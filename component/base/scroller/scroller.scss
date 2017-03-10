@@ -1,0 +1,38 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+
+/**
+ * scroller 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_SCROLLER };
+
+.#{ $C_PREFIX } {
+  overflow: hidden;
+  position: relative;
+
+  .#{ $C_PREFIX }-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .#{ $C_PREFIX }-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 5px;
+
+    border-radius: 4px;
+    background-color: $grey;
+    opacity: .4;
+
+    &:hover{
+      background-color: $grey-dark;
+      opacity: 1;
+    }
+  }
+}

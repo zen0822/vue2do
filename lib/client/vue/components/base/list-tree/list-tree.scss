@@ -1,0 +1,53 @@
+.listTree{
+  width: 250px;
+  background: white;
+  .item {
+    cursor: pointer;
+  }
+  #demo{
+    >li{
+      padding-left: 0px;
+    }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    color: #333;
+      li{
+        padding: 4px 0;
+        list-style: none;
+        min-width: 150px;
+        width: 150px;
+        padding-left: 25px;
+      }
+    .itemList{
+      &:hover{
+        >span{
+//        color: #333;
+        }
+      }
+      >i{
+        margin-top: 1px;
+        font-size: 12px;
+        color: #666;
+        margin-right: 3px;
+        vertical-align: middle;
+      }
+      .circle{
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        margin-right: 4px;
+        background: #999;
+        border-radius: 50%;
+      }
+      >span{
+        color: #666;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+    }
+  }
+}

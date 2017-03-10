@@ -1,0 +1,57 @@
+@import "../config.scss";
+@import "../extend.scss";
+
+/**
+ * 组件公共类样式
+ */
+
+$C_PREFIX: $comp-prefix;
+
+.#{ $C_PREFIX }-clear-fix {
+  &::before,
+  &::after {
+    content: '\200b';
+    clear: both;
+    display: table-cell;
+  }
+}
+
+.#{ $C_PREFIX }-float-left {
+  float: left;
+}
+
+.#{ $C_PREFIX }-float-right {
+  float: right;
+}
+
+.#{ $C_PREFIX }-text--left {
+  text-align: left;
+}
+
+.#{ $C_PREFIX }-text-center {
+  text-align: center;
+}
+
+.#{ $C_PREFIX }-text-right {
+  text-align: right;
+}
+
+.#{ $C_PREFIX }-vertical-middle {
+  vertical-align: middle;
+}
+
+.#{ $C_PREFIX }-cursor-pointer {
+  cursor: pointer;
+}
+
+.#{ $C_PREFIX }-hide {
+  display: none !important;
+}
+
+.#{ $C_PREFIX }-invisible {
+  visibility: hidden !important;
+}
+
+.#{ $C_PREFIX }-transition {
+  @extend %transition;
+}

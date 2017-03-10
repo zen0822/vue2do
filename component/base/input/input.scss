@@ -1,0 +1,187 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+
+/**
+ * input 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_INPUT };
+
+$INPUT_HEIGHT: 36px;
+$INPUT_WIDTH: 170px;
+$INPUT_BORDER_WIDTH: 1px;
+
+.#{ $C_PREFIX } {
+  display: inline-block;
+  vertical-align: middle;
+  width: $INPUT_WIDTH;
+
+  .#{ $C_PREFIX }-stage {
+    position: relative;
+
+    .#{ $C_PREFIX }-limit-txt{
+      padding: $gap-v 0;
+      text-align: right;
+    }
+
+    &.#{ $C_PREFIX }-textarea-stage {
+      .input-wrap{
+        min-height: $INPUT_HEIGHT;
+        height: auto;
+      }
+    }
+
+    .#{ $C_PREFIX }-wrap {
+      display: table-cell;
+      // 流式布局 BFC 用到的 hack
+      width: 9999px;
+
+      position: relative;
+      height: $INPUT_HEIGHT;
+      border: $border-color $border-thin solid;
+      background-color: #fff;
+      line-height: 20px;
+
+      &.#{ $C_PREFIX }-error-border{
+        border: $danger-color $border-thin solid;
+      }
+
+      &.#{ $C_PREFIX }-editting {
+        border-color: $border-dark-color;
+      }
+      .#{ $C_PREFIX }-hide {
+        display: none;
+      }
+
+      .#{ $C_PREFIX }-edit-box-left {
+        float: left;
+
+        & > .#{ $C_PREFIX }-icon-stage {
+          line-height: $INPUT_HEIGHT - $INPUT_BORDER_WIDTH * 2;
+          padding-left: $gap-h;
+        }
+      }
+      .#{ $C_PREFIX }-edit-box {
+        // 流式布局 BFC 用到的 hack
+        display: table-cell;
+        width: 9999px;
+
+        & > input,
+        & > textarea {
+          border: none;
+          width: 100%;
+          font: inherit;
+          color: inherit;
+
+          &:focus {
+            outline-style: none;
+            border-style: none;
+          }
+        }
+
+        & > input {
+          box-sizing: border-box;
+        }
+
+        & > textarea {
+          resize: none;
+        }
+      }
+
+      .#{ $C_PREFIX }-auto-completion {
+        position: absolute;
+        top: $INPUT_HEIGHT - 4;
+        left: -$INPUT_BORDER_WIDTH;
+        z-index: 1;
+        width: $INPUT_WIDTH;
+        background: #fff;
+        border: $border-dark-color $border-thin solid;
+
+        & > ul {
+          max-height: 200px;
+          overflow: auto;
+
+          & > li{
+            @extend %text-ellipsis;
+            cursor: default;
+            width: 100%;
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    .#{ $C_PREFIX }-addon-stage {
+      float: right;
+
+      background-color: $grey-light;
+      border: $border-color $border-thin solid;
+      margin-left: -$gap-h-half;
+      padding: $gap-v;
+      color: #fff;
+    }
+
+    .#{ $C_PREFIX }-danger-tip {
+      color: $danger-color;
+      margin-top: $gap-v-half;
+    }
+
+    &.#{ $C_PREFIX }-theme-primary, &.#{ $C_PREFIX }-theme-fill {
+      .#{ $C_PREFIX }-wrap {
+        border-radius: $border-radius;
+
+        .#{ $C_PREFIX }-edit-box {
+          & > input,
+          & > textarea {
+            padding: 7px;
+            border-radius: $border-radius;
+          }
+        }
+
+        .#{ $C_PREFIX }-auto-completion {
+          border-bottom-left-radius: $border-radius;
+          border-bottom-right-radius: $border-radius;
+        }
+      }
+
+      .#{ $C_PREFIX }-danger-tip {
+        position: absolute;
+        top: $INPUT_HEIGHT + 5;
+        width: 100%;
+        background: #fff;
+        border: $danger-color $border-thin solid;
+        padding: $gap-v;
+        z-index: 1;
+
+        &::after,
+        &::before {
+          content: "◆";
+          position: absolute;
+          top: -11px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          width: 22px;
+          height: 20px;
+          font-size: 33px;
+          line-height: 20px;
+        }
+
+        &::after {
+          top: -9px;
+          color: #fff;
+        }
+      }
+
+      .#{ $C_PREFIX }-addon-stage {
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+
+    &.#{ $C_PREFIX }-theme-fill {
+      width: 100%;
+    }
+  }
+}

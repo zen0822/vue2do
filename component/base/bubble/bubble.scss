@@ -1,0 +1,66 @@
+//bubble组件样式
+
+@import "~config.scss";
+@import "~extend.scss";
+
+.bubble-stage,
+.bubble-stage.theme-default {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $z-index;
+  background: #fff;
+  border: $grey-light $border-thin solid;
+  padding: 15px;
+
+  .bubble-slot {
+    max-width: 300px;
+
+    .bubble-text {
+      @extend %text-ellipsis;
+      width: 100%;
+      display: inline-block;
+    }
+  }
+
+  &.customize-bubble .bubble-slot {
+    max-width: none;
+  }
+
+  .arrow {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 19px;
+    width: 16px;
+    margin: auto;
+    overflow: hidden;
+
+    .icon-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      .fa {
+        font-size: 26px;
+        line-height: 16px;
+      }
+    }
+
+    .arrow-border {
+      top: -1.5px;
+      color: $grey-dark;
+    }
+    .arrow-body {
+      color: #fff;
+    }
+  }
+}
+
+.bubble-stage.theme-primary {
+  border-radius: $border-radius;
+}
+.bubble-stage.theme-primary:active {
+  color: #333;
+}

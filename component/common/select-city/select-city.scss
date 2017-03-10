@@ -1,0 +1,20 @@
+@import "~config.scss";
+
+.select-city-stage,
+.select-city-stage .theme-default {
+    width: 100%;
+  .inline{
+      display: inline-block;
+  }
+  .width2{
+      width: 49%;
+  }
+  .width3{
+      width: 32.5%;
+  }
+.drop-menu-stage, .drop-menu-stage.theme-default,.drop-menu-stage .drop-menu-items, .drop-menu-stage.theme-default .drop-menu-items,
+.drop-menu-stage .option-ul, .drop-menu-stage.theme-default .option-ul{
+    width: 100%;
+    box-sizing: content-box;
+}
+}

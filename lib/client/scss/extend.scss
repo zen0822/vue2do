@@ -1,0 +1,24 @@
+@import "./config.scss";
+
+%text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+%center-position {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+%clear-fix {
+  content: "\200b";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}

@@ -1,0 +1,13 @@
+@import "./config.scss";
+
+html, body {
+  color: $grey;
+  font-size: $font-base;
+  font-weight: normal;
+  font-family: "Microsoft Yahei" ,"simSun", "Arial";
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}

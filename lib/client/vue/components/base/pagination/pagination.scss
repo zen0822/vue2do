@@ -1,0 +1,86 @@
+@import "~config.scss";
+@import "~extend.scss";
+
+// pagination 组件样式
+
+.pagination-wrap,
+.pagination-wrap.theme-default {
+  color: $grey-dark;
+  padding: $gap-v-double 0;
+  line-height: 30px;
+
+  .invisible {
+    visibility: hidden;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .pagination-page-box {
+    display: inline-block;
+    margin: 0 $gap-h;
+
+    li {
+      cursor: pointer;
+      padding: 0 $gap-h;
+      display: inline-block;
+      vertical-align: middle;
+
+      &.page-item {
+        color: $grey-light;
+        padding: 0;
+        border-radius: 6px;
+        margin: 0 5px;
+        min-width: 30px;
+        height: 30px;
+        text-align: center;
+
+        &.active {
+          background-color: $border-lightest-color;
+          color: $grey-dark;
+        }
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  .page-count {
+    color: $grey-light;
+    margin: 0 $gap-h-double;
+    min-width: 100px;
+  }
+  .page-total{
+    color: $grey-light;
+    min-width: 100px;
+  }
+  .page-search {
+    display: inline-block;
+
+    .go-btn {
+      margin-left: $gap-h;
+
+      .btn-default {
+        color: $grey;
+      }
+    }
+
+    .page-current {
+      width: 50px;
+      border-radius: 5px;
+      margin: 0 $gap-h;
+    }
+  }
+}
+
+.pagination-wrap.theme-primary {
+  text-align: right;
+}

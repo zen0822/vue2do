@@ -1,0 +1,60 @@
+@import "../../../../scss/config.scss";
+@import "../../../../scss/extend.scss";
+@import "../../../../scss/name.scss";
+@import "../../../../scss/mixin.scss";
+
+/**
+ * col 组件样式
+ */
+
+@mixin device-style($type) {
+  @for $i from 1 through 12 {
+    &.#{ $C_PREFIX }-#{$type}-#{$i} {
+      width: 100% * $i / 12;
+
+      @each $gap in 5, 10, 20 {
+        &.#{ $C_PREFIX }-gap-#{$gap} {
+          width: calc(#{100% * $i / 12} - #{$gap}px);
+          padding-right: 5px;
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+}
+
+$C_PREFIX: #{ $COMP_COL };
+
+.#{ $C_PREFIX } {
+  display: inline-block;
+  vertical-align: middle;
+
+  @for $i from 1 through 12 {
+    &.#{ $C_PREFIX }-pull-#{$i},
+    &.#{ $C_PREFIX }-push-#{$i} {
+      position: relative;
+    }
+
+    &.#{ $C_PREFIX }-offset-#{$i} {
+      margin-left: 100% * $i / 12;
+    }
+
+    &.#{ $C_PREFIX }-pull-#{$i} {
+      left: -100% * $i / 12;
+    }
+
+    &.#{ $C_PREFIX }-push-#{$i} {
+      left: 100% * $i / 12;
+    }
+  }
+
+  @each $type in span, xs, s, m, l, xl {
+    @if $type != span {
+      @include device-type ($type) {
+        @include device-style($type);
+      }
+    } @else {
+      @include device-style($type);
+    }
+  }
+}

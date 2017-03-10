@@ -1,0 +1,178 @@
+@import "~config.scss";
+@import "~extend.scss";
+
+// input-box 组件样式
+
+$INPUT_HEIGHT: 36px;
+$INPUT_WIDTH: 170px;
+$INPUT_BORDER_WIDTH: 1px;
+
+.input-box-stage {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: $INPUT_WIDTH;
+
+  .limit-txt{
+    padding: 10px 0;
+    text-align: right;
+  }
+
+  input, textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  &.textarea-stage {
+    .input-box-wrap{
+      min-height: $INPUT_HEIGHT;
+      height: auto;
+    }
+  }
+
+  .input-box-wrap {
+    display: table-cell;
+    /* 流式布局 BFC 用到的 hack */
+    width: 9999px;
+
+    position: relative;
+    height: $INPUT_HEIGHT;
+    border: $border-color $border-thin solid;
+    background-color: #fff;
+    line-height: 20px;
+
+    &.error-border{
+      border: $danger-color $border-thin solid;
+    }
+
+    &.editting {
+      border-color: $border-dark-color;
+    }
+    .hide {
+      display: none;
+    }
+
+    .edit-box-left {
+      float: left;
+
+      & > .icon-stage {
+        line-height: $INPUT_HEIGHT - $INPUT_BORDER_WIDTH * 2;
+        padding-left: $gap-h;
+      }
+    }
+    .edit-box {
+      /* hack */
+      display: table-cell;
+      width: 9999px;
+
+      input,
+      textarea {
+        border: none;
+        width: 100%;
+
+        &:focus {
+          outline-style: none;
+          border-style: none;
+        }
+      }
+
+      textarea {
+        resize: none;
+      }
+    }
+
+    .auto-completion {
+      position: absolute;
+      top: $INPUT_HEIGHT - 4;
+      left: -$INPUT_BORDER_WIDTH;
+      z-index: 1;
+      width: $INPUT_WIDTH;
+      background: #fff;
+      border: $border-dark-color $border-thin solid;
+
+      ul {
+        max-height: 200px;
+        overflow: auto;
+
+        li{
+          @extend %text-ellipsis;
+          cursor: default;
+          width: 100%;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .addon-stage {
+    float: right;
+
+    background-color: $grey-light;
+    border: $border-color $border-thin solid;
+    margin-left: -$gap-h-half;
+    padding: $gap-v;
+    color: #fff;
+  }
+
+  .danger-tip {
+    color: $danger-color;
+    margin-top: $gap-v-half;
+  }
+
+  &.theme-primary, &.theme-fill {
+    .input-box-wrap {
+      border-radius: $border-radius;
+
+      .edit-box {
+        input,
+        textarea {
+          padding: 7px;
+          border-radius: $border-radius;
+        }
+      }
+
+      .auto-completion {
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+
+    .danger-tip {
+      position: absolute;
+      top: $INPUT_HEIGHT + 5;
+      width: 100%;
+      background: #fff;
+      border: $danger-color $border-thin solid;
+      padding: $gap-v;
+      z-index: 1;
+
+      &::after,
+      &::before {
+        content: "◆";
+        position: absolute;
+        top: -11px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 22px;
+        height: 20px;
+        font-size: 33px;
+        line-height: 20px;
+      }
+
+      &::after {
+        top: -9px;
+        color: #fff;
+      }
+    }
+
+    .addon-stage {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+
+  &.theme-fill {
+    width: 100%;
+  }
+}

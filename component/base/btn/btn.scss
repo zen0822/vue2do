@@ -1,0 +1,112 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+
+/**
+ * btn 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_BTN };
+
+.#{ $C_PREFIX } {
+  position: relative;
+  display: inline-block;
+
+  & > a,
+  & > button,
+  & > input {
+    width: 100%;
+  }
+  & > a {
+  	cursor: pointer;
+  }
+
+  .#{ $C_PREFIX }-ele {
+    position: relative;
+    display: inline-block;
+    border: $border-thin solid transparent;
+    padding: 7.5px $gap-v-triple;
+    border-radius: $border-radius;
+
+    color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    font-size: $font-base;
+    line-height: 1.42857;
+    white-space: nowrap;
+
+    &:link,
+    &:visited,
+    &:hover,
+    &:active,
+    &:focus:active {
+      color: #ffffff;
+      outline: none;
+    }
+
+    &.#{ $C_PREFIX }-ele-primary {
+      background-color: $danger-color;
+
+      &:hover {
+        background-color: #d44a4a;
+        border-color: $danger-color;
+      }
+
+      &:active {
+        background-color: #c9403f;
+      }
+    }
+
+    &.#{ $C_PREFIX }-ele-secondary {
+      background-color: $secondary-color;
+    }
+
+    &.#{ $C_PREFIX }-ele-default {
+      background-color: #f6f6f6;
+      border: $grey-light $border-thin solid;
+      color: $grey-light;
+
+      &:hover {
+        background-color: $grey-lightest;
+        color: #f6f6f6;
+      }
+
+      &:active {
+        background-color: $default-color;
+        color: #f6f6f6;
+      }
+    }
+
+    &.#{ $C_PREFIX }-ele-m {
+      padding: 7px $gap-v-double * 2;
+    }
+
+    &.#{ $C_PREFIX }-ele-l {
+      padding: 7px $gap-v-triple * 2;
+    }
+
+    .#{ $C_PREFIX }-loading {
+      position: absolute;
+      left: $gap-v;
+    }
+  }
+
+  .#{ $C_PREFIX }-value-show {
+    display: inline-block;
+  }
+
+  .#{ $C_PREFIX }-read-only-shadow {
+    @extend %center-position;
+
+    background-color: rgba(0, 0, 0, .3);
+    border-radius: $border-radius;
+    cursor: not-allowed;
+    z-index: 1;
+  }
+
+  &.#{ $C_PREFIX }-theme-primary {
+    .#{ $C_PREFIX }-ele {
+      padding: 7px 15px;
+    }
+  }
+}

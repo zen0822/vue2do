@@ -1,0 +1,19 @@
+@import '~config.scss';
+@import '~extend.scss';
+
+.form-area-stage {
+  .control-label {
+    padding-top: $gap-v;
+  }
+  .checkbox-group {
+    margin-top: $gap-v;
+  }
+
+  &.theme-primary {
+    .col-sm-10 {
+      .date-time-stage {
+        width: 47.2%;
+      }
+    }
+  }
+}

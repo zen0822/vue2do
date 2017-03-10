@@ -1,0 +1,11 @@
+@import "~config.scss";
+
+.app-container {
+  position: relative;
+}
+
+.app-content {
+  clear: both;
+  box-sizing: border-box;
+  background-color: $bg-color;
+}

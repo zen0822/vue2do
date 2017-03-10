@@ -1,0 +1,45 @@
+@import "~config.scss";
+
+/*
+* 全局盒子类
+*/
+
+.m-t-half {
+    margin-top: $gap-v-half;
+}
+.m-t {
+    margin-top: $gap-v;
+}
+.m-t-double {
+    margin-top: $gap-v-double;
+}
+
+.m-r-half {
+    margin-right: $gap-h-half;
+}
+.m-r {
+    margin-right: $gap-h;
+}
+.m-r-double {
+    margin-right: $gap-v-double;
+}
+
+.m-b-half {
+    margin-bottom: $gap-v-half;
+}
+.m-b {
+    margin-bottom: $gap-v;
+}
+.m-b-double {
+    margin-bottom: $gap-v-double;
+}
+
+.m-l-half {
+    margin-left: $gap-h-half;
+}
+.m-l {
+    margin-left: $gap-h;
+}
+.m-l-double {
+    margin-left: $gap-h-double;
+}

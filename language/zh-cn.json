@@ -1,0 +1,24 @@
+{
+  "name": "zh-cn",
+  "btn": {},
+  "column": {},
+  "check": {},
+  "form": {},
+  "input": {},
+  "icon": {},
+  "loading": {},
+  "page": {},
+  "pop": {},
+  "list": {},
+  "scroller": {},
+  "select": {},
+  "selectEle": {},
+  "shift": {},
+  "shiftEle": {},
+  "tab": {},
+  "tabEle": {},
+  "row": {},
+  "table": {
+    "emptyData": "暂无数据"
+  }
+}

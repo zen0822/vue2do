@@ -1,0 +1,129 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
+
+/**
+ * table 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_TABLE };
+$COL_PREFIX: #{ $COMP_TABLE_COL };
+
+.#{$C_PREFIX} {
+  position: relative;
+
+  &.#{$C_PREFIX}-theme-primary,
+  &.#{$C_PREFIX}-theme-fill {
+    .#{$C_PREFIX}-header-group {
+      .#{$COL_PREFIX} {
+        color: $grey-dark;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-theme-fill {
+     .#{$C_PREFIX}-stage {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .#{$C_PREFIX}-wrap {
+      width: 100%;
+    }
+  }
+
+  .#{$C_PREFIX}-empty-data {
+    text-align: center;
+    margin: $gap-v-double;
+  }
+
+  .#{$C_PREFIX}-stage {
+    &:before,
+    &:after{
+      position: absolute;
+      top: 0;
+      content: "";
+      display: block;
+      width: 0;
+      height: 100%;
+      border-left: 1px $border-lightest-color solid;
+    }
+    &:before{
+      left: 0;
+    }
+    &:after{
+      right: 0;
+    }
+  }
+
+  .#{$C_PREFIX}-wrap {
+    background: #fff;
+    display: table;
+    border: $border-lightest-color $border-thin solid;
+  }
+
+  .#{$C_PREFIX}-header-group {
+    background: $bg-color;
+    display: table-header-group;
+    padding: $gap-v;
+  }
+
+  .#{$C_PREFIX}-row-group {
+    display: table-row-group;
+    padding: $gap-v-double;
+  }
+
+  .#{$C_PREFIX}-row {
+    display: table-row;
+    border: $border-lightest-color $border-thin solid;
+
+    &:nth-child(2n) {
+      background: $bg-light-color;
+    }
+  }
+
+  .#{$C_PREFIX}-header {
+    display: table-header;
+    padding: $gap-v-double;
+  }
+
+  .#{$COL_PREFIX} {
+    display: table-cell;
+    padding: $gap-v $gap-v-double;
+    white-space: nowrap;
+  }
+
+  .#{$C_PREFIX}-page {
+    position: relative;
+    padding-right: 5px;
+
+    &:before, &:after{
+      z-index: 10;
+      position: absolute;
+      top: 0;
+      content: "";
+      display: block;
+      width: 0;
+      height: 100%;
+      border-left: 1px #fff solid;
+    }
+    &:before{
+      left: 0;
+    }
+    &:after{
+      right: 0;
+    }
+  }
+}
+
+@include device-type ("<l") {
+  .#{$C_PREFIX} {
+    &.#{$C_PREFIX}-theme-primary,
+    &.#{$C_PREFIX}-theme-fill {
+      .#{$C_PREFIX}-wrap {
+        width: 100%;
+      }
+    }
+  }
+}

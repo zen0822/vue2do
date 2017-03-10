@@ -1,0 +1,30 @@
+{
+  "select": {
+    "option": {
+      "change": "selectOptChange"
+    }
+  },
+  "input": {
+    "focus": "focusInput",
+    "blur": "blurInput",
+    "keyup": "keyupInput",
+    "change": "changeInput",
+    "completion": {
+      "click": "clickCompletion"
+    }
+  },
+  "tab": {
+    "change": "tabChange"
+  },
+  "checkbox": {
+    "change": "checkboxChange"
+  },
+  "btn": {
+    "click": "clickBtn"
+  },
+  "common": {
+    "searchTool": {
+      "change": "searchQueryChange"
+    }
+  }
+}

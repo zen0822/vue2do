@@ -1,0 +1,49 @@
+@import "../config.scss";
+
+/**
+ * 全局盒子类
+ */
+
+// margin top
+.#{ $comp-prefix }-m-t-half {
+    margin-top: $gap-v-half;
+}
+.#{ $comp-prefix }-m-t {
+    margin-top: $gap-v;
+}
+.#{ $comp-prefix }-m-t-double {
+    margin-top: $gap-v-double;
+}
+
+// margin right
+.#{ $comp-prefix }-m-r-half {
+    margin-right: $gap-h-half;
+}
+.#{ $comp-prefix }-m-r {
+    margin-right: $gap-h;
+}
+.#{ $comp-prefix }-m-r-double {
+    margin-right: $gap-v-double;
+}
+
+// margin bottom
+.#{ $comp-prefix }-m-b-half {
+    margin-bottom: $gap-v-half;
+}
+.#{ $comp-prefix }-m-b {
+    margin-bottom: $gap-v;
+}
+.#{ $comp-prefix }-m-b-double {
+    margin-bottom: $gap-v-double;
+}
+
+// margin left
+.#{ $comp-prefix }-m-l-half {
+    margin-left: $gap-h-half;
+}
+.#{ $comp-prefix }-m-l {
+    margin-left: $gap-h;
+}
+.#{ $comp-prefix }-m-l-double {
+    margin-left: $gap-h-double;
+}

@@ -1,0 +1,87 @@
+@import "~config.scss";
+@import '~bourbon/app/assets/stylesheets/bourbon';
+
+.img-handle-content {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	.img-div {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		display:table;
+    text-align:center;
+    span {
+    	display: table-cell;
+    	vertical-align: middle;
+    }
+		img {
+			position: relative;
+			width: auto;
+			height: auto;
+		  max-width:100%;
+		  max-height:100%;
+		  cursor: pointer;
+		}
+	}
+	.handle-content {
+		@include clearfix;
+		position: absolute;
+		top: 90%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		padding: $gap-v;
+		background-color: #333;
+		opacity: 0.9;
+		border: #333 $border-thin solid;
+		border-radius: 4px;
+		.handle-img {
+			float: left;
+			overflow: hidden;
+			cursor: pointer;
+		}
+		.expand-img {
+			margin-right: $gap-v;
+			width: 24px;
+			height: 22px;
+			background: url("../../../assets/ic_amplification_normal.png");
+			&:hover {
+				background: url("../../../assets/ic_amplification_pressed.png");
+			}
+		}
+		.narrow-img {
+			margin-right: $gap-v;
+			width: 24px;
+			height: 22px;
+			background: url("../../../assets/ic_narrow_normal.png");
+			&:hover {
+				background: url("../../../assets/ic_narrow_pressed.png");
+			}
+		}
+		.rotate-img {
+			width: 19px;
+			height: 22px;
+			background: url("../../../assets/ic_turn_right_normal.png");
+			&:hover {
+				background: url("../../../assets/ic_turn_right_pressed.png");
+			}
+		}
+	}
+	.img-null {
+		width: 100%;
+		height: 100%;
+		span {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			display: inline-block;
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			background: #e5e5e5;
+			padding: 45px 22px;
+		}
+	}
+}

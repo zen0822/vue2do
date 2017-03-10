@@ -1,0 +1,85 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
+
+/**
+ * select-opt 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_SELECT_OPT };
+$C_LIST_PREFIX: #{ $COMP_LIST };
+
+$SELECT_HEIGHT: 36px;
+$SELECT_WIDTH: 170px;
+$SELECT_BORDER_WIDTH: 1px;
+$OPTION_UI_PADDING_WIDTH: $gap-v;
+$MULTI_SELECT_WIDTH: 170px + 80px;
+
+.#{ $C_PREFIX }-ul {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: $SELECT_WIDTH - $OPTION_UI_PADDING_WIDTH;
+  width: $SELECT_WIDTH;
+
+  background-color: #fff;
+  border: $border-color $border-thin solid;
+
+  .#{ $C_PREFIX }-li {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    cursor: default;
+
+    &:first-child {
+      padding-top: $OPTION_UI_PADDING_WIDTH;
+    }
+    &:last-child {
+      padding-bottom: $OPTION_UI_PADDING_WIDTH;
+    }
+
+    &:hover > .#{ $C_PREFIX }-ul {
+      display: block;
+    }
+
+    &.default-txt {
+      color: #999;
+    }
+
+    &.classify-title {
+      font-weight: bold;
+    }
+  }
+
+  &.#{ $C_PREFIX }-theme-primary,
+  &.#{ $C_PREFIX }-theme-fill {
+    border: $border-dark-color $border-thin solid;
+    border-radius: $border-radius;
+
+    .#{ $C_PREFIX }-list .#{ $C_LIST_PREFIX }-scroller {
+      @include transition (height)
+    }
+
+    .#{ $C_PREFIX }-li {
+      padding: $OPTION_UI_PADDING_WIDTH $OPTION_UI_PADDING_WIDTH $OPTION_UI_PADDING_WIDTH;
+
+      &:hover {
+        background-color: $bg-color;
+      }
+
+      &:hover.#{ $C_PREFIX }-classify-title {
+        background-color: transparent;
+      }
+
+      &>span {
+        @extend %text-ellipsis;
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+      }
+    }
+  }
+}
+

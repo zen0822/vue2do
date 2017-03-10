@@ -1,0 +1,13 @@
+@import "../config.scss";
+
+/**
+ * 组件公共类样式
+ */
+
+$C_PREFIX: $comp-prefix;
+
+.#{ $C_PREFIX }-ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}

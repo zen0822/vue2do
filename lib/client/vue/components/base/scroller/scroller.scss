@@ -1,0 +1,32 @@
+@import '~config.scss';
+@import '~extend.scss';
+
+.scroller-stage {
+  overflow: auto;
+  position: relative;
+
+  .scroller-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .scroller-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+
+    opacity: .6;
+    background-color: #000;
+  }
+
+  &.theme-default {
+
+  }
+
+  &.theme-primary {
+
+  }
+}

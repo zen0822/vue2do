@@ -1,0 +1,26 @@
+@import "../config.scss";
+
+html, body {
+  color: $grey;
+  font-size: $font-base;
+  font-weight: normal;
+  font-family: "Microsoft Yahei" ,"simSun", "Arial";
+}
+
+h1 {
+  font-size: $h1;
+}
+h2 {
+  font: $h2 bold;
+}
+h3 {
+  font-size: $h3;
+}
+
+a {
+  color: $link-color;
+}
+
+p {
+  line-height: 24px;
+}

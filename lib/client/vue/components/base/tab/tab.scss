@@ -1,0 +1,85 @@
+@import '~config.scss';
+@import '~extend.scss';
+
+.tab-stage,
+.tab-stage.theme-default {
+  ul {
+    &::after {
+      @extend %clear-fix;
+    }
+
+    li {
+      float: left;
+      border-right: $border-color $border-thin solid;
+      cursor: pointer;
+
+      &.active {
+        border-bottom: $border-color $border-thin solid;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
+
+.tab-stage.theme-primary {
+  ul {
+    display: inline-block;
+    vertical-align: middle;
+
+    border: #d6d6d6 $border-thin solid;
+    border-radius: $border-radius;
+
+    box-shadow: 0 1px 1px 0 #d6d6d6;
+
+    overflow: hidden;
+
+    li {
+      min-width: 100px;
+      padding: $gap-v $gap-h-double;
+      background-color: #fff;
+      text-align: center;
+      border: none;
+      border-right: #d6d6d6 $border-thin solid;
+      color: $grey-light;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      &:hover {
+        background-color: $bg-light-color;
+        color: $grey-light;
+      }
+
+      &.active {
+        background-color: #f3f3f3;
+        color: $grey-dark;
+      }
+    }
+  }
+}
+
+.tab-stage.theme-secondary {
+  border-bottom: $border-thin solid $border-color;
+
+  ul {
+    li {
+      min-width: 100px;
+      padding: 12px $gap-h-double $gap-v;
+      text-align: center;
+      border: none;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &.active {
+        border-bottom: $primary-color $border-thick solid;
+        color: $primary-color;
+      }
+    }
+  }
+}

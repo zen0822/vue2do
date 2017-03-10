@@ -1,0 +1,28 @@
+.breadcrumb-wrap {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  padding-left: 20px;
+
+  .breadcrumb {
+    padding: 0px;
+    margin-bottom: 0px;
+    background: transparent;
+    cursor: default;
+    .nolink{
+      a{
+        color: #666;
+      }
+    }
+    a {
+      text-decoration: none;
+    }
+
+    & > li + li:before {
+      content: ">";
+      color: #323232;
+    }
+  }
+}

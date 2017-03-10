@@ -1,0 +1,22 @@
+@import "~config.scss";
+
+// icon 组件样式
+
+.icon-stage {
+  display: inline-block;
+  margin-right: $gap-h-half;
+
+  .icon-box {
+    &.s {
+      font-size: $h4;
+    }
+
+    &.m {
+      font-size: $h3;
+    }
+
+    &.l {
+      font-size: $h2;
+    }
+  }
+}

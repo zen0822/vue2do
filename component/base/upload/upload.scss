@@ -1,0 +1,103 @@
+@import '~config.scss';
+@import '~extend.scss';
+
+.upload-box-stage {
+	.input-label {
+		display: inline-block;
+		vertical-align: middle;
+		max-width: 150px;
+		margin-left: $gap-h;
+	}
+
+	.upload-img {
+		$upload-img-width: 60px;
+		.input-label{
+			line-height: 1.2;
+		}
+		.select-file {
+			position: relative;
+			display: inline-block;
+			overflow: hidden;
+			vertical-align: middle;
+			cursor: default;
+			width: $upload-img-width;
+			height: $upload-img-width;
+			border: $border-color $border-thin solid;
+			.select-file-input{
+				position: absolute;
+				cursor: default;
+				opacity: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 1;
+			}
+
+			.icon-plus {
+				@extend %center-position;
+				text-align: center;
+				width: 30px;
+				height: 30px;
+
+				.fa-plus {
+					font-size: 30px;
+				}
+			}
+		}
+
+		.img-showcase-ul {
+			display: inline-block;
+			vertical-align: middle;
+
+			li {
+				position: relative;
+				width: $upload-img-width;
+				height: $upload-img-width;
+				border: $border-color $border-thin solid;
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 12px;
+				/* hack: 保证 inline-block 之间没有空格 */
+				/* 若一定要写文字，需要手动加上 line-height */
+				font-size: 0;
+
+				.del-upload-item {
+					position: absolute;
+					top: -9px;
+					right: -13px;
+					cursor: pointer;
+					z-index: 1;
+
+					.fa-times-circle {
+						font-size: 18px;
+					}
+				}
+
+				.show-img {
+					overflow: hidden;
+					width: 100%;
+					height: 100%;
+
+					&::before {
+						content:'';
+						display: inline-block;
+						height: 100%;
+						width: 0;
+						vertical-align:middle;
+					}
+
+					img {
+						width: 100%;
+						display: inline-block;
+						vertical-align: middle;
+					}
+				}
+			}
+		}
+
+		.img-preview {
+			overflow: hidden;
+			width: 0;
+			height: 0;
+		}
+	}
+}

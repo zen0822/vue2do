@@ -1,0 +1,143 @@
+//pop组件样式
+
+@import "~config.scss";
+@import "~extend.scss";
+
+.pop-stage,
+.pop-stage.theme-default {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+
+  &.tip-stage {
+    .pop > article {
+      min-height: auto;
+
+      .alert-message{
+        white-space: normal;
+      }
+    }
+  }
+
+  .bg {
+    background: #000;
+    opacity: .8;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  .pop {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: #fff;
+    overflow: hidden;
+
+    >header {
+      cursor: move;
+      padding: $gap-v-double $gap-h-triple;
+      font-size: $h2;
+      width: 100%;
+
+      &.no-header-title {
+        .close-pop {
+          opacity: 1;
+
+          .fa-times {
+            color: $secondary-color;
+          }
+        }
+      }
+
+      .close-pop {
+        float: right;
+        cursor: pointer;
+      }
+    }
+
+    >article {
+      padding: 30px 50px 0;
+      margin: $gap-v-double 0;
+      overflow: auto;
+
+      .alert-message{
+        text-align: center;
+        white-space: pre-line;
+        font-size: 18px;
+      }
+    }
+
+    >footer {
+      padding: 20px 0 50px;
+      line-height: normal;
+      text-align: center;
+      height: auto;
+      width: 100%;
+    }
+  }
+}
+
+.pop-stage.theme-primary {
+
+  &.tip-stage {
+    .pop {
+      border-radius: $border-radius;
+      padding: $gap-v-double $gap-v;
+      line-height: $font-base * 2;
+      max-width: 220px;
+      height: auto;
+      min-height: auto;
+
+      article {
+        @extend %text-ellipsis;
+        padding: 0;
+        text-align: center;
+        min-height: auto;
+      }
+    }
+  }
+
+  &.alert-stage {
+    article {
+      font-size: $h3;
+      text-align: center;
+    }
+  }
+
+  .pop {
+    width: 500px;
+    border-radius: 10px;
+
+    >header {
+      background-color: $secondary-color;
+      color: #fff;
+
+      &.no-header-title {
+        background-color: transparent;
+      }
+    }
+
+    >article {
+      min-height: 100px;
+      width: 100%;
+    }
+
+    >footer {
+      .btn-stage {
+        width: 180px;
+
+        .btn {
+          width: 100%;
+
+        }
+      }
+    }
+  }
+}

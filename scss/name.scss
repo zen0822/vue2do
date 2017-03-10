@@ -1,0 +1,28 @@
+@import "./config.scss";
+
+// 组件的名称
+
+$COMP_BTN: #{ $comp-prefix }-btn;
+$COMP_CHECK: #{ $comp-prefix }-check;
+$COMP_FORM: #{ $comp-prefix }-form;
+$COMP_INPUT: #{ $comp-prefix }-input;
+$COMP_ICON: #{ $comp-prefix }-icon;
+$COMP_PAGE: #{ $comp-prefix }-page;
+
+$COMP_LOADING: #{ $comp-prefix }-loading;
+$COMP_POP: #{ $comp-prefix }-pop;
+$COMP_SCROLLER: #{ $comp-prefix }-scroller;
+$COMP_SHIFT: #{ $comp-prefix }-shift;
+
+$COMP_SELECT: #{ $comp-prefix }-select;
+$COMP_SELECT_OPT: #{ $comp-prefix }-select-opt;
+
+$COMP_TAB: #{ $comp-prefix }-tab;
+$COMP_TAB_ELE: #{ $comp-prefix }-tab-ele;
+
+$COMP_ROW: #{ $comp-prefix }-row;
+$COMP_COL: #{ $comp-prefix }-col;
+
+$COMP_LIST: #{ $comp-prefix }-list;
+$COMP_TABLE: #{ $comp-prefix }-table;
+$COMP_TABLE_COL: #{ $comp-prefix }-table-col;

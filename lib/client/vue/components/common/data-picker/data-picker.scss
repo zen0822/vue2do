@@ -1,0 +1,52 @@
+@import "~config.scss";
+@import "~extend.scss";
+
+$INPUT_HEIGHT: 36px;
+$INPUT_WIDTH: 170px;
+$INPUT_BORDER_WIDTH: 1px;
+
+.data-picker-stage, .data-picker-stage.theme-default {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  height: $INPUT_HEIGHT;
+  width: $INPUT_WIDTH;
+  border: $border-color $border-thin solid;
+  background-color: #fff;
+  line-height: 20px;
+  border-radius: $border-radius;
+
+  &.open {
+    border-color: $border-dark-color;
+  }
+  .text {
+    float: left;
+    &.gray {
+      color: #999;
+    }
+  }
+  .icon-stage {
+    float: right;
+  }
+
+  .calendar {
+    z-index: $z-index-higher;
+  }
+
+  .view-box {
+    height: 100%;
+    width: 100%;
+
+    text-align: left;
+    @extend %text-ellipsis;
+
+    cursor: text;
+    padding: 7px;
+  }
+}
+.data-picker-stage.theme-bootstrap {
+  width: 100%;
+  &.open {
+    border-color: #66afe9;
+  }
+}

@@ -1,0 +1,24 @@
+.selecttree{
+    position: relative;
+    height: 34px;
+    border-radius: 4px;
+    border:1px solid #d6d6d6;
+    cursor: pointer;
+    .input{
+       padding: 10px 10px 10px 10px;
+       .icon-stage{
+           float: right;
+       }
+    }
+    .treelist{
+        background-color: #fff;
+        position: absolute;
+        padding:10px 20px;
+        width: 100%;
+        border:1px solid #d6d6d6;
+        z-index: 22;
+        left: 0;
+        top: 33px;
+        border-radius:0 0 4px 4px;
+    }
+}

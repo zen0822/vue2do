@@ -1,0 +1,29 @@
+@import "~config.scss";
+
+.drop-menu-input-stage {
+	display: inline-block;
+	min-width: 250px;
+	width: 100%;
+
+	.drop-menu-stage {
+		float: left;
+		width: 30%;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		border-top-left-radius: $border-radius;
+		border-bottom-left-radius: $border-radius;
+	}
+
+	.input-box-stage {
+		display: table-cell;
+		width: 9999px;
+
+		.input-box-wrap {
+			border-left: 0;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-top-right-radius: $border-radius;
+			border-bottom-right-radius: $border-radius;
+		}
+	}
+}

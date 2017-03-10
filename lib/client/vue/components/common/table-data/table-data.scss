@@ -1,0 +1,111 @@
+@import '~config.scss';
+@import '~extend.scss';
+
+.table-data-stage {
+  position: relative;
+
+  &.theme-default {
+
+  }
+
+  &.theme-primary, &.theme-fill {
+    .header-group {
+      .table-cell {
+        color: $grey-dark;
+      }
+    }
+  }
+
+  &.theme-fill {
+    .table-wrap-stage {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .table-wrap {
+      width: 100%;
+    }
+  }
+
+  .empty-data{
+    text-align: center;
+    margin: $gap-v-double;
+  }
+
+  .table-wrap-stage{
+    &:before, &:after{
+      position: absolute;
+      top: 0;
+      content: "";
+      display: block;
+      width: 0;
+      height: 100%;
+      border-left: 1px $border-lightest-color solid;
+    }
+    &:before{
+      left: 0;
+    }
+    &:after{
+      right: 0;
+    }
+  }
+
+  .table-wrap {
+    background: #fff;
+    display: table;
+    border: $border-lightest-color $border-thin solid;
+  }
+
+  .header-group {
+    background: $bg-color;
+    display: table-header-group;
+    padding: $gap-v;
+  }
+
+  .row-group {
+    display: table-row-group;
+    padding: $gap-v-double;
+  }
+
+  .table-row {
+    display: table-row;
+    border: $border-lightest-color $border-thin solid;
+
+    &:nth-child(2n) {
+      background: $bg-light-color;
+    }
+  }
+
+  .table-header {
+    display: table-header;
+    padding: $gap-v-double;
+  }
+
+  .table-cell {
+    display: table-cell;
+    padding: $gap-v $gap-v-double;
+    white-space: nowrap;
+  }
+
+  .pagination-wrap{
+    position: relative;
+    padding-right: 5px;
+    
+    &:before, &:after{
+      z-index: 10;
+      position: absolute;
+      top: 0;
+      content: "";
+      display: block;
+      width: 0;
+      height: 100%;
+      border-left: 1px #fff solid;
+    }
+    &:before{
+      left: 0;
+    }
+    &:after{
+      right: 0;
+    }
+  }
+}

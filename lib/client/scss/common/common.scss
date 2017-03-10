@@ -1,0 +1,70 @@
+@import "../config.scss";
+
+.clear-fix {
+  &::before,
+  &::after {
+    content: '\200b';
+    clear: both;
+    display: table-cell;
+  }
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.text-align-left {
+  text-align: left;
+} 
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.vertical-middle {
+  vertical-align: middle;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.table-primary {
+  background: #fff;
+  border: $border-light-color $border-thin solid;
+
+  thead {
+    background: $bg-color;
+  }
+
+  tr {
+    &:nth-child(2n) {
+      background: $bg-light-color;
+    }
+  }
+
+  th {
+    padding: $gap-v-double;
+  }
+
+  td {
+    padding: $gap-v-double;
+  }
+}
+
+.input-primary {
+  height: 36px;
+  border: $border-color $border-thin solid;
+  border-radius: $border-radius;
+  outline: none;
+  padding: $gap-v;
+  vertical-align: middle;
+}

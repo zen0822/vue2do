@@ -1,0 +1,13 @@
+//jquery 和 bootstrap 的插件样式重写或者样式重构
+
+.glyphicon.icon-arrow-right {
+  &:before {
+    content: "\E092";
+  }
+}
+
+.glyphicon.icon-arrow-left {
+  &:before {
+    content: "\E091";
+  }
+}

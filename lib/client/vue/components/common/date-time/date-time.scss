@@ -1,0 +1,58 @@
+@import "~config.scss";
+@import "~extend.scss";
+
+$INPUT_HEIGHT: 36px;
+$INPUT_WIDTH: 180px;
+$INPUT_BORDER_WIDTH: 1px;
+
+.date-time-stage {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  height: $INPUT_HEIGHT;
+  width: $INPUT_WIDTH;
+  border: $border-color $border-thin solid;
+  background-color: #fff;
+  line-height: 20px;
+  border-radius: $border-radius;
+
+  .date-time-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: $border-radius;
+
+    input {
+      width: 100%;
+      padding: 7px 30px 7px 7px;
+      border: none;
+      cursor: default;
+
+      &:focus {
+        outline-style: none;
+        border-style: none;
+      }
+
+    }
+
+    .calendar-icon {
+      position: absolute;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      height: 14px;
+      line-height: 14px;
+    }
+  }
+
+  &.theme-primary {
+    &:hover {
+      border: $border-dark-color $border-thin solid;
+    }
+
+    .date-time-box input {
+      padding: 7px 30px 7px 7px;
+      cursor: default;
+    }
+  }
+}

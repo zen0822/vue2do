@@ -1,0 +1,3 @@
+$(window).on('click', () => {
+  // TODO
+});

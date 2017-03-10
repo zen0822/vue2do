@@ -1,0 +1,31 @@
+@import "../../../../scss/config.scss";
+@import "../../../../scss/extend.scss";
+@import "../../../../scss/name.scss";
+@import "../../../../scss/mixin.scss";
+
+/**
+ * row 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_ROW };
+
+.#{ $C_PREFIX } {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &.#{ $C_PREFIX }-wrap {
+    flex-wrap: wrap;
+  }
+
+  &.#{ $C_PREFIX }-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  @each $gap in 5, 10, 20 {
+    &.#{ $C_PREFIX }-gap-#{$gap} {
+      margin-right: -#{$gap / 2}px;
+      margin-left: -#{$gap / 2}px;
+    }
+  }
+}

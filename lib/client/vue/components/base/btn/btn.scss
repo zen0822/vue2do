@@ -1,0 +1,52 @@
+@import '~config.scss';
+@import '~extend.scss';
+
+.btn-stage {
+  position: relative;
+  display: inline-block;
+
+  & > a,
+  & > button,
+  & > input {
+    width: 100%;
+  }
+  & > a {
+  	cursor: pointer;
+  }
+
+  .btn {
+    position: relative;
+
+    .loading-stage {
+      position: absolute;
+      left: 30px;
+    }
+  }
+
+  .btn-value-show {
+    display: inline-block;
+  }
+
+  .read-only-shadow {
+    @extend %center-position;
+
+    background-color: #fff;
+    opacity: 0;
+    cursor: not-allowed;
+  }
+
+  &.theme-primary {
+    .btn {
+      padding: 7px 15px;
+    }
+  }
+
+  &.m {
+    padding: 7px 30px;
+  }
+
+  &.l .btn{
+    padding: 7px 60px;
+  }
+
+}

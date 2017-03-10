@@ -1,0 +1,154 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+
+/**
+ * pop 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_POP };
+
+.#{ $C_PREFIX } {
+  position: relative;
+
+  .#{ $C_PREFIX }-stage {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+
+    &.#{ $C_PREFIX }-tip-stage {
+      .#{ $C_PREFIX }-container > article {
+        min-height: auto;
+
+        .#{ $C_PREFIX }-alert-message{
+          white-space: normal;
+        }
+      }
+    }
+
+    .#{ $C_PREFIX }-bg {
+      background: #000;
+      opacity: .8;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+    }
+    .#{ $C_PREFIX }-container {
+      position: absolute;
+      top: 10%;
+      left: 0;
+      right: 0;
+      margin: auto;
+      background: #fff;
+      overflow: hidden;
+
+      >header {
+        cursor: move;
+        padding: $gap-v-double $gap-h-triple;
+        box-sizing: border-box;
+        font-size: $h2;
+        width: 100%;
+
+        &.#{ $C_PREFIX }-no-header-title {
+          .#{ $C_PREFIX }-close-pop {
+            opacity: 1;
+
+            .fa-times {
+              color: $secondary-color;
+            }
+          }
+        }
+
+        .#{ $C_PREFIX }-close-pop {
+          float: right;
+          cursor: pointer;
+        }
+      }
+
+      >article {
+        padding: 30px 50px 0;
+        margin: $gap-v-double 0;
+        overflow: auto;
+        box-sizing: border-box;
+
+        .#{ $C_PREFIX }-alert-message{
+          text-align: center;
+          white-space: pre-line;
+          font-size: 18px;
+        }
+      }
+
+      >footer {
+        padding: 20px 0 50px;
+        box-sizing: border-box;
+        line-height: normal;
+        text-align: center;
+        height: auto;
+        width: 100%;
+      }
+    }
+
+    &.#{ $C_PREFIX }-theme-primary {
+
+      &.#{ $C_PREFIX }-tip-stage {
+        .#{ $C_PREFIX }-container {
+          border-radius: $border-radius;
+          padding: $gap-v-double $gap-v;
+          line-height: $font-base * 2;
+          max-width: 220px;
+          height: auto;
+          min-height: auto;
+
+          article {
+            @extend %text-ellipsis;
+            padding: 0;
+            text-align: center;
+            min-height: auto;
+          }
+        }
+      }
+
+      &.#{ $C_PREFIX }-alert-stage {
+        article {
+          font-size: $h3;
+          text-align: center;
+        }
+      }
+
+      .#{ $C_PREFIX }-container {
+        width: 500px;
+        border-radius: 10px;
+
+        >header {
+          background-color: $secondary-color;
+          color: #fff;
+
+          &.#{ $C_PREFIX }-no-header-title {
+            background-color: transparent;
+          }
+        }
+
+        >article {
+          min-height: 100px;
+          width: 100%;
+        }
+
+        >footer {
+          .btn-stage {
+            width: 180px;
+
+            .btn {
+              width: 100%;
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+//pop组件样式
+
+@import "~config.scss";
+@import "~extend.scss";
+
+@media only screen and (min-width: 320px) and (max-width: 500px){
+  .pop-stage,
+  .pop-stage.theme-default,
+  .pop-stage.theme-primary {
+    .pop {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Scrollbar</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="includes/style.css">
+        <link rel="stylesheet" href="includes/prettify/prettify.css">
+        <link rel="stylesheet" href="jquery.scrollbar.css">
+
+        <script type="text/javascript" src="includes/prettify/prettify.js"></script>
+        <script type="text/javascript" src="includes/jquery.js"></script>
+        <script type="text/javascript" src="jquery.scrollbar.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+                window.prettyPrint && prettyPrint();
+                $('.wrapper').scrollbar();
+            });
+        </script>
+
+        <script type="text/javascript">
+            if(window.location.href.match(/gromo.github.io/i)){
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-52878040-1', 'auto');
+                ga('send', 'pageview');
+            }
+        </script>
+    </head>
+    <body>
+        <div class="wrapper scrollbar-dynamic">
+            <div class="page-content">
+
+                <h1>jQuery Scrollbar</h1>
+
+                Cross-browser CSS customizable scrollbar with advanced features:
+                <ul>
+                    <li>Easy to implement</li>
+                    <li>No fixed height or width needed</li>
+                    <li>Supports responsive design</li>
+                    <li>Customizable CSS</li>
+                    <li>Standard browser scroll behaviour</li>
+                    <li>Supports vertical and horizontal scrollbars or both</li>
+                    <li>Automatically re-initializes scrollbars</li>
+                    <li>Supports external scrollbars</li>
+                    <li>Provides a AngularJS directive</li>
+                    <li>Supports the use as textarea scrollbar</li>
+                    <li>Browser support: IE7+, Edge, Firefox, Opera, Chrome, Safari</li>
+                </ul>
+
+                <h4><a href="demo/basic.html">Basic Scrollbars Demo</a></h4>
+                <h4><a href="demo/advanced.html">Advanced Scrollbars Demo</a></h4>
+                <h4><a href="demo/angular.html">jQuery Scrollbars as AngularJS directive</a></h4>
+                <h4><a href="https://github.com/gromo/jquery.scrollbar/archive/gh-pages.zip">Download example</a></h4>
+
+                <h3>Easy to implement</h3>
+                <p>
+                    Go to the demo pages, find a scrollbar that fits your needs, copy the HTML/CSS/JavaScript and paste it to your page.
+                    Modify CSS styles to change scrollbar colors/sizes. If you can't find a scrollbar that fits your needs, contact the
+                    author and your scrollbar will be added to the demo page.
+                </p>
+
+                <h3>No fixed height or width needed</h3>
+                <p>
+                    Most of the scrollbar plugins require container height or width to be set in order to calculate scrollbar sizes.
+                    jQuery Scrollbar does not require height, nor width. You can use max-height/max-width to restrict
+                    container sizes, or use standard height/width in pixels/percents in the parent container.
+                </p>
+
+                <h3>Supports responsive design</h3>
+                <p>
+                    jQuery Scrollbar can be used in responsive designs as there is no need to set fixed height/width to the container.
+                    Scrollbars will be automatically updated/hidden/displayed when content or container size changes.
+                </p>
+
+                <h3>Customizable CSS</h3>
+                <p>
+                    Use CSS to customize scrollbar colors, sizes or positions. Use simple or advanced HTML structure to
+                    customize how scrollbars should look. If simple or advanced HTML structure is not what you are looking for,
+                    you can use your own HTML structure with custom elements.
+                </p>
+
+                <h3>Standard browser scroll behaviour</h3>
+                <p>
+                    If your browser can scroll content, jQuery Scrollbar will scroll it too! Why? Because it does not emulate
+                    browser scroll behaviour as many plugins do, instead hides standard scrollbars and displays custom ones. You want
+                    to scroll with mouse middle button? – Just use it! You want to scroll with touch? – Do it! Your browser
+                    supports custom scroll behavior? – Use it too! Use the standard or jQuery scrollTop/scrollLeft functions to get
+                    current scroll offset or scroll to any position. Use the standard "scroll" event to handle content scrolling.
+                    You don't need to know custom functions/events – everything is done based on standard scroll behaviour.
+                </p>
+
+                <h3>Supports vertical and horizontal scrollbars or both</h3>
+                <p>
+                    Most of the scrollbar plugins allow using either vertical or horizontal scrollbars.
+                    Only a few can use both vertical and horizontal scrollbars and they are using scroll emulation
+                    which has limitations. jQuery Scrollbar does not emulate scroll behaviour. Also it can work 
+                    with both vertical and horizontal scrollbars together.
+                </p>
+
+                <h3>Automatically re-initializes scrollbars</h3>
+                <p>
+                    Usually scrollbar size and positions are calculated when plugin is initialized. What if content or container
+                    size is changed with javascript/ajax? - You have to update plugin to recalculate scrollbar sizes. And it's
+                    OK because you know when content is changed. But what to do if you don't know when it is changed? For
+                    example, if content contains images without height/width. These images change content size after loading.
+                    There are 3 obvious ways: always set image height/width (and force users to set image size for content added
+                    with WYSIWYG editor), wait for whole page to load and then initialize scrollbars or handle content images
+                    loading and then re-initialize scrollbar plugin. Annoying, isn't it?
+                </p>
+                <p>
+                    jQuery Scrollbar handles content/container size changes and recalculate scrollbar sizes automatically. Just
+                    initialize it once and forget about it.
+                </p>
+
+                <h3>Supports external scrollbars</h3>
+                <p>
+                    jQuery Scrollbar supports 3 types of scrollbars: <strong>inner</strong> &mdash; scrollbar is displayed over
+                    content (Apple Mac OS); <strong>outer</strong> &mdash; scrollbar shifts content to display itself (Microsoft
+                    Windows scrollbars); <strong>external</strong> &mdash; scrollbar is located in any place of your page. So,
+                    you can choose between Apple Mac and Windows style scrollbar or even place it outside of the container and
+                    style it as you wish. Cool, isn't it?
+                </p>
+
+                <h3>Provides a AngularJS directive</h3>
+                <p>
+                    Now you can easily use jQuery Scrollbar with AngularJS as directive. Just include module <em>jQueryScrollbar</em>
+                    as dependency in your module, and you can use jQuery Scrollbar on your container with attribute
+                    <em>data-jquery-scrollbar</em>. <a href="demo/angular.html">jQuery Scrollbar as AngularJS directive</a>.
+                </p>
+
+                <h3>Textarea scrollbars</h3>
+                <p>
+                    Apply jQuery Scrollbar to your textarea and enjoy CSS styled scrollbars. Supports IE8+. Fixed height/width are required.
+                </p>
+
+                <h3>Browser support: IE7+, Edge, Firefox, Opera, Chrome, Safari</h3>
+                <p>
+                    Of course all modern browsers are supported starting from IE7. The most problematic browser is IE, as you
+                    already suspect. But it's not IE7, it's IE8! Surprised? I was! IE7 works better with height/width
+                    calculations than IE8. IE8 renderer is crashed when using <em>max-height</em> with <em>overflow:auto</em>.
+                    It is officially logged as a <a href="https://www.google.com/#q=IE8+max+height+crash" target="_blank">bug</a>
+                    in the final version of IE8 with no fix. There are also other bugs with max-height/max-width and positioning.
+                    So, be careful if you are going to support IE8.
+                </p>
+
+                <h4>Advanced features that standard scroll has, but scroll emulation plugins have to emulate or don't have at all</h4>
+                <ul>
+                    <li>mouse middle button / touch / arrow buttons scrolling</li>
+                    <li>auto content scrolling when selecting text</li>
+                    <li>auto scrolling to focused element</li>
+                </ul>
+
+                <h2>jQuery Scrollbar Options</h2>
+                <ul>
+                    <li>
+                        <strong>autoScrollSize</strong> [true|false] (default: true)<br/>
+                        automatically calculate scrollbar size depending on container/content size
+                    </li>
+                    <li>
+                        <strong>autoUpdate</strong> [true|false] (default: true)<br/>
+                        automatically update scrollbar if container/content size is changed
+                    </li>
+                    <li>
+                        <strong>disableBodyScroll</strong> [true|false] (default: false)<br/>
+                        if this option is enabled and the mouse is over the scrollable container, the main page won't be scrolled
+                    </li>
+                    <li>
+                        <strong>duration</strong> [ms] (default: 200)<br/>
+                        scroll speed duration when the mouse is over scrollbar (scroll emulating mode)
+                    </li>
+                    <li>
+                        <strong>ignoreMobile</strong> [true|false] (default: false)<br/>
+                        do not initialize custom scrollbars on mobile devices
+                    </li>
+                    <li>
+                        <strong>ignoreOverlay</strong> [true|false] (default: false)<br/>
+                        do not initialize custom scrollbars in browsers when native scrollbars
+                        overlay content (Mac OS, mobile devices, etc...)
+                    </li>
+                    <li>
+                        <strong>scrollStep</strong> [px] (default: 30)<br/>
+                        scroll step when the mouse is over the scrollbar (scroll emulating mode)
+                    </li>
+                    <li>
+                        <strong>showArrows</strong> [true|false] (default: false)<br/>
+                        add a class to show scrollbar arrows in the advanced scrollbar
+                    </li>
+                    <li>
+                        <strong>stepScrolling</strong> [true|false] (default: true)<br/>
+                        emulate step scrolling on mousedown over scrollbar
+                    </li>
+                    <li>
+                        <strong>scrollx</strong> [string|element] (default: simple)<br/>
+                        <i>simple</i>, <i>advanced</i>, HTML or jQuery element for horizontal scrollbar
+                    </li>
+                    <li>
+                        <strong>scrolly</strong> [string|element] (default: simple)<br/>
+                        <i>simple</i>, <i>advanced</i>, HTML or jQuery element for vertical scrollbar
+                    </li>
+                    <li>
+                        <strong>onDestroy</strong> [function] (default: null)<br/>
+                        callback function when scrollbar is destroyed
+                    </li>
+                    <li>
+                        <strong>onInit</strong> [function] (default: null)<br/>
+                        callback function when scrollbar is initialized at the first time
+                    </li>
+                    <li>
+                        <strong>onScroll</strong> [function] (default: null)<br/>
+                        callback function when container is scrolled
+                    </li>
+                    <li>
+                        <strong>onUpdate</strong> [function] (default: null)<br/>
+                        callback function before scrollbars size is calculated
+                    </li>
+                </ul>
+
+                <h2>Limitations</h2>
+                <ul>
+                    <li>scrollable elements should not have paddings, margins, left/top values</li>
+                    <li>do not use max-height in IE8 – it crashes browser renderer</li>
+                    <li>custom scroll is not initialized in Firefox under MacOS because of a bug while hiding native overlay scrollbar</li>
+					<li>custom scroll works incorrectly if containers children's height is set in percent of parent (issue <a href="https://github.com/gromo/jquery.scrollbar/issues/57">#57</a>)</li>
+                </ul>
+
+                <h2>FAQ</h2>
+                <ol>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> I need padding between border/scrollbar and text, but scrollbar does not
+                            allow it. What should I do?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Wrap the inner content in the div with padding
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> I need space between content with scrollbar and the rest of the page.
+                            What should I do?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Wrap the scrollable content into container with padding.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> If content contains images, content size can be changed after images will
+                            be loaded. Should I re-initialize scrollbar?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> No, scrollbar detects content/container size changes automatically and
+                            recalculates its size or hides/shows scrollbars.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> How can I scroll content to a custom position?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Use standard jQuery scrollTop/scrollLeft functions on the container.
+                            For example if you have a container with a class "scrollbar-macosx" use the following code to scroll 50px from top:
+                        <pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-macosx').scrollTop(50);</pre>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> I want to know when the content is scrolled. Is there any callback for this?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Yes, you can use "onScroll" callback (look at AngularJS example),
+                            or use the standard "scroll" event on the container. For example you have a container with a class
+                            "scrollbar-macosx", then use the following code to handle the scroll event:
+                        <pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-macosx').not('.scroll-wrapper').on("scroll", function(){
+    console.log('content is scrolling');
+});</pre>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> The scrollbar does not replace the standard scrollbar. What should I do?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> It's not a good idea to replace the standard scrollbar for a whole page. But if you
+                            really need it, wrap all page into container with height/width 100%, overflow: auto and apply
+                            the scrollbar to this container.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> I don't want to see horizontal scrollbar ever. What should I do?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Hide it with CSS like this:
+                        <pre class="prettyprint linenums lang-css">
+.scroll-element.scroll-x {
+    display: none !important;
+}</pre>
+                        But don't forget that even if the scrollbar is hidden, the content still may be scrollable horizontally.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> Using jQuery's .width() or .height() on a container
+							will return incorrect values. What is going on?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Inner scrollable content uses additional height/width & offset of the scrollbar
+                            to hide it. To get correct height/width values use the visible container:
+                        <pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-macosx').not('.scroll-content').height();
+jQuery('.scrollbar-macosx').not('.scroll-content').width();</pre>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> How to detect when a DIV is scrolled to the bottom edge?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> You can make calculations using jQuery's "scroll" event or you can use
+                            the "onScroll" callback function that provides information about container's sizes &amp; offset:
+                        <pre class="prettyprint linenums lang-js">
+jQuery('.scrollbar-dynamic').scrollbar({
+    "onScroll": function(y, x){
+        if(y.scroll == y.maxScroll){
+            console.log('Scrolled to bottom');
+        }
+    }
+});</pre>
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> Can I use jQuery Scrollbar to customize textarea scrollbar?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Yes, you can. Textarea scrollbars are supported now.
+                            Look at <a href="demo/basic.html">Basic Scrollbars Demo</a> page.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> Is it possible to set scrollbars max/min size?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Use CSS max-height/min-height (max-width/min-width) to set scrollbar size limits.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            <strong>Question:</strong> I have a question / want to report an issue. How can I contact the author?
+                        </p>
+                        <p>
+                            <strong>Answer:</strong> Please send an email to <a href="mailto:13real008@gmail.com">13real008@gmail.com</a>
+                        </p>
+                    </li>
+                </ol>
+
+                <h5 style="display:none;">
+                    <a href="https://docs.google.com/spreadsheet/ccc?key=0Ao4HbHsCLP0YdEhnZVh1WGZSbXloekZiNWlaNElnTnc&usp=sharing"
+                       target="_blank">Compare with other popular scrollbars</a>
+                </h5>
+            </div>
+        </div>
+    </body>
+</html>

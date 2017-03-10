@@ -1,0 +1,42 @@
+@import "~config.scss";
+
+.search-tool-stage,
+.search-tool-stage .theme-default {
+  display: inline-block;
+
+  .searcher-box {
+    display: inline-block;
+  }
+
+  .input-stage {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+
+    .icon-stage {
+      position: absolute;
+      top: 11px;
+      left: 10px;
+      z-index: 1;
+    }
+
+    .input-box-stage {
+      vertical-align: middle;
+
+      .input-box-wrap {
+        padding-left: 25px;
+      }
+    }
+  }
+
+  .btn {
+    padding: 7px 15px;
+    line-height: 20px;
+  }
+}
+
+.search-tool-stage.theme-primary {
+  .search-btn {
+    margin-left: $gap-h;
+  }
+}

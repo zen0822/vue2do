@@ -1,0 +1,71 @@
+/**
+ * zenSpa/scss/config.scss
+ */
+
+//---------------- color ----------------
+
+// base color
+$primary-color: #e65454;
+$secondary-color: #44546a;
+
+$danger-color: $primary-color;
+$success-color: #5cb85c;
+$warning-color: #f0ad4e;
+$default-color: #e6e6e6;
+$orange-color: #f29354;
+
+$grey: #666666;
+$grey-dark: #333333;
+$grey-light: #999999;
+$grey-lightest: #cccccc;
+
+// background
+$bg-color: #f5f5f5;
+$bg-light-color: #fafafa;
+
+// link
+$link-color: #4183c4;
+
+// border
+$border-color: #d6d6d6;
+$border-lightest-color: #f0f0f0;
+$border-light-color: #e5e5e5;
+$border-dark-color: $grey-light;
+
+//---------------- gap ----------------
+
+$gap-base: 10px;
+
+// 垂直方向的空隙值
+$gap-v: $gap-base;
+$gap-v-half: $gap-v / 2;
+$gap-v-double: $gap-v * 2;
+$gap-v-triple: $gap-v * 3;
+
+// 水平方向的空隙值
+$gap-h: $gap-base;
+$gap-h-half: $gap-v / 2;
+$gap-h-double: $gap-v * 2;
+$gap-h-triple: $gap-v * 3;
+
+//---------------- border ----------------
+
+$border-thin: 1px;
+$border-thick: 3px;
+
+$border-radius: 4px;
+
+//---------------- font ----------------
+
+$font-base: 14px;
+
+$h1: 24px;
+$h2: 20px;
+$h3: 16px;
+$h4: $font-base;
+$h6: 12px;
+
+//---------------- other ----------------
+
+$z-index: 999;
+$z-index-higher: 9999;

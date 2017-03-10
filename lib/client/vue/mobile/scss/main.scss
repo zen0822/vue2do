@@ -1,0 +1,11 @@
+@import "../wechat.conf.scss";
+
+html {
+  font-size: $font-base;
+}
+html, body {
+  color: $grey;
+  font-weight: normal;
+  font-family: "PingFangSC-Regular", "Microsoft Yahei" ,"simSun", "Arial";
+  height: 100%;
+}

@@ -1,0 +1,74 @@
+// vue2/scss/config.scss
+
+//---------------- main ----------------
+
+$comp-prefix: z !default;
+
+//---------------- color ----------------
+
+// base color
+$primary-color: #e65454 !default;
+$secondary-color: #44546a !default;
+
+$danger-color: $primary-color !default;
+$success-color: #5cb85c !default;
+$warning-color: #f0ad4e !default;
+$default-color: #e6e6e6 !default;
+$orange-color: #f29354 !default;
+
+$grey: #666666 !default;
+$grey-dark: #333333 !default;
+$grey-light: #999999 !default;
+$grey-lightest: #cccccc !default;
+
+// background
+$bg-color: #f5f5f5 !default;
+$bg-light-color: #fafafa !default;
+
+// link
+$link-color: #4183c4 !default;
+
+// border
+$border-color: #d6d6d6 !default;
+$border-lightest-color: #f0f0f0 !default;
+$border-light-color: #e5e5e5 !default;
+$border-dark-color: $grey-light !default;
+
+//---------------- gap ----------------
+
+$gap-base: 10px !default;
+
+// 垂直方向的空隙值
+$gap-v: $gap-base !default;
+$gap-v-half: $gap-v / 2 !default;
+$gap-v-double: $gap-v * 2 !default;
+$gap-v-triple: $gap-v * 3 !default;
+
+// 水平方向的空隙值
+$gap-h: $gap-base !default;
+$gap-h-half: $gap-v / 2 !default;
+$gap-h-double: $gap-v * 2 !default;
+$gap-h-triple: $gap-v * 3 !default;
+
+//---------------- border ----------------
+
+$border-thin: 1px !default;
+$border-thick: 3px !default;
+
+$border-radius: 4px !default;
+
+//---------------- font ----------------
+
+$font-base: 14px !default;
+
+$h1: 24px !default;
+$h2: 20px !default;
+$h3: 16px !default;
+$h4: $font-base !default;
+$h6: 12px !default;
+
+//---------------- other ----------------
+
+$z-index-lower: 998 !default;
+$z-index: 999 !default;
+$z-index-higher: 1000 !default;
