@@ -4,7 +4,7 @@ require('components/base/tab/tab');
 require('components/base/switching/switching');
 require('./panel-ele');
 
-import baseMixin from 'vue2/mixin/base';
+import baseMixin from 'src/mixin/base';
 const { tab: tabEvent } = require('components/config/event.json');
 
 const template = require('./tab-panel.tpl');

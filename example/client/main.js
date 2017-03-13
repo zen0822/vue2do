@@ -9,8 +9,8 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import routes from './route/route'
 import appComp from './app/app'
-import { set as setConfig } from 'vue2/config'
-import enLang from 'vue2/language/en.json'
+import { set as setConfig } from 'src/config'
+import enLang from 'src/language/en.json'
 
 Vue.use(VueRouter)
 setConfig.lang(enLang)

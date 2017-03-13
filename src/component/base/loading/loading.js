@@ -11,8 +11,8 @@
 
 import './loading.scss'
 
-import iconComp from 'vue2/component/base/icon/icon'
-import baseMixin from 'vue2/mixin/base'
+import iconComp from 'src/component/base/icon/icon'
+import baseMixin from 'src/mixin/base'
 import render from './loading.render'
 
 const TYPE_ROTATE = 'rotate'

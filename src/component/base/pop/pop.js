@@ -22,9 +22,9 @@ import './pop.scss'
 import './m.pop.scss'
 
 import template from './pop.tpl'
-import btnComp from 'vue2/component/base/btn/btn'
-import iconComp from 'vue2/component/base/icon/icon'
-import baseMixin from 'vue2/mixin/base'
+import btnComp from 'src/component/base/btn/btn'
+import iconComp from 'src/component/base/icon/icon'
+import baseMixin from 'src/mixin/base'
 
 const TYPE_ALERT = 'alert'
 const TYPE_CONFIRM = 'confirm'

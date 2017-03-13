@@ -25,16 +25,16 @@ import './check.scss'
 
 import Vue from 'vue'
 import template from './check.tpl'
-import compEvent from 'vue2/config/event.json'
+import compEvent from 'src/config/event.json'
 
-import iconComp from 'vue2/component/base/icon/icon'
-import checkComp from 'vue2/component/base/check/check'
-import tip from 'vue2/component/base/pop/tip'
+import iconComp from 'src/component/base/icon/icon'
+import checkComp from 'src/component/base/check/check'
+import tip from 'src/component/base/pop/tip'
 
-import baseMixin from 'vue2/mixin/base'
-import formMixin from 'vue2/mixin/form'
+import baseMixin from 'src/mixin/base'
+import formMixin from 'src/mixin/form'
 
-import { isEmpty as isEmptyArray } from 'vue2/util/data/array'
+import { isEmpty as isEmptyArray } from 'src/util/data/array'
 
 const TYPE_RADIO = 'radio'
 const TYPE_CHECKBOX = 'checkbox'

@@ -30,7 +30,7 @@ const INIT_SEARCH_CONTROL = ['DropMenu', 'InputBox', 'Checkbox', 'DateTime'];
 require('./search-tool.scss');
 const template = require('./search-tool.tpl');
 
-import baseMixin from 'vue2/mixin/base';
+import baseMixin from 'src/mixin/base';
 
 const SearchTool = {
   template,

@@ -21,12 +21,12 @@
 
 import './page.scss'
 
-import btnComp from 'vue2/component/base/btn/btn'
-import iconComp from 'vue2/component/base/icon/icon'
-import inputComp from 'vue2/component/base/input/input'
-import rowComp from 'vue2/component/common/layout/row/row'
-import columnComp from 'vue2/component/common/layout/col/col'
-import baseMixin from 'vue2/mixin/base'
+import btnComp from 'src/component/base/btn/btn'
+import iconComp from 'src/component/base/icon/icon'
+import inputComp from 'src/component/base/input/input'
+import rowComp from 'src/component/common/layout/row/row'
+import columnComp from 'src/component/common/layout/col/col'
+import baseMixin from 'src/mixin/base'
 import render from './page.render'
 
 const pageComp = {

@@ -40,14 +40,14 @@
 import './input.scss'
 import template from './input.tpl'
 
-import store from 'vue2/vuex/store'
-import hubStore from 'vue2/vuex/module/hub/type.json'
+import store from 'src/vuex/store'
+import hubStore from 'src/vuex/module/hub/type.json'
 import initVerfication from './validate.js'
 
-import baseMixin from 'vue2/mixin/base'
-import formMixin from 'vue2/mixin/form'
+import baseMixin from 'src/mixin/base'
+import formMixin from 'src/mixin/form'
 
-import { dataType } from 'vue2/util/data/data'
+import { dataType } from 'src/util/data/data'
 
 const tip = {}
 

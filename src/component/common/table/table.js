@@ -13,9 +13,9 @@
 
 import './table.scss'
 import render from './table.render'
-import baseMixin from 'vue2/mixin/base'
-import listMixin from 'vue2/mixin/list'
-import tip from 'vue2/component/base/pop/tip'
+import baseMixin from 'src/mixin/base'
+import listMixin from 'src/mixin/list'
+import tip from 'src/component/base/pop/tip'
 
 const tableRowComp = {
   name: 'table-row',

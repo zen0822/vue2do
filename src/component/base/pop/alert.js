@@ -5,9 +5,9 @@
 import Vue from 'vue'
 
 import popComp from './pop'
-import store from 'vue2/vuex/store'
-import commonStore from 'vue2/vuex/module/common/type.json'
-import baseMixin from 'vue2/mixin/base'
+import store from 'src/vuex/store'
+import commonStore from 'src/vuex/module/common/type.json'
+import baseMixin from 'src/mixin/base'
 
 let alerting = false
 let alertHub = []

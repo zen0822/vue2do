@@ -1,36 +1,36 @@
-import './lib/directive'
-import './scss/common/box.scss'
-import './scss/common/main.scss'
-import './scss/common/common.scss'
+import 'src/lib/directive'
+import 'src/scss/common/box.scss'
+import 'src/scss/common/main.scss'
+import 'src/scss/common/common.scss'
 
-import btn from './component/base/btn/btn'
-import check from './component/base/check/check'
-import form from './component/base/form/form'
-import input from './component/base/input/input'
-import icon from './component/base/icon/icon'
-import loading from './component/base/loading/loading'
-import page from './component/base/page/page'
-import pop from './component/base/pop/pop'
-import scroller from './component/base/scroller/scroller'
+import btn from 'src/component/base/btn/btn'
+import check from 'src/component/base/check/check'
+import form from 'src/component/base/form/form'
+import input from 'src/component/base/input/input'
+import icon from 'src/component/base/icon/icon'
+import loading from 'src/component/base/loading/loading'
+import page from 'src/component/base/page/page'
+import pop from 'src/component/base/pop/pop'
+import scroller from 'src/component/base/scroller/scroller'
 
-import list from './component/common/list/list'
+import list from 'src/component/common/list/list'
 import {
   tableComp as table,
   tableColComp as tableCol,
   tableRowComp as tableRow
-} from './component/common/table/table'
+} from 'src/component/common/table/table'
 
-import select from './component/base/select/select'
-import selectEle from './component/base/select/select-ele'
+import select from 'src/component/base/select/select'
+import selectEle from 'src/component/base/select/select-ele'
 
-import shift from './component/base/shift/shift'
-import shiftEle from './component/base/shift/shift-ele'
+import shift from 'src/component/base/shift/shift'
+import shiftEle from 'src/component/base/shift/shift-ele'
 
-import tab from './component/base/tab/tab'
-import tabEle from './component/base/tab/tab-ele'
+import tab from 'src/component/base/tab/tab'
+import tabEle from 'src/component/base/tab/tab-ele'
 
-import col from './component/common/layout/col/col'
-import row from './component/common/layout/row/row'
+import col from 'src/component/common/layout/col/col'
+import row from 'src/component/common/layout/row/row'
 
 export {
   btn,

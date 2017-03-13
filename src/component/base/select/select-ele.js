@@ -2,7 +2,7 @@
  * select 组件里面的 ele 组件
  */
 
-import baseMixin from 'vue2/mixin/base'
+import baseMixin from 'src/mixin/base'
 
 export default {
   template: `

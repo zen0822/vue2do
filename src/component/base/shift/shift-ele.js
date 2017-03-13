@@ -3,7 +3,7 @@
  *
  */
 
-import baseMixin from 'vue2/mixin/base'
+import baseMixin from 'src/mixin/base'
 
 export default {
   mixins: [baseMixin],

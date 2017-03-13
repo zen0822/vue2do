@@ -17,7 +17,7 @@
 
 import './scroller.scss'
 
-import baseMixin from 'vue2/mixin/base'
+import baseMixin from 'src/mixin/base'
 import render from './scroller.render.js'
 
 // 滚动一次的滚动区域走的像素大小

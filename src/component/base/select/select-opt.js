@@ -14,12 +14,12 @@
 import './select-opt.scss'
 import Vue from 'vue'
 import template from './select-opt.tpl'
-import compEvent from 'vue2/config/event.json'
+import compEvent from 'src/config/event.json'
 
-import iconComp from 'vue2/component/base/icon/icon'
-import checkComp from 'vue2/component/base/check/check'
-import listComp from 'vue2/component/common/list/list'
-import baseMixin from 'vue2/mixin/base'
+import iconComp from 'src/component/base/icon/icon'
+import checkComp from 'src/component/base/check/check'
+import listComp from 'src/component/common/list/list'
+import baseMixin from 'src/mixin/base'
 
 
 const selectOptionComp = {

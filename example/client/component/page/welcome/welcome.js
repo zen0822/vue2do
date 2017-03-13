@@ -1,7 +1,7 @@
 import './welcome.scss'
 import template from './welcome.tpl'
-import tip from 'vue2/component/base/pop/tip'
-import alert from 'vue2/component/base/pop/alert'
+import tip from 'src/component/base/pop/tip'
+import alert from 'src/component/base/pop/alert'
 
 import {
   btn,
@@ -24,7 +24,7 @@ import {
   table,
   tableCol,
   tableRow
-} from 'vue2'
+} from 'vue2do'
 
 export default {
   name: 'welcome',

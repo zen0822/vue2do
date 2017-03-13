@@ -2,9 +2,9 @@
  * list 混入
  */
 
-import scrollerComp from 'vue2/component/base/scroller/scroller'
-import loadingComp from 'vue2/component/base/loading/loading'
-import pageComp from 'vue2/component/base/page/page'
+import scrollerComp from 'src/component/base/scroller/scroller'
+import loadingComp from 'src/component/base/loading/loading'
+import pageComp from 'src/component/base/page/page'
 
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'

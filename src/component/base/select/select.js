@@ -40,19 +40,19 @@ import Vue from 'vue'
 import optionComp from './select-opt'
 
 import template from './select.tpl'
-import store from 'vue2/vuex/store'
-import hubStore from 'vue2/vuex/module/hub/type.json'
-import tip from 'vue2/component/base/pop/tip'
-import compEvent from 'vue2/config/event.json'
+import store from 'src/vuex/store'
+import hubStore from 'src/vuex/module/hub/type.json'
+import tip from 'src/component/base/pop/tip'
+import compEvent from 'src/config/event.json'
 
-import iconComp from 'vue2/component/base/icon/icon'
-import checkComp from 'vue2/component/base/check/check'
+import iconComp from 'src/component/base/icon/icon'
+import checkComp from 'src/component/base/check/check'
 
-import baseMixin from 'vue2/mixin/base'
-import formMixin from 'vue2/mixin/form'
+import baseMixin from 'src/mixin/base'
+import formMixin from 'src/mixin/form'
 
-import { dataType } from 'vue2/util/data/data'
-import { unique as uniqueArray } from 'vue2/util/data/array'
+import { dataType } from 'src/util/data/data'
+import { unique as uniqueArray } from 'src/util/data/array'
 
 // 下拉框的 border 宽度
 const SELECT_BORDER_WIDTH = 1

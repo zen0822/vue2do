@@ -8,9 +8,9 @@
  */
 
 import './tab.scss'
-import baseMixin from 'vue2/mixin/base'
+import baseMixin from 'src/mixin/base'
 import render from './tab.render.js'
-import shiftComp from 'vue2/component/base/shift/shift'
+import shiftComp from 'src/component/base/shift/shift'
 
 export default {
   name: 'tab',

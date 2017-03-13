@@ -11,7 +11,7 @@
 
 import './row.scss'
 import render from './row.render.js'
-import baseMixin from 'vue2/mixin/base'
+import baseMixin from 'src/mixin/base'
 
 const layoutType = ['grid', 'flex', 'flow']
 

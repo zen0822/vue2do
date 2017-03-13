@@ -25,11 +25,13 @@ module.exports = function (opt) {
     context: path.resolve(__dirname, 'app'),
 
     resolve: {
-      modules: ["node_modules", path.resolve(__dirname, `${config.global.root}/scss`)],
+      modules: ["node_modules", path.resolve(__dirname, `${config.global.root}/src/scss`)],
       extensions: ['.js'],
       alias: {
         'vue$': 'vue/dist/vue.common.js',
-        'vue2': path.resolve(__dirname, `${config.global.root}`),
+        'vue2': path.resolve(__dirname, `${config.global.root}/src`),
+        'vue2do': path.resolve(__dirname, `${config.global.root}`),
+        'src': path.resolve(__dirname, `${config.global.root}/src`),
       }
     },
 
