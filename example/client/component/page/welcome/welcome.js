@@ -90,7 +90,6 @@ export default {
     },
 
     clickIcon() {
-      debugger
     },
 
     submit() {

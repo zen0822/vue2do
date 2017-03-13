@@ -11,7 +11,7 @@ module.exports = function ({appName}) {
   const WebpackDevServer = require("webpack-dev-server")
 
   const webpackConfig = process.env.NODE_ENV === 'testing'
-    ? require('./prod.webpack.conf')({
+    ? require('./config/prod.webpack.conf')({
       appName: appName
     })
     : require('./config/dev.webpack.conf')({

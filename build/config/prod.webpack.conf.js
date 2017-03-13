@@ -1,26 +1,29 @@
 module.exports = function (opt) {
   opt = opt || {};
+  const appName = opt.appName
 
   var path = require('path')
-  var config = require('../config')
-  var utils = require('./utils')
+  var utils = require('./../utils')
   var webpack = require('webpack')
   var merge = require('webpack-merge')
-  var baseWebpackConfig = require('./webpack.base.conf')(opt)
+
   var ExtractTextPlugin = require('extract-text-webpack-plugin')
   var HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  var config = require('../config')
+  const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
+  var baseWebpackConfig = require('./base.webpack.conf')(opt)
+
   var env = process.env.NODE_ENV === 'testing'
     ? require('../config/test.env')
     : config.build.env
-  var appName = process.env.PROJECT ? process.env.PROJECT : config.app[opt.app];
+  const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
 
   var webpackConfig = merge(baseWebpackConfig, {
-    entry: {
-      app: path.resolve(__dirname, `${config.global.srcDir}/${config.app[opt.app]}/main.js`)
-    },
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
       path: config.build.assetsRoot,
+      publicPath: config.build.assetsPublicPath,
       filename: utils.assetsPath('js/[name].[chunkhash].js'),
       chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
@@ -45,7 +48,7 @@ module.exports = function (opt) {
         filename: process.env.NODE_ENV === 'testing'
           ? 'index.html'
           : config.build.index,
-        template: opt.mobile ? 'm.index.html' : 'index.html',
+        template,
         inject: true,
         minify: {
           removeComments: true,

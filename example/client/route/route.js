@@ -2,7 +2,7 @@ import welcome from '../component/page/welcome/welcome'
 
 export default [
   {
-    path: '/zen',
+    path: '/',
     title: 'welcome to zenAdminer',
     component: welcome
   }

@@ -12,7 +12,8 @@
     "set.js": "./bin/set.js"
   },
   "scripts": {
-    "start": "node bin/dev --app example"
+    "start": "node bin/dev --app example",
+    "prod": "node bin/prod --app example"
   },
   "betterScripts": {
     "devSF": {
@@ -47,7 +48,7 @@
     "eslint-plugin-standard": "*",
     "eventsource-polyfill": "*",
     "express": "*",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "*",
     "font-awesome": "^4.7.0",
     "font-awesome-sass-loader": "^1.0.3",
@@ -70,7 +71,7 @@
     "vue-router": "^2.1.1",
     "vue-style-loader": "*",
     "vuex": "^2.1.10",
-    "webpack": "^2.2.0-rc.3",
+    "webpack": "^2.2.1",
     "webpack-dashboard": "*",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-dev-server": "^2.2.0-rc.0",

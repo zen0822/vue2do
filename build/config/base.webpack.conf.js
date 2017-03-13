@@ -15,8 +15,8 @@ module.exports = function (opt) {
     },
 
     output: {
+      publicPath: config.dev.assetsPublicPath,
       path: config.build.assetsRoot,
-      publicPath: opt.env === 'prod' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
       filename: '[name].[hash].js'
     },
 
