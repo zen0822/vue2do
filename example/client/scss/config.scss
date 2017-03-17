@@ -5,18 +5,23 @@
 //---------------- color ----------------
 
 // base color
-$primary-color: #e65454;
-$secondary-color: #44546a;
+$primary-color: #0099FF !default;
+$secondary-color: #999999 !default;
 
-$danger-color: $primary-color;
-$success-color: #5cb85c;
-$warning-color: #f0ad4e;
-$default-color: #e6e6e6;
-$orange-color: #f29354;
+$danger-color: #e65454 !default;
+$success-color: #5cb85c !default;
+$warning-color: #f0ad4e !default;
+$default-color: #e6e6e6 !default;
+$orange-color: #f29354 !default;
+
+$primary-dark-color: #3084bf !default;
+$danger-dark-color: #d44a4a !default;
+$success-dark-color: #54a754 !default;
+$warning-dark-color: #f59f25 !default;
 
 $grey: #666666;
 $grey-dark: #333333;
-$grey-light: #999999;
+$grey-light: $secondary-color;
 $grey-lightest: #cccccc;
 
 // background
@@ -24,7 +29,7 @@ $bg-color: #f5f5f5;
 $bg-light-color: #fafafa;
 
 // link
-$link-color: #4183c4;
+$link-color: $primary-color !default;
 
 // border
 $border-color: #d6d6d6;

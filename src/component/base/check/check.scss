@@ -48,12 +48,12 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
             vertical-align: middle;
             width: 14px;
 
-            .fa {
+            .#{ $C_ICON_PREFIX }-ali {
               text-align: center;
             }
 
-            .fa-dot-circle-o,
-            .fa-check-square {
+            .#{ $C_ICON_PREFIX }-circle-check-o,
+            .#{ $C_ICON_PREFIX }-square-check-o {
                 color: $primary-color;
             }
           }
@@ -74,7 +74,7 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
         width: 14px;
         margin-right: 0;
 
-        .fa-check-square {
+        .#{ $C_ICON_PREFIX }-square-check {
           color: $primary-color
         }
       }

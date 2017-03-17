@@ -1,11 +1,11 @@
-@import "~config.scss";
+@import "../scss/config.scss";
 
 .app-container {
   position: relative;
-}
-
-.app-content {
-  clear: both;
-  box-sizing: border-box;
   background-color: $bg-color;
+
+  .app-content {
+    margin: $gap-v-triple auto;
+    max-width: 1024px;
+  }
 }

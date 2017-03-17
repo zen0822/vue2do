@@ -4,7 +4,7 @@
     <ul class="z-ul" v-xclass="xclass('opt-ul')">
       <li class="z-li" v-if="checkAll">
         <div @click="checkAllOption" v-xclass="xclass('opt-check-all')">
-          <icon size="m" :kind="checkedAll ? 'check-square' : 'square-o'"></icon>
+          <icon size="m" :kind="checkedAll ? 'square-check-o' : 'square-o'"></icon>
           <span v-xclass="xclass('lable')">全选</span>
         </div>
       </li>

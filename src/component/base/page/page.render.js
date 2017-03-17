@@ -63,7 +63,8 @@ export default function (h) {
                 [
                   h('icon', {
                     props: {
-                      kind: 'step-backward'
+                      size: 'm',
+                      kind: 'backward-start'
                     }
                   })
                 ]
@@ -86,6 +87,7 @@ export default function (h) {
                 [
                   h('icon', {
                     props: {
+                      size: 'm',
                       kind: 'backward'
                     }
                   })
@@ -130,6 +132,7 @@ export default function (h) {
                 [
                   h('icon', {
                     props: {
+                      size: 'm',
                       kind: 'forward'
                     }
                   })
@@ -157,7 +160,8 @@ export default function (h) {
                 [
                   h('icon', {
                     props: {
-                      kind: 'step-forward'
+                      size: 'm',
+                      kind: 'forward-end'
                     }
                   })
                 ]

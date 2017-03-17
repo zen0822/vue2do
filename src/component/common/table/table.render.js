@@ -8,6 +8,7 @@ export default function (h) {
   let tableEle = {}
   let tableChildren = []
   let theadRowChildren = []
+  let tbodyRowChildren = []
 
   if (this.theadItem.length > 0) {
     theadRowChildren = this.theadItem.map((item) => {
@@ -17,6 +18,30 @@ export default function (h) {
     })
   } else {
     theadRowChildren = this.$slots.thead
+  }
+
+  if (this.tbodyItem.length > 0) {
+    tbodyRowChildren = this.tbodyItem.map((item, index) => {
+      return h('tr', {
+        class: [this.xclass('row')]
+      }, this.$scopedSlots.tbody({
+        index: index,
+        item: item
+      }))
+    })
+  } else {
+    tbodyRowChildren = [
+      h('tr',
+        [
+          h('td', {
+            attrs: {
+              colspan: 8
+            },
+            class: [this.xclass('empty-data')]
+          }, this.emptyDataText)
+        ]
+      )
+    ]
   }
 
   tableChildren.push(
@@ -30,14 +55,7 @@ export default function (h) {
   tableChildren.push(
     h('tbody', {
       class: [this.xclass('row-group')]
-    }, this.tbodyItem.map((item, index) => {
-      return h('tr', {
-        class: [this.xclass('row')]
-      }, this.$scopedSlots.tbody({
-        index: index,
-        item: item
-      }))
-    }))
+    }, tbodyRowChildren)
   )
 
   tableEle = h('table', {
@@ -62,7 +80,7 @@ export default function (h) {
       h(
         'page',
         {
-          class: [this.xclass('page')],
+          class: [this.xclass('page'), `${this.compPrefix}-m-t-double`],
           directives: [{
             name: 'show',
             value: this.pagerDisplay && this.pager

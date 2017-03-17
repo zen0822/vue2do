@@ -5,6 +5,8 @@
 import baseMixin from 'src/mixin/base'
 
 export default {
+  name: 'select-ele',
+
   template: `
     <div :class="[cPrefix]">
       <slot></slot>

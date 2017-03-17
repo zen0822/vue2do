@@ -49,8 +49,8 @@ $C_PREFIX: #{ $COMP_PAGE };
         text-align: center;
 
         &.#{$C_PREFIX}-li-active {
-          background-color: $border-lightest-color;
-          color: $grey-dark;
+          background-color: $primary-color;
+          color: #fff;
         }
 
         &:first-child {

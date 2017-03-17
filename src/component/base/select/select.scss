@@ -48,7 +48,9 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       }
 
       .#{ $C_PREFIX }-init-text {
+        display: inline-block;
         padding-left: $gap-v / 2;
+        padding-top: 8px;
         box-sizing: border-box;
       }
 

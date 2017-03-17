@@ -1,0 +1,43 @@
+@import "../../../scss/config.scss";
+
+.header-layout-stage {
+  position: relative;
+  background-color: #fff;
+  height: 88px;
+
+  .nav-box {
+    max-width: 1024px;
+    height: 100%;
+    margin: 0 auto;
+
+    .logo-box {
+      width: 30px;
+    }
+
+    .nav-menu-box {
+      a {
+        color: $primary-color;
+      }
+
+      .z-col {
+        position: relative;
+        font-size: $h3;
+        width: 100px;
+        text-align: center;
+      }
+    }
+
+    .router-link-active {
+      color: $bg-color;
+
+      &::after {
+        content: " ";
+        width: 100%;
+        bottom: -33px;
+        left: 0;
+        position: absolute;
+        border-bottom: #fff $border-thin * 5 solid;
+      }
+    }
+  }
+}

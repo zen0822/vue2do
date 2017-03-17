@@ -1,6 +1,6 @@
 <div class="app-container">
+  <header-layout></header-layout>
   <div class="app-content">
-    <router-link to="/zen">Go to zen</router-link>
     <router-view></router-view>
   </div>
 </div>

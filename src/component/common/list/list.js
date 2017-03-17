@@ -183,6 +183,10 @@ const listComp = {
      * 切换页数
      */
     switchPage(currentPage) {
+      if (this.pageData.current > this.pageData.total) {
+        return false
+      }
+
       if (this.loadingListData) {
         return false
       }
@@ -214,8 +218,8 @@ const listComp = {
      */
     scroll({barToBox, top, isBottom}) {
       if (this.pageTrigger === 'scroll') {
-        if (isBottom) {
-          return this.swicthPage(this.pageData.current + 1)
+        if (barToBox - top < 10 && this.pageData.current + 1 <= this.pageData.total) {
+          return this.switchPage(this.pageData.current + 1)
         }
       }
 

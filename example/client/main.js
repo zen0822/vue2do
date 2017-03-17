@@ -9,13 +9,18 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import routes from './route/route'
 import appComp from './app/app'
-import { set as setConfig } from 'src/config'
+import vue2do from 'vue2do'
+// import { set as setConfig } from 'vue2do'
 import enLang from 'src/language/en.json'
 
+Vue.use(vue2do, {
+  prefix: 'z'
+})
 Vue.use(VueRouter)
-setConfig.lang(enLang)
+// setConfig.lang(enLang)
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

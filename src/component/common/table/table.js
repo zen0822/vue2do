@@ -91,7 +91,6 @@ const tableComp = {
     return {
       emptyDataText: this.$t('table.emptyData'),
       pageData: {},
-      pagerDisplay: true,
       tbodyItem: this.tbody.slice(),
       theadItem: this.thead.slice()
     }
@@ -100,6 +99,10 @@ const tableComp = {
   computed: {
     cPrefix() {
       return `${this.compPrefix}-table`
+    },
+
+    pagerDisplay() {
+      return this.tbodyItem.length > 0
     }
   },
 

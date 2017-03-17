@@ -6,20 +6,14 @@ export default function (h) {
   let classOpt = []
   let $slots = this.$slots.default
 
-  if (this.gap > 0) {
-    classOpt.push(`${this.cPrefix}-gap-${this.gap}`)
-  }
-
-  classOpt.push(this.cPrefix, `${this.cPrefix}-${this.wrap}`)
-
   $slots = $slots.filter((item) => {
-    return item.componentOptions && item.componentOptions.tag === 'column'
+    return !item.text
   })
 
   return h(
     'div',
     {
-      class: classOpt
+      class: this.compClass
     },
     $slots
   )

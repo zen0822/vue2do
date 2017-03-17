@@ -7,16 +7,26 @@
  * col 组件样式
  */
 
+$gap-hub: (5, 10, 20, 30, 40, 50);
+
 @mixin device-style($type) {
   @for $i from 1 through 12 {
     &.#{ $C_PREFIX }-#{$type}-#{$i} {
       width: 100% * $i / 12;
 
-      @each $gap in 5, 10, 20 {
+      @each $gap in $gap-hub {
         &.#{ $C_PREFIX }-gap-#{$gap} {
           width: calc(#{100% * $i / 12} - #{$gap}px);
-          padding-right: 5px;
-          padding-left: 5px;
+          margin-right: #{$gap / 2}px;
+          margin-left: #{$gap / 2}px;
+
+          &:first-child {
+            width: calc(#{100% * $i / 12} - #{$gap / 2}px);
+          }
+
+          &:last-child {
+            width: calc(#{100% * $i / 12} - #{$gap / 2}px);
+          }
         }
       }
     }
@@ -29,6 +39,26 @@ $C_PREFIX: #{ $COMP_COL };
   display: inline-block;
   vertical-align: middle;
 
+  @each $type in span, xs, s, m, l, xl {
+    @if $type != span {
+      @include device-type ($type) {
+        @include device-style($type);
+      }
+    } @else {
+      @include device-style($type);
+    }
+  }
+
+  @each $gap in $gap-hub {
+    &.#{ $C_PREFIX }-gap-#{$gap}:first-child {
+      margin-left: 0;
+    }
+
+    &.#{ $C_PREFIX }-gap-#{$gap}:last-child {
+      margin-right: 0;
+    }
+  }
+
   @for $i from 1 through 12 {
     &.#{ $C_PREFIX }-pull-#{$i},
     &.#{ $C_PREFIX }-push-#{$i} {
@@ -37,24 +67,32 @@ $C_PREFIX: #{ $COMP_COL };
 
     &.#{ $C_PREFIX }-offset-#{$i} {
       margin-left: 100% * $i / 12;
+
+      @each $gap in $gap-hub {
+        &.#{ $C_PREFIX }-gap-#{$gap}:first-child:last-child {
+          margin-left: calc(#{100% * $i / 12} + #{$gap / 2}px);
+        }
+      }
     }
 
     &.#{ $C_PREFIX }-pull-#{$i} {
       left: -100% * $i / 12;
+
+      @each $gap in $gap-hub {
+        &.#{ $C_PREFIX }-gap-#{$gap}:last-child {
+          left: calc(-#{100% * $i / 12} - #{$gap / 2}px);
+        }
+      }
     }
 
     &.#{ $C_PREFIX }-push-#{$i} {
       left: 100% * $i / 12;
-    }
-  }
 
-  @each $type in span, xs, s, m, l, xl {
-    @if $type != span {
-      @include device-type ($type) {
-        @include device-style($type);
+      @each $gap in $gap-hub {
+        &.#{ $C_PREFIX }-gap-#{$gap}:first-child {
+          left: calc(#{100% * $i / 12} + #{$gap / 2}px);
+        }
       }
-    } @else {
-      @include device-style($type);
     }
   }
 }

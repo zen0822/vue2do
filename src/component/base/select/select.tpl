@@ -15,7 +15,7 @@
           <li v-for="(txt, index) in text" :value="value[index]">
             <span>{{ txt }}</span>
             <span @click.stop="removeMultiSelected(value[index])">
-              <icon kind="times"></icon>
+              <icon kind="close"></icon>
             </span>
           </li>
         </ul>
@@ -26,7 +26,7 @@
         </span>
       </template>
 
-      <icon :class="[xclass('caret-down-icon')]" kind="caret-down"></icon>
+      <icon :class="[xclass('caret-down-icon')]" kind="spread"></icon>
     </div>
 
     <div

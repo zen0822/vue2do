@@ -6,6 +6,21 @@
  * btn 组件样式
  */
 
+@mixin border-radius($color, $dark-color) {
+  background-color: $color;
+  border-color: $color;
+
+  &:hover {
+    background-color: $dark-color;
+    border-color: $dark-color;
+  }
+
+  &:active {
+    background-color: $dark-color;
+    border-color: $dark-color;
+  }
+}
+
 $C_PREFIX: #{ $COMP_BTN };
 
 .#{ $C_PREFIX } {
@@ -45,35 +60,30 @@ $C_PREFIX: #{ $COMP_BTN };
     }
 
     &.#{ $C_PREFIX }-ele-primary {
-      background-color: $danger-color;
-
-      &:hover {
-        background-color: #d44a4a;
-        border-color: $danger-color;
-      }
-
-      &:active {
-        background-color: #c9403f;
-      }
+      @include border-radius($primary-color, $primary-dark-color);
     }
 
-    &.#{ $C_PREFIX }-ele-secondary {
-      background-color: $secondary-color;
+    &.#{ $C_PREFIX }-ele-danger {
+      @include border-radius($danger-color, $danger-dark-color);
+    }
+
+    &.#{ $C_PREFIX }-ele-success {
+      @include border-radius($success-color, $success-dark-color);
+    }
+
+    &.#{ $C_PREFIX }-ele-warning {
+      @include border-radius($warning-color, $warning-dark-color);
     }
 
     &.#{ $C_PREFIX }-ele-default {
-      background-color: #f6f6f6;
-      border: $grey-light $border-thin solid;
-      color: $grey-light;
+      @include border-radius(#fff, $border-light-color);
+      border-color: $grey-dark;
+      color: $grey-dark;
 
-      &:hover {
-        background-color: $grey-lightest;
-        color: #f6f6f6;
-      }
-
+      &:hover,
       &:active {
-        background-color: $default-color;
-        color: #f6f6f6;
+        color: $grey-dark;
+        border-color: $grey-dark;
       }
     }
 

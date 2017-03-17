@@ -330,9 +330,9 @@ let checkCompConfig = {
      **/
     iconName(val) {
       if (this.isRadio) {
-        return this.value === val ? 'dot-circle-o' : 'circle-thin'
+        return this.value === val ? 'circle-check-o' : 'circle-o'
       } else if (this.isCheckbox && Array.isArray(this.value)) {
-        return this.value.indexOf(val) !== -1 ? 'check-square' : 'square-o'
+        return this.value.indexOf(val) !== -1 ? 'square-check-o' : 'square-o'
       }
     },
 

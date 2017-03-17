@@ -13,8 +13,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
 .#{$C_PREFIX} {
   position: relative;
 
-  &.#{$C_PREFIX}-theme-primary,
-  &.#{$C_PREFIX}-theme-fill {
+  &.#{$C_PREFIX}-theme-primary {
     .#{$C_PREFIX}-header-group {
       .#{$COL_PREFIX} {
         color: $grey-dark;
@@ -22,45 +21,20 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
     }
   }
 
-  &.#{$C_PREFIX}-theme-fill {
-     .#{$C_PREFIX}-stage {
-      overflow-x: auto;
-      width: 100%;
-    }
-
-    .#{$C_PREFIX}-wrap {
-      width: 100%;
-    }
+  .#{$C_PREFIX}-scroller {
+    border: $border-color $border-thin solid;
   }
 
   .#{$C_PREFIX}-empty-data {
     text-align: center;
-    margin: $gap-v-double;
-  }
-
-  .#{$C_PREFIX}-stage {
-    &:before,
-    &:after{
-      position: absolute;
-      top: 0;
-      content: "";
-      display: block;
-      width: 0;
-      height: 100%;
-      border-left: 1px $border-lightest-color solid;
-    }
-    &:before{
-      left: 0;
-    }
-    &:after{
-      right: 0;
-    }
+    padding: $gap-v 0;
   }
 
   .#{$C_PREFIX}-wrap {
     background: #fff;
     display: table;
-    border: $border-lightest-color $border-thin solid;
+    border-spacing: 0;
+    min-width: 100%;
   }
 
   .#{$C_PREFIX}-header-group {
@@ -92,38 +66,5 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
     display: table-cell;
     padding: $gap-v $gap-v-double;
     white-space: nowrap;
-  }
-
-  .#{$C_PREFIX}-page {
-    position: relative;
-    padding-right: 5px;
-
-    &:before, &:after{
-      z-index: 10;
-      position: absolute;
-      top: 0;
-      content: "";
-      display: block;
-      width: 0;
-      height: 100%;
-      border-left: 1px #fff solid;
-    }
-    &:before{
-      left: 0;
-    }
-    &:after{
-      right: 0;
-    }
-  }
-}
-
-@include device-type ("<l") {
-  .#{$C_PREFIX} {
-    &.#{$C_PREFIX}-theme-primary,
-    &.#{$C_PREFIX}-theme-fill {
-      .#{$C_PREFIX}-wrap {
-        width: 100%;
-      }
-    }
   }
 }

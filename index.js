@@ -3,12 +3,20 @@ import 'src/scss/common/box.scss'
 import 'src/scss/common/main.scss'
 import 'src/scss/common/common.scss'
 
+import 'src/asset/icon/iconfont.svg.js'
+
+import pluginInstall from 'src'
+import cnLang from 'src/language/zh-cn.json'
+import { set as setConfig } from 'src/config'
+
 import btn from 'src/component/base/btn/btn'
 import check from 'src/component/base/check/check'
 import form from 'src/component/base/form/form'
+import fold from 'src/component/base/fold/fold'
 import input from 'src/component/base/input/input'
 import icon from 'src/component/base/icon/icon'
 import loading from 'src/component/base/loading/loading'
+import menu from 'src/component/common/menu/menu'
 import page from 'src/component/base/page/page'
 import pop from 'src/component/base/pop/pop'
 import scroller from 'src/component/base/scroller/scroller'
@@ -32,13 +40,19 @@ import tabEle from 'src/component/base/tab/tab-ele'
 import col from 'src/component/common/layout/col/col'
 import row from 'src/component/common/layout/row/row'
 
+setConfig.lang(cnLang)
+
+export default pluginInstall
+
 export {
   btn,
   check,
+  fold,
   form,
   input,
   icon,
   loading,
+  menu,
   page,
   pop,
   scroller,
@@ -58,5 +72,7 @@ export {
   tabEle,
 
   col,
-  row
+  row,
+
+  setConfig as set
 }

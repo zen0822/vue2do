@@ -29,7 +29,7 @@ module.exports = function (opt) {
       extensions: ['.js'],
       alias: {
         'vue$': 'vue/dist/vue.common.js',
-        'vue2': path.resolve(__dirname, `${config.global.root}/src`),
+        'ex': path.resolve(__dirname, `${config.global.root}/example`),
         'vue2do': path.resolve(__dirname, `${config.global.root}`),
         'src': path.resolve(__dirname, `${config.global.root}/src`),
       }
@@ -67,6 +67,9 @@ module.exports = function (opt) {
             'postcss-loader',
             'sass-loader'
           ]
+        }, {
+          test: /\.json$/,
+          loader: 'json-loader'
         }, {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
           loader: 'url-loader',

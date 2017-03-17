@@ -6,6 +6,7 @@
 import baseMixin from 'src/mixin/base'
 
 export default {
+  name: 'tab-ele',
   mixins: [baseMixin],
   computed: {
     // 组件类名的前缀

@@ -22,10 +22,13 @@ $C_PREFIX: #{ $COMP_ROW };
     flex-wrap: nowrap;
   }
 
-  @each $gap in 5, 10, 20 {
-    &.#{ $C_PREFIX }-gap-#{$gap} {
-      margin-right: -#{$gap / 2}px;
-      margin-left: -#{$gap / 2}px;
+  &.#{ $C_PREFIX }-align {
+    &-start {
+      align-items: flex-start;
+    }
+
+    &-end {
+      align-items: flex-end;
     }
   }
 }

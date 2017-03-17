@@ -19,6 +19,7 @@ const SIZE_S = 'S'
 const SIZE_M = 'M'
 const SIZE_L = 'L'
 
+const TYPE_ALI = 'ali'
 const TYPE_FA = 'fa'
 
 const iconCompConfig = {
@@ -36,7 +37,7 @@ const iconCompConfig = {
 
     type: {
       type: String,
-      default: TYPE_FA
+      default: TYPE_ALI
     },
 
     kind: {
@@ -51,13 +52,16 @@ const iconCompConfig = {
       return `${this.compPrefix}-icon`
     },
     sizeClass() {
-      return this.size.toLowerCase()
+      return `${this.compPrefix}-icon-${this.size.toLowerCase()}`
+    },
+    isAli() {
+      return this.type === 'ali'
     },
     typeClass() {
-      return this.type
+      return this.isAli ? `${this.compPrefix}-icon-${this.type}` : this.type
     },
     nameClass() {
-      return `fa-${this.kind}`
+      return this.isAli ? `icon-${this.kind}` : `fa-${this.kind}`
     }
   }
 }

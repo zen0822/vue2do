@@ -1,0 +1,55 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
+
+/**
+ * fold 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_FOLD };
+$ICON_PREFIX: #{ $COMP_ICON };
+
+.#{$C_PREFIX} {
+  background-color: #fff;
+  border: $border-color $border-thin solid;
+
+  .#{$C_PREFIX}-dl {
+    margin: 0;
+
+    & > dt {
+      position: relative;
+      padding: $gap-v $gap-v-double $gap-v $gap-v;
+      border-bottom: $border-color $border-thin solid;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .#{$C_PREFIX}-icon {
+        position: absolute;
+        right: $gap-v-half;
+        top: $gap-v;
+      }
+
+      .#{$ICON_PREFIX}-fold {
+
+      }
+    }
+
+    & > dd {
+      border-bottom: $border-color $border-thin solid;
+      margin-left: 0;
+      padding: $gap-v;
+      transition: height 500ms ease;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.#{$ICON_PREFIX}-spreading {
+        height: auto;
+      }
+    }
+  }
+}

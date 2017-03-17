@@ -11,17 +11,23 @@ $C_PREFIX: #{ $COMP_ICON };
 .#{ $C_PREFIX } {
   display: inline-block;
 
-  .#{ $C_PREFIX }-box {
-    &.s {
-      font-size: $h4;
-    }
+  .#{ $C_PREFIX }-ali {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 
-    &.m {
-      font-size: $h3;
-    }
+  .#{ $C_PREFIX }-s {
+    font-size: $h4;
+  }
 
-    &.l {
-      font-size: $h2;
-    }
+  .#{ $C_PREFIX }-m {
+    font-size: $h3;
+  }
+
+  .#{ $C_PREFIX }-l {
+    font-size: $h2;
   }
 }

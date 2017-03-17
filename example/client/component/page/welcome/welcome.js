@@ -3,56 +3,8 @@ import template from './welcome.tpl'
 import tip from 'src/component/base/pop/tip'
 import alert from 'src/component/base/pop/alert'
 
-import {
-  btn,
-  check,
-  form,
-  input,
-  icon,
-  list,
-  loading,
-  pop,
-  scroller,
-  select,
-  selectEle,
-  shift,
-  shiftEle,
-  tab,
-  tabEle,
-  col,
-  row,
-  table,
-  tableCol,
-  tableRow
-} from 'vue2do'
-
 export default {
-  name: 'welcome',
-
   template,
-
-  components: {
-    'btn': btn,
-    'check': check,
-    'form-area': form,
-    'input-box': input,
-    'icon': icon,
-    'list': list,
-    'loading': loading,
-    'pop': pop,
-    'drop-menu': select,
-    'drop-menu-ele': selectEle,
-    'scroller': scroller,
-    'shift': shift,
-    'shift-ele': shiftEle,
-    'tab': tab,
-    'tab-ele': tabEle,
-    'column': col,
-    'row': row,
-    'table-data': table,
-    'table-row': tableRow,
-    'table-col': tableCol
-  },
 
   data() {
     return {

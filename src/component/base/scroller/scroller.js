@@ -58,6 +58,8 @@ const scrollerComp = {
       boxTop: 0,
       // bar 的高度
       barTop: 0,
+      // 记录上一次滚动条的高度
+      oldBarTop: 0,
       // 滚动容器的比 / 滚动条区域
       boxBarRate: 0,
       // 滚动一次的滚动条走的像素大小
@@ -68,6 +70,8 @@ const scrollerComp = {
       barToBottomHeight: 0,
       // 滚动条的 mousedown 事件
       isMousedown: false,
+      // 记录连续滚动的标注
+      scrolling: false,
       // 记录开始点击滚动条的坐标
       pointStart: {
         x: 0,
@@ -84,6 +88,10 @@ const scrollerComp = {
     // 是否显示滚动条
     barDisplay() {
       return this.barEqualScroller && this.autoHideBar
+    },
+    // 滚动条是否在顶部
+    isTop() {
+      return this.barTop === 0
     },
     // 滚动条是否在底部
     isBottom() {
@@ -204,24 +212,44 @@ const scrollerComp = {
     },
 
     mouseWheel(evt) {
+      let barTop = 0
+      let boxTop = 0
+
+      this.oldBarTop = this.barTop
+
       if (evt.deltaY > 0) {
-        let barTop = this.barTop + this.scrollBarPixel
+        barTop = this.barTop + this.scrollBarPixel
         this.barTop = barTop > this.barToBottomHeight ? this.barToBottomHeight : barTop
 
-        let boxTop = SCROLL_PIXEL - this.boxTop
+        boxTop = SCROLL_PIXEL - this.boxTop
         this.boxTop = boxTop > this.boxToBottomHeight ? -this.boxToBottomHeight : -boxTop
       } else {
-        let barTop = this.barTop - this.scrollBarPixel
+        barTop = this.barTop - this.scrollBarPixel
         this.barTop = barTop < 0 ? 0 : barTop
 
-        let boxTop = SCROLL_PIXEL + this.boxTop
+        boxTop = SCROLL_PIXEL + this.boxTop
         this.boxTop = boxTop > 0 ? 0 : boxTop
       }
 
       this.triggerScroll()
 
-      evt.preventDefault()
-      evt.stopPropagation()
+      if (this.isBottom || this.isTop) {
+        if (this.scrolling) {
+          evt.preventDefault()
+
+          return false
+        }
+
+        this.scrolling = true
+
+        setTimeout(() => {
+          this.scrolling = false
+        }, 200)
+      }
+
+      if (!(this.isBottom || this.isTop) || this.oldBarTop !== this.barTop) {
+        evt.preventDefault()
+      }
     },
 
     triggerScroll() {
@@ -229,7 +257,7 @@ const scrollerComp = {
         top: this.barTop,
         barToBox: this.barToBottomHeight,
         isBottom: this.isBottom,
-        isTop: this.barTop === 0
+        isTop: this.isTop
       })
     }
   }
