@@ -12,12 +12,6 @@ module.exports = function ({ appName }) {
     appName: appName
   })
 
-  // console.log(
-  //   '  Tip:\n' +
-  //   '  Built files are meant to be served over an HTTP server.\n' +
-  //   '  Opening index.html over file:// won\'t work.\n'
-  // )
-
   var spinner = ora('building for production...')
   spinner.start()
 
@@ -37,4 +31,9 @@ module.exports = function ({ appName }) {
       chunkModules: false
     }) + '\n')
   })
+
+  if (shell.exec('git push origin master').code !== 0) {
+    shell.echo('Error: Git push failed');
+    shell.exit(1);
+  }
 }
