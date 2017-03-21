@@ -47,7 +47,7 @@ const scrollerComp = {
       // 滚动条自动隐藏的状态
       autoHideBar: false,
       // 滚动条的高度是否等于滚动容器的高度
-      barEqualScroller: false,
+      barBiggerScroller: false,
       // 滚动区域的高度
       boxHeight: 0,
       // 滚动条的高度
@@ -87,7 +87,7 @@ const scrollerComp = {
     },
     // 是否显示滚动条
     barDisplay() {
-      return this.barEqualScroller && this.autoHideBar
+      return !this.barBiggerScroller && this.autoHideBar
     },
     // 滚动条是否在顶部
     isTop() {
@@ -121,16 +121,17 @@ const scrollerComp = {
       this.triggerScroll()
     },
     boxHeight(boxHeight) {
-      this.barEqualScroller = boxHeight > this.height
-      this.scrollerHeight = this.barEqualScroller ? this.height : boxHeight
+      this.barBiggerScroller = this.height > boxHeight
+      this.scrollerHeight = this.barBiggerScroller ? boxHeight : this.height
 
       this.boxBarRate = boxHeight / this.scrollerHeight
       this.barHeight = this.scrollerHeight / this.boxBarRate
 
-      if (this.barEqualScroller) {
+      if (!this.barBiggerScroller) {
         this.scrollBarPixel = SCROLL_PIXEL / this.boxBarRate
         this.boxToBottomHeight = boxHeight - this.scrollerHeight
         this.barToBottomHeight = this.scrollerHeight - this.barHeight
+        this.barTop = -this.boxTop * this.barToBottomHeight / this.boxToBottomHeight
       }
 
       this.$emit('changeBar', {

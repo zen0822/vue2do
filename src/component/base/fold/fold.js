@@ -104,24 +104,30 @@ const foldComp = {
   methods: {
     clickTitle(evt) {
       let currentIndex = Number(evt.currentTarget.getAttribute('data-index')) - 1
+      let currentData = this.foldData[currentIndex]
+      let folding = currentData.folding
 
-      if (!this.foldData[currentIndex]) {
+      if (!currentData) {
         return false
       }
 
-      Vue.set(this.foldData, currentIndex, Object.assign(this.foldData[currentIndex], {
-        folding: false
+      Vue.set(this.foldData, currentIndex, Object.assign(currentData, {
+        folding: !folding
       }))
     },
 
+    foldingStatus(currentIndex) {
+      let currentData = this.foldData[currentIndex - 1]
+
+      return currentData && currentData.folding
+    },
+
     foldTitleIcon(contentIndex) {
-      let currentIndex = contentIndex - 1
+      return this.foldingStatus(contentIndex) ? 'fold' : 'spread'
+    },
 
-      if (this.foldData[currentIndex]) {
-        return 'fold'
-      }
-
-      return this.foldData[currentIndex].folding ? 'fold' : 'spread'
+    foldContentActive(contentIndex) {
+      return this.foldingStatus(contentIndex) ? `${this.cPrefix}-folding` : ''
     }
   },
 

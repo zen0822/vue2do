@@ -24,6 +24,7 @@ export default function (h) {
             attrs: {
               'data-index': contentIndex
             },
+            class: [this.foldContentActive(contentIndex)],
             on: {
               click: this.clickTitle
             }
@@ -33,7 +34,7 @@ export default function (h) {
             h('icon', {
               class: [this.xclass('icon')],
               props: {
-                kind: this.foldData[contentIndex - 1].folding ? 'fold' : 'spread'
+                kind: this.foldTitleIcon(contentIndex)
               }
             })
           ]
@@ -41,17 +42,49 @@ export default function (h) {
       )
 
       foldChildren.push(
-        h('dd', {
-          class: [{
-
-          }]
-        }, slotEle))
+        h('dd',
+          {
+            attrs: {
+              'data-index': contentIndex
+            },
+            class: [this.foldContentActive(contentIndex)]
+          },
+          [
+            h('transition',
+              {
+                on: {
+                  'before-enter'(el) {
+                    el.style.height = '0px'
+                  },
+                  'enter'(el) {
+                    el.style.height = `${el.firstChild.offsetHeight}px`
+                  },
+                  'leave'(el) {
+                    el.style.height = '0px'
+                  }
+                }
+              },
+              [
+                h('div', {
+                  class: [this.xclass('transition')],
+                  css: false,
+                  directives: [{
+                    name: 'show',
+                    value: !this.foldingStatus(contentIndex)
+                  }],
+                  style: this.foldData[contentIndex - 1].style
+                }, slotEle)
+              ]
+            )
+          ]
+        )
+      )
     })
   }
 
   return h('div',
     {
-      class: [this.cPrefix]
+      class: [this.cPrefix, this.xclass(this.themeClass)]
     },
     [
       h('dl',

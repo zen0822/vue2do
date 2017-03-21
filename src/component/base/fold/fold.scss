@@ -12,43 +12,56 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
   background-color: #fff;
-  border: $border-color $border-thin solid;
 
   .#{$C_PREFIX}-dl {
     margin: 0;
 
     & > dt {
       position: relative;
-      padding: $gap-v $gap-v-double $gap-v $gap-v;
-      border-bottom: $border-color $border-thin solid;
+      padding-right: $gap-v-double;
+      border-top: $border-color $border-thin solid;
 
-      &:last-child {
-        border-bottom: none;
+      &:first-child {
+        border-top: none;
       }
 
       .#{$C_PREFIX}-icon {
         position: absolute;
-        right: $gap-v-half;
-        top: $gap-v;
-      }
-
-      .#{$ICON_PREFIX}-fold {
-
+        right: 0;
+        top: 0;
       }
     }
 
     & > dd {
-      border-bottom: $border-color $border-thin solid;
       margin-left: 0;
-      padding: $gap-v;
-      transition: height 500ms ease;
+      overflow: hidden;
 
-      &:last-child {
-        border-bottom: none;
+      & > .#{$C_PREFIX}-transition {
+        transition: all 500ms ease;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-theme-primary {
+    border: $border-color $border-thin solid;
+
+    .#{$C_PREFIX}-dl {
+      & > dt {
+        padding: $gap-v $gap-v-double $gap-v $gap-v;
+
+        .#{$C_PREFIX}-icon {
+          position: absolute;
+          right: $gap-v-half;
+          top: $gap-v;
+        }
       }
 
-      &.#{$ICON_PREFIX}-spreading {
-        height: auto;
+      & > dd {
+        & > .#{$C_PREFIX}-transition {
+          & > .#{$C_PREFIX}-content {
+            padding: $gap-v;
+          }
+        }
       }
     }
   }
