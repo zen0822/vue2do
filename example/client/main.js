@@ -2,6 +2,7 @@
  * the main file that the client of app
  */
 
+// import 'font-awesome-sass-loader'
 import './common'
 
 import Vue from 'vue'
@@ -20,7 +21,6 @@ Vue.use(VueRouter)
 // setConfig.lang(enLang)
 
 const router = new VueRouter({
-  mode: 'history',
   routes
 })
 

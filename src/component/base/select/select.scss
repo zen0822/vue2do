@@ -22,6 +22,7 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
   .#{ $C_PREFIX }-stage {
     display: inline-block;
     position: relative;
+    box-sizing: border-box;
     height: $SELECT_HEIGHT;
     width: $SELECT_WIDTH;
     background-color: #fff;

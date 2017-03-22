@@ -8,7 +8,6 @@
  *
  */
 
-import 'font-awesome-sass-loader'
 import './icon.scss'
 
 import Vue from 'vue'

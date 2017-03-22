@@ -50,20 +50,7 @@ export default function (h) {
             class: [this.foldContentActive(contentIndex)]
           },
           [
-            h('transition',
-              {
-                on: {
-                  'before-enter'(el) {
-                    el.style.height = '0px'
-                  },
-                  'enter'(el) {
-                    el.style.height = `${el.firstChild.offsetHeight}px`
-                  },
-                  'leave'(el) {
-                    el.style.height = '0px'
-                  }
-                }
-              },
+            h('fold-transition',
               [
                 h('div', {
                   class: [this.xclass('transition')],

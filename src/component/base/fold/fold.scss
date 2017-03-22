@@ -11,8 +11,6 @@ $C_PREFIX: #{ $COMP_FOLD };
 $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
-  background-color: #fff;
-
   .#{$C_PREFIX}-dl {
     margin: 0;
 
@@ -20,6 +18,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
       position: relative;
       padding-right: $gap-v-double;
       border-top: $border-color $border-thin solid;
+      cursor: default;
 
       &:first-child {
         border-top: none;
@@ -27,8 +26,11 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
       .#{$C_PREFIX}-icon {
         position: absolute;
+        height: 14px;
+        margin: auto;
         right: 0;
         top: 0;
+        bottom: 0;
       }
     }
 
@@ -37,14 +39,13 @@ $ICON_PREFIX: #{ $COMP_ICON };
       overflow: hidden;
 
       & > .#{$C_PREFIX}-transition {
+        will-change: height;
         transition: all 500ms ease;
       }
     }
   }
 
   &.#{$C_PREFIX}-theme-primary {
-    border: $border-color $border-thin solid;
-
     .#{$C_PREFIX}-dl {
       & > dt {
         padding: $gap-v $gap-v-double $gap-v $gap-v;
@@ -52,7 +53,6 @@ $ICON_PREFIX: #{ $COMP_ICON };
         .#{$C_PREFIX}-icon {
           position: absolute;
           right: $gap-v-half;
-          top: $gap-v;
         }
       }
 

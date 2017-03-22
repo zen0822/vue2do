@@ -2,6 +2,7 @@ import './component.scss'
 import template from './component.tpl'
 import tip from 'src/component/base/pop/tip'
 import alert from 'src/component/base/pop/alert'
+import menuOpt from './menuOpt.json'
 
 export default {
   name: 'page-component-layout',
@@ -10,6 +11,7 @@ export default {
 
   data() {
     return {
+      menuOpt,
       testName: 'test',
       dropMenuOpt: [],
       classifyOpt: {

@@ -1,0 +1,20 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
+
+/**
+ * menu 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_MENU };
+
+.#{$C_PREFIX} {
+  .#{$C_PREFIX}-sub-ul {
+    margin-left: $gap-h;
+
+    & > li {
+      padding: $gap-v-half 0;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "表单相关",
+    "route": "/component/form",
+    "sub": [
+      {
+        "name": "按钮组件",
+        "route": "/component/btn-comp",
+        "sub": [{
+          "name": "基本用法",
+          "route": "/component/btn#start"
+        }, {
+          "name": "按钮类别",
+          "route": "/component/btn#kind"
+        }]
+      },
+      {
+        "name": "选择组件",
+        "route": "/component/select-comp",
+        "sub": [{
+          "name": "基本用法",
+          "route": "/component/select#start"
+        }]
+      }
+    ]
+  },
+  {
+    "name": "布局相关",
+    "route": "/component/layout",
+    "sub": [
+      {
+        "name": "行列组件",
+        "route": "/component/row-and-col"
+      }
+    ]
+  }
+]

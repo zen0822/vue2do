@@ -1,6 +1,7 @@
-// https://github.com/shelljs/shelljs
-require('shelljs/global')
-env.NODE_ENV = 'production'
+const shelljs = require('shelljs')
+shelljs.env.NODE_ENV = 'production'
+
+const websiteProject = './zen0822.github.io'
 
 module.exports = function ({ appName }) {
   const path = require('path')
@@ -16,9 +17,8 @@ module.exports = function ({ appName }) {
   spinner.start()
 
   var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
-  rm('-rf', assetsPath)
-  mkdir('-p', assetsPath)
-  cp('-R', './static/', assetsPath)
+  shelljs.rm('-rf', assetsPath)
+  shelljs.mkdir('-p', assetsPath)
 
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
@@ -30,10 +30,30 @@ module.exports = function ({ appName }) {
       chunks: false,
       chunkModules: false
     }) + '\n')
-  })
 
-  if (shell.exec('git push origin master').code !== 0) {
-    shell.echo('Error: Git push failed');
-    shell.exit(1);
-  }
+    shelljs.rm('-rf', websiteProject)
+    if (shelljs.exec('git clone https://github.com/zen0822/zen0822.github.io.git').code === 0) {
+      shelljs.echo('Git clone zen0822.github.io Success')
+
+      shelljs.rm('-rf', `${websiteProject}/static`)
+      shelljs.cp('-r', `${config.build.assetsRoot}/*`, `${websiteProject}`)
+      shelljs.echo(`${assetsPath} successfully copy to ${websiteProject}`)
+
+      shelljs.cd('./zen0822.github.io')
+
+      shelljs.exec('git add -A')
+      shelljs.exec('git commit -m "更新网站"')
+
+      shelljs.exec('git push origin master', function (code) {
+        code === 0 && console.log('Success: push to zen0822.github.io')
+      })
+
+      shelljs.cd('../')
+      shelljs.chmod(777, 'zen0822.github.io');
+      shelljs.rm('-rf', 'zen0822.github.io')
+    } else {
+      shelljs.echo('Error: Git clone zen0822.github.io failed')
+      exit(1)
+    }
+  })
 }

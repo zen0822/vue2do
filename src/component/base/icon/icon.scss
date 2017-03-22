@@ -10,6 +10,7 @@ $C_PREFIX: #{ $COMP_ICON };
 
 .#{ $C_PREFIX } {
   display: inline-block;
+  line-height: 1;
 
   .#{ $C_PREFIX }-ali {
     width: 1em;

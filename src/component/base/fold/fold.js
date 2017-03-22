@@ -2,7 +2,7 @@
  * fold 组件
  *
  * @props initOpt - 折叠版的初始化数据
- * @props initIndex - 但钱展开的折叠板
+ * @props initIndex - 当前展开的折叠板
  * @props spread-all - 展开全部
  * @props one - 开启一次只能展开一个面板功能
  * @props type - 布局类型
@@ -14,6 +14,7 @@ import './fold.scss'
 import render from './fold.render.js'
 import baseMixin from 'src/mixin/base'
 import iconComp from 'src/component/base/icon/icon'
+import foldTransition from 'src/component/transition/fold'
 
 const foldTitleComp = {
   name: 'fold-title',
@@ -55,13 +56,17 @@ const foldComp = {
   render,
 
   components: {
-    icon: iconComp
+    icon: iconComp,
+    'fold-transition': foldTransition
   },
 
   props: {
     initIndex: Number,
 
-    initOpt: Array,
+    initOpt: {
+      type: Array,
+      default: () => []
+    },
 
     spreadAll: {
       type: Boolean,
@@ -139,17 +144,29 @@ const foldComp = {
 
       let contentIndex = Number(item.split('-')[1]) - 1
 
-      if (this.spreadAll) {
-        this.foldData[contentIndex] = {
-          folding: true
-        }
-      } else if (this.initIndex) {
-        this.foldData[contentIndex] = {
-          folding: index === this.initIndex - 1
+      if (this.one) {
+        if (this.initIndex) {
+          this.foldData[contentIndex] = {
+            folding: contentIndex !== this.initIndex - 1
+          }
+        } else {
+          this.foldData[contentIndex] = {
+            folding: true
+          }
         }
       } else {
-        this.foldData[contentIndex] = {
-          folding: true
+        if (this.spreadAll) {
+          this.foldData[contentIndex] = {
+            folding: false
+          }
+        } else if (this.initIndex) {
+          this.foldData[contentIndex] = {
+            folding: contentIndex !== this.initIndex - 1
+          }
+        } else {
+          this.foldData[contentIndex] = {
+            folding: true
+          }
         }
       }
     })
