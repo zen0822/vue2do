@@ -32,7 +32,6 @@
     <div
         :class="[xclass('menu')]"
         :style="selectMenuStyle"
-        v-if="Array.isArray(option)"
         v-show="!selectMenuDisplay">
       <div
           @click.stop
@@ -46,16 +45,45 @@
       </div>
 
       <select-opt
+          ref="selectOption"
+          v-if="isCustomOption && Array.isArray(option)"
           :multiple="multiple"
           :val-name="valName"
           :txt-name="txtName"
           :option="searchOptionDisplay ? searchOptionItem : option"
           :opt-root="me"
-          :class="[xclass('opt-comp')]"
-          ref="selectOption"></select-opt>
-    </div>
-    <div class="z-hide" :class="[xclass('option-slot')]">
-      <slot></slot>
+          :class="[xclass('opt-comp')]">
+        <template :slot="1" scope="props">
+          <slot
+              v-for="(item, index) in option"
+              name="custom"
+              :item="{
+                index: index,
+                data: item}">
+          </slot>
+        </template>
+        <template :slot="2" scope="props">
+          <div>{{props.item.index}}--custom</div>
+        </template>
+      </select-opt>
+
+      <div
+          v-else
+          :class="[xclass('custom-option-slot')]">
+        <scroller>
+          <slot
+              v-for="(item, index) in option"
+              name="custom"
+              :item="{
+                index: index,
+                data: item}">
+          </slot>
+        </scroller>
+      </div>
+
+      <div :class="[xclass('option-slot'), 'z-hide']">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </div>

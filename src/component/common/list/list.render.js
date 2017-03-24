@@ -79,19 +79,43 @@ export default function (h) {
           },
           ref: 'pager'
         }, (() => {
-          let ele = [h('span', this.loadMoreText)]
+          let ele = [
+            h('icon', {
+              class: [`${this.compPrefix}-m-r-half`],
+              props: {
+                kind: 'arrow'
+              }
+            }),
+            h('span', this.loadMoreText)
+          ]
 
           if (this.isPageTypeMore) {
-            return [h(
-              'div', {
-                slot: 'loadMore'
-              }, [h('loading', {
-                class: [`${this.compPrefix}-m-r-half`].concat(
-                  this.xclass(['loading', 'loading-more'])
-                ),
-                ref: 'loadingOfMore'
-              }), h('span', this.loadMoreText)]
-            )]
+            return [
+              h(
+                'div',
+                {
+                  slot: 'loadMore'
+                },
+                [
+                  h('loading', {
+                    class: [`${this.compPrefix}-m-r-half`].concat(
+                      this.xclass(['loading', 'loading-more'])
+                    ),
+                    ref: 'loadingOfMore'
+                  }),
+                  h('icon', {
+                    class: [`${this.compPrefix}-m-r-half`],
+                    directives: [{
+                      name: 'show',
+                      value: this.arrowOfMoreDisplay
+                    }],
+                    props: {
+                      kind: 'arrow'
+                    }
+                  }),
+                  h('span', this.loadMoreText)
+                ]
+              )]
           }
 
           return ele

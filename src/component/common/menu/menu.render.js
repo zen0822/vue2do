@@ -1,6 +1,7 @@
 /**
  * menu.render.js
  */
+
 function foldContent(h, foldList) {
   let foldChildren = []
 
@@ -9,14 +10,14 @@ function foldContent(h, foldList) {
     let flodNum = index + 1
     let contentChildren = []
 
-    foldChildren.push(
-        h('fold-title', {
-          slot: 'title-' + flodNum
-      }, item.name)
-    )
-
     if (Array.isArray(subMenu) && subMenu.length > 0) {
       contentChildren = foldContent.call(this, h, subMenu)
+
+      foldChildren.push(
+        h('fold-title', {
+          slot: 'title-' + flodNum
+        }, item.name)
+      )
 
       foldChildren.push(
         h('fold-content', {
@@ -25,14 +26,26 @@ function foldContent(h, foldList) {
       )
     } else {
       foldChildren.push(
-        h('fold-content', {
-          slot: 'content-' + flodNum
-        }, item.name)
+        h('fold-title',
+          {
+            slot: 'title-' + flodNum
+          },
+          [
+            h('router-link', {
+              props: {
+                to: item.route
+              }
+            }, item.name)
+          ]
+        )
       )
     }
   })
 
   return h('fold', {
+    props: {
+      spreadAll: true
+    },
     class: [this.xclass('sub-fold')]
   }, foldChildren)
 }

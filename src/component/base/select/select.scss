@@ -8,6 +8,7 @@
 
 $C_PREFIX: #{ $COMP_SELECT };
 $C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
+$INPUT_PREFIX: #{ $COMP_INPUT };
 
 $SELECT_HEIGHT: 36px;
 $SELECT_WIDTH: 170px;
@@ -66,7 +67,6 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       position: relative;
       box-sizing: border-box;
       vertical-align: middle;
-      padding: 8px $gap-h-triple 9px $gap-v;
       min-height: $SELECT_HEIGHT;
       width: 100%;
 
@@ -76,6 +76,11 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
         &.#{ $C_PREFIX }-default-text {
           color: #999;
+        }
+
+        .#{$INPUT_PREFIX}-wrap {
+          border: none;
+          height: 34px;
         }
       }
 

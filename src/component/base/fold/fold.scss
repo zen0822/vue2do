@@ -48,7 +48,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
   &.#{$C_PREFIX}-theme-primary {
     .#{$C_PREFIX}-dl {
       & > dt {
-        padding: $gap-v $gap-v-double $gap-v $gap-v;
+        padding: $gap-v-half $gap-v-double $gap-v-half 0;
 
         .#{$C_PREFIX}-icon {
           position: absolute;
@@ -59,7 +59,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
       & > dd {
         & > .#{$C_PREFIX}-transition {
           & > .#{$C_PREFIX}-content {
-            padding: $gap-v;
+            padding: $gap-v-half 0;
           }
         }
       }

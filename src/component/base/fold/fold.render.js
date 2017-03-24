@@ -5,18 +5,31 @@
 export default function (h) {
   let foldChildren = []
 
-  if (this.$slots) {
-    this.$slotKey.forEach((item, index) => {
-      if (item === 'default' || !/content-/.test(item)) {
-        return false
+  if (this.foldChildren.length > 0) {
+    this.foldChildren.forEach((item, index) => {
+      let contentIndex = index + 1
+      let foldTitle = []
+
+      const slotEle = item.content
+
+      if (slotEle) {
+        foldTitle.push(
+          h('icon', {
+            class: [this.xclass('icon')],
+            props: {
+              kind: this.foldTitleIcon(contentIndex)
+            }
+          })
+        )
+
+        if (slotEle[0].data.attrs) {
+          foldTitle.push(slotEle[0].data.attrs.title)
+        } else {
+          foldTitle.push(item.title)
+        }
+      } else {
+        foldTitle.push(item.title)
       }
-
-      let contentIndex = Number(item.split('-')[1])
-
-      const slotEle = this.$slots[item]
-      let foldTitle = slotEle[0].data.attrs
-        ? slotEle[0].data.attrs.title
-        : this.$slots[item.replace('content', 'title')]
 
       foldChildren.push(
         h('dt',
@@ -26,18 +39,11 @@ export default function (h) {
             },
             class: [this.foldContentActive(contentIndex)],
             on: {
-              click: this.clickTitle
-            }
-          },
-          [
-            foldTitle,
-            h('icon', {
-              class: [this.xclass('icon')],
-              props: {
-                kind: this.foldTitleIcon(contentIndex)
+              click: slotEle ? this.clickTitle : () => {
+                return false
               }
-            })
-          ]
+            }
+          }, foldTitle
         )
       )
 
@@ -59,7 +65,7 @@ export default function (h) {
                     name: 'show',
                     value: !this.foldingStatus(contentIndex)
                   }],
-                  style: this.foldData[contentIndex - 1].style
+                  style: this.foldData[index].style
                 }, slotEle)
               ]
             )

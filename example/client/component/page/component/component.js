@@ -3,6 +3,7 @@ import template from './component.tpl'
 import tip from 'src/component/base/pop/tip'
 import alert from 'src/component/base/pop/alert'
 import menuOpt from './menuOpt.json'
+import mixin from './mixin'
 
 export default {
   name: 'page-component-layout',

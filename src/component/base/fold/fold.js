@@ -86,6 +86,8 @@ const foldComp = {
 
   data() {
     return {
+      // 折叠板的有效 slot 信息
+      foldChildren: [],
       // 当前展开的面板
       currentIndex: 1,
       // 折叠版数据
@@ -108,7 +110,7 @@ const foldComp = {
 
   methods: {
     clickTitle(evt) {
-      let currentIndex = Number(evt.currentTarget.getAttribute('data-index')) - 1
+      let currentIndex = Number(evt.currentTarget.dataset.index) - 1
       let currentData = this.foldData[currentIndex]
       let folding = currentData.folding
 
@@ -138,33 +140,45 @@ const foldComp = {
 
   created() {
     this.$slotKey.forEach((item, index) => {
-      if (item === 'default' || !/content-/.test(item)) {
+      if (item === 'default') {
         return false
       }
 
       let contentIndex = Number(item.split('-')[1]) - 1
 
+      if (this.foldChildren[contentIndex] === undefined) {
+        this.foldChildren[contentIndex] = {}
+      }
+
+      if (/content-/.test(item)) {
+        this.foldChildren[contentIndex].content = this.$slots[item]
+      } else if (/title-/.test(item)) {
+        this.foldChildren[contentIndex].title = this.$slots[item]
+      }
+    })
+
+    this.foldChildren.forEach((item, index) => {
       if (this.one) {
         if (this.initIndex) {
-          this.foldData[contentIndex] = {
-            folding: contentIndex !== this.initIndex - 1
+          this.foldData[index] = {
+            folding: index !== this.initIndex - 1
           }
         } else {
-          this.foldData[contentIndex] = {
+          this.foldData[index] = {
             folding: true
           }
         }
       } else {
         if (this.spreadAll) {
-          this.foldData[contentIndex] = {
+          this.foldData[index] = {
             folding: false
           }
         } else if (this.initIndex) {
-          this.foldData[contentIndex] = {
-            folding: contentIndex !== this.initIndex - 1
+          this.foldData[index] = {
+            folding: index !== this.initIndex - 1
           }
         } else {
-          this.foldData[contentIndex] = {
+          this.foldData[index] = {
             folding: true
           }
         }

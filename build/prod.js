@@ -14,7 +14,7 @@ module.exports = function ({ appName }) {
   })
 
   var spinner = ora('building for production...')
-  spinner.start()
+  // spinner.start()
 
   var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
   shelljs.rm('-rf', assetsPath)
@@ -46,11 +46,9 @@ module.exports = function ({ appName }) {
 
       shelljs.exec('git push origin master', function (code) {
         code === 0 && console.log('Success: push to zen0822.github.io')
+        shelljs.cd('../')
+        shelljs.rm('-rf', './zen0822.github.io')
       })
-
-      shelljs.cd('../')
-      shelljs.chmod(777, 'zen0822.github.io');
-      shelljs.rm('-rf', 'zen0822.github.io')
     } else {
       shelljs.echo('Error: Git clone zen0822.github.io failed')
       exit(1)

@@ -553,7 +553,10 @@ const inputComp = {
   },
 
   watch: {
-    'value'(val, oldVal) {
+    initVal(val, oldVal) {
+      this.value = val
+    },
+    value(val, oldVal) {
       // 限制长度显示
       this.limitLen = String(val).length
 

@@ -33,14 +33,16 @@
 						:init-opt="selectedAllCheckOpt">
 				</check>
 
-				<span
-						v-bubble="{
-							text: props.item[txtName] && props.item[txtName].length > 9 ?
-							props.item[txtName] :
-							''
-						}">
-					{{ props.item[txtName] }}
-				</span>
+				<slot :name="`${props.index}`" :item="props">
+					<span
+							v-bubble="{
+								text: props.item[txtName] && props.item[txtName].length > 9 ?
+								props.item[txtName] :
+								''
+							}">
+						{{ props.item[txtName] }}
+					</span>
+				</slot>
 
 				<icon v-if="hasSubOption(props.item)" kind="caret-right"></icon>
 				<select-opt

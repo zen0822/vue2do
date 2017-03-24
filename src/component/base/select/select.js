@@ -39,14 +39,16 @@ import './select.scss'
 import Vue from 'vue'
 import optionComp from './select-opt'
 
-import template from './select.tpl'
+import render from './select.render'
 import store from 'src/vuex/store'
 import hubStore from 'src/vuex/module/hub/type.json'
 import tip from 'src/component/base/pop/tip'
 import compEvent from 'src/config/event.json'
 
 import iconComp from 'src/component/base/icon/icon'
+import inputComp from 'src/component/base/input/input'
 import checkComp from 'src/component/base/check/check'
+import scrollerComp from 'src/component/base/scroller/scroller'
 
 import baseMixin from 'src/mixin/base'
 import formMixin from 'src/mixin/form'
@@ -62,7 +64,7 @@ const SEARCH_KEY_UP_INTERVAL = 500
 const selectComp = {
   name: 'select',
 
-  template,
+  render,
 
   mixins: [baseMixin, formMixin],
 
@@ -70,8 +72,10 @@ const selectComp = {
 
   components: {
     'select-opt': optionComp,
+    'input-box': inputComp,
     icon: iconComp,
-    check: checkComp
+    check: checkComp,
+    scroller: scrollerComp
   },
 
   props: {
@@ -183,7 +187,7 @@ const selectComp = {
   },
 
   data() {
-      // 组件名字
+    // 组件名字
     this.compName = 'select'
 
     return {
@@ -216,7 +220,9 @@ const selectComp = {
       // 当下拉框为 classify 的时候，将 option 转换为数组
       optionItemCopy: {},
       // 是否全选多选下拉框的标记
-      selectedAll: false
+      selectedAll: false,
+      // 自定义下拉框的显示状态
+      customOptionDisplay: false
     }
   },
 
@@ -235,6 +241,10 @@ const selectComp = {
       }, {
         [`${this.cPrefix}-multiple-stage`]: this.multiple
       }].concat(this.xclass(['stage', this.themeClass]))
+    },
+    // 自定义下拉框的显示状态
+    isCustomOption() {
+      return this.initOpt.length > 0 && this.customOptionDisplay
     }
   },
 
@@ -272,7 +282,7 @@ const selectComp = {
         return false
       }
 
-      this.$refs.selectOption.$on(compEvent.select.option.change, ({value, text, index}) => {
+      this.$refs.selectOption && this.$refs.selectOption.$on(compEvent.select.option.change, ({ value, text, index }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
 
@@ -373,17 +383,19 @@ const selectComp = {
       let optionItem = []
 
       $defaultSlotContent.forEach((item) => {
-        const $el = item.elm
+        let children = item.componentOptions &&
+          Array.isArray(item.componentOptions.children) &&
+          item.componentOptions.children[0]
 
-        if ($el.className === `${this.compPrefix}-select-ele`) {
-          optionItem.push({
-            value: $el.getAttribute('value'),
-            text: $el.innerText.trim()
-          })
+        if (!children) {
+          return false
         }
-      })
 
-      $(`.${this.compPrefix}-select-comp .${this.compPrefix}-option-slot`).remove()
+        optionItem.push({
+          value: item.data && item.data.attrs ? item.data.attrs.value : '',
+          text: children ? children.text : ''
+        })
+      })
 
       return optionItem
     },
@@ -510,7 +522,7 @@ const selectComp = {
     /**
      * 处理下拉框的 text 和 value
      */
-    _setTxtVal({value, text, replace = false}) {
+    _setTxtVal({ value, text, replace = false }) {
       if (!this.multiple || replace) {
         if (value !== undefined) {
           this.value = value
@@ -796,11 +808,16 @@ const selectComp = {
         replace: true
       })
     }
+
+    this._initOption()
   },
 
   mounted() {
+    if (this.$scopedSlots.custom) {
+      this.customOptionDisplay = true
+    }
+
     this.$nextTick(() => {
-      this._initOption()
       this.$store.dispatch(hubStore.select.add, this)
     })
   }

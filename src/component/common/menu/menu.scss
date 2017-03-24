@@ -10,11 +10,15 @@
 $C_PREFIX: #{ $COMP_MENU };
 
 .#{$C_PREFIX} {
-  .#{$C_PREFIX}-sub-ul {
+  .#{$C_PREFIX}-sub-fold {
     margin-left: $gap-h;
 
-    & > li {
-      padding: $gap-v-half 0;
+    & > dl > dt {
+      border-top: none;
     }
+  }
+
+  & > .#{$C_PREFIX}-sub-fold {
+    margin-left: 0;
   }
 }

@@ -20,6 +20,7 @@ import render from './list.render'
 import baseMixin from 'src/mixin/base'
 import listMixin from 'src/mixin/list'
 import tip from 'src/component/base/pop/tip'
+import iconComp from 'src/component/base/icon/icon'
 
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
@@ -30,6 +31,10 @@ const listComp = {
   render,
 
   mixins: [baseMixin, listMixin],
+
+  components: {
+    icon: iconComp
+  },
 
   props: {
     auto: {
@@ -74,6 +79,8 @@ const listComp = {
     return {
       listItem: [],
       pageData: {},
+      // 滚动加载更多时的图标显示状态
+      arrowOfMoreDisplay: true,
       // 加载更多的显示状态
       moreDisplay: false,
       // 滚动条是否在底部
@@ -120,7 +127,7 @@ const listComp = {
 
   methods: {
     _init() {
-      this.$refs.scroller.$on('changeBar', ({isBottom}) => {
+      this.$refs.scroller && this.$refs.scroller.$on('changeBar', ({isBottom}) => {
         this.scrollerAlmostInBottom = isBottom
       })
     },
@@ -238,6 +245,8 @@ const listComp = {
         this.$refs.loading.show()
       }
 
+      this.arrowOfMoreDisplay = false
+
       return this
     },
 
@@ -252,6 +261,8 @@ const listComp = {
       } else {
         this.$refs.loading.hide()
       }
+
+      this.arrowOfMoreDisplay = true
 
       return this
     }
