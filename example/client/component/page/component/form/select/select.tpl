@@ -55,7 +55,7 @@
       </z-select>
     </section>
 
-    <!--<section>
+    <section>
       <router-link
           class="anchor-title"
           tag="h1"
@@ -77,16 +77,44 @@
           }]"
           :classify-opt="classifyOpt"></z-select>
     </section>
+
     <section>
       <router-link
           class="anchor-title"
           tag="h1"
-          :to="anchorLink('custom')">
-        <span @click="goAnchor">自定义按钮内容</span>
+          :to="anchorLink('multiple')">
+        <span @click="goAnchor">多选下拉框</span>
       </router-link>
-      <z-select>
-        <div>custom</div>
-      </z-select>
-    </section>-->
+
+      <z-select
+          :multiple="true"
+          :init-opt="dropMenuOpt"></z-select>
+    </section>
+
+    <section>
+      <router-link
+          class="anchor-title"
+          tag="h1"
+          :to="anchorLink('search')">
+        <span @click="goAnchor">搜索功能</span>
+      </router-link>
+
+      <z-select
+          :search="true"
+          :init-opt="dropMenuOpt"></z-select>
+    </section>
+
+    <section>
+      <router-link
+          class="anchor-title"
+          tag="h1"
+          :to="anchorLink('initVal')">
+        <span @click="goAnchor">指定选定下拉选项</span>
+      </router-link>
+
+      <z-select
+          :init-val="[1, 3]"
+          :init-opt="dropMenuOpt"></z-select>
+    </section>
   </article>
 </div>

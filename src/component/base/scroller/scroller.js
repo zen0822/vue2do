@@ -70,10 +70,17 @@ const scrollerComp = {
       barToBottomHeight: 0,
       // 滚动条的 mousedown 事件
       isMousedown: false,
+      // 滚动区域的 touchend 事件
+      isTouchStart: false,
       // 记录连续滚动的标注
       scrolling: false,
       // 记录开始点击滚动条的坐标
       pointStart: {
+        x: 0,
+        y: 0
+      },
+      // 记录开始触摸滚动区域的坐标
+      touchStart: {
         x: 0,
         y: 0
       }
@@ -196,11 +203,6 @@ const scrollerComp = {
 
     scrollerMouseUp(evt) {
       evt.preventDefault()
-
-      if (!this.isMousedown) {
-        return false
-      }
-
       this.isMousedown = false
     },
 
@@ -251,6 +253,50 @@ const scrollerComp = {
       if (!(this.isBottom || this.isTop) || this.oldBarTop !== this.barTop) {
         evt.preventDefault()
       }
+    },
+
+    scrollerTouchStart(evt) {
+      this.isTouchStart = true
+      this.autoHideBar = true
+
+      this.touchStart = {
+        x: evt.touches[0].clientX,
+        y: evt.touches[0].clientY
+      }
+    },
+
+    scrollerTouchMove(evt) {
+      evt.preventDefault()
+
+      this.autoHideBar = true
+
+      if (!this.isTouchStart) {
+        return false
+      }
+
+      let distance = this.touchStart.y - evt.touches[0].clientY
+      let barTop = this.barTop + distance
+      let boxTop = this.boxTop - distance * this.boxBarRate
+
+      if (distance > 0) {
+        this.barTop = barTop > this.barToBottomHeight ? this.barToBottomHeight : barTop
+        this.boxTop = boxTop < -this.boxToBottomHeight ? -this.boxToBottomHeight : boxTop
+      } else if (distance < 0) {
+        this.barTop = barTop < 0 ? 0 : barTop
+        this.boxTop = boxTop > 0 ? 0 : boxTop
+      }
+
+      this.touchStart = {
+        x: evt.touches[0].clientX,
+        y: evt.touches[0].clientY
+      }
+
+      this.triggerScroll()
+    },
+
+    scrollerTouchEnd(evt) {
+      this.autoHideBar = false
+      this.isTouchStart = false
     },
 
     triggerScroll() {

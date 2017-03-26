@@ -1,4 +1,5 @@
 @import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
 
 .#{$PAGE_PREFIX}-component {
   text-align: left;
@@ -47,6 +48,22 @@
         &:hover {
           text-decoration: none;
         }
+      }
+    }
+  }
+
+  @include device-type("<xl") {
+    .example-article .anchor-title::after {
+      content: "#";
+      color: $primary-color;
+      margin-left: $gap-v-half;
+    }
+  }
+
+  @include device-type("<l") {
+    .#{$PAGE_PREFIX}-component-menu {
+      a {
+        color: #fff;
       }
     }
   }

@@ -1,0 +1,63 @@
+//---------------- layout ----------------
+
+$DEVICE-XS-RANGE: "0px ~ 575px";
+$DEVICE-S-RANGE: "576px ~ 765px";
+$DEVICE-M-RANGE: "768px ~ 991px";
+$DEVICE-L-RANGE: "992px ~ 1911px";
+$DEVICE-XL-RANGE: "1200px ~ --px";
+
+@mixin device-type($type){
+  @if $type == "<s" {
+    @media only screen and (max-width: 575px) {
+      @content;
+    }
+  }
+
+  @if $type == "<m" {
+    @media only screen and (max-width: 765px) {
+      @content;
+    }
+  }
+
+  @if $type == "<l" {
+    @media only screen and (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @if $type == "<xl" {
+    @media only screen and (max-width: 1911px) {
+      @content;
+    }
+  }
+
+  @if $type == xs {
+    @media only screen and (max-width: 575px) {
+      @content;
+    }
+  }
+
+  @if $type == s {
+    @media only screen and (min-width: 576px) {
+      @content;
+    }
+  }
+
+  @if $type == m {
+    @media only screen and (min-width: 768px) {
+      @content;
+    }
+  }
+
+  @if $type == l {
+    @media only screen and (min-width: 992px) {
+      @content;
+    }
+  }
+
+  @if $type == xl {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+}

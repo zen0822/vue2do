@@ -58,6 +58,14 @@ export default function (h) {
         this.defaultValClassName(this.value),
         this.xclass('init-text')
       ],
+      on: {
+        blur: () => {
+          this.selectMenuDisplay = true
+        },
+        focus: () => {
+          this.selectMenuDisplay = false
+        }
+      },
       props: {
         placeholder: '请选择',
         initVal: this.text,
@@ -72,7 +80,7 @@ export default function (h) {
   }))
 
   if (this.search) {
-    this.menuChildren(h('div',
+    menuChildren.push(h('div',
       {
         class: [
           this.xclass('search-input')
@@ -151,10 +159,7 @@ export default function (h) {
             }]
           }),
           h('div', {
-            class: [this.xclass('selected-box')],
-            on: {
-              click: this.select
-            }
+            class: [this.xclass('selected-box')]
           }, [selectedBoxChildren]),
           h('div',
             {

@@ -110,6 +110,8 @@ const foldComp = {
 
   methods: {
     clickTitle(evt) {
+      evt.stopPropagation()
+
       let currentIndex = Number(evt.currentTarget.dataset.index) - 1
       let currentData = this.foldData[currentIndex]
       let folding = currentData.folding

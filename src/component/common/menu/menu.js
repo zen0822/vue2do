@@ -16,6 +16,7 @@ import {
   foldTitleComp,
   foldContentComp
 } from 'src/component/base/fold/fold'
+import iconComp from 'src/component/base/icon/icon'
 
 const layoutType = ['grid', 'flex', 'flow']
 
@@ -29,7 +30,8 @@ export default {
   components: {
     'fold': foldComp,
     'fold-title': foldTitleComp,
-    'fold-content': foldContentComp
+    'fold-content': foldContentComp,
+    icon: iconComp
   },
 
   props: {
@@ -53,6 +55,12 @@ export default {
     type: {
       type: String,
       default: 'horizontal'
+    }
+  },
+
+  data() {
+    return {
+      isStageActive: false
     }
   },
 

@@ -8,8 +8,18 @@
  */
 
 $C_PREFIX: #{ $COMP_MENU };
+$ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
+  .#{$C_PREFIX}-trigger {
+    display: none;
+  }
+
+  .#{$C_PREFIX}-stage {
+    background: rgba(0, 0, 0, .6);
+    transition: transform 500ms ease-in-out;
+  }
+
   .#{$C_PREFIX}-sub-fold {
     margin-left: $gap-h;
 
@@ -20,5 +30,36 @@ $C_PREFIX: #{ $COMP_MENU };
 
   & > .#{$C_PREFIX}-sub-fold {
     margin-left: 0;
+  }
+
+  @include device-type("<l") {
+    .#{$C_PREFIX}-stage {
+      position: fixed;
+      transform: translateX(-100%);
+      width: 100%;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      z-index: $z-index;
+
+      &.#{$C_PREFIX}-active {
+        transform: translateX(0);
+      }
+
+      .#{$C_PREFIX}-sub-fold {
+        color: #fff !important;
+        font-size: $h2;
+      }
+    }
+
+    .#{$C_PREFIX}-trigger {
+      display: block;
+
+      & > .#{$ICON_PREFIX}
+      > .#{$ICON_PREFIX}-stage
+      > .#{$ICON_PREFIX}-sort {
+        font-size: 40px;
+      }
+    }
   }
 }

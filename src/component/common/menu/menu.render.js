@@ -51,7 +51,39 @@ function foldContent(h, foldList) {
 }
 
 export default function (h) {
-  return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
-  }, [foldContent.call(this, h, this.initOpt)])
+  return h('div',
+    {
+      class: [this.cPrefix, this.xclass(this.themeClass)]
+    },
+    [
+      h('div',
+        {
+          class: [this.xclass('trigger')],
+          on: {
+            click: (evt) => {
+              this.isStageActive = !this.isStageActive
+            }
+          }
+        },
+        [
+          h('icon', {
+            props: {
+              kind: 'sort'
+            }
+          })
+        ]
+      ),
+      h('div', {
+        class: [
+          this.xclass('stage'),
+          { [this.xclass('active')]: this.isStageActive }
+        ],
+        on: {
+          click: (evt) => {
+            this.isStageActive = false
+          }
+        }
+      }, [foldContent.call(this, h, this.initOpt)])
+    ]
+  )
 }

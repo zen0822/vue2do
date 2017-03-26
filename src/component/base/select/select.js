@@ -727,25 +727,6 @@ const selectComp = {
     },
 
     /**
-     * 点击下拉框以选择的值
-     *
-     * @return {Object} this - 组件
-     */
-    select() {
-      this.$store.state.hub.select.forEach((val, index) => {
-        if (!Object.is(this, val)) {
-          val.selectMenuDisplay = true
-        }
-      })
-
-      this._adjustselectMenuStyle(() => {
-        this.selectMenuDisplay = !this.selectMenuDisplay
-      })
-
-      return this
-    },
-
-    /**
      * 全选多选下拉框
      *
      * @return {Object} - this - 组件

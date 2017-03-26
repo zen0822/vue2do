@@ -8,6 +8,7 @@
  */
 
 $gap-hub: (5, 10, 20, 30, 40, 50);
+$device-type: span, xs, s, m, l, xl;
 
 @mixin device-style($type) {
   @for $i from 1 through 12 {
@@ -16,16 +17,30 @@ $gap-hub: (5, 10, 20, 30, 40, 50);
 
       @each $gap in $gap-hub {
         &.#{ $C_PREFIX }-gap-#{$gap} {
-          width: calc(#{100% * $i / 12} - #{$gap}px);
-          margin-right: #{$gap / 2}px;
-          margin-left: #{$gap / 2}px;
+          @if $i == 12 {
+            width: 100%;
+            margin-right: 0;
+            margin-left: 0;
 
-          &:first-child {
-            width: calc(#{100% * $i / 12} - #{$gap / 2}px);
-          }
+            &:first-child {
+              width: 100%;
+            }
 
-          &:last-child {
-            width: calc(#{100% * $i / 12} - #{$gap / 2}px);
+            &:last-child {
+              width: 100%;
+            }
+          } @else {
+            width: calc(#{100% * $i / 12} - #{$gap}px);
+            margin-right: #{$gap / 2}px;
+            margin-left: #{$gap / 2}px;
+
+            &:first-child {
+              width: calc(#{100% * $i / 12} - #{$gap / 2}px);
+            }
+
+            &:last-child {
+              width: calc(#{100% * $i / 12} - #{$gap / 2}px);
+            }
           }
         }
       }
@@ -39,7 +54,7 @@ $C_PREFIX: #{ $COMP_COL };
   display: inline-block;
   vertical-align: middle;
 
-  @each $type in span, xs, s, m, l, xl {
+  @each $type in $device-type {
     @if $type != span {
       @include device-type ($type) {
         @include device-style($type);

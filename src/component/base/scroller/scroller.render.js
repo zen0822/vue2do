@@ -9,7 +9,10 @@ export default function (h) {
         mouseup: this.scrollerMouseUp,
         mouseover: this.scrollerMouseover,
         mouseout: this.scrollerMouseout,
-        wheel: this.mouseWheel
+        wheel: this.mouseWheel,
+        touchstart: this.scrollerTouchStart,
+        touchmove: this.scrollerTouchMove,
+        touchend: this.scrollerTouchEnd
       }
     },
     [

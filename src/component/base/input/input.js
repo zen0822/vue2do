@@ -325,7 +325,7 @@ const inputComp = {
      * @return {Object} this - 组件
      */
     _dispatchChange() {
-      return this
+      return this.$emit('change', this.value)
     },
 
     /**
@@ -467,6 +467,8 @@ const inputComp = {
     focus() {
       this.verified = true
       this.focusing = true
+
+      return this.$emit('focus', this.value)
     },
 
     /**
@@ -479,6 +481,8 @@ const inputComp = {
       if (this.number) {
         this.value = this._switchNum(this.value)
       }
+
+      return this.$emit('blur', this.value)
     },
 
     /**
