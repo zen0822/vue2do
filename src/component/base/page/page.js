@@ -175,7 +175,9 @@ const pageComp = {
     /**
      * 加载更多
      */
-    more() {
+    more(event = {}) {
+      event.stopPropagation && event.stopPropagation()
+
       this.next()
     },
 
@@ -183,8 +185,10 @@ const pageComp = {
      * @param {Number} - 当前页码
      * @return {Function}
      */
-    click(evt) {
-      let currentPage = parseInt(evt.currentTarget.getAttribute('data-index'), 10)
+    click(event = {}) {
+      event.stopPropagation && event.stopPropagation()
+
+      let currentPage = parseInt(event.currentTarget.getAttribute('data-index'), 10)
 
       if (currentPage === this.pageData.current) {
         return false
@@ -196,7 +200,9 @@ const pageComp = {
     /**
      * 下一页
      */
-    next() {
+    next(event = {}) {
+      event.stopPropagation && event.stopPropagation()
+
       if (this.pageData.current + 1 > this.pageData.total) {
         return false
       }
@@ -207,7 +213,9 @@ const pageComp = {
     /**
      * 上一页
      */
-    pre() {
+    pre(event = {}) {
+      event.stopPropagation && event.stopPropagation()
+
       if (this.pageData.current - 1 === 0) {
         return false
       }
@@ -218,32 +226,38 @@ const pageComp = {
     /**
      * 最后一页
      */
-    end() {
+    end(event = {}) {
+      event.stopPropagation && event.stopPropagation()
+
       return this.switch(this.pageData.total)
     },
 
     /**
      * 第一页
      */
-    start() {
+    start(event = {}) {
+      event.stopPropagation && event.stopPropagation()
+
       return this.switch(1)
     },
 
     /**
      * 跳转到指定页数
      */
-    jump(pageNum) {
-      if (isNaN(pageNum)) {
-        return false
-      }
+    jump(event = {}) {
+      event.stopPropagation && event.stopPropagation()
 
-      return this.switch(parseInt(pageNum, 10))
+      return this.switch(this.$refs.jumpInput.val())
     },
 
     /**
      * 切换页码
      */
     switch(pageNum) {
+      if (isNaN(pageNum)) {
+        return false
+      }
+
       this.pageData.current = pageNum
 
       return this.$emit('switch', pageNum)

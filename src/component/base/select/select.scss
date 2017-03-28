@@ -39,21 +39,25 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
     }
 
     &.#{ $C_PREFIX }-multiple-stage {
+      position: relative;
       width: $MULTI_SELECT_WIDTH;
       height: auto;
       min-height: $SELECT_HEIGHT;
 
-      .#{ $C_PREFIX }-selected-box{
-        max-height: 200px;
-        overflow: auto;
-        padding: 0 $gap-v-triple 0 $gap-v-half;
-      }
-
       .#{ $C_PREFIX }-init-text {
         display: inline-block;
-        padding-left: $gap-v / 2;
-        padding-top: 8px;
+        position: absolute;
         box-sizing: border-box;
+        top: 0;
+        left: 0;
+
+        &.#{ $C_PREFIX }-opacity {
+          opacity: 0;
+        }
+
+        .#{$INPUT_PREFIX}-wrap input {
+          padding-left: 0;
+        }
       }
 
       .#{ $C_PREFIX }-menu,
@@ -69,6 +73,13 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       vertical-align: middle;
       min-height: $SELECT_HEIGHT;
       width: 100%;
+
+      .#{ $C_PREFIX }-init-text-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
 
       .#{ $C_PREFIX }-init-text {
         @extend %text-ellipsis;
@@ -129,18 +140,21 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
         box-sizing: border-box;
         box-shadow: 0px 1px 3px rgba(0, 0, 0, .1);
         background-color: #fff;
-        padding: 6px 10px;
+        padding: 0 $gap-h;
         border-bottom: 1px solid $border-color;
 
         display:inline-block;
         width: 100%;
 
-        &>input{
-          margin-left:10px;
-          border:none;
-          width: calc(100% - 40px);
+        & > .#{$INPUT_PREFIX} {
+          width: calc(100% - 20px);
+
           &:focus{
             outline:none;
+          }
+
+          .#{$INPUT_PREFIX}-wrap {
+            border:none;
           }
         }
       }

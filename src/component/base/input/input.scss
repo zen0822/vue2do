@@ -40,8 +40,8 @@ $INPUT_BORDER_WIDTH: 1px;
       position: relative;
       height: $INPUT_HEIGHT;
       border: $border-color $border-thin solid;
-      background-color: #fff;
       line-height: 20px;
+      background-color: #fff;
 
       &.#{ $C_PREFIX }-error-border{
         border: $danger-color $border-thin solid;
@@ -82,6 +82,7 @@ $INPUT_BORDER_WIDTH: 1px;
 
         & > input {
           box-sizing: border-box;
+          background-color: rgba(0, 0, 0, 0);
         }
 
         & > textarea {

@@ -4,16 +4,16 @@ Vue.directive('focus', {
   priority: 1000,
 
   inserted(el, binding) {
-    binding.bound = true
+    binding.zBound = true
 
-    binding.focus = () => {
-      if (binding.bound === true) {
+    binding.zFocus = () => {
+      if (binding.zBound) {
         el.focus()
       }
     }
 
-    binding.blur = () => {
-      if (binding.bound === true) {
+    binding.zBlur = () => {
+      if (binding.zBound) {
         el.blur()
       }
     }
@@ -21,14 +21,14 @@ Vue.directive('focus', {
 
   update(el, binding) {
     if (binding.value) {
-      Vue.nextTick(binding.focus)
+      Vue.nextTick(binding.zFocus)
     } else {
-      Vue.nextTick(binding.blur)
+      Vue.nextTick(binding.zBlur)
     }
   },
 
   unbind(el, binding) {
-    binding.bound = false
+    binding.zBound = false
   }
 })
 
@@ -77,6 +77,51 @@ Vue.directive('bubble', {
       bubbleTip.hide()
 
       event.stopPropagation()
+    })
+  }
+})
+
+/**
+ * 绑定元素的父元素的 click 事件
+ */
+
+let nodeList = []
+const storeName = 'VUE_2_DO_DIRECTIVE_CLICK_PARENT_STORE_NAME'
+
+document.getElementsByTagName('body')[0].addEventListener('click', function () {
+  nodeList.forEach((el) => {
+    el[storeName].expression()
+  })
+})
+
+Vue.directive('clickParent', {
+  bind(el, binding, vnode) {
+    const id = nodeList.push(el) - 1
+    const context = el.context
+
+    el[storeName] = {
+      id,
+      expression: binding.expression,
+      value: binding.value
+    }
+  },
+
+  update(el, binding) {
+    el[storeName].expression = binding.expression
+    el[storeName].value = binding.value
+  },
+
+  unbind(el) {
+    let len = nodeList.length
+
+    nodeList.every((el, index) => {
+      if (el[storeName].id === el[storeName].id) {
+        nodeList.splice(index, 1)
+
+        return false
+      }
+
+      return true
     })
   }
 })

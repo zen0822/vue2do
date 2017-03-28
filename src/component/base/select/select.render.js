@@ -5,16 +5,27 @@ export default function (h) {
   if (this.multiple) {
     let liELe = []
 
-    selectedBoxChildren.push(h('span', {
-      class: [
-        this.defaultValClassName(this.value),
-        this.xclass('init-text')
-      ],
-      directives: [{
-        name: 'show',
-        value: this.value.length === 0
-      }]
-    }, this.defaultTxt))
+    selectedBoxChildren.push(
+      h('input-box', {
+        class: [
+          this.defaultValClassName(this.value),
+          this.xclass('init-text'),
+          { [this.xclass('opacity')]: !this.initTxtDisplay }
+        ],
+        props: {
+          placeholder: this.defaultTxt
+        }
+      }),
+      h('input-box', {
+        class: [
+          this.xclass('init-text-input')
+        ],
+        on: {
+          blur: this.blur,
+          focus: this.focus
+        }
+      })
+    )
 
     this.text.forEach((txt, index) => {
       liELe.push(h('li',
@@ -31,7 +42,7 @@ export default function (h) {
               }
             },
             [
-              ('icon', {
+              h('icon', {
                 props: {
                   kind: 'close'
                 }
@@ -42,41 +53,58 @@ export default function (h) {
       )
     })
 
-    selectedBoxChildren.push(h('ul', {
-      class: [
-        `${this.compPrefix}-ul`,
-        this.xclass('multiple')
-      ],
-      directives: [{
-        name: 'show',
-        value: this.value.length !== 0
-      }]
-    }, [liELe]))
-  } else {
-    selectedBoxChildren.push(h('input-box', {
-      class: [
-        this.defaultValClassName(this.value),
-        this.xclass('init-text')
-      ],
-      on: {
-        blur: () => {
-          this.selectMenuDisplay = true
+    selectedBoxChildren.push(
+      h('scroller',
+        {
+          props: {
+            height: 100
+          }
         },
-        focus: () => {
-          this.selectMenuDisplay = false
+        [
+          h('ul', {
+            class: [
+              `${this.compPrefix}-ul`,
+              this.xclass('multiple')
+            ],
+            directives: [{
+              name: 'show',
+              value: !this.initTxtDisplay
+            }]
+          }, [liELe])
+        ]
+      )
+    )
+  } else {
+    selectedBoxChildren.push(
+      h('input-box', {
+        class: [
+          this.xclass('init-text-input')
+        ],
+        on: {
+          blur: this.blur,
+          focus: this.focus
         }
-      },
-      props: {
-        placeholder: '请选择',
-        initVal: this.text,
-        readOnly: true
-      }
-    }))
+      }),
+
+      h('input-box', {
+        class: [
+          this.defaultValClassName(this.value),
+          this.xclass('init-text')
+        ],
+        props: {
+          placeholder: '请选择',
+          initVal: this.text,
+          readOnly: true
+        }
+      })
+    )
   }
 
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
-    kind: 'spread'
+    props: {
+      kind: 'spread'
+    }
   }))
 
   if (this.search) {
@@ -92,7 +120,11 @@ export default function (h) {
         }
       },
       [
-        h('icon', { kind: 'search' }),
+        h('icon', {
+          props: {
+            kind: 'search'
+          }
+        }),
         h('input-box', {
           props: {
             placeholder: '请输入搜索值',
@@ -143,7 +175,11 @@ export default function (h) {
 
   return h('div',
     {
-      class: [this.cPrefix]
+      class: [this.cPrefix],
+      directives: [{
+        name: 'clickParent',
+        expression: this.clickParent
+      }]
     },
     [
       h('div',
@@ -159,7 +195,10 @@ export default function (h) {
             }]
           }),
           h('div', {
-            class: [this.xclass('selected-box')]
+            class: [this.xclass('selected-box')],
+            on: {
+              click: this.select
+            }
           }, [selectedBoxChildren]),
           h('div',
             {

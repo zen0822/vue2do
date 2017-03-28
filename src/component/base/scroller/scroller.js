@@ -45,7 +45,7 @@ const scrollerComp = {
   data() {
     return {
       // 滚动条自动隐藏的状态
-      autoHideBar: false,
+      showBar: false,
       // 滚动条的高度是否等于滚动容器的高度
       barBiggerScroller: false,
       // 滚动区域的高度
@@ -94,7 +94,7 @@ const scrollerComp = {
     },
     // 是否显示滚动条
     barDisplay() {
-      return !this.barBiggerScroller && this.autoHideBar
+      return !this.barBiggerScroller && (!this.autoHide || this.showBar)
     },
     // 滚动条是否在顶部
     isTop() {
@@ -207,11 +207,11 @@ const scrollerComp = {
     },
 
     scrollerMouseover(evt) {
-      this.autoHideBar = true
+      this.showBar = true
     },
 
     scrollerMouseout(evt) {
-      this.autoHideBar = false
+      this.showBar = false
     },
 
     mouseWheel(evt) {
@@ -257,7 +257,7 @@ const scrollerComp = {
 
     scrollerTouchStart(evt) {
       this.isTouchStart = true
-      this.autoHideBar = true
+      this.showBar = true
 
       this.touchStart = {
         x: evt.touches[0].clientX,
@@ -268,7 +268,7 @@ const scrollerComp = {
     scrollerTouchMove(evt) {
       evt.preventDefault()
 
-      this.autoHideBar = true
+      this.showBar = true
 
       if (!this.isTouchStart) {
         return false
@@ -295,7 +295,7 @@ const scrollerComp = {
     },
 
     scrollerTouchEnd(evt) {
-      this.autoHideBar = false
+      this.showBar = false
       this.isTouchStart = false
     },
 

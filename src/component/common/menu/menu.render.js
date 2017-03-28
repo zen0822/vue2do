@@ -3,6 +3,10 @@
  */
 
 function foldContent(h, foldList) {
+  if (!Array.isArray(foldList) || foldList.length === 0) {
+    return false
+  }
+
   let foldChildren = []
 
   foldList.forEach((item, index) => {
@@ -44,7 +48,7 @@ function foldContent(h, foldList) {
 
   return h('fold', {
     props: {
-      spreadAll: true
+      spreadAll: this.spreadAll
     },
     class: [this.xclass('sub-fold')]
   }, foldChildren)
@@ -58,32 +62,71 @@ export default function (h) {
     [
       h('div',
         {
-          class: [this.xclass('trigger')],
+          class: [
+            this.xclass('trigger'),
+            { [this.xclass('active')]: this.isStageActive }
+          ],
+          directives: [{
+            name: 'show',
+            value: this.trigger === 'show'
+          }],
           on: {
-            click: (evt) => {
-              this.isStageActive = !this.isStageActive
-            }
+            click: this.show
           }
         },
         [
-          h('icon', {
-            props: {
-              kind: 'sort'
-            }
-          })
+          h('row', [
+            h('column', {
+              props: {
+                span: 6
+              }
+            }, this.title),
+            h('column', {
+              class: [`${this.compPrefix}-text-right`],
+              props: {
+                span: 6
+              }
+            }, [
+                h('icon', {
+                  props: {
+                    kind: 'arrow',
+                    size: 'l'
+                  }
+                })
+              ]
+            )
+          ])
         ]
       ),
-      h('div', {
-        class: [
-          this.xclass('stage'),
-          { [this.xclass('active')]: this.isStageActive }
-        ],
-        on: {
-          click: (evt) => {
-            this.isStageActive = false
-          }
-        }
-      }, [foldContent.call(this, h, this.initOpt)])
+      h('div',
+        {
+          class: [
+            this.xclass('stage'),
+            { [this.xclass('active')]: this.isStageActive }
+          ]
+        },
+        [
+          h('div',
+            {
+              class: [this.xclass('close-menu')],
+              on: {
+                click: () => {
+                  this.hide()
+                }
+              }
+            }, [
+              h('icon', {
+                props: {
+                  kind: 'close'
+                }
+              })
+            ]
+          ),
+          this.$slots.head,
+          foldContent.call(this, h, this.initOpt),
+          this.$slots.tail
+        ]
+      )
     ]
   )
 }

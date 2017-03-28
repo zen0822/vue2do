@@ -4,33 +4,44 @@
       :class="stageClass.concat(xclass(['stage', themeClass]))">
     <div v-if="isText && addon" :class="[xclass('addon-stage')]">{{ addon }}</div>
     <div :class="wrapClass">
-      <div :class="[xclass('edit-box-left')]">
-        <slot></slot>
-      </div>
-      <div :class="[xclass('edit-box')]">
-        <input
-            v-model="value"
-            v-if="isText"
-            v-focus="focusing"
-            @focus="focus"
-            @blur="blur"
-            @keyup="keyup"
-            :placeholder="placeholder"
-            :readonly="readOnly"
-            :maxlength = "maxLength" />
+      <row>
+        <column>
+          <div :class="[xclass('edit-box-left')]">
+            <slot name="head"></slot>
+          </div>
+        </column>
+        <column :span="9">
+          <div :class="[xclass('edit-box')]">
+            <input
+                v-model="value"
+                v-if="isText"
+                v-focus="focusing"
+                @focus="focus"
+                @blur="blur"
+                @keyup="keyup"
+                :placeholder="placeholder"
+                :readonly="readOnly"
+                :maxlength = "maxLength" />
 
-        <textarea
-            v-model="value"
-            v-if="isTextarea"
-            v-focus="focusing"
-            @focus="focus"
-            @blur="blur"
-            @keyup="keyup"
-            :placeholder="placeholder"
-            :readonly="readOnly"
-            :maxlength = "maxLength"
-            :rows="row"></textarea>
-      </div>
+            <textarea
+                v-model="value"
+                v-if="isTextarea"
+                v-focus="focusing"
+                @focus="focus"
+                @blur="blur"
+                @keyup="keyup"
+                :placeholder="placeholder"
+                :readonly="readOnly"
+                :maxlength = "maxLength"
+                :rows="row"></textarea>
+          </div>
+        </column>
+        <column :span="2">
+          <div :class="[xclass('edit-box-tail')]">
+            <slot name="tail"></slot>
+          </div>
+        </column>
+      </row>
       <div :class="[xclass('auto-completion')]" v-show="completionDisplay">
         <ul>
           <li

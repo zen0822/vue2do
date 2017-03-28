@@ -1,11 +1,26 @@
 @import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
 
 .header-layout-stage {
   position: relative;
-  background-color: #fff;
+  background-color: $grey-dark;
   height: 88px;
+  padding: 0 $gap-h;
 
-  .nav-box {
+  & > .nav-box-mobile {
+    display: none;
+
+    .z-icon .z-icon-ali {
+      font-size: 30px;
+      color: #fff;
+    }
+
+    .z-icon .z-icon-sort {
+      font-size: 40px;
+    }
+  }
+
+  & > .nav-box {
     max-width: 1024px;
     height: 100%;
     margin: 0 auto;
@@ -38,6 +53,48 @@
         position: absolute;
         border-bottom: #fff $border-thin * 5 solid;
       }
+    }
+  }
+
+  & > .menu {
+    margin: 0 -$gap-h;
+
+    a {
+      color: #fff;
+    }
+
+    .menu-search {
+      padding: $gap-v 0;
+      border-bottom: #fff $border-thin solid;
+
+      & > .z-input {
+        width: 100%;
+
+        .z-input-wrap {
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+
+          .z-icon .z-icon-search {
+            font-size: $h1;
+          }
+
+          input {
+            font-size: $h2;
+          }
+        }
+      }
+    }
+  }
+
+  @include device-type('<l') {
+    height: 60px;
+
+    & > .nav-box {
+      display: none;
+    }
+
+    & > .nav-box-mobile {
+      display: flex;
     }
   }
 }

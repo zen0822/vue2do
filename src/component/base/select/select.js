@@ -245,6 +245,10 @@ const selectComp = {
     // 自定义下拉框的显示状态
     isCustomOption() {
       return this.initOpt.length > 0 && this.customOptionDisplay
+    },
+    // 多选框的默认值显示状态
+    initTxtDisplay() {
+      return this.multiple && this.value.length === 0
     }
   },
 
@@ -724,6 +728,73 @@ const selectComp = {
       }
 
       this.value.splice(index, 1)
+    },
+
+    /**
+     * 点击父元素
+     *
+     */
+    clickParent() {
+      return this.toggleMenuDisplay(false)
+    },
+
+    /**
+    * 下拉框展示失去焦点
+    *
+    * @return {Object} this - 组件
+    */
+    blur() {
+      return false
+    },
+
+    /**
+    * 下拉框展示的焦点
+    *
+    * @return {Object} this - 组件
+    */
+    focus() {
+      return this.toggleMenuDisplay(true)
+    },
+
+    /**
+     * 点击下拉框
+     *
+     * @return {Object} this - 组件
+     */
+    select(event) {
+      event.stopPropagation()
+
+      return this.toggleMenuDisplay()
+    },
+
+    /**
+     * 下拉框的显示操作
+     *
+     * @param {Boolean} opt - 操作状态,
+     *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
+     *
+     * @return {Object} - this组件
+     */
+    toggleMenuDisplay(opt) {
+      this.$store.state.hub.select.forEach((val, index) => {
+        if (!Object.is(this, val)) {
+          val.selectMenuDisplay = true
+        }
+      })
+
+      return this._adjustselectMenuStyle(() => {
+        this.selectMenuDisplay = opt === undefined
+          ? !this.selectMenuDisplay : !opt
+      })
+    },
+
+    /**
+     * 收起下拉框
+     *
+     * @return {Object} - this - 组件
+     */
+    hideMenu() {
+      this.selectMenuDisplay = true
     },
 
     /**

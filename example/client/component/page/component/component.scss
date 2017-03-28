@@ -3,6 +3,7 @@
 
 .#{$PAGE_PREFIX}-component {
   text-align: left;
+  padding: 0 $gap-h;
 
   .#{$PAGE_PREFIX}-component-menu {
     a {

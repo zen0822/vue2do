@@ -1,20 +1,49 @@
 <div class="header-layout-stage">
-  <row class="nav-box">
-    <column :span="8">
+  <z-row class="nav-box">
+    <z-col :span="8">
       <img class="logo-box" :src="logoUrl" />
-    </column>
-    <column :span="4">
-    <row class="nav-menu-box">
-      <column>
-        <router-link to="/component">组件</router-link>
-      </column>
-      <column>
-        <router-link to="/build">构建</router-link>
-      </column>
-      <column>
-        <router-link to="/about">关于</router-link>
-      </column>
-    </row>
-  </column>
-  </row>
+    </z-col>
+    <z-col :span="4">
+      <z-row class="nav-menu-box">
+        <z-col>
+          <router-link to="/component">组件</router-link>
+        </z-col>
+        <z-col>
+          <router-link to="/build">构建</router-link>
+        </z-col>
+        <z-col>
+          <router-link to="/about">关于</router-link>
+        </z-col>
+      </z-row>
+    </z-col>
+  </z-row>
+
+  <z-row class="nav-box nav-box-mobile">
+    <z-col :span="4">
+      <div @click.stop="showMenu">
+        <z-icon kind="sort" v-show="sortIconDisplay"></z-icon>
+      </div>
+    </z-col>
+    <z-col class="z-text-center" :span="4">
+      <img class="logo-box" :src="logoUrl" />
+    </z-col>
+    <z-col :span="4" class="z-text-right">
+      <div @click.stop="showMenu">
+        <z-icon kind="search"></z-icon>
+      </div>
+    </z-col>
+  </z-row>
+
+  <z-menu
+      class="menu"
+      ref="mobileMenu"
+      switch="up2down"
+      @hide="hideMenu"
+      :init-opt="menuOpt">
+    <div class="menu-search" slot="tail">
+      <z-input placeholder="search in vue2do">
+        <z-icon slot="head" kind="search"></z-icon>
+      </z-input>
+    </div>
+  </z-menu>
 </div>

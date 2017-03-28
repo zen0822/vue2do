@@ -47,6 +47,9 @@ import initVerfication from './validate.js'
 import baseMixin from 'src/mixin/base'
 import formMixin from 'src/mixin/form'
 
+import rowComp from 'src/component/common/layout/row/row'
+import colComp from 'src/component/common/layout/col/col'
+
 import { dataType } from 'src/util/data/data'
 
 const tip = {}
@@ -63,6 +66,11 @@ const inputComp = {
   template,
 
   mixins: [baseMixin, formMixin],
+
+  components: {
+    row: rowComp,
+    column: colComp
+  },
 
   store,
 
@@ -464,25 +472,31 @@ const inputComp = {
      * 输入框 focus 状态触发的方法
      * @return {Object} this - 组件
      */
-    focus() {
+    focus(evt) {
       this.verified = true
       this.focusing = true
 
-      return this.$emit('focus', this.value)
+      return this.$emit('focus', {
+        valeu: this.value,
+        event: evt
+      })
     },
 
     /**
      * 输入框 blur 状态触发的方法
      * @return {Object} this - 组件
      */
-    blur() {
+    blur(evt) {
       this.focusing = false
 
       if (this.number) {
         this.value = this._switchNum(this.value)
       }
 
-      return this.$emit('blur', this.value)
+      return this.$emit('blur', {
+        valeu: this.value,
+        event: evt
+      })
     },
 
     /**

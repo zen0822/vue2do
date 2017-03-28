@@ -13,34 +13,56 @@ $ICON_PREFIX: #{ $COMP_ICON };
 .#{$C_PREFIX} {
   .#{$C_PREFIX}-trigger {
     display: none;
-  }
-
-  .#{$C_PREFIX}-stage {
-    background: rgba(0, 0, 0, .6);
-    transition: transform 500ms ease-in-out;
+    background: #fff;
+    padding: $gap-v;
   }
 
   .#{$C_PREFIX}-sub-fold {
-    margin-left: $gap-h;
-
     & > dl > dt {
       border-top: none;
     }
   }
 
-  & > .#{$C_PREFIX}-sub-fold {
+   .#{$C_PREFIX}-stage > .#{$C_PREFIX}-sub-fold {
     margin-left: 0;
   }
 
+  .#{$C_PREFIX}-sub-fold {
+    margin-left: $gap-h;
+  }
+
   @include device-type("<l") {
+    .#{$C_PREFIX}-trigger {
+      display: block;
+    }
+
     .#{$C_PREFIX}-stage {
       position: fixed;
-      transform: translateX(-100%);
+      box-sizing: border-box;
+      transform: translateX(-1000%);
+      background: rgba(0, 0, 0, .8);
+      transition: transform 500ms ease-in-out;
       width: 100%;
+      padding: 15% 10% 10%;
       margin: auto;
       top: 0;
       bottom: 0;
       z-index: $z-index;
+
+      .#{$ICON_PREFIX}-ali {
+        color: #fff;
+        font-size: 20px;
+      }
+
+      & > .#{$C_PREFIX}-close-menu {
+        position: absolute;
+        left: $gap-v;
+        top: $gap-v;
+
+        .#{$ICON_PREFIX}-close {
+          font-size: 35px;
+        }
+      }
 
       &.#{$C_PREFIX}-active {
         transform: translateX(0);
@@ -49,16 +71,11 @@ $ICON_PREFIX: #{ $COMP_ICON };
       .#{$C_PREFIX}-sub-fold {
         color: #fff !important;
         font-size: $h2;
-      }
-    }
 
-    .#{$C_PREFIX}-trigger {
-      display: block;
-
-      & > .#{$ICON_PREFIX}
-      > .#{$ICON_PREFIX}-stage
-      > .#{$ICON_PREFIX}-sort {
-        font-size: 40px;
+        & > dl > dt {
+          padding: $gap-v 0;
+          border-bottom: #fff $border-thin solid;
+        }
       }
     }
   }
