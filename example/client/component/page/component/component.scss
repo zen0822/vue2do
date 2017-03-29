@@ -4,7 +4,13 @@
 .#{$PAGE_PREFIX}-component {
   text-align: left;
 
+  .#{$PAGE_PREFIX}-component-stage {
+    margin-top: $gap-v-double;
+  }
+
   .#{$PAGE_PREFIX}-component-menu {
+    margin-top: $gap-v-double;
+
     a {
       color: $grey;
 
@@ -62,6 +68,8 @@
 
   @include device-type("<l") {
     .#{$PAGE_PREFIX}-component-menu {
+      margin-top: 0;
+
       a {
         color: #fff;
       }
@@ -69,7 +77,6 @@
 
     .#{$PAGE_PREFIX}-component-stage {
       padding: 0 $gap-h $gap-v-triple;
-      margin-top: $gap-v-double;
     }
   }
 }

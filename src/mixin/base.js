@@ -130,33 +130,33 @@ export default {
   },
 
   created() {
-    let deviceSizeClass = `${compConfig.prefix}-device-size`
-
-    if (!document.querySelector('.' + deviceSizeClass)) {
-      let deviceSizeEle = document.createElement('div')
-      deviceSizeEle.className = `${compConfig.prefix}-device-size`
-
-      document.body.append(deviceSizeEle)
-
-      this.$nextTick(() => {
-        let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
-        this.$store.dispatch(commonStore.deviceSize, content)
-      })
-
-      window.addEventListener('resize', () => {
-        this.$nextTick(() => {
-          let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
-          this.$store.dispatch(commonStore.deviceSize, content)
-        })
-      })
-    }
-
     this.$slotKey = Object.keys(this.$slots)
     this._setDataOpt()
   },
 
   mounted() {
     this.$nextTick(() => {
+      let deviceSizeClass = `${compConfig.prefix}-device-size`
+
+      if (!document.querySelector('.' + deviceSizeClass)) {
+        let deviceSizeEle = document.createElement('div')
+        deviceSizeEle.className = `${compConfig.prefix}-device-size`
+
+        document.body.append(deviceSizeEle)
+
+        this.$nextTick(() => {
+          let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+          this.$store.dispatch(commonStore.deviceSize, content)
+        })
+
+        window.addEventListener('resize', () => {
+          this.$nextTick(() => {
+            let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+            this.$store.dispatch(commonStore.deviceSize, content)
+          })
+        })
+      }
+
       this._init()
     })
   }

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import focusDirective from './focus'
 import bubbleDirective from './bubble'
 import clickParentDirective from './clickParent'
-import deviceSizeDirective from './deviceSize'
 
 /**
  * 获取焦点指令
@@ -23,8 +22,3 @@ Vue.directive('bubble', bubbleDirective)
  * 绑定元素的父元素的 click 事件
  */
 Vue.directive('clickParent', clickParentDirective)
-
-/**
- * 获取客户端的设备大小（xs, s, m, l, xl)
- */
-Vue.directive('deviceSize', deviceSizeDirective)

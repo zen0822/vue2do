@@ -8,11 +8,12 @@
 $C_PREFIX: $comp-prefix;
 
 .#{ $C_PREFIX }-device-size {
-  display: inline-block;
+  position: absolute;
   height: 0;
   width: 0;
   overflow: hidden;
-  line-height: 0;
+  visibility: hidden;
+  z-index: -$z-index;
 
   &::after {
     content: ">xl";
