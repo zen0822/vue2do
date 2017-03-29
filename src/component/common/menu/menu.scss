@@ -15,6 +15,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     display: none;
     background: #fff;
     padding: $gap-v;
+    border-bottom: $border-color $border-thin solid;
   }
 
   .#{$C_PREFIX}-sub-fold {
@@ -29,9 +30,15 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
   .#{$C_PREFIX}-sub-fold {
     margin-left: $gap-h;
+
+    a {
+      display: block;
+    }
   }
 
   @include device-type("<l") {
+    font-size: $h2;
+
     .#{$C_PREFIX}-trigger {
       display: block;
     }
@@ -70,7 +77,10 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
       .#{$C_PREFIX}-sub-fold {
         color: #fff !important;
-        font-size: $h2;
+
+        a {
+          text-decoration: none;
+        }
 
         & > dl > dt {
           padding: $gap-v 0;

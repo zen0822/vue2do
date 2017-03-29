@@ -89,7 +89,7 @@ export default function (h) {
             }, [
                 h('icon', {
                   props: {
-                    kind: 'arrow',
+                    kind: this.isStageActive ? 'spread' : 'fold',
                     size: 'l'
                   }
                 })

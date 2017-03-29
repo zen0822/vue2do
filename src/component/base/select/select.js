@@ -286,6 +286,12 @@ const selectComp = {
         return false
       }
 
+      this.$refs.scroller && this.$refs.scroller.$on(compEvent.scroller.change.bar, ({ boxHeight }) => {
+        this._adjustselectMenuStyle({
+          height: boxHeight
+        })
+      })
+
       this.$refs.selectOption && this.$refs.selectOption.$on(compEvent.select.option.change, ({ value, text, index }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
@@ -311,10 +317,11 @@ const selectComp = {
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustselectMenuStyle(cb) {
-      let selectHeight = $(this.$el).outerHeight()
-      let selectWidth = $(this.$el).outerWidth()
+    _adjustselectMenuStyle({ height, cb } = {}) {
+      let selectHeight = height || this.$el.offsetHeight
+      selectHeight = selectHeight > 100 ? 100 : selectHeight
       let top = selectHeight - SELECT_BORDER_WIDTH * 2
+      let selectWidth = this.$el.offsetWidth
       let width = selectWidth - SELECT_BORDER_WIDTH * 2
 
       this.selectMenuStyle = {
@@ -322,9 +329,7 @@ const selectComp = {
         width: `${width}px`
       }
 
-      if (cb) {
-        return cb()
-      }
+      return cb && cb()
     },
 
     /**
@@ -782,9 +787,11 @@ const selectComp = {
         }
       })
 
-      return this._adjustselectMenuStyle(() => {
-        this.selectMenuDisplay = opt === undefined
-          ? !this.selectMenuDisplay : !opt
+      return this._adjustselectMenuStyle({
+        cb: () => {
+          this.selectMenuDisplay = opt === undefined
+            ? !this.selectMenuDisplay : !opt
+        }
       })
     },
 

@@ -10,8 +10,9 @@
  *                         isTop - 滚动条是否到顶
  *                         top - 滚动条到滚动区域的顶部的当前距离
  *                         barToBox - 滚动条离滚动区域的顶部的距离
- * @events changeBar - 滚动事件
+ * @events changeBar - 滚动条改变
  *                  return isBottom - 滚动条是否到低
+ * @events changeHeight - 滚动内容的高度变化
  *
  */
 
@@ -142,7 +143,8 @@ const scrollerComp = {
       }
 
       this.$emit('changeBar', {
-        isBottom: this.isBottom
+        isBottom: this.isBottom,
+        boxHeight
       })
     }
   },

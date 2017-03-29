@@ -8,21 +8,22 @@ export default function (h) {
     selectedBoxChildren.push(
       h('input-box', {
         class: [
-          this.defaultValClassName(this.value),
-          this.xclass('init-text'),
-          { [this.xclass('opacity')]: !this.initTxtDisplay }
-        ],
-        props: {
-          placeholder: this.defaultTxt
-        }
-      }),
-      h('input-box', {
-        class: [
           this.xclass('init-text-input')
         ],
         on: {
           blur: this.blur,
           focus: this.focus
+        }
+      }),
+      h('input-box', {
+        class: [
+          this.defaultValClassName(this.value),
+          this.xclass('init-text'),
+          { [this.xclass('opacity')]: !this.initTxtDisplay }
+        ],
+        props: {
+          placeholder: this.defaultTxt,
+          readOnly: true
         }
       })
     )
@@ -56,9 +57,11 @@ export default function (h) {
     selectedBoxChildren.push(
       h('scroller',
         {
+          class: [this.xclass('scroller')],
           props: {
             height: 100
-          }
+          },
+          ref: 'scroller'
         },
         [
           h('ul', {
