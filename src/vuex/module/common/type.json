@@ -12,5 +12,7 @@
   "tip": {
     "add": "common/tip/add",
     "get": "common/tip/get"
-  }
+  },
+
+  "deviceSize": "common/deviceSize"
 }

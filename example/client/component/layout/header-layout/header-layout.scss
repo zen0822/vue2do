@@ -31,7 +31,8 @@
 
     .nav-menu-box {
       a {
-        color: $primary-color;
+        color: #fff;
+        text-decoration: none;
       }
 
       .z-col {
@@ -56,12 +57,9 @@
     }
   }
 
-  & > .menu {
+  & > .mobile-menu {
     margin: 0 -$gap-h;
-
-    a {
-      color: #fff;
-    }
+    display: none;
 
     .menu-search {
       padding: $gap-v 0;
@@ -95,6 +93,10 @@
 
     & > .nav-box-mobile {
       display: flex;
+    }
+
+    & > .mobile-menu {
+      display: block;
     }
   }
 }

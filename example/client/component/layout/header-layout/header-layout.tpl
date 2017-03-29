@@ -35,9 +35,8 @@
   </z-row>
 
   <z-menu
-      class="menu"
+      class="mobile-menu"
       ref="mobileMenu"
-      switch="up2down"
       @hide="hideMenu"
       :init-opt="menuOpt">
     <div class="menu-search" slot="tail">

@@ -4,7 +4,8 @@ export default {
   state: {
     alert: [],
     confirm: [],
-    tip: []
+    tip: [],
+    deviceSize: ''
   },
 
   getters: {
@@ -16,6 +17,9 @@ export default {
     },
     [nameSpace.tip.get](state) {
       return state.tip.pop()
+    },
+    [nameSpace.deviceSize](state) {
+      return state.deviceSize.replace(/('|")/g, '')
     }
   },
 
@@ -28,6 +32,9 @@ export default {
     },
     [nameSpace.tip.add]({ state, commit, rootState }, component) {
       return commit(nameSpace.tip.add, component)
+    },
+    [nameSpace.deviceSize]({ state, commit, rootState }, sizeName) {
+      return commit(nameSpace.deviceSize, sizeName)
     }
   },
 
@@ -40,6 +47,9 @@ export default {
     },
     [nameSpace.confirm.add](state, component) {
       state.confirm.push(component)
+    },
+    [nameSpace.deviceSize](state, sizeName) {
+      state.deviceSize = sizeName
     }
   }
 }

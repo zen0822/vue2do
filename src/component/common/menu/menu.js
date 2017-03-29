@@ -1,6 +1,7 @@
 /**
  * menu 组件
  *
+ * @props animate - 菜单显示动画
  * @props initOpt - 菜单的数据
  * @props kind - 菜单的种类
  * @props trigger - 2，3 级菜单的触发模式
@@ -19,6 +20,7 @@ import {
   foldTitleComp,
   foldContentComp
 } from 'src/component/base/fold/fold'
+import foldTransition from 'src/component/transition/fold'
 import iconComp from 'src/component/base/icon/icon'
 import rowComp from 'src/component/common/layout/row/row'
 import colComp from 'src/component/common/layout/col/col'
@@ -36,12 +38,18 @@ export default {
     'fold': foldComp,
     'fold-title': foldTitleComp,
     'fold-content': foldContentComp,
+    'fold-transition': foldTransition,
     row: rowComp,
     column: colComp,
     icon: iconComp
   },
 
   props: {
+    animate: {
+      type: String,
+      default: 'horizontal'
+    },
+
     initOpt: Array,
 
     gap: {
@@ -93,6 +101,12 @@ export default {
     }
   },
 
+  watch: {
+    deviceSize(val) {
+      this.changeByDeviceSize(val)
+    }
+  },
+
   methods: {
     show() {
       this.isStageActive = true
@@ -102,6 +116,24 @@ export default {
     hide() {
       this.isStageActive = false
       this.$emit('hide')
+    },
+
+    toggle() {
+      this.isStageActive = !this.isStageActive
+    },
+
+    changeByDeviceSize(size) {
+      if (size === '<xl') {
+        this.show()
+      } else {
+        this.hide()
+      }
     }
+  },
+
+  mounted() {
+    this.$nextTick(() => [
+      this.changeByDeviceSize(this.deviceSize)
+    ])
   }
 }

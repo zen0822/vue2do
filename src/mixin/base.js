@@ -8,8 +8,12 @@
  */
 
 import compConfig from '../config/index.json'
+import store from 'src/vuex/store'
+import commonStore from 'src/vuex/module/common/type.json'
 
 export default {
+  store,
+
   props: {
     id: [String, Number],
 
@@ -36,6 +40,11 @@ export default {
     // 组件的统一前缀
     compPrefix() {
       return compConfig.prefix
+    },
+
+    // 设备尺寸
+    deviceSize() {
+      return this.$store.getters[commonStore.deviceSize]
     }
   },
 
@@ -121,8 +130,28 @@ export default {
   },
 
   created() {
-    this.$slotKey = Object.keys(this.$slots)
+    let deviceSizeClass = `${compConfig.prefix}-device-size`
 
+    if (!document.querySelector('.' + deviceSizeClass)) {
+      let deviceSizeEle = document.createElement('div')
+      deviceSizeEle.className = `${compConfig.prefix}-device-size`
+
+      document.body.append(deviceSizeEle)
+
+      this.$nextTick(() => {
+        let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+        this.$store.dispatch(commonStore.deviceSize, content)
+      })
+
+      window.addEventListener('resize', () => {
+        this.$nextTick(() => {
+          let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+          this.$store.dispatch(commonStore.deviceSize, content)
+        })
+      })
+    }
+
+    this.$slotKey = Object.keys(this.$slots)
     this._setDataOpt()
   },
 

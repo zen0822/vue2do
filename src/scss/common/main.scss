@@ -1,10 +1,47 @@
 @import "../config.scss";
+@import "../mixin.scss";
 
 /**
  * 组件公共类样式
  */
 
 $C_PREFIX: $comp-prefix;
+
+.#{ $C_PREFIX }-device-size {
+  display: inline-block;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  line-height: 0;
+
+  &::after {
+    content: ">xl";
+  }
+
+  @include device-type("<xl") {
+    &::after {
+      content: "<xl";
+    }
+  }
+
+  @include device-type("<l") {
+    &::after {
+      content: "<l";
+    }
+  }
+
+  @include device-type("<m") {
+    &::after {
+      content: "<m";
+    }
+  }
+
+  @include device-type("<s") {
+    &::after {
+      content: "<s";
+    }
+  }
+}
 
 .#{ $C_PREFIX }-ul {
   margin: 0;

@@ -2,6 +2,7 @@
   <z-row :gap="30" align="start">
     <z-col :span="3" :xs="12">
       <z-menu
+          animate="vertical"
           class="p-component-menu"
           title="组件导航"
           trigger="show"

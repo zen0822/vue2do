@@ -11,6 +11,8 @@ $C_PREFIX: #{ $COMP_MENU };
 $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
+  position: relative;
+
   .#{$C_PREFIX}-trigger {
     display: none;
     background: #fff;
@@ -36,33 +38,49 @@ $ICON_PREFIX: #{ $COMP_ICON };
     }
   }
 
+  .#{$C_PREFIX}-close-menu {
+    display: none;
+  }
+
   @include device-type("<l") {
     font-size: $h2;
+
+    .#{$C_PREFIX}-sub-fold a {
+      color: #fff;
+    }
 
     .#{$C_PREFIX}-trigger {
       display: block;
     }
 
     .#{$C_PREFIX}-stage {
-      position: fixed;
       box-sizing: border-box;
-      transform: translateX(-1000%);
-      background: rgba(0, 0, 0, .8);
-      transition: transform 500ms ease-in-out;
+      transition: all 500ms ease-in-out;
       width: 100%;
-      padding: 15% 10% 10%;
-      margin: auto;
-      top: 0;
-      bottom: 0;
       z-index: $z-index;
 
-      .#{$ICON_PREFIX}-ali {
-        color: #fff;
-        font-size: 20px;
+      &.#{$C_PREFIX}-animate-horizontal {
+        position: fixed;
+        padding: 15% 10% 10%;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .8);
+        transform: translateX(-200%);
+      }
+
+      &.#{$C_PREFIX}-animate-vertical {
+        overflow: hidden;
+        background: rgba(0, 0, 0, .8);
+
+        & > .#{$C_PREFIX}-close-menu {
+          display: none;
+        }
       }
 
       & > .#{$C_PREFIX}-close-menu {
         position: absolute;
+        display: block;
         left: $gap-v;
         top: $gap-v;
 
@@ -71,8 +89,15 @@ $ICON_PREFIX: #{ $COMP_ICON };
         }
       }
 
+      .#{$ICON_PREFIX}-ali {
+        color: #fff;
+        font-size: 20px;
+      }
+
       &.#{$C_PREFIX}-active {
-        transform: translateX(0);
+        &.#{$C_PREFIX}-animate-horizontal {
+          transform: translateX(0);
+        }
       }
 
       .#{$C_PREFIX}-sub-fold {
