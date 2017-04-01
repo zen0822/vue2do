@@ -98,7 +98,7 @@ export default {
      * @return { Object }
      */
     tab(evt) {
-      let currentIndex = $(evt.currentTarget).data('index')
+      let currentIndex = evt.currentTarget.dataset.index
       this.currentIndex = currentIndex
       this.$refs.shift.switch(currentIndex)
 

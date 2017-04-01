@@ -30,6 +30,19 @@
     }
 
     .nav-menu-box {
+      .router-link-active {
+        color: $bg-color;
+
+        &::after {
+          content: " ";
+          width: 100%;
+          bottom: -33px;
+          left: 0;
+          position: absolute;
+          border-bottom: #fff $border-thin * 5 solid;
+        }
+      }
+
       a {
         color: #fff;
         text-decoration: none;
@@ -42,19 +55,6 @@
         text-align: center;
       }
     }
-
-    .router-link-active {
-      color: $bg-color;
-
-      &::after {
-        content: " ";
-        width: 100%;
-        bottom: -33px;
-        left: 0;
-        position: absolute;
-        border-bottom: #fff $border-thin * 5 solid;
-      }
-    }
   }
 
   & > .mobile-menu {
@@ -62,7 +62,6 @@
     display: none;
 
     .menu-search {
-      padding: $gap-v 0;
       border-bottom: #fff $border-thin solid;
 
       & > .z-input {

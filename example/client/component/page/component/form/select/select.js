@@ -1,5 +1,6 @@
 import './select.scss'
 import template from './select.tpl'
+import pug from './select.pug'
 import mixin from '../../mixin'
 
 export default {
@@ -27,21 +28,18 @@ export default {
           text: 'test3'
         }]
       },
-
       initVal: []
-
     }
   },
 
-  created() {
-    for (let i = 0, len = 33; i < len; i++) {
-      this.dropMenuOpt.push({
-        text: 'test-' + i,
-        name: 'name-' + i,
-        size: 'size-' + i,
-        en: 'en-' + i,
-        value: i
+  computed: {
+    selectOpt() {
+      this.testOpt.unshift({
+        value: -1,
+        text: '请选择'
       })
+
+      return this.testOpt
     }
   }
 }

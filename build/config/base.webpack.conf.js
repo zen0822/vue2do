@@ -10,8 +10,7 @@ module.exports = function (opt) {
 
   var baseConf = {
     entry: {
-      app: path.resolve(__dirname, `${config.global.root}/${appName}/app.js`),
-      vendors: ['jquery']
+      app: path.resolve(__dirname, `${config.global.root}/${appName}/app.js`)
     },
 
     output: {
@@ -28,10 +27,11 @@ module.exports = function (opt) {
       modules: ["node_modules", path.resolve(__dirname, `${config.global.root}/src/scss`)],
       extensions: ['.js'],
       alias: {
-        'vue$': 'vue/dist/vue.common.js',
+        'vue$': 'vue/dist/vue.esm.js',
         'ex': path.resolve(__dirname, `${config.global.root}/example`),
         'vue2do': path.resolve(__dirname, `${config.global.root}`),
         'src': path.resolve(__dirname, `${config.global.root}/src`),
+        'exAsset': path.resolve(__dirname, `${config.global.root}/example/client/asset`)
       }
     },
 
@@ -71,6 +71,9 @@ module.exports = function (opt) {
           test: /\.json$/,
           loader: 'json-loader'
         }, {
+          test: /\.pug$/,
+          loader: 'pug-loader'
+        }, {
           test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
           loader: 'url-loader',
           options: {
@@ -84,6 +87,19 @@ module.exports = function (opt) {
             limit: 10000,
             name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
           }
+        }, {
+          test: /\.ts$/,
+          exclude: /node_modules|vue\/src/,
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
+        }, {
+          test: /\.vue$/,
+          loader: 'vue-loader',
+          options: {
+            esModule: true
+          }
         }
       ]
     },
@@ -91,15 +107,7 @@ module.exports = function (opt) {
     performance: {
       maxEntrypointSize: 104857600,
       maxAssetSize: 10485760
-    },
-
-    plugins: [
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery"
-      })
-    ]
+    }
   }
 
   return baseConf

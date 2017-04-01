@@ -3,6 +3,8 @@ import check from 'src/component/base/check/check'
 import form from 'src/component/base/form/form'
 import input from 'src/component/base/input/input'
 import icon from 'src/component/base/icon/icon'
+
+import code from 'src/component/common/code/code'
 import loading from 'src/component/base/loading/loading'
 import menu from 'src/component/common/menu/menu'
 import page from 'src/component/base/page/page'
@@ -37,6 +39,7 @@ import row from 'src/component/common/layout/row/row'
 const compHub = [
   btn,
   check,
+  code,
   form,
   fold,
   foldTitle,

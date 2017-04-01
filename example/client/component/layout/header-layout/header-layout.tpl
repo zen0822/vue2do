@@ -1,7 +1,9 @@
 <div class="header-layout-stage">
   <z-row class="nav-box">
     <z-col :span="8">
-      <img class="logo-box" :src="logoUrl" />
+      <router-link to="/">
+        <img class="logo-box" :src="logoUrl" />
+      </router-link>
     </z-col>
     <z-col :span="4">
       <z-row class="nav-menu-box">

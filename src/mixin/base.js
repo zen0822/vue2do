@@ -10,6 +10,7 @@
 import compConfig from '../config/index.json'
 import store from 'src/vuex/store'
 import commonStore from 'src/vuex/module/common/type.json'
+import { addClass } from 'src/util/dom/element'
 
 export default {
   store,
@@ -27,7 +28,7 @@ export default {
 
   directives: {
     'xclass'(el, binding) {
-      $(el).addClass(binding.value)
+      addClass(el, binding.value)
     }
   },
 
@@ -72,6 +73,21 @@ export default {
 
     /**
      * 为组件里面的类名增加前缀
+     **/
+    prefixClass(className) {
+      if (Array.isArray(className)) {
+        for (let i = 0, len = className.length; i < len; i++) {
+          className[i] = `${this.compPrefix}-${className[i]}`
+        }
+
+        return className.join(' ')
+      } else {
+        return `${this.compPrefix}-${className}`
+      }
+    },
+
+    /**
+     * 为组件里面的类名增加组件前缀
      **/
     xclass(className) {
       if (Array.isArray(className)) {
@@ -142,7 +158,7 @@ export default {
         let deviceSizeEle = document.createElement('div')
         deviceSizeEle.className = `${compConfig.prefix}-device-size`
 
-        document.body.append(deviceSizeEle)
+        document.body.appendChild(deviceSizeEle)
 
         this.$nextTick(() => {
           let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')

@@ -4,8 +4,12 @@
 .#{$PAGE_PREFIX}-component {
   text-align: left;
 
+  max-width: 1024px;
+  margin: 0 auto;
+
   .#{$PAGE_PREFIX}-component-stage {
     margin-top: $gap-v-double;
+    padding-bottom: $gap-v-triple;
   }
 
   .#{$PAGE_PREFIX}-component-menu {
@@ -55,6 +59,10 @@
           text-decoration: none;
         }
       }
+    }
+
+    .z-code {
+      margin-top: $gap-v-double;
     }
   }
 

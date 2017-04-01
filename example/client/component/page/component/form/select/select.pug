@@ -1,0 +1,13 @@
+.p-select
+  article.example-article
+    section
+      router-link.anchor-title(
+          tag='h1'
+          ':to'='anchorLink("basic")')
+        span(@click="goAnchor") 基本用法
+      p.section-description
+        | 直接传入 init-opt
+      z-select(:init-opt="dropMenuOpt")
+      z-code
+        = '<z-select :init-opt="dropMenuOpt">'
+        = '</z-select>'

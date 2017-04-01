@@ -1,21 +1,52 @@
 [
   {
-    "name": "表单相关",
-    "route": "/component/form",
+    "name": "表单控件",
     "sub": [
       {
         "name": "按钮组件",
-        "sub": [{
-          "name": "基本用法",
-          "route": "/component/btn#start"
-        }, {
-          "name": "按钮类别",
-          "route": "/component/btn#kind"
-        }]
+        "sub": [
+          {
+            "name": "基本用法",
+            "route": "/component/btn#start"
+          },
+          {
+            "name": "按钮类别",
+            "route": "/component/btn#kind"
+          }
+        ]
       },
       {
         "name": "选择组件",
-        "route": "/component/select"
+        "sub": [
+          {
+            "name": "基本用法",
+            "route": "/component/select#basic"
+          },
+          {
+            "name": "标签声明",
+            "route": "/component/select#tag"
+          },
+          {
+            "name": "自定义内容",
+            "route": "/component/select#custom"
+          },
+          {
+            "name": "分类下拉框",
+            "route": "/component/select#classify"
+          },
+          {
+            "name": "多选下拉框",
+            "route": "/component/select#multiple"
+          },
+          {
+            "name": "搜索功能",
+            "route": "/component/select#search"
+          },
+          {
+            "name": "指定下拉框选项",
+            "route": "/component/select#init"
+          }
+        ]
       },
       {
         "name": "输入组件",
@@ -24,12 +55,68 @@
     ]
   },
   {
-    "name": "布局相关",
-    "route": "/component/layout",
+    "name": "消息和提示",
     "sub": [
       {
-        "name": "行列组件",
-        "route": "/component/row-and-col"
+        "name": "弹窗",
+        "sub": [
+          {
+            "name": "确认弹窗",
+            "route": "/component/pop#confirm"
+          },
+          {
+            "name": "消息弹窗",
+            "route": "/component/pop#alert"
+          }
+        ]
+      },
+      {
+        "name": "提示",
+        "sub": [
+          {
+            "name": "泡泡提示",
+            "route": "/component/tip#bubble"
+          },
+          {
+            "name": "弹窗提示",
+            "route": "/component/tip#alert"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "数据展示",
+    "sub": [
+      {
+        "name": "表格数据",
+        "route": "/component/table"
+      },
+      {
+        "name": "列表数据",
+        "route": "/component/list"
+      },
+      {
+        "name": "分页控件",
+        "sub": [
+          {
+            "name": "加载更多",
+            "route": "/component/pager#more"
+          },
+          {
+            "name": "页码跳转",
+            "route": "/component/pager#page-num"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "布局相关",
+    "sub": [
+      {
+        "name": "布局组件",
+        "route": "/component/grid"
       }
     ]
   }

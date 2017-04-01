@@ -20,21 +20,21 @@ $ICON_PREFIX: #{ $COMP_ICON };
     border-bottom: $border-color $border-thin solid;
   }
 
-  .#{$C_PREFIX}-sub-fold {
-    & > dl > dt {
-      border-top: none;
-    }
-  }
-
-   .#{$C_PREFIX}-stage > .#{$C_PREFIX}-sub-fold {
+  .#{$C_PREFIX}-stage
+      > .#{$C_PREFIX}-transition-container
+      > .#{$C_PREFIX}-sub-fold {
     margin-left: 0;
-  }
 
-  .#{$C_PREFIX}-sub-fold {
-    margin-left: $gap-h;
+    .#{$C_PREFIX}-sub-fold {
+      margin-left: $gap-h;
 
-    a {
-      display: block;
+      a {
+        display: block;
+      }
+
+      & > dl > dt {
+        border-top: none;
+      }
     }
   }
 
@@ -43,14 +43,11 @@ $ICON_PREFIX: #{ $COMP_ICON };
   }
 
   @include device-type("<l") {
-    font-size: $h2;
-
-    .#{$C_PREFIX}-sub-fold a {
-      color: #fff;
-    }
+    font-size: $h3;
 
     .#{$C_PREFIX}-trigger {
       display: block;
+      font-size: $h2;
     }
 
     .#{$C_PREFIX}-stage {
@@ -73,25 +70,35 @@ $ICON_PREFIX: #{ $COMP_ICON };
         overflow: hidden;
         background: rgba(0, 0, 0, .8);
 
-        & > .#{$C_PREFIX}-close-menu {
+        & > .#{$C_PREFIX}-transition-container
+            > .#{$C_PREFIX}-close-menu {
           display: none;
+        }
+
+        & > .#{$C_PREFIX}-transition-container
+            > .#{$C_PREFIX}-sub-fold {
+          padding: $gap-v-triple $gap-h-triple 40px;
+        }
+
+        .router-link-active {
+          color: $primary-color;
+        }
+
+        .#{$C_PREFIX}-sub-fold {
+          padding: 0 $gap-h;
         }
       }
 
-      & > .#{$C_PREFIX}-close-menu {
+      & > .#{$C_PREFIX}-transition-container
+          > .#{$C_PREFIX}-close-menu {
         position: absolute;
         display: block;
         left: $gap-v;
         top: $gap-v;
 
         .#{$ICON_PREFIX}-close {
-          font-size: 35px;
+          font-size: 30px;
         }
-      }
-
-      .#{$ICON_PREFIX}-ali {
-        color: #fff;
-        font-size: 20px;
       }
 
       &.#{$C_PREFIX}-active {
@@ -100,16 +107,23 @@ $ICON_PREFIX: #{ $COMP_ICON };
         }
       }
 
+
+      .#{$ICON_PREFIX}-ali {
+        color: #fff;
+        font-size: 20px;
+      }
+
       .#{$C_PREFIX}-sub-fold {
         color: #fff !important;
 
         a {
+          color: #fff;
           text-decoration: none;
         }
 
         & > dl > dt {
           padding: $gap-v 0;
-          border-bottom: #fff $border-thin solid;
+          border-bottom: $border-color $border-thin solid;
         }
       }
     }

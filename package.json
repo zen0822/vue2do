@@ -16,7 +16,6 @@
     "prod": "node bin/prod --app example"
   },
   "dependencies": {
-    "jquery": "*",
     "vue": "^2.1.8"
   },
   "devDependencies": {
@@ -53,16 +52,22 @@
     "optimist": "*",
     "ora": "*",
     "postcss-loader": "^1.2.1",
+    "pug": "^2.0.0-beta3",
+    "pug-loader": "^2.3.0",
     "sass-loader": "*",
     "shelljs": "*",
     "style-loader": "^0.13.1",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.2",
     "url-loader": "*",
+    "vue-class-component": "^5.0.1",
     "vue-hot-reload-api": "^2.0.7",
     "vue-html-loader": "^1.2.3",
     "vue-i18n": "^5.0.3",
-    "vue-loader": "*",
+    "vue-loader": "^11.3.4",
     "vue-router": "^2.1.1",
     "vue-style-loader": "*",
+    "vue-template-compiler": "^2.2.6",
     "vuex": "^2.2.1",
     "webpack": "^2.2.1",
     "webpack-dashboard": "*",

@@ -3,6 +3,12 @@ import btnPage from '../component/page/component/form/btn/btn'
 import selectPage from '../component/page/component/form/select/select'
 import checkPage from '../component/page/component/form/check/check'
 import inputPage from '../component/page/component/form/input/input'
+import popPage from '../component/page/component/message/pop/pop'
+import tipPage from '../component/page/component/message/tip/tip'
+import tablePage from '../component/page/component/data/table/table'
+import listPage from '../component/page/component/data/list/list'
+import pagerPage from '../component/page/component/data/page/page'
+import gridPage from '../component/page/component/layout/grid/grid'
 
 export default [{
   path: '',
@@ -33,5 +39,47 @@ export default [{
   component: checkPage,
   meta: {
     title: '选择框组件'
+  }
+}, {
+  path: 'pop',
+  component: popPage,
+  meta: {
+    title: '弹窗组件'
+  }
+}, {
+  path: 'pop',
+  component: popPage,
+  meta: {
+   title: '弹窗组件'
+  }
+}, {
+  path: 'tip',
+  component: tipPage,
+  meta: {
+    title: '提示组件'
+  }
+}, {
+  path: 'table',
+  component: tablePage,
+  meta: {
+    title: '表格组件'
+  }
+}, {
+  path: 'list',
+  component: listPage,
+  meta: {
+    title: '列表组件'
+  }
+}, {
+  path: 'pager',
+  component: pagerPage,
+  meta: {
+    title: '分页组件'
+  }
+}, {
+  path: 'grid',
+  component: gridPage,
+  meta: {
+    title: '表格布局组件'
   }
 }]

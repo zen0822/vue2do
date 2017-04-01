@@ -336,6 +336,10 @@ const selectComp = {
      * 设置 data 选项的默认值
      */
     _setDataOpt() {
+      if (this.initVal) {
+        this.value = this.multiple ? this.initVal.slice() : this.initVal
+      }
+
       this.option = this.initOpt.slice()
     },
 

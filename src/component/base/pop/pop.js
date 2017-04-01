@@ -191,7 +191,7 @@ const popComp = {
      * @return {Object, Boolean}
      */
     mouseMove(event) {
-      var $this = $(this.$el).find('.pop')
+      var $this = this.$el.querySelector('.pop')
       if (!this.isMousedown) {
         return false
       }

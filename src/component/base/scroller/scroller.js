@@ -151,8 +151,7 @@ const scrollerComp = {
 
   methods: {
     _init() {
-      this.$box = $(this.$refs.box)
-      this.$bar = $(this.$refs.bar)
+      this.$box = this.$refs.box
 
       setInterval(() => {
         this._initScroller()
@@ -161,7 +160,7 @@ const scrollerComp = {
 
     // 初始化滚动条
     _initScroller() {
-      this.boxHeight = this.$box.outerHeight()
+      this.boxHeight = this.$box.offsetHeight
     },
 
     barClick(evt) {

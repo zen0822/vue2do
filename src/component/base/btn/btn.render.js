@@ -34,7 +34,7 @@ export default function (h) {
       }))
     }
 
-    buttonChildren.push(this.$slots.default)
+    buttonChildren.push(this.$slots.default ? this.$slots.default : this.value)
 
     btnChildren.push(
       h(

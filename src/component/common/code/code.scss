@@ -1,0 +1,39 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
+
+/**
+ * code 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_CODE };
+
+.#{$C_PREFIX} {
+  position: relative;
+  background-color: #fff;
+  padding: $gap-v $gap-v $gap-v 50px;
+  border: $primary-light-color $border-thin solid;
+  border-radius: $border-radius;
+
+  & > .#{$C_PREFIX}-article {
+    & > pre {
+      font-family: 'Roboto Mono', Monaco, courier, monospace;
+      font-size: 1em;
+      margin: 0;
+      -webkit-font-smoothing: initial;
+      -moz-osx-font-smoothing: initial;
+    }
+  }
+
+  & > .#{$C_PREFIX}-line-num {
+    font-family: 'Roboto Mono', Monaco, courier, monospace;
+    position: absolute;
+    top: $gap-v;
+    left: 5px;
+    padding-right: 5px;
+    border-right: $border-thin * 2 $primary-color solid;
+    text-align: right;
+    width: 24px;
+  }
+}

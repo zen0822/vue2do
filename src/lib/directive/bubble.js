@@ -1,6 +1,5 @@
 export default {
   update(el, binding, opt = {}) {
-    binding.$el = $(el)
     var bubbleTip = {}
 
     var bubbleText = opt.text
@@ -21,7 +20,7 @@ export default {
       // bubbleTip = COMMON.router.app.$refs.commonComponent.$refs.bubbleTip
     }
 
-    binding.$el.mouseover((event) => {
+    el.addEventListener('mouseover', (event) => {
       if (bubbleText) {
         bubbleTip.info(bubbleText).show(event.target)
         return false
@@ -31,7 +30,7 @@ export default {
       event.stopPropagation()
     })
 
-    binding.$el.mouseout((event) => {
+    el.addEventListener('mouseout', (event) => {
       bubbleTip.hide()
 
       event.stopPropagation()

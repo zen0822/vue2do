@@ -1,62 +1,121 @@
 //---------------- layout ----------------
 
-$DEVICE-XS-RANGE: "0px ~ 575px";
-$DEVICE-S-RANGE: "576px ~ 765px";
-$DEVICE-M-RANGE: "768px ~ 991px";
-$DEVICE-L-RANGE: "992px ~ 1911px";
-$DEVICE-XL-RANGE: "1200px ~ --px";
+$DEVICE_SIZE_XS: 575px;
+$DEVICE_SIZE_S: 765px;
+$DEVICE_SIZE_M: 991px;
+$DEVICE_SIZE_L: 1911px;
+
+$DEVICE_XS_RANGE: "0px ~ 575px";
+$DEVICE_S_RANGE: "576px ~ 765px";
+$DEVICE_M_RANGE: "766px ~ 991px";
+$DEVICE_L_RANGE: "992px ~ 1911px";
+$DEVICE_XL_RANGE: "1200px ~ --px";
 
 @mixin device-type($type){
   @if $type == "<s" {
-    @media only screen and (max-width: 575px) {
+    @media only screen and (max-width: $DEVICE_SIZE_XS) {
       @content;
     }
   }
 
   @if $type == "<m" {
-    @media only screen and (max-width: 765px) {
+    @media only screen and (max-width: $DEVICE_SIZE_S) {
       @content;
     }
   }
 
   @if $type == "<l" {
-    @media only screen and (max-width: 991px) {
+    @media only screen and (max-width: $DEVICE_SIZE_M) {
       @content;
     }
   }
 
   @if $type == "<xl" {
-    @media only screen and (max-width: 1911px) {
+    @media only screen and (max-width: $DEVICE_SIZE_L) {
+      @content;
+    }
+  }
+
+  @if $type == ">xs" {
+    @media only screen and (min-width: $DEVICE_SIZE_XS) {
+      @content;
+    }
+  }
+
+  @if $type == ">s" {
+    @media only screen and (min-width: $DEVICE_SIZE_S) {
+      @content;
+    }
+  }
+
+  @if $type == ">m" {
+    @media only screen and (min-width: $DEVICE_SIZE_M) {
+      @content;
+    }
+  }
+
+  @if $type == ">l" {
+    @media only screen and (min-width: $DEVICE_SIZE_L) {
+      @content;
+    }
+  }
+
+  @if $type == "<xs>" {
+    @media only screen and (max-width: $DEVICE_SIZE_XS) {
+      @content;
+    }
+  }
+
+  @if $type == "<s>" {
+    @media only screen and (min-width: $DEVICE_SIZE_XS) and (max-width: $DEVICE_SIZE_S) {
+      @content;
+    }
+  }
+
+  @if $type == "<m>" {
+    @media only screen and (min-width: $DEVICE_SIZE_S) and (max-width: $DEVICE_SIZE_M) {
+      @content;
+    }
+  }
+
+  @if $type == "<l>" {
+    @media only screen and (min-width: $DEVICE_SIZE_M) and (max-width: $DEVICE_SIZE_L) {
+      @content;
+    }
+  }
+
+  @if $type == "<xl>" {
+    @media only screen and (min-width: $DEVICE_SIZE_L) {
       @content;
     }
   }
 
   @if $type == xs {
-    @media only screen and (max-width: 575px) {
+    @media only screen and (max-width: $DEVICE_SIZE_XS) {
       @content;
     }
   }
 
   @if $type == s {
-    @media only screen and (min-width: 576px) {
+    @media only screen and (min-width: $DEVICE_SIZE_XS) {
       @content;
     }
   }
 
   @if $type == m {
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: $DEVICE_SIZE_S) {
       @content;
     }
   }
 
   @if $type == l {
-    @media only screen and (min-width: 992px) {
+    @media only screen and (min-width: $DEVICE_SIZE_M) {
       @content;
     }
   }
 
   @if $type == xl {
-    @media only screen and (min-width: 1200px) {
+    @media only screen and (min-width: $DEVICE_SIZE_L) {
       @content;
     }
   }

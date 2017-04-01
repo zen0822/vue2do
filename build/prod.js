@@ -14,7 +14,7 @@ module.exports = function ({ appName }) {
   })
 
   var spinner = ora('building for production...')
-  // spinner.start()
+  spinner.start()
 
   var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
   shelljs.rm('-rf', assetsPath)
@@ -38,6 +38,9 @@ module.exports = function ({ appName }) {
       shelljs.rm('-rf', `${websiteProject}/static`)
       shelljs.cp('-r', `${config.build.assetsRoot}/*`, `${websiteProject}`)
       shelljs.echo(`${assetsPath} successfully copy to ${websiteProject}`)
+
+      // 准备解析 log 到网站分支
+      // let log = shelljs.exec('git log')
 
       shelljs.cd('./zen0822.github.io')
 

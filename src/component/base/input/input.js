@@ -395,7 +395,7 @@ const inputComp = {
           this.verified = false
 
           // TODO bug
-          $(window).scrollTop($(this.$el).scrollTop())
+          // $(window).scrollTop($(this.$el).scrollTop())
 
           return false
         }

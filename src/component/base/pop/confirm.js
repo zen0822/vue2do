@@ -4,26 +4,90 @@
 
 import Vue from 'vue'
 
-const {trim} = require('src/common/utils/string');
-const commonCompUtil = require('src/common/utils/commonComp')
+import popComp from './pop'
+import store from 'src/vuex/store'
+import commonStore from 'src/vuex/module/common/type.json'
+import baseMixin from 'src/mixin/base'
+
+let confirming = false
+let confirmHub = []
 
 /**
- * 弹窗函数
- * @param {Object} - {弹窗的头部名字, 弹窗的信息, ok 的回调函数，no 的回调函数}
- */
+ * 创建 confirm 组件的实例
+ **/
+const createTip = () => {
+  const confirmCompVm = new Vue({
+    name: 'confirm',
+    mixins: [baseMixin],
+    computed: {
+      // 组件类名的前缀
+      cPrefix() {
+        return `${this.compPrefix}-confirm`
+      }
+    },
+    components: {
+      pop: popComp
+    },
+    store,
+    template: `
+      <div :class="[cPrefix]">
+        <pop
+            ref="confirm"
+            type="confirm"></pop>
+      </div>
+    `,
+    mounted() {
+      this.$store.dispatch(commonStore.confirm.add, this)
+    }
+  }).$mount()
 
-module.exports = ({title = '', message = '', cb, noCb} = {}) => {
-  if (!commonCompUtil.alive()) {
+  document.body.appendChild(confirmCompVm.$el)
+}
+
+/**
+ * 调用 confirm
+ **/
+const confirm = (opt) => {
+  if (confirming) {
+    confirmHub.push(opt)
+
     return false
   }
 
-  return COMMON.router.app.$refs
-    .commonComponent
+  if (opt === undefined) {
+    opt.message = '未知错误！'
+  } else if (typeof opt === 'string') {
+    opt = {
+      message: opt
+    }
+  }
+
+  const commonVuex = new Vue({
+    store
+  })
+
+  return commonVuex
+    .$store
+    .getters[commonStore.confirm.get]
     .$refs
     .confirm
-    .title(title)
-    .info(message)
-    .setOkCb(cb)
-    .setNoCb(noCb)
-    .show()
-};
+    .title(opt.title)
+    .info(opt.message)
+    .setOkCb((vm) => {
+      confirming = false
+
+      if (confirmHub.length > 0) {
+        confirm(confirmHub.shift())
+      }
+
+      opt.cb && opt.cb()
+      vm.hide()
+    })
+    .show(() => {
+      confirming = true
+    })
+}
+
+createTip()
+
+export default confirm

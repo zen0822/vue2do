@@ -1,7 +1,8 @@
 @import "~config.scss";
 
 .page-layout {
-  margin-left: $menuwidth;
+  max-width: 1024px;
+  margin: 0 auto;
 
   .page-layout-wrap {
 
