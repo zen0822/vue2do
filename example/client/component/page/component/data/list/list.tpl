@@ -8,7 +8,7 @@
         <span @click="goAnchor">基本用法</span>
       </router-link>
 
-      <z-list
+      <!--<z-list
           page-type="more"
           page-trigger="click"
           auto
@@ -19,7 +19,13 @@
         <template scope="props">
           <div>{{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf</div>
         </template>
-      </z-list>
+      </z-list>-->
+
+      <z-select :init-opt="testOpt">
+        <template slot="custom" scope="props">
+          <z-select-ele>{{ props.item.text }}-custom</z-select-ele>
+        </template>
+      </z-select>
     </section>
   </article>
 </div>

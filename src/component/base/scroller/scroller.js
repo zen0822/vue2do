@@ -56,6 +56,9 @@ const scrollerComp = {
   },
 
   data() {
+    // 组件名字
+    this.compName = 'scroller'
+
     return {
       // y-scroller detail
       yData: {
@@ -120,6 +123,10 @@ const scrollerComp = {
       isTouchStart: false,
       // 记录连续滚动的标注
       scrolling: false,
+      // 记录是否还在触摸移动中
+      moving: false,
+      // 是否有 scroller 组件的祖先
+      hasScrollerGrandpa: false,
       // 记录开始触摸滚动区域的坐标
       touchStart: {
         x: 0,
@@ -162,9 +169,10 @@ const scrollerComp = {
         // 是否显示滚动条
         barDisplay: !this.yData.scrollerContainBox && (!this.autoHide || this.showBar),
         // 滚动条是否在顶部
-        isTop: this.yData.barTop === 0,
+        isTop: this.yData.scrollerContainBox || this.yData.barTop === 0,
         // 滚动条是否在底部
-        isBottom: this.yData.barTop === this.yData.barAndScrollerOffset,
+        isBottom: this.yData.scrollerContainBox ||
+        this.yData.barTop === this.yData.barAndScrollerOffset,
         barStyle: {
           'height': this.yData.barLength + 'px',
           'top': this.yData.barTop + 'px'
@@ -255,6 +263,10 @@ const scrollerComp = {
       let boxAndScrollerOffset = 0
       // 滚动条和滚动区域的偏移值
       let barAndScrollerOffset = 0
+      // 滚动条位置名字
+      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
+      // 滚动内容位置名字
+      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
 
       if (type === 'y') {
         scrollerContainBox = length === 'auto' ? true : length >= boxLength
@@ -277,21 +289,16 @@ const scrollerComp = {
 
       boxAndScrollerOffset = boxLength - scrollerLength
       barAndScrollerOffset = scrollerLength - barLength
+
       this[barName].scrollerContainBox = scrollerContainBox
+      this[barName].boxBarRate = boxBarRate
+      this[barName].barLength = barLength
+      this[barName].scrollBarPixel = SCROLL_PIXEL / boxBarRate
+      this[barName].boxAndScrollerOffset = boxAndScrollerOffset
+      this[barName].barAndScrollerOffset = barAndScrollerOffset
 
-      if (!scrollerContainBox) {
-        this[barName].boxBarRate = boxBarRate
-        this[barName].barLength = barLength
-        this[barName].scrollBarPixel = SCROLL_PIXEL / boxBarRate
-        this[barName].boxAndScrollerOffset = boxAndScrollerOffset
-        this[barName].barAndScrollerOffset = barAndScrollerOffset
-
-        if (type === 'y') {
-          this.yData.barTop = -this.boxTop * barAndScrollerOffset / boxAndScrollerOffset
-        } else {
-          this.xData.barLeft = -this.boxLeft * barAndScrollerOffset / boxAndScrollerOffset
-        }
-      }
+      this[barName][barPositionName] = scrollerContainBox ? 0
+        : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
 
       this.triggerChangeBar(type)
     },
@@ -311,32 +318,30 @@ const scrollerComp = {
       }
 
       let barName = type + 'Data'
-      let barDistanceName = `bar${type === 'y' ? 'Top' : 'Left'}`
-      let boxDistanceName = `box${type === 'y' ? 'Top' : 'Left'}`
-      let boxPosition = this[boxDistanceName] + boxDistance
-      let barPosition = this[barName][barDistanceName] + barDistance
+      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
+      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
+      let boxPosition = this[boxPositionName] + boxDistance
+      let barPosition = this[barName][barPositionName] + barDistance
       let barAndScrollerOffset = this[barName].barAndScrollerOffset
       let boxAndScrollerOffset = this[barName].boxAndScrollerOffset
 
       if (boxDistance > 0) {
         if (type === 'y') {
-          this[barName][barDistanceName] = barPosition < 0 ? 0 : barPosition
-          this[boxDistanceName] = boxPosition > 0 ? 0 : boxPosition
+          this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition
+          this[boxPositionName] = boxPosition > 0 ? 0 : boxPosition
         } else {
-          this[barName][barDistanceName] = barPosition < 0 ? 0 : barPosition
-          this[boxDistanceName] = boxPosition > 0 ? 0 : boxPosition
+          this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition
+          this[boxPositionName] = boxPosition > 0 ? 0 : boxPosition
         }
       } else {
         if (type === 'y') {
-          this[barName][barDistanceName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
-          this[boxDistanceName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
+          this[barName][barPositionName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
+          this[boxPositionName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
         } else {
-          this[barName][barDistanceName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
-          this[boxDistanceName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
+          this[barName][barPositionName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
+          this[boxPositionName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
         }
       }
-
-      this.triggerScroll(type)
     },
 
     barClick(evt) {
@@ -452,9 +457,9 @@ const scrollerComp = {
     },
 
     scrollerTouchMove(evt) {
-      evt.preventDefault()
-
       if (this.yData.scrollerContainBox && this.xData.scrollerContainBox) {
+        this.triggerScroll('y')
+
         return false
       }
 
@@ -473,6 +478,8 @@ const scrollerComp = {
           boxDistance: -yDistance,
           barDistance: yDistance / this.yData.boxBarRate
         })
+
+        this.triggerScroll('y')
       }
 
       if (!this.xData.scrollerContainBox) {
@@ -481,17 +488,34 @@ const scrollerComp = {
           boxDistance: -xDistance,
           barDistance: xDistance / this.xData.boxBarRate
         })
+
+
+        this.triggerScroll('x')
       }
 
       this.touchStart = {
         x: evt.touches[0].clientX,
         y: evt.touches[0].clientY
       }
+
+      // 滚动区域正方向移动
+      if (yDistance > 0) {
+        if (this.yComputed.isBottom && !this.hasScrollerGrandpa) {
+        } else {
+          evt.preventDefault()
+        }
+      } else {
+        if (this.yComputed.isTop && !this.hasScrollerGrandpa) {
+        } else {
+          evt.preventDefault()
+        }
+      }
     },
 
     scrollerTouchEnd(evt) {
       this.showBar = false
       this.isTouchStart = false
+      this.moving = false
     },
 
     triggerScroll(type) {
@@ -543,6 +567,20 @@ const scrollerComp = {
 
       return this.$emit(eventName, data)
     }
+  },
+
+  created() {
+    function checkScrollerParent(parent = {}) {
+      if (parent.compName === 'scroller') {
+        return true
+      } else if (parent.constructor.name === 'VueComponent') {
+        return checkScrollerParent(parent.$parent)
+      } else {
+        return false
+      }
+    }
+
+    this.hasScrollerGrandpa = checkScrollerParent(this.$parent)
   }
 }
 
