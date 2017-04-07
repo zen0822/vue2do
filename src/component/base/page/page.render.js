@@ -39,163 +39,195 @@ export default function (h) {
           }]
         },
         [
-          h('row', [
-            h('column', [
-              h('div', {
-                class: [this.xclass('length')]
-              }, `共 ${this.pageData.length} 条`)
-            ]),
-            h('column', [
-              h(
-                'div',
-                {
-                  class: [
-                    this.xclass('ele')
-                  ],
-                  directives: [{
-                    name: 'show',
-                    value: this.pageData.current !== 1
-                  }],
-                  on: {
-                    click: this.start
-                  }
-                },
-                [
-                  h('icon', {
-                    props: {
-                      size: 'm',
-                      kind: 'backward-start'
-                    }
-                  })
-                ]
-              )
-            ]),
-            h('column', [
-              h(
-                'div',
-                {
-                  class: [
-                    this.xclass('ele'),
-                    {
-                      [`${this.compPrefix}-invisible`]: this.preDisplay
-                    }
-                  ],
-                  on: {
-                    click: this.pre
-                  }
-                },
-                [
-                  h('icon', {
-                    props: {
-                      size: 'm',
-                      kind: 'backward'
-                    }
-                  })
-                ]
-              )
-            ]),
-            h('column', [
-              h('ul', {
-                class: [this.xclass('ul'), `${this.compPrefix}-ul`]
-              }, this.pageData.item.map((item, index) => {
-                let pageNum = index + 1
+          h('row', {
+            props: {
+              gap: 10
+            }
+          }, [
+            h('column', {
+              props: {
+                xs: 12,
+                s: 12,
+                l: 1,
+                xl: 1
+              }
+            }, [
+                h('div', {
+                  class: [this.xclass('length')]
+                }, `共 ${this.pageData.length} 条`)
+              ]),
+            h('column',
+              {
+                props: {
+                  xs: 12,
+                  s: 12,
+                  l: 6,
+                  xl: 6
+                }
+              },
+              [
+                h('row', [
+                  h('column', [
+                    h(
+                      'div',
+                      {
+                        class: [
+                          this.xclass('ele')
+                        ],
+                        directives: [{
+                          name: 'show',
+                          value: this.pageData.current !== 1
+                        }],
+                        on: {
+                          click: this.start
+                        }
+                      },
+                      [
+                        h('icon', {
+                          props: {
+                            size: 'm',
+                            kind: 'backward-start'
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  h('column', [
+                    h(
+                      'div',
+                      {
+                        class: [
+                          this.xclass('ele'),
+                          {
+                            [`${this.compPrefix}-invisible`]: this.preDisplay
+                          }
+                        ],
+                        on: {
+                          click: this.pre
+                        }
+                      },
+                      [
+                        h('icon', {
+                          props: {
+                            size: 'm',
+                            kind: 'backward'
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  h('column', [
+                    h('ul', {
+                      class: [this.xclass('ul'), `${this.compPrefix}-ul`]
+                    }, this.pageData.item.map((item, index) => {
+                      let pageNum = index + 1
 
-                return h('li', {
-                  attrs: {
-                    'data-index': pageNum
+                      return h('li', {
+                        attrs: {
+                          'data-index': pageNum
+                        },
+                        class: [
+                          this.xclass('li'),
+                          this.xclass('ele'),
+                          { [this.xclass('li-active')]: pageNum === this.pageData.current }
+                        ],
+                        on: {
+                          click: this.click
+                        }
+                      }, pageNum)
+                    }))
+                  ]),
+                  h('column', [
+                    h(
+                      'div',
+                      {
+                        class: [
+                          this.xclass('ele'),
+                          {
+                            [`${this.compPrefix}-invisible`]: this.nextDisplay
+                          }
+                        ],
+                        on: {
+                          click: this.next
+                        }
+                      },
+                      [
+                        h('icon', {
+                          props: {
+                            size: 'm',
+                            kind: 'forward'
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  h('column', [
+                    h(
+                      'div',
+                      {
+                        class: [
+                          this.xclass('ele'),
+                          {
+                            [`${this.compPrefix}-invisible`]: this.nextDisplay
+                          }
+                        ],
+                        directives: [{
+                          name: 'show',
+                          value: this.pageData.length !== this.pageData.current
+                        }],
+                        on: {
+                          click: this.end
+                        }
+                      },
+                      [
+                        h('icon', {
+                          props: {
+                            size: 'm',
+                            kind: 'forward-end'
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            ),
+            h('column', {
+              props: {
+                xs: 12,
+                s: 12,
+                l: 5,
+                xl: 5
+              }
+            }, [
+                h(
+                  'div',
+                  {
+                    class: [this.xclass('search')]
                   },
-                  class: [
-                    this.xclass('li'),
-                    this.xclass('ele'),
-                    { [this.xclass('li-active')]: pageNum === this.pageData.current }
-                  ],
-                  on: {
-                    click: this.click
-                  }
-                }, pageNum)
-              }))
-            ]),
-            h('column', [
-              h(
-                'div',
-                {
-                  class: [
-                    this.xclass('ele'),
-                    {
-                      [`${this.compPrefix}-invisible`]: this.nextDisplay
-                    }
-                  ],
-                  on: {
-                    click: this.next
-                  }
-                },
-                [
-                  h('icon', {
-                    props: {
-                      size: 'm',
-                      kind: 'forward'
-                    }
-                  })
-                ]
-              )
-            ]),
-            h('column', [
-              h(
-                'div',
-                {
-                  class: [
-                    this.xclass('ele'),
-                    {
-                      [`${this.compPrefix}-invisible`]: this.nextDisplay
-                    }
-                  ],
-                  directives: [{
-                    name: 'show',
-                    value: this.pageData.length !== this.pageData.current
-                  }],
-                  on: {
-                    click: this.end
-                  }
-                },
-                [
-                  h('icon', {
-                    props: {
-                      size: 'm',
-                      kind: 'forward-end'
-                    }
-                  })
-                ]
-              )
-            ]),
-            h('column', [
-              h(
-                'div',
-                {
-                  class: [this.xclass('search')]
-                },
-                [
-                  h('span', {
-                    class: [this.xclass('total')]
-                  }, `共 ${this.pageData.total} 页 `),
-                  h('span', '第 '),
-                  h('input-box', {
-                    class: [this.xclass('jump-box')],
-                    ref: 'jumpInput'
-                  }),
-                  h('span', ' 页 '),
-                  h('btn', {
-                    class: [this.xclass('jump-btn')],
-                    props: {
-                      kind: 'default',
-                      value: 'GO'
-                    },
-                    on: {
-                      click: this.jump
-                    }
-                  }, 'GO')
-                ]
-              )
-            ])
+                  [
+                    h('span', {
+                      class: [this.xclass('total')]
+                    }, `共 ${this.pageData.total} 页 `),
+                    h('span', '第 '),
+                    h('input-box', {
+                      class: [this.xclass('jump-box')],
+                      ref: 'jumpInput'
+                    }),
+                    h('span', ' 页 '),
+                    h('btn', {
+                      class: [this.xclass('jump-btn')],
+                      props: {
+                        kind: 'default',
+                        value: 'GO'
+                      },
+                      on: {
+                        click: this.jump
+                      }
+                    }, 'GO')
+                  ]
+                )
+              ])
           ])
         ]
       )

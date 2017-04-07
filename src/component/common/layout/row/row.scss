@@ -12,7 +12,7 @@ $C_PREFIX: #{ $COMP_ROW };
 .#{ $C_PREFIX } {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   &.#{ $C_PREFIX }-wrap {
     flex-wrap: wrap;
@@ -29,6 +29,20 @@ $C_PREFIX: #{ $COMP_ROW };
 
     &-end {
       align-items: flex-end;
+    }
+  }
+
+  &.#{ $C_PREFIX }-justify {
+    &-justify {
+      justify-content: space-between;
+    }
+
+    &-start {
+      justify-content: flex-start;
+    }
+
+    &-end {
+      justify-content: flex-end;
     }
   }
 }

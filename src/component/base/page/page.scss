@@ -22,12 +22,8 @@ $C_PREFIX: #{ $COMP_PAGE };
   }
 
   .#{$C_PREFIX}-num {
-    display: inline-block;
-    margin: 0 $gap-h;
-
     .#{$C_PREFIX}-length {
       color: $grey-light;
-      margin: 0 $gap-h-double;
     }
 
     .#{$C_PREFIX}-ele {
@@ -87,5 +83,14 @@ $C_PREFIX: #{ $COMP_PAGE };
 
   &.#{$C_PREFIX}-theme-primary {
     text-align: center;
+  }
+
+  @include device-type('<l') {
+    .#{$C_PREFIX}-num {
+      .#{$C_PREFIX}-search,
+      .#{$C_PREFIX}-length{
+        display: none;
+      }
+    }
   }
 }

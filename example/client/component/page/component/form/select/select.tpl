@@ -12,7 +12,7 @@
         直接传入 init-opt
       </p>
 
-      <!--<z-select :init-opt="selectOpt"></z-select>-->
+      <z-select :init-opt="selectOpt"></z-select>
 
       <z-code>
 &ltz-select :init-opt="selectOpt"&gt&lt/z-select&gt
@@ -31,13 +31,13 @@
         用直观的标签声明下拉框的数据
       </p>
 
-      <!--<z-select>
+      <z-select>
         <z-select-ele value="1">{{ testName }}</z-select-ele>
         <z-select-ele value="2">测试2</z-select-ele>
         <z-select-ele value="3">测试222</z-select-ele>
         <z-select-ele value="4">测试3</z-select-ele>
         <z-select-ele value="5">测试4</z-select-ele>
-      </z-select>-->
+      </z-select>
 
       <z-code>&ltz-select&gt
   &ltz-select-ele value="1"&gt{{ testName }}&lt/z-select-ele&gt
@@ -82,7 +82,7 @@
         <span @click="goAnchor">分类下拉选择</span>
       </router-link>
 
-      <!--<z-select
+      <z-select
           :select-all="true"
           :classify="[{
             key: 'recent',
@@ -91,7 +91,7 @@
             key: 'hot',
             text: '热门'
           }]"
-          :classify-opt="classifyOpt"></z-select>-->
+          :classify-opt="classifyOpt"></z-select>
 
       <z-code>
 &ltz-select
@@ -116,9 +116,9 @@
         <span @click="goAnchor">多选下拉框</span>
       </router-link>
 
-      <!--<z-select
+      <z-select
           multiple
-          :init-opt="selectOpt"></z-select>-->
+          :init-opt="selectOpt"></z-select>
 
       <z-code>
 &ltz-select
@@ -135,7 +135,7 @@
         <span @click="goAnchor">搜索功能</span>
       </router-link>
 
-      <!--<z-select search :init-opt="selectOpt"></z-select>-->
+      <z-select search :init-opt="selectOpt"></z-select>
 
       <z-code>
 &ltz-select search :init-opt="selectOpt"&gt&lt/z-select&gt
@@ -150,9 +150,9 @@
         <span @click="goAnchor">指定选定下拉选项</span>
       </router-link>
 
-      <!--<z-select
+      <z-select
           :init-val="2"
-          :init-opt="selectOpt"></z-select>-->
+          :init-opt="selectOpt"></z-select>
 
       <z-code>
 &ltz-select :init-val="1" :init-opt="selectOpt"&gt&lt/z-select&gt

@@ -8,7 +8,7 @@
         <span @click="goAnchor">基本用法</span>
       </router-link>
 
-      <!--<z-list
+      <z-list
           page-type="more"
           page-trigger="click"
           auto
@@ -19,13 +19,20 @@
         <template scope="props">
           <div>{{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf</div>
         </template>
-      </z-list>-->
+      </z-list>
 
-      <z-select :init-opt="testOpt">
-        <template slot="custom" scope="props">
-          <z-select-ele>{{ props.item.text }}-custom</z-select-ele>
-        </template>
-      </z-select>
+      <z-code v-pre>&ltz-list
+    page-type="more"
+    page-trigger="click"
+    auto
+    pager
+    class="z-m-t"
+    :page-size="7"
+    :item="testOpt">
+  &lttemplate scope="props"&gt
+    &ltdiv&gt{{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf&lt/div&gt
+  &lt/template&gt
+&lt/z-list&gt</z-code>
     </section>
   </article>
 </div>

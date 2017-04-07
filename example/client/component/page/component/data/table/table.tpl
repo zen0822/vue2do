@@ -22,6 +22,21 @@
           <z-table-col>{{ props.item.en }}</z-table-col>
         </template>
       </z-table>
+
+      <z-code v-pre>&ltz-table
+          auto
+          :thead="['test', 'name', 'en']"
+          :tbody="testOpt"&gt
+        &lttemplate slot="thead" v-for="item in ['test', 'name', 'en']"&gt
+          &ltz-table-col&gt{{ item }}&lt/z-table-col&gt
+        &lt/template&gt
+
+        &lttemplate slot="tbody" scope="props"&gt
+          &ltz-table-col&gt{{ props.item.text }}&lt/z-table-col&gt
+          &ltz-table-col&gt{{ props.item.name }}&lt/z-table-col&gt
+          &ltz-table-col&gt{{ props.item.en }}&lt/z-table-col&gt
+        &lt/template&gt
+      &lt/z-table&gt</z-code>
     </section>
   </article>
 </div>
