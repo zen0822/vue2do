@@ -1,6 +1,7 @@
 @import "../../../scss/config.scss";
 @import "../../../scss/extend.scss";
 @import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
 
 /**
  * input 组件样式
@@ -184,5 +185,9 @@ $INPUT_BORDER_WIDTH: 1px;
     &.#{ $C_PREFIX }-theme-fill {
       width: 100%;
     }
+  }
+
+  @include device-type("<l") {
+    width: 100%;
   }
 }

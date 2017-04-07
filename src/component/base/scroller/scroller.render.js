@@ -23,16 +23,30 @@ export default function (h) {
       }, this.$slots.default),
 
       h('div', {
-        class: [this.xclass('bar')],
+        class: [this.xclass(['bar', 'y-bar'])],
         on: {
           click: this.barClick,
-          mousedown: this.barMouseDown
+          mousedown: this.yBarMouseDown
         },
-        style: this.barStyle,
+        style: this.yComputed.barStyle,
         ref: 'bar',
         directives: [{
           name: 'show',
-          value: this.barDisplay
+          value: this.yComputed.barDisplay
+        }]
+      }),
+
+      h('div', {
+        class: [this.xclass(['bar', 'x-bar'])],
+        on: {
+          click: this.barClick,
+          mousedown: this.xBarMouseDown
+        },
+        style: this.xComputed.barStyle,
+        ref: 'xBar',
+        directives: [{
+          name: 'show',
+          value: this.xComputed.barDisplay
         }]
       })
     ]

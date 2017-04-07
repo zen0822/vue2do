@@ -38,6 +38,9 @@ function foldContent(h, foldList) {
             h('router-link', {
               props: {
                 to: item.route
+              },
+              nativeOn: {
+                click: this.hide
               }
             }, item.name)
           ]
@@ -45,10 +48,15 @@ function foldContent(h, foldList) {
       )
     }
   })
+  if (this.deviceRange) {
+    debugger
+    console.log(this.deviceRange, this._deviceTypeRange('<l'))
+    console.log(this.deviceRange <= this._deviceTypeRange('<l') ? false : this.spreadAll)
+  }
 
   return h('fold', {
     props: {
-      spreadAll: this.spreadAll
+      spreadAll: this.deviceRange <= this._deviceTypeRange('<l') ? false : this.spreadAll
     },
     class: [this.xclass('sub-fold')]
   }, foldChildren)
@@ -60,26 +68,26 @@ export default function (h) {
     h('div', {
       class: [this.xclass('transition-container')]
     }, [
-      h('div',
-        {
-          class: [this.xclass('close-menu')],
-          on: {
-            click: () => {
-              this.hide()
+        h('div',
+          {
+            class: [this.xclass('close-menu')],
+            on: {
+              click: () => {
+                this.hide()
+              }
             }
-          }
-        }, [
-          h('icon', {
-            props: {
-              kind: 'close'
-            }
-          })
-        ]
-      ),
-      this.$slots.head,
-      foldContent.call(this, h, this.initOpt),
-      this.$slots.tail
-    ])
+          }, [
+            h('icon', {
+              props: {
+                kind: 'close'
+              }
+            })
+          ]
+        ),
+        this.$slots.head,
+        foldContent.call(this, h, this.initOpt),
+        this.$slots.tail
+      ])
   ]
 
   if (this.animate === 'vertical') {

@@ -53,6 +53,7 @@ $C_PREFIX: #{ $COMP_COL };
 .#{ $C_PREFIX } {
   display: inline-block;
   vertical-align: middle;
+  box-sizing: border-box;
 
   @each $type in $device-type {
     @if $type != span {

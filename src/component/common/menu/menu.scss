@@ -20,20 +20,17 @@ $ICON_PREFIX: #{ $COMP_ICON };
     border-bottom: $border-color $border-thin solid;
   }
 
-  .#{$C_PREFIX}-stage
-      > .#{$C_PREFIX}-transition-container
-      > .#{$C_PREFIX}-sub-fold {
-    margin-left: 0;
+  .#{$C_PREFIX}-stage {
+    & > .#{$C_PREFIX}-transition-container
+        > .#{$C_PREFIX}-sub-fold {
+      margin-left: 0;
+    }
 
     .#{$C_PREFIX}-sub-fold {
       margin-left: $gap-h;
 
       a {
         display: block;
-      }
-
-      & > dl > dt {
-        border-top: none;
       }
     }
   }
@@ -119,11 +116,6 @@ $ICON_PREFIX: #{ $COMP_ICON };
         a {
           color: #fff;
           text-decoration: none;
-        }
-
-        & > dl > dt {
-          padding: $gap-v 0;
-          border-bottom: $border-color $border-thin solid;
         }
       }
     }

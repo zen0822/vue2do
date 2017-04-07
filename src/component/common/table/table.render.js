@@ -72,7 +72,7 @@ export default function (h) {
             autoHide: this.scrollerAutoHide
           },
           on: {
-            scroll: this.scroll
+            scrollY: this.scroll
           },
           ref: 'scroller'
         }, [tableEle]

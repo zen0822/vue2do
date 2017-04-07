@@ -17,12 +17,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     & > dt {
       position: relative;
       padding-right: $gap-v-double;
-      border-top: $border-color $border-thin solid;
       cursor: default;
-
-      &:first-child {
-        border-top: none;
-      }
 
       .#{$C_PREFIX}-icon {
         position: absolute;

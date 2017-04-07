@@ -10,14 +10,18 @@
 $C_PREFIX: #{ $COMP_CODE };
 
 .#{$C_PREFIX} {
-  position: relative;
+  font-size: $font-base;
   background-color: #fff;
-  padding: $gap-v $gap-v $gap-v 50px;
   border: $primary-light-color $border-thin solid;
   border-radius: $border-radius;
 
-  & > .#{$C_PREFIX}-article {
-    & > pre {
+  .#{$C_PREFIX}-stage {
+    position: relative;
+    padding: $gap-v $gap-v $gap-v 50px;
+  }
+
+  .#{$C_PREFIX}-article {
+    .#{$C_PREFIX}-pre {
       font-family: 'Roboto Mono', Monaco, courier, monospace;
       font-size: 1em;
       margin: 0;
@@ -26,7 +30,7 @@ $C_PREFIX: #{ $COMP_CODE };
     }
   }
 
-  & > .#{$C_PREFIX}-line-num {
+  .#{$C_PREFIX}-line-num {
     font-family: 'Roboto Mono', Monaco, courier, monospace;
     position: absolute;
     top: $gap-v;

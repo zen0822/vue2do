@@ -25,7 +25,9 @@
   "scroller": {
     "change": {
       "height": "changeHeight",
-      "bar": "changeBar"
+      "bar": {
+        "y": "change"
+      }
     },
     "scroll": "scroll"
   },

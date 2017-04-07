@@ -1,6 +1,7 @@
 @import "../../../scss/config.scss";
 @import "../../../scss/extend.scss";
 @import "../../../scss/name.scss";
+@import "../../../scss/mixin.scss";
 
 /**
  * select 组件样式
@@ -19,13 +20,14 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
 .#{ $C_PREFIX } {
   display: inline-block;
+  width: $SELECT_WIDTH;
 
   .#{ $C_PREFIX }-stage {
     display: inline-block;
     position: relative;
     box-sizing: border-box;
     height: $SELECT_HEIGHT;
-    width: $SELECT_WIDTH;
+    width: 100%;
     background-color: #fff;
     border: $border-color $border-thin solid;
     cursor: default;
@@ -207,5 +209,9 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
     &.#{ $C_PREFIX }-theme-fill {
       width: 100%;
     }
+  }
+
+  @include device-type("<l") {
+    width: 100%;
   }
 }

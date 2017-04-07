@@ -11,21 +11,16 @@ $C_PREFIX: #{ $COMP_SCROLLER };
 .#{ $C_PREFIX } {
   overflow: hidden;
   position: relative;
+  width: 100%;
 
   .#{ $C_PREFIX }-box {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
   }
 
   .#{ $C_PREFIX }-bar {
     position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 5px;
-
     border-radius: 4px;
     background-color: $grey;
     opacity: .4;
@@ -35,6 +30,16 @@ $C_PREFIX: #{ $COMP_SCROLLER };
     &:hover{
       background-color: $grey-dark;
       opacity: 1;
+    }
+
+    &.#{ $C_PREFIX }-x-bar {
+      bottom: 0;
+      height: 5px;
+    }
+
+    &.#{ $C_PREFIX }-y-bar {
+      right: 0;
+      width: 5px;
     }
   }
 }

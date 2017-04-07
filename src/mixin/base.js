@@ -46,6 +46,11 @@ export default {
     // 设备尺寸
     deviceSize() {
       return this.$store.getters[commonStore.deviceSize]
+    },
+
+    // 设备尺寸范围
+    deviceRange() {
+      return this._deviceTypeRange()
     }
   },
 
@@ -69,6 +74,22 @@ export default {
      */
     _setDataOpt() {
       // TODO
+    },
+
+    // 设备尺寸范围
+    _deviceTypeRange(type = this.deviceSize) {
+      switch (type) {
+        case '<s':
+          return 575
+        case '<m':
+          return 765
+        case '<l':
+          return 991
+        case '<xl':
+          return 1911
+        default:
+          return Number.MAX_VALUE
+      }
     },
 
     /**

@@ -8,6 +8,7 @@
 import './code.scss'
 import render from './code.render.js'
 import baseMixin from 'src/mixin/base'
+import scrollerComp from 'src/component/base/scroller/scroller'
 
 export default {
   name: 'code',
@@ -15,6 +16,10 @@ export default {
   mixins: [baseMixin],
 
   render,
+
+  components: {
+    scroller: scrollerComp
+  },
 
   props: {
     code: {

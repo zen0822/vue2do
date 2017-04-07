@@ -105,10 +105,44 @@ const foldComp = {
   watch: {
     initIndex(val) {
       this.currentIndex = val
+    },
+
+    spreadAll() {
+      this._initFold()
     }
   },
 
   methods: {
+    _initFold() {
+      this.foldChildren.forEach((item, index) => {
+        if (this.one) {
+          if (this.initIndex) {
+            this.foldData[index] = {
+              folding: index !== this.initIndex - 1
+            }
+          } else {
+            this.foldData[index] = {
+              folding: true
+            }
+          }
+        } else {
+          if (this.spreadAll) {
+            this.foldData[index] = {
+              folding: false
+            }
+          } else if (this.initIndex) {
+            this.foldData[index] = {
+              folding: index !== this.initIndex - 1
+            }
+          } else {
+            this.foldData[index] = {
+              folding: true
+            }
+          }
+        }
+      })
+    },
+
     clickTitle(evt) {
       evt.stopPropagation()
 
@@ -159,33 +193,7 @@ const foldComp = {
       }
     })
 
-    this.foldChildren.forEach((item, index) => {
-      if (this.one) {
-        if (this.initIndex) {
-          this.foldData[index] = {
-            folding: index !== this.initIndex - 1
-          }
-        } else {
-          this.foldData[index] = {
-            folding: true
-          }
-        }
-      } else {
-        if (this.spreadAll) {
-          this.foldData[index] = {
-            folding: false
-          }
-        } else if (this.initIndex) {
-          this.foldData[index] = {
-            folding: index !== this.initIndex - 1
-          }
-        } else {
-          this.foldData[index] = {
-            folding: true
-          }
-        }
-      }
-    })
+    this._initFold()
   }
 }
 

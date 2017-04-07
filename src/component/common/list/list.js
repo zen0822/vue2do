@@ -127,7 +127,7 @@ const listComp = {
 
   methods: {
     _init() {
-      this.$refs.scroller && this.$refs.scroller.$on('changeBar', ({isBottom}) => {
+      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({isBottom}) => {
         this.scrollerAlmostInBottom = isBottom
       })
     },
@@ -223,14 +223,14 @@ const listComp = {
     /**
      * scroller 滚动触发事件
      */
-    scroll({barToBox, top, isBottom}) {
+    scroll({ offset, top, isBottom }) {
       if (this.pageTrigger === 'scroll') {
-        if (barToBox - top < 10 && this.pageData.current + 1 <= this.pageData.total) {
+        if (offset - top < 10 && this.pageData.current + 1 <= this.pageData.total) {
           return this.switchPage(this.pageData.current + 1)
         }
       }
 
-      this.scrollerAlmostInBottom = barToBox - top < 20
+      this.scrollerAlmostInBottom = offset - top < 20
     },
 
     /**

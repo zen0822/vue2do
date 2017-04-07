@@ -54,10 +54,11 @@ export default function (h) {
       h('scroller', {
         class: [this.xclass('scroller')],
         props: {
-          autoHide: this.scrollerAutoHide
+          autoHide: this.scrollerAutoHide,
+          height: 150
         },
         on: {
-          scroll: this.scroll
+          scrollY: this.scroll
         },
         ref: 'scroller'
       }, scrollerChildren),
