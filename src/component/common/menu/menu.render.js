@@ -48,11 +48,6 @@ function foldContent(h, foldList) {
       )
     }
   })
-  if (this.deviceRange) {
-    debugger
-    console.log(this.deviceRange, this._deviceTypeRange('<l'))
-    console.log(this.deviceRange <= this._deviceTypeRange('<l') ? false : this.spreadAll)
-  }
 
   return h('fold', {
     props: {

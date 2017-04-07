@@ -139,7 +139,6 @@ const scrollerComp = {
 
     scrollerStyle() {
       return {
-        'max-height': this.height ? this.height + 'px' : 'none',
         'height': this.scrollerHeight + 'px'
       }
     },
@@ -297,6 +296,49 @@ const scrollerComp = {
       this.triggerChangeBar(type)
     },
 
+    /**
+     * 滚动条和滚动区域的滚动操作
+     * @param { Object } - 选项数据
+     *                   type - 滚动条类型
+     *                   direction - 1: 正方向，0：反方向
+     *                   barDistance - 滚动条的位移
+     *                   boxDistance - 滚动内容的位移
+     *                   length - 指定的滚动区域的高度/宽度
+     */
+    _boxAndBarScroll({ type, direction, boxDistance, barDistance }) {
+      if (boxDistance === 0 || barDistance === 0) {
+        return false
+      }
+
+      let barName = type + 'Data'
+      let barDistanceName = `bar${type === 'y' ? 'Top' : 'Left'}`
+      let boxDistanceName = `box${type === 'y' ? 'Top' : 'Left'}`
+      let boxPosition = this[boxDistanceName] + boxDistance
+      let barPosition = this[barName][barDistanceName] + barDistance
+      let barAndScrollerOffset = this[barName].barAndScrollerOffset
+      let boxAndScrollerOffset = this[barName].boxAndScrollerOffset
+
+      if (boxDistance > 0) {
+        if (type === 'y') {
+          this[barName][barDistanceName] = barPosition < 0 ? 0 : barPosition
+          this[boxDistanceName] = boxPosition > 0 ? 0 : boxPosition
+        } else {
+          this[barName][barDistanceName] = barPosition < 0 ? 0 : barPosition
+          this[boxDistanceName] = boxPosition > 0 ? 0 : boxPosition
+        }
+      } else {
+        if (type === 'y') {
+          this[barName][barDistanceName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
+          this[boxDistanceName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
+        } else {
+          this[barName][barDistanceName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
+          this[boxDistanceName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
+        }
+      }
+
+      this.triggerScroll(type)
+    },
+
     barClick(evt) {
       evt.preventDefault()
       evt.stopPropagation()
@@ -412,6 +454,10 @@ const scrollerComp = {
     scrollerTouchMove(evt) {
       evt.preventDefault()
 
+      if (this.yData.scrollerContainBox && this.xData.scrollerContainBox) {
+        return false
+      }
+
       this.showBar = true
 
       if (!this.isTouchStart) {
@@ -420,36 +466,27 @@ const scrollerComp = {
 
       let yDistance = this.touchStart.y - evt.touches[0].clientY
       let xDistance = this.touchStart.x - evt.touches[0].clientX
-      let boxTop = this.boxTop - yDistance
-      let boxLeft = this.boxLeft - xDistance
-      let yBarTop = this.yData.barTop + yDistance / this.yData.boxBarRate
-      let xBarLeft = this.xData.barLeft + xDistance / this.xData.boxBarRate
 
-      if (yDistance > 0) {
-        // y-bar 反方向滚动
-        this.yData.barTop = yBarTop > this.yData.barAndScrollerOffset ? this.yData.barAndScrollerOffset : yBarTop
-        this.boxTop = boxTop < -this.yData.boxAndScrollerOffset ? -this.yData.boxAndScrollerOffset : boxTop
-      } else if (yDistance < 0) {
-        this.yData.barTop = yBarTop < 0 ? 0 : yBarTop
-        this.boxTop = boxTop > 0 ? 0 : boxTop
+      if (!this.yData.scrollerContainBox) {
+        this._boxAndBarScroll({
+          type: 'y',
+          boxDistance: -yDistance,
+          barDistance: yDistance / this.yData.boxBarRate
+        })
       }
 
-      if (xDistance < 0) {
-        // x-bar 反方向滚动
-        this.xData.barLeft = xBarLeft < 0 ? 0 : xBarLeft
-        this.boxLeft = boxLeft > 0 ? 0 : boxLeft
-      } else if (xDistance > 0) {
-        this.xData.barLeft = xBarLeft > this.xData.barAndScrollerOffset ? this.xData.barAndScrollerOffset : xBarLeft
-        this.boxLeft = boxLeft < -this.xData.boxAndScrollerOffset ? -this.xData.boxAndScrollerOffset : boxLeft
+      if (!this.xData.scrollerContainBox) {
+        this._boxAndBarScroll({
+          type: 'x',
+          boxDistance: -xDistance,
+          barDistance: xDistance / this.xData.boxBarRate
+        })
       }
 
       this.touchStart = {
         x: evt.touches[0].clientX,
         y: evt.touches[0].clientY
       }
-
-      this.triggerScroll('y')
-      this.triggerScroll('x')
     },
 
     scrollerTouchEnd(evt) {

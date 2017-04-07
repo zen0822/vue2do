@@ -213,5 +213,9 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
   @include device-type("<l") {
     width: 100%;
+
+    .#{ $C_PREFIX }-stage.#{ $C_PREFIX }-multiple-stage {
+      width: 100%;
+    }
   }
 }
