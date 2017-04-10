@@ -2,13 +2,18 @@
  * table 组件
  *
  * @props auto - 根据传入的列表数据生成分页数据
+ * @props border - 表格的边界线的类型
+ *   （none：默认是不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
  * @props page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @props pager - 启动分页功能
+ * @props list - 默认是不以列表化的表格数据
  * @props thead - 表头标题数据
  * @props tbody - 列表的数据
  * @props page - 分页数据
  * @props pageSize - 将列表数据（item）分为每页多少条数据
  * @props scrollerAutoHide - 是否远程获取数据
+ *
+ * @events switchPage - 切换分页
  */
 
 import './table.scss'
@@ -19,16 +24,32 @@ import tip from 'src/component/base/pop/tip'
 
 const tableRowComp = {
   name: 'table-row',
-  template: `
-    <tr class="table-row">
-      <slot></slot>
-    </tr>
-  `
+  mixins: [baseMixin],
+  computed: {
+    cPrefix() {
+      return `${this.compPrefix}-table-row`
+    }
+  },
+  render(h) {
+    return h(
+      'tr',
+      {
+        class: [this.cPrefix]
+      },
+      this.$slots.default
+    )
+  }
 }
 
 const tableColComp = {
   name: 'table-col',
   mixins: [baseMixin],
+  props: {
+    align: {
+      type: String,
+      default: 'left'
+    }
+  },
   computed: {
     cPrefix() {
       return `${this.compPrefix}-table-col`
@@ -37,7 +58,9 @@ const tableColComp = {
   render(h) {
     return h(
       'td',
-      { class: [this.cPrefix] },
+      {
+        class: [this.cPrefix, this.prefixClass('text-' + this.align)]
+      },
       this.$slots.default
     )
   }
@@ -52,6 +75,16 @@ const tableComp = {
 
   props: {
     auto: {
+      type: Boolean,
+      default: false
+    },
+
+    border: {
+      type: String,
+      default: 'none'
+    },
+
+    list: {
       type: Boolean,
       default: false
     },
@@ -75,7 +108,7 @@ const tableComp = {
 
     pager: {
       type: Boolean,
-      default: true
+      default: false
     },
 
     pageSize: {
@@ -102,7 +135,9 @@ const tableComp = {
     },
 
     pagerDisplay() {
-      return this.tbodyItem.length > 0
+      return this.list && this.pager &&
+        this.tbody.length > 0 &&
+        this.tbodyItem.length > 0
     }
   },
 
@@ -129,7 +164,7 @@ const tableComp = {
     /**
      * 初始化分页
      */
-    initPage({tableData = {}, pageData = {}}) {
+    initPage({ tableData = {}, pageData = {} }) {
       if (!this.auto) {
         this.pageData = Object.assign({}, pageData)
 
@@ -153,7 +188,7 @@ const tableComp = {
      *
      * @return { Object }
      */
-    initTable({pageNum = 1, tableData}) {
+    initTable({ pageNum = 1, tableData }) {
       this.tbodyItem = this.getListItemByPage({
         listItem: tableData,
         pageNum,
@@ -183,28 +218,17 @@ const tableComp = {
       return this
     },
 
-    /**
-     * 重置queryOpt
-     * @param { Object } - 参数选项
-     * @return { Object }
-     */
-    resetQueryOpt(opt = {}) {
-      this.queryOpt = opt
-
-      return this
-    },
-
     switchPage(currentPage) {
-      if (this.url) {
-        this.queryOpt = Object.assign(this.queryOpt, {
-          _index: currentPage
-        })
-        this.fetch()
+      this.showLoading()
 
-        return false
-      }
+      this.initTable({
+        pageNum: currentPage,
+        tableData: this.tbody.slice()
+      })
 
-      return true
+      return this.$emit('switchPage', {
+        currentPage
+      })
     },
 
     scroll() {
@@ -213,9 +237,9 @@ const tableComp = {
   },
 
   created() {
-    this.initPage({tableData: this.tbodyItem.slice()}).initTable({
+    this.initPage({ tableData: this.tbody.slice() }).initTable({
       pageNum: this.pageData.current,
-      tableData: this.tbodyItem
+      tableData: this.tbody.slice()
     })
   }
 }

@@ -121,7 +121,7 @@ const pageComp = {
     },
 
     pageDisplay() {
-      return this.display && (this.onePageDisplay || this.data.total > 1)
+      return this.display && (this.onePageDisplay || this.pageData.total > 1)
     }
   },
 

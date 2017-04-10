@@ -12,6 +12,10 @@ $C_PREFIX: #{ $COMP_PAGE };
 .#{$C_PREFIX} {
   color: $grey-dark;
 
+  &.#{$C_PREFIX}-type-more {
+    display: inline-block;
+  }
+
   .#{$C_PREFIX}-more {
     padding: $gap-v-half 0;
     color: $grey;
@@ -86,6 +90,10 @@ $C_PREFIX: #{ $COMP_PAGE };
   }
 
   @include device-type('<l') {
+    &.#{$C_PREFIX}-type-more {
+      width: 100%;
+    }
+
     .#{$C_PREFIX}-num {
       .#{$C_PREFIX}-search,
       .#{$C_PREFIX}-length{

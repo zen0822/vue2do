@@ -9,7 +9,10 @@ export default {
 
   data() {
     return {
-      testName: 'test'
+      pageData: {
+        length: 24,
+        size: 5
+      }
     }
   }
 }

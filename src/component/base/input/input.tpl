@@ -4,13 +4,13 @@
       :class="stageClass.concat(xclass(['stage', themeClass]))">
     <div v-if="isText && addon" :class="[xclass('addon-stage')]">{{ addon }}</div>
     <div :class="wrapClass">
-      <row>
+      <row justify="justify">
         <column>
           <div :class="[xclass('edit-box-left')]">
             <slot name="head"></slot>
           </div>
         </column>
-        <column :span="9">
+        <column>
           <div :class="[xclass('edit-box')]">
             <input
                 v-model="value"
@@ -36,7 +36,7 @@
                 :rows="row"></textarea>
           </div>
         </column>
-        <column :span="2">
+        <column>
           <div :class="[xclass('edit-box-tail')]">
             <slot name="tail"></slot>
           </div>

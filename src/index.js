@@ -50,6 +50,7 @@ const compHub = [
   list,
   loading,
   pop,
+  page,
   select,
   selectEle,
   scroller,

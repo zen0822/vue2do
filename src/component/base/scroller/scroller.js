@@ -190,9 +190,11 @@ const scrollerComp = {
     barTop(val) {
       this.triggerScroll('y')
     },
+
     barLeft(val) {
       this.triggerScroll('x')
     },
+
     boxHeight(boxHeight) {
       this._initScrollerData({
         length: this.height,
@@ -201,6 +203,7 @@ const scrollerComp = {
         type: 'y'
       })
     },
+
     boxWidth(boxWidth) {
       this._initScrollerData({
         length: this.width,
@@ -276,6 +279,11 @@ const scrollerComp = {
         barLength = scrollerLength / boxBarRate
 
         this.scrollerHeight = scrollerLength
+
+        if (scrollerContainBox) {
+          this.boxTop = 0
+          this.barTop = 0
+        }
       } else {
         if (length === '100%') {
           scrollerContainBox = scrollerLength >= boxLength
@@ -285,6 +293,11 @@ const scrollerComp = {
 
         boxBarRate = boxLength / scrollerLength
         barLength = scrollerLength / boxBarRate
+
+        if (scrollerContainBox) {
+          this.boxLeft = 0
+          this.barLeft = 0
+        }
       }
 
       boxAndScrollerOffset = boxLength - scrollerLength

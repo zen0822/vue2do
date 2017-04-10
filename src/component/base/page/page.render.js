@@ -5,7 +5,11 @@
 export default function (h) {
   return h('div',
     {
-      class: [this.cPrefix, this.xclass(this.themeClass)],
+      class: [
+        this.cPrefix,
+        this.xclass(this.themeClass),
+        this.xclass('type-' + this.type)
+      ],
       directives: [{
         name: 'show',
         value: this.pageDisplay
@@ -25,7 +29,7 @@ export default function (h) {
           h('span', {
             class: [this.xclass('load')]
           }, (() => {
-            return this.$slots ? this.$slots.loadMore : this.loadMoreText
+            return this.$slots.loadMore ? this.$slots.loadMore : this.loadMoreText
           })())
         ]
       ),
