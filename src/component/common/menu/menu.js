@@ -22,11 +22,11 @@ import {
   foldComp,
   foldTitleComp,
   foldContentComp
-} from 'src/component/base/fold/fold'
-import foldTransition from 'src/component/transition/fold'
-import iconComp from 'src/component/base/icon/icon'
-import rowComp from 'src/component/common/layout/row/row'
-import colComp from 'src/component/common/layout/col/col'
+} from '../../base/fold/fold'
+import foldTransition from '../../transition/fold'
+import iconComp from '../../base/icon/icon'
+import rowComp from '../../common/layout/row/row'
+import colComp from '../../common/layout/col/col'
 
 const layoutType = ['grid', 'flex', 'flow']
 

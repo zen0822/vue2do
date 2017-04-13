@@ -20,7 +20,7 @@ import './table.scss'
 import render from './table.render'
 import baseMixin from 'src/mixin/base'
 import listMixin from 'src/mixin/list'
-import tip from 'src/component/base/pop/tip'
+import tip from '../../base/pop/tip'
 
 const tableRowComp = {
   name: 'table-row',
