@@ -3,6 +3,7 @@
  * chai 的 测试断言框架 http://chaijs.com/api/bdd/#method_a
  */
 
+const path = require('path')
 var config = require('./config.json')
 var webpackConf = require('../build/config/base.webpack.conf')(config.appName)
 
@@ -59,31 +60,31 @@ const customLaunchers = {
 }
 
 var customLaunchers2 = {
-    'SL_Chrome': {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      version: '48.0',
-      platform: 'Linux'
-    },
-    'SL_Firefox': {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      version: '50.0',
-      platform: 'Windows 10'
-    },
-    'SL_InternetExplorer': {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      version: '11.0',
-      platform: 'Windows 7'
-    },
-    'SL_Safari': {
-      base: 'SauceLabs',
-      browserName: 'safari',
-      platform: 'OS X 10.11',
-      version: '10.0'
-    }
+  'SL_Chrome': {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    version: '48.0',
+    platform: 'Linux'
+  },
+  'SL_Firefox': {
+    base: 'SauceLabs',
+    browserName: 'firefox',
+    version: '50.0',
+    platform: 'Windows 10'
+  },
+  'SL_InternetExplorer': {
+    base: 'SauceLabs',
+    browserName: 'internet explorer',
+    version: '11.0',
+    platform: 'Windows 7'
+  },
+  'SL_Safari': {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'OS X 10.11',
+    version: '10.0'
   }
+}
 
 // 要先启动 sauce connect
 // if (!process.env.SAUCE_USERNAME) {
@@ -96,6 +97,13 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: Object.keys(customLaunchers2), // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
     captureTimeout: 6000,
+    coverageReporter: {
+      dir: path.join(__dirname, 'coverage'),
+      reporters: [
+        { type: 'html' },
+        { type: 'lcov', subdir: 'lcov' }  // lcov
+      ]
+    },
     colors: true,
     customLaunchers: customLaunchers2,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
