@@ -4,6 +4,8 @@
   "description": "project of zen",
   "author": "zen <zenhuangzheng@126.com>",
   "private": false,
+  "repository": "https://github.com/zen0822/vue2do",
+  "license": "MIT",
   "keywords": [
     "vue2",
     "component"
@@ -47,6 +49,8 @@
     "html-webpack-plugin": "*",
     "http-proxy-middleware": "*",
     "json-loader": "^0.5.4",
+    "jstransformer-markdown-it": "^2.0.0",
+    "markdown-it": "^8.3.1",
     "node-sass": "*",
     "nprogress": "*",
     "optimist": "*",

@@ -1,7 +1,6 @@
 /**
  * input 组件
  *
- * @props addon - 为输入框添加度量单位（ex: 小时/元）
  * @props hidden - 设置为隐藏域
  * @props initVal - 设置当前输入框的值
  * @props number - 输入框的数字指定为 nmuber 类型
@@ -38,7 +37,7 @@
  */
 
 import './input.scss'
-import template from './input.tpl'
+import render from './input.render'
 
 import store from 'src/vuex/store'
 import hubStore from 'src/vuex/module/hub/type.json'
@@ -63,7 +62,7 @@ const ERROR_MESSAGE_BUBBLE = 'bubble'
 const inputComp = {
   name: 'input',
 
-  template,
+  render,
 
   mixins: [baseMixin, formMixin],
 
@@ -75,8 +74,6 @@ const inputComp = {
   store,
 
   props: {
-    addon: String,
-
     hidden: {
       type: Boolean,
       default: false
@@ -238,6 +235,19 @@ const inputComp = {
           [`${this.cPrefix}-error-border`]: this.errorBorderDisplay
         }
       ]
+    },
+    // input 的阑珊的格数
+    inputBoxCol() {
+      let slotHead = this.$slots.head
+      let slotTail = this.$slots.tail
+
+      if (slotHead && slotTail) {
+        return 10
+      } else if (slotHead || slotTail) {
+        return 11
+      } else {
+        return 12
+      }
     }
   },
 

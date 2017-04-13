@@ -7,8 +7,8 @@ export default function (h) {
   let codeStr = $slots.default ? $slots.default[0].text : this.code
   let lineNumEle = []
 
-  let matches = codeStr.match(/\n/g)
-  this.lineNum = matches ? matches.length + 1 : 1
+  let matches = codeStr ? codeStr.match(/\n/g) : []
+  this.lineNum = matches.length + 1
   for (let i = 1, len = this.lineNum; i <= len; i++) {
     lineNumEle.push(h('li', i))
   }

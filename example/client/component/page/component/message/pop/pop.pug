@@ -1,0 +1,16 @@
+include ../../mixin.pug
+
+div.component-pop
+  article.example-article
+    +section('confirm', '弹窗')
+      z-btn(@click='alert') 确认
+      z-code.
+        #{'<z-btn @click="alert">'}
+          确认
+        #{'</z-btn>'}
+    +section('confirm', '确认弹窗')
+      z-btn(@click='confirm') 确认弹窗
+      z-code.
+        #{'<z-btn @click="confirm">'}
+          确认
+        #{'</z-btn>'}

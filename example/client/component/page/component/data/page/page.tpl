@@ -106,13 +106,13 @@
         </z-table-row>
         <z-table-row slot="5">
           <z-table-col>size</z-table-col>
-          <z-table-col>布尔值</z-table-col>
+          <z-table-col>Boolean</z-table-col>
           <z-table-col>（s | *m | l）</z-table-col>
           <z-table-col>分页外观尺寸大小</z-table-col>
         </z-table-row>
         <z-table-row slot="6">
           <z-table-col>type</z-table-col>
-          <z-table-col>布尔值</z-table-col>
+          <z-table-col>Boolean</z-table-col>
           <z-table-col>（more | *num）</z-table-col>
           <z-table-col>
             <p>分页类型</p>
@@ -121,6 +121,63 @@
               <li>num：数字标注（默认）</li>
             </ul>
           </z-table-col>
+        </z-table-row>
+        <z-table-row slot="7">
+          <z-table-col>loadMoreText</z-table-col>
+          <z-table-col>String</z-table-col>
+          <z-table-col>——</z-table-col>
+          <z-table-col>
+            加载更多的提示文字
+          </z-table-col>
+        </z-table-row>
+      </z-table>
+    </section>
+
+    <section>
+      <router-link
+          class="anchor-title"
+          tag="h1"
+          :list="false"
+          :to="anchorLink('events')">
+        <span @click="goAnchor">events 事件</span>
+      </router-link>
+
+      <z-table
+          border="row"
+          auto
+          :pageSize="10">
+        <template slot="thead" v-for="item in ['名字', '返回值类型', '说明']">
+          <z-table-col>{{ item }}</z-table-col>
+        </template>
+
+        <z-table-row slot="1">
+          <z-table-col>switch</z-table-col>
+          <z-table-col>Number</z-table-col>
+          <z-table-col>切换页码触发的事件</z-table-col>
+        </z-table-row>
+      </z-table>
+    </section>
+
+    <section>
+      <router-link
+          class="anchor-title"
+          tag="h1"
+          :list="false"
+          :to="anchorLink('slots')">
+        <span @click="goAnchor">slots 内容分发</span>
+      </router-link>
+
+      <z-table
+          border="row"
+          auto
+          :pageSize="10">
+        <template slot="thead" v-for="item in ['名字', '返回值类型', '说明']">
+          <z-table-col>{{ item }}</z-table-col>
+        </template>
+
+        <z-table-row slot="1">
+          <z-table-col>loadMore</z-table-col>
+          <z-table-col>分页类型为加载更多时的，在按钮处的内容分发</z-table-col>
         </z-table-row>
       </z-table>
     </section>

@@ -37,9 +37,11 @@
   </z-row>
 
   <z-menu
+      animate="bounce"
       class="mobile-menu"
       ref="mobileMenu"
       @hide="hideMenu"
+      :autoSwitch="false"
       :init-opt="menuOpt">
     <div class="menu-search" slot="tail">
       <z-input placeholder="search in vue2do">

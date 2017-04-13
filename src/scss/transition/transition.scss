@@ -1,5 +1,6 @@
 @import "../config.scss";
 @import "./bounce.scss";
+@import "./fall.scss";
 
 $C_PREFIX: $comp-prefix;
 
@@ -8,5 +9,11 @@ $C_PREFIX: $comp-prefix;
 }
 .#{ $C_PREFIX }-rotate-half-enter-active {
   transform: rotate(180deg);
-  transition: all .5s ease;
+  transition: all 1s ease;
+}
+
+.#{ $C_PREFIX }-fade-enter,
+.#{ $C_PREFIX }-fade-leave-active {
+  transition: opacity 1s ease-out;
+  opacity: 0,
 }

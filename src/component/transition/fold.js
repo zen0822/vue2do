@@ -10,7 +10,9 @@ const Transition = {
   },
 
   enter(el) {
-    el.style.height = `${el.firstChild.offsetHeight}px`
+    let height = el.firstChild ? el.firstChild.offsetHeight : 0
+
+    el.style.height = `${height}px`
   },
 
   afterEnter(el) {

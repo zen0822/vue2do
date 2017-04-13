@@ -1,0 +1,29 @@
+@import "../config.scss";
+
+$C_PREFIX: $comp-prefix;
+
+.#{ $C_PREFIX }-fall-enter,
+.#{ $C_PREFIX }-fall-enter-active,
+.#{ $C_PREFIX }-fall-shake-enter
+.#{ $C_PREFIX }-fall-shake-enter-active {
+  transition: transform 500ms ease-out;
+}
+.#{ $C_PREFIX }-fall-leave-active,
+.#{ $C_PREFIX }-fall-shake-leave-active {
+  transition: transform 1.5s ease-out;
+}
+.#{ $C_PREFIX }-fall-enter,
+.#{ $C_PREFIX }-fall-leave-active,
+.#{ $C_PREFIX }-fall-shake-enter,
+.#{ $C_PREFIX }-fall-shake-leave-active {
+  transform: translateY(-1000px);
+}
+
+.#{ $C_PREFIX }-fall-shake-enter,
+.#{ $C_PREFIX }-fall-shake-leave-active {
+  transform: translateY(-1000px);
+}
+
+.#{ $C_PREFIX }-fall-shake-enter {
+
+}

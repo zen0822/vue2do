@@ -19,9 +19,9 @@
  */
 
 import './pop.scss'
-import './m.pop.scss'
+import './pop.m.scss'
 
-import template from './pop.tpl'
+import render from './pop.render'
 import btnComp from 'src/component/base/btn/btn'
 import iconComp from 'src/component/base/icon/icon'
 import baseMixin from 'src/mixin/base'
@@ -35,7 +35,7 @@ const TIP_SHOW_TIME = 1500
 const popComp = {
   name: 'pop',
 
-  template,
+  render,
 
   mixins: [baseMixin],
 
@@ -153,6 +153,7 @@ const popComp = {
       } else {
         this.popDisplay = true
       }
+
       return this
     },
 
@@ -161,12 +162,16 @@ const popComp = {
      *
      * @return {Object}
      */
-    hide() {
+    hide(event) {
+      event && event.stopPropagation()
+
       if (this.isTip) {
         return this
       }
+
       this.popDisplay = false
       this.isMousedown = false
+
       return this
     },
 
@@ -177,6 +182,7 @@ const popComp = {
      */
     mouseDown(event) {
       this.isMousedown = true
+
       this.pointStart = {
         x: event.clientX,
         y: event.clientY
@@ -191,17 +197,17 @@ const popComp = {
      * @return {Object, Boolean}
      */
     mouseMove(event) {
-      var $this = this.$el.querySelector('.pop')
       if (!this.isMousedown) {
         return false
       }
-      var top = parseInt($this.css('top'), 10)
-      var left = parseInt($this.css('left'), 10)
 
-      $this.css({
-        'top': top + event.clientY - this.pointStart.y,
-        'left': left + event.clientX - this.pointStart.x
-      })
+      let $this = this.$el.querySelector('.' + this.xclass('stage'))
+      let styleHub = getComputedStyle($this)
+      let top = parseFloat(styleHub.top, 10)
+      let left = parseFloat(styleHub.left, 10)
+
+      $this.style.top = `${top + event.clientY - this.pointStart.y}px`
+      $this.style.left = `${left + event.clientX - this.pointStart.x}px`
 
       this.pointStart = {
         x: event.clientX,
@@ -216,7 +222,9 @@ const popComp = {
      *
      * @return {Object, Boolean}
      */
-    mouseUp() {
+    mouseUp(event) {
+      event.preventDefault()
+
       if (!this.isMousedown) {
         return false
       }

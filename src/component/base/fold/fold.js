@@ -4,7 +4,7 @@
  * @props initOpt - 折叠版的初始化数据
  * @props initIndex - 当前展开的折叠板
  * @props spread-all - 展开全部
- * @props one - 开启一次只能展开一个面板功能
+ * @props only - 开启一次只能展开一个面板功能
  * @props type - 布局类型
  *
  */
@@ -73,7 +73,7 @@ const foldComp = {
       default: false
     },
 
-    one: {
+    only: {
       type: Boolean,
       default: false
     },
@@ -109,38 +109,67 @@ const foldComp = {
 
     spreadAll() {
       this._initFold()
+    },
+
+    only(val) {
+      this._initFold()
     }
   },
 
   methods: {
     _initFold() {
-      this.foldChildren.forEach((item, index) => {
-        if (this.one) {
+      let foldChildren = []
+      let foldData = []
+
+      this.$slotKey.forEach((item, index) => {
+        if (item === 'default') {
+          return false
+        }
+
+        let contentIndex = Number(item.split('-')[1]) - 1
+
+        if (foldChildren[contentIndex] === undefined) {
+          foldChildren[contentIndex] = {}
+        }
+
+        if (/content-/.test(item)) {
+          foldChildren[contentIndex].content = this.$slots[item]
+        } else if (/title-/.test(item)) {
+          foldChildren[contentIndex].title = this.$slots[item]
+        }
+      })
+
+
+      foldChildren.forEach((item, index) => {
+        if (this.only) {
           if (this.initIndex) {
-            this.foldData[index] = {
+            foldData[index] = {
               folding: index !== this.initIndex - 1
             }
           } else {
-            this.foldData[index] = {
+            foldData[index] = {
               folding: true
             }
           }
         } else {
           if (this.spreadAll) {
-            this.foldData[index] = {
+            foldData[index] = {
               folding: false
             }
           } else if (this.initIndex) {
-            this.foldData[index] = {
+            foldData[index] = {
               folding: index !== this.initIndex - 1
             }
           } else {
-            this.foldData[index] = {
+            foldData[index] = {
               folding: true
             }
           }
         }
       })
+
+      this.foldChildren = foldChildren
+      this.foldData = foldData
     },
 
     clickTitle(evt) {
@@ -175,24 +204,6 @@ const foldComp = {
   },
 
   created() {
-    this.$slotKey.forEach((item, index) => {
-      if (item === 'default') {
-        return false
-      }
-
-      let contentIndex = Number(item.split('-')[1]) - 1
-
-      if (this.foldChildren[contentIndex] === undefined) {
-        this.foldChildren[contentIndex] = {}
-      }
-
-      if (/content-/.test(item)) {
-        this.foldChildren[contentIndex].content = this.$slots[item]
-      } else if (/title-/.test(item)) {
-        this.foldChildren[contentIndex].title = this.$slots[item]
-      }
-    })
-
     this._initFold()
   }
 }

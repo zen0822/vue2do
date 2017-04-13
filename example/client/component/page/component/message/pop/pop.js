@@ -1,11 +1,11 @@
 import './pop.scss'
-import template from './pop.tpl'
+import pugTpl from './pop.pug'
 import mixin from '../../mixin'
 import alert from 'src/component/base/pop/alert'
 import confirm from 'src/component/base/pop/confirm'
 
 export default {
-  template,
+  template: pugTpl(),
 
   mixins: [mixin],
 

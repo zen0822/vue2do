@@ -1,9 +1,11 @@
 /**
  * menu 组件
  *
- * @props animate - 菜单显示动画
+ * @props animate - 菜单显示动画()
+ * @props autoSwitch - 菜单是否根据设备响应式切换
  * @props initOpt - 菜单的数据
  * @props kind - 菜单的种类
+ * @props only - 手风琴模式，一次只能打开一个面板
  * @props trigger - 2，3 级菜单的触发模式
  * @props type - 布局类型
  * @props spreadAll - 打开全部一级菜单
@@ -13,6 +15,7 @@
  */
 
 import './menu.scss'
+import './menu.m.scss'
 import render from './menu.render.js'
 import baseMixin from 'src/mixin/base'
 import {
@@ -50,6 +53,11 @@ export default {
       default: 'horizontal'
     },
 
+    autoSwitch: {
+      type: Boolean,
+      default: true
+    },
+
     initOpt: Array,
 
     gap: {
@@ -62,9 +70,9 @@ export default {
       default: 'center'
     },
 
-    wrap: {
-      type: String,
-      default: 'wrap'
+    only: {
+      type: Boolean,
+      default: false
     },
 
     spreadAll: {
@@ -98,6 +106,11 @@ export default {
     // 组件类名的前缀
     cPrefix() {
       return `${this.compPrefix}-menu`
+    },
+
+    // 设备小于 L 尺寸
+    isSmallDevice() {
+      return this.deviceRange <= this._deviceTypeRange('<l')
     }
   },
 
@@ -123,6 +136,10 @@ export default {
     },
 
     changeByDeviceSize(size) {
+      if (!this.autoSwitch) {
+        return false
+      }
+
       if (size === '<xl') {
         this.show()
       } else {

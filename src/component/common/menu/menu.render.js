@@ -40,7 +40,11 @@ function foldContent(h, foldList) {
                 to: item.route
               },
               nativeOn: {
-                click: this.hide
+                click: () => {
+                  if (this.isSmallDevice) {
+                    this.hide()
+                  }
+                }
               }
             }, item.name)
           ]
@@ -51,7 +55,8 @@ function foldContent(h, foldList) {
 
   return h('fold', {
     props: {
-      spreadAll: this.deviceRange <= this._deviceTypeRange('<l') ? false : this.spreadAll
+      only: this.isSmallDevice ? true : this.only,
+      spreadAll: this.isSmallDevice ? false : this.spreadAll
     },
     class: [this.xclass('sub-fold')]
   }, foldChildren)
@@ -60,9 +65,11 @@ function foldContent(h, foldList) {
 export default function (h) {
   let menuStage = []
   let stageChildren = [
-    h('div', {
-      class: [this.xclass('transition-container')]
-    }, [
+    h('div',
+      {
+        class: [this.xclass('transition-container')]
+      },
+      [
         h('div',
           {
             class: [this.xclass('close-menu')],
@@ -71,7 +78,8 @@ export default function (h) {
                 this.hide()
               }
             }
-          }, [
+          },
+          [
             h('icon', {
               props: {
                 kind: 'close'
@@ -82,7 +90,8 @@ export default function (h) {
         this.$slots.head,
         foldContent.call(this, h, this.initOpt),
         this.$slots.tail
-      ])
+      ]
+    )
   ]
 
   if (this.animate === 'vertical') {
@@ -110,7 +119,7 @@ export default function (h) {
       h('transition',
         {
           props: {
-            name: 'bounce'
+            name: this.prefixClass(this.animate + '-down')
           }
         },
         [
@@ -118,9 +127,12 @@ export default function (h) {
             {
               class: [
                 this.xclass('stage'),
-                this.xclass(`animate-${this.animate}`),
-                { [this.xclass('active')]: this.isStageActive }
-              ]
+                this.xclass(`animate-${this.animate}`)
+              ],
+              directives: [{
+                name: 'show',
+                value: this.isStageActive
+              }]
             },
             stageChildren
           )
@@ -155,12 +167,14 @@ export default function (h) {
                 span: 6
               }
             }, this.title),
-            h('column', {
-              class: [`${this.compPrefix}-text-right`],
-              props: {
-                span: 6
-              }
-            }, [
+            h('column',
+              {
+                class: [`${this.compPrefix}-text-right`],
+                props: {
+                  span: 6
+                }
+              },
+              [
                 h('icon', {
                   props: {
                     kind: this.isStageActive ? 'spread' : 'fold',
