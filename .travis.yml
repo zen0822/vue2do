@@ -3,12 +3,16 @@ node_js:
   - "7"
 cache:
   directories: node_modules
+addons:
+  sauce_connect:
+    username: "zen_n"
+    access_key: "ab082b18-8c48-4378-be1a-2f85059acc71"
 install:
 |
   npm install -g npm@latest
   npm --version
-  npm install -g cnpm --registry=https://registry.npm.taobao.org
-  # npm install --registry http://registry.npmjs.org
-  cnpm install
+  npm install --registry http://registry.npmjs.org
 script:
   - npm test
+after_script:
+  - npm run coveralls
