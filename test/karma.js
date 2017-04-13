@@ -99,7 +99,7 @@ module.exports = function (config) {
     colors: true,
     customLaunchers: customLaunchers2,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    reporters: ['spec', 'coverage', 'saucelabs'],
+    reporters: ['spec', 'coverage'],
     files: ['./entry.js'],// 这是测试入口文件
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap']
