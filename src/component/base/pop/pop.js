@@ -22,9 +22,9 @@ import './pop.scss'
 import './pop.m.scss'
 
 import render from './pop.render'
-import btnComp from 'src/component/base/btn/btn'
-import iconComp from 'src/component/base/icon/icon'
-import baseMixin from 'src/mixin/base'
+import btnComp from '../../base/btn/btn'
+import iconComp from '../../base/icon/icon'
+import baseMixin from '../../../mixin/base'
 
 const TYPE_ALERT = 'alert'
 const TYPE_CONFIRM = 'confirm'

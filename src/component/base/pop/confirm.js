@@ -5,9 +5,9 @@
 import Vue from 'vue'
 
 import popComp from './pop'
-import store from 'src/vuex/store'
-import commonStore from 'src/vuex/module/common/type.json'
-import baseMixin from 'src/mixin/base'
+import store from '../../../vuex/store'
+import commonStore from '../../../vuex/module/common/type.json'
+import baseMixin from '../../../mixin/base'
 
 let confirming = false
 let confirmHub = []

@@ -12,9 +12,9 @@
 import Vue from 'vue'
 import './fold.scss'
 import render from './fold.render.js'
-import baseMixin from 'src/mixin/base'
-import iconComp from 'src/component/base/icon/icon'
-import foldTransition from 'src/component/transition/fold'
+import baseMixin from '../../../mixin/base'
+import iconComp from '../../base/icon/icon'
+import foldTransition from '../../transition/fold'
 
 const foldTitleComp = {
   name: 'fold-title',

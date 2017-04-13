@@ -12,7 +12,7 @@ import './icon.scss'
 
 import Vue from 'vue'
 import render from './icon.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 
 const SIZE_S = 'S'
 const SIZE_M = 'M'

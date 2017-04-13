@@ -16,10 +16,10 @@
 
 import './btn.scss'
 
-import loadingComp from 'src/component/base/loading/loading'
+import loadingComp from '../../base/loading/loading'
 import render from './btn.render'
-import baseMixin from 'src/mixin/base'
-import formMixin from 'src/mixin/form'
+import baseMixin from '../../../mixin/base'
+import formMixin from '../../../mixin/form'
 
 const BTN_TYPE_LINK = 'link'
 const BTN_TYPE_BUTTON = 'button'

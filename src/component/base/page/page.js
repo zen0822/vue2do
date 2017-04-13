@@ -21,12 +21,12 @@
 
 import './page.scss'
 
-import btnComp from 'src/component/base/btn/btn'
-import iconComp from 'src/component/base/icon/icon'
-import inputComp from 'src/component/base/input/input'
-import rowComp from 'src/component/common/layout/row/row'
-import columnComp from 'src/component/common/layout/col/col'
-import baseMixin from 'src/mixin/base'
+import btnComp from '../../base/btn/btn'
+import iconComp from '../../base/icon/icon'
+import inputComp from '../../base/input/input'
+import rowComp from '../../common/layout/row/row'
+import columnComp from '../../common/layout/col/col'
+import baseMixin from '../../../mixin/base'
 import render from './page.render'
 
 const pageComp = {

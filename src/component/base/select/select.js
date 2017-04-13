@@ -40,21 +40,21 @@ import Vue from 'vue'
 import optionComp from './select-opt'
 
 import render from './select.render'
-import store from 'src/vuex/store'
-import hubStore from 'src/vuex/module/hub/type.json'
-import tip from 'src/component/base/pop/tip'
-import compEvent from 'src/config/event.json'
+import store from '../../../vuex/store'
+import hubStore from '../../../vuex/module/hub/type.json'
+import tip from '../../base/pop/tip'
+import compEvent from '../../../config/event.json'
 
-import iconComp from 'src/component/base/icon/icon'
-import inputComp from 'src/component/base/input/input'
-import checkComp from 'src/component/base/check/check'
-import scrollerComp from 'src/component/base/scroller/scroller'
+import iconComp from '../../base/icon/icon'
+import inputComp from '../../base/input/input'
+import checkComp from '../../base/check/check'
+import scrollerComp from '../../base/scroller/scroller'
 
-import baseMixin from 'src/mixin/base'
-import formMixin from 'src/mixin/form'
+import baseMixin from '../../../mixin/base'
+import formMixin from '../../../mixin/form'
 
-import { dataType } from 'src/util/data/data'
-import { unique as uniqueArray } from 'src/util/data/array'
+import { dataType } from '../../../util/data/data'
+import { unique as uniqueArray } from '../../../util/data/array'
 
 // 下拉框的 border 宽度
 const SELECT_BORDER_WIDTH = 1

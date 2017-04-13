@@ -2,7 +2,7 @@
  * check 组件里面的 ele 组件
  */
 
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 
 export default {
   template: `

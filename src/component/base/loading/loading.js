@@ -11,8 +11,8 @@
 
 import './loading.scss'
 
-import iconComp from 'src/component/base/icon/icon'
-import baseMixin from 'src/mixin/base'
+import iconComp from '../../base/icon/icon'
+import baseMixin from '../../../mixin/base'
 import render from './loading.render'
 
 const TYPE_ROTATE = 'rotate'

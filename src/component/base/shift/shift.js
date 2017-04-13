@@ -10,7 +10,7 @@
 
 import './shift.scss'
 import render from './shift.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 
 // 可供选择的切换模式
 const SHIFT_TYPE = ['display', 'move', 'opacity']

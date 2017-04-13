@@ -8,9 +8,9 @@
  */
 
 import './tab.scss'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 import render from './tab.render.js'
-import shiftComp from 'src/component/base/shift/shift'
+import shiftComp from '../../base/shift/shift'
 
 export default {
   name: 'tab',

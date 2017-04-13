@@ -3,7 +3,7 @@
  *
  */
 
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 
 export default {
   mixins: [baseMixin],

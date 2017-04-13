@@ -18,7 +18,7 @@
  */
 import Vue from 'vue'
 
-import baseMixin from 'src/mixin/base';
+import baseMixin from '../../../mixin/base';
 const { bubble: bubbleHub } = require('components/config/componentHub.json');
 
 require('components/base/icon/icon')

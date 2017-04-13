@@ -25,7 +25,7 @@
 
 import './scroller.scss'
 
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 import render from './scroller.render.js'
 
 // 滚动一次的滚动区域走的像素大小

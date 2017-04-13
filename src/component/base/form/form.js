@@ -16,8 +16,8 @@
 require('./form.scss')
 const template = require('./form.tpl')
 
-import baseMixin from 'src/mixin/base'
-import tip from 'src/component/base/pop/tip'
+import baseMixin from '../../../mixin/base'
+import tip from '../../base/pop/tip'
 
 const INIT_FORM_CONTROL = ['select', 'input', 'check', 'data', 'upload']
 const VERIFY_FORM_CONTROL = ['select', 'input', 'check', 'data', 'upload']

@@ -39,17 +39,17 @@
 import './input.scss'
 import render from './input.render'
 
-import store from 'src/vuex/store'
-import hubStore from 'src/vuex/module/hub/type.json'
+import store from '../../../vuex/store'
+import hubStore from '../../../vuex/module/hub/type.json'
 import initVerfication from './validate.js'
 
-import baseMixin from 'src/mixin/base'
-import formMixin from 'src/mixin/form'
+import baseMixin from '../../../mixin/base'
+import formMixin from '../../../mixin/form'
 
-import rowComp from 'src/component/common/layout/row/row'
-import colComp from 'src/component/common/layout/col/col'
+import rowComp from '../../common/layout/row/row'
+import colComp from '../../common/layout/col/col'
 
-import { dataType } from 'src/util/data/data'
+import { dataType } from '../../../util/data/data'
 
 const tip = {}
 
