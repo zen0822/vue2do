@@ -13,7 +13,7 @@
 
 import './row.scss'
 import render from './row.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../../mixin/base'
 
 const layoutType = ['grid', 'flex', 'flow']
 

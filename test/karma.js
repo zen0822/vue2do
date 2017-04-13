@@ -4,7 +4,7 @@
  */
 
 var config = require ('./config.json')
-var webpackConf = require('../build/webpack.base.conf')(config.appNickName)
+var webpackConf = require('../build/config/base.webpack.conf')(config.appName)
 
 delete webpackConf.entry
 
@@ -13,10 +13,9 @@ module.exports = function (config) {
     browsers: ['Chrome'], // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     reporters: ['spec', 'coverage'],
-    // 这是测试入口文件
-    files: ['../test/entry.js'],
+    files: ['./entry.js'],// 这是测试入口文件
     preprocessors: {
-      '../test/entry.js': ['webpack', 'sourcemap']
+      './entry.js': ['webpack', 'sourcemap']
     },
     webpack: webpackConf,
     webpackMiddleware: {

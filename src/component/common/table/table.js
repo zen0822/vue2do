@@ -18,8 +18,8 @@
 
 import './table.scss'
 import render from './table.render'
-import baseMixin from 'src/mixin/base'
-import listMixin from 'src/mixin/list'
+import baseMixin from '../../../mixin/base'
+import listMixin from '../../../mixin/list'
 import tip from '../../base/pop/tip'
 
 const tableRowComp = {

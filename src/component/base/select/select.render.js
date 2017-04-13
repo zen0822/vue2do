@@ -86,6 +86,9 @@ export default function (h) {
         on: {
           blur: this.blur,
           focus: this.focus
+        },
+        props: {
+          readOnly: true
         }
       }),
 

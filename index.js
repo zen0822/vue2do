@@ -6,7 +6,7 @@ import './src/scss/common/common.scss'
 
 import './src/asset/icon/iconfont.svg.js'
 
-import pluginInstall from 'src'
+import pluginInstall from './src'
 import cnLang from './src/language/zh-cn.json'
 import { set as setConfig } from './src/config'
 

@@ -17,7 +17,7 @@
 
 import './col.scss'
 import render from './col.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../../mixin/base'
 
 export default {
   name: 'col',

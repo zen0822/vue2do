@@ -7,11 +7,11 @@ export default function (h) {
 
   if (this.isText) {
     editBoxEle = h('input', {
-      domProps: {
+      attrs: {
         value: this.value,
-        placeholder: this.placeholder,
+        maxlength: this.maxLength,
         readonly: this.readOnly,
-        maxlength: this.maxLength
+        placeholder: this.placeholder
       },
       directives: [{
         name: 'focus',
@@ -28,11 +28,10 @@ export default function (h) {
     })
   } else {
     editBoxEle = h('textarea', {
-      domProps: {
-        value: this.value,
+      attrs: {
         placeholder: this.placeholder,
-        readonly: this.readOnly,
         maxlength: this.maxLength,
+        readonly: this.readOnly,
         rows: this.row
       },
       directives: [{
@@ -47,7 +46,7 @@ export default function (h) {
           this.value = event.target.value
         }
       }
-    })
+    }, this.value)
   }
 
   return h('div',

@@ -191,7 +191,7 @@ const inputComp = {
       bubbleDisplay: false,
       // 当前输入框值的长度
       inputTextLength: 0,
-      staticCompletionItems: this.completionItems.slice()
+      staticCompletionItems: []
     }
   },
 
@@ -252,6 +252,9 @@ const inputComp = {
   },
 
   methods: {
+    _setDataOpt() {
+      this.staticCompletionItems = this.completionItems.slice()
+    },
     /**
      * 初始化验证规则
      * @return {Object} this - 组件

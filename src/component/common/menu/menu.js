@@ -17,7 +17,7 @@
 import './menu.scss'
 import './menu.m.scss'
 import render from './menu.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 import {
   foldComp,
   foldTitleComp,

@@ -1,4 +1,4 @@
 {
-  "appNickName": "AB",
-  "testFilePath": "appBackend/configPush"
+  "appName": "example",
+  "testFilePath": "unit/component"
 }

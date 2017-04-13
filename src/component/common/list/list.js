@@ -17,8 +17,8 @@
 
 import './list.scss'
 import render from './list.render'
-import baseMixin from 'src/mixin/base'
-import listMixin from 'src/mixin/list'
+import baseMixin from '../../../mixin/base'
+import listMixin from '../../../mixin/list'
 import tip from '../../base/pop/tip'
 import iconComp from '../../base/icon/icon'
 
@@ -103,8 +103,7 @@ const listComp = {
     },
     // 分页的显示状态
     pagerDisplay() {
-      return this.pageData.current !== this.pageData.total &&
-        this.scrollerAlmostInBottom
+      return this.pageData.current !== this.pageData.total
     },
     // 是否是加载更多的触发方式
     isPageTypeMore() {

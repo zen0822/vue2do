@@ -17,7 +17,7 @@ require('components/base/drop-menu/drop-menu');
 require('./select-city.scss');
 const template = require('./select-city.tpl');
 
-import baseMixin from 'src/mixin/base';
+import baseMixin from '../../../mixin/base';
 
 const { apiPath } = require('appService/api');
 

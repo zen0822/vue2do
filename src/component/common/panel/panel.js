@@ -14,7 +14,7 @@
 
 import './panel.scss'
 import render from './panel.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 import {
   foldComp,
   foldTitleComp,

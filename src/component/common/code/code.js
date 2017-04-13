@@ -7,7 +7,7 @@
 
 import './code.scss'
 import render from './code.render.js'
-import baseMixin from 'src/mixin/base'
+import baseMixin from '../../../mixin/base'
 import scrollerComp from '../../base/scroller/scroller'
 
 export default {

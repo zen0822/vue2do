@@ -23,7 +23,7 @@ require('components/base/drop-menu/drop-menu');
 require('./drop-menu-input.scss');
 const template = require('./drop-menu-input.tpl');
 
-import baseMixin from 'src/mixin/base';
+import baseMixin from '../../../mixin/base';
 
 const dropMenuInput = {
 	template,

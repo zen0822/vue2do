@@ -8,9 +8,9 @@
  */
 
 import compConfig from '../config/index.json'
-import store from 'src/vuex/store'
-import commonStore from 'src/vuex/module/common/type.json'
-import { addClass } from 'src/util/dom/element'
+import store from '../vuex/store'
+import commonStore from '../vuex/module/common/type.json'
+import { addClass } from '../util/dom/element'
 
 export default {
   store,
