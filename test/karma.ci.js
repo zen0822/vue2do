@@ -67,10 +67,10 @@ module.exports = function (config) {
       version: '10.0'
     },
     sl_android: {
-        base: 'SauceLabs',
-        browserName: 'android',
-        platform: 'Linux',
-        version: '4.3'
+      base: 'SauceLabs',
+      browserName: 'android',
+      platform: 'Linux',
+      version: '4.3'
     }
   }
 
@@ -79,6 +79,13 @@ module.exports = function (config) {
     browsers: Object.keys(customLaunchers),
     captureTimeout: 120000,
     colors: true,
+    coverageReporter: {
+      dir: path.join(__dirname, 'coverage'),
+      reporters: [
+        { type: 'html' },
+        { type: 'lcov', subdir: 'lcov' }  // lcov
+      ]
+    },
     customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'],// 这是测试入口文件
