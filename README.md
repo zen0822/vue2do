@@ -7,5 +7,5 @@
 
 [![Build Status](https://saucelabs.com/browser-matrix/zen_n.svg)](https://saucelabs.com/beta/builds/e8ac8e3b1d664ce5997afc6879f2858b)
 
-### 基于 vue2 的响应式基础组件
+## 基于 vue2 的响应式基础组件
 

@@ -45,6 +45,8 @@
     "eslint-friendly-formatter": "*",
     "eslint-loader": "*",
     "eslint-plugin-html": "*",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "*",
     "eslint-plugin-standard": "*",
     "eventsource-polyfill": "*",
