@@ -93,7 +93,7 @@ module.exports = function (config) {
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap']
     },
-    reporters: ['coverage', 'saucelabs'],
+    reporters: ['spec', 'coverage', 'saucelabs'],
     singleRun: true,
     sauceLabs: {
       testName: 'Karma and Sauce Labs demo',

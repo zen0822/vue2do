@@ -56,12 +56,12 @@ module.exports = function (config) {
     colors: true,
     customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    reporters: ['spec', 'coverage', 'saucelabs'],
     files: ['./entry.js'], // 这是测试入口文件
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap']
     },
     port: 9877,
+    reporters: ['spec', 'coverage', 'saucelabs'],
     singleRun: false,
     sauceLabs: {
       accessKey: 'ab082b18-8c48-4378-be1a-2f85059acc71',
