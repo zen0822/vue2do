@@ -4,127 +4,80 @@
  */
 
 const path = require('path')
-var config = require('./config.json')
-var webpackConf = require('../build/config/base.webpack.conf')(config.appName)
+const config = require('./config.json')
+const webpackConf = require('../build/config/base.webpack.conf')(config.appName)
 
 delete webpackConf.entry
 
+// https://saucelabs.com/platforms 里面有各种浏览器型号
 const customLaunchers = {
-  // pc
-  slChrome: {
+  // sl_chrome: {
+  //   base: 'SauceLabs',
+  //   browserName: 'chrome',
+  //   platform: 'Windows 7',
+  //   version: '35'
+  // },
+  sl_firefox: {
     base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7'
+    browserName: 'firefox',
+    version: '30'
   },
-  slFirefox: {
-    base: 'SauceLabs',
-    browserName: 'firefox'
-  },
-  // ie family
-  slIE11: {
+  sl_ie_11: {
     base: 'SauceLabs',
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
     version: '11'
   },
-  slIE10: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 8',
-    version: '10'
-  },
-  slIE9: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    version: '9'
-  },
-  // mac safari
-  slMacSafari: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.10'
-  },
-  // mobile
-  slIosSafari: {
-    base: 'SauceLabs',
-    browserName: 'iphone',
-    platform: 'OS X 10.9',
-    version: '9.1'
-  },
-  slAndroid: {
-    base: 'SauceLabs',
-    browserName: 'android',
-    platform: 'Linux',
-    version: '4.3'
-  }
+  // 'SL_Safari': {
+  //   base: 'SauceLabs',
+  //   browserName: 'safari',
+  //   platform: 'OS X 10.11',
+  //   version: '10.0'
+  // }
 }
 
-var customLaunchers2 = {
-  'SL_Chrome': {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    version: '48.0',
-    platform: 'Linux'
-  },
-  'SL_Firefox': {
-    base: 'SauceLabs',
-    browserName: 'firefox',
-    version: '50.0',
-    platform: 'Windows 10'
-  },
-  'SL_InternetExplorer': {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    version: '11.0',
-    platform: 'Windows 7'
-  },
-  'SL_Safari': {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    platform: 'OS X 10.11',
-    version: '10.0'
-  }
+if (!process.env.SAUCE_USERNAME) {
+  process.env.SAUCE_USERNAME = 'zen_n'
+  process.env.SAUCE_ACCESS_KEY = 'ab082b18-8c48-4378-be1a-2f85059acc71'
 }
-
-// 要先启动 sauce connect
-// if (!process.env.SAUCE_USERNAME) {
-//   process.env.SAUCE_USERNAME = 'zen_n'
-//   process.env.SAUCE_ACCESS_KEY = 'ab082b18-8c48-4378-be1a-2f85059acc71'
-// }
 
 module.exports = function (config) {
   config.set({
     autoWatch: true,
-    browsers: Object.keys(customLaunchers2), // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
-    captureTimeout: 6000,
+    browsers:  Object.keys(customLaunchers),// Object.keys(customLaunchers), // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
+    captureTimeout: 120000,
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),
       reporters: [
         { type: 'html' },
-        { type: 'lcov', subdir: 'lcov' }  // lcov
+        { type: 'lcov', subdir: 'lcov' } // lcov
       ]
     },
     colors: true,
-    customLaunchers: customLaunchers2,
+    customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    reporters: ['spec', 'coverage'],
-    files: ['./entry.js'],// 这是测试入口文件
+    reporters: ['spec', 'coverage', 'saucelabs'],
+    files: ['./entry.js'], // 这是测试入口文件
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap']
     },
-    port: 9876,
+    port: 9877,
     singleRun: false,
     sauceLabs: {
       accessKey: 'ab082b18-8c48-4378-be1a-2f85059acc71',
       build: '0822',
+      connectOptions: {
+        port: 5757,
+        logfile: 'sauce_connect.log'
+      },
       public: 'public',
       testName: 'Karma and Sauce Labs demo',
-      username: 'zen_n'
+      username: 'zen_n',
     },
     webpack: webpackConf,
     webpackMiddleware: {
       noInfo: true
     }
-    //logLevel: config.LOG_ERROR
+    // logLevel: config.LOG_ERROR
   })
 }

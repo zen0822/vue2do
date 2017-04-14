@@ -1,3 +1,6 @@
+/**
+ * select.render.js
+ */
 export default function (h) {
   let selectedBoxChildren = []
   let menuChildren = []

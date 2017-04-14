@@ -33,7 +33,7 @@
 						:init-opt="selectedAllCheckOpt">
 				</check>
 
-				<slot :name="`${props.index}`" :item="props">
+				<slot :name="props.index" :item="props">
 					<span
 							v-bubble="{
 								text: props.item[txtName] && props.item[txtName].length > 9 ?

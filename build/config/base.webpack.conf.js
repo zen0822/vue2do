@@ -10,7 +10,10 @@ module.exports = function (opt) {
 
   var baseConf = {
     entry: {
-      app: path.resolve(__dirname, `${config.global.root}/${appName}/app.js`)
+      app: [
+        'babel-polyfill',
+        path.resolve(__dirname, `${config.global.root}/${appName}/app.js`)
+      ]
     },
 
     output: {

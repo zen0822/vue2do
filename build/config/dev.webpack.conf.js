@@ -15,19 +15,17 @@ module.exports = function (opt = {}) {
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName: appName
   })
-
   const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
 
-  let baseEntryApp = baseWebpackConfig.entry.app
+  let baseEntryApp = baseWebpackConfig.entry.app.slice()
+  delete baseWebpackConfig.entry
 
   const devConf = merge(baseWebpackConfig, {
     entry: {
-      app: [
-        'babel-polyfill',
-        baseEntryApp,
+      app: baseEntryApp.concat([
         `webpack-dev-server/client?http://localhost:${port}/`,
         'webpack/hot/dev-server'
-      ]
+      ])
     },
 
     devtool: '#eval-source-map',
