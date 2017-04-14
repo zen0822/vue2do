@@ -14,27 +14,44 @@ module.exports = function (config) {
 
 
   const customLaunchers = {
-    sl_chrome: {
+    sl_chrome_36: {
       base: 'SauceLabs',
       browserName: 'chrome',
       platform: 'Windows 7',
       version: '36'
     },
-    sl_firefox: {
+    sl_chrome_46: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 7',
+      version: '46'
+    },
+    sl_chrome_56: {
+      base: 'SauceLabs',
+      browserName: 'chrome',
+      platform: 'Windows 7',
+      version: '56'
+    },
+    sl_firefox_30: {
       base: 'SauceLabs',
       browserName: 'firefox',
       version: '30'
     },
+    sl_firefox_50: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '50'
+    },
     sl_ie_11: {
       base: 'SauceLabs',
       browserName: 'internet explorer',
-      platform: 'Windows 7',
+      platform: 'Windows 10',
       version: '11'
     },
     sl_ie_10: {
       base: 'SauceLabs',
       browserName: 'internet explorer',
-      platform: 'Windows 7',
+      platform: 'Windows 10',
       version: '10'
     },
     sl_ie_9: {
