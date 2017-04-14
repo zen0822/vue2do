@@ -18,7 +18,7 @@ module.exports = function (config) {
       base: 'SauceLabs',
       browserName: 'chrome',
       platform: 'Windows 7',
-      version: '35'
+      version: '36'
     },
     // sl_firefox: {
     //   base: 'SauceLabs',
@@ -31,7 +31,7 @@ module.exports = function (config) {
     //   platform: 'Windows 8.1',
     //   version: '11'
     // },
-    // 'SL_Safari': {
+    // 'sl_safari': {
     //   base: 'SauceLabs',
     //   browserName: 'safari',
     //   platform: 'OS X 10.11',
@@ -44,10 +44,13 @@ module.exports = function (config) {
     browsers: Object.keys(customLaunchers),
     captureTimeout: 120000,
     colors: true,
-    customLaunchers: customLaunchers,
+    customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'],// 这是测试入口文件
     port: 9876,
+    preprocessors: {
+      './entry.js': ['webpack', 'sourcemap']
+    },
     reporters: ['progress', 'saucelabs'],
     singleRun: true,
     sauceLabs: {
