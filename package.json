@@ -64,6 +64,7 @@
     "karma-coverage": "*",
     "karma-mocha": "*",
     "karma-phantomjs-launcher": "*",
+    "karma-sauce-launcher": "^1.1.0",
     "karma-sinon-chai ": "*",
     "karma-source-map-support": "*",
     "karma-sourcemap-loader": "*",
