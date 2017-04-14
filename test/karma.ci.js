@@ -20,23 +20,41 @@ module.exports = function (config) {
       platform: 'Windows 7',
       version: '36'
     },
-    // sl_firefox: {
-    //   base: 'SauceLabs',
-    //   browserName: 'firefox',
-    //   version: '30'
-    // },
-    // sl_ie_11: {
-    //   base: 'SauceLabs',
-    //   browserName: 'internet explorer',
-    //   platform: 'Windows 8.1',
-    //   version: '11'
-    // },
-    // 'sl_safari': {
-    //   base: 'SauceLabs',
-    //   browserName: 'safari',
-    //   platform: 'OS X 10.11',
-    //   version: '10.0'
-    // }
+    sl_firefox: {
+      base: 'SauceLabs',
+      browserName: 'firefox',
+      version: '30'
+    },
+    sl_ie_11: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '11'
+    },
+    sl_ie_10: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '10'
+    },
+    sl_ie_9: {
+      base: 'SauceLabs',
+      browserName: 'internet explorer',
+      platform: 'Windows 7',
+      version: '9'
+    },
+    sl_safari: {
+      base: 'SauceLabs',
+      browserName: 'safari',
+      platform: 'OS X 10.11',
+      version: '10.0'
+    },
+    sl_android: {
+        base: 'SauceLabs',
+        browserName: 'android',
+        platform: 'Linux',
+        version: '4.3'
+    }
   }
 
   config.set({
