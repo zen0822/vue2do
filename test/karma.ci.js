@@ -89,7 +89,6 @@ module.exports = function (config) {
     customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'],// 这是测试入口文件
-    port: 9876,
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap', 'coverage']
     },

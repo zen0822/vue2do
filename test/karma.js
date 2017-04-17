@@ -56,13 +56,9 @@ module.exports = function (config) {
     colors: true,
     customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    files: [
-      './entry.js', // 这是测试入口文件
-      '../src/component/**/*.js' // 这是需要计算代码覆盖率的文件
-    ],
+    files: ['./entry.js'],// 这是测试入口文件
     preprocessors: {
-      './entry.js': ['webpack', 'sourcemap'],
-      '../src/component/**/*.js' : ['webpack', 'sourcemap', 'coverage']
+      './entry.js': ['webpack', 'sourcemap', 'coverage']
     },
     port: 9877,
     reporters: ['spec', 'coverage'],
