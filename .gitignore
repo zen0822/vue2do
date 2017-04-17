@@ -4,3 +4,4 @@ node_modules/
 .vscode/
 npm-debug.log
 sauce_connect.log
+test/coverage/*
