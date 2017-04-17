@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import '../src/lib/directive/directive.js'
 import path from 'path'
 
