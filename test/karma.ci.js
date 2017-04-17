@@ -93,7 +93,7 @@ module.exports = function (config) {
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap', 'coverage']
     },
-    reporters: ['spec', 'coverage', 'saucelabs'],
+    reporters: ['progress', 'saucelabs'],
     singleRun: true,
     sauceLabs: {
       testName: 'vue2do test',

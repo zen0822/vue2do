@@ -44,7 +44,7 @@ if (!process.env.SAUCE_USERNAME) {
 module.exports = function (config) {
   config.set({
     autoWatch: true,
-    browsers:  Object.keys(customLaunchers), // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
+    browsers:  ['Chrome'], // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
     captureTimeout: 120000,
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),
@@ -56,24 +56,17 @@ module.exports = function (config) {
     colors: true,
     customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    files: ['./entry.js'], // 这是测试入口文件
+    files: [
+      './entry.js', // 这是测试入口文件
+      '../src/index.js' // 这是需要计算代码覆盖率文件
+    ],
     preprocessors: {
-      './entry.js': ['webpack', 'sourcemap']
+      './entry.js': ['webpack', 'sourcemap'],
+      '../src/**/*.js' : ['webpack', 'sourcemap', 'coverage']
     },
     port: 9877,
-    reporters: ['spec', 'coverage', 'saucelabs'],
+    reporters: ['spec', 'coverage'],
     singleRun: false,
-    sauceLabs: {
-      accessKey: 'ab082b18-8c48-4378-be1a-2f85059acc71',
-      build: '0822',
-      connectOptions: {
-        port: 5757,
-        logfile: 'sauce_connect.log'
-      },
-      public: 'public',
-      testName: 'vue2do test',
-      username: 'zen_n',
-    },
     webpack: webpackConf,
     webpackMiddleware: {
       noInfo: true
