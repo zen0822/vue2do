@@ -13,7 +13,7 @@
  *
  */
 
-require('./form.scss')
+import './form.scss'
 const template = require('./form.tpl')
 
 import baseMixin from '../../../mixin/base'

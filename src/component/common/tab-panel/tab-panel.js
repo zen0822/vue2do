@@ -1,14 +1,13 @@
 import Vue from 'vue'
 
-require('../../base/tab/tab')
-require('../../base/shift/shift')
-require('./panel-ele')
+import '../../base/tab/tab'
+import '../../base/shift/shift'
+import './panel-ele'
 
 import baseMixin from '../../../mixin/base'
-const { tab: tabEvent } = require('../../../config/event.json')
 
-const template = require('./tab-panel.tpl')
-require('./tab-panel.scss')
+import template from './tab-panel.tpl'
+import './tab-panel.scss'
 
 const tabPanelComp = {
   name: 'tab-panel',
@@ -84,12 +83,6 @@ const tabPanelComp = {
       this.switchingIndex = index
 
       return this
-    }
-  },
-
-  events: {
-    [tabEvent.change]({ index }) {
-      this.switchingIndex = index
     }
   },
 
