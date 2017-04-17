@@ -71,7 +71,7 @@ module.exports = function (config) {
         logfile: 'sauce_connect.log'
       },
       public: 'public',
-      testName: 'Karma and Sauce Labs demo',
+      testName: 'vue2do test',
       username: 'zen_n',
     },
     webpack: webpackConf,

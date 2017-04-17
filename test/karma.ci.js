@@ -70,7 +70,7 @@ module.exports = function (config) {
       base: 'SauceLabs',
       browserName: 'android',
       platform: 'Linux',
-      version: '4.3'
+      version: '4.4'
     }
   }
 
@@ -96,7 +96,7 @@ module.exports = function (config) {
     reporters: ['spec', 'coverage', 'saucelabs'],
     singleRun: true,
     sauceLabs: {
-      testName: 'Karma and Sauce Labs demo',
+      testName: 'vue2do test',
       recordScreenshots: false,
       connectOptions: {
         port: 5757,
