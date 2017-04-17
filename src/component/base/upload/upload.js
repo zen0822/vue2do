@@ -22,17 +22,17 @@
 
 import Vue from 'vue'
 
-const tip = require('components/base/pop/tip')
-const loading = require('components/base/loading/loading')
-const { upload: uploadEvent } = require('components/config/event.json');
+const tip = require('../pop/tip')
+const loading = require('../loading/loading')
+const { upload: uploadEvent } = require('../../../config/event.json')
 
-const template = require("./upload.tpl");
-require("./upload.scss");
+const template = require('./upload.tpl')
+require('./upload.scss')
 
-const TYPE_IMG = 'img';
-const TYPE_DOC = 'doc';
+const TYPE_IMG = 'img'
+const TYPE_DOC = 'doc'
 
-const Upload = {
+const uploadComp = {
   template,
 
   props: {
@@ -68,8 +68,8 @@ const Upload = {
     store: Object,
 
     success: Function,
-    errorMessage:{
-      type:String
+    errorMessage: {
+      type: String
     },
     queryOpt: {
       type: Object,
@@ -88,7 +88,7 @@ const Upload = {
       dangerTip: '',
       width: null,
       height: null,
-      iptval:''
+      iptval: ''
     }
   },
 
@@ -116,7 +116,7 @@ const Upload = {
 
   watch: {
     'uploadItems'(val) {
-      console.log('----------------'+val);
+      console.log('----------------' + val)
       this.value = []
 
       val.forEach((item, index) => {
@@ -151,13 +151,13 @@ const Upload = {
         case TYPE_IMG:
           this.regex = /(.jpg|.png|.gif)$/i
           this.fileTypeTip = '仅支持jpg, png, gif 格式图片!'
-          break;
-        case TYPE_IMG:
+          break
+        case TYPE_DOC:
           this.regex = /(.pdf|.doc|.txt)$/i
           this.fileTypeTip = '仅支持doc, pdf, txt 格式文档!'
-          break;
+          break
         default:
-          break;
+          break
       }
     },
 
@@ -211,7 +211,7 @@ const Upload = {
         }
 
         img.onerror = () => {
-          tip("图片下载失败")
+          tip('图片下载失败')
         }
       } else {
         imgComplete()
@@ -226,7 +226,7 @@ const Upload = {
      * @return {Object} - this - 组件
      */
     delUploaded(index) {
-      this.iptval = '';
+      this.iptval = ''
       this.uploadItems.splice(index, 1)
 
       return this
@@ -236,46 +236,46 @@ const Upload = {
      * 触发上传文件
      */
     upload(evt) {
-      var file = evt.target.files[0];
+      var file = evt.target.files[0]
       if (!file) {
         return false
       }
 
       if (!this.regex.test(file.name)) {
-        tip(this.fileTypeTip);
+        tip(this.fileTypeTip)
 
-        return false;
+        return false
       }
 
       if (this.space && this.isImg && file.size > 1024 * 1024 * this.space) {
-        tip(`上传图片应小于${this.space}M`);
+        tip(`上传图片应小于${this.space}M`)
 
-        return false;
+        return false
       }
 
-      var formData = new FormData();
-      formData.append("data", file);
+      var formData = new FormData()
+      formData.append('data', file)
 
       Object.keys(this.queryOpt).forEach((item) => {
-        formData.append(item, this.queryOpt[item]);
+        formData.append(item, this.queryOpt[item])
       })
 
       this.$refs.loading.show()
-      this.loadingUpload = false;
+      this.loadingUpload = false
 
 
       $.ajax({
-        type: "POST",
+        type: 'POST',
         url: this.url,
-        dataType: "json",
+        dataType: 'json',
         crossDomain: true,
         processData: false,
         contentType: false,
         data: formData,
-        headers:{token:window.localStorage.getItem('appBackToken')},
+        headers: { token: window.localStorage.getItem('appBackToken') },
         success: (rtn) => {
           if (rtn.code !== 0) {
-            return false;
+            return false
           }
 
           var data = rtn.data
@@ -286,7 +286,7 @@ const Upload = {
 
           data.forEach((item, index) => {
             this.$refs.loading.hide()
-            this.loadingUpload = true;
+            this.loadingUpload = true
 
             this.checkPhotoSize(item.picPath, () => {
               this.uploadItems.push({
@@ -294,10 +294,10 @@ const Upload = {
                 id: item.picId,
                 width: this.width,
                 height: this.height
-              });
+              })
             })
           })
-          this.iptval="";
+          this.iptval = ''
           this.$nextTick(() => {
             this.success && this.success.call(null, rtn, this)
           })
@@ -310,4 +310,5 @@ const Upload = {
     this._init()
   }
 }
-module.exports = Vue.component('upload', Upload);
+
+export default uploadComp

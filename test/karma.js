@@ -58,11 +58,11 @@ module.exports = function (config) {
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: [
       './entry.js', // 这是测试入口文件
-      '../src/index.js' // 这是需要计算代码覆盖率文件
+      '../src/component/**/*.js' // 这是需要计算代码覆盖率的文件
     ],
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap'],
-      '../src/**/*.js' : ['webpack', 'sourcemap', 'coverage']
+      '../src/component/**/*.js' : ['webpack', 'sourcemap', 'coverage']
     },
     port: 9877,
     reporters: ['spec', 'coverage'],

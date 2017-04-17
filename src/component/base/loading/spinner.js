@@ -1,22 +1,5 @@
-const commonCompUtil = require('src/common/utils/commonComp')
+/**
+ * 启用全局等待控件
+ */
 
-module.exports = {
-  show(cb) {
-    if (!commonCompUtil.alive()) {
-      return false
-    }
-
-    return COMMON.router.app.$refs.commonComponent.$refs
-      .loading
-      .show(cb);
-  },
-  hide() {
-    if (!commonCompUtil.alive()) {
-      return false
-    }
-
-    return COMMON.router.app.$refs.commonComponent.$refs
-      .loading
-      .hide();
-  }
-}
+export default {}

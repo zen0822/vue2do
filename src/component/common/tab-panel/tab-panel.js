@@ -1,17 +1,17 @@
 import Vue from 'vue'
 
-require('components/base/tab/tab');
-require('components/base/switching/switching');
-require('./panel-ele');
+require('../../base/tab/tab')
+require('../../base/shift/shift')
+require('./panel-ele')
 
-import baseMixin from '../../../mixin/base';
-const { tab: tabEvent } = require('components/config/event.json');
+import baseMixin from '../../../mixin/base'
+const { tab: tabEvent } = require('../../../config/event.json')
 
-const template = require('./tab-panel.tpl');
-require('./tab-panel.scss');
+const template = require('./tab-panel.tpl')
+require('./tab-panel.scss')
 
-const TabPanel = {
-  name: "tab-panel",
+const tabPanelComp = {
+  name: 'tab-panel',
 
   mixins: [baseMixin],
 
@@ -20,7 +20,7 @@ const TabPanel = {
   props: {
     theme: {
       type: String,
-      default: "primary"
+      default: 'primary'
     },
 
     tabItems: {
@@ -34,7 +34,7 @@ const TabPanel = {
       themeClass: this.theme ? `theme-${this.theme}` : '',
       panelItems: {},
       currentIndex: 0,
-      currentItem: "",
+      currentItem: '',
       compileVm: this.$parent,
       switchingIndex: 0
     }
@@ -43,68 +43,68 @@ const TabPanel = {
   methods: {
 
     _initPanel() {
-      var optionContent = this.$options._content;
-      var switchinghtml = '';
+      var optionContent = this.$options._content
+      var switchinghtml = ''
 
-      for (let i = 0; i < this.tabItems.length; i++){
-        var slotEle = optionContent['children'][i].innerHTML;
+      for (let i = 0; i < this.tabItems.length; i++) {
+        var slotEle = optionContent['children'][i].innerHTML
 
         switchinghtml += `
-          <div slot="ele-${i}">
-            <div class="switching-content">${slotEle}</div>
+          <div slot='ele-${i}'>
+            <div class='switching-content'>${slotEle}</div>
           </div>
-        `;
+        `
       }
-      this.$tpl = $(this.$options.template);
-      this.$tpl.find('.panel-wrap').html(switchinghtml);
+      this.$tpl = $(this.$options.template)
+      this.$tpl.find('.panel-wrap').html(switchinghtml)
     },
 
     /**
      * @param { String } - tab 的 name 值
      */
     _findIndex(name) {
-      var currentIndex = 0;
+      var currentIndex = 0
 
       this.tabItems.every((item, index) => {
         if (item.name === name) {
-          currentIndex = index;
+          currentIndex = index
 
-          return false;
+          return false
         }
-        return true;
-      });
+        return true
+      })
 
-      return currentIndex;
+      return currentIndex
     },
 
     /**
      * @param { Number }
      */
     switchPanel(index) {
-      this.switchingIndex = index;
+      this.switchingIndex = index
 
-      return this;
+      return this
     }
   },
 
   events: {
-    [tabEvent.change]({index}) {
-      this.switchingIndex = index;
+    [tabEvent.change]({ index }) {
+      this.switchingIndex = index
     }
   },
 
   mounted() {
-    var dom = this.$tpl[0];
-    this.$compile(dom);
-    this.$el = dom;
+    var dom = this.$tpl[0]
+    this.$compile(dom)
+    this.$el = dom
 
-    //自动根据网址的 query 的 tab 值来转换 tab 状态
-    this.switchPanel(this._findIndex(this.$route.query.tab));
+    // 自动根据网址的 query 的 tab 值来转换 tab 状态
+    this.switchPanel(this._findIndex(this.$route.query.tab))
   },
 
   created() {
-    this._initPanel();
+    this._initPanel()
   }
 }
 
-module.exports = Vue.component('tab-panel', TabPanel);
+export default tabPanelComp

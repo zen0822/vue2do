@@ -18,18 +18,17 @@
  */
 import Vue from 'vue'
 
-import baseMixin from '../../../mixin/base';
-const { bubble: bubbleHub } = require('components/config/componentHub.json');
+import baseMixin from '../../../mixin/base'
+const COMMON = {}
+require('../icon/icon')
 
-require('components/base/icon/icon')
+require('./bubble.scss')
+var template = require('./bubble.tpl')
 
-require('./bubble.scss');
-var template = require('./bubble.tpl');
+const ARROW_HEIGHT = 20
 
-const ARROW_HEIGHT = 20;
-
-var Bubble = Vue.extend({
-  name: "Bubble",
+const bubbleComp = {
+  name: 'bubble',
 
   template,
 
@@ -38,11 +37,11 @@ var Bubble = Vue.extend({
   props: {
     theme: {
       type: String,
-      default: "primary"
+      default: 'primary'
     },
     message: {
       type: String,
-      default: ""
+      default: ''
     },
 
     bubbleDisplay: {
@@ -67,6 +66,8 @@ var Bubble = Vue.extend({
   },
 
   data: () => {
+    this.compName = 'bubble'
+
     return {
       popDisplay: false,
       mouseOnBubble: false,
@@ -78,7 +79,7 @@ var Bubble = Vue.extend({
   methods: {
     _init() {
       if (this.hideRightNow) {
-        this.displayInterval = 0;
+        this.displayInterval = 0
       }
     },
     /**
@@ -86,22 +87,22 @@ var Bubble = Vue.extend({
      * @return {Object} - 组件本身
      */
     _initPosition(target) {
-      var $target = $(target);
-      var position = this.relative ? $target.position() : $target.offset();
+      var $target = $(target)
+      var position = this.relative ? $target.position() : $target.offset()
 
-      var width = $target.outerWidth();
-      var height = $target.outerHeight();
+      var width = $target.outerWidth()
+      var height = $target.outerHeight()
 
-      var $el = $(this.$el);
-      var bubbleWidth = $el.outerWidth();
-      var bubbleHeight = $el.outerHeight();
+      var $el = $(this.$el)
+      var bubbleWidth = $el.outerWidth()
+      var bubbleHeight = $el.outerHeight()
 
       $el.css({
-        top: position.top + height + ARROW_HEIGHT/2,
+        top: position.top + height + ARROW_HEIGHT / 2,
         left: position.left - bubbleWidth / 2 + width / 2
-      });
+      })
 
-      return this;
+      return this
     },
 
     /**
@@ -109,14 +110,14 @@ var Bubble = Vue.extend({
      * @return {Functio} - 初始化bubble位置
      */
     show(target) {
-      clearTimeout(this.bubbleDisplayCounter);
-      this.bubbleDisplay = true;
+      clearTimeout(this.bubbleDisplayCounter)
+      this.bubbleDisplay = true
 
       this.$nextTick(() => {
-        this._initPosition(target);
-      });
+        this._initPosition(target)
+      })
 
-      return this;
+      return this
     },
 
     /**
@@ -124,10 +125,10 @@ var Bubble = Vue.extend({
      * @return {Object} - 组件本身
      */
     hide() {
-      clearTimeout(this.bubbleDisplayCounter);
-      this.setTimeoutBubbleDisplay();
+      clearTimeout(this.bubbleDisplayCounter)
+      this.setTimeoutBubbleDisplay()
 
-      return this;
+      return this
     },
 
     /**
@@ -135,29 +136,29 @@ var Bubble = Vue.extend({
      * @return {Object, String}
      **/
     info(text) {
-      if (typeof text !== undefined) {
-        this.message = text;
+      if (text !== undefined) {
+        this.message = text
 
-        return this;
+        return this
       }
 
-      return this.message;
+      return this.message
     },
 
     /**
      * 鼠标在bubble上面触发的函数
      **/
     mouseOver() {
-      this.mouseOnBubble = true;
-      clearTimeout(this.bubbleDisplayCounter);
+      this.mouseOnBubble = true
+      clearTimeout(this.bubbleDisplayCounter)
     },
 
     /**
      * 鼠标离开bubble触发的函数
      **/
     mouseLeave() {
-      this.mouseOnBubble = false;
-      this.setTimeoutBubbleDisplay();
+      this.mouseOnBubble = false
+      this.setTimeoutBubbleDisplay()
     },
 
     /**
@@ -165,14 +166,10 @@ var Bubble = Vue.extend({
      **/
     setTimeoutBubbleDisplay() {
       this.bubbleDisplayCounter = setTimeout(() => {
-        this.bubbleDisplay = false;
-      }, this.displayInterval);
+        this.bubbleDisplay = false
+      }, this.displayInterval)
     }
-  },
-
-  ready() {
-    COMMON.componentHub[bubbleHub].push(this);
   }
-});
+}
 
-module.exports = Vue.component('bubble', Bubble);
+export default bubbleComp

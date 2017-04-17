@@ -1,9 +1,9 @@
 import Vue from 'vue'
 
-module.exports = Vue.component('panel-ele', {
+export default {
   template: `
     <div>
       <slot></slot>
     </div>
   `
-});
+}
