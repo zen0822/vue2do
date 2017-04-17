@@ -44,7 +44,7 @@ if (!process.env.SAUCE_USERNAME) {
 module.exports = function (config) {
   config.set({
     autoWatch: true,
-    browsers:  Object.keys(customLaunchers),// Object.keys(customLaunchers), // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
+    browsers:  Object.keys(customLaunchers), // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
     captureTimeout: 120000,
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),

@@ -91,7 +91,7 @@ module.exports = function (config) {
     files: ['./entry.js'],// 这是测试入口文件
     port: 9876,
     preprocessors: {
-      './entry.js': ['webpack', 'sourcemap']
+      './entry.js': ['webpack', 'sourcemap', 'coverage']
     },
     reporters: ['spec', 'coverage', 'saucelabs'],
     singleRun: true,
@@ -107,7 +107,7 @@ module.exports = function (config) {
     // Increase timeout in case connection in CI is slow
     webpack: webpackConf,
     webpackMiddleware: {
-      noInfo: true
+      stats: 'errors-only'
     }
   })
 }

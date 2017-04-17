@@ -21,7 +21,7 @@
     "prod": "node bin/prod --app example",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
-    "coveralls": "tac ./test/coverage/lcov/lcov.info | coveralls"
+    "coveralls": "cat test/coverage/lcov/lcov.info | coveralls"
   },
   "dependencies": {
     "vue": "^2.1.8"
