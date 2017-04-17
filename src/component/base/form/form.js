@@ -14,7 +14,7 @@
  */
 
 import './form.scss'
-const template = require('./form.tpl')
+import template from './form.tpl'
 
 import baseMixin from '../../../mixin/base'
 import tip from '../../base/pop/tip'
