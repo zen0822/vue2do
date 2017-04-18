@@ -45,13 +45,15 @@
     "platform": "Linux",
     "version": "4.4"
   },
-  "iPhone5_Safari": {
-    "appiumVersion": "1.5.1",
+  "slMacSafari": {
     "base": "SauceLabs",
-    "deviceName": "iPhone 5",
-    "deviceOrientation": "portrait",
-    "platformVersion": "8.4",
-    "platformName": "iOS",
-    "browserName": "Safari"
+    "browserName": "safari",
+    "platform": "OS X10.10"
+  },
+  "slIosSafari": {
+    "base": "SauceLabs",
+    "browserName": "iphone",
+    "platform": "OS X10.9",
+    "version": "9.1"
   }
 }
