@@ -62,9 +62,9 @@ module.exports = function (config) {
     },
     sl_safari: {
       base: 'SauceLabs',
-      browserName: 'safari',
-      platform: 'OS X 10.11',
-      version: '10.0'
+      browserName: 'iPhone 4s Simulator',
+      platform: 'iOS',
+      version: '8.1'
     },
     sl_android: {
       base: 'SauceLabs',
