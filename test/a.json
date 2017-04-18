@@ -45,12 +45,6 @@
     "platform": "Windows 7",
     "version": "9"
   },
-  "sl_safari": {
-    "base": "SauceLabs",
-    "browserName": "iPhone 4s Simulator",
-    "platform": "iOS",
-    "version": "8.1"
-  },
   "sl_android": {
     "base": "SauceLabs",
     "browserName": "android",

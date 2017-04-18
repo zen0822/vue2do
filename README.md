@@ -1,4 +1,4 @@
-# vue2do2
+# vue2do
 [![Coverage Status](https://coveralls.io/repos/github/zen0822/vue2do/badge.svg)](https://coveralls.io/github/zen0822/vue2do)
 [![Build Status](https://travis-ci.org/zen0822/vue2do.svg?branch=master)](https://travis-ci.org/zen0822/vue2do)
 [![Build Status](https://saucelabs.com/buildstatus/zen_n)](https://saucelabs.com/beta/builds/e8ac8e3b1d664ce5997afc6879f2858b)
