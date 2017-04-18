@@ -1,0 +1,70 @@
+{
+  "iPhone5_Safari": {
+    "appiumVersion": "1.5.1",
+    "base": "SauceLabs",
+    "deviceName": "iPhone 5",
+    "deviceOrientation": "portrait",
+    "platformVersion": "8.4",
+    "platformName": "iOS",
+    "browserName": "Safari"
+  },
+  "iPad_Safari": {
+    "appiumVersion": "1.5.1",
+    "base": "SauceLabs",
+    "browserName": "Safari",
+    "deviceName": "iPad Retina",
+    "deviceOrientation": "portrait",
+    "platformVersion": "8.4",
+    "platformName": "iOS"
+  },
+  "android_browser": {
+    "appiumVersion": "1.5.1",
+    "base": "SauceLabs",
+    "browserName": "Browser",
+    "deviceName": "Android Emulator",
+    "deviceType": "phone",
+    "deviceOrientation": "portrait",
+    "platformVersion": "4.4",
+    "platformName": "Android"
+  },
+  "Chrome_46": {
+    "base": "SauceLabs",
+    "browserName": "chrome",
+    "platform": "Windows7",
+    "version": "46"
+  },
+  "Chrome_56": {
+    "base": "SauceLabs",
+    "browserName": "chrome",
+    "platform": "Windows10",
+    "version": "56"
+  },
+  "Firefox_40": {
+    "base": "SauceLabs",
+    "browserName": "firefox",
+    "version:": "40"
+  },
+  "Firefox_50": {
+    "base": "SauceLabs",
+    "browserName": "firefox",
+    "version:": "50"
+  },
+  "IE_11": {
+    "base": "SauceLabs",
+    "browserName": "internet explorer",
+    "platform": "Windows10",
+    "version": "11"
+  },
+  "IE_10": {
+    "base": "SauceLabs",
+    "browserName": "internet explorer",
+    "platform": "Windows8",
+    "version": "10"
+  },
+  "IE_9": {
+    "base": "SauceLabs",
+    "browserName": "internet explorer",
+    "platform": "Windows7",
+    "version": "9"
+  }
+}
