@@ -61,7 +61,7 @@
     "platform": "Windows8",
     "version": "10"
   },
-  "IE_9": {
+  "sl_ie_9": {
     "base": "SauceLabs",
     "browserName": "internet explorer",
     "platform": "Windows7",
