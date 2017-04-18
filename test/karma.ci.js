@@ -1,7 +1,7 @@
 const path = require('path')
 const config = require('./config.json')
 const webpackConf = require('../build/config/base.webpack.conf')(config.appName)
-const customLaunchers = require('./launcher.sauceLab.json')
+const customLaunchers = require('./a.json')
 // const customLaunchers = {
 //   sl_chrome_36: {
 //     base: 'SauceLabs',
