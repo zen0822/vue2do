@@ -1,10 +1,4 @@
 {
-  "chrome_36": {
-    "base": "SauceLabs",
-    "browserName": "chrome",
-    "platform": "Windows 7",
-    "version": "36"
-  },
   "chrome_46": {
     "base": "SauceLabs",
     "browserName": "chrome",
@@ -17,10 +11,10 @@
     "platform": "Windows 10",
     "version": "56"
   },
-  "firefox_30": {
+  "firefox_40": {
     "base": "SauceLabs",
     "browserName": "firefox",
-    "version": "30"
+    "version": "40"
   },
   "firefox_50": {
     "base": "SauceLabs",
@@ -50,5 +44,14 @@
     "browserName": "android",
     "platform": "Linux",
     "version": "4.4"
+  },
+  "iPhone5_Safari": {
+    "appiumVersion": "1.5.1",
+    "base": "SauceLabs",
+    "deviceName": "iPhone 5",
+    "deviceOrientation": "portrait",
+    "platformVersion": "8.4",
+    "platformName": "iOS",
+    "browserName": "Safari"
   }
 }
