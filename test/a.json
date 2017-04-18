@@ -48,12 +48,12 @@
   "slMacSafari": {
     "base": "SauceLabs",
     "browserName": "safari",
-    "platform": "OS X10.10"
+    "platform": "MacOS Sierra 10.12"
   },
   "slIosSafari": {
     "base": "SauceLabs",
     "browserName": "iphone",
-    "platform": "OS X10.9",
-    "version": "9.1"
+    "platform": "MacOS Sierra 10.12",
+    "version": "10"
   }
 }
