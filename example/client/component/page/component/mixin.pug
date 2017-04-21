@@ -2,7 +2,7 @@ mixin section(name, title)
   section
     router-link.anchor-title(
       tag='h1'
-      ':to'='anchorLink(' + name + ')'
+      ':to'='anchorLink("' + name + '")'
     )
       span(@click='goAnchor') #{ title }
     if block

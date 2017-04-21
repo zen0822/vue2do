@@ -90,6 +90,8 @@ const foldComp = {
       foldChildren: [],
       // 当前展开的面板
       currentIndex: 1,
+      // 前一个打开的面板
+      preIndex: 1,
       // 折叠版数据
       foldData: []
     }
@@ -175,15 +177,26 @@ const foldComp = {
     clickTitle(evt) {
       evt.stopPropagation()
 
-      let currentIndex = Number(evt.currentTarget.getAttribute('data-index')) - 1
-      let currentData = this.foldData[currentIndex]
+      let currentIndex = Number(evt.currentTarget.getAttribute('data-index'))
+      let currentData = this.foldData[currentIndex - 1]
       let folding = currentData.folding
+
+      if (this.currentIndex !== currentIndex) {
+        this.preIndex = this.currentIndex
+        this.currentIndex = currentIndex
+      }
 
       if (!currentData) {
         return false
       }
 
-      Vue.set(this.foldData, currentIndex, Object.assign(currentData, {
+      if (this.only) {
+        Vue.set(this.foldData, this.preIndex - 1, Object.assign(this.foldData[this.preIndex - 1], {
+          folding: true
+        }))
+      }
+
+      Vue.set(this.foldData, currentIndex - 1, Object.assign(currentData, {
         folding: !folding
       }))
     },

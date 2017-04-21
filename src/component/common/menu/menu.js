@@ -48,10 +48,7 @@ export default {
   },
 
   props: {
-    animate: {
-      type: String,
-      default: 'horizontal'
-    },
+    animate: String,
 
     autoSwitch: {
       type: Boolean,
@@ -98,7 +95,8 @@ export default {
 
   data() {
     return {
-      isStageActive: false
+      isStageActive: false,
+      menuAnimate: ''
     }
   },
 
@@ -121,6 +119,14 @@ export default {
   },
 
   methods: {
+    _setDataOpt() {
+      if (this.type === 'vertical') {
+        this.menuAnimate = this.animate ? this.animate : 'fold'
+      } else if (this.type === 'horizontal') {
+        this.menuAnimate = this.animate ? this.animate : 'slide'
+      }
+    },
+
     show() {
       this.isStageActive = true
       this.$emit('show')

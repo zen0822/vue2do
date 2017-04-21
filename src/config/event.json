@@ -26,10 +26,14 @@
     "change": {
       "height": "changeHeight",
       "bar": {
-        "y": "change"
+        "y": "changeYBar",
+        "x": "changeXBar"
       }
     },
-    "scroll": "scroll"
+    "scroll": {
+      "y": "scrollY",
+      "x": "scrollX"
+    }
   },
   "common": {
     "searchTool": {

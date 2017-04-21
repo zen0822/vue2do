@@ -74,7 +74,7 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       }
 
       &>span {
-        @extend %text-ellipsis;
+        @extend %text-omit;
         display: inline-block;
         vertical-align: middle;
         width: 100%;

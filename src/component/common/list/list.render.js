@@ -54,7 +54,7 @@ export default function (h) {
       h('scroller', {
         class: [this.xclass('scroller')],
         props: {
-          autoHide: this.scrollerAutoHide,
+          autoHide: this.autoHideScroller,
           height: 150
         },
         on: {
@@ -62,65 +62,74 @@ export default function (h) {
         },
         ref: 'scroller'
       }, scrollerChildren),
-      h(
-        'page',
+      h('transition',
         {
-          class: [this.xclass('page')],
-          directives: [{
-            name: 'show',
-            value: this.pagerDisplay && this.pager
-          }],
           props: {
-            data: this.pageData,
-            type: this.pageType,
-            loadMoreText: this.loadMoreText
-          },
-          on: {
-            'switch': this.switchPage
-          },
-          ref: 'pager'
-        }, (() => {
-          let ele = [
-            h('icon', {
-              class: [`${this.compPrefix}-m-r-half`],
-              props: {
-                kind: 'arrow'
-              }
-            }),
-            h('span', this.loadMoreText)
-          ]
-
-          if (this.isPageTypeMore) {
-            return [
-              h(
-                'div',
-                {
-                  slot: 'loadMore'
-                },
-                [
-                  h('loading', {
-                    class: [`${this.compPrefix}-m-r-half`].concat(
-                      this.xclass(['loading', 'loading-more'])
-                    ),
-                    ref: 'loadingOfMore'
-                  }),
-                  h('icon', {
-                    class: [`${this.compPrefix}-m-r-half`],
-                    directives: [{
-                      name: 'show',
-                      value: this.arrowOfMoreDisplay
-                    }],
-                    props: {
-                      kind: 'arrow'
-                    }
-                  }),
-                  h('span', this.loadMoreText)
-                ]
-              )]
+            name: this.prefixClass('slide-up')
           }
+        },
+        [
+          h(
+            'page',
+            {
+              class: [this.xclass('page')],
+              directives: [{
+                name: 'show',
+                value: this.pagerDisplay && this.pager
+              }],
+              props: {
+                data: this.pageData,
+                type: this.pageType,
+                loadMoreText: this.loadMoreText
+              },
+              on: {
+                'switch': this.switchPage
+              },
+              ref: 'pager'
+            }, (() => {
+              let ele = [
+                h('icon', {
+                  class: [`${this.compPrefix}-m-r-half`],
+                  props: {
+                    kind: 'arrow'
+                  }
+                }),
+                h('span', this.loadMoreText)
+              ]
 
-          return ele
-        })()
+              if (this.isPageTypeMore) {
+                return [
+                  h(
+                    'div',
+                    {
+                      slot: 'loadMore'
+                    },
+                    [
+                      h('loading', {
+                        class: [`${this.compPrefix}-m-r-half`].concat(
+                          this.xclass(['loading', 'loading-more'])
+                        ),
+                        ref: 'loadingOfMore'
+                      }),
+                      h('icon', {
+                        class: [`${this.compPrefix}-m-r-half`],
+                        directives: [{
+                          name: 'show',
+                          value: this.arrowOfMoreDisplay
+                        }],
+                        props: {
+                          kind: 'arrow'
+                        }
+                      }),
+                      h('span', this.loadMoreText)
+                    ]
+                  )]
+              }
+
+              return ele
+            })()
+          )
+        ]
       )
     ].concat(loadingOfNum)
   )

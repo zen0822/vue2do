@@ -2,7 +2,6 @@
  * btn 组件
  *
  * @props ban - 禁止点击
- * @props flag - 按钮标识
  * @props kind - 按钮种类
  * @props link - 链接地址
  * @props size - 按钮大小
@@ -43,11 +42,6 @@ const btnComp = {
     ban: {
       type: Boolean,
       default: false
-    },
-
-    flag: {
-      type: String,
-      require: false
     },
 
     link: Object,

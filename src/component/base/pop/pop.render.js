@@ -91,7 +91,7 @@ export default function (h) {
   return h('transition',
     {
       props: {
-        name: this.prefixClass('fade')
+        name: this.prefixClass('hide')
       }
     },
     [
@@ -114,17 +114,30 @@ export default function (h) {
               }
             },
             [
-              h('div', {
-                class: this.xclass('bg'),
-                on: {
-                  click: this.hide
-                }
-              }),
+              h('transition',
+                {
+                  props: {
+                    name: this.prefixClass('bg')
+                  }
+                },
+                [
+                  h('div', {
+                    class: this.xclass('bg'),
+                    directives: [{
+                      name: 'show',
+                      value: !this.isTip && this.popDisplay
+                    }],
+                    on: {
+                      click: this.hide
+                    }
+                  })
+                ]
+              ),
 
               h('transition',
                 {
                   props: {
-                    name: this.prefixClass(`${this.isTip ? 'bounce-down' : 'fall-shake'}`)
+                    name: this.prefixClass(`${this.isTip ? 'bounce-down' : 'slide-down'}`)
                   }
                 },
                 [

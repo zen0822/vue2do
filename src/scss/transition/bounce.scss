@@ -1,24 +1,69 @@
 @import "../config.scss";
 
 $C_PREFIX: $comp-prefix;
-$dirction-hub: 'up', 'down', 'left', 'right';
+$dirction-hub: "up", "down", "left", "right";
 
 @mixin bounce($dirction) {
   $bounce-in-data: ();
   $bounce-out-data: ();
 
-  @if $dirction == 'down' {
+  @if $dirction == "down" {
     $bounce-in-data: (
-      first: '0, -3000px, 0',
-      second: '0, 25px, 0',
-      third: '0, -10px, 0',
-      fourth: '0, 5px, 0'
+      first: "0, -3000px, 0",
+      second: "0, 25px, 0",
+      third: "0, -10px, 0",
+      fourth: "0, 5px, 0"
     );
 
     $bounce-out-data: (
-      first: '0, 0, 0',
-      second: '0, 20px, 0',
-      third: '0, -2000px, 0'
+      first: "0, 0, 0",
+      second: "0, 20px, 0",
+      third: "0, -2000px, 0"
+    );
+  }
+
+  @if $dirction == "up" {
+    $bounce-in-data: (
+      first: "0, 3000px, 0",
+      second: "0, -25px, 0",
+      third: "0, 10px, 0",
+      fourth: "0, -5px, 0"
+    );
+
+    $bounce-out-data: (
+      first: "0, 0, 0",
+      second: "0, -20px, 0",
+      third: "0, 2000px, 0"
+    );
+  }
+
+  @if $dirction == "right" {
+    $bounce-in-data: (
+      first: "3000px, 0, 0",
+      second: "-25px, 0, 0",
+      third: "10px, 0, 0",
+      fourth: "-5px, 0, 0"
+    );
+
+    $bounce-out-data: (
+      first: "0, 0, 0",
+      second: "-20px, 0, 0",
+      third: "2000px, 0, 0"
+    );
+  }
+
+  @if $dirction == "left" {
+    $bounce-in-data: (
+      first: "-3000px, 0, 0",
+      second: "25px, 0, 0",
+      third: "-10px, 0, 0",
+      fourth: "5px, 0, 0"
+    );
+
+    $bounce-out-data: (
+      first: "0, 0, 0",
+      second: "20px, 0, 0",
+      third: "-2000px, 0, 0"
     );
   }
 
@@ -58,13 +103,13 @@ $dirction-hub: 'up', 'down', 'left', 'right';
 
   .#{ $C_PREFIX }-bounce-#{ $dirction }-enter-active,
   .#{ $C_PREFIX }-bounce-#{ $dirction }-leave-active {
-    animation-duration: 1s;
+    animation-duration: 1s !important;
   }
   .#{ $C_PREFIX }-bounce-#{ $dirction }-enter-active {
-    animation-name: bounce-in-#{ $dirction };
+    animation-name: bounce-in-#{ $dirction } !important;
   }
   .#{ $C_PREFIX }-bounce-#{ $dirction }-leave-active {
-    animation-name: bounce-out-#{ $dirction };
+    animation-name: bounce-out-#{ $dirction } !important;
   }
 }
 

@@ -1,0 +1,40 @@
+@import "../config.scss";
+
+$C_PREFIX: $comp-prefix;
+
+$dirction-hub: "up", "down", "left", "right";
+
+@mixin slide($dirction) {
+  $transform-data: translateY(0) !default;
+
+  @if $dirction == "down" {
+    $transform-data: translateY(-150%);
+  }
+
+  @if $dirction == "up" {
+    $transform-data: translateY(150%);
+  }
+
+  @if $dirction == "left" {
+    $transform-data: translateX(-150%);
+  }
+
+  @if $dirction == "right" {
+    $transform-data: translateX(150%);
+  }
+
+  .#{ $C_PREFIX }-slide-#{ $dirction }-enter,
+  .#{ $C_PREFIX }-slide-#{ $dirction }-enter-active,
+  .#{ $C_PREFIX }-slide-#{ $dirction }-leave-active {
+    transition: transform 500ms ease-out !important;
+  }
+
+  .#{ $C_PREFIX }-slide-#{ $dirction }-enter,
+  .#{ $C_PREFIX }-slide-#{ $dirction }-leave-active {
+    transform: $transform-data !important;
+  }
+}
+
+@each $type in $dirction-hub {
+  @include slide($type)
+}

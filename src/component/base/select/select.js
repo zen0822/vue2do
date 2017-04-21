@@ -286,7 +286,7 @@ const selectComp = {
         return false
       }
 
-      this.$refs.scroller && this.$refs.scroller.$on(compEvent.scroller.change.bar, ({ boxHeight }) => {
+      this.$refs.scroller && this.$refs.scroller.$on(compEvent.scroller.change.bar.y, ({ boxHeight }) => {
         this._adjustselectMenuStyle({
           height: boxHeight
         })
@@ -319,9 +319,9 @@ const selectComp = {
      */
     _adjustselectMenuStyle({ height, cb } = {}) {
       let selectHeight = height || this.$el.offsetHeight
-      selectHeight = selectHeight > 100 ? 100 : selectHeight
-      let top = selectHeight - SELECT_BORDER_WIDTH * 2
       let selectWidth = this.$el.offsetWidth
+      selectHeight = selectHeight > 100 ? 100 : selectHeight
+      let top = height ? selectHeight : selectHeight - SELECT_BORDER_WIDTH * 2 - 1
       let width = selectWidth - SELECT_BORDER_WIDTH * 2
 
       this.selectMenuStyle = {
@@ -737,6 +737,17 @@ const selectComp = {
       }
 
       this.value.splice(index, 1)
+    },
+
+    /**
+     * 移除 多选下拉框 已选的值
+     *
+     * @param {String, Number} - 多选下拉框的值
+     */
+    clickMultiSelected(event) {
+      event.stopPropagation()
+
+      return this.removeMultiSelected(event.currentTarget.getAttribute('data-index'))
     },
 
     /**

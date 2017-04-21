@@ -62,44 +62,36 @@ const scrollerComp = {
     return {
       // y-scroller detail
       yData: {
-        // 滚动条的高度是否大于滚动容器
-        scrollerContainBox: false,
+        // 滚动条和滚动区域的偏移值
+        barAndScrollerOffset: 0,
         // 滚动条的高度
         barLength: 0,
         // bar 的高度
         barTop: 0,
-        // 记录上一次滚动条的高度
-        oldBarTop: 0,
         // 滚动容器 / 滚动条区域
         boxBarRate: 0,
-        // 滚动一次的滚动条走的像素大小
-        scrollBarPixel: 0,
         // 滚动内容和滚动区域的偏移值
         boxAndScrollerOffset: 0,
-        // 滚动条和滚动区域的偏移值
-        barAndScrollerOffset: 0,
-        // 记录开始点击滚动条的坐标
-        pointStart: {
-          x: 0,
-          y: 0
-        }
+        // 滚动条的 mousedown 事件
+        isMousedown: false,
+        // 记录上一次滚动条的高度
+        oldBarTop: 0,
+        // 滚动一次的滚动条走的像素大小
+        scrollBarPixel: 0,
+        // 滚动条的高度是否大于滚动容器
+        scrollerContainBox: false
       },
       // x-scroller detail
       xData: {
-        scrollerContainBox: false,
         barLength: 0,
         barLeft: 0,
-        oldBarLeft: 0,
-        boxBarRate: 0,
-        scrollBarPixel: 0,
-        // 滚动内容和滚动区域的偏移值
-        boxAndScrollerOffset: 0,
-        // 滚动条和滚动区域的偏移值
         barAndScrollerOffset: 0,
-        pointStart: {
-          x: 0,
-          y: 0
-        }
+        boxBarRate: 0,
+        boxAndScrollerOffset: 0,
+        isMousedown: false,
+        oldBarLeft: 0,
+        scrollBarPixel: 0,
+        scrollerContainBox: false
       },
       // box 离最顶端的偏移值
       boxTop: 0,
@@ -117,8 +109,6 @@ const scrollerComp = {
       scrollerWidth: 0,
       // 滚动条自动隐藏的状态
       showBar: false,
-      // 滚动条的 mousedown 事件
-      isMousedown: false,
       // 滚动区域的 touchend 事件
       isTouchStart: false,
       // 记录连续滚动的标注
@@ -129,6 +119,11 @@ const scrollerComp = {
       hasScrollerGrandpa: false,
       // 记录开始触摸滚动区域的坐标
       touchStart: {
+        x: 0,
+        y: 0
+      },
+      // 记录开始点击滚动条的坐标
+      pointStart: {
         x: 0,
         y: 0
       }
@@ -171,8 +166,7 @@ const scrollerComp = {
         // 滚动条是否在顶部
         isTop: this.yData.scrollerContainBox || this.yData.barTop === 0,
         // 滚动条是否在底部
-        isBottom: this.yData.scrollerContainBox ||
-        this.yData.barTop === this.yData.barAndScrollerOffset,
+        isBottom: this.yData.scrollerContainBox || this.yData.barTop === this.yData.barAndScrollerOffset,
         barStyle: {
           'height': this.yData.barLength + 'px',
           'top': this.yData.barTop + 'px'
@@ -238,7 +232,11 @@ const scrollerComp = {
       this.boxHeight = this.$box.offsetHeight
       this.boxWidth = this.$box.offsetWidth
 
-      if (this.boxWidth <= this.scrollerWidth) {
+      let firstChildWidth = this.$box.firstChild.offsetWidth
+
+      if (firstChildWidth > this.boxWidth) {
+        this.boxStyleWidth = firstChildWidth + 'px'
+      } else if (this.boxWidth <= this.scrollerWidth) {
         this.boxStyleWidth = this.scrollerWidth + 'px'
       } else {
         this.boxStyleWidth = 'auto'
@@ -313,11 +311,22 @@ const scrollerComp = {
       this[barName][barPositionName] = scrollerContainBox ? 0
         : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
 
+      this._boxAndBarScroll({
+        type: 'y',
+        boxDistance: 0,
+        barDistance: 0
+      })
+      this._boxAndBarScroll({
+        type: 'x',
+        boxDistance: 0,
+        barDistance: 0
+      })
+
       this.triggerChangeBar(type)
     },
 
     /**
-     * 滚动条和滚动区域的滚动操作
+     * 滚动条和滚动区域的滚动操作的相关数据
      * @param { Object } - 选项数据
      *                   type - 滚动条类型
      *                   direction - 1: 正方向，0：反方向
@@ -326,10 +335,6 @@ const scrollerComp = {
      *                   length - 指定的滚动区域的高度/宽度
      */
     _boxAndBarScroll({ type, direction, boxDistance, barDistance }) {
-      if (boxDistance === 0 || barDistance === 0) {
-        return false
-      }
-
       let barName = type + 'Data'
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
@@ -363,51 +368,52 @@ const scrollerComp = {
     },
 
     yBarMouseDown(evt) {
-      this.isMousedown = true
+      this.yData.isMousedown = true
 
-      this.yData.pointStart = {
+      this.pointStart = {
         x: event.clientX,
         y: event.clientY
       }
     },
 
     xBarMouseDown(evt) {
-      this.isMousedown = true
+      this.xData.isMousedown = true
 
-      this.yData.pointStart = {
+      this.pointStart = {
         x: event.clientX,
         y: event.clientY
       }
     },
 
     scrollerMouseMove(evt) {
-      // evt.preventDefault()
-
-      if (!this.isMousedown) {
+      if (!this.yData.isMousedown && !this.xData.isMousedown) {
         return false
       }
 
-      let distance = evt.clientY - this.yData.pointStart.y
-      let barTop = this.yData.barTop + distance
-      let boxTop = this.boxTop - distance * this.yData.boxBarRate
+      evt.preventDefault()
 
-      if (distance > 0) {
-        this.yData.barTop = barTop > this.yData.barAndScrollerOffset ? this.yData.barAndScrollerOffset : barTop
-        this.boxTop = boxTop < -this.yData.boxAndScrollerOffset ? -this.yData.boxAndScrollerOffset : boxTop
-      } else if (distance < 0) {
-        this.yData.barTop = barTop < 0 ? 0 : barTop
-        this.boxTop = boxTop > 0 ? 0 : boxTop
-      }
+      let type = this.yData.isMousedown ? 'y' : 'x'
+      let distance = evt[`client${type.toUpperCase()}`] - this.pointStart[type]
 
-      this.yData.pointStart = {
+      this._boxAndBarScroll({
+        type,
+        boxDistance: -distance * this[`${type}Data`].boxBarRate,
+        barDistance: distance
+      })
+
+      this.pointStart = {
         x: evt.clientX,
         y: evt.clientY
       }
+
+      return this.triggerScroll(type)
     },
 
     scrollerMouseUp(evt) {
       evt.preventDefault()
-      this.isMousedown = false
+
+      this.yData.isMousedown = false
+      this.xData.isMousedown = false
     },
 
     scrollerMouseover(evt) {
@@ -424,19 +430,11 @@ const scrollerComp = {
 
       this.yData.oldBarTop = this.yData.barTop
 
-      if (evt.deltaY > 0) {
-        barTop = this.yData.barTop + this.yData.scrollBarPixel
-        this.yData.barTop = barTop > this.yData.barAndScrollerOffset ? this.yData.barAndScrollerOffset : barTop
-
-        boxTop = SCROLL_PIXEL - this.boxTop
-        this.boxTop = boxTop > this.yData.boxAndScrollerOffset ? -this.yData.boxAndScrollerOffset : -boxTop
-      } else {
-        barTop = this.yData.barTop - this.yData.scrollBarPixel
-        this.yData.barTop = barTop < 0 ? 0 : barTop
-
-        boxTop = SCROLL_PIXEL + this.boxTop
-        this.boxTop = boxTop > 0 ? 0 : boxTop
-      }
+      this._boxAndBarScroll({
+        type: 'y',
+        boxDistance: evt.deltaY > 0 ? -SCROLL_PIXEL : SCROLL_PIXEL,
+        barDistance: evt.deltaY > 0 ? this.yData.scrollBarPixel : -this.yData.scrollBarPixel
+      })
 
       this.triggerScroll('y')
 
@@ -512,6 +510,7 @@ const scrollerComp = {
       }
 
       // 滚动区域正方向移动
+      // TODO: 优化，可以在滚动到底部得时候触发父容器得滚动事件
       if (yDistance > 0) {
         if (this.yComputed.isBottom && !this.hasScrollerGrandpa) {
         } else {
@@ -531,6 +530,9 @@ const scrollerComp = {
       this.moving = false
     },
 
+    /**
+     * 触发滚动条滚动事件
+     */
     triggerScroll(type) {
       let data = {}
       let eventName = ''

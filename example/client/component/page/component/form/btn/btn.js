@@ -1,9 +1,9 @@
 import './btn.scss'
-import template from './btn.tpl'
+import pug from './btn.pug'
 import mixin from '../../mixin'
 
 export default {
-  template,
+  template: pug(),
 
   mixins: [mixin],
 

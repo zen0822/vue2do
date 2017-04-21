@@ -95,7 +95,7 @@ $INPUT_BORDER_WIDTH: 1px;
           overflow: auto;
 
           & > li{
-            @extend %text-ellipsis;
+            @extend %text-omit;
             cursor: default;
             width: 100%;
             text-align: left;

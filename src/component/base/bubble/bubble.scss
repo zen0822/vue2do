@@ -17,7 +17,7 @@
     max-width: 300px;
 
     .bubble-text {
-      @extend %text-ellipsis;
+      @extend %text-omit;
       width: 100%;
       display: inline-block;
     }

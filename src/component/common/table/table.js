@@ -48,6 +48,24 @@ const tableColComp = {
     align: {
       type: String,
       default: 'left'
+    },
+    omit: {
+      type: Boolean,
+      default: false
+    },
+    th: {
+      type: Boolean,
+      default: false
+    },
+    width: {
+      type: String,
+      default: ''
+    }
+  },
+  data() {
+    return {
+      colWidth: '',
+      tableWidth: 0
     }
   },
   computed: {
@@ -57,12 +75,30 @@ const tableColComp = {
   },
   render(h) {
     return h(
-      'td',
+      this.th ? 'th' : 'td',
       {
-        class: [this.cPrefix, this.prefixClass('text-' + this.align)]
+        class: [
+          this.cPrefix,
+          this.prefixClass('text-' + this.align)
+        ]
       },
-      this.$slots.default
+      [
+        h('div', {
+          class: [{
+            [`${this.prefixClass('text-omit')}`]: this.omit
+          }],
+
+          style: {
+            width: this.width.indexOf('%') ? `${this.tableWidth * parseFloat(this.width) * 0.01}px` : this.width
+          }
+        }, this.$slots.default)
+      ]
     )
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.tableWidth = this.$el.offsetWidth
+    })
   }
 }
 

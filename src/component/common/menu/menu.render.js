@@ -94,7 +94,7 @@ export default function (h) {
     )
   ]
 
-  if (this.animate === 'vertical') {
+  if (this.type === 'vertical') {
     menuStage.push(
       h('fold-transition',
         [
@@ -102,7 +102,7 @@ export default function (h) {
             {
               class: [
                 this.xclass('stage'),
-                this.xclass(`animate-${this.animate}`)
+                this.xclass(`animate-${this.menuAnimate}`)
               ],
               directives: [{
                 name: 'show',
@@ -119,7 +119,7 @@ export default function (h) {
       h('transition',
         {
           props: {
-            name: this.prefixClass(this.animate + '-down')
+            name: this.prefixClass(`${this.menuAnimate}-down`)
           }
         },
         [
@@ -127,7 +127,7 @@ export default function (h) {
             {
               class: [
                 this.xclass('stage'),
-                this.xclass(`animate-${this.animate}`)
+                this.xclass(`animate-${this.menuAnimate}`)
               ],
               directives: [{
                 name: 'show',

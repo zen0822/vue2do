@@ -2,14 +2,13 @@
  * list 组件
  *
  * @props auto - 根据传入的列表数据生成分页数据
+ * @props autoHideScroller - 是否自动隐藏滚动条
  * @props item - 列表数据
  * @props page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @props pager - 启动分页功能
  * @props pageSize - 将列表数据（item）分为每页多少条数据
  * @props pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
  * @props pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
- * @props processor - 处理远程数据的钩子函数
- * @props scrollerAutoHide - 是否自动隐藏滚动条
  *
  * @events switch - 换页触发事件
  *
@@ -69,7 +68,7 @@ const listComp = {
       default: 'scroll'
     },
 
-    scrollerAutoHide: {
+    autoHideScroller: {
       type: Boolean,
       default: false
     }
@@ -103,7 +102,7 @@ const listComp = {
     },
     // 分页的显示状态
     pagerDisplay() {
-      return this.pageData.current !== this.pageData.total
+      return this.pageData.current !== this.pageData.total && this.scrollerAlmostInBottom
     },
     // 是否是加载更多的触发方式
     isPageTypeMore() {

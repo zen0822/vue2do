@@ -4,6 +4,7 @@
 
 export default function (h) {
   let scrollerChildren = []
+  let colCompOption = []
 
   let tableEle = {}
   let tableChildren = []
@@ -22,6 +23,13 @@ export default function (h) {
   } else {
     theadRowChildren = this.$slots.thead
     headLength = theadRowChildren.length
+
+    theadRowChildren.forEach(
+      (item) => colCompOption.push({
+        width: item.componentOptions.propsData.width,
+        omit: item.componentOptions.propsData.omit
+      })
+    )
   }
 
   if (!this.list) {
@@ -30,7 +38,13 @@ export default function (h) {
         return false
       }
 
-      tbodyRowChildren.push(this.$slots[item])
+      let rowSlot = this.$slots[item]
+
+      rowSlot[0].componentOptions && rowSlot[0].componentOptions.children.forEach((rowSlotItem, rowSlotItemIndex) => {
+        Object.assign(rowSlotItem.componentOptions.propsData, colCompOption[rowSlotItemIndex])
+      })
+
+      tbodyRowChildren.push(rowSlot)
     })
   } else if (this.tbody.length > 0 && this.tbodyItem.length > 0) {
     tbodyRowChildren = this.tbodyItem.map((item, index) => {

@@ -1,0 +1,90 @@
+include ../../mixin.pug
+
+div.component-pop
+  article.example-article
+    +section('basic', '基本用法')
+      z-btn 提交
+
+      z-code.
+        #{'<z-btn>'}
+          提交
+        #{'</z-btn>'}
+    +section('kind', '按钮种类')
+      <z-btn>提交</z-btn>
+      <z-btn kind='success'>成功</z-btn>
+      <z-btn kind='warning'>提交</z-btn>
+
+      z-code.
+        #{'<z-btn kind="success">'}
+          #{'成功'}
+        #{'</z-btn>'}
+    +section('custom', '自定义按钮内容')
+      z-btn
+        p custom content
+
+      z-code.
+        #{'<z-btn kind="success">'}
+          #{'<p>custom content</p>'}
+        #{'</z-btn>'}
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col ban
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 禁止点击
+        z-table-row(slot='2')
+          z-table-col kind
+          z-table-col String
+          z-table-col ( *primary | danger | success | warning | default )
+          z-table-col 按钮种类
+        z-table-row(slot='4')
+          z-table-col link
+          z-table-col String
+          z-table-col ——
+          z-table-col 链接地址
+        z-table-row(slot='3')
+          z-table-col size
+          z-table-col String
+          z-table-col ( S | M | L)
+          z-table-col 按钮大小
+        z-table-row(slot='5')
+          z-table-col submit
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 作为提交按钮
+        z-table-row(slot='6')
+          z-table-col type
+          z-table-col Boolean
+          z-table-col ( *button | link )
+          z-table-col 按钮类型
+        z-table-row(slot='7')
+          z-table-col value
+          z-table-col String
+          z-table-col ——
+          z-table-col 按钮名字
+        z-table-row(slot='7')
+          z-table-col textDisplay
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 是否显示按钮文字
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='7')
+          z-table-col click
+          z-table-col ——
+          z-table-col 点击btn事件

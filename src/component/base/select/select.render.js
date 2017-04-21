@@ -35,14 +35,15 @@ export default function (h) {
       liELe.push(h('li',
         {
           attrs: {
-            'data-value': this.value[index]
+            'data-value': this.value[index],
+            'data-index': index
           }
         }, [
           h('span', txt),
           h('span',
             {
               on: {
-                click: this.removeMultiSelected
+                click: this.clickMultiSelected
               }
             },
             [
@@ -125,7 +126,8 @@ export default function (h) {
         on: {
           click(event) {
             event.stopPropagation()
-          }
+          },
+          input: this._searchKeyup
         }
       },
       [
@@ -209,16 +211,39 @@ export default function (h) {
               click: this.select
             }
           }, [selectedBoxChildren]),
-          h('div',
-            {
-              class: [this.xclass('menu')],
-              directives: [{
-                name: 'show',
-                value: !this.selectMenuDisplay
-              }],
-              style: this.selectMenuStyle
-            },
-            [menuChildren]
+
+          h('transition', {
+            on: {
+              beforeLeave(el) {
+                el.style.height = el.scrollHeight + 'px'
+                el.style.transition = 'height 300ms ease'
+              },
+
+              leave(el) {
+                if (el.scrollHeight !== 0) {
+                  el.style.height = 0
+                }
+              },
+
+              afterLeave(el) {
+                el.style.height = ''
+                el.style.transition = ''
+              }
+            }
+          },
+            [
+              h('div',
+                {
+                  class: [this.xclass('menu')],
+                  directives: [{
+                    name: 'show',
+                    value: !this.selectMenuDisplay
+                  }],
+                  style: this.selectMenuStyle
+                },
+                [menuChildren]
+              )
+            ]
           )
         ]
       )

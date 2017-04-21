@@ -55,3 +55,7 @@ $C_PREFIX: $comp-prefix;
 .#{ $C_PREFIX }-transition {
   @extend %transition;
 }
+
+.#{ $C_PREFIX }-text-omit {
+  @extend %text-omit;
+}

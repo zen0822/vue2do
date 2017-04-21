@@ -10,6 +10,7 @@
 $C_PREFIX: #{ $COMP_SELECT };
 $C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
 $INPUT_PREFIX: #{ $COMP_INPUT };
+$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
 $SELECT_HEIGHT: 36px;
 $SELECT_WIDTH: 170px;
@@ -20,14 +21,13 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
 .#{ $C_PREFIX } {
   display: inline-block;
-  width: $SELECT_WIDTH;
 
   .#{ $C_PREFIX }-stage {
     display: inline-block;
     position: relative;
     box-sizing: border-box;
     height: $SELECT_HEIGHT;
-    width: 100%;
+    width: $SELECT_WIDTH;
     background-color: #fff;
     border: $border-color $border-thin solid;
     cursor: default;
@@ -57,9 +57,20 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
           opacity: 0;
         }
 
-        .#{$INPUT_PREFIX}-wrap input {
-          padding-left: 0;
+        .#{$INPUT_PREFIX}-wrap {
+          border-color: transparent;
+
+          input {
+            padding-left: $gap-v;
+          }
         }
+      }
+
+      .#{ $C_PREFIX }-selected-box
+          > .#{ $C_PREFIX }-scroller
+          > .#{ $SCROLLER_PREFIX }-box
+          > .#{ $C_PREFIX }-multiple {
+        margin-right: $gap-v-triple;
       }
 
       .#{ $C_PREFIX }-menu,
@@ -89,8 +100,10 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       }
 
       .#{ $C_PREFIX }-init-text {
-        @extend %text-ellipsis;
+        @extend %text-omit;
         width: 100%;
+        padding-right: 25px;
+        box-sizing: border-box;
 
         &.#{ $C_PREFIX }-default-text {
           color: #999;
@@ -137,6 +150,7 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       border-bottom-right-radius: $border-radius;
       border-bottom-left-radius: $border-radius;
       z-index: 2;
+
       transition: top 300ms ease;
       will-change: top;
 
@@ -176,7 +190,7 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
       &.#{ $C_PREFIX }-multiple-stage {
         .#{ $C_OPT_PREFIX }-li > span {
-          @extend %text-ellipsis;
+          @extend %text-omit;
           display: inline-block;
           vertical-align: middle;
           width: calc(100% - 25px);
@@ -184,12 +198,6 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       }
 
       &:hover {
-        border: $border-dark-color $border-thin solid;
-      }
-
-      &.#{ $C_PREFIX }-selected {
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
         border: $border-dark-color $border-thin solid;
       }
 

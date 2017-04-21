@@ -3,7 +3,7 @@
     v-xclass="xclass(['ul', themeClass])">
   <div
       @click.stop="$parent.selectAllOption"
-      v-if="$parent.selectAll"
+      v-if="$parent.mutiple && $parent.selectAll"
       v-xclass="xclass('li')">
     <check
 				type="checkbox"
@@ -16,7 +16,7 @@
   <list
 			:class="xclass('list')"
 			:item="option"
-			:page-size="3"
+			:page-size="6"
 			auto
 			page-type="more"
 			pager

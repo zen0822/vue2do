@@ -25,8 +25,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
       width: 100%;
       z-index: $z-index;
 
-      &.#{$C_PREFIX}-animate-horizontal,
-      &.#{$C_PREFIX}-animate-bounce {
+      &.#{$C_PREFIX}-animate-slide {
         position: fixed;
         padding: 15% 10% 10%;
         margin: auto;
@@ -35,7 +34,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
         background: rgba(0, 0, 0, .8);
       }
 
-      &.#{$C_PREFIX}-animate-vertical {
+      &.#{$C_PREFIX}-animate-fold {
         overflow: hidden;
         background: rgba(0, 0, 0, .8);
 

@@ -8,7 +8,7 @@ export default function (h) {
   let lineNumEle = []
 
   let matches = codeStr ? codeStr.match(/\n/g) : []
-  this.lineNum = matches.length + 1
+  this.lineNum = matches ? matches.length + 1 : 1
   for (let i = 1, len = this.lineNum; i <= len; i++) {
     lineNumEle.push(h('li', i))
   }

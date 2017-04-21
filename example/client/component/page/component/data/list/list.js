@@ -1,9 +1,9 @@
 import './list.scss'
-import template from './list.tpl'
+import pug from './list.pug'
 import mixin from '../../mixin'
 
 export default {
-  template,
+  template: pug(),
 
   mixins: [mixin],
 

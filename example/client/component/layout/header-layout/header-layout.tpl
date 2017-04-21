@@ -37,7 +37,6 @@
   </z-row>
 
   <z-menu
-      animate="bounce"
       class="mobile-menu"
       ref="mobileMenu"
       @hide="hideMenu"

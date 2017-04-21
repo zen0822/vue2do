@@ -35,7 +35,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
       & > .#{$C_PREFIX}-transition {
         will-change: height;
-        transition: all 500ms ease;
+        transition: height 500ms ease;
       }
     }
   }

@@ -1,6 +1,6 @@
 @import "../config.scss";
 @import "./bounce.scss";
-@import "./fall.scss";
+@import "./slide.scss";
 
 $C_PREFIX: $comp-prefix;
 
@@ -12,8 +12,27 @@ $C_PREFIX: $comp-prefix;
   transition: all 1s ease;
 }
 
+.#{ $C_PREFIX }-fade-enter-active,
+.#{ $C_PREFIX }-fade-leave-active {
+  transition: opacity 500ms ease-out !important;
+}
+
 .#{ $C_PREFIX }-fade-enter,
 .#{ $C_PREFIX }-fade-leave-active {
-  transition: opacity 1s ease-out;
-  opacity: 0,
+  opacity: 0 !important;
+}
+
+.#{ $C_PREFIX }-hide-enter-active,
+.#{ $C_PREFIX }-hide-leave-active {
+  transition: all 800ms !important;
+}
+
+.#{ $C_PREFIX }-bg-enter-active,
+.#{ $C_PREFIX }-bg-leave-active {
+  transition: opacity 100ms ease-out !important;
+}
+
+.#{ $C_PREFIX }-bg-enter,
+.#{ $C_PREFIX }-bg-leave-active {
+  opacity: 0 !important;
 }
