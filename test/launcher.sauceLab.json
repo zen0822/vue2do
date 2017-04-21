@@ -44,16 +44,16 @@
     "browserName": "android",
     "platform": "Linux",
     "version": "4.4"
-  },
-  "slMacSafari": {
-    "base": "SauceLabs",
-    "browserName": "safari",
-    "platform": "OS X 10.11"
-  },
-  "slIosSafari": {
-    "base": "SauceLabs",
-    "browserName": "iphone",
-    "platform": "",
-    "version": "9.3"
   }
+  // "slMacSafari": {
+  //   "base": "SauceLabs",
+  //   "browserName": "safari",
+  //   "platform": "OS X 10.11"
+  // },
+  // "slIosSafari": {
+  //   "base": "SauceLabs",
+  //   "browserName": "iphone",
+  //   "platform": "",
+  //   "version": "9.3"
+  // }
 }
