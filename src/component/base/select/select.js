@@ -16,6 +16,9 @@
  * @props theme - 主题
  * @props tipName - 当实例显示提示时候的名字
  *
+ * @props height - 下拉菜单的高
+ * @props width - 下拉菜单的宽
+ *
  * @props errorMessage - 没选的时候显示的错误信息
  * @props max - 多选下拉框最多选择几个
  * @props min - 多选下拉框至少选择几个
@@ -42,6 +45,7 @@ import optionComp from './select-opt'
 import render from './select.render'
 import store from '../../../vuex/store'
 import hubStore from '../../../vuex/module/hub/type.json'
+import compStore from '../../../vuex/module/comp/type.json'
 import tip from '../../base/pop/tip'
 import compEvent from '../../../config/event.json'
 
@@ -53,6 +57,7 @@ import scrollerComp from '../../base/scroller/scroller'
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
 
+import uid from '../../../util/uid'
 import { dataType } from '../../../util/data/data'
 import { unique as uniqueArray } from '../../../util/data/array'
 
@@ -183,12 +188,19 @@ const selectComp = {
     selectAllTxt: {
       type: String,
       default: '全选'
+    },
+
+    height: {
+      type: String,
+      default: '150'
     }
   },
 
   data() {
     // 组件名字
     this.compName = 'select'
+    // 组件唯一标识符
+    this.uid = ''
 
     return {
       // props 里面 optionItem 的 data 替换值
@@ -222,7 +234,9 @@ const selectComp = {
       // 是否全选多选下拉框的标记
       selectedAll: false,
       // 自定义下拉框的显示状态
-      customOptionDisplay: false
+      customOptionDisplay: false,
+      // 下拉框显示过渡完成的标识符
+      transitionFinish: false
     }
   },
 
@@ -270,6 +284,9 @@ const selectComp = {
     },
     classifyOpt(val) {
       return this._processOption(val)._initAllOptionVal()._initSelectTxt()
+    },
+    deviceSize(val) {
+      this.changeByDeviceSize(val)
     }
   },
 
@@ -396,6 +413,10 @@ const selectComp = {
       let optionItem = []
 
       $defaultSlotContent.forEach((item) => {
+        if (item.text === ' ') {
+          return false
+        }
+
         let children = item.componentOptions &&
           Array.isArray(item.componentOptions.children) &&
           item.componentOptions.children[0]
@@ -404,9 +425,14 @@ const selectComp = {
           return false
         }
 
+        let attrs = item.data ? item.data.attrs : {}
+        let text = attrs.text === undefined
+          ? (children ? (children.text ? children.text : '(empty)') : '')
+          : attrs.text
+
         optionItem.push({
-          value: item.data && item.data.attrs ? item.data.attrs.value : '',
-          text: children ? children.text : ''
+          value: attrs.value,
+          text
         })
       })
 
@@ -679,6 +705,27 @@ const selectComp = {
     },
 
     /**
+     * 下拉框显示过渡完成之后
+     */
+    afrerTransition() {
+      this.transitionFinish = true
+    },
+
+    /**
+     * 下拉框显示过渡完成之前
+     */
+    beforeTransition() {
+      this.transitionFinish = false
+    },
+
+    /**
+     * 当设备改变尺寸
+     */
+    changeByDeviceSize(size) {
+      return this._adjustselectMenuStyle()
+    },
+
+    /**
      * 多选下拉框的复选框赋值情况
      *
      * @param {String, Number} - 多选下拉框的值
@@ -796,11 +843,13 @@ const selectComp = {
      * @return {Object} - this组件
      */
     toggleMenuDisplay(opt) {
-      this.$store.state.hub.select.forEach((val, index) => {
-        if (!Object.is(this, val)) {
-          val.selectMenuDisplay = true
+      let selectHub = this.$store.state.comp.select
+
+      for (let name in selectHub) {
+        if (selectHub.hasOwnProperty(name) && !Object.is(this, selectHub[name])) {
+          selectHub[name].selectMenuDisplay = true
         }
-      })
+      }
 
       return this._adjustselectMenuStyle({
         cb: () => {
@@ -840,6 +889,7 @@ const selectComp = {
      */
     fold() {
       this.selectMenuDisplay = true
+
       return this
     },
 
@@ -849,6 +899,7 @@ const selectComp = {
      */
     spread() {
       this.selectMenuDisplay = false
+
       return this
     },
 
@@ -875,6 +926,14 @@ const selectComp = {
   },
 
   created() {
+    this.uid = uid()
+
+    this.$store.dispatch(compStore.common.add, {
+      vm: this,
+      name: this.compName,
+      id: this.uid
+    })
+
     if (this.multiple) {
       this._setTxtVal({
         value: this.value || [],
@@ -890,10 +949,6 @@ const selectComp = {
     if (this.$scopedSlots.custom) {
       this.customOptionDisplay = true
     }
-
-    this.$nextTick(() => {
-      this.$store.dispatch(hubStore.select.add, this)
-    })
   }
 }
 

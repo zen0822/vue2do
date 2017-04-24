@@ -33,7 +33,9 @@
 
       <z-select>
         <z-select-ele value="1">{{ testName }}</z-select-ele>
-        <z-select-ele value="2">测试2</z-select-ele>
+        <z-select-ele value="2">
+          <z-btn>按钮</z-btn>
+        </z-select-ele>
         <z-select-ele value="3">测试222</z-select-ele>
         <z-select-ele value="4">测试3</z-select-ele>
         <z-select-ele value="5">测试4</z-select-ele>

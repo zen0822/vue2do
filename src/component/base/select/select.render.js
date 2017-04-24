@@ -4,6 +4,7 @@
 export default function (h) {
   let selectedBoxChildren = []
   let menuChildren = []
+  let selectMenuEle = []
 
   if (this.multiple) {
     let liELe = []
@@ -63,7 +64,7 @@ export default function (h) {
         {
           class: [this.xclass('scroller')],
           props: {
-            height: 100
+            height: this.height
           },
           ref: 'scroller'
         },
@@ -149,40 +150,72 @@ export default function (h) {
   if (Array.isArray(this.option)) {
     let scopedSlots = []
 
-    if (this.$scopedSlots && this.$scopedSlots['custom']) {
-      this.option.forEach((item, index) => {
-        Object.assign(scopedSlots, {
-          [`${index}`]: (props) => {
-            return this.$scopedSlots['custom']({
-              item,
-              index
-            })
-          }
-        })
-      })
-    }
-
-    menuChildren.push(
-      h('select-opt',
-        {
-          class: [this.xclass('opt-comp')],
-          props: {
-            multiple: this.multiple,
-            valName: this.valName,
-            txtName: this.txtName,
-            option: this.searchOptionDisplay
-              ? this.searchOptionItem : this.option,
-            optRoot: this.me
+    // 当下拉菜单是以子标签加载的时候
+    if (this.initOpt.length === 0 && !this.classify) {
+      menuChildren.push(
+        h('scroller',
+          {
+            props: {
+              height: this.height
+            }
           },
-          ref: 'selectOption',
-          scopedSlots
-        }
-      ),
-      h('div', {
-        class: [this.xclass('option-slot'), `${this.compPrefix}-hide`]
-      }, this.$slots.default)
-    )
+          [
+            h('div', {
+              class: this.xclass('tag-opt')
+            }, [this.$slots.default])
+          ]
+        )
+      )
+    } else {
+      if (this.$scopedSlots && this.$scopedSlots['custom']) {
+        this.option.forEach((item, index) => {
+          Object.assign(scopedSlots, {
+            [`${index}`]: (props) => {
+              return this.$scopedSlots['custom']({
+                item,
+                index
+              })
+            }
+          })
+        })
+      }
+
+      menuChildren.push(
+        h('select-opt',
+          {
+            class: [this.xclass('opt-comp')],
+            props: {
+              multiple: this.multiple,
+              valName: this.valName,
+              txtName: this.txtName,
+              option: this.searchOptionDisplay
+                ? this.searchOptionItem : this.option,
+              optRoot: this.me
+            },
+            ref: 'selectOption',
+            scopedSlots
+          }
+        ),
+        h('div', {
+          class: [this.xclass('option-slot'), `${this.compPrefix}-hide`]
+        }, this.$slots.default)
+      )
+    }
   }
+
+  selectMenuEle = [
+    h('div',
+      {
+        class: [this.xclass('menu')],
+        directives: [{
+          name: 'show',
+          value: !this.selectMenuDisplay
+        }],
+        style: this.selectMenuStyle
+      },
+      [menuChildren]
+    )
+  ]
 
   return h('div',
     {
@@ -212,38 +245,29 @@ export default function (h) {
             }
           }, [selectedBoxChildren]),
 
-          h('transition', {
-            on: {
-              beforeLeave(el) {
-                el.style.height = el.scrollHeight + 'px'
-                el.style.transition = 'height 300ms ease'
-              },
-
-              leave(el) {
-                if (el.scrollHeight !== 0) {
-                  el.style.height = 0
-                }
-              },
-
-              afterLeave(el) {
-                el.style.height = ''
-                el.style.transition = ''
-              }
-            }
-          },
-            [
-              h('div',
-                {
-                  class: [this.xclass('menu')],
-                  directives: [{
-                    name: 'show',
-                    value: !this.selectMenuDisplay
-                  }],
-                  style: this.selectMenuStyle
+          h('transition',
+            {
+              on: {
+                beforeEnter: this.beforeTransition,
+                afterEnter: this.afrerTransition,
+                beforeLeave(el) {
+                  el.style.height = el.scrollHeight + 'px'
+                  el.style.transition = 'height 300ms ease'
                 },
-                [menuChildren]
-              )
-            ]
+
+                leave(el) {
+                  if (el.scrollHeight !== 0) {
+                    el.style.height = 0
+                  }
+                },
+
+                afterLeave(el) {
+                  el.style.height = ''
+                  el.style.transition = ''
+                }
+              }
+            },
+            selectMenuEle
           )
         ]
       )

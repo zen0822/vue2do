@@ -35,10 +35,10 @@ div.component-pop
           auto
           :pageSize='10')
         template(slot='thead')
-          z-table-col(th, width='25%') 名字
-          z-table-col(th, width='25%', omit) 类型
-          z-table-col(th, width='25%', omit) 可选值
-          z-table-col(th, width='', omit) 说明
+          z-table-col(th) 名字
+          z-table-col(th, omit) 类型
+          z-table-col(th, omit) 可选值
+          z-table-col(th, width='40%', omit) 说明
         z-table-row(slot='1')
           z-table-col auto
           z-table-col Boolean

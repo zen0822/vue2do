@@ -20,6 +20,7 @@ import baseMixin from '../../../mixin/base'
 import listMixin from '../../../mixin/list'
 import tip from '../../base/pop/tip'
 import iconComp from '../../base/icon/icon'
+import { findGrandpa } from '../../../util/util'
 
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
@@ -83,9 +84,11 @@ const listComp = {
       // 加载更多的显示状态
       moreDisplay: false,
       // 滚动条是否在底部
-      scrollerAlmostInBottom: true,
+      scrollerAlmostInBottom: false,
       // 是否正在加载列表数据
-      loadingListData: false
+      loadingListData: false,
+      // 下拉框祖先元素
+      selectGrandpa: {}
     }
   },
 
@@ -102,7 +105,7 @@ const listComp = {
     },
     // 分页的显示状态
     pagerDisplay() {
-      return this.pageData.current !== this.pageData.total && this.scrollerAlmostInBottom
+      return (!this.selectGrandpa || this.selectGrandpa.transitionFinish) && this.pageData.current !== this.pageData.total && this.scrollerAlmostInBottom
     },
     // 是否是加载更多的触发方式
     isPageTypeMore() {
@@ -271,6 +274,10 @@ const listComp = {
       pageNum: this.pageData.current,
       listItem: this.item
     })
+  },
+
+  beforeMount() {
+    this.selectGrandpa = findGrandpa(this.$parent, 'select')
   }
 }
 

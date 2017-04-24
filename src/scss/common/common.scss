@@ -8,11 +8,13 @@
 $C_PREFIX: $comp-prefix;
 
 .#{ $C_PREFIX }-clear-fix {
-  &::before,
-  &::after {
-    content: '\200b';
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
     clear: both;
-    display: table-cell;
   }
 }
 

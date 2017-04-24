@@ -9,6 +9,7 @@
 
 $C_PREFIX: #{ $COMP_SELECT };
 $C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
+$C_ELE_PREFIX: #{ $COMP_SELECT_ELE };
 $INPUT_PREFIX: #{ $COMP_INPUT };
 $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
@@ -154,6 +155,11 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       transition: top 300ms ease;
       will-change: top;
 
+      .#{ $C_PREFIX }-tag-opt > .#{ $C_ELE_PREFIX } {
+        background-color: #fff;
+        padding: $gap-h;
+      }
+
       .#{ $C_PREFIX }-opt-comp {
         position: static;
         display: block;
@@ -222,8 +228,12 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
   @include device-type("<l") {
     width: 100%;
 
-    .#{ $C_PREFIX }-stage.#{ $C_PREFIX }-multiple-stage {
+    .#{ $C_PREFIX }-stage {
       width: 100%;
+
+      &.#{ $C_PREFIX }-multiple-stage {
+        width: 100%;
+      }
     }
   }
 }

@@ -33,9 +33,7 @@ const createTip = () => {
     store,
     template: `
       <div :class="[cPrefix]">
-        <pop
-            ref="tip"
-            type="tip"></pop>
+        <pop ref="tip" type="tip"></pop>
       </div>
     `,
     mounted() {

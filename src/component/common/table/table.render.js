@@ -26,6 +26,8 @@ export default function (h) {
 
     theadRowChildren.forEach(
       (item) => colCompOption.push({
+        maxWidth: item.componentOptions.propsData.maxWidth,
+        minWidth: item.componentOptions.propsData.minWidth,
         width: item.componentOptions.propsData.width,
         omit: item.componentOptions.propsData.omit
       })
@@ -41,6 +43,11 @@ export default function (h) {
       let rowSlot = this.$slots[item]
 
       rowSlot[0].componentOptions && rowSlot[0].componentOptions.children.forEach((rowSlotItem, rowSlotItemIndex) => {
+        if (rowSlotItem.componentOptions === undefined) {
+          rowSlotItem.componentOptions = {}
+          rowSlotItem.componentOptions.propsData = {}
+        }
+
         Object.assign(rowSlotItem.componentOptions.propsData, colCompOption[rowSlotItemIndex])
       })
 

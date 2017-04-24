@@ -220,10 +220,11 @@ const scrollerComp = {
   methods: {
     _init() {
       this.$box = this.$refs.box
+      this._initScroller()
 
       setInterval(() => {
         this._initScroller()
-      }, 100)
+      }, 10)
     },
 
     // 初始化滚动条
@@ -232,7 +233,7 @@ const scrollerComp = {
       this.boxHeight = this.$box.offsetHeight
       this.boxWidth = this.$box.offsetWidth
 
-      let firstChildWidth = this.$box.firstChild.offsetWidth
+      let firstChildWidth = this.$box.firstChild ? this.$box.firstChild.offsetWidth : 0
 
       if (firstChildWidth > this.boxWidth) {
         this.boxStyleWidth = firstChildWidth + 'px'
@@ -329,12 +330,10 @@ const scrollerComp = {
      * 滚动条和滚动区域的滚动操作的相关数据
      * @param { Object } - 选项数据
      *                   type - 滚动条类型
-     *                   direction - 1: 正方向，0：反方向
      *                   barDistance - 滚动条的位移
      *                   boxDistance - 滚动内容的位移
-     *                   length - 指定的滚动区域的高度/宽度
      */
-    _boxAndBarScroll({ type, direction, boxDistance, barDistance }) {
+    _boxAndBarScroll({ type, boxDistance, barDistance }) {
       let barName = type + 'Data'
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
@@ -343,7 +342,7 @@ const scrollerComp = {
       let barAndScrollerOffset = this[barName].barAndScrollerOffset
       let boxAndScrollerOffset = this[barName].boxAndScrollerOffset
 
-      if (boxDistance > 0) {
+      if (boxDistance >= 0) {
         if (type === 'y') {
           this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition
           this[boxPositionName] = boxPosition > 0 ? 0 : boxPosition

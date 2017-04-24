@@ -4,11 +4,13 @@
  * @props ban - 禁止点击
  * @props kind - 按钮种类
  * @props link - 链接地址
+ * @props radius - 按钮边角得半径尺寸（S | M | L）
  * @props size - 按钮大小
  * @props submit - 提交按钮
  * @props type - 按钮类型 (button | link)
- * @props value - 按钮名字
+ * @props white - 背景颜色为白色
  * @props textDisplay - 是否显示按钮文字
+ * @props value - 按钮名字
  *
  * @events click - 点击btn事件
  */

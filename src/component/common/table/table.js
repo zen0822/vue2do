@@ -21,6 +21,9 @@ import render from './table.render'
 import baseMixin from '../../../mixin/base'
 import listMixin from '../../../mixin/list'
 import tip from '../../base/pop/tip'
+import { findGrandpa } from '../../../util/util'
+
+const COL_PADDING_BORDER_LENGTH = 22
 
 const tableRowComp = {
   name: 'table-row',
@@ -57,6 +60,14 @@ const tableColComp = {
       type: Boolean,
       default: false
     },
+    maxWidth: {
+      type: String,
+      default: ''
+    },
+    minWidth: {
+      type: String,
+      default: ''
+    },
     width: {
       type: String,
       default: ''
@@ -65,12 +76,22 @@ const tableColComp = {
   data() {
     return {
       colWidth: '',
-      tableWidth: 0
+      table: 0
     }
   },
   computed: {
     cPrefix() {
       return `${this.compPrefix}-table-col`
+    },
+    tableWidth() {
+      return this.table.tableWidth
+    },
+    colBodyStyle() {
+      return {
+        width: this.widthTypeStyle(this.width),
+        'max-width': this.widthTypeStyle(this.maxWidth),
+        'min-width': this.widthTypeStyle(this.minWidth)
+      }
     }
   },
   render(h) {
@@ -87,17 +108,38 @@ const tableColComp = {
           class: [{
             [`${this.prefixClass('text-omit')}`]: this.omit
           }],
-
-          style: {
-            width: this.width.indexOf('%') ? `${this.tableWidth * parseFloat(this.width) * 0.01}px` : this.width
-          }
+          style: this.colBodyStyle
         }, this.$slots.default)
       ]
     )
   },
+  methods: {
+    widthTypeStyle(width) {
+      if (!this.colWidth || width === '') {
+        return ''
+      }
+
+      // 最终的宽度
+      let w = ''
+      let colBodyWidth = 0
+      let colContentWidth = 0
+      let widthNum = parseFloat(width)
+
+      colBodyWidth = width.indexOf('%') ? `${this.tableWidth * widthNum * 0.01 - COL_PADDING_BORDER_LENGTH}` : widthNum
+      colContentWidth = this.$el.offsetWidth - COL_PADDING_BORDER_LENGTH
+
+      // TODO: 当父元素 td 的宽度大于内容宽度时，宽度要设置成 auto
+      w = colContentWidth > colBodyWidth ? colContentWidth : colBodyWidth
+
+      return colBodyWidth + 'px'
+    }
+  },
+  beforeMount() {
+    this.table = findGrandpa(this.$parent, 'table')
+  },
   mounted() {
     this.$nextTick(() => {
-      this.tableWidth = this.$el.offsetWidth
+      this.colWidth = this.$el.offsetWidth
     })
   }
 }
@@ -161,7 +203,9 @@ const tableComp = {
       emptyDataText: this.$t('table.emptyData'),
       pageData: {},
       tbodyItem: this.tbody.slice(),
-      theadItem: this.thead.slice()
+      theadItem: this.thead.slice(),
+      // 组件自身的宽度
+      tableWidth: 0
     }
   },
 
@@ -193,10 +237,18 @@ const tableComp = {
 
     thead(val) {
       this.theadItem = val.slice()
+    },
+
+    deviceSize() {
+      this.tableWidth = this.$el.offsetWidth
     }
   },
 
   methods: {
+    _init() {
+      this.tableWidth = this.$el.offsetWidth
+    },
+
     /**
      * 初始化分页
      */
