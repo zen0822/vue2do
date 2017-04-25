@@ -40,7 +40,10 @@ export default function (h) {
       h(
         'button',
         {
-          class: [this.xclass(['ele', this.btnClass, this.sizeClass])],
+          class: [
+            this.xclass(['ele', this.btnClass, this.sizeClass, this.radiusClass]),
+            { [this.xclass('outline')]: this.outline }
+          ],
           on: {
             click: this.click
           }
@@ -52,11 +55,14 @@ export default function (h) {
   return h(
     'div',
     {
-      class: [this.cPrefix]
+      class: [
+        this.cPrefix,
+        this.xclass(this.themeClass)
+      ]
     },
     [
       h('div', {
-        class: [this.xclass([this.themeClass, 'stage'])]
+        class: [this.xclass('stage')]
       }, btnChildren)
     ]
   )

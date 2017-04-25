@@ -6,18 +6,25 @@
  * btn 组件样式
  */
 
-@mixin border-radius($color, $dark-color) {
+@mixin btn-ele($color, $dark-color) {
   background-color: $color;
   border-color: $color;
 
-  &:hover {
-    background-color: $dark-color;
-    border-color: $dark-color;
-  }
-
+  &:hover,
   &:active {
     background-color: $dark-color;
     border-color: $dark-color;
+  }
+}
+
+@mixin btn-ele-outline($color) {
+  border-color: $color;
+  color: $color;
+
+  &:hover,
+  &:active {
+    background-color: $color;
+    color: #fff;
   }
 }
 
@@ -28,8 +35,7 @@ $C_PREFIX: #{ $COMP_BTN };
   display: inline-block;
 
   & > a,
-  & > button,
-  & > input {
+  & > button {
     width: 100%;
   }
   & > a {
@@ -39,44 +45,46 @@ $C_PREFIX: #{ $COMP_BTN };
   .#{ $C_PREFIX }-ele {
     position: relative;
     display: inline-block;
+    background-color: #fff;
     border: $border-thin solid transparent;
     padding: 7.5px $gap-v-triple;
     border-radius: $border-radius;
 
-    color: #ffffff;
+    color: #fff;
     text-align: center;
     cursor: pointer;
     font-size: $font-base;
     line-height: 1.42857;
     white-space: nowrap;
+    transition: background-color 300ms;
 
     &:link,
     &:visited,
     &:hover,
     &:active,
     &:focus:active {
-      color: #ffffff;
+      color: #fff;
       outline: none;
     }
 
     &.#{ $C_PREFIX }-ele-primary {
-      @include border-radius($primary-color, $primary-dark-color);
+      @include btn-ele($primary-color, $primary-dark-color);
     }
 
     &.#{ $C_PREFIX }-ele-danger {
-      @include border-radius($danger-color, $danger-dark-color);
+      @include btn-ele($danger-color, $danger-dark-color);
     }
 
     &.#{ $C_PREFIX }-ele-success {
-      @include border-radius($success-color, $success-dark-color);
+      @include btn-ele($success-color, $success-dark-color);
     }
 
     &.#{ $C_PREFIX }-ele-warning {
-      @include border-radius($warning-color, $warning-dark-color);
+      @include btn-ele($warning-color, $warning-dark-color);
     }
 
     &.#{ $C_PREFIX }-ele-default {
-      @include border-radius(#fff, $border-light-color);
+      @include btn-ele(#fff, $border-light-color);
       border-color: $grey-dark;
       color: $grey-dark;
 
@@ -87,12 +95,47 @@ $C_PREFIX: #{ $COMP_BTN };
       }
     }
 
+    &.#{ $C_PREFIX }-outline {
+      background-color: #fff;
+
+      &.#{ $C_PREFIX }-ele-primary {
+        @include btn-ele-outline($primary-color);
+      }
+
+      &.#{ $C_PREFIX }-ele-danger {
+        @include btn-ele-outline($danger-color);
+      }
+
+      &.#{ $C_PREFIX }-ele-success {
+        @include btn-ele-outline($success-color);
+      }
+
+      &.#{ $C_PREFIX }-ele-warning {
+        @include btn-ele-outline($warning-color);
+      }
+
+      &.#{ $C_PREFIX }-ele-default {
+        @include btn-ele-outline($grey-light);
+      }
+    }
+
     &.#{ $C_PREFIX }-ele-m {
       padding: 7px $gap-v-double * 2;
     }
 
     &.#{ $C_PREFIX }-ele-l {
       padding: 7px $gap-v-triple * 2;
+    }
+
+    &.#{ $C_PREFIX }-ele-radius-none {
+      border-radius: 0;
+    }
+    &.#{ $C_PREFIX }-ele-radius-m {
+      border-radius: 10px;
+    }
+
+    &.#{ $C_PREFIX }-ele-radius-l {
+      border-radius: 30px;
     }
 
     .#{ $C_PREFIX }-loading {
@@ -108,7 +151,7 @@ $C_PREFIX: #{ $COMP_BTN };
   .#{ $C_PREFIX }-read-only-shadow {
     @extend %center-position;
 
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgba(255, 255, 255, .5);
     border-radius: $border-radius;
     cursor: not-allowed;
     z-index: 1;

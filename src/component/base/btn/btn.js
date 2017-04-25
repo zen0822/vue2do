@@ -4,11 +4,11 @@
  * @props ban - 禁止点击
  * @props kind - 按钮种类
  * @props link - 链接地址
- * @props radius - 按钮边角得半径尺寸（S | M | L）
+ * @props outline - 背景颜色为白色，是有轮廓的按钮
+ * @props radius - 按钮边角得半径尺寸（none | S | M | L）
  * @props size - 按钮大小
  * @props submit - 提交按钮
  * @props type - 按钮类型 (button | link)
- * @props white - 背景颜色为白色
  * @props textDisplay - 是否显示按钮文字
  * @props value - 按钮名字
  *
@@ -46,11 +46,21 @@ const btnComp = {
       default: false
     },
 
-    link: Object,
-
     kind: {
       type: String,
       default: 'primary'
+    },
+
+    link: String,
+
+    outline: {
+      type: Boolean,
+      default: false
+    },
+
+    radius: {
+      type: String,
+      default: 's'
     },
 
     type: {
@@ -162,6 +172,10 @@ const btnComp = {
 
     sizeClass() {
       return `ele-${this.size.toLowerCase()}`
+    },
+
+    radiusClass() {
+      return `ele-radius-${this.radius.toLowerCase()}`
     },
 
     isLink() {
