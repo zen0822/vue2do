@@ -2,8 +2,13 @@
   "name": "vue2do",
   "version": "0.0.2",
   "description": "project of zen",
-  "author": "zen <zenhuangzheng@126.com>",
+  "main": "index.js",
+  "author": "zen huang <zenhuangzheng@126.com>",
   "private": false,
+  "files": [
+    "src",
+    "dist/*.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/zen0822/vue2do"
@@ -11,7 +16,9 @@
   "license": "MIT",
   "keywords": [
     "vue2",
-    "component"
+    "component",
+    "ui",
+    "base"
   ],
   "bin": {
     "set.js": "./bin/set.js"
@@ -19,6 +26,7 @@
   "scripts": {
     "start": "node bin/dev --app example",
     "prod": "node bin/prod --app example",
+    "rel": "bash build/rel.sh",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
     "coveralls": "cat test/coverage/lcov/lcov.info | coveralls && rm -rf test/coverage"
