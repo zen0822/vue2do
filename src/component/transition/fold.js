@@ -15,6 +15,7 @@ export default {
         },
 
         enter(el) {
+          // HACK: 获取 offsetHeight 触发重绘，让 css3 过渡发生变化
           let height = el.firstChild ? el.firstChild.offsetHeight : 0
 
           el.style.height = `${height}px`

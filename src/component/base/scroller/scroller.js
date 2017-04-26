@@ -2,7 +2,8 @@
  *
  * scroller 组件 滚动条
  *
- * @props height - 滚动内容最大高度
+ * @props height - 滚动内容最大高度(auto | {Number}px)
+ * @props width - 滚动内容最大高度(auto | {Number}px | 100%)
  * @props autoHide - 自动隐藏滚动条
  *
  * @events scrollY - 滚动事件

@@ -88,11 +88,6 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       min-height: $SELECT_HEIGHT;
       width: 100%;
 
-      .#{ $C_PREFIX }-scroller {
-        transition: height 300ms ease;
-        will-change: height;
-      }
-
       .#{ $C_PREFIX }-init-text-input {
         position: absolute;
         top: 0;
@@ -152,8 +147,8 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       border-bottom-left-radius: $border-radius;
       z-index: 2;
 
-      transition: top 300ms ease;
-      will-change: top;
+      transition: top 300ms ease, height 300ms ease;
+      will-change: top, height;
 
       .#{ $C_PREFIX }-tag-opt > .#{ $C_ELE_PREFIX } {
         background-color: #fff;

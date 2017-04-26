@@ -59,7 +59,7 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
     border-radius: $border-radius;
 
     .#{ $C_PREFIX }-list .#{ $C_LIST_PREFIX }-scroller {
-      @include transition (height)
+      // @include transition (height)
     }
 
     .#{ $C_PREFIX }-li {

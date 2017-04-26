@@ -707,15 +707,27 @@ const selectComp = {
     /**
      * 下拉框显示过渡完成之后
      */
-    afrerTransition() {
-      this.transitionFinish = true
+    transitionBeforeEnter(el) {
+      el.style.height = 0
+      this.transitionFinish = false
     },
 
     /**
-     * 下拉框显示过渡完成之前
+     * 下拉框显示过渡
      */
-    beforeTransition() {
-      this.transitionFinish = false
+    transitionEnter(el) {
+      let elHeight = el.offsetHeight
+      let height = isNaN(this.height) ? parseFloat(this.height) : this.height
+
+      el.style.height = `${height}px`
+    },
+
+    /**
+     * 下拉框显示过渡完成之后
+     */
+    transitionAfterEnter(el) {
+      el.style.height = ''
+      this.transitionFinish = true
     },
 
     /**

@@ -248,11 +248,11 @@ export default function (h) {
           h('transition',
             {
               on: {
-                beforeEnter: this.beforeTransition,
-                afterEnter: this.afrerTransition,
+                beforeEnter: this.transitionBeforeEnter,
+                enter: this.transitionEnter,
+                afterEnter: this.transitionAfterEnter,
                 beforeLeave(el) {
                   el.style.height = el.scrollHeight + 'px'
-                  el.style.transition = 'height 300ms ease'
                 },
 
                 leave(el) {
@@ -263,7 +263,6 @@ export default function (h) {
 
                 afterLeave(el) {
                   el.style.height = ''
-                  el.style.transition = ''
                 }
               }
             },

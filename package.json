@@ -1,11 +1,15 @@
 {
   "name": "vue2do",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "description": "project of zen",
   "main": "index.js",
-  "author": "zen huang <zenhuangzheng@126.com>",
+  "author": {
+    "name": "zheng (Zen) Huang",
+    "email": "zenhuangzheng@126.com>"
+  },
   "private": false,
   "files": [
+    "bin",
     "src",
     "dist/*.js"
   ],
@@ -21,7 +25,7 @@
     "base"
   ],
   "bin": {
-    "set.js": "./bin/set.js"
+    "set": "./bin/set.js"
   },
   "scripts": {
     "start": "node bin/dev --app example",
@@ -30,9 +34,6 @@
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
     "coveralls": "cat test/coverage/lcov/lcov.info | coveralls && rm -rf test/coverage"
-  },
-  "dependencies": {
-    "vue": "^2.1.8"
   },
   "devDependencies": {
     "autoprefixer": "*",
@@ -98,6 +99,7 @@
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
     "url-loader": "*",
+    "vue": "^2.1.8",
     "vue-class-component": "^5.0.1",
     "vue-hot-reload-api": "^2.0.7",
     "vue-html-loader": "^1.2.3",
