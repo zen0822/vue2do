@@ -47,18 +47,14 @@ module.exports = function (opt) {
             loaders: utils.cssLoaders()
           }
         }, {
-          enforce: 'pre',
           test: /\.js$/,
-          loader: "eslint-loader",
-          query: {
-            configFile: '.eslintrc.js',
-            formatter: require('eslint-friendly-formatter')
-          },
-          exclude: [/node_modules/]
-        }, {
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/
+          // exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['env']
+            }
+          }
         }, {
           test: /\.(html|tpl)$/,
           loader: 'html-loader'

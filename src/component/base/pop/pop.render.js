@@ -128,7 +128,9 @@ export default function (h) {
                       value: !this.isTip && this.popDisplay
                     }],
                     on: {
-                      click: this.hide
+                      click: () => {
+                        !this.noClickBgHide && this.hide()
+                      }
                     }
                   })
                 ]

@@ -26,6 +26,10 @@ export default {
       confirm({
         message: '这是一个弹窗'
       })
+    },
+
+    customPop() {
+      this.$refs.pop.show()
     }
   }
 }

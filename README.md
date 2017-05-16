@@ -27,7 +27,7 @@ Vue.use(vue2do)
 <z-input></input>
 ```
 
-## 局部加载
+### 局部加载
 ```js
 import {
   select,

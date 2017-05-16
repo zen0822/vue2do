@@ -32,11 +32,6 @@ module.exports = function (opt) {
       new webpack.DefinePlugin({
         'process.env': env
       }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      }),
       // extract css into its own file
       new ExtractTextPlugin({
         filename: utils.assetsPath('css/[name].[contenthash].css')

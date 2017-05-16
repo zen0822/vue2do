@@ -10,6 +10,7 @@
  * @props headerDisplay - 是否显示弹窗头部
  * @props footerDisplay - 是否显示弹窗底部
  * @props type - 弹窗类型
+ * @props noClickBgHide - 不启动点击背景隐藏弹窗
  *
  * @slot - 弹窗的主体内容
  *
@@ -105,6 +106,10 @@ const popComp = {
     footerDisplay: {
       type: Boolean,
       default: true
+    },
+    noClickBgHide: {
+      type: Boolean,
+      default: false
     }
   },
 
