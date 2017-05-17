@@ -19,8 +19,12 @@ import icon from './src/component/base/icon/icon'
 import loading from './src/component/base/loading/loading'
 import menu from './src/component/common/menu/menu'
 import page from './src/component/base/page/page'
+
 import pop from './src/component/base/pop/pop'
+import alert from 'src/component/base/pop/alert'
+import confirm from 'src/component/base/pop/confirm'
 import scroller from './src/component/base/scroller/scroller'
+import tip from 'src/component/base/pop/tip'
 
 import list from './src/component/common/list/list'
 import {
@@ -46,6 +50,11 @@ setConfig.lang(cnLang)
 export default pluginInstall
 
 export {
+  alert,
+  confirm,
+  pop,
+  tip,
+
   btn,
   check,
   fold,
@@ -55,7 +64,6 @@ export {
   loading,
   menu,
   page,
-  pop,
   scroller,
 
   list,
