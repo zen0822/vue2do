@@ -15,8 +15,7 @@
  * @slot - 弹窗的主体内容
  *
  * @events ok - 点击确定按钮
- * @events no - 点击取消按钮
- *
+ * @events no - 点击取消按钮 *
  */
 
 import './pop.scss'
