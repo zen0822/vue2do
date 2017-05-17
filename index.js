@@ -21,11 +21,11 @@ import menu from './src/component/common/menu/menu'
 import page from './src/component/base/page/page'
 
 import pop from './src/component/base/pop/pop'
-import alert from 'src/component/base/pop/alert'
-import confirm from 'src/component/base/pop/confirm'
-import scroller from './src/component/base/scroller/scroller'
-import tip from 'src/component/base/pop/tip'
+import alert from './src/component/base/pop/alert'
+import confirm from './src/component/base/pop/confirm'
+import tip from './src/component/base/pop/tip'
 
+import scroller from './src/component/base/scroller/scroller'
 import list from './src/component/common/list/list'
 import {
   tableComp as table,
