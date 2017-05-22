@@ -16,7 +16,12 @@ div.component-pop
         #{'</z-btn>'}
     +section('custom', '自定义弹窗')
       z-btn(@click='customPop') 自定义弹窗
-      z-pop(ref='pop', no-click-bg-hide) custom
+      z-pop(
+          no-click-bg-hide,
+          pop
+          header-name='custom'
+          ref='pop')
+        p custom
       z-code.
         #{'<z-btn @click="alert">'}
           自定义弹窗

@@ -5,7 +5,7 @@
 export default function (h) {
   let popChildren = []
 
-  if (!this.isTip && this.headerDisplay) {
+  if (!this.pop && !this.isTip && this.headerDisplay) {
     popChildren.push(
       h('header',
         {
@@ -18,6 +18,7 @@ export default function (h) {
         [
           h('span', this.popHeaderName),
           h('span', {
+            class: [this.prefixClass('clear-fix')],
             on: {
               click: this.hide
             }
@@ -29,8 +30,10 @@ export default function (h) {
                   name: 'show',
                   value: !this.popHeaderName
                 }],
-                kind: 'times',
-                size: 'L'
+                props: {
+                  kind: 'close',
+                  size: 'L'
+                }
               })]
             }
 
@@ -51,7 +54,7 @@ export default function (h) {
     ]))
   }
 
-  if (!this.isTip && this.footerDisplay) {
+  if (!this.pop && !this.isTip && this.footerDisplay) {
     let footerChildren = []
 
     if (!this.isAlert && this.noBtnDisplay) {
@@ -68,7 +71,6 @@ export default function (h) {
 
     footerChildren.push(
       h('btn', {
-        class: ['z-m-l'],
         props: {
           value: this.okBtnName,
           kind: 'primary'
@@ -80,7 +82,9 @@ export default function (h) {
     )
 
     popChildren.push(
-      h('footer', footerChildren)
+      h('footer', {
+        class: this.footerClass
+      }, footerChildren)
     )
   }
 
@@ -103,6 +107,7 @@ export default function (h) {
           h('div',
             {
               class: this.stageClass.concat(
+                { [this.xclass('pure')]: this.pop },
                 this.xclass([this.themeClass, 'stage'])
               ),
               on: {

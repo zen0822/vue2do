@@ -9,6 +9,7 @@
  * @props headerNoBtnDisplay - 弹窗头部X是否显示
  * @props headerDisplay - 是否显示弹窗头部
  * @props footerDisplay - 是否显示弹窗底部
+ * @props pop - 纯粹的自定义弹窗
  * @props type - 弹窗类型
  * @props noClickBgHide - 不启动点击背景隐藏弹窗
  *
@@ -65,7 +66,14 @@ const popComp = {
     },
     // 组件的 header 的 class 名字
     headerClass() {
-      return { [`${this.cPrefix}-no-header-title`]: !this.popHeaderName }
+      return {
+        [`${this.cPrefix}-no-header`]: !this.headerDisplay,
+        [`${this.cPrefix}-no-header-title`]: !this.popHeaderName
+      }
+    },
+    // 组件的 footer 的 class 名字
+    footerClass() {
+      return { [`${this.cPrefix}-no-footer`]: !this.footerDisplay }
     }
   },
 
@@ -105,6 +113,10 @@ const popComp = {
     footerDisplay: {
       type: Boolean,
       default: true
+    },
+    pop: {
+      type: Boolean,
+      default: false
     },
     noClickBgHide: {
       type: Boolean,

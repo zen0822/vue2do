@@ -8,13 +8,10 @@
 $C_PREFIX: $comp-prefix;
 
 .#{ $C_PREFIX }-clear-fix {
-  &:before,
   &:after {
-    content: " ";
-    display: table;
-  }
-  &:after {
+    display: block;
     clear: both;
+    content: "";
   }
 }
 

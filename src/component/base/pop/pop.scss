@@ -8,6 +8,10 @@
  */
 
 $C_PREFIX: #{ $COMP_POP };
+$ICON_PREFIX: #{ $COMP_ICON };
+$BTN_PREFIX: #{ $COMP_BTN };
+
+$POP_CONTAINER_PADDING: 4% 6%;
 
 .#{ $C_PREFIX } {
   position: relative;
@@ -32,6 +36,13 @@ $C_PREFIX: #{ $COMP_POP };
       }
     }
 
+    &.#{ $C_PREFIX }-pure {
+      .#{ $C_PREFIX }-container {
+        box-shadow: none;
+        background: transparent;
+      }
+    }
+
     .#{ $C_PREFIX }-bg {
       background: #000;
       opacity: .8;
@@ -41,6 +52,7 @@ $C_PREFIX: #{ $COMP_POP };
       left: 0;
       top: 0;
     }
+
     .#{ $C_PREFIX }-container {
       position: absolute;
       top: 10%;
@@ -49,24 +61,23 @@ $C_PREFIX: #{ $COMP_POP };
       margin: auto;
       background: #fff;
       overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04) inset;
 
-      border: $border-color $border-thin solid;
-      box-shadow: 0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04);
-
-      >header {
+      > header {
         cursor: move;
-        padding: $gap-v-double $gap-h-triple;
+        padding: $POP_CONTAINER_PADDING;
         box-sizing: border-box;
         font-size: $h2;
         width: 100%;
 
+        &.#{ $C_PREFIX }-no-header {
+          padding: 0;
+        }
+
         &.#{ $C_PREFIX }-no-header-title {
           .#{ $C_PREFIX }-close-pop {
             opacity: 1;
-
-            .fa-times {
-              color: $secondary-color;
-            }
+            color: $secondary-color;
           }
         }
 
@@ -76,9 +87,8 @@ $C_PREFIX: #{ $COMP_POP };
         }
       }
 
-      >article {
-        padding: 30px 50px 0;
-        margin: $gap-v-double 0;
+      > article {
+        padding: $POP_CONTAINER_PADDING;
         overflow: auto;
         box-sizing: border-box;
 
@@ -89,13 +99,21 @@ $C_PREFIX: #{ $COMP_POP };
         }
       }
 
-      >footer {
-        padding: 20px 0 50px;
+      > footer {
+        padding: $POP_CONTAINER_PADDING;
         box-sizing: border-box;
         line-height: normal;
         text-align: center;
         height: auto;
         width: 100%;
+
+        > .#{ $BTN_PREFIX } {
+          margin: 0 $gap-h-half;
+        }
+
+        &.#{ $C_PREFIX }-no-footer {
+          padding: 0;
+        }
       }
     }
 
@@ -129,7 +147,7 @@ $C_PREFIX: #{ $COMP_POP };
         width: 500px;
         border-radius: 10px;
 
-        >header {
+        > header {
           background-color: $secondary-color;
           color: #fff;
 
@@ -138,18 +156,17 @@ $C_PREFIX: #{ $COMP_POP };
           }
         }
 
-        >article {
+        > article {
           min-height: 100px;
           width: 100%;
         }
 
-        >footer {
+        > footer {
           .btn-stage {
             width: 180px;
 
             .btn {
               width: 100%;
-
             }
           }
         }
