@@ -18,6 +18,8 @@ $SELECT_WIDTH: 170px;
 $SELECT_BORDER_WIDTH: 1px;
 $OPTION_UI_PADDING_WIDTH: $gap-v;
 
+$SEARCH_INPUT_HEIGHT: 37px;
+
 $MULTI_SELECT_WIDTH: 170px + 80px;
 
 .#{ $C_PREFIX } {
@@ -141,6 +143,7 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       top: $SELECT_HEIGHT - $SELECT_BORDER_WIDTH * 2;
       left: -$SELECT_BORDER_WIDTH;
       width: $SELECT_WIDTH;
+      height: 200px;
       overflow: hidden;
       border: $border-dark-color $border-thin solid;
       border-bottom-right-radius: $border-radius;
@@ -149,6 +152,16 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
       transition: top 300ms ease, height 300ms ease;
       will-change: top, height;
+
+      &.#{ $C_PREFIX }-menu-search {
+        & > .#{ $C_OPT_PREFIX }-ul {
+          height: calc(100% - #{ $SEARCH_INPUT_HEIGHT });
+        }
+      }
+
+      & > .#{ $C_OPT_PREFIX }-ul {
+        height: 100%;
+      }
 
       .#{ $C_PREFIX }-tag-opt > .#{ $C_ELE_PREFIX } {
         background-color: #fff;

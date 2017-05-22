@@ -16,9 +16,6 @@
  * @props theme - 主题
  * @props tipName - 当实例显示提示时候的名字
  *
- * @props height - 下拉菜单的高
- * @props width - 下拉菜单的宽
- *
  * @props errorMessage - 没选的时候显示的错误信息
  * @props max - 多选下拉框最多选择几个
  * @props min - 多选下拉框至少选择几个
@@ -188,11 +185,6 @@ const selectComp = {
     selectAllTxt: {
       type: String,
       default: '全选'
-    },
-
-    height: {
-      type: String,
-      default: '150'
     }
   },
 
@@ -236,7 +228,9 @@ const selectComp = {
       // 自定义下拉框的显示状态
       customOptionDisplay: false,
       // 下拉框显示过渡完成的标识符
-      transitionFinish: false
+      transitionFinish: false,
+      // 下拉菜单的高度
+      menuHeight: 0
     }
   },
 
@@ -338,7 +332,7 @@ const selectComp = {
       let selectHeight = height || this.$el.offsetHeight
       let selectWidth = this.$el.offsetWidth
       selectHeight = selectHeight > 100 ? 100 : selectHeight
-      let top = height ? selectHeight : selectHeight - SELECT_BORDER_WIDTH * 2 - 1
+      let top = height ? selectHeight : selectHeight + SELECT_BORDER_WIDTH * 2 + 1
       let width = selectWidth - SELECT_BORDER_WIDTH * 2
 
       this.selectMenuStyle = {
@@ -716,10 +710,10 @@ const selectComp = {
      * 下拉框显示过渡
      */
     transitionEnter(el) {
+      // 获取元素高度 触发回流
       let elHeight = el.offsetHeight
-      let height = isNaN(this.height) ? parseFloat(this.height) : this.height
 
-      el.style.height = `${height}px`
+      el.style.height = `${this.menuHeight}px`
     },
 
     /**
@@ -961,6 +955,10 @@ const selectComp = {
     if (this.$scopedSlots.custom) {
       this.customOptionDisplay = true
     }
+
+    this.$nextTick(() => {
+      this.menuHeight = parseFloat(getComputedStyle(this.$refs.selectMenu).height)
+    })
   }
 }
 

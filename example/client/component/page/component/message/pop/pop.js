@@ -1,8 +1,7 @@
 import './pop.scss'
 import pugTpl from './pop.pug'
 import mixin from '../../mixin'
-import alert from 'src/component/base/pop/alert'
-import confirm from 'src/component/base/pop/confirm'
+import { alert, confirm } from 'vue2do/index.js'
 
 export default {
   template: pugTpl(),

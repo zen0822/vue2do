@@ -2,7 +2,7 @@
  * @param appName { string } - project name
  * @param opt { Object } - the options that start the development project
  */
-module.exports = function ({appName}) {
+module.exports = function ({ appName }) {
   const path = require('path')
   const express = require('express')
   const webpack = require('webpack')
@@ -46,7 +46,9 @@ module.exports = function ({appName}) {
       colors: true
     },
 
-    inline: true
+    inline: true,
+
+    disableHostCheck: true
   });
 
   server.listen(port, function (err) {

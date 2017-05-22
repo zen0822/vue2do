@@ -56,10 +56,8 @@ export default function (h) {
 
     if (!this.isAlert && this.noBtnDisplay) {
       footerChildren.push(h('btn', {
-        domProps: {
-          value: this.noBtnName
-        },
         props: {
+          value: this.noBtnName,
           kind: 'default'
         },
         on: {
@@ -71,10 +69,8 @@ export default function (h) {
     footerChildren.push(
       h('btn', {
         class: ['z-m-l'],
-        domProps: {
-          value: this.okBtnName
-        },
         props: {
+          value: this.okBtnName,
           kind: 'primary'
         },
         on: {

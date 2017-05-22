@@ -54,8 +54,7 @@ export default function (h) {
       h('scroller', {
         class: [this.xclass('scroller')],
         props: {
-          autoHide: this.autoHideScroller,
-          height: 150
+          autoHide: this.autoHideScroller
         },
         on: {
           scrollY: this.scroll

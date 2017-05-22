@@ -43,6 +43,11 @@ export default function (h) {
                 },
                 [
                   h('scroller',
+                    {
+                      props: {
+                        height: 'auto'
+                      }
+                    },
                     [
                       h('pre', {
                         class: [this.xclass('pre')]

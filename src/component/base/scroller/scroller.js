@@ -42,7 +42,7 @@ const scrollerComp = {
   props: {
     height: {
       type: [Number, String],
-      default: 'auto'
+      default: '100%'
     },
 
     width: {
@@ -141,9 +141,9 @@ const scrollerComp = {
     },
 
     scrollerStyle() {
-      return {
-        'height': this.scrollerHeight + 'px'
-      }
+      return this.height === '100%'
+        ? {}
+        : { 'height': this.scrollerHeight + 'px' }
     },
 
     // x 方向的计算属性
@@ -208,6 +208,15 @@ const scrollerComp = {
       })
     },
 
+    scrollerHeight(scrollerHeight) {
+      this._initScrollerData({
+        length: this.height,
+        scrollerLength: scrollerHeight,
+        boxLength: this.boxHeight,
+        type: 'y'
+      })
+    },
+
     scrollerWidth(scrollerWidth) {
       this._initScrollerData({
         length: this.width,
@@ -231,6 +240,8 @@ const scrollerComp = {
     // 初始化滚动条
     _initScroller() {
       this.scrollerWidth = this.$el.offsetWidth
+      this.scrollerHeight = this.$el.offsetHeight
+
       this.boxHeight = this.$box.offsetHeight
       this.boxWidth = this.$box.offsetWidth
 
@@ -272,13 +283,16 @@ const scrollerComp = {
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
 
       if (type === 'y') {
-        scrollerContainBox = length === 'auto' ? true : length >= boxLength
-        scrollerLength = scrollerContainBox ? boxLength : length
+        if (length === '100%') {
+          scrollerContainBox = scrollerLength > boxLength
+        } else {
+          scrollerContainBox = length === 'auto' ? true : length >= boxLength
+          scrollerLength = scrollerContainBox ? boxLength : length
+          this.scrollerHeight = scrollerLength
+        }
 
         boxBarRate = boxLength / scrollerLength
         barLength = scrollerLength / boxBarRate
-
-        this.scrollerHeight = scrollerLength
 
         if (scrollerContainBox) {
           this.boxTop = 0
