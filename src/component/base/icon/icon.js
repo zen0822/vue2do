@@ -17,6 +17,7 @@ import baseMixin from '../../../mixin/base'
 const SIZE_S = 'S'
 const SIZE_M = 'M'
 const SIZE_L = 'L'
+const SIZE_XL = 'XL'
 
 const TYPE_ALI = 'ali'
 const TYPE_FA = 'fa'

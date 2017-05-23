@@ -3,6 +3,8 @@ import pugTpl from './pop.pug'
 import mixin from '../../mixin'
 import { alert, confirm } from 'vue2do/index.js'
 
+import homeBgImg from 'exAsset/home-bg.jpg'
+
 export default {
   template: pugTpl(),
 
@@ -10,7 +12,8 @@ export default {
 
   data() {
     return {
-      testName: 'test'
+      testName: 'test',
+      homeBgImg
     }
   },
 
@@ -29,6 +32,10 @@ export default {
 
     customPop() {
       this.$refs.pop.show()
+    },
+
+    purePop() {
+      this.$refs.purePop.show()
     }
   }
 }

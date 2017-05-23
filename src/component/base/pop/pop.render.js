@@ -44,15 +44,27 @@ export default function (h) {
     )
   }
 
-  if (this.$slots.default) {
-    popChildren.push(h('article', this.$slots.default))
-  } else {
-    popChildren.push(h('article', [
-      h('div', {
-        class: this.xclass('alert-message')
-      }, this.popMessage)
-    ]))
-  }
+  popChildren.push(
+    h('article',
+      [
+        h('scroller', {
+          props: {
+            height: '<150'
+          }
+        }, (() => {
+          if (this.$slots.default) {
+            return this.$slots.default
+          } else {
+            return [
+              h('div', {
+                class: this.xclass('alert-message')
+              }, this.popMessage)
+            ]
+          }
+        })())
+      ]
+    )
+  )
 
   if (!this.pop && !this.isTip && this.footerDisplay) {
     let footerChildren = []
@@ -134,6 +146,29 @@ export default function (h) {
                       }
                     }
                   })
+                ]
+              ),
+
+              h('div',
+                {
+                  class: this.xclass('close-pure-pop'),
+                  on: {
+                    click: this.hide
+                  }
+                },
+                [
+                  (() => {
+                    if (this.pop) {
+                      return h('icon', {
+                        props: {
+                          kind: 'close',
+                          size: 'XL'
+                        }
+                      })
+                    } else {
+                      return
+                    }
+                  })()
                 ]
               ),
 

@@ -25,6 +25,7 @@ import './pop.m.scss'
 import render from './pop.render'
 import btnComp from '../../base/btn/btn'
 import iconComp from '../../base/icon/icon'
+import scrollerComp from '../../base/scroller/scroller'
 import baseMixin from '../../../mixin/base'
 
 const TYPE_ALERT = 'alert'
@@ -42,7 +43,8 @@ const popComp = {
 
   components: {
     btn: btnComp,
-    icon: iconComp
+    icon: iconComp,
+    scroller: scrollerComp
   },
 
   computed: {

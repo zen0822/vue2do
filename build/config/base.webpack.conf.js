@@ -31,9 +31,9 @@ module.exports = function (opt) {
       extensions: ['.js'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
-        'ex': path.resolve(__dirname, `${config.global.root}/example`),
         'vue2do': path.resolve(__dirname, `${config.global.root}`),
         'src': path.resolve(__dirname, `${config.global.root}/src`),
+        'ex': path.resolve(__dirname, `${config.global.root}/example`),
         'exAsset': path.resolve(__dirname, `${config.global.root}/example/client/asset`)
       }
     },
