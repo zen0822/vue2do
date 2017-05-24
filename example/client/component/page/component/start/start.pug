@@ -1,0 +1,29 @@
+include ../mixin.pug
+
+div
+  article.example-article
+    +section('basic', '基本用法')
+      p 在终端安装（推荐使用 yarn）
+      z-code.
+        npm install vue2do -S
+      z-code.
+        yarn add vue2do
+      p 全部加载
+      z-code.
+        import Vue from 'vue'
+        import vue2do from 'vue2do'
+
+        Vue.use(vue2do)
+      p 局部加载
+      z-code.
+        import {
+          select,
+          input
+          // ...
+        } from 'vue2do'
+
+        Vue.component('select', select)
+        Vue.component('yourPrefix' + input.compName, input)
+      p
+        | 获取更多信息请访问 vue2do 的
+        a(href='https://zen0822.github.io' target="_blank") 官方网站。

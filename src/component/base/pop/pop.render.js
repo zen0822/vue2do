@@ -49,7 +49,7 @@ export default function (h) {
       [
         h('scroller', {
           props: {
-            height: '<150'
+            height: 150
           }
         }, (() => {
           if (this.$slots.default) {

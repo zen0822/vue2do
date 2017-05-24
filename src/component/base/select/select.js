@@ -1,20 +1,14 @@
 /**
  * select 组件
  *
- * @props ajaxType - post 或 get
  * @props classifyOpt - 分类下拉框的数据
  * @props defaultVal - 默认的选项值
  * @props defaultTxt - 默认的选项文本值
  * @props initVal - 默认第一个显示的值
  * @props initOpt - 下拉框的 option 数据
  * @props queryName - 搜索参数名
- * @props queryOpt - 远程获取 option 的搜索数据
- * @props remote - 是否远程获取数据
- * @props url - 远程数据的 url
  * @props store - 储存实例化的信息
- * @props processor - 处理下拉框数据工具
  * @props theme - 主题
- * @props tipName - 当实例显示提示时候的名字
  *
  * @props errorMessage - 没选的时候显示的错误信息
  * @props max - 多选下拉框最多选择几个
@@ -92,29 +86,6 @@ const selectComp = {
     },
 
     initVal: [Number, Array, String],
-
-    remote: {
-      type: Boolean,
-      default: false
-    },
-
-    url: {
-      type: String,
-      default: ''
-    },
-
-    ajaxType: {
-      type: String,
-      default: 'get'
-    },
-
-    queryOpt: {
-      type: Object
-    },
-
-    processor: Function,
-
-    tipName: String,
 
     multiple: {
       type: Boolean,
@@ -329,11 +300,21 @@ const selectComp = {
      * 调整多选下拉框的选择值的样式
      */
     _adjustselectMenuStyle({ height, cb } = {}) {
+      debugger
       let selectHeight = height || this.$el.offsetHeight
       let selectWidth = this.$el.offsetWidth
-      selectHeight = selectHeight > 100 ? 100 : selectHeight
-      let top = height ? selectHeight : selectHeight + SELECT_BORDER_WIDTH * 2 + 1
+      let over100 = selectHeight > 100
+      selectHeight = over100 ? 100 : selectHeight
+      let top = selectHeight + SELECT_BORDER_WIDTH * 2 + 1
       let width = selectWidth - SELECT_BORDER_WIDTH * 2
+
+      if (this.multiple) {
+        if (over100) {
+          top = selectHeight + SELECT_BORDER_WIDTH * 2 + 3
+        } else {
+          top = height ? selectHeight + SELECT_BORDER_WIDTH * 2 + 3 : selectHeight + SELECT_BORDER_WIDTH * 2 + 1
+        }
+      }
 
       this.selectMenuStyle = {
         top: `${top}px`,
@@ -374,11 +355,7 @@ const selectComp = {
      * 初始化下拉 option
      */
     _initOption() {
-      if (this.remote) {
-        return this.fetch((optionItem) => {
-          return this._processOption(optionItem)._initAllOptionVal()._initSelectTxt()
-        })
-      } else if (this.classifyOpt) {
+      if (this.classifyOpt) {
         return this._processOption(this.classifyOpt)._initAllOptionVal()._initSelectTxt()
       } else {
         let slotOption = this._initSelectSlot()
@@ -646,10 +623,6 @@ const selectComp = {
         toBeOption = optionItem
       }
 
-      if (this.optProcessor) {
-        toBeOption = this.optProcessor(optionItem, this)
-      }
-
       this.option = toBeOption
 
       return this
@@ -907,27 +880,6 @@ const selectComp = {
       this.selectMenuDisplay = false
 
       return this
-    },
-
-    /**
-     * 获取数据
-     * @return {Object} this - 组件
-     */
-    fetch(cb) {
-      $.ajax({
-        data: this.queryOpt,
-        type: this.ajaxType,
-        url: this.url,
-        success(rtn) {
-          if (rtn.code === 0) {
-            if (cb) {
-              return cb(rtn.data)
-            }
-          } else {
-            console.warn(`${this.tipName}下拉框获取远程数据失败`)
-          }
-        }
-      })
     }
   },
 

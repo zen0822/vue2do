@@ -4,7 +4,7 @@ import pug from './select.pug'
 import mixin from '../../mixin'
 
 export default {
-  template,
+  template: pug(),
 
   mixins: [mixin],
 

@@ -1,6 +1,6 @@
 include ../../mixin.pug
 
-div.component-pop
+div
   article.example-article
     +section('basic', '基本用法')
       z-btn 提交
@@ -94,7 +94,7 @@ div.component-pop
           z-table-col String
           z-table-col ( none | *S | M | L)
           z-table-col 按钮边角得半径尺寸
-    +section('props', 'props 数据类型')
+    +section('props', 'events 组件事件')
       z-table(
           border='row'
           auto

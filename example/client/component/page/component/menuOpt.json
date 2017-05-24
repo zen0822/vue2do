@@ -1,5 +1,9 @@
 [
   {
+    "name": "开始使用",
+    "route": "/component/start"
+  },
+  {
     "name": "表单控件",
     "sub": [
       {

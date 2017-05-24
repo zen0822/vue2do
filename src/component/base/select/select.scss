@@ -50,23 +50,17 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       min-height: $SELECT_HEIGHT;
 
       .#{ $C_PREFIX }-init-text {
-        display: inline-block;
         position: absolute;
-        box-sizing: border-box;
         top: 0;
         left: 0;
 
         &.#{ $C_PREFIX }-opacity {
           opacity: 0;
         }
+      }
 
-        .#{$INPUT_PREFIX}-wrap {
-          border-color: transparent;
-
-          input {
-            padding-left: $gap-v;
-          }
-        }
+      .#{ $C_PREFIX }-selected-box {
+        transition: height 300ms ease;
       }
 
       .#{ $C_PREFIX }-selected-box
@@ -90,6 +84,17 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       min-height: $SELECT_HEIGHT;
       width: 100%;
 
+      .#{ $C_PREFIX }-init-text,
+      .#{ $C_PREFIX }-init-text-input {
+        .#{$INPUT_PREFIX}-wrap {
+          border: none;
+
+          input {
+            padding: 6.5px 0 6.5px $gap-v;
+          }
+        }
+      }
+
       .#{ $C_PREFIX }-init-text-input {
         position: absolute;
         top: 0;
@@ -109,19 +114,18 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
         .#{$INPUT_PREFIX}-wrap {
           border: none;
-          height: 34px;
+
+          input {
+            padding: 6.5px 0 6.5px $gap-v;
+          }
         }
       }
 
-      .fa-times{
-        cursor: pointer;
-      }
-
       .#{ $C_PREFIX }-multiple {
-        &>li {
+        & > li {
           background-color: $default-color;
           display: inline-block;
-          margin: $gap-v-half 3px;
+          margin: 4.5px 3px;
           padding: 3px;
 
           &:hover{

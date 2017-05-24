@@ -111,8 +111,6 @@ const scrollerComp = {
       boxStyleWidth: '',
       // 滚动容器的高度
       scrollerHeight: 0,
-      // 滚动容器的最大高度
-      scrollerMaxHeight: -1,
       // 滚动容器的宽度
       scrollerWidth: 0,
       // 滚动条自动隐藏的状态
@@ -290,19 +288,12 @@ const scrollerComp = {
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
 
       if (type === 'y') {
-        if (typeof length === 'string') {
-          if (length === '100%') {
-            scrollerContainBox = scrollerLength > boxLength
-          } else if (length === 'auto') {
-            scrollerContainBox = true
-            scrollerLength = scrollerContainBox ? boxLength : length
-            this.scrollerHeight = scrollerLength
-          } else {
-            scrollerLength = boxLength > this.scrollerMaxHeight ? this.scrollerMaxHeight : boxLength
-            scrollerContainBox = scrollerLength >= boxLength
-
-            this.scrollerHeight = scrollerLength
-          }
+        if (length === '100%') {
+          scrollerContainBox = scrollerLength > boxLength
+        } else if (length === 'auto') {
+          scrollerContainBox = true
+          scrollerLength = scrollerContainBox ? boxLength : length
+          this.scrollerHeight = scrollerLength
         } else {
           scrollerContainBox = length >= boxLength
           scrollerLength = scrollerContainBox ? boxLength : length
@@ -628,14 +619,6 @@ const scrollerComp = {
     }
 
     this.hasScrollerGrandpa = checkScrollerParent(this.$parent)
-
-    if (typeof this.height === 'string') {
-      if (this.height.indexOf('<') > -1) {
-        this.scrollerMaxHeight = parseFloat(this.height.slice(1))
-      } else if(/^[0-9]*$/.test(this.height)) {
-        console.warn('props height maybe mistake!')
-      }
-    }
   }
 }
 

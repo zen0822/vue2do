@@ -1,5 +1,6 @@
 import total from '../component/page/component/total/total'
 import btnPage from '../component/page/component/form/btn/btn'
+import startPage from '../component/page/component/start/start'
 import selectPage from '../component/page/component/form/select/select'
 import checkPage from '../component/page/component/form/check/check'
 import inputPage from '../component/page/component/form/input/input'
@@ -15,6 +16,12 @@ export default [{
   component: total,
   meta: {
     title: '全部组件'
+  }
+}, {
+  path: 'start',
+  component: startPage,
+  meta: {
+    title: '开始使用'
   }
 }, {
   path: 'btn',

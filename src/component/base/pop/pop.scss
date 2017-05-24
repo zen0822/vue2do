@@ -27,6 +27,8 @@ $POP_CONTAINER_PADDING: 4% 6%;
     &.#{ $C_PREFIX }-tip-stage {
       .#{ $C_PREFIX }-container {
         > article {
+          min-height: auto;
+
           .#{ $C_PREFIX }-alert-message{
             white-space: normal;
           }
@@ -129,11 +131,14 @@ $POP_CONTAINER_PADDING: 4% 6%;
           padding: $gap-v-double $gap-v;
           line-height: $font-base * 2;
           max-width: 220px;
+          height: auto;
+          min-height: auto;
 
           article {
             @extend %text-omit;
             padding: 0;
             text-align: center;
+            min-height: auto;
           }
         }
       }
