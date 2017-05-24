@@ -6,7 +6,7 @@
     background: url("../../../asset/home-bg.jpg") center 0 no-repeat;
     background-size: cover;
     width: 100%;
-    padding: 30px 0 80% * 0.618;
+    padding: 30px 0 30% * 0.618;
 
     h3, h2 {
       color: #fff;
@@ -17,10 +17,38 @@
     }
   }
 
+  .welcome-container {
+    max-width: 1024px;
+    width: 95%;
+    margin: 50px auto;
+
+    .welcome-detail-col {
+      width: 30%;
+      min-width: 1024px * 0.3;
+
+      .welcome-detail-col-title {
+        font-size: 30px;
+        text-align: center;
+      }
+
+      .welcome-detail-col-text {
+        font-size: 16px;
+      }
+    }
+  }
+
   @include device-type("<l") {
     .welcome-bg {
       background-position: center;
       padding: 30px 0 100% * 0.618;
+    }
+
+    .welcome-detail-col {
+      margin-bottom: 30px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }

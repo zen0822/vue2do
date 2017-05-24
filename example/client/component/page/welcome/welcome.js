@@ -1,11 +1,18 @@
 import './welcome.scss'
-import template from './welcome.tpl'
+import pug from './welcome.pug'
 import tip from 'src/component/base/pop/tip'
 import alert from 'src/component/base/pop/alert'
+import colComp from 'src/component/common/layout/col/col'
+import rowComp from 'src/component/common/layout/row/row'
 import mixin from '../component/mixin'
 
 export default {
-  template,
+  template: pug(),
+
+  components: {
+    column: colComp,
+    row: rowComp
+  },
 
   mixins: [mixin],
 
