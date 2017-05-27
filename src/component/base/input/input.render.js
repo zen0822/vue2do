@@ -41,7 +41,7 @@ export default function (h) {
       on: {
         focus: this.focus,
         blur: this.blur,
-        keyup: this.keyUp,
+        keyup: this.keyup,
         input: (event) => {
           this.value = event.target.value
         }
@@ -120,24 +120,12 @@ export default function (h) {
               ),
               h('div',
                 {
-                  class: [this.xclass('auto-completion')],
+                  class: [this.xclass('completion')],
                   directives: [{
                     name: 'show',
-                    value: this.completionDisplay
+                    value: this.completion
                   }]
-                },
-                [
-                  h('ul', this.completionItems.map((item, index) => {
-                    return h('li', {
-                      domProps: {
-                        'data-index': index
-                      },
-                      on: {
-                        click: this._clickCompletion
-                      }
-                    }, item.text)
-                  }))
-                ]
+                }, this.$slots.completion
               )
             ]
           ),

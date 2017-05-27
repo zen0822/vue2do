@@ -22,17 +22,11 @@
  * @props verifedType - 验证值的类型
  *
  * @props completion - 是否启用自动搜索补全功能
- * @props completionUrl - 补全搜索的url
- * @props completionItems - 搜索补全的值
- * @props completionProcessor - 处理搜索的补全数据的钩子
- * @props completionKeyName - 搜索到的补全值的 key 名字
  *
- * @events change - inputBox的值改变
- * @events blur - inputBox的blur
- * @events focus - inputBox的focus
- * @events keyup - inputBox的keyup
- * @events inputBoxEvent.completion.click - 点击补全搜索的下拉框触发的事件
- * @events inputBoxEvent.completion.change - 补全搜索的下拉框的值改变的事件
+ * @events change - input的值改变
+ * @events blur - input的blur
+ * @events focus - input的focus
+ * @events keyup - input的keyup
  *
  */
 
@@ -147,24 +141,7 @@ const inputComp = {
     completion: {
       type: Boolean,
       default: false
-    },
-
-    completionItems: {
-      type: Array,
-      default: () => []
-    },
-
-    completionUrl: {
-      type: String,
-      default: ''
-    },
-
-    completionKeyName: {
-      type: String,
-      require: true
-    },
-
-    completionProcessor: Function
+    }
   },
 
   data() {
@@ -179,19 +156,15 @@ const inputComp = {
       keyuping: false,
       // 错误信息提示信息
       dangerTip: '',
-      // 补全信息的显示状态
-      completionDisplay: false,
       // 数据类型的名称
       dataTypeName: '',
       // 是否验证通过
       verified: true,
       // 当前补全搜索的值
-      currentCompletionIndex: 'undefined',
       // 冒泡的错误提示显示状态
       bubbleDisplay: false,
       // 当前输入框值的长度
       inputTextLength: 0,
-      staticCompletionItems: []
     }
   },
 
@@ -252,9 +225,6 @@ const inputComp = {
   },
 
   methods: {
-    _setDataOpt() {
-      this.staticCompletionItems = this.completionItems.slice()
-    },
     /**
      * 初始化验证规则
      * @return {Object} this - 组件
@@ -297,56 +267,14 @@ const inputComp = {
     },
 
     /**
-     * 获取搜索补全的数据
-     * @return {Object} this - 组件
-     */
-    _fetchCompletion(key) {
-      if (!this.completion) {
-        this.completionDisplay = this.completionItems.length !== 0
-
-        return false
-      }
-
-      if (this.completion && !this.completionUrl) {
-        this.completionItems = this.staticCompletionItems.filter((item) => {
-          return item.text.indexOf(key) > -1
-        })
-
-        this._processCompletion()
-        this.completionDisplay = this.completionItems.length !== 0
-
-        return
-      }
-
-      $.ajax({
-        type: 'get',
-        url: this.completionUrl,
-        data: {
-          [this.completionKeyName]: key
-        },
-        success: (result) => {
-          if (result.code === 0) {
-            this.completionItems = result.data
-            this._processCompletion()
-          } else {
-            this.completionItems = []
-          }
-
-          this.completionDisplay = this.completionItems.length !== 0
-
-          return this
-        }
-      })
-
-      return this
-    },
-
-    /**
      * 派送 value 的 change 事件
      * @return {Object} this - 组件
      */
     _dispatchChange() {
-      return this.$emit('change', this.value)
+      return this.$emit('change', {
+        dispatcher: this,
+        value: this.value
+      })
     },
 
     /**
@@ -366,33 +294,6 @@ const inputComp = {
       }
 
       return true
-    },
-
-    /**
-     * 点击搜索补全的数据
-     *
-     * @return {Object}
-     */
-    _clickCompletion(item, index) {
-      this.value = item.text
-      this.currentCompletionIndex = index
-
-      return this
-    },
-
-    /**
-     * 处理搜索补全的数据
-     *
-     * @return {Object}
-     */
-    _processCompletion() {
-      if (!this.edit) {
-        return this
-      }
-
-      this.completionProcessor && this.completionProcessor.call(null, this.completionItems)
-
-      return this
     },
 
     /**
@@ -470,18 +371,6 @@ const inputComp = {
     },
 
     /**
-     * 获取补全搜索的text 和 value
-     * @param {Number} - 不传则是默认是当前的值
-     */
-    getCompletionItem(index = this.currentCompletionIndex) {
-      if (this.currentCompletionIndex === 'undefined') {
-        return 'undefined'
-      }
-
-      return this.completionItems[index]
-    },
-
-    /**
      * 输入框 focus 状态触发的方法
      * @return {Object} this - 组件
      */
@@ -490,6 +379,7 @@ const inputComp = {
       this.focusing = true
 
       return this.$emit('focus', {
+        dispatcher: this,
         valeu: this.value,
         event: evt
       })
@@ -507,6 +397,7 @@ const inputComp = {
       }
 
       return this.$emit('blur', {
+        dispatcher: this,
         valeu: this.value,
         event: evt
       })
@@ -522,33 +413,10 @@ const inputComp = {
       }
 
       this.keyuping = true
+
       setTimeout(() => {
         this.keyuping = false
       }, KEYUP_INTERVAL_TIME)
-
-      return this._fetchCompletion(this.value)
-    },
-
-    /**
-     * 折叠补全搜索数据的下拉框
-     *
-     * @return {Object}
-     */
-    fold() {
-      this.completionDisplay = false
-
-      return this
-    },
-
-    /**
-     * 展开补全搜索数据的下拉框
-     *
-     * @return {Object}
-     */
-    spread() {
-      this.completionDisplay = true
-
-      return this
     },
 
     /**
@@ -591,14 +459,11 @@ const inputComp = {
       // 限制长度显示
       this.limitLen = String(val).length
 
-      // 补全搜索不触发 但是值为空时触发
-      if ((this.completion && val !== '') ||
-        Object.is(val, oldVal) || val === oldVal) {
-        return false
-      } else {
-        this._dispatchChange()
-        this.bubbleDisplay && this.verify()
+      if (val !== 0 && val && this.completion && this.$slots.completion) {
+        this.$slots.completion[0].componentInstance.search(val)
       }
+
+      this._dispatchChange()
     }
   },
 

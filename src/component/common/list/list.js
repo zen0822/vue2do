@@ -19,7 +19,12 @@ import render from './list.render'
 import baseMixin from '../../../mixin/base'
 import listMixin from '../../../mixin/list'
 import tip from '../../base/pop/tip'
+
 import iconComp from '../../base/icon/icon'
+import loadingComp from '../../base/loading/loading'
+import pageComp from '../../base/page/page'
+import scrollerComp from '../../base/scroller/scroller'
+
 import { findGrandpa } from '../../../util/util'
 
 const PAGE_TYPE_NUM = 'num'
@@ -33,7 +38,10 @@ const listComp = {
   mixins: [baseMixin, listMixin],
 
   components: {
-    icon: iconComp
+    icon: iconComp,
+    loading: loadingComp,
+    page: pageComp,
+    scroller: scrollerComp
   },
 
   props: {
@@ -72,6 +80,11 @@ const listComp = {
     autoHideScroller: {
       type: Boolean,
       default: false
+    },
+
+    scrollerHeight: {
+      type: [String, Number],
+      default: 'auto'
     }
   },
 

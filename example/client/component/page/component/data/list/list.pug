@@ -9,11 +9,10 @@ div.component-pop
           auto
           pager
           class='z-m-t'
-          ':page-size'='7'
-          ':item'='testOpt')
+          :page-size='7'
+          :item='testOpt')
         template(scope='props')
           div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf
-
       z-code(v-pre).
         #{'<z-list'}
             page-type="more"
@@ -38,7 +37,7 @@ div.component-pop
           z-table-col(th) 名字
           z-table-col(th, omit) 类型
           z-table-col(th, omit) 可选值
-          z-table-col(th, width='40%', omit) 说明
+          z-table-col(th, width='40%') 说明
         z-table-row(slot='1')
           z-table-col auto
           z-table-col Boolean

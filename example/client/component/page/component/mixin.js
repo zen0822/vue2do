@@ -12,6 +12,10 @@ for (let i = 0, len = 33; i < len; i++) {
 
 export default {
   methods: {
+    _init() {
+
+    },
+
     anchorLink(name) {
       return this.$route.path + '#' + name
     },
@@ -26,5 +30,9 @@ export default {
     testOpt() {
       return testOpt
     }
+  },
+
+  mounted() {
+    this._init()
   }
 }

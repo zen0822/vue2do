@@ -90,6 +90,5 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   .#{$COL_PREFIX} {
     display: table-cell;
     padding: $gap-v $gap-v;
-    white-space: nowrap;
   }
 }

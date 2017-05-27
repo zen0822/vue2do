@@ -59,11 +59,11 @@ export default {
      * 安装完组件后初始化实例
      */
     _init() {
-      this._binder()
+      // TODO
     },
 
     /**
-     * 设置 data 选项的值
+     * 绑定相关事件
      */
     _binder() {
       // TODO
@@ -173,6 +173,8 @@ export default {
 
   mounted() {
     this.$nextTick(() => {
+      this._binder()
+
       let deviceSizeClass = `${compConfig.prefix}-device-size`
 
       if (!document.querySelector('.' + deviceSizeClass)) {

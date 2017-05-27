@@ -123,5 +123,14 @@
         "route": "/component/grid"
       }
     ]
+  },
+  {
+    "name": "其他组件",
+    "sub": [
+      {
+        "name": "滚动条组件",
+        "route": "/component/scroller"
+      }
+    ]
   }
 ]

@@ -64,8 +64,10 @@
           :pageSize="10"
           :thead="['test', 'name', 'en']"
           :tbody="testOpt">
-        <template slot="thead" v-for="item in ['test', 'name', 'en']">
-          <z-table-col>{{ item }}</z-table-col>
+        <template slot="thead">
+          <z-table-col max-width="33px">test</z-table-col>
+          <z-table-col max-width="33px">name</z-table-col>
+          <z-table-col max-width="33px">en</z-table-col>
         </template>
 
         <template slot="tbody" scope="props">

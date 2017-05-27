@@ -10,10 +10,10 @@ export default function (h) {
 
     this.listItem.forEach((item, index) => {
       let $slot = this.$scopedSlots
-        ? this.$scopedSlots.default({
+        ? [this.$scopedSlots.default({
           index,
           item
-        })
+        })]
         : this.$slots.default
 
       listItems.push(
@@ -54,7 +54,8 @@ export default function (h) {
       h('scroller', {
         class: [this.xclass('scroller')],
         props: {
-          autoHide: this.autoHideScroller
+          autoHide: this.autoHideScroller,
+          height: this.scrollerHeight
         },
         on: {
           scrollY: this.scroll

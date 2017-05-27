@@ -423,15 +423,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(264);
+var _index = __webpack_require__(263);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _store = __webpack_require__(53);
+var _store = __webpack_require__(56);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(54);
+var _type = __webpack_require__(57);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -9763,7 +9763,7 @@ module.exports = function (NAME, exec) {
 
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(57),
+var IObject = __webpack_require__(59),
     defined = __webpack_require__(24);
 module.exports = function (it) {
   return IObject(defined(it));
@@ -9776,7 +9776,7 @@ module.exports = function (it) {
 "use strict";
 
 
-var pIE = __webpack_require__(58),
+var pIE = __webpack_require__(60),
     createDesc = __webpack_require__(36),
     toIObject = __webpack_require__(20),
     toPrimitive = __webpack_require__(29),
@@ -9961,7 +9961,7 @@ exports.default = iconCompConfig;
 // 5 -> Array#find
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(32),
-    IObject = __webpack_require__(57),
+    IObject = __webpack_require__(59),
     toObject = __webpack_require__(12),
     toLength = __webpack_require__(11),
     asc = __webpack_require__(298);
@@ -10059,19 +10059,19 @@ var _vue = __webpack_require__(15);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _pop = __webpack_require__(61);
+var _pop = __webpack_require__(63);
 
 var _pop2 = _interopRequireDefault(_pop);
 
-var _alert = __webpack_require__(60);
+var _alert = __webpack_require__(62);
 
 var _alert2 = _interopRequireDefault(_alert);
 
-var _store = __webpack_require__(53);
+var _store = __webpack_require__(56);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(54);
+var _type = __webpack_require__(57);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -10290,7 +10290,7 @@ if (__webpack_require__(9)) {
       toPrimitive = __webpack_require__(29),
       has = __webpack_require__(13),
       same = __webpack_require__(138),
-      classof = __webpack_require__(56),
+      classof = __webpack_require__(58),
       isObject = __webpack_require__(6),
       toObject = __webpack_require__(12),
       isArrayIter = __webpack_require__(89),
@@ -10304,7 +10304,7 @@ if (__webpack_require__(9)) {
       createArrayIncludes = __webpack_require__(65),
       speciesConstructor = __webpack_require__(98),
       ArrayIterators = __webpack_require__(107),
-      Iterators = __webpack_require__(49),
+      Iterators = __webpack_require__(50),
       $iterDetect = __webpack_require__(71),
       setSpecies = __webpack_require__(44),
       arrayFill = __webpack_require__(82),
@@ -11024,6 +11024,267 @@ module.exports = function (key) {
 "use strict";
 
 
+var pug_has_own_property = Object.prototype.hasOwnProperty;
+
+/**
+ * Merge two attribute objects giving precedence
+ * to values in object `b`. Classes are special-cased
+ * allowing for arrays and merging/joining appropriately
+ * resulting in a string.
+ *
+ * @param {Object} a
+ * @param {Object} b
+ * @return {Object} a
+ * @api private
+ */
+
+exports.merge = pug_merge;
+function pug_merge(a, b) {
+  if (arguments.length === 1) {
+    var attrs = a[0];
+    for (var i = 1; i < a.length; i++) {
+      attrs = pug_merge(attrs, a[i]);
+    }
+    return attrs;
+  }
+
+  for (var key in b) {
+    if (key === 'class') {
+      var valA = a[key] || [];
+      a[key] = (Array.isArray(valA) ? valA : [valA]).concat(b[key] || []);
+    } else if (key === 'style') {
+      var valA = pug_style(a[key]);
+      var valB = pug_style(b[key]);
+      a[key] = valA + valB;
+    } else {
+      a[key] = b[key];
+    }
+  }
+
+  return a;
+};
+
+/**
+ * Process array, object, or string as a string of classes delimited by a space.
+ *
+ * If `val` is an array, all members of it and its subarrays are counted as
+ * classes. If `escaping` is an array, then whether or not the item in `val` is
+ * escaped depends on the corresponding item in `escaping`. If `escaping` is
+ * not an array, no escaping is done.
+ *
+ * If `val` is an object, all the keys whose value is truthy are counted as
+ * classes. No escaping is done.
+ *
+ * If `val` is a string, it is counted as a class. No escaping is done.
+ *
+ * @param {(Array.<string>|Object.<string, boolean>|string)} val
+ * @param {?Array.<string>} escaping
+ * @return {String}
+ */
+exports.classes = pug_classes;
+function pug_classes_array(val, escaping) {
+  var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
+  for (var i = 0; i < val.length; i++) {
+    className = pug_classes(val[i]);
+    if (!className) continue;
+    escapeEnabled && escaping[i] && (className = pug_escape(className));
+    classString = classString + padding + className;
+    padding = ' ';
+  }
+  return classString;
+}
+function pug_classes_object(val) {
+  var classString = '', padding = '';
+  for (var key in val) {
+    if (key && val[key] && pug_has_own_property.call(val, key)) {
+      classString = classString + padding + key;
+      padding = ' ';
+    }
+  }
+  return classString;
+}
+function pug_classes(val, escaping) {
+  if (Array.isArray(val)) {
+    return pug_classes_array(val, escaping);
+  } else if (val && typeof val === 'object') {
+    return pug_classes_object(val);
+  } else {
+    return val || '';
+  }
+}
+
+/**
+ * Convert object or string to a string of CSS styles delimited by a semicolon.
+ *
+ * @param {(Object.<string, string>|string)} val
+ * @return {String}
+ */
+
+exports.style = pug_style;
+function pug_style(val) {
+  if (!val) return '';
+  if (typeof val === 'object') {
+    var out = '';
+    for (var style in val) {
+      /* istanbul ignore else */
+      if (pug_has_own_property.call(val, style)) {
+        out = out + style + ':' + val[style] + ';';
+      }
+    }
+    return out;
+  } else {
+    val += '';
+    if (val[val.length - 1] !== ';') 
+      return val + ';';
+    return val;
+  }
+};
+
+/**
+ * Render the given attribute.
+ *
+ * @param {String} key
+ * @param {String} val
+ * @param {Boolean} escaped
+ * @param {Boolean} terse
+ * @return {String}
+ */
+exports.attr = pug_attr;
+function pug_attr(key, val, escaped, terse) {
+  if (val === false || val == null || !val && (key === 'class' || key === 'style')) {
+    return '';
+  }
+  if (val === true) {
+    return ' ' + (terse ? key : key + '="' + key + '"');
+  }
+  if (typeof val.toJSON === 'function') {
+    val = val.toJSON();
+  }
+  if (typeof val !== 'string') {
+    val = JSON.stringify(val);
+    if (!escaped && val.indexOf('"') !== -1) {
+      return ' ' + key + '=\'' + val.replace(/'/g, '&#39;') + '\'';
+    }
+  }
+  if (escaped) val = pug_escape(val);
+  return ' ' + key + '="' + val + '"';
+};
+
+/**
+ * Render the given attributes object.
+ *
+ * @param {Object} obj
+ * @param {Object} terse whether to use HTML5 terse boolean attributes
+ * @return {String}
+ */
+exports.attrs = pug_attrs;
+function pug_attrs(obj, terse){
+  var attrs = '';
+
+  for (var key in obj) {
+    if (pug_has_own_property.call(obj, key)) {
+      var val = obj[key];
+
+      if ('class' === key) {
+        val = pug_classes(val);
+        attrs = pug_attr(key, val, false, terse) + attrs;
+        continue;
+      }
+      if ('style' === key) {
+        val = pug_style(val);
+      }
+      attrs += pug_attr(key, val, false, terse);
+    }
+  }
+
+  return attrs;
+};
+
+/**
+ * Escape the given string of `html`.
+ *
+ * @param {String} html
+ * @return {String}
+ * @api private
+ */
+
+var pug_match_html = /["&<>]/;
+exports.escape = pug_escape;
+function pug_escape(_html){
+  var html = '' + _html;
+  var regexResult = pug_match_html.exec(html);
+  if (!regexResult) return _html;
+
+  var result = '';
+  var i, lastIndex, escape;
+  for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+    switch (html.charCodeAt(i)) {
+      case 34: escape = '&quot;'; break;
+      case 38: escape = '&amp;'; break;
+      case 60: escape = '&lt;'; break;
+      case 62: escape = '&gt;'; break;
+      default: continue;
+    }
+    if (lastIndex !== i) result += html.substring(lastIndex, i);
+    lastIndex = i + 1;
+    result += escape;
+  }
+  if (lastIndex !== i) return result + html.substring(lastIndex, i);
+  else return result;
+};
+
+/**
+ * Re-throw the given `err` in context to the
+ * the pug in `filename` at the given `lineno`.
+ *
+ * @param {Error} err
+ * @param {String} filename
+ * @param {String} lineno
+ * @param {String} str original source
+ * @api private
+ */
+
+exports.rethrow = pug_rethrow;
+function pug_rethrow(err, filename, lineno, str){
+  if (!(err instanceof Error)) throw err;
+  if ((typeof window != 'undefined' || !filename) && !str) {
+    err.message += ' on line ' + lineno;
+    throw err;
+  }
+  try {
+    str = str || __webpack_require__(511).readFileSync(filename, 'utf8')
+  } catch (ex) {
+    pug_rethrow(err, null, lineno)
+  }
+  var context = 3
+    , lines = str.split('\n')
+    , start = Math.max(lineno - context, 0)
+    , end = Math.min(lines.length, lineno + context);
+
+  // Error context
+  var context = lines.slice(start, end).map(function(line, i){
+    var curr = i + start + 1;
+    return (curr == lineno ? '  > ' : '    ')
+      + curr
+      + '| '
+      + line;
+  }).join('\n');
+
+  // Alter exception message
+  err.path = filename;
+  err.message = (filename || 'Pug') + ':' + lineno
+    + '\n' + context + '\n\n' + err.message;
+  throw err;
+};
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 // 22.1.3.31 Array.prototype[@@unscopables]
 var UNSCOPABLES = __webpack_require__(8)('unscopables'),
     ArrayProto = Array.prototype;
@@ -11033,7 +11294,7 @@ module.exports = function (key) {
 };
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11071,7 +11332,7 @@ _exports.BREAK = BREAK;
 _exports.RETURN = RETURN;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11080,7 +11341,7 @@ _exports.RETURN = RETURN;
 module.exports = {};
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11095,7 +11356,7 @@ module.exports = function (it, tag, stat) {
 };
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11133,7 +11394,7 @@ var trim = exporter.trim = function (string, TYPE) {
 module.exports = exporter;
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11774,7 +12035,197 @@ var scrollerComp = {
 exports.default = scrollerComp;
 
 /***/ }),
-/* 53 */
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+__webpack_require__(196);
+
+var _colRender = __webpack_require__(496);
+
+var _colRender2 = _interopRequireDefault(_colRender);
+
+var _base = __webpack_require__(7);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'col',
+
+  mixins: [_base2.default],
+
+  render: _colRender2.default,
+
+  props: {
+    gap: {
+      type: Number,
+      default: 0
+    },
+
+    pull: {
+      type: Number,
+      default: 0
+    },
+
+    push: {
+      type: Number,
+      default: 0
+    },
+
+    offset: {
+      type: Number,
+      default: 0
+    },
+
+    span: {
+      type: Number,
+      default: 0
+    },
+
+    xs: {
+      type: Number,
+      default: 0
+    },
+
+    s: {
+      type: Number,
+      default: 0
+    },
+
+    m: {
+      type: Number,
+      default: 0
+    },
+
+    l: {
+      type: Number,
+      default: 0
+    },
+
+    xl: {
+      type: Number,
+      default: 0
+    },
+
+    grid: Object
+  },
+
+  computed: {
+    // 组件类名的前缀
+    cPrefix: function cPrefix() {
+      return this.compPrefix + '-col';
+    }
+  }
+}; /**
+    * col 组件
+    *
+    * @props gap - 定义间隔的宽度（px），覆盖行设置的间隔 (5, 10, 20, 30, 40, 50)
+    * @props pull - 定义了列在 x 反方向偏移的栅格数
+    * @props push - 定义了列在 x 正方向偏移的栅格数
+    * @props offset - 定义了列离开头的栅格数
+    * @props span - 定义了列在行上的水平跨度（采用 12 栏栅格）
+    * @props xs - 加小设备的水平跨度栅格数
+    * @props s - 小设备的水平跨度栅格数
+    * @props m - 中设备的水平跨度栅格数
+    * @props l - 大型设备的水平跨度栅格数
+    * @props xl - 超大型设备的水平跨度栅格数
+    * @props grid - 集合所有设备水平跨度的栅格数
+    *
+    */
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+__webpack_require__(197);
+
+var _rowRender = __webpack_require__(497);
+
+var _rowRender2 = _interopRequireDefault(_rowRender);
+
+var _base = __webpack_require__(7);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var layoutType = ['grid', 'flex', 'flow']; /**
+                                            * row 组件
+                                            *
+                                            * @props align - 定义了列在行上垂直方向上的对齐方式，对应 flex 的 align-items 属性
+                                            *    可选值[start, end, center]
+                                            * @props gap - 每列的间隔是多少（px）-- 草案
+                                            * @props justify - 定义了列在行上的水平空间的对齐方式，对应 flex 的 justify-content 属性
+                                            *    可选值[start, end, center, justify]
+                                            * @props wrap - 定义列的换行模式，对应 flex 的 flex-wrap 属性（nowrap | wrap）
+                                            * @props type - 布局类型
+                                            *
+                                            */
+
+exports.default = {
+  name: 'row',
+
+  mixins: [_base2.default],
+
+  render: _rowRender2.default,
+
+  props: {
+    align: {
+      type: String,
+      default: 'center'
+    },
+
+    gap: {
+      type: Number,
+      default: 0
+    },
+
+    justify: {
+      type: String,
+      default: 'space-between'
+    },
+
+    wrap: {
+      type: String,
+      default: 'wrap'
+    },
+
+    type: {
+      type: String,
+      default: 'flow'
+    }
+  },
+
+  computed: {
+    // 组件类名的前缀
+    cPrefix: function cPrefix() {
+      return this.compPrefix + '-row';
+    },
+    compClass: function compClass() {
+      var compClass = this.xclass(['align-' + this.align, 'justify-' + this.justify, this.wrap]);
+
+      return [compClass, this.cPrefix];
+    }
+  }
+};
+
+/***/ }),
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11822,7 +12273,7 @@ exports.default = commonStore;
 exports.common = commonStore;
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -11842,268 +12293,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var pug_has_own_property = Object.prototype.hasOwnProperty;
-
-/**
- * Merge two attribute objects giving precedence
- * to values in object `b`. Classes are special-cased
- * allowing for arrays and merging/joining appropriately
- * resulting in a string.
- *
- * @param {Object} a
- * @param {Object} b
- * @return {Object} a
- * @api private
- */
-
-exports.merge = pug_merge;
-function pug_merge(a, b) {
-  if (arguments.length === 1) {
-    var attrs = a[0];
-    for (var i = 1; i < a.length; i++) {
-      attrs = pug_merge(attrs, a[i]);
-    }
-    return attrs;
-  }
-
-  for (var key in b) {
-    if (key === 'class') {
-      var valA = a[key] || [];
-      a[key] = (Array.isArray(valA) ? valA : [valA]).concat(b[key] || []);
-    } else if (key === 'style') {
-      var valA = pug_style(a[key]);
-      var valB = pug_style(b[key]);
-      a[key] = valA + valB;
-    } else {
-      a[key] = b[key];
-    }
-  }
-
-  return a;
-};
-
-/**
- * Process array, object, or string as a string of classes delimited by a space.
- *
- * If `val` is an array, all members of it and its subarrays are counted as
- * classes. If `escaping` is an array, then whether or not the item in `val` is
- * escaped depends on the corresponding item in `escaping`. If `escaping` is
- * not an array, no escaping is done.
- *
- * If `val` is an object, all the keys whose value is truthy are counted as
- * classes. No escaping is done.
- *
- * If `val` is a string, it is counted as a class. No escaping is done.
- *
- * @param {(Array.<string>|Object.<string, boolean>|string)} val
- * @param {?Array.<string>} escaping
- * @return {String}
- */
-exports.classes = pug_classes;
-function pug_classes_array(val, escaping) {
-  var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
-  for (var i = 0; i < val.length; i++) {
-    className = pug_classes(val[i]);
-    if (!className) continue;
-    escapeEnabled && escaping[i] && (className = pug_escape(className));
-    classString = classString + padding + className;
-    padding = ' ';
-  }
-  return classString;
-}
-function pug_classes_object(val) {
-  var classString = '', padding = '';
-  for (var key in val) {
-    if (key && val[key] && pug_has_own_property.call(val, key)) {
-      classString = classString + padding + key;
-      padding = ' ';
-    }
-  }
-  return classString;
-}
-function pug_classes(val, escaping) {
-  if (Array.isArray(val)) {
-    return pug_classes_array(val, escaping);
-  } else if (val && typeof val === 'object') {
-    return pug_classes_object(val);
-  } else {
-    return val || '';
-  }
-}
-
-/**
- * Convert object or string to a string of CSS styles delimited by a semicolon.
- *
- * @param {(Object.<string, string>|string)} val
- * @return {String}
- */
-
-exports.style = pug_style;
-function pug_style(val) {
-  if (!val) return '';
-  if (typeof val === 'object') {
-    var out = '';
-    for (var style in val) {
-      /* istanbul ignore else */
-      if (pug_has_own_property.call(val, style)) {
-        out = out + style + ':' + val[style] + ';';
-      }
-    }
-    return out;
-  } else {
-    val += '';
-    if (val[val.length - 1] !== ';') 
-      return val + ';';
-    return val;
-  }
-};
-
-/**
- * Render the given attribute.
- *
- * @param {String} key
- * @param {String} val
- * @param {Boolean} escaped
- * @param {Boolean} terse
- * @return {String}
- */
-exports.attr = pug_attr;
-function pug_attr(key, val, escaped, terse) {
-  if (val === false || val == null || !val && (key === 'class' || key === 'style')) {
-    return '';
-  }
-  if (val === true) {
-    return ' ' + (terse ? key : key + '="' + key + '"');
-  }
-  if (typeof val.toJSON === 'function') {
-    val = val.toJSON();
-  }
-  if (typeof val !== 'string') {
-    val = JSON.stringify(val);
-    if (!escaped && val.indexOf('"') !== -1) {
-      return ' ' + key + '=\'' + val.replace(/'/g, '&#39;') + '\'';
-    }
-  }
-  if (escaped) val = pug_escape(val);
-  return ' ' + key + '="' + val + '"';
-};
-
-/**
- * Render the given attributes object.
- *
- * @param {Object} obj
- * @param {Object} terse whether to use HTML5 terse boolean attributes
- * @return {String}
- */
-exports.attrs = pug_attrs;
-function pug_attrs(obj, terse){
-  var attrs = '';
-
-  for (var key in obj) {
-    if (pug_has_own_property.call(obj, key)) {
-      var val = obj[key];
-
-      if ('class' === key) {
-        val = pug_classes(val);
-        attrs = pug_attr(key, val, false, terse) + attrs;
-        continue;
-      }
-      if ('style' === key) {
-        val = pug_style(val);
-      }
-      attrs += pug_attr(key, val, false, terse);
-    }
-  }
-
-  return attrs;
-};
-
-/**
- * Escape the given string of `html`.
- *
- * @param {String} html
- * @return {String}
- * @api private
- */
-
-var pug_match_html = /["&<>]/;
-exports.escape = pug_escape;
-function pug_escape(_html){
-  var html = '' + _html;
-  var regexResult = pug_match_html.exec(html);
-  if (!regexResult) return _html;
-
-  var result = '';
-  var i, lastIndex, escape;
-  for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-    switch (html.charCodeAt(i)) {
-      case 34: escape = '&quot;'; break;
-      case 38: escape = '&amp;'; break;
-      case 60: escape = '&lt;'; break;
-      case 62: escape = '&gt;'; break;
-      default: continue;
-    }
-    if (lastIndex !== i) result += html.substring(lastIndex, i);
-    lastIndex = i + 1;
-    result += escape;
-  }
-  if (lastIndex !== i) return result + html.substring(lastIndex, i);
-  else return result;
-};
-
-/**
- * Re-throw the given `err` in context to the
- * the pug in `filename` at the given `lineno`.
- *
- * @param {Error} err
- * @param {String} filename
- * @param {String} lineno
- * @param {String} str original source
- * @api private
- */
-
-exports.rethrow = pug_rethrow;
-function pug_rethrow(err, filename, lineno, str){
-  if (!(err instanceof Error)) throw err;
-  if ((typeof window != 'undefined' || !filename) && !str) {
-    err.message += ' on line ' + lineno;
-    throw err;
-  }
-  try {
-    str = str || __webpack_require__(511).readFileSync(filename, 'utf8')
-  } catch (ex) {
-    pug_rethrow(err, null, lineno)
-  }
-  var context = 3
-    , lines = str.split('\n')
-    , start = Math.max(lineno - context, 0)
-    , end = Math.min(lines.length, lineno + context);
-
-  // Error context
-  var context = lines.slice(start, end).map(function(line, i){
-    var curr = i + start + 1;
-    return (curr == lineno ? '  > ' : '    ')
-      + curr
-      + '| '
-      + line;
-  }).join('\n');
-
-  // Alter exception message
-  err.path = filename;
-  err.message = (filename || 'Pug') + ':' + lineno
-    + '\n' + context + '\n\n' + err.message;
-  throw err;
-};
-
-
-/***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12137,7 +12327,7 @@ module.exports = function (it) {
 };
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12150,7 +12340,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 };
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12159,7 +12349,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 exports.f = {}.propertyIsEnumerable;
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12198,7 +12388,7 @@ var _vue = __webpack_require__(15);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _check = __webpack_require__(261);
+var _check = __webpack_require__(260);
 
 var _check2 = _interopRequireDefault(_check);
 
@@ -12210,7 +12400,7 @@ var _icon = __webpack_require__(26);
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _check3 = __webpack_require__(59);
+var _check3 = __webpack_require__(61);
 
 var _check4 = _interopRequireDefault(_check3);
 
@@ -12725,7 +12915,7 @@ var checkCompConfig = {
 exports.default = checkCompConfig;
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12739,15 +12929,15 @@ var _vue = __webpack_require__(15);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _pop = __webpack_require__(61);
+var _pop = __webpack_require__(63);
 
 var _pop2 = _interopRequireDefault(_pop);
 
-var _store = __webpack_require__(53);
+var _store = __webpack_require__(56);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(54);
+var _type = __webpack_require__(57);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -12830,7 +13020,7 @@ createTip();
 exports.default = alert;
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12856,7 +13046,7 @@ var _icon = __webpack_require__(26);
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _scroller = __webpack_require__(52);
+var _scroller = __webpack_require__(53);
 
 var _scroller2 = _interopRequireDefault(_scroller);
 
@@ -13209,196 +13399,6 @@ var popComp = {
 exports.default = popComp;
 
 /***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-__webpack_require__(196);
-
-var _colRender = __webpack_require__(496);
-
-var _colRender2 = _interopRequireDefault(_colRender);
-
-var _base = __webpack_require__(7);
-
-var _base2 = _interopRequireDefault(_base);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'col',
-
-  mixins: [_base2.default],
-
-  render: _colRender2.default,
-
-  props: {
-    gap: {
-      type: Number,
-      default: 0
-    },
-
-    pull: {
-      type: Number,
-      default: 0
-    },
-
-    push: {
-      type: Number,
-      default: 0
-    },
-
-    offset: {
-      type: Number,
-      default: 0
-    },
-
-    span: {
-      type: Number,
-      default: 0
-    },
-
-    xs: {
-      type: Number,
-      default: 0
-    },
-
-    s: {
-      type: Number,
-      default: 0
-    },
-
-    m: {
-      type: Number,
-      default: 0
-    },
-
-    l: {
-      type: Number,
-      default: 0
-    },
-
-    xl: {
-      type: Number,
-      default: 0
-    },
-
-    grid: Object
-  },
-
-  computed: {
-    // 组件类名的前缀
-    cPrefix: function cPrefix() {
-      return this.compPrefix + '-col';
-    }
-  }
-}; /**
-    * col 组件
-    *
-    * @props gap - 定义间隔的宽度（px），覆盖行设置的间隔 (5, 10, 20, 30, 40, 50)
-    * @props pull - 定义了列在 x 反方向偏移的栅格数
-    * @props push - 定义了列在 x 正方向偏移的栅格数
-    * @props offset - 定义了列离开头的栅格数
-    * @props span - 定义了列在行上的水平跨度（采用 12 栏栅格）
-    * @props xs - 加小设备的水平跨度栅格数
-    * @props s - 小设备的水平跨度栅格数
-    * @props m - 中设备的水平跨度栅格数
-    * @props l - 大型设备的水平跨度栅格数
-    * @props xl - 超大型设备的水平跨度栅格数
-    * @props grid - 集合所有设备水平跨度的栅格数
-    *
-    */
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-__webpack_require__(197);
-
-var _rowRender = __webpack_require__(497);
-
-var _rowRender2 = _interopRequireDefault(_rowRender);
-
-var _base = __webpack_require__(7);
-
-var _base2 = _interopRequireDefault(_base);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var layoutType = ['grid', 'flex', 'flow']; /**
-                                            * row 组件
-                                            *
-                                            * @props align - 定义了列在行上垂直方向上的对齐方式，对应 flex 的 align-items 属性
-                                            *    可选值[start, end, center]
-                                            * @props gap - 每列的间隔是多少（px）-- 草案
-                                            * @props justify - 定义了列在行上的水平空间的对齐方式，对应 flex 的 justify-content 属性
-                                            *    可选值[start, end, center, justify]
-                                            * @props wrap - 定义列的换行模式，对应 flex 的 flex-wrap 属性（nowrap | wrap）
-                                            * @props type - 布局类型
-                                            *
-                                            */
-
-exports.default = {
-  name: 'row',
-
-  mixins: [_base2.default],
-
-  render: _rowRender2.default,
-
-  props: {
-    align: {
-      type: String,
-      default: 'center'
-    },
-
-    gap: {
-      type: Number,
-      default: 0
-    },
-
-    justify: {
-      type: String,
-      default: 'space-between'
-    },
-
-    wrap: {
-      type: String,
-      default: 'wrap'
-    },
-
-    type: {
-      type: String,
-      default: 'flow'
-    }
-  },
-
-  computed: {
-    // 组件类名的前缀
-    cPrefix: function cPrefix() {
-      return this.compPrefix + '-row';
-    },
-    compClass: function compClass() {
-      var compClass = this.xclass(['align-' + this.align, 'justify-' + this.justify, this.wrap]);
-
-      return [compClass, this.cPrefix];
-    }
-  }
-};
-
-/***/ }),
 /* 64 */,
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13442,12 +13442,12 @@ var global = __webpack_require__(4),
     redefine = __webpack_require__(18),
     redefineAll = __webpack_require__(43),
     meta = __webpack_require__(35),
-    forOf = __webpack_require__(48),
+    forOf = __webpack_require__(49),
     anInstance = __webpack_require__(38),
     isObject = __webpack_require__(6),
     fails = __webpack_require__(5),
     $iterDetect = __webpack_require__(71),
-    setToStringTag = __webpack_require__(50),
+    setToStringTag = __webpack_require__(51),
     inheritIfRequired = __webpack_require__(88);
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
@@ -13976,7 +13976,7 @@ var _input = __webpack_require__(483);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _store = __webpack_require__(53);
+var _store = __webpack_require__(56);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -13996,11 +13996,11 @@ var _form = __webpack_require__(79);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _row = __webpack_require__(63);
+var _row = __webpack_require__(55);
 
 var _row2 = _interopRequireDefault(_row);
 
-var _col = __webpack_require__(62);
+var _col = __webpack_require__(54);
 
 var _col2 = _interopRequireDefault(_col);
 
@@ -14985,7 +14985,7 @@ module.exports = function (that, target, C) {
 
 
 // check on default Array iterator
-var Iterators = __webpack_require__(49),
+var Iterators = __webpack_require__(50),
     ITERATOR = __webpack_require__(8)('iterator'),
     ArrayProto = Array.prototype;
 
@@ -15015,7 +15015,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 var create = __webpack_require__(40),
     descriptor = __webpack_require__(36),
-    setToStringTag = __webpack_require__(50),
+    setToStringTag = __webpack_require__(51),
     IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
@@ -15040,9 +15040,9 @@ var LIBRARY = __webpack_require__(39),
     redefine = __webpack_require__(18),
     hide = __webpack_require__(17),
     has = __webpack_require__(13),
-    Iterators = __webpack_require__(49),
+    Iterators = __webpack_require__(50),
     $iterCreate = __webpack_require__(91),
-    setToStringTag = __webpack_require__(50),
+    setToStringTag = __webpack_require__(51),
     getPrototypeOf = __webpack_require__(22),
     ITERATOR = __webpack_require__(8)('iterator'),
     BUGGY = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
@@ -15464,7 +15464,7 @@ var global = __webpack_require__(4),
     gOPN = __webpack_require__(41).f,
     dP = __webpack_require__(10).f,
     arrayFill = __webpack_require__(82),
-    setToStringTag = __webpack_require__(50),
+    setToStringTag = __webpack_require__(51),
     ARRAY_BUFFER = 'ArrayBuffer',
     DATA_VIEW = 'DataView',
     PROTOTYPE = 'prototype',
@@ -15754,9 +15754,9 @@ module.exports = function (name) {
 "use strict";
 
 
-var classof = __webpack_require__(56),
+var classof = __webpack_require__(58),
     ITERATOR = __webpack_require__(8)('iterator'),
-    Iterators = __webpack_require__(49);
+    Iterators = __webpack_require__(50);
 module.exports = __webpack_require__(31).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
 };
@@ -15768,9 +15768,9 @@ module.exports = __webpack_require__(31).getIteratorMethod = function (it) {
 "use strict";
 
 
-var addToUnscopables = __webpack_require__(47),
+var addToUnscopables = __webpack_require__(48),
     step = __webpack_require__(128),
-    Iterators = __webpack_require__(49),
+    Iterators = __webpack_require__(50),
     toIObject = __webpack_require__(20);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -16111,11 +16111,11 @@ var _input = __webpack_require__(77);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _row = __webpack_require__(63);
+var _row = __webpack_require__(55);
 
 var _row2 = _interopRequireDefault(_row);
 
-var _col = __webpack_require__(62);
+var _col = __webpack_require__(54);
 
 var _col2 = _interopRequireDefault(_col);
 
@@ -17103,7 +17103,7 @@ var _src = __webpack_require__(502);
 
 var _src2 = _interopRequireDefault(_src);
 
-var _zhCn = __webpack_require__(266);
+var _zhCn = __webpack_require__(265);
 
 var _zhCn2 = _interopRequireDefault(_zhCn);
 
@@ -17113,7 +17113,7 @@ var _btn = __webpack_require__(76);
 
 var _btn2 = _interopRequireDefault(_btn);
 
-var _check = __webpack_require__(59);
+var _check = __webpack_require__(61);
 
 var _check2 = _interopRequireDefault(_check);
 
@@ -17145,11 +17145,11 @@ var _page = __webpack_require__(110);
 
 var _page2 = _interopRequireDefault(_page);
 
-var _pop = __webpack_require__(61);
+var _pop = __webpack_require__(63);
 
 var _pop2 = _interopRequireDefault(_pop);
 
-var _alert = __webpack_require__(60);
+var _alert = __webpack_require__(62);
 
 var _alert2 = _interopRequireDefault(_alert);
 
@@ -17161,7 +17161,7 @@ var _tip = __webpack_require__(30);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _scroller = __webpack_require__(52);
+var _scroller = __webpack_require__(53);
 
 var _scroller2 = _interopRequireDefault(_scroller);
 
@@ -17195,11 +17195,11 @@ var _tabEle = __webpack_require__(150);
 
 var _tabEle2 = _interopRequireDefault(_tabEle);
 
-var _col = __webpack_require__(62);
+var _col = __webpack_require__(54);
 
 var _col2 = _interopRequireDefault(_col);
 
-var _row = __webpack_require__(63);
+var _row = __webpack_require__(55);
 
 var _row2 = _interopRequireDefault(_row);
 
@@ -17288,7 +17288,7 @@ module.exports = [].copyWithin || function copyWithin(target /*= 0*/, start /*= 
 "use strict";
 
 
-var forOf = __webpack_require__(48);
+var forOf = __webpack_require__(49);
 
 module.exports = function (iter, ITERATOR) {
   var result = [];
@@ -17305,7 +17305,7 @@ module.exports = function (iter, ITERATOR) {
 
 var aFunction = __webpack_require__(16),
     toObject = __webpack_require__(12),
-    IObject = __webpack_require__(57),
+    IObject = __webpack_require__(59),
     toLength = __webpack_require__(11);
 
 module.exports = function (that, callbackfn, aLen, memo, isRight) {
@@ -17378,7 +17378,7 @@ var dP = __webpack_require__(10).f,
     ctx = __webpack_require__(32),
     anInstance = __webpack_require__(38),
     defined = __webpack_require__(24),
-    forOf = __webpack_require__(48),
+    forOf = __webpack_require__(49),
     $iterDefine = __webpack_require__(92),
     step = __webpack_require__(128),
     setSpecies = __webpack_require__(44),
@@ -17527,7 +17527,7 @@ module.exports = {
 
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
-var classof = __webpack_require__(56),
+var classof = __webpack_require__(58),
     from = __webpack_require__(119);
 module.exports = function (NAME) {
   return function toJSON() {
@@ -17548,7 +17548,7 @@ var redefineAll = __webpack_require__(43),
     anObject = __webpack_require__(3),
     isObject = __webpack_require__(6),
     anInstance = __webpack_require__(38),
-    forOf = __webpack_require__(48),
+    forOf = __webpack_require__(49),
     createArrayMethod = __webpack_require__(27),
     $has = __webpack_require__(13),
     arrayFind = createArrayMethod(5),
@@ -17704,9 +17704,9 @@ module.exports = Math.log1p || function log1p(x) {
 
 var getKeys = __webpack_require__(42),
     gOPS = __webpack_require__(73),
-    pIE = __webpack_require__(58),
+    pIE = __webpack_require__(60),
     toObject = __webpack_require__(12),
-    IObject = __webpack_require__(57),
+    IObject = __webpack_require__(59),
     $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
@@ -17825,7 +17825,7 @@ module.exports = function (object, names) {
 
 var getKeys = __webpack_require__(42),
     toIObject = __webpack_require__(20),
-    isEnum = __webpack_require__(58).f;
+    isEnum = __webpack_require__(60).f;
 module.exports = function (isEntries) {
   return function (it) {
     var O = toIObject(it),
@@ -17868,7 +17868,7 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 
 
 var $parseFloat = __webpack_require__(4).parseFloat,
-    $trim = __webpack_require__(51).trim;
+    $trim = __webpack_require__(52).trim;
 
 module.exports = 1 / $parseFloat(__webpack_require__(102) + '-0') !== -Infinity ? function parseFloat(str) {
   var string = $trim(String(str), 3),
@@ -17884,7 +17884,7 @@ module.exports = 1 / $parseFloat(__webpack_require__(102) + '-0') !== -Infinity 
 
 
 var $parseInt = __webpack_require__(4).parseInt,
-    $trim = __webpack_require__(51).trim,
+    $trim = __webpack_require__(52).trim,
     ws = __webpack_require__(102),
     hex = /^[\-+]?0[xX]/;
 
@@ -19151,7 +19151,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(183);
 
-var _form = __webpack_require__(262);
+var _form = __webpack_require__(261);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -19635,7 +19635,7 @@ var _select = __webpack_require__(491);
 
 var _select2 = _interopRequireDefault(_select);
 
-var _store = __webpack_require__(53);
+var _store = __webpack_require__(56);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -19663,11 +19663,11 @@ var _input = __webpack_require__(77);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _check = __webpack_require__(59);
+var _check = __webpack_require__(61);
 
 var _check2 = _interopRequireDefault(_check);
 
-var _scroller = __webpack_require__(52);
+var _scroller = __webpack_require__(53);
 
 var _scroller2 = _interopRequireDefault(_scroller);
 
@@ -20878,11 +20878,11 @@ var _icon = __webpack_require__(26);
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _row = __webpack_require__(63);
+var _row = __webpack_require__(55);
 
 var _row2 = _interopRequireDefault(_row);
 
-var _col = __webpack_require__(62);
+var _col = __webpack_require__(54);
 
 var _col2 = _interopRequireDefault(_col);
 
@@ -21472,7 +21472,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _scroller = __webpack_require__(52);
+var _scroller = __webpack_require__(53);
 
 var _scroller2 = _interopRequireDefault(_scroller);
 
@@ -23060,7 +23060,7 @@ exports = module.exports = __webpack_require__(2)();
 
 
 // module
-exports.push([module.i, "/**\r\n * zenSpa/scss/config.scss\r\n */\n.welcome .welcome-bg {\n  background: url(" + __webpack_require__(115) + ") center 0 no-repeat;\n  background-size: cover;\n  width: 100%;\n  padding: 30px 0 49.44%; }\n  .welcome .welcome-bg h3, .welcome .welcome-bg h2 {\n    color: #fff; }\n  .welcome .welcome-bg h2 {\n    font-size: 56px; }\n\n@media only screen and (max-width: 991px) {\n  .welcome .welcome-bg {\n    background-position: center;\n    padding: 30px 0 61.8%; } }\n", ""]);
+exports.push([module.i, "/**\r\n * zenSpa/scss/config.scss\r\n */\n.welcome .welcome-bg {\n  background: url(" + __webpack_require__(115) + ") center 0 no-repeat;\n  background-size: cover;\n  width: 100%;\n  padding: 30px 0 18.54%; }\n  .welcome .welcome-bg h3, .welcome .welcome-bg h2 {\n    color: #fff; }\n  .welcome .welcome-bg h2 {\n    font-size: 56px; }\n\n.welcome .welcome-container {\n  max-width: 1024px;\n  width: 95%;\n  margin: 50px auto; }\n  .welcome .welcome-container .welcome-detail-col {\n    width: 30%;\n    min-width: 307.2px; }\n    .welcome .welcome-container .welcome-detail-col .welcome-detail-col-title {\n      font-size: 30px;\n      text-align: center; }\n    .welcome .welcome-container .welcome-detail-col .welcome-detail-col-text {\n      font-size: 16px; }\n\n@media only screen and (max-width: 991px) {\n  .welcome .welcome-bg {\n    background-position: center;\n    padding: 30px 0 61.8%; }\n  .welcome .welcome-detail-col {\n    margin-bottom: 30px; }\n    .welcome .welcome-detail-col:last-child {\n      margin-bottom: 0; } }\n", ""]);
 
 // exports
 
@@ -23513,28 +23513,22 @@ module.exports = "<div class=\"welcome\">\r\n  <article class=\"example-article\
 /* 260 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"welcome\">\r\n  <div class=\"welcome-bg\">\r\n    <h3 class=\"z-text-center z-m-t-double\">welcome to</h3>\r\n    <h2 class=\"z-text-center z-m-t-double\">vue2do</h2>\r\n  </div>\r\n</div>";
+module.exports = "<div :class=\"[cPrefix]\">\r\n  <div v-xclass=\"xclass(['stage', themeClass])\">\r\n    <div v-xclass=\"xclass('read-only')\" v-show=\"readOnly\"></div>\r\n    <ul class=\"z-ul\" v-xclass=\"xclass('opt-ul')\">\r\n      <li class=\"z-li\" v-if=\"checkAll\">\r\n        <div @click=\"checkAllOption\" v-xclass=\"xclass('opt-check-all')\">\r\n          <icon size=\"m\" :kind=\"checkedAll ? 'square-check-o' : 'square-o'\"></icon>\r\n          <span v-xclass=\"xclass('lable')\">全选</span>\r\n        </div>\r\n      </li>\r\n      <li\r\n          class=\"z-li\"\r\n          v-for=\"item in option\"\r\n          v-xclass=\"xclass('opt-li')\">\r\n        <div\r\n            @click=\"check($event, item[valName])\"\r\n            v-xclass=\"xclass('box')\">\r\n          <icon size=\"m\" :kind=\"iconName(item[valName])\"></icon>\r\n          <span v-if=\"item[txtName]\" v-xclass=\"xclass('lable')\">{{ item[txtName] }}</span>\r\n        </div>\r\n      </li>\r\n    </ul>\r\n    <div class=\"z-hide\" v-xclass=\"xclass('opt-slot')\">\r\n      <slot></slot>\r\n    </div>\r\n  </div>\r\n</div>";
 
 /***/ }),
 /* 261 */
 /***/ (function(module, exports) {
 
-module.exports = "<div :class=\"[cPrefix]\">\r\n  <div v-xclass=\"xclass(['stage', themeClass])\">\r\n    <div v-xclass=\"xclass('read-only')\" v-show=\"readOnly\"></div>\r\n    <ul class=\"z-ul\" v-xclass=\"xclass('opt-ul')\">\r\n      <li class=\"z-li\" v-if=\"checkAll\">\r\n        <div @click=\"checkAllOption\" v-xclass=\"xclass('opt-check-all')\">\r\n          <icon size=\"m\" :kind=\"checkedAll ? 'square-check-o' : 'square-o'\"></icon>\r\n          <span v-xclass=\"xclass('lable')\">全选</span>\r\n        </div>\r\n      </li>\r\n      <li\r\n          class=\"z-li\"\r\n          v-for=\"item in option\"\r\n          v-xclass=\"xclass('opt-li')\">\r\n        <div\r\n            @click=\"check($event, item[valName])\"\r\n            v-xclass=\"xclass('box')\">\r\n          <icon size=\"m\" :kind=\"iconName(item[valName])\"></icon>\r\n          <span v-if=\"item[txtName]\" v-xclass=\"xclass('lable')\">{{ item[txtName] }}</span>\r\n        </div>\r\n      </li>\r\n    </ul>\r\n    <div class=\"z-hide\" v-xclass=\"xclass('opt-slot')\">\r\n      <slot></slot>\r\n    </div>\r\n  </div>\r\n</div>";
+module.exports = "<div :class=\"[cPrefix]\">\r\n  <div v-xclass=\"xclass(themeClass)\">\r\n    <slot></slot>\r\n  </div>\r\n</div>";
 
 /***/ }),
 /* 262 */
 /***/ (function(module, exports) {
 
-module.exports = "<div :class=\"[cPrefix]\">\r\n  <div v-xclass=\"xclass(themeClass)\">\r\n    <slot></slot>\r\n  </div>\r\n</div>";
-
-/***/ }),
-/* 263 */
-/***/ (function(module, exports) {
-
 module.exports = "<div\r\n    :class=\"{'search-option-wrap': $parent.searchFilter }\"\r\n    v-xclass=\"xclass(['ul', themeClass])\">\r\n  <div\r\n      @click.stop=\"$parent.selectAllOption\"\r\n      v-if=\"$parent.mutiple && $parent.selectAll\"\r\n      v-xclass=\"xclass('li')\">\r\n    <check\r\n\t\t\t\ttype=\"checkbox\"\r\n        :init-val=\"$parent.selectedAll ? [-1] : []\"\r\n        :init-opt=\"selectedAllCheckOpt\">\r\n    </check>\r\n    <span>{{ $parent.selectAllTxt }}</span>\r\n  </div>\r\n\r\n  <list\r\n\t\t\t:class=\"xclass('list')\"\r\n\t\t\t:item=\"option\"\r\n\t\t\t:page-size=\"6\"\r\n\t\t\tauto\r\n\t\t\tpage-type=\"more\"\r\n\t\t\tpager\r\n\t\t\ttheme=\"default\">\r\n\t\t<template scope=\"props\">\r\n\t\t\t<div\r\n\t\t\t\t\t:class=\"liClass(props.item.classify, props.item.value)\"\r\n\t\t\t\t\t@click.stop=\"selectOption(props.item, props.index)\">\r\n\t\t\t\t<check\r\n\t\t\t\t\t\tv-if=\"multiple && !props.item.classify\"\r\n\t\t\t\t\t\ttheme=\"default\"\r\n\t\t\t\t\t\ttype=\"checkbox\"\r\n\t\t\t\t\t\t:init-val=\"optRoot.checkboxVal(props.item[valName])\"\r\n\t\t\t\t\t\t:init-opt=\"selectedAllCheckOpt\">\r\n\t\t\t\t</check>\r\n\r\n\t\t\t\t<slot :name=\"props.index\" :item=\"props\">\r\n\t\t\t\t\t<span\r\n\t\t\t\t\t\t\tv-bubble=\"{\r\n\t\t\t\t\t\t\t\ttext: props.item[txtName] && props.item[txtName].length > 9 ?\r\n\t\t\t\t\t\t\t\tprops.item[txtName] :\r\n\t\t\t\t\t\t\t\t''\r\n\t\t\t\t\t\t\t}\">\r\n\t\t\t\t\t\t{{ props.item[txtName] }}\r\n\t\t\t\t\t</span>\r\n\t\t\t\t</slot>\r\n\r\n\t\t\t\t<icon v-if=\"hasSubOption(props.item)\" kind=\"caret-right\"></icon>\r\n\t\t\t\t<select-opt\r\n\t\t\t\t\t\t:multiple=\"multiple\"\r\n\t\t\t\t\t\t:option=\"props.item.sub\"\r\n\t\t\t\t\t\t:opt-root=\"optRoot\"\r\n\t\t\t\t\t\tv-if=\"hasSubOption(props.item)\"></select-opt>\r\n\t\t\t</div>\r\n\t\t</template>\r\n  </list>\r\n</div>";
 
 /***/ }),
-/* 264 */
+/* 263 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -23544,7 +23538,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 265 */
+/* 264 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -23573,7 +23567,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 266 */
+/* 265 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -23602,16 +23596,16 @@ module.exports = {
 };
 
 /***/ }),
-/* 267 */
+/* 266 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL8AAADtCAYAAADurKT6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo0QzQ4QzI3QjA4OTcxMUU3QTUzOEE1RjhBN0FEQ0Q3RiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo0QzQ4QzI3QzA4OTcxMUU3QTUzOEE1RjhBN0FEQ0Q3RiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjRDNDhDMjc5MDg5NzExRTdBNTM4QTVGOEE3QURDRDdGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjRDNDhDMjdBMDg5NzExRTdBNTM4QTVGOEE3QURDRDdGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+2FwMGgAAB9BJREFUeNrs3YmO2zoQ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"
 
 /***/ }),
-/* 268 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pug = __webpack_require__(55);
+var pug = __webpack_require__(47);
 
 function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["section"] = pug_interp = function(name, title){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -23644,10 +23638,10 @@ pug_html = pug_html + "\u003C\u002Farticle\u003E\u003C\u002Fdiv\u003E";;return p
 module.exports = template;
 
 /***/ }),
-/* 269 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pug = __webpack_require__(55);
+var pug = __webpack_require__(47);
 
 function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["section"] = pug_interp = function(name, title){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -23695,10 +23689,10 @@ pug_html = pug_html + "\u003C\u002Farticle\u003E\u003C\u002Fdiv\u003E";;return p
 module.exports = template;
 
 /***/ }),
-/* 270 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pug = __webpack_require__(55);
+var pug = __webpack_require__(47);
 
 function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["section"] = pug_interp = function(name, title){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -23756,10 +23750,10 @@ pug_html = pug_html + "\u003C\u002Farticle\u003E\u003C\u002Fdiv\u003E";;return p
 module.exports = template;
 
 /***/ }),
-/* 271 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pug = __webpack_require__(55);
+var pug = __webpack_require__(47);
 
 function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["section"] = pug_interp = function(name, title){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -23797,10 +23791,10 @@ pug_html = pug_html + "\u003C\u002Farticle\u003E\u003C\u002Fdiv\u003E";;return p
 module.exports = template;
 
 /***/ }),
-/* 272 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pug = __webpack_require__(55);
+var pug = __webpack_require__(47);
 
 function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_mixins["section"] = pug_interp = function(name, title){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
@@ -23820,6 +23814,15 @@ pug_html = pug_html + "\u003Cp\u003E在终端安装（推荐使用 yarn）\u003C
 }
 }, 'basic', '基本用法');
 pug_html = pug_html + "\u003C\u002Farticle\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+module.exports = template;
+
+/***/ }),
+/* 272 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pug = __webpack_require__(47);
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"welcome\"\u003E\u003Cdiv class=\"welcome-bg\"\u003E\u003Ch3 class=\"z-text-center z-m-t-double\"\u003Ewelcome to\u003C\u002Fh3\u003E\u003Ch2 class=\"z-text-center z-m-t-double\"\u003Evue2do\u003C\u002Fh2\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"welcome-container\"\u003E\u003Crow align=\"start\" justify=\"justify\"\u003E\u003Ccolumn class=\"welcome-detail-col\"\u003E\u003Cdiv class=\"welcome-detail-col-title\"\u003E响应\u003C\u002Fdiv\u003E\u003Cp class=\"welcome-detail-col-text\"\u003E适配任何设备，在移动端有更好的用户体验。\n支持五种尺寸的设备，让你不再担心适配不同设备的尺寸带来的烦恼。\u003C\u002Fp\u003E\u003C\u002Fcolumn\u003E\u003Ccolumn class=\"welcome-detail-col\"\u003E\u003Cdiv class=\"welcome-detail-col-title\"\u003E灵活\u003C\u002Fdiv\u003E\u003Cp class=\"welcome-detail-col-text\"\u003E组件和组件之间可以灵活组合，能满足任何需求。\n组件的功能丰富，能随意搭配成需要的功能\u003C\u002Fp\u003E\u003C\u002Fcolumn\u003E\u003Ccolumn class=\"welcome-detail-col\"\u003E\u003Cdiv class=\"welcome-detail-col-title\"\u003E待定\u003C\u002Fdiv\u003E\u003Cp class=\"welcome-detail-col-text\"\u003E（还没想到）\u003C\u002Fp\u003E\u003C\u002Fcolumn\u003E\u003C\u002Frow\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
 module.exports = template;
 
 /***/ }),
@@ -23916,7 +23919,7 @@ exports.default = {
 
   data: function data() {
     return {
-      logoUrl: __webpack_require__(267),
+      logoUrl: __webpack_require__(266),
       menuOpt: [{
         'name': '组件',
         'route': '/component'
@@ -23964,7 +23967,7 @@ var _tip = __webpack_require__(30);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _alert = __webpack_require__(60);
+var _alert = __webpack_require__(62);
 
 var _alert2 = _interopRequireDefault(_alert);
 
@@ -24074,7 +24077,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(166);
 
-var _list = __webpack_require__(268);
+var _list = __webpack_require__(267);
 
 var _list2 = _interopRequireDefault(_list);
 
@@ -24182,7 +24185,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(169);
 
-var _btn = __webpack_require__(269);
+var _btn = __webpack_require__(268);
 
 var _btn2 = _interopRequireDefault(_btn);
 
@@ -24291,7 +24294,7 @@ var _select = __webpack_require__(256);
 
 var _select2 = _interopRequireDefault(_select);
 
-var _select3 = __webpack_require__(270);
+var _select3 = __webpack_require__(269);
 
 var _select4 = _interopRequireDefault(_select3);
 
@@ -24391,7 +24394,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(174);
 
-var _pop = __webpack_require__(271);
+var _pop = __webpack_require__(270);
 
 var _pop2 = _interopRequireDefault(_pop);
 
@@ -24501,7 +24504,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(176);
 
-var _start = __webpack_require__(272);
+var _start = __webpack_require__(271);
 
 var _start2 = _interopRequireDefault(_start);
 
@@ -24544,7 +24547,7 @@ var _tip = __webpack_require__(30);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _alert = __webpack_require__(60);
+var _alert = __webpack_require__(62);
 
 var _alert2 = _interopRequireDefault(_alert);
 
@@ -24643,7 +24646,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(178);
 
-var _welcome = __webpack_require__(260);
+var _welcome = __webpack_require__(272);
 
 var _welcome2 = _interopRequireDefault(_welcome);
 
@@ -24651,9 +24654,17 @@ var _tip = __webpack_require__(30);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _alert = __webpack_require__(60);
+var _alert = __webpack_require__(62);
 
 var _alert2 = _interopRequireDefault(_alert);
+
+var _col = __webpack_require__(54);
+
+var _col2 = _interopRequireDefault(_col);
+
+var _row = __webpack_require__(55);
+
+var _row2 = _interopRequireDefault(_row);
 
 var _mixin = __webpack_require__(14);
 
@@ -24662,7 +24673,12 @@ var _mixin2 = _interopRequireDefault(_mixin);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  template: _welcome2.default,
+  template: (0, _welcome2.default)(),
+
+  components: {
+    column: _col2.default,
+    row: _row2.default
+  },
 
   mixins: [_mixin2.default],
 
@@ -24716,7 +24732,7 @@ var _vue2do = __webpack_require__(116);
 
 var _vue2do2 = _interopRequireDefault(_vue2do);
 
-var _en = __webpack_require__(265);
+var _en = __webpack_require__(264);
 
 var _en2 = _interopRequireDefault(_en);
 
@@ -26565,7 +26581,7 @@ module.exports = function (hint) {
 // all enumerable object keys, includes symbols
 var getKeys = __webpack_require__(42),
     gOPS = __webpack_require__(73),
-    pIE = __webpack_require__(58);
+    pIE = __webpack_require__(60);
 module.exports = function (it) {
   var result = getKeys(it),
       getSymbols = gOPS.f;
@@ -26687,7 +26703,7 @@ var $export = __webpack_require__(0);
 
 $export($export.P, 'Array', { copyWithin: __webpack_require__(118) });
 
-__webpack_require__(47)('copyWithin');
+__webpack_require__(48)('copyWithin');
 
 /***/ }),
 /* 307 */
@@ -26718,7 +26734,7 @@ var $export = __webpack_require__(0);
 
 $export($export.P, 'Array', { fill: __webpack_require__(82) });
 
-__webpack_require__(47)('fill');
+__webpack_require__(48)('fill');
 
 /***/ }),
 /* 309 */
@@ -26758,7 +26774,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(47)(KEY);
+__webpack_require__(48)(KEY);
 
 /***/ }),
 /* 311 */
@@ -26781,7 +26797,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(47)(KEY);
+__webpack_require__(48)(KEY);
 
 /***/ }),
 /* 312 */
@@ -26896,7 +26912,7 @@ var $export = __webpack_require__(0),
     arrayJoin = [].join;
 
 // fallback for not array-like strings
-$export($export.P + $export.F * (__webpack_require__(57) != Object || !__webpack_require__(25)(arrayJoin)), 'Array', {
+$export($export.P + $export.F * (__webpack_require__(59) != Object || !__webpack_require__(25)(arrayJoin)), 'Array', {
   join: function join(separator) {
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
@@ -27609,7 +27625,7 @@ var global = __webpack_require__(4),
     gOPN = __webpack_require__(41).f,
     gOPD = __webpack_require__(21).f,
     dP = __webpack_require__(10).f,
-    $trim = __webpack_require__(51).trim,
+    $trim = __webpack_require__(52).trim,
     NUMBER = 'Number',
     $Number = global[NUMBER],
     Base = $Number,
@@ -28177,7 +28193,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(96).set });
 
 // 19.1.3.6 Object.prototype.toString()
 
-var classof = __webpack_require__(56),
+var classof = __webpack_require__(58),
     test = {};
 test[__webpack_require__(8)('toStringTag')] = 'z';
 if (test + '' != '[object z]') {
@@ -28220,12 +28236,12 @@ $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt }
 var LIBRARY = __webpack_require__(39),
     global = __webpack_require__(4),
     ctx = __webpack_require__(32),
-    classof = __webpack_require__(56),
+    classof = __webpack_require__(58),
     $export = __webpack_require__(0),
     isObject = __webpack_require__(6),
     aFunction = __webpack_require__(16),
     anInstance = __webpack_require__(38),
-    forOf = __webpack_require__(48),
+    forOf = __webpack_require__(49),
     speciesConstructor = __webpack_require__(98),
     task = __webpack_require__(103).set,
     microtask = __webpack_require__(95)(),
@@ -28452,7 +28468,7 @@ if (!USE_NATIVE) {
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-__webpack_require__(50)($Promise, PROMISE);
+__webpack_require__(51)($Promise, PROMISE);
 __webpack_require__(44)(PROMISE);
 Wrapper = __webpack_require__(31)[PROMISE];
 
@@ -29466,7 +29482,7 @@ __webpack_require__(19)('sup', function (createHTML) {
 
 // 21.1.3.25 String.prototype.trim()
 
-__webpack_require__(51)('trim', function ($trim) {
+__webpack_require__(52)('trim', function ($trim) {
   return function trim() {
     return $trim(this, 3);
   };
@@ -29490,7 +29506,7 @@ var global = __webpack_require__(4),
     META = __webpack_require__(35).KEY,
     $fails = __webpack_require__(5),
     shared = __webpack_require__(74),
-    setToStringTag = __webpack_require__(50),
+    setToStringTag = __webpack_require__(51),
     uid = __webpack_require__(46),
     wks = __webpack_require__(8),
     wksExt = __webpack_require__(140),
@@ -29633,7 +29649,7 @@ if (!USE_NATIVE) {
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
   __webpack_require__(41).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(58).f = $propertyIsEnumerable;
+  __webpack_require__(60).f = $propertyIsEnumerable;
   __webpack_require__(73).f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(39)) {
@@ -29942,7 +29958,7 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(47)('includes');
+__webpack_require__(48)('includes');
 
 /***/ }),
 /* 439 */
@@ -30247,7 +30263,7 @@ var $export = __webpack_require__(0),
     anInstance = __webpack_require__(38),
     redefineAll = __webpack_require__(43),
     hide = __webpack_require__(17),
-    forOf = __webpack_require__(48),
+    forOf = __webpack_require__(49),
     RETURN = forOf.RETURN;
 
 var getMethod = function getMethod(fn) {
@@ -30735,7 +30751,7 @@ $export($export.P, 'String', {
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 
-__webpack_require__(51)('trimLeft', function ($trim) {
+__webpack_require__(52)('trimLeft', function ($trim) {
   return function trimLeft() {
     return $trim(this, 1);
   };
@@ -30749,7 +30765,7 @@ __webpack_require__(51)('trimLeft', function ($trim) {
 
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 
-__webpack_require__(51)('trimRight', function ($trim) {
+__webpack_require__(52)('trimRight', function ($trim) {
   return function trimRight() {
     return $trim(this, 2);
   };
@@ -30796,7 +30812,7 @@ var $iterators = __webpack_require__(107),
     redefine = __webpack_require__(18),
     global = __webpack_require__(4),
     hide = __webpack_require__(17),
-    Iterators = __webpack_require__(49),
+    Iterators = __webpack_require__(50),
     wks = __webpack_require__(8),
     ITERATOR = wks('iterator'),
     TO_STRING_TAG = wks('toStringTag'),
@@ -34119,15 +34135,15 @@ var _vue = __webpack_require__(15);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _pop = __webpack_require__(61);
+var _pop = __webpack_require__(63);
 
 var _pop2 = _interopRequireDefault(_pop);
 
-var _store = __webpack_require__(53);
+var _store = __webpack_require__(56);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(54);
+var _type = __webpack_require__(57);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -34436,7 +34452,7 @@ var _vue = __webpack_require__(15);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _selectOpt = __webpack_require__(263);
+var _selectOpt = __webpack_require__(262);
 
 var _selectOpt2 = _interopRequireDefault(_selectOpt);
 
@@ -34448,7 +34464,7 @@ var _icon = __webpack_require__(26);
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _check = __webpack_require__(59);
+var _check = __webpack_require__(61);
 
 var _check2 = _interopRequireDefault(_check);
 
@@ -34914,7 +34930,7 @@ var _base = __webpack_require__(7);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _scroller = __webpack_require__(52);
+var _scroller = __webpack_require__(53);
 
 var _scroller2 = _interopRequireDefault(_scroller);
 
@@ -35516,7 +35532,7 @@ var _btn = __webpack_require__(76);
 
 var _btn2 = _interopRequireDefault(_btn);
 
-var _check = __webpack_require__(59);
+var _check = __webpack_require__(61);
 
 var _check2 = _interopRequireDefault(_check);
 
@@ -35548,11 +35564,11 @@ var _page = __webpack_require__(110);
 
 var _page2 = _interopRequireDefault(_page);
 
-var _pop = __webpack_require__(61);
+var _pop = __webpack_require__(63);
 
 var _pop2 = _interopRequireDefault(_pop);
 
-var _scroller = __webpack_require__(52);
+var _scroller = __webpack_require__(53);
 
 var _scroller2 = _interopRequireDefault(_scroller);
 
@@ -35588,11 +35604,11 @@ var _tabEle = __webpack_require__(150);
 
 var _tabEle2 = _interopRequireDefault(_tabEle);
 
-var _col = __webpack_require__(62);
+var _col = __webpack_require__(54);
 
 var _col2 = _interopRequireDefault(_col);
 
-var _row = __webpack_require__(63);
+var _row = __webpack_require__(55);
 
 var _row2 = _interopRequireDefault(_row);
 
@@ -35840,7 +35856,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _getters, _actions, _mutations;
 
-var _type = __webpack_require__(54);
+var _type = __webpack_require__(57);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -36019,4 +36035,4 @@ module.exports = __webpack_require__(160);
 
 /***/ })
 ],[512]);
-//# sourceMappingURL=app.047b9448c829035a548e.js.map
+//# sourceMappingURL=app.8ada070ad9b5dbc258d6.js.map

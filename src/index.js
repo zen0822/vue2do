@@ -10,6 +10,7 @@ import menu from './component/common/menu/menu'
 import page from './component/base/page/page'
 import pop from './component/base/pop/pop'
 import scroller from './component/base/scroller/scroller'
+import search from './component/common/search/search'
 
 import {
   foldComp as fold,
@@ -56,6 +57,7 @@ const compHub = [
   scroller,
   shift,
   shiftEle,
+  search,
   tab,
   tabEle,
   col,

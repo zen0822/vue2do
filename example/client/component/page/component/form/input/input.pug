@@ -1,0 +1,28 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('basic', '基本用法')
+      z-input
+      z-code.
+        #{'<z-input></z-input>'}
+    +section('textarea', '输入区域')
+      z-input(
+        type='row',
+        :row='4',
+        placeholder='请输入...')
+      z-code.
+        #{'<z-input></z-input>'}
+    +section('completion', '补全功能')
+      z-input(
+          completion
+          placeholder='请输入...会补全的...'
+          ref='input')
+        z-search(
+          :option='testOpt'
+          :input='false'
+          ref='completion'
+          slot='completion'
+        )
+      z-code.
+        #{'<z-input></z-input>'}

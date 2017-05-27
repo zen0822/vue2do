@@ -10,6 +10,7 @@ import tablePage from '../component/page/component/data/table/table'
 import listPage from '../component/page/component/data/list/list'
 import pagerPage from '../component/page/component/data/page/page'
 import gridPage from '../component/page/component/layout/grid/grid'
+import scrollerPage from '../component/page/component/other/scroller/scroller'
 
 export default [{
   path: '',
@@ -57,7 +58,7 @@ export default [{
   path: 'pop',
   component: popPage,
   meta: {
-   title: '弹窗组件'
+    title: '弹窗组件'
   }
 }, {
   path: 'tip',
@@ -88,5 +89,11 @@ export default [{
   component: gridPage,
   meta: {
     title: '表格布局组件'
+  }
+}, {
+  path: 'scroller',
+  component: scrollerPage,
+  meta: {
+    title: '滚动条组件'
   }
 }]

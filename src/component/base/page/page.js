@@ -21,11 +21,12 @@
 
 import './page.scss'
 
-import btnComp from '../../base/btn/btn'
-import iconComp from '../../base/icon/icon'
-import inputComp from '../../base/input/input'
+import btnComp from '../btn/btn'
+import iconComp from '../icon/icon'
+import inputComp from '../input/input'
 import rowComp from '../../common/layout/row/row'
 import columnComp from '../../common/layout/col/col'
+
 import baseMixin from '../../../mixin/base'
 import render from './page.render'
 

@@ -12,14 +12,20 @@
  *                         top - 滚动条到滚动区域的顶部的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
  * @events scrollX - 滚动事件
- *                  return isRight - 滚动条是否到低
- *                         isLeft - 滚动条是否到顶
+ *                  return isRight - 滚动条是否到结束的地方
+ *                         isLeft - 滚动条是否到开始的地方
  *                         left - 滚动条到滚动区域的最左边的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
  * @events changeYBar - y-bar 滚动条改变
  *                  return isBottom - 滚动条是否到低
+ *                         isTop - 滚动条是否到顶
+ *                         top - 滚动条到滚动区域的顶部的当前距离
+ *                         offset - 滚动条离滚动区域的顶部的距离
  * @events changeXBar - x-bar 滚动条改变
- *                  return isBottom - 滚动条是否到低
+ *                  return isRight - 滚动条是否到结束的地方
+ *                         isLeft - 滚动条是否到开始的地方
+ *                         left - 滚动条到滚动区域的最左边的当前距离
+ *                         offset - 滚动条离滚动区域的顶部的距离
  * @events changeHeight - 滚动内容的高度变化
  *
  */
@@ -240,6 +246,11 @@ const scrollerComp = {
       setInterval(() => {
         this._initScroller()
       }, 10)
+    },
+
+    _binder() {
+      document.addEventListener('mousemove', this.scrollerMouseMove)
+      document.addEventListener('mouseup', this.scrollerMouseUp)
     },
 
     // 初始化滚动条

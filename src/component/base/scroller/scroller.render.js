@@ -5,8 +5,6 @@ export default function (h) {
       class: [this.cPrefix],
       style: this.scrollerStyle,
       on: {
-        mousemove: this.scrollerMouseMove,
-        mouseup: this.scrollerMouseUp,
         mouseover: this.scrollerMouseover,
         mouseout: this.scrollerMouseout,
         wheel: this.mouseWheel,

@@ -300,7 +300,6 @@ const selectComp = {
      * 调整多选下拉框的选择值的样式
      */
     _adjustselectMenuStyle({ height, cb } = {}) {
-      debugger
       let selectHeight = height || this.$el.offsetHeight
       let selectWidth = this.$el.offsetWidth
       let over100 = selectHeight > 100

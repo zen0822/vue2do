@@ -73,33 +73,12 @@ $INPUT_BORDER_WIDTH: 1px;
 
         & > input {
           box-sizing: border-box;
-          background-color: rgba(0, 0, 0, 0);
+          background-color: transparent;
         }
 
         & > textarea {
+          box-sizing: border-box;
           resize: none;
-        }
-      }
-
-      .#{ $C_PREFIX }-auto-completion {
-        position: absolute;
-        top: $INPUT_HEIGHT - 4;
-        left: -$INPUT_BORDER_WIDTH;
-        z-index: 1;
-        width: $INPUT_WIDTH;
-        background: #fff;
-        border: $border-dark-color $border-thin solid;
-
-        & > ul {
-          max-height: 200px;
-          overflow: auto;
-
-          & > li{
-            @extend %text-omit;
-            cursor: default;
-            width: 100%;
-            text-align: left;
-          }
         }
       }
     }

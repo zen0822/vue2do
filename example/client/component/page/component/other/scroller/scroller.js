@@ -1,5 +1,5 @@
-import './input.scss'
-import pug from './input.pug'
+import './scroller.scss'
+import pug from './scroller.pug'
 import mixin from '../../mixin'
 
 export default {
@@ -10,12 +10,6 @@ export default {
   data() {
     return {
       testName: 'test'
-    }
-  },
-
-  methods: {
-    _init() {
-
     }
   }
 }

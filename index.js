@@ -15,10 +15,12 @@ import check from './src/component/base/check/check'
 import form from './src/component/base/form/form'
 import fold from './src/component/base/fold/fold'
 import input from './src/component/base/input/input'
+
 import icon from './src/component/base/icon/icon'
 import loading from './src/component/base/loading/loading'
 import menu from './src/component/common/menu/menu'
 import page from './src/component/base/page/page'
+import search from './src/component/common/search/search'
 
 import pop from './src/component/base/pop/pop'
 import alert from './src/component/base/pop/alert'
@@ -60,11 +62,13 @@ export {
   fold,
   form,
   input,
+
   icon,
   loading,
   menu,
   page,
   scroller,
+  search,
 
   list,
   table,

@@ -18,131 +18,16 @@
 
 import './table.scss'
 import render from './table.render'
+
+import tableColComp from './table-col'
+import tableRowComp from './table-row'
+
 import baseMixin from '../../../mixin/base'
 import listMixin from '../../../mixin/list'
 import tip from '../../base/pop/tip'
 import { findGrandpa } from '../../../util/util'
 
 const COL_PADDING_BORDER_LENGTH = 22
-
-const tableRowComp = {
-  name: 'table-row',
-  mixins: [baseMixin],
-  computed: {
-    cPrefix() {
-      return `${this.compPrefix}-table-row`
-    }
-  },
-  render(h) {
-    return h(
-      'tr',
-      {
-        class: [this.cPrefix]
-      },
-      this.$slots.default
-    )
-  }
-}
-
-const tableColComp = {
-  name: 'table-col',
-  mixins: [baseMixin],
-  props: {
-    align: {
-      type: String,
-      default: 'left'
-    },
-    omit: {
-      type: Boolean,
-      default: false
-    },
-    th: {
-      type: Boolean,
-      default: false
-    },
-    maxWidth: {
-      type: String,
-      default: ''
-    },
-    minWidth: {
-      type: String,
-      default: ''
-    },
-    width: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      colWidth: '',
-      table: 0
-    }
-  },
-  computed: {
-    cPrefix() {
-      return `${this.compPrefix}-table-col`
-    },
-    tableWidth() {
-      return this.table.tableWidth
-    },
-    colBodyStyle() {
-      return {
-        width: this.widthTypeStyle(this.width),
-        'max-width': this.widthTypeStyle(this.maxWidth),
-        'min-width': this.widthTypeStyle(this.minWidth)
-      }
-    }
-  },
-  render(h) {
-    return h(
-      this.th ? 'th' : 'td',
-      {
-        class: [
-          this.cPrefix,
-          this.prefixClass('text-' + this.align)
-        ]
-      },
-      [
-        h('div', {
-          class: [{
-            [`${this.prefixClass('text-omit')}`]: this.omit
-          }],
-          style: this.colBodyStyle
-        }, this.$slots.default)
-      ]
-    )
-  },
-  methods: {
-    widthTypeStyle(width) {
-      if (!this.colWidth || width === '') {
-        return ''
-      }
-
-      // 最终的宽度
-      let w = ''
-      let colBodyWidth = 0
-      let colContentWidth = 0
-      let widthNum = parseFloat(width)
-
-      colBodyWidth = width.indexOf('%') ? `${this.tableWidth * widthNum * 0.01 - COL_PADDING_BORDER_LENGTH}` : widthNum
-      colContentWidth = this.$el.offsetWidth - COL_PADDING_BORDER_LENGTH
-
-      // TODO: 当父元素 td 的宽度大于内容宽度时，宽度要设置成 auto
-      w = colContentWidth > colBodyWidth ? colContentWidth : colBodyWidth
-
-      return colBodyWidth + 'px'
-    }
-  },
-  beforeMount() {
-    this.table = findGrandpa(this.$parent, 'table')
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.colWidth = this.$el.offsetWidth
-    })
-  }
-}
 
 const tableComp = {
   name: 'table',
