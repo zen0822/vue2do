@@ -1,30 +1,30 @@
 /**
  * select 组件
  *
- * @props classifyOpt - 分类下拉框的数据
- * @props defaultVal - 默认的选项值
- * @props defaultTxt - 默认的选项文本值
- * @props initVal - 默认第一个显示的值
- * @props initOpt - 下拉框的 option 数据
- * @props queryName - 搜索参数名
- * @props store - 储存实例化的信息
- * @props theme - 主题
+ * @prop classifyOpt - 分类下拉框的数据
+ * @prop defaultVal - 默认的选项值
+ * @prop defaultTxt - 默认的选项文本值
+ * @prop initVal - 默认第一个显示的值
+ * @prop initOpt - 下拉框的 option 数据
+ * @prop queryName - 搜索参数名
+ * @prop store - 储存实例化的信息
+ * @prop theme - 主题
  *
- * @props errorMessage - 没选的时候显示的错误信息
- * @props max - 多选下拉框最多选择几个
- * @props min - 多选下拉框至少选择几个
- * @props required - 必须选择下拉框的值
- * @props readOnly - 只读
+ * @prop errorMessage - 没选的时候显示的错误信息
+ * @prop max - 多选下拉框最多选择几个
+ * @prop min - 多选下拉框至少选择几个
+ * @prop required - 必须选择下拉框的值
+ * @prop readOnly - 只读
  *
- * @props txtName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
- * @props valName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
+ * @prop txtName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
+ * @prop valName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
  *
  * @porps classify - 有值（数组类型）就开启标题下拉框 option 分类模式
- * @props multiple - 是为多选
+ * @prop multiple - 是为多选
  * @porps search - 开启搜索过滤
  *
- * @props selectAll - 启动全选的功能
- * @props selectAllTxt - 全选选项的名字
+ * @prop selectAll - 启动全选的功能
+ * @prop selectAllTxt - 全选选项的名字
  *
  */
 

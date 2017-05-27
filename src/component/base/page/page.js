@@ -1,21 +1,21 @@
 /**
  * page 组件
  *
- * @props auto -自动计算分页数据（data 选项需要传入数据的长度 length 和每页的数据数目 size）
- * @props display - 显示分页控件
- * @props data - 分页数据
+ * @prop auto -自动计算分页数据（data 选项需要传入数据的长度 length 和每页的数据数目 size）
+ * @prop display - 显示分页控件
+ * @prop data - 分页数据
  *             length - 一共有几条数据
  *             total - 一共有多少页
  *             size - 每页几条数据
  *             current - 当前的页码
- * @props onePageDisplay - 分页总页数为 1 时是否显示
- * @props size - 分页外观尺寸大小（s | m | l）
- * @props type - 分页类型（加载更多：more | 数字标注（默认）：num）
- * @props loadMoreText - 加载更多的提示文字
+ * @prop onePageDisplay - 分页总页数为 1 时是否显示
+ * @prop size - 分页外观尺寸大小（s | m | l）
+ * @prop type - 分页类型（加载更多：more | 数字标注（默认）：num）
+ * @prop loadMoreText - 加载更多的提示文字
  *
- * @events switch - 换页触发事件
+ * @event switch - 换页触发事件
  *
- * @slots loadMore - 分页类型为加载更多时的，在按钮处的内容分发
+ * @slot loadMore - 分页类型为加载更多时的，在按钮处的内容分发
  *
  */
 

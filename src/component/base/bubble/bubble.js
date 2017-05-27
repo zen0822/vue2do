@@ -4,14 +4,14 @@
  * 注意要用自定义的 bubble 的时候，bubble的所有祖父元素都不能为相对定位
  * 如果bubble有祖父元素有相对定位的，请启用 props 的
  *
- * @props theme - 主题
- * @props poptype - 弹窗类型
- * @props width - bubble最大宽度
- * @props headername - 弹窗头部名字
- * @props message - alert信息
- * @props bubbleDisplay - 是否立即显示bubble
- * @props relative - 是否启用相对位置的 bubble
- * @props hideRightNow - 马上显示和隐藏 bubble，就是纯显示的 bubble 要启用
+ * @prop theme - 主题
+ * @prop poptype - 弹窗类型
+ * @prop width - bubble最大宽度
+ * @prop headername - 弹窗头部名字
+ * @prop message - alert信息
+ * @prop bubbleDisplay - 是否立即显示bubble
+ * @prop relative - 是否启用相对位置的 bubble
+ * @prop hideRightNow - 马上显示和隐藏 bubble，就是纯显示的 bubble 要启用
  *
  * @slot body - confirm弹窗的主体内容
  *

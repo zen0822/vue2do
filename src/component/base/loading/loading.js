@@ -2,10 +2,10 @@
  * loading 组件
  * 使用自定义的loading 需要将父元素设置成 position: relative
  *
- * @props bgDisplay - 是否显示 loading 的背景
- * @props text - 等待文字
- * @props theme - 主题
- * @props type - 类型
+ * @prop bgDisplay - 是否显示 loading 的背景
+ * @prop text - 等待文字
+ * @prop theme - 主题
+ * @prop type - 类型
  *
  */
 

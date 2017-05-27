@@ -1,16 +1,16 @@
 /**
  * list 组件
  *
- * @props auto - 根据传入的列表数据生成分页数据
- * @props autoHideScroller - 是否自动隐藏滚动条
- * @props item - 列表数据
- * @props page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
- * @props pager - 启动分页功能
- * @props pageSize - 将列表数据（item）分为每页多少条数据
- * @props pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
- * @props pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
+ * @prop auto - 根据传入的列表数据生成分页数据
+ * @prop autoHideScroller - 是否自动隐藏滚动条
+ * @prop item - 列表数据
+ * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+ * @prop pager - 启动分页功能
+ * @prop pageSize - 将列表数据（item）分为每页多少条数据
+ * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
+ * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
  *
- * @events switch - 换页触发事件
+ * @event switch - 换页触发事件
  *
  */
 

@@ -1,23 +1,23 @@
 /*
  * check - 多选框组件
  *
- * @props initVal - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
- * @props queryName - 参数名
- * @props initOpt - 复选框数据
- * @props readOnly - 只读
- * @props required - 是否必选
- * @props theme - 主题
- * @props type - input 的 type(radio | checkbox)
+ * @prop initVal - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
+ * @prop queryName - 参数名
+ * @prop initOpt - 复选框数据
+ * @prop readOnly - 只读
+ * @prop required - 是否必选
+ * @prop theme - 主题
+ * @prop type - input 的 type(radio | checkbox)
  *
- * @props errorMessage - checkbox 没选的时候显示的错误信息
- * @props valName - 指定读取 checkboxItems 的 value 值的 key 的名字
- * @props txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
- * @props remote - 不为空则是远程下载的 url 地址，并且数据是从远程下载
+ * @prop errorMessage - checkbox 没选的时候显示的错误信息
+ * @prop valName - 指定读取 checkboxItems 的 value 值的 key 的名字
+ * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
+ * @prop remote - 不为空则是远程下载的 url 地址，并且数据是从远程下载
  *
- * @props beforeCheck - 选择之前的回调函数
- * @props success - 选择成功的回调函数
+ * @prop beforeCheck - 选择之前的回调函数
+ * @prop success - 选择成功的回调函数
  *
- * @props checkAll - 全选 checkbox 的选项
+ * @prop checkAll - 全选 checkbox 的选项
  *
  */
 

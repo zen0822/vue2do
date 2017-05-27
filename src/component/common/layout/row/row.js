@@ -1,13 +1,13 @@
 /**
  * row 组件
  *
- * @props align - 定义了列在行上垂直方向上的对齐方式，对应 flex 的 align-items 属性
+ * @prop align - 定义了列在行上垂直方向上的对齐方式，对应 flex 的 align-items 属性
  *    可选值[start, end, center]
- * @props gap - 每列的间隔是多少（px）-- 草案
- * @props justify - 定义了列在行上的水平空间的对齐方式，对应 flex 的 justify-content 属性
+ * @prop gap - 每列的间隔是多少（px）-- 草案
+ * @prop justify - 定义了列在行上的水平空间的对齐方式，对应 flex 的 justify-content 属性
  *    可选值[start, end, center, justify]
- * @props wrap - 定义列的换行模式，对应 flex 的 flex-wrap 属性（nowrap | wrap）
- * @props type - 布局类型
+ * @prop wrap - 定义列的换行模式，对应 flex 的 flex-wrap 属性（nowrap | wrap）
+ * @prop type - 布局类型
  *
  */
 

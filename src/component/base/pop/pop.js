@@ -1,22 +1,22 @@
 /**
  * pop 组件
  *
- * @props headerName - 弹窗头部名字
- * @props message - alert信息
- * @props okBtnName - 确定按钮名字
- * @props noBtnName - 取消按钮名字
- * @props noBtnDisplay - 取消按钮是否显示
- * @props headerNoBtnDisplay - 弹窗头部X是否显示
- * @props headerDisplay - 是否显示弹窗头部
- * @props footerDisplay - 是否显示弹窗底部
- * @props pop - 纯粹的自定义弹窗
- * @props type - 弹窗类型
- * @props noClickBgHide - 不启动点击背景隐藏弹窗
+ * @prop headerName - 弹窗头部名字
+ * @prop message - alert信息
+ * @prop okBtnName - 确定按钮名字
+ * @prop noBtnName - 取消按钮名字
+ * @prop noBtnDisplay - 取消按钮是否显示
+ * @prop headerNoBtnDisplay - 弹窗头部X是否显示
+ * @prop headerDisplay - 是否显示弹窗头部
+ * @prop footerDisplay - 是否显示弹窗底部
+ * @prop pop - 纯粹的自定义弹窗
+ * @prop type - 弹窗类型
+ * @prop noClickBgHide - 不启动点击背景隐藏弹窗
  *
  * @slot - 弹窗的主体内容
  *
- * @events ok - 点击确定按钮
- * @events no - 点击取消按钮 *
+ * @event ok - 点击确定按钮
+ * @event no - 点击取消按钮 *
  */
 
 import './pop.scss'

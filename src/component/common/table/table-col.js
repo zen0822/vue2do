@@ -1,12 +1,12 @@
 /**
  * table-col 组件
  *
- * @props align - 文字对齐类型
- * @props omit - 文字不还换，启用省略模式
- * @props th - 是否是 th
- * @props minWidth - 最小宽度
- * @props width - 宽度
- * @props maxWidth - 最大宽度
+ * @prop align - 文字对齐类型
+ * @prop omit - 文字不还换，启用省略模式
+ * @prop th - 是否是 th
+ * @prop minWidth - 最小宽度
+ * @prop width - 宽度
+ * @prop maxWidth - 最大宽度
  *
  */
 

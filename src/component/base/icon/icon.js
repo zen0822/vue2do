@@ -1,10 +1,10 @@
 /**
  * icon 组件
  *
- * @props theme - 主题
- * @props size - 大小
- * @props type - 字符图标类型
- * @props kind - 图标的种类（ex：fa-circle -> kind='circle')
+ * @prop theme - 主题
+ * @prop size - 大小
+ * @prop type - 字符图标类型
+ * @prop kind - 图标的种类（ex：fa-circle -> kind='circle')
  *
  */
 

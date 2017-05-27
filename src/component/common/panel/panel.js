@@ -1,15 +1,15 @@
 /**
  * panel 组件
  *
- * @props animate - 菜单显示动画
- * @props initOpt - 菜单的数据
- * @props kind - 菜单的种类
- * @props trigger - 2，3 级菜单的触发模式
- * @props type - 布局类型
- * @props spreadAll - 打开全部一级菜单
- * @props title - 菜单标题
+ * @prop animate - 菜单显示动画
+ * @prop initOpt - 菜单的数据
+ * @prop kind - 菜单的种类
+ * @prop trigger - 2，3 级菜单的触发模式
+ * @prop type - 布局类型
+ * @prop spreadAll - 打开全部一级菜单
+ * @prop title - 菜单标题
  *
- * @events hide - 隐藏 panel
+ * @event hide - 隐藏 panel
  */
 
 import './panel.scss'

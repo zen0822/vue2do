@@ -1,11 +1,11 @@
 /**
  * fold 组件
  *
- * @props initOpt - 折叠版的初始化数据
- * @props initIndex - 当前展开的折叠板
- * @props spread-all - 展开全部
- * @props only - 开启一次只能展开一个面板功能
- * @props type - 布局类型
+ * @prop initOpt - 折叠版的初始化数据
+ * @prop initIndex - 当前展开的折叠板
+ * @prop spread-all - 展开全部
+ * @prop only - 开启一次只能展开一个面板功能
+ * @prop type - 布局类型
  *
  */
 

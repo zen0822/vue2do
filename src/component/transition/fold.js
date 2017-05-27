@@ -3,7 +3,7 @@ import { addClass, delClass } from '../../util/dom/element'
 /**
  * fold transition component
  *
- * @events finish - 过渡完成
+ * @event finish - 过渡完成
  */
 
 export default {

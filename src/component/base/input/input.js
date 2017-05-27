@@ -1,32 +1,32 @@
 /**
  * input 组件
  *
- * @props hidden - 设置为隐藏域
- * @props initVal - 设置当前输入框的值
- * @props number - 输入框的数字指定为 nmuber 类型
- * @props placeholder - 占位符
- * @props queryName - 查询参数名
- * @props readOnly - 只读，不能編輯
- * @props row - textarea 的行数
- * @props textLengthTip -显示当前输入的长度
- * @props type - 输入框类型( text | textarea )
- * @props theme - 主题
+ * @prop hidden - 设置为隐藏域
+ * @prop initVal - 设置当前输入框的值
+ * @prop number - 输入框的数字指定为 nmuber 类型
+ * @prop placeholder - 占位符
+ * @prop queryName - 查询参数名
+ * @prop readOnly - 只读，不能編輯
+ * @prop row - textarea 的行数
+ * @prop textLengthTip -显示当前输入的长度
+ * @prop type - 输入框类型( text | textarea )
+ * @prop theme - 主题
  *
- * @props empty - 是否可以为空，默认是
- * @props errorTipName - 组件显示错误提示时候的名字
- * @props errorMessage - input 为空和格式不对的错误信息
- * @props errorTipType - 弹出错误提示的类型（ bubble | tip ）
- * @props formatMessage - 格式错误的提示信息
- * @props maxLength - input，textarea 可输入最大长度
- * @props regex - 验证值的正则
- * @props verifedType - 验证值的类型
+ * @prop empty - 是否可以为空，默认是
+ * @prop errorTipName - 组件显示错误提示时候的名字
+ * @prop errorMessage - input 为空和格式不对的错误信息
+ * @prop errorTipType - 弹出错误提示的类型（ bubble | tip ）
+ * @prop formatMessage - 格式错误的提示信息
+ * @prop maxLength - input，textarea 可输入最大长度
+ * @prop regex - 验证值的正则
+ * @prop verifedType - 验证值的类型
  *
- * @props completion - 是否启用自动搜索补全功能
+ * @prop completion - 是否启用自动搜索补全功能
  *
- * @events change - input的值改变
- * @events blur - input的blur
- * @events focus - input的focus
- * @events keyup - input的keyup
+ * @event change - input的值改变
+ * @event blur - input的blur
+ * @event focus - input的focus
+ * @event keyup - input的keyup
  *
  */
 
@@ -272,7 +272,7 @@ const inputComp = {
      */
     _dispatchChange() {
       return this.$emit('change', {
-        dispatcher: this,
+        emitter: this,
         value: this.value
       })
     },
@@ -379,7 +379,7 @@ const inputComp = {
       this.focusing = true
 
       return this.$emit('focus', {
-        dispatcher: this,
+        emitter: this,
         valeu: this.value,
         event: evt
       })
@@ -397,7 +397,7 @@ const inputComp = {
       }
 
       return this.$emit('blur', {
-        dispatcher: this,
+        emitter: this,
         valeu: this.value,
         event: evt
       })

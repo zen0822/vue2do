@@ -1,9 +1,9 @@
 /**
  * base 混入
  *
- * @props id - 实例的唯一标识符
- * @props name - 实例的中文名字
- * @props theme - 主题
+ * @prop id - 实例的唯一标识符
+ * @prop name - 实例的中文名字
+ * @prop theme - 主题
  *
  */
 

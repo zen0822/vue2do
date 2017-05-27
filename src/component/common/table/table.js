@@ -1,19 +1,19 @@
 /**
  * table 组件
  *
- * @props auto - 根据传入的列表数据生成分页数据
- * @props border - 表格的边界线的类型
+ * @prop auto - 根据传入的列表数据生成分页数据
+ * @prop border - 表格的边界线的类型
  *   （none：默认是不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
- * @props page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
- * @props pager - 启动分页功能
- * @props list - 默认是不以列表化的表格数据
- * @props thead - 表头标题数据
- * @props tbody - 列表的数据
- * @props page - 分页数据
- * @props pageSize - 将列表数据（item）分为每页多少条数据
- * @props scrollerAutoHide - 是否远程获取数据
+ * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+ * @prop pager - 启动分页功能
+ * @prop list - 默认是不以列表化的表格数据
+ * @prop thead - 表头标题数据
+ * @prop tbody - 列表的数据
+ * @prop page - 分页数据
+ * @prop pageSize - 将列表数据（item）分为每页多少条数据
+ * @prop scrollerAutoHide - 是否远程获取数据
  *
- * @events switchPage - 切换分页
+ * @event switchPage - 切换分页
  */
 
 import './table.scss'

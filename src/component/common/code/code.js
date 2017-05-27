@@ -1,7 +1,7 @@
 /**
  * code 组件
  *
- * @props code - 代码
+ * @prop code - 代码
  *
  */
 

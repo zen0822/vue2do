@@ -1,10 +1,10 @@
 /**
  * shift - 切换组件（轮播之类的）
  *
- * @props index - 显示当前第几个
- * @props type - 切换模式 （可供选择的模式），不传默认是显示\隐藏的切换模式
- * @props before - 切换前的 class 名字
- * @props after - 切换后的 class 名字
+ * @prop index - 显示当前第几个
+ * @prop type - 切换模式 （可供选择的模式），不传默认是显示\隐藏的切换模式
+ * @prop before - 切换前的 class 名字
+ * @prop after - 切换后的 class 名字
  *
  */
 

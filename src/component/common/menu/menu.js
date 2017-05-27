@@ -1,17 +1,17 @@
 /**
  * menu 组件
  *
- * @props animate - 菜单显示动画()
- * @props autoSwitch - 菜单是否根据设备响应式切换
- * @props initOpt - 菜单的数据
- * @props kind - 菜单的种类
- * @props only - 手风琴模式，一次只能打开一个面板
- * @props trigger - 2，3 级菜单的触发模式
- * @props type - 布局类型
- * @props spreadAll - 打开全部一级菜单
- * @props title - 菜单标题
+ * @prop animate - 菜单显示动画()
+ * @prop autoSwitch - 菜单是否根据设备响应式切换
+ * @prop initOpt - 菜单的数据
+ * @prop kind - 菜单的种类
+ * @prop only - 手风琴模式，一次只能打开一个面板
+ * @prop trigger - 2，3 级菜单的触发模式
+ * @prop type - 布局类型
+ * @prop spreadAll - 打开全部一级菜单
+ * @prop title - 菜单标题
  *
- * @events hide - 隐藏 menu
+ * @event hide - 隐藏 menu
  */
 
 import './menu.scss'

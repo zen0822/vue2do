@@ -1,18 +1,18 @@
 /**
  * btn 组件
  *
- * @props ban - 禁止点击
- * @props kind - 按钮种类
- * @props link - 链接地址
- * @props outline - 背景颜色为白色，是有轮廓的按钮
- * @props radius - 按钮边角得半径尺寸（none | S | M | L）
- * @props size - 按钮大小
- * @props submit - 提交按钮
- * @props type - 按钮类型 (button | link)
- * @props textDisplay - 是否显示按钮文字
- * @props value - 按钮名字
+ * @prop ban - 禁止点击
+ * @prop kind - 按钮种类
+ * @prop link - 链接地址
+ * @prop outline - 背景颜色为白色，是有轮廓的按钮
+ * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
+ * @prop size - 按钮大小
+ * @prop submit - 提交按钮
+ * @prop type - 按钮类型 (button | link)
+ * @prop textDisplay - 是否显示按钮文字
+ * @prop value - 按钮名字
  *
- * @events click - 点击btn事件
+ * @event click - 点击btn事件
  */
 
 import './btn.scss'

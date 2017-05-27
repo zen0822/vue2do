@@ -1,10 +1,10 @@
 /**
  * tab 组件
  *
- * @props initOpt - tab 的初始选项
- * @props initVal - 初始化 tab 的当前 value 值
+ * @prop initOpt - tab 的初始选项
+ * @prop initVal - 初始化 tab 的当前 value 值
  *
- * @events click - 点击 tab
+ * @event click - 点击 tab
  */
 
 import './tab.scss'

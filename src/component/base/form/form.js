@@ -1,13 +1,13 @@
 /**
  * form 组件
  *
- * @props action - 提交url
- * @props jsonData - 提交 json 数据格式
- * @props type - ( Post | Get)
+ * @prop action - 提交url
+ * @prop jsonData - 提交 json 数据格式
+ * @prop type - ( Post | Get)
  *
- * @props beforeSubmit - 提交之前的钩子函数
- * @props success - 提交成功的回调函数
- * @props fail - 提交失败的回调函数
+ * @prop beforeSubmit - 提交之前的钩子函数
+ * @prop success - 提交成功的回调函数
+ * @prop fail - 提交失败的回调函数
  *
  * @slot - 表单控件
  *

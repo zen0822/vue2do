@@ -2,22 +2,22 @@
  * upload 组件
  * 目前只支持上传图片
  *
- * @props theme - 主题
- * @props type - 上传类型 (img | doc)
- * @props url - 上传地址
- * @props regex - 用正则过滤上传的文件类型, 不传就默认用本组件的过滤原则
- * @props max - 最大上传数量
- * @props min - 至少上传数量
- * @props space - 文件大小（M）
- * @props size - 图片尺寸（像素）：宽 * 高（300*200）
- * @props instruction - 上传说明文字
- * @props uploadItems - 已上传图片的地址数组
- * @props queryName - 上传图片参数名
- * @props store - 父组件暂存在组件的数据，充当和父亲组件通信时传递的数据
- * @props success - 上传文件成功的钩子函数
- * @props queryOpt - 申请上传文件时的数据
+ * @prop theme - 主题
+ * @prop type - 上传类型 (img | doc)
+ * @prop url - 上传地址
+ * @prop regex - 用正则过滤上传的文件类型, 不传就默认用本组件的过滤原则
+ * @prop max - 最大上传数量
+ * @prop min - 至少上传数量
+ * @prop space - 文件大小（M）
+ * @prop size - 图片尺寸（像素）：宽 * 高（300*200）
+ * @prop instruction - 上传说明文字
+ * @prop uploadItems - 已上传图片的地址数组
+ * @prop queryName - 上传图片参数名
+ * @prop store - 父组件暂存在组件的数据，充当和父亲组件通信时传递的数据
+ * @prop success - 上传文件成功的钩子函数
+ * @prop queryOpt - 申请上传文件时的数据
  *
- * @events change - 已上传文件的数量变化
+ * @event change - 已上传文件的数量变化
  */
 
 import Vue from 'vue'
@@ -127,7 +127,7 @@ const uploadComp = {
         uploadItems: val,
         store: this.store,
         value: this.value,
-        dispatcher: this
+        emitter: this
       })
     }
   },

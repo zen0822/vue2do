@@ -1,13 +1,13 @@
 /**
  * select-option -- 作为 select 的 option 的局部组件
  *
- * @props option - 下拉框option数据
- * @props multiple - 是否是多选
- * @props optRoot - 递归调用的父元素
- * @props valName - 下拉框 options 的 value 值的 key name
- * @props txtName - 下拉框 options 的 text 值的 key name
+ * @prop option - 下拉框option数据
+ * @prop multiple - 是否是多选
+ * @prop optRoot - 递归调用的父元素
+ * @prop valName - 下拉框 options 的 value 值的 key name
+ * @prop txtName - 下拉框 options 的 text 值的 key name
  *
- * @events change - checkbox的option值改变
+ * @event change - checkbox的option值改变
  *
  */
 
@@ -109,7 +109,7 @@ const selectOptionComp = {
       }
 
       this.$emit(compEvent.select.option.change, {
-        dispatcher: this,
+        emitter: this,
         value: item[this.valName],
         text: item[this.txtName],
         index: index
