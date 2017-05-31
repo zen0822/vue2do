@@ -9,7 +9,7 @@ export default function (h) {
     editBoxEle = h('input', {
       attrs: {
         value: this.value,
-        maxlength: this.maxLength,
+        maxlength: this.number ? undefined : this.max,
         readonly: this.readOnly,
         placeholder: this.placeholder
       },

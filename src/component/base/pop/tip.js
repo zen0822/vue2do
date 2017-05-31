@@ -54,16 +54,22 @@ const tip = (opt) => {
     return false
   }
 
+  let option = {}
+
   if (opt === undefined) {
-    opt.message = '未知错误！'
+    Object.assign(option, {
+      message: '信息格式不正确！'
+    })
   } else if (typeof opt === 'string') {
-    opt = {
-      message: opt
-    }
+    Object.assign(option, {
+      message: opt.toString()
+    })
+  } else {
+    option = opt
   }
 
-  if (opt.message.length > 20) {
-    alert(opt)
+  if (option.message.length > 20) {
+    alert(option)
 
     return false
   }
@@ -77,7 +83,7 @@ const tip = (opt) => {
     .getters[commonStore.tip.get]
     .$refs
     .tip
-    .info(opt.message)
+    .info(option.message)
     .setOkCb(() => {
       tiping = false
 
@@ -85,7 +91,7 @@ const tip = (opt) => {
         tip(tipHub.shift())
       }
 
-      opt.cb && opt.cb()
+      option.cb && option.cb()
     })
     .show(() => {
       tiping = true

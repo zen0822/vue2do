@@ -86,12 +86,12 @@ const searchComp = {
      */
     search(keyword) {
       if ((keyword === 0 || !keyword) || !(Array.isArray(this.option) && this.option.length > 0)) {
-        return false
+        this.matchOpt = []
+      } else {
+        this.matchOpt = this.option.filter((item) => {
+          return item.text.indexOf(keyword) > -1
+        })
       }
-
-      this.matchOpt = this.option.filter((item) => {
-        return item.text.indexOf(keyword) > -1
-      })
 
       this.$emit('change', {
         emitter: this,

@@ -7,17 +7,17 @@
  * @prop placeholder - 占位符
  * @prop queryName - 查询参数名
  * @prop readOnly - 只读，不能編輯
+ * @prop required - 是否为必填，默认否
  * @prop row - textarea 的行数
- * @prop textLengthTip -显示当前输入的长度
+ * @prop textLengthTip - 显示当前输入的长度
  * @prop type - 输入框类型( text | textarea )
  * @prop theme - 主题
  *
- * @prop empty - 是否可以为空，默认是
- * @prop errorTipName - 组件显示错误提示时候的名字
  * @prop errorMessage - input 为空和格式不对的错误信息
  * @prop errorTipType - 弹出错误提示的类型（ bubble | tip ）
  * @prop formatMessage - 格式错误的提示信息
- * @prop maxLength - input，textarea 可输入最大长度
+ * @prop min - input，textarea 可输入最小长度（数字）
+ * @prop max - input，textarea 可输入最大长度（数字）
  * @prop regex - 验证值的正则
  * @prop verifedType - 验证值的类型
  *
@@ -115,7 +115,7 @@ const inputComp = {
       default: 'text'
     },
 
-    empty: {
+    required: {
       type: Boolean,
       default: true
     },
@@ -132,7 +132,9 @@ const inputComp = {
 
     formatMessage: String,
 
-    maxLength: Number,
+    min: Number,
+
+    max: Number,
 
     regex: String,
 
@@ -145,9 +147,10 @@ const inputComp = {
   },
 
   data() {
+    // 组件名字
+    this.compName = 'input'
+
     return {
-      // 组件名字
-      compName: 'input',
       // 输入框的当前的值
       value: this.number ? this._switchNum(this.initVal) : this.initVal,
       // 输入框是否处于 focus 状态
@@ -160,7 +163,6 @@ const inputComp = {
       dataTypeName: '',
       // 是否验证通过
       verified: true,
-      // 当前补全搜索的值
       // 冒泡的错误提示显示状态
       bubbleDisplay: false,
       // 当前输入框值的长度
@@ -231,7 +233,7 @@ const inputComp = {
      */
     _initVerfication() {
       if (this.regex) {
-        this.regex = new RegExp(this.regex)
+        this.regexObj = new RegExp(this.regex)
 
         return this
       }
@@ -239,7 +241,7 @@ const inputComp = {
       var verify = initVerfication(this.verifedType)
 
       if (verify) {
-        this.regex = verify.regex
+        this.regexObj = verify.regex
         this.dataTypeName = verify.dataTypeName
       }
 
@@ -280,20 +282,30 @@ const inputComp = {
     /**
      * 验证数据是否为空
      *
-     * @return {Object} - this - 组件
+     * @return {Object} -
+     *                  verified - 验证情况
+     *                  dangerTip - 错误提示
      */
     _verifyEmpty(firstVerify) {
-      if (!this.empty) {
+      let dangerTip = ''
+
+      if (this.required) {
         if (this.bubbleDisplay) {
-          this.dangerTip = firstVerify ? '' : `请输入${this.emptyMessage}!`
+          dangerTip = firstVerify ? '' : `请输入${this.emptyMessage}!`
         } else {
-          this.dangerTip = `请输入${this.emptyMessage}!`
+          dangerTip = `请输入${this.emptyMessage}!`
         }
-        this.verified = false
-        return false
+
+        return {
+          verified: false,
+          dangerTip
+        }
       }
 
-      return true
+      return {
+        verified: true,
+        dangerTip
+      }
     },
 
     /**
@@ -303,54 +315,81 @@ const inputComp = {
      * @return {Object} - this - 组件
      */
     verify(firstVerify) {
-      this.value = $.trim(this.value)
-      if (!this.value && this.value !== 0) {
-        if (!this._verifyEmpty()) {
-          this.verified = false
+      let verified = true
+      let dangerTip = ''
 
-          // TODO bug
-          // $(window).scrollTop($(this.$el).scrollTop())
-
-          return false
+      const returnFun = () => {
+        if (!verified) {
+          document.body.scrollTop = this.$el.offsetTop
         }
 
-        this.verified = true
-        this.dangerTip = ''
+        this.verified = verified
+        this.dangerTip = dangerTip
 
-        return this
+        return verified
+      }
+
+      if (!this.number) {
+        this.value = this.value.trim()
+      }
+
+      if (!this.value && this.value !== 0) {
+        let verifyEmpty = this._verifyEmpty()
+
+        verified = verifyEmpty.verified
+        dangerTip = verifyEmpty.dangerTip
+
+        return returnFun()
       } else {
         if (this.number && isNaN(this.value)) {
-          this.dangerTip = `${this.errorMessage}请输入数字类型`
-          this.verified = false
+          dangerTip = `${this.errorMessage}请输入数字类型`
+          verified = false
 
-          return false
+          return returnFun()
         }
 
-        if (this.maxLength) {
-          if (this.value.toString().length > this.maxLength) {
-            this.dangerTip = this.number
-              ? `${this.lengthMessage}不能超过${this.maxLength}位数!`
-              : `${this.lengthMessage}长度不超过${this.maxLength}个字符!`
+        if (this.min) {
+          if (this.number) {
+            verified = this.min <= this.value
+            dangerTip = verified ? '' : `${this.lengthMessage}不能小于${this.min}!`
+          } else {
+            verified = this.min <= this.value.toString().length
+            dangerTip = verified ? '' : `${this.lengthMessage}长度不能小于${this.min}个字符!`
+          }
 
-            this.verified = false
-
-            return false
+          if (!verified) {
+            return returnFun()
           }
         }
 
-        if (this.regex || this.verifedType) {
-          if (!this.regex.test(this.value)) {
-            this.dangerTip = firstVerify ? '' : this.formatMessage
-            this.verified = false
+        if (this.max) {
+          if (this.number) {
+            verified = this.max >= this.value
+            dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.max}!`
+          } else {
+            verified = this.max >= this.value.toString().length
+            dangerTip = verified ? '' : `${this.lengthMessage}长度不能大于${this.max}个字符!`
+          }
 
-            return false
+          if (!verified) {
+            return returnFun()
           }
         }
 
-        this.verified = true
-        this.dangerTip = ''
-        return this
+        if ((this.regex || this.verifedType) && !this.regexObj.test(this.value)) {
+          verified = false
+
+          if (firstVerify) {
+            dangerTip = ''
+          } else {
+            dangerTip = this.formatMessage ? this.formatMessage : this._formatMessage
+          }
+
+          return returnFun()
+        }
       }
+
+      return returnFun()
     },
 
     /**
@@ -459,7 +498,7 @@ const inputComp = {
       // 限制长度显示
       this.limitLen = String(val).length
 
-      if (val !== 0 && val && this.completion && this.$slots.completion) {
+      if (this.completion && this.$slots.completion) {
         this.$slots.completion[0].componentInstance.search(val)
       }
 
