@@ -147,7 +147,6 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       top: $SELECT_HEIGHT - $SELECT_BORDER_WIDTH * 2;
       left: -$SELECT_BORDER_WIDTH;
       width: $SELECT_WIDTH;
-      height: 200px;
       overflow: hidden;
       border: $border-dark-color $border-thin solid;
       border-bottom-right-radius: $border-radius;
@@ -161,10 +160,6 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
         & > .#{ $C_OPT_PREFIX }-ul {
           height: calc(100% - #{ $SEARCH_INPUT_HEIGHT });
         }
-      }
-
-      & > .#{ $C_OPT_PREFIX }-ul {
-        height: 100%;
       }
 
       .#{ $C_PREFIX }-tag-opt > .#{ $C_ELE_PREFIX } {

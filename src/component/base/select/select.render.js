@@ -154,6 +154,11 @@ export default function (h) {
     if (this.initOpt.length === 0 && !this.classify) {
       menuChildren.push(
         h('scroller',
+          {
+            props: {
+              height: 200
+            }
+          },
           [
             h('div', {
               class: this.xclass('tag-opt')
@@ -204,11 +209,7 @@ export default function (h) {
         class: [this.xclass('menu'), {
           [this.xclass('menu-search')]: this.search
         }],
-        directives: [{
-          name: 'show',
-          value: !this.selectMenuDisplay
-        }],
-        style: this.selectMenuStyle,
+        style: [this.selectMenuPoiStyle, this.selectMenuStyle],
         ref: 'selectMenu'
       },
       [menuChildren]

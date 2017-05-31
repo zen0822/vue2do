@@ -9,7 +9,7 @@ div
         #{'<z-select :init-opt="selectOpt"></z-select>'}
     +section('tag', '添加子标签')
       p.section-description 用直观的标签声明下拉框的数据
-      z-select
+      z-select(id='test')
         z-select-ele(value='1') {{ testName }}
         z-select-ele(value='2')
           z-btn 按钮

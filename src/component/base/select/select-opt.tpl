@@ -20,6 +20,7 @@
 			auto
 			page-type="more"
 			pager
+			:scroller-height='200'
 			theme="default">
 		<template scope="props">
 			<div

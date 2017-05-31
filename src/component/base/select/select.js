@@ -38,7 +38,6 @@ import store from '../../../vuex/store'
 import hubStore from '../../../vuex/module/hub/type.json'
 import compStore from '../../../vuex/module/comp/type.json'
 import tip from '../../base/pop/tip'
-import compEvent from '../../../config/event.json'
 
 import iconComp from '../../base/icon/icon'
 import inputComp from '../../base/input/input'
@@ -47,6 +46,7 @@ import scrollerComp from '../../base/scroller/scroller'
 
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
+import transitionMixin from './transition.mixin'
 
 import uid from '../../../util/uid'
 import { dataType } from '../../../util/data/data'
@@ -62,7 +62,7 @@ const selectComp = {
 
   render,
 
-  mixins: [baseMixin, formMixin],
+  mixins: [baseMixin, formMixin, transitionMixin],
 
   store,
 
@@ -177,9 +177,13 @@ const selectComp = {
       // 是否以验证通过
       verified: true,
       // 下拉菜单的显示状态
-      selectMenuDisplay: true,
+      selectMenuDisplay: false,
       // 下拉菜单的样式
-      selectMenuStyle: {},
+      selectMenuStyle: {
+        visibility: 'hidden'
+      },
+      // 下拉菜单位置的样式
+      selectMenuPoiStyle: {},
       // 是否是 slot 定义的 option
       hasSlotOption: false,
       // option 值的当前游标
@@ -199,9 +203,7 @@ const selectComp = {
       // 自定义下拉框的显示状态
       customOptionDisplay: false,
       // 下拉框显示过渡完成的标识符
-      transitionFinish: false,
-      // 下拉菜单的高度
-      menuHeight: 0
+      transitionFinish: false
     }
   },
 
@@ -216,7 +218,7 @@ const selectComp = {
     // 组件 stage 的 class 的名字
     stageClass() {
       return [{
-        [`${this.cPrefix}-selected`]: !this.selectMenuDisplay
+        [`${this.cPrefix}-selected`]: this.selectMenuDisplay
       }, {
         [`${this.cPrefix}-multiple-stage`]: this.multiple
       }].concat(this.xclass(['stage', this.themeClass]))
@@ -238,7 +240,7 @@ const selectComp = {
       }
 
       return this._initSelectTxt().$nextTick(() => {
-        this._adjustselectMenuStyle()
+        this._adjustselectMenuPoiStyle()
       })
     },
     initVal(val) {
@@ -252,6 +254,19 @@ const selectComp = {
     },
     deviceSize(val) {
       this.changeByDeviceSize(val)
+    },
+    selectMenuDisplay(val) {
+      if (val) {
+        this.transitionBeforeEnter(this.$refs.selectMenu)
+          .then(this.transitionEnter)
+          .then(this.transitionAfterEnter)
+          .catch()
+      } else {
+        this.transitionBeforeLeave(this.$refs.selectMenu)
+          .then(this.transitionLeave)
+          .then(this.transitionAfterLeave)
+          .catch()
+      }
     }
   },
 
@@ -268,13 +283,13 @@ const selectComp = {
         return false
       }
 
-      this.$refs.scroller && this.$refs.scroller.$on(compEvent.scroller.change.bar.y, ({ boxHeight }) => {
-        this._adjustselectMenuStyle({
+      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
+        this._adjustselectMenuPoiStyle({
           height: boxHeight
         })
       })
 
-      this.$refs.selectOption && this.$refs.selectOption.$on(compEvent.select.option.change, ({ value, text, index }) => {
+      this.$refs.selectOption && this.$refs.selectOption.$on('selectOptChange', ({ value, text, index }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
 
@@ -299,7 +314,7 @@ const selectComp = {
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustselectMenuStyle({ height, cb } = {}) {
+    _adjustselectMenuPoiStyle({ height, cb } = {}) {
       let selectHeight = height || this.$el.offsetHeight
       let selectWidth = this.$el.offsetWidth
       let over100 = selectHeight > 100
@@ -315,7 +330,7 @@ const selectComp = {
         }
       }
 
-      this.selectMenuStyle = {
+      this.selectMenuPoiStyle = {
         top: `${top}px`,
         width: `${width}px`
       }
@@ -671,36 +686,10 @@ const selectComp = {
     },
 
     /**
-     * 下拉框显示过渡完成之后
-     */
-    transitionBeforeEnter(el) {
-      el.style.height = 0
-      this.transitionFinish = false
-    },
-
-    /**
-     * 下拉框显示过渡
-     */
-    transitionEnter(el) {
-      // 获取元素高度 触发回流
-      let elHeight = el.offsetHeight
-
-      el.style.height = `${this.menuHeight}px`
-    },
-
-    /**
-     * 下拉框显示过渡完成之后
-     */
-    transitionAfterEnter(el) {
-      el.style.height = ''
-      this.transitionFinish = true
-    },
-
-    /**
      * 当设备改变尺寸
      */
     changeByDeviceSize(size) {
-      return this._adjustselectMenuStyle()
+      return this._adjustselectMenuPoiStyle()
     },
 
     /**
@@ -825,14 +814,14 @@ const selectComp = {
 
       for (let name in selectHub) {
         if (selectHub.hasOwnProperty(name) && !Object.is(this, selectHub[name])) {
-          selectHub[name].selectMenuDisplay = true
+          selectHub[name].selectMenuDisplay = false
         }
       }
 
-      return this._adjustselectMenuStyle({
+      return this._adjustselectMenuPoiStyle({
         cb: () => {
           this.selectMenuDisplay = opt === undefined
-            ? !this.selectMenuDisplay : !opt
+            ? !this.selectMenuDisplay : opt
         }
       })
     },
@@ -843,7 +832,7 @@ const selectComp = {
      * @return {Object} - this - 组件
      */
     hideMenu() {
-      this.selectMenuDisplay = true
+      this.selectMenuDisplay = false
     },
 
     /**
@@ -866,7 +855,7 @@ const selectComp = {
      * @return {Object} this - 组件
      */
     fold() {
-      this.selectMenuDisplay = true
+      this.selectMenuDisplay = false
 
       return this
     },
@@ -876,7 +865,7 @@ const selectComp = {
      * @return {Object} this - 组件
      */
     spread() {
-      this.selectMenuDisplay = false
+      this.selectMenuDisplay = true
 
       return this
     }
@@ -906,10 +895,6 @@ const selectComp = {
     if (this.$scopedSlots.custom) {
       this.customOptionDisplay = true
     }
-
-    this.$nextTick(() => {
-      this.menuHeight = parseFloat(getComputedStyle(this.$refs.selectMenu).height)
-    })
   }
 }
 

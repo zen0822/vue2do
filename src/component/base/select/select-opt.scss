@@ -22,14 +22,9 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
   top: 0;
   left: $SELECT_WIDTH - $OPTION_UI_PADDING_WIDTH;
   width: $SELECT_WIDTH;
-  height: 100%;
 
   background-color: #fff;
   border: $border-color $border-thin solid;
-
-  & > .#{ $C_LIST_PREFIX } {
-    height: 100%;
-  }
 
   .#{ $C_PREFIX }-li {
     position: relative;
