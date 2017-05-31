@@ -1,4 +1,6 @@
-set -e
+#!/usr/bin/env node
+
+set -o errexit
 
 if [[ -z $1 ]]; then
   echo "Enter new version: "
