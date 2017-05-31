@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/bin/sh
 
 set -o errexit
 
