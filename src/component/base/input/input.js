@@ -13,6 +13,7 @@
  * @prop type - 输入框类型( text | textarea )
  * @prop theme - 主题
  *
+ * @prop completion - 是否启用自动搜索补全功能
  * @prop errorMessage - input 为空和格式不对的错误信息
  * @prop errorTipType - 弹出错误提示的类型（ bubble | tip ）
  * @prop formatMessage - 格式错误的提示信息
@@ -20,8 +21,6 @@
  * @prop max - input，textarea 可输入最大长度（数字）
  * @prop regex - 验证值的正则
  * @prop verifedType - 验证值的类型
- *
- * @prop completion - 是否启用自动搜索补全功能
  *
  * @event change - input的值改变
  * @event blur - input的blur
