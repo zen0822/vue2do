@@ -13,6 +13,10 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
 .#{$C_PREFIX} {
   position: relative;
 
+  .#{$COL_PREFIX} > div {
+    display: inline-block;
+  }
+
   &.#{$C_PREFIX}-border-row,
   &.#{$C_PREFIX}-border-all {
     .#{$C_PREFIX}-row-group {

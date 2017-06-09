@@ -1,55 +1,53 @@
 /**
- * alert 组件
+ * confirm 组件
  */
 
 import Vue from 'vue'
 
-import popComp from './pop'
+import modalComp from './modal'
 import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
 import baseMixin from '../../../mixin/base'
 
-let alerting = false
-let alertHub = []
+let confirming = false
+let confirmHub = []
 
 /**
- * 创建 alert 组件的实例
+ * 创建 confirm 组件的实例
  **/
 const createTip = () => {
-  const alertCompVm = new Vue({
-    name: 'alert',
+  const confirmCompVm = new Vue({
+    name: 'confirm',
     mixins: [baseMixin],
     computed: {
       // 组件类名的前缀
       cPrefix() {
-        return `${this.compPrefix}-alert`
+        return `${this.compPrefix}-confirm`
       }
     },
     components: {
-      pop: popComp
+      modal: modalComp
     },
     store,
     template: `
       <div :class="[cPrefix]">
-        <pop
-            ref="alert"
-            type="alert"></pop>
+        <modal ref="confirm"></modal>
       </div>
     `,
     mounted() {
-      this.$store.dispatch(commonStore.alert.add, this)
+      this.$store.dispatch(commonStore.confirm.add, this)
     }
   }).$mount()
 
-  document.body.appendChild(alertCompVm.$el)
+  document.body.appendChild(confirmCompVm.$el)
 }
 
 /**
- * 调用 alert
+ * 调用 confirm
  **/
-const alert = (opt) => {
-  if (alerting) {
-    alertHub.push(opt)
+const confirm = (opt) => {
+  if (confirming) {
+    confirmHub.push(opt)
 
     return false
   }
@@ -68,27 +66,26 @@ const alert = (opt) => {
 
   return commonVuex
     .$store
-    .getters[commonStore.alert.get]
+    .getters[commonStore.confirm.get]
     .$refs
-    .alert
+    .confirm
     .title(opt.title)
     .info(opt.message)
     .setOkCb((vm) => {
-      alerting = false
+      confirming = false
 
-      if (alertHub.length > 0) {
-        alert(alertHub.shift())
+      if (confirmHub.length > 0) {
+        confirm(confirmHub.shift())
       }
 
       opt.cb && opt.cb()
       vm.hide()
     })
     .show(() => {
-      alerting = true
+      confirming = true
     })
 }
 
 createTip()
 
-export default alert
-
+export default confirm

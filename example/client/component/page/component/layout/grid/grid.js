@@ -1,9 +1,9 @@
 import './grid.scss'
-import template from './grid.tpl'
+import pug from './grid.pug'
 import mixin from '../../mixin'
 
 export default {
-  template,
+  template: pug(),
 
   mixins: [mixin],
 

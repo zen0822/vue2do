@@ -1,3 +1,5 @@
+import { childrenHeight } from '../../../util/dom/element'
+
 export default {
   methods: {
     /**
@@ -9,7 +11,6 @@ export default {
       this.selectMenuStyle = {
         visibility: ''
       }
-
       return new Promise((resolve, reject) => {
         resolve(el)
       })
@@ -19,7 +20,7 @@ export default {
      * 下拉框显示过渡
      */
     transitionEnter(el) {
-      el.style.height = el.firstChild.offsetHeight + 'px'
+      el.style.height = childrenHeight(el) + 'px'
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -39,8 +40,7 @@ export default {
        * 下拉框隐藏过渡完成之前
        */
     transitionBeforeLeave(el) {
-      let elHeight = el.firstChild.offsetHeight
-      el.style.height = elHeight + 'px'
+      el.style.height = childrenHeight(el) + 'px'
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {

@@ -4,11 +4,10 @@
  * @prop ban - 禁止点击
  * @prop kind - 按钮种类
  * @prop link - 链接地址
- * @prop outline - 背景颜色为白色，是有轮廓的按钮
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
  * @prop size - 按钮大小
  * @prop submit - 提交按钮
- * @prop type - 按钮类型 (button | link)
+ * @prop type - 按钮类型 (button | flat | float | outline)
  * @prop textDisplay - 是否显示按钮文字
  * @prop value - 按钮名字
  *
@@ -111,6 +110,14 @@ const btnComp = {
       this.banState = this.ban
     },
 
+    mouseup() {
+
+    },
+
+    mousedown() {
+
+    },
+
     /**
      * 点击按钮
      * @return {Object} this - 组件
@@ -162,28 +169,22 @@ const btnComp = {
       return `${this.compPrefix}-btn`
     },
 
-    btnClass() {
-      if (!this.kind) {
-        return false
-      }
-
-      return `ele-${this.kind}`
-    },
-
-    sizeClass() {
-      return `ele-${this.size.toLowerCase()}`
-    },
-
-    radiusClass() {
-      return `ele-radius-${this.radius.toLowerCase()}`
-    },
-
     isLink() {
-      return !this.btnValueDisplay && this.type === BTN_TYPE_LINK
+      return !this.btnValueDisplay && this.link
     },
 
     isButton() {
       return !this.btnValueDisplay && this.type === BTN_TYPE_BUTTON
+    },
+
+    btnClass() {
+      return this.xclass([
+        this.themeClass,
+        `kind-${this.kind}`,
+        `size-${this.size.toLowerCase()}`,
+        `radius-${this.radius.toLowerCase()}`,
+        `type-${this.type}`
+      ])
     }
   }
 }

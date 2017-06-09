@@ -18,8 +18,6 @@ $SELECT_WIDTH: 170px;
 $SELECT_BORDER_WIDTH: 1px;
 $OPTION_UI_PADDING_WIDTH: $gap-v;
 
-$SEARCH_INPUT_HEIGHT: 37px;
-
 $MULTI_SELECT_WIDTH: 170px + 80px;
 
 .#{ $C_PREFIX } {
@@ -41,6 +39,10 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       height: 100%;
       z-index: 5;
       opacity: 0;
+    }
+
+    &.#{ $C_PREFIX }-selected {
+      border: $border-dark-color $border-thin solid;
     }
 
     &.#{ $C_PREFIX }-multiple-stage {
@@ -156,12 +158,6 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
       transition: top 300ms ease, height 300ms ease;
       will-change: top, height;
 
-      &.#{ $C_PREFIX }-menu-search {
-        & > .#{ $C_OPT_PREFIX }-ul {
-          height: calc(100% - #{ $SEARCH_INPUT_HEIGHT });
-        }
-      }
-
       .#{ $C_PREFIX }-tag-opt > .#{ $C_ELE_PREFIX } {
         background-color: #fff;
         padding: $gap-h;
@@ -186,11 +182,11 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
           width: calc(100% - 20px);
 
           &:focus{
-            outline:none;
+            outline: none;
           }
 
           .#{$INPUT_PREFIX}-wrap {
-            border:none;
+            border: none;
           }
         }
       }

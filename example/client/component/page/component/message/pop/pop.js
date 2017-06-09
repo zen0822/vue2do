@@ -34,6 +34,10 @@ export default {
       this.$refs.pop.show()
     },
 
+    hideCustomPop() {
+      this.$refs.pop.hide()
+    },
+
     purePop() {
       this.$refs.purePop.show()
     }

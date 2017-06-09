@@ -1,5 +1,4 @@
 /**
- *
  * scroller 组件 滚动条
  *
  * @prop height - 滚动区域的高度(auto | { Number }px | 100% | <{ Number })
@@ -26,14 +25,15 @@
  *                         isLeft - 滚动条是否到开始的地方
  *                         left - 滚动条到滚动区域的最左边的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
- * @event changeHeight - 滚动内容的高度变化
- *
+ * @event changeScroller - 滚动区域的高度/宽度变化
  */
 
 import './scroller.scss'
 
 import baseMixin from '../../../mixin/base'
 import render from './scroller.render.js'
+
+import fadeTransition from '../../transition/fade'
 
 // 滚动一次的滚动区域走的像素大小
 const SCROLL_PIXEL = 10
@@ -44,6 +44,10 @@ const scrollerComp = {
   mixins: [baseMixin],
 
   render,
+
+  components: {
+    'fade-transition': fadeTransition
+  },
 
   props: {
     height: {
@@ -226,6 +230,8 @@ const scrollerComp = {
         boxLength: this.boxHeight,
         type: 'y'
       })
+
+      return this._changeScroller()
     },
 
     scrollerWidth(scrollerWidth) {
@@ -235,6 +241,8 @@ const scrollerComp = {
         boxLength: this.boxWidth,
         type: 'x'
       })
+
+      return this._changeScroller()
     }
   },
 
@@ -394,6 +402,19 @@ const scrollerComp = {
           this[boxPositionName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
         }
       }
+    },
+
+    /**
+     * 滚动条的高度/宽度改变事件
+     */
+    _changeScroller() {
+      return this.$nextTick(() => {
+        this.$emit('changeScroller', {
+          emitter: this,
+          scrollerWidth: this.scrollerWidth,
+          scrollerHeight: this.scrollerHeight
+        })
+      })
     },
 
     barClick(evt) {
@@ -574,6 +595,7 @@ const scrollerComp = {
       if (type === 'y') {
         eventName = 'scrollY'
         data = {
+          emitter: this,
           top: this.yData.barTop,
           offset: this.yData.barAndScrollerOffset,
           isBottom: this.yComputed.isBottom,
@@ -582,6 +604,7 @@ const scrollerComp = {
       } else {
         eventName = 'scrollX'
         data = {
+          emitter: this,
           left: this.xData.barLeft,
           offset: this.xData.barAndScrollerOffset,
           isRight: this.xComputed.isRight,
@@ -589,7 +612,9 @@ const scrollerComp = {
         }
       }
 
-      return this.$emit(eventName, data)
+      return this.$nextTick(() => {
+        this.$emit(eventName, data)
+      })
     },
 
     triggerChangeBar(type) {
@@ -602,7 +627,8 @@ const scrollerComp = {
           isBottom: this.yComputed.isBottom,
           isTop: this.yComputed.isTop,
           boxWidth: this.boxWidth,
-          boxHeight: this.boxHeight
+          boxHeight: this.boxHeight,
+          hasScroller: !this.yData.scrollerContainBox
         }
       } else {
         eventName = 'changeXBar'
@@ -610,7 +636,8 @@ const scrollerComp = {
           isLeft: this.xComputed.isLeft,
           isRight: this.xComputed.isRight,
           boxWidth: this.boxWidth,
-          boxHeight: this.boxHeight
+          boxHeight: this.boxHeight,
+          hasScroller: !this.xData.scrollerContainBox
         }
       }
 

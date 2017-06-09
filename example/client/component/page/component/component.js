@@ -1,9 +1,8 @@
 import './component.scss'
 import template from './component.tpl'
-import tip from 'src/component/base/pop/tip'
-import alert from 'src/component/base/pop/alert'
 import menuOpt from './menuOpt.json'
 import mixin from './mixin'
+import { alert, confirm, tip } from 'vue2do/index.js'
 
 export default {
   name: 'page-component-layout',

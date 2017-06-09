@@ -6,25 +6,39 @@
  * btn 组件样式
  */
 
-@mixin btn-ele($color, $dark-color) {
+$kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
+
+@mixin btn-button($color, $dark-color, $lighter-color) {
   background-color: $color;
   border-color: $color;
 
-  &:hover,
-  &:active {
+  &:focus {
+    outline-style: none;
     background-color: $dark-color;
     border-color: $dark-color;
+    box-shadow: $shadow;
   }
 }
 
-@mixin btn-ele-outline($color) {
+@mixin btn-flat($color, $lighter-color) {
+  color: $color;
+  border: rgba(0, 0, 0, 0) $border-thin solid;
+  -webkit-tap-highlight-color: $lighter-color;
+
+  &:focus {
+    outline-style: none;
+    background-color: $lighter-color;
+    border-color: $lighter-color;
+  }
+}
+
+@mixin btn-outline($color) {
   border-color: $color;
   color: $color;
 
-  &:hover,
-  &:active {
-    background-color: $color;
-    color: #fff;
+  &:focus {
+    outline-style: none;
+    background-color: $default-color;
   }
 }
 
@@ -44,19 +58,16 @@ $C_PREFIX: #{ $COMP_BTN };
 
   .#{ $C_PREFIX }-ele {
     position: relative;
-    display: inline-block;
-    background-color: #fff;
-    border: $border-thin solid transparent;
-    padding: 7.5px $gap-v-triple;
+    padding: 7.5px $gap-v-triple / 2;
     border-radius: $border-radius;
-
     color: #fff;
     text-align: center;
     cursor: pointer;
     font-size: $font-base;
     line-height: 1.42857;
     white-space: nowrap;
-    transition: background-color 300ms;
+    transition-duration: 200ms;
+    transition-property: background-color, box-shadow, color;
 
     &:link,
     &:visited,
@@ -67,80 +78,127 @@ $C_PREFIX: #{ $COMP_BTN };
       outline: none;
     }
 
-    &.#{ $C_PREFIX }-ele-primary {
-      @include btn-ele($primary-color, $primary-dark-color);
-    }
-
-    &.#{ $C_PREFIX }-ele-danger {
-      @include btn-ele($danger-color, $danger-dark-color);
-    }
-
-    &.#{ $C_PREFIX }-ele-success {
-      @include btn-ele($success-color, $success-dark-color);
-    }
-
-    &.#{ $C_PREFIX }-ele-warning {
-      @include btn-ele($warning-color, $warning-dark-color);
-    }
-
-    &.#{ $C_PREFIX }-ele-default {
-      @include btn-ele(#fff, $border-light-color);
-      border-color: $grey-dark;
-      color: $grey-dark;
-
-      &:hover,
-      &:active {
-        color: $grey-dark;
-        border-color: $grey-dark;
-      }
-    }
-
-    &.#{ $C_PREFIX }-outline {
-      background-color: #fff;
-
-      &.#{ $C_PREFIX }-ele-primary {
-        @include btn-ele-outline($primary-color);
-      }
-
-      &.#{ $C_PREFIX }-ele-danger {
-        @include btn-ele-outline($danger-color);
-      }
-
-      &.#{ $C_PREFIX }-ele-success {
-        @include btn-ele-outline($success-color);
-      }
-
-      &.#{ $C_PREFIX }-ele-warning {
-        @include btn-ele-outline($warning-color);
-      }
-
-      &.#{ $C_PREFIX }-ele-default {
-        @include btn-ele-outline($grey-light);
-      }
-    }
-
-    &.#{ $C_PREFIX }-ele-m {
-      padding: 7px $gap-v-double * 2;
-    }
-
-    &.#{ $C_PREFIX }-ele-l {
-      padding: 7px $gap-v-triple * 2;
-    }
-
-    &.#{ $C_PREFIX }-ele-radius-none {
-      border-radius: 0;
-    }
-    &.#{ $C_PREFIX }-ele-radius-m {
-      border-radius: 10px;
-    }
-
-    &.#{ $C_PREFIX }-ele-radius-l {
-      border-radius: 30px;
-    }
-
     .#{ $C_PREFIX }-loading {
       position: absolute;
       left: $gap-v;
+    }
+  }
+
+  &.#{ $C_PREFIX }-size {
+    &-m > .#{ $C_PREFIX }-ele {
+      padding: 7px $gap-v-double * 2;
+    }
+
+    &-l > .#{ $C_PREFIX }-ele {
+      padding: 7px $gap-v-triple * 2;
+    }
+  }
+
+  &.#{ $C_PREFIX }-radius {
+    &-none > .#{ $C_PREFIX }-ele {
+      border-radius: 0;
+    }
+
+    &-m > .#{ $C_PREFIX }-ele {
+      border-radius: 10px;
+    }
+
+    &-l > .#{ $C_PREFIX }-ele {
+      border-radius: 30px;
+    }
+  }
+
+  &.#{ $C_PREFIX }-type-button {
+    & > .#{ $C_PREFIX }-ele {
+      background-color: #fff;
+      border: $border-thin solid transparent;
+      border-radius: $border-radius;
+      box-shadow: $shadow-lower;
+    }
+
+    &.#{ $C_PREFIX }-kind {
+      &-primary > .#{ $C_PREFIX }-ele {
+        @include btn-button($primary-color, $primary-dark-color, $primary-lighter-color);
+      }
+
+      &-danger > .#{ $C_PREFIX }-ele {
+        @include btn-button($danger-color, $danger-dark-color, $danger-lighter-color);
+      }
+
+      &-success > .#{ $C_PREFIX }-ele {
+        @include btn-button($success-color, $success-dark-color, $success-lighter-color);
+      }
+
+      &-warning > .#{ $C_PREFIX }-ele {
+        @include btn-button($warning-color, $warning-dark-color, $warning-lighter-color);
+      }
+
+      &-default > .#{ $C_PREFIX }-ele {
+        @include btn-button(#fff, $border-light-color, $border-lightest-color);
+        border-color: $grey-dark;
+        color: $grey-dark;
+
+        &:hover,
+        &:active {
+          color: $grey-dark;
+          border-color: $grey-dark;
+        }
+      }
+    }
+  }
+
+  &.#{ $C_PREFIX }-type-flat {
+    & > .#{ $C_PREFIX }-ele {
+      background-color: #fff;
+      padding: 7.5px $gap-v;
+    }
+
+    &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {
+      @include btn-flat($primary-color, $primary-lighter-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-danger > .#{ $C_PREFIX }-ele {
+      @include btn-flat($danger-color, $danger-lighter-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-success > .#{ $C_PREFIX }-ele {
+      @include btn-flat($success-color, $success-lighter-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-warning > .#{ $C_PREFIX }-ele {
+      @include btn-flat($warning-color, $warning-lighter-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-default > .#{ $C_PREFIX }-ele {
+      @include btn-flat($grey-light, $warning-lighter-color);
+    }
+  }
+
+  &.#{ $C_PREFIX }-type-outline {
+    & > .#{ $C_PREFIX }-ele {
+      background-color: #fff;
+      border-style: solid;
+      border-width: $border-thin;
+    }
+
+    &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {
+      @include btn-outline($primary-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-dange > .#{ $C_PREFIX }-eler {
+      @include btn-outline($danger-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-success > .#{ $C_PREFIX }-ele {
+      @include btn-outline($success-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-warning > .#{ $C_PREFIX }-ele {
+      @include btn-outline($warning-color);
+    }
+
+    &.#{ $C_PREFIX }-kind-default > .#{ $C_PREFIX }-ele {
+      @include btn-outline($grey-light);
     }
   }
 
@@ -155,11 +213,5 @@ $C_PREFIX: #{ $COMP_BTN };
     border-radius: $border-radius;
     cursor: not-allowed;
     z-index: 1;
-  }
-
-  &.#{ $C_PREFIX }-theme-primary {
-    .#{ $C_PREFIX }-ele {
-      padding: 7px 15px;
-    }
   }
 }

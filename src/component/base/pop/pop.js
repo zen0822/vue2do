@@ -1,38 +1,22 @@
 /**
- * pop 组件
+ * pop 弹出层组件
  *
- * @prop headerName - 弹窗头部名字
- * @prop message - alert信息
- * @prop okBtnName - 确定按钮名字
- * @prop noBtnName - 取消按钮名字
- * @prop noBtnDisplay - 取消按钮是否显示
- * @prop headerNoBtnDisplay - 弹窗头部X是否显示
- * @prop headerDisplay - 是否显示弹窗头部
- * @prop footerDisplay - 是否显示弹窗底部
- * @prop pop - 纯粹的自定义弹窗
- * @prop type - 弹窗类型
- * @prop noClickBgHide - 不启动点击背景隐藏弹窗
+ * @prop direction - 弹出方向（left | right | top | bottom）
+ * @prop speed - 弹出速度
+ * @prop type - 弹出类型
+ * @prop part - 在一个父类元素弹出，默认为否即在当前文档之外弹窗
  *
  * @slot - 弹窗的主体内容
  *
- * @event ok - 点击确定按钮
- * @event no - 点击取消按钮 *
  */
 
 import './pop.scss'
 import './pop.m.scss'
 
 import render from './pop.render'
-import btnComp from '../../base/btn/btn'
-import iconComp from '../../base/icon/icon'
-import scrollerComp from '../../base/scroller/scroller'
 import baseMixin from '../../../mixin/base'
 
-const TYPE_ALERT = 'alert'
-const TYPE_CONFIRM = 'confirm'
-const TYPE_TIP = 'tip'
-
-const TIP_SHOW_TIME = 1500
+import slideTransition from '../../transition/slide'
 
 const popComp = {
   name: 'pop',
@@ -42,9 +26,39 @@ const popComp = {
   mixins: [baseMixin],
 
   components: {
-    btn: btnComp,
-    icon: iconComp,
-    scroller: scrollerComp
+    'slide-transition': slideTransition
+  },
+
+  props: {
+    type: {
+      type: String,
+      default: 'slide'
+    },
+    direction: {
+      type: String,
+      default: 'top'
+    },
+    speed: {
+      type: String,
+      default: 'normal'
+    },
+    part: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data() {
+    this.compName = 'pop'
+
+    return {
+      // 弹出层显示状态
+      popDisplay: false,
+      // 弹出层的 top
+      top: 0,
+      // 弹出层的 left
+      left: 0
+    }
   },
 
   computed: {
@@ -52,102 +66,64 @@ const popComp = {
     cPrefix() {
       return `${this.compPrefix}-pop`
     },
-    isAlert() {
-      return this.type === TYPE_ALERT
+    // 组件类组合
+    compClass() {
+      return [
+        this.cPrefix,
+        this.xclass(`direction-${this.direction}`),
+        this.xclass(`type-${this.type}`),
+        this.xclass(`speed-${this.speed}`),
+        { [this.xclass('part')]: this.part }
+      ]
     },
-    isTip() {
-      return this.type === TYPE_TIP
-    },
-    // 组件的 stage 的 class 名字
-    stageClass() {
-      return [{
-        [`${this.cPrefix}-tip-stage`]: this.isTip
-      }, {
-        [`${this.cPrefix}-alert-stage`]: this.isAlert
-      }]
-    },
-    // 组件的 header 的 class 名字
-    headerClass() {
+    // 弹出层的位置样式
+    positionStyle() {
       return {
-        [`${this.cPrefix}-no-header`]: !this.headerDisplay,
-        [`${this.cPrefix}-no-header-title`]: !this.popHeaderName
+        top: this.top + 'px',
+        left: this.left + 'px'
       }
-    },
-    // 组件的 footer 的 class 名字
-    footerClass() {
-      return { [`${this.cPrefix}-no-footer`]: !this.footerDisplay }
-    }
-  },
-
-  props: {
-    type: {
-      type: String,
-      default: TYPE_CONFIRM
-    },
-    headerName: {
-      type: String,
-      default: ''
-    },
-    okBtnName: {
-      type: String,
-      default: '确定'
-    },
-    noBtnName: {
-      type: String,
-      default: '取消'
-    },
-    message: {
-      type: String,
-      default: ''
-    },
-    headerDisplay: {
-      type: Boolean,
-      default: true
-    },
-    headerNoBtnDisplay: {
-      type: Boolean,
-      default: true
-    },
-    noBtnDisplay: {
-      type: Boolean,
-      default: true
-    },
-    footerDisplay: {
-      type: Boolean,
-      default: true
-    },
-    pop: {
-      type: Boolean,
-      default: false
-    },
-    noClickBgHide: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  data: () => {
-    return {
-      pointStart: {
-        x: 0,
-        y: 0
-      },
-      isMousedown: false,
-      popDisplay: false,
-      popMessage: '',
-      popHeaderName: '',
-      okCb: 'undefined',
-      onCb: 'undefined'
     }
   },
 
   methods: {
+    _init() {
+      if (!this.part) {
+        window.addEventListener('resize', (event) => {
+          this.computePosition()
+        })
+      }
+    },
+
     /**
-     * 设置数据
+    * 计算弹出层的位置
+    */
+    computePosition({
+      popW = this.$el.offsetWidth,
+      popH = this.$el.offsetHeight,
+      parentW = window.innerWidth,
+      parentH = window.innerHeight,
+      cb
+    } = {}) {
+      let offsetW = parentW - popW
+      let offsetH = parentH - popH
+      let left = offsetW < 0 ? 0 : offsetW / 2
+      let top = offsetH < 0 ? 0 : offsetH / 2
+
+      this.left = left
+      this.top = top
+    },
+
+    /**
+     * 初始化弹出层的位置
      */
-    _setDataOpt() {
-      this.popMessage = this.message
-      this.popHeaderName = this.headerName
+    initPosition({ parentW = 0, parentH = 0, cb } = {}) {
+      this.$el.style.visibility = 'hidden'
+      this.$el.style.display = ''
+
+      this.computePosition()
+
+      this.$el.style.display = 'none'
+      this.$el.style.visibility = ''
     },
 
     /**
@@ -156,21 +132,12 @@ const popComp = {
      * @param {Number} - 当前页码
      * @return {Object}
      */
-    show(cb) {
-      if (this.isTip) {
-        this.popDisplay = true
+    show({ cb } = {}) {
+      this.popDisplay = true
+
+      this.$refs.transition.$on('afterEnter', () => {
         cb && cb()
-
-        setTimeout(() => {
-          this.popDisplay = false
-
-          if (this.okCb) {
-            this.okCb()
-          }
-        }, TIP_SHOW_TIME)
-      } else {
-        this.popDisplay = true
-      }
+      })
 
       return this
     },
@@ -180,156 +147,12 @@ const popComp = {
      *
      * @return {Object}
      */
-    hide(event) {
-      event && event.stopPropagation()
-
-      if (this.isTip) {
-        return this
-      }
-
+    hide({ cb } = {}) {
       this.popDisplay = false
-      this.isMousedown = false
 
-      return this
-    },
-
-    /**
-     * 鼠标mouseDown 弹窗头部触发的事件
-     *
-     * @return {Object}
-     */
-    mouseDown(event) {
-      this.isMousedown = true
-
-      this.pointStart = {
-        x: event.clientX,
-        y: event.clientY
-      }
-
-      return this
-    },
-
-    /**
-     * 鼠标mouseMove 弹窗头部触发的事件
-     *
-     * @return {Object, Boolean}
-     */
-    mouseMove(event) {
-      if (!this.isMousedown) {
-        return false
-      }
-
-      let $this = this.$el.querySelector('.' + this.xclass('stage'))
-      let styleHub = getComputedStyle($this)
-      let top = parseFloat(styleHub.top, 10)
-      let left = parseFloat(styleHub.left, 10)
-
-      $this.style.top = `${top + event.clientY - this.pointStart.y}px`
-      $this.style.left = `${left + event.clientX - this.pointStart.x}px`
-
-      this.pointStart = {
-        x: event.clientX,
-        y: event.clientY
-      }
-
-      return this
-    },
-
-    /**
-     * 鼠标mouseUp 弹窗头部触发的事件
-     *
-     * @return {Object, Boolean}
-     */
-    mouseUp(event) {
-      event.preventDefault()
-
-      if (!this.isMousedown) {
-        return false
-      }
-
-      this.isMousedown = false
-
-      return this
-    },
-
-    /**
-     * 弹窗点击确定触发的函数
-     *
-     * @return {Object}
-     */
-    ok() {
-      if (this.okCb) {
-        this.okCb(this)
-
-        return this.$emit('ok')
-      }
-
-      this.hide()
-    },
-
-    /**
-     * 弹窗点击取消触发的函数
-     *
-     * @return {Object}
-     */
-    cancel() {
-      if (this.noCb) {
-        this.noCb(this)
-
-        return this.$emit('no')
-      }
-
-      this.hide()
-    },
-
-    /**
-     * 返回弹窗的title名
-     *
-     * @return {Object, Boolean}
-     */
-    title(text) {
-      if (text === '' || text) {
-        this.popHeaderName = text
-      }
-
-      return this
-    },
-
-    /**
-     * alert, confirm 弹窗的文字信息
-     *
-     * @param {String} - 需要设置的值
-     * @return {Object, String}
-     */
-    info(text) {
-      if (text === '' || text) {
-        this.popMessage = text
-      }
-
-      return this
-    },
-
-    /**
-     * alert, confirm 设置弹窗的确定按钮的回调函数
-     * 显示完 tip 的回调函数
-     *
-     * @param {Function}
-     * @return {Object}
-     */
-    setOkCb(cb) {
-      this.okCb = cb
-
-      return this
-    },
-
-    /**
-     * alert, confirm 设置弹窗的确定按钮的回调函数
-     *
-     * @param {Function}
-     * @return {Object}
-     */
-    setNoCb(cb) {
-      this.noCb = cb
+      this.$refs.transition.$on('afterLeave', () => {
+        cb && cb()
+      })
 
       return this
     }

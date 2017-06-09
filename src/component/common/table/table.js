@@ -6,12 +6,11 @@
  *   （none：默认是不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
  * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @prop pager - 启动分页功能
+ * @prop pageSize - 将列表数据（item）分为每页多少条数据
  * @prop list - 默认是不以列表化的表格数据
  * @prop thead - 表头标题数据
  * @prop tbody - 列表的数据
- * @prop page - 分页数据
- * @prop pageSize - 将列表数据（item）分为每页多少条数据
- * @prop scrollerAutoHide - 是否远程获取数据
+ * @prop scrollerAutoHide - 滚动条自动隐藏
  *
  * @event switchPage - 切换分页
  */
@@ -21,10 +20,11 @@ import render from './table.render'
 
 import tableColComp from './table-col'
 import tableRowComp from './table-row'
+import loadingComp from '../../base/loading/loading'
 
 import baseMixin from '../../../mixin/base'
 import listMixin from '../../../mixin/list'
-import tip from '../../base/pop/tip'
+import tip from '../../base/message/tip'
 import { findGrandpa } from '../../../util/util'
 
 const COL_PADDING_BORDER_LENGTH = 22
@@ -35,6 +35,10 @@ const tableComp = {
   render,
 
   mixins: [baseMixin, listMixin],
+
+  components: {
+    loading: loadingComp
+  },
 
   props: {
     auto: {
@@ -199,8 +203,11 @@ const tableComp = {
         tableData: this.tbody.slice()
       })
 
+      this.hideLoading()
+
       return this.$emit('switchPage', {
-        currentPage
+        currentPage,
+        emitter: this
       })
     },
 

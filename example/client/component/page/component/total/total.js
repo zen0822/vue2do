@@ -1,7 +1,7 @@
 import './total.scss'
 import template from './total.tpl'
-import tip from 'src/component/base/pop/tip'
-import alert from 'src/component/base/pop/alert'
+import { alert, confirm, tip } from 'vue2do/index.js'
+
 
 export default {
   template,

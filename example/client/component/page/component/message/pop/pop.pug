@@ -2,22 +2,26 @@ include ../../mixin.pug
 
 div.component-pop
   article.example-article
-    +section('confirm', '弹窗')
-      z-btn(@click='alert') 确认
-      z-code.
-        #{'<z-btn @click="alert">'}
-          确认
-        #{'</z-btn>'}
-    +section('confirm', '确认弹窗')
-      z-btn(@click='confirm') 确认弹窗
-      z-code.
-        #{'<z-btn @click="confirm">'}
-          确认
-        #{'</z-btn>'}
+    z-message(ref='message', message='wanyea玩野啊')
+    //- +section('confirm', '弹窗')
+    //-   z-btn(@click='alert') 确认
+    //-   z-code.
+    //-     #{'<z-btn @click="alert">'}
+    //-       确认
+    //-     #{'</z-btn>'}
+    //- +section('confirm', '确认弹窗')
+    //-   z-btn(@click='confirm') 确认弹窗
+    //-   z-code.
+    //-     #{'<z-btn @click="confirm">'}
+    //-       确认
+    //-     #{'</z-btn>'}
     +section('custom', '自定义弹窗')
       z-btn(@click='customPop') 自定义弹窗
-      z-pop(
-          header-name='custom'
+      z-btn(@click='hideCustomPop') 隐藏自定义弹窗
+      z-modal(
+          commit
+          header='dasfdfasdf'
+          ok-btn='发布'
           ref='pop')
         p custom
         p custom
@@ -26,22 +30,42 @@ div.component-pop
         p custom
         p custom
         p custom
-      z-code.
-        #{'<z-pop header-name="custom" ref="pop">'}
-          #{'<p>custom</p>'}
-        #{'</z-pop>'}
-    +section('pure', '纯自定义弹窗')
-      z-btn(@click='purePop') 自定义弹窗
-      z-pop(
-          no-click-bg-hide,
-          pop
-          ref='purePop')
-        img(
-          width='100%'
-          :src='homeBgImg')
-      z-code.
-        #{'<z-pop'}
-            header-name="custom"
-            ref="pop"
-          #{'<p>pure custom</p>'}
-        #{'</z-pop>'}
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+        p custom
+    //-   z-code.
+    //-     #{'<z-pop header-name="custom" ref="pop">'}
+    //-       #{'<p>custom</p>'}
+    //-     #{'</z-pop>'}
+    //- +section('pure', '纯自定义弹窗')
+    //-   z-btn(@click='purePop') 自定义弹窗
+    //-   z-pop(
+    //-       no-click-bg-hide,
+    //-       pop
+    //-       ref='purePop')
+    //-     img(
+    //-       width='100%'
+    //-       :src='homeBgImg')
+    //-   z-code.
+    //-     #{'<z-pop'}
+    //-         header-name="custom"
+    //-         ref="pop"
+    //-       #{'<p>pure custom</p>'}
+    //-     #{'</z-pop>'}

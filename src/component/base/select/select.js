@@ -37,7 +37,7 @@ import render from './select.render'
 import store from '../../../vuex/store'
 import hubStore from '../../../vuex/module/hub/type.json'
 import compStore from '../../../vuex/module/comp/type.json'
-import tip from '../../base/pop/tip'
+import tip from '../../base/message/tip'
 
 import iconComp from '../../base/icon/icon'
 import inputComp from '../../base/input/input'
@@ -778,7 +778,9 @@ const selectComp = {
     * @return {Object} this - 组件
     */
     blur() {
-      return false
+      if (!this.multiple) {
+        return this.toggleMenuDisplay(false)
+      }
     },
 
     /**

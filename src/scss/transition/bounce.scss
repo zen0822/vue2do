@@ -1,7 +1,7 @@
 @import "../config.scss";
 
 $C_PREFIX: $comp-prefix;
-$dirction-hub: "up", "down", "left", "right";
+$dirction-hub: "top", "bottom", "left", "right";
 
 @mixin bounce($dirction) {
   $bounce-in-data: ();
@@ -22,7 +22,7 @@ $dirction-hub: "up", "down", "left", "right";
     );
   }
 
-  @if $dirction == "up" {
+  @if $dirction == "top" {
     $bounce-in-data: (
       first: "0, 3000px, 0",
       second: "0, -25px, 0",

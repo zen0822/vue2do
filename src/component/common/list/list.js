@@ -18,7 +18,7 @@ import './list.scss'
 import render from './list.render'
 import baseMixin from '../../../mixin/base'
 import listMixin from '../../../mixin/list'
-import tip from '../../base/pop/tip'
+import tip from '../../base/message/tip'
 
 import iconComp from '../../base/icon/icon'
 import loadingComp from '../../base/loading/loading'
@@ -212,8 +212,9 @@ const listComp = {
         return false
       }
 
-      this.$emit('switch', {
-        currentPage
+      this.$emit('switchPage', {
+        currentPage,
+        emitter: this
       })
 
       if (this.auto) {

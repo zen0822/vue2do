@@ -29,7 +29,7 @@ import compEvent from '../../../config/event.json'
 
 import iconComp from '../../base/icon/icon'
 import checkComp from '../../base/check/check'
-import tip from '../../base/pop/tip'
+import tip from '../../base/message/tip'
 
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'

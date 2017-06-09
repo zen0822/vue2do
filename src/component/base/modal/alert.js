@@ -1,64 +1,58 @@
 /**
- * tip 组件
+ * alert 组件
  */
 
 import Vue from 'vue'
 
-import popComp from './pop'
-import alert from './alert'
-
+import modalComp from './modal'
 import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
 import baseMixin from '../../../mixin/base'
 
-let tiping = false
-let tipHub = []
+let alerting = false
+let alertHub = []
 
 /**
- * 创建 tip 组件的实例
+ * 创建 alert 组件的实例
  **/
 const createTip = () => {
-  const tipCompVm = new Vue({
-    name: 'tip',
+  const alertCompVm = new Vue({
+    name: 'alert',
     mixins: [baseMixin],
     computed: {
       // 组件类名的前缀
       cPrefix() {
-        return `${this.compPrefix}-tip`
+        return `${this.compPrefix}-alert`
       }
     },
     components: {
-      pop: popComp
+      modal: modalComp
     },
     store,
     template: `
       <div :class="[cPrefix]">
-        <pop ref="tip" type="tip"></pop>
+        <modal
+            ref="alert"
+            type="alert"></modal>
       </div>
     `,
     mounted() {
-      this.$store.dispatch(commonStore.tip.add, this)
+      this.$store.dispatch(commonStore.alert.add, this)
     }
   }).$mount()
 
-  document.body.appendChild(tipCompVm.$el)
+  document.body.appendChild(alertCompVm.$el)
 }
 
 /**
- * 调用 tip
+ * 调用 alert
  **/
-const tip = (opt) => {
-  if (tiping) {
-    tipHub.push(opt)
-
-    return false
-  }
-
+const alert = (opt) => {
   let option = {}
 
   if (opt === undefined) {
     Object.assign(option, {
-      message: '信息格式不正确！'
+      message: 'vue2do: 调用 alert 传的参数错误!'
     })
   } else if (typeof opt === 'string') {
     Object.assign(option, {
@@ -68,8 +62,8 @@ const tip = (opt) => {
     option = opt
   }
 
-  if (option.message.length > 20) {
-    alert(option)
+  if (alerting) {
+    alertHub.push(option)
 
     return false
   }
@@ -80,24 +74,27 @@ const tip = (opt) => {
 
   return commonVuex
     .$store
-    .getters[commonStore.tip.get]
+    .getters[commonStore.alert.get]
     .$refs
-    .tip
+    .alert
+    .title(option.title)
     .info(option.message)
-    .setOkCb(() => {
-      tiping = false
+    .setOkCb((vm) => {
+      alerting = false
 
-      if (tipHub.length > 0) {
-        tip(tipHub.shift())
+      if (alertHub.length > 0) {
+        alert(alertHub.shift())
       }
 
-      option.cb && option.cb()
+      opt.cb && opt.cb()
+      vm.hide()
     })
     .show(() => {
-      tiping = true
+      alerting = true
     })
 }
 
 createTip()
 
-export default tip
+export default alert
+

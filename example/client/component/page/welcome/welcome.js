@@ -1,8 +1,7 @@
 import './welcome.scss'
 import pug from './welcome.pug'
-import tip from 'src/component/base/pop/tip'
-import alert from 'src/component/base/pop/alert'
 import mixin from '../component/mixin'
+import { alert, confirm } from 'vue2do/index.js'
 
 export default {
   template: pug(),

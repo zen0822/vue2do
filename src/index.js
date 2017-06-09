@@ -4,11 +4,15 @@ import form from './component/base/form/form'
 import input from './component/base/input/input'
 import icon from './component/base/icon/icon'
 
+import modal from './component/base/modal/modal'
+import pop from './component/base/pop/pop'
+import message from './component/base/message/message'
+
 import code from './component/common/code/code'
 import loading from './component/base/loading/loading'
 import menu from './component/common/menu/menu'
+
 import page from './component/base/page/page'
-import pop from './component/base/pop/pop'
 import scroller from './component/base/scroller/scroller'
 import search from './component/common/search/search'
 
@@ -45,7 +49,9 @@ const compHub = [
   fold,
   foldTitle,
   foldContent,
+  modal,
   menu,
+  message,
   input,
   icon,
   list,

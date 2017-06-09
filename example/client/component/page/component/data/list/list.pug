@@ -84,7 +84,7 @@ div.component-pop
           z-table-col Boolean
           z-table-col ( *false | true )
           z-table-col 是否自动隐藏滚动条
-    +section('props', 'props 数据类型')
+    +section('events', 'events 事件')
       z-table(
           border='row'
           auto
@@ -94,9 +94,10 @@ div.component-pop
             v-for='item in ["名字", "返回值类型", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
-          z-table-col switch
+          z-table-col switchPage
           z-table-col Object
           z-table-col
             p 换页触发事件, 返回值说明：
             ul
               li currentPage: 当前页码
+              li emitter: 派送事件的 viewModel

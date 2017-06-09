@@ -1,9 +1,9 @@
 import './table.scss'
-import template from './table.tpl'
+import pug from './table.pug'
 import mixin from '../../mixin'
 
 export default {
-  template,
+  template: pug(),
 
   mixins: [mixin],
 

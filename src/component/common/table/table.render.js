@@ -132,7 +132,10 @@ export default function (h) {
           },
           ref: 'pager'
         }
-      )
+      ),
+      h('loading', {
+        ref: 'loading'
+      })
     ]
   )
 }

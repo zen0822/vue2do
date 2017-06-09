@@ -17,7 +17,7 @@ import './form.scss'
 import template from './form.tpl'
 
 import baseMixin from '../../../mixin/base'
-import tip from '../../base/pop/tip'
+import tip from '../../base/message/tip'
 
 const INIT_FORM_CONTROL = ['select', 'input', 'check', 'data', 'upload']
 const VERIFY_FORM_CONTROL = ['select', 'input', 'check', 'data', 'upload']

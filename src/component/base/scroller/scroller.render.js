@@ -20,19 +20,29 @@ export default function (h) {
         ref: 'box'
       }, this.$slots.default),
 
-      h('div', {
-        class: [this.xclass(['bar', 'y-bar'])],
-        on: {
-          click: this.barClick,
-          mousedown: this.yBarMouseDown
+      h('fade-transition',
+        {
+          props: {
+            opacity: true,
+            speed: 'fast'
+          }
         },
-        style: this.yComputed.barStyle,
-        ref: 'bar',
-        directives: [{
-          name: 'show',
-          value: this.yComputed.barDisplay
-        }]
-      }),
+        [
+          h('div', {
+            class: [this.xclass(['bar', 'y-bar'])],
+            on: {
+              click: this.barClick,
+              mousedown: this.yBarMouseDown
+            },
+            style: this.yComputed.barStyle,
+            ref: 'bar',
+            directives: [{
+              name: 'show',
+              value: this.yComputed.barDisplay
+            }]
+          })
+        ]
+      ),
 
       h('div', {
         class: [this.xclass(['bar', 'x-bar'])],

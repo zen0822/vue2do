@@ -8,176 +8,27 @@
  */
 
 $C_PREFIX: #{ $COMP_POP };
-$ICON_PREFIX: #{ $COMP_ICON };
-$BTN_PREFIX: #{ $COMP_BTN };
-
-$POP_CONTAINER_PADDING: 4% 6%;
 
 .#{ $C_PREFIX } {
-  position: relative;
+  position: fixed;
 
-  .#{ $C_PREFIX }-stage {
-    position: fixed;
-    left: 0;
+  &.#{ $C_PREFIX }-part {
+    position: absolute;
+  }
+
+  &.#{ $C_PREFIX }-direction-top {
     top: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 999;
+  }
 
-    &.#{ $C_PREFIX }-tip-stage {
-      .#{ $C_PREFIX }-container {
-        > article {
-          min-height: auto;
+  &.#{ $C_PREFIX }-direction-bottom {
+    bottom: 0;
+  }
 
-          .#{ $C_PREFIX }-alert-message{
-            white-space: normal;
-          }
-        }
-      }
-    }
+  &.#{ $C_PREFIX }-direction-left {
+    left: 0;
+  }
 
-    &.#{ $C_PREFIX }-pure {
-      .#{ $C_PREFIX }-container {
-        box-shadow: none;
-        background: transparent;
-      }
-    }
-
-    .#{ $C_PREFIX }-bg {
-      background: #000;
-      opacity: .8;
-      height: 100%;
-      width: 100%;
-      position: fixed;
-      left: 0;
-      top: 0;
-    }
-
-    .#{ $C_PREFIX }-close-pure-pop {
-      position: fixed;
-      right: 20px;
-      top: 20px;
-      color: #fff;
-    }
-
-    .#{ $C_PREFIX }-container {
-      position: absolute;
-      top: 10%;
-      left: 0;
-      right: 0;
-      margin: auto;
-      background: #fff;
-      overflow: hidden;
-      transform: rotate(0);
-      box-shadow: 0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04) inset;
-
-      > header {
-        cursor: move;
-        padding: $POP_CONTAINER_PADDING;
-        box-sizing: border-box;
-        font-size: $h2;
-        width: 100%;
-
-        &.#{ $C_PREFIX }-no-header {
-          padding: 0;
-        }
-
-        &.#{ $C_PREFIX }-no-header-title {
-          .#{ $C_PREFIX }-close-pop {
-            opacity: 1;
-            color: $secondary-color;
-          }
-        }
-
-        .#{ $C_PREFIX }-close-pop {
-          float: right;
-          cursor: pointer;
-        }
-      }
-
-      > article {
-        padding: $POP_CONTAINER_PADDING;
-        box-sizing: border-box;
-
-        .#{ $C_PREFIX }-alert-message{
-          text-align: center;
-          white-space: pre-line;
-          font-size: 18px;
-        }
-      }
-
-      > footer {
-        padding: $POP_CONTAINER_PADDING;
-        box-sizing: border-box;
-        line-height: normal;
-        text-align: center;
-        height: auto;
-        width: 100%;
-
-        > .#{ $BTN_PREFIX } {
-          margin: 0 $gap-h-half;
-        }
-
-        &.#{ $C_PREFIX }-no-footer {
-          padding: 0;
-        }
-      }
-    }
-
-    &.#{ $C_PREFIX }-theme-primary {
-      &.#{ $C_PREFIX }-tip-stage {
-        .#{ $C_PREFIX }-container {
-          border-radius: $border-radius;
-          padding: $gap-v-double $gap-v;
-          line-height: $font-base * 2;
-          max-width: 220px;
-          height: auto;
-          min-height: auto;
-
-          article {
-            @extend %text-omit;
-            padding: 0;
-            text-align: center;
-            min-height: auto;
-          }
-        }
-      }
-
-      &.#{ $C_PREFIX }-alert-stage {
-        article {
-          font-size: $h3;
-          text-align: center;
-        }
-      }
-
-      .#{ $C_PREFIX }-container {
-        width: 500px;
-        border-radius: 10px;
-
-        > header {
-          background-color: $secondary-color;
-          color: #fff;
-
-          &.#{ $C_PREFIX }-no-header-title {
-            background-color: transparent;
-          }
-        }
-
-        > article {
-          min-height: 100px;
-          width: 100%;
-        }
-
-        > footer {
-          .btn-stage {
-            width: 180px;
-
-            .btn {
-              width: 100%;
-            }
-          }
-        }
-      }
-    }
+  &.#{ $C_PREFIX }-direction-right {
+    right: 0;
   }
 }

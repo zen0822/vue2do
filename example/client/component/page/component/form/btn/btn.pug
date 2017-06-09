@@ -15,7 +15,7 @@ div
         #{'<z-btn kind="success">'}
           #{'成功'}
         #{'</z-btn>'}
-      z-btn.z-m-t-double(kind='success', outline, radius='none') 只有轮廓
+      z-btn.z-m-t-double(kind='success', type='outline', radius='none') 只有轮廓
       z-code.
         #{'<z-btn kind="success" outline radius="none">'}
           #{'只有轮廓'}
@@ -72,7 +72,7 @@ div
         z-table-row(slot='6')
           z-table-col type
           z-table-col Boolean
-          z-table-col ( *button | link )
+          z-table-col ( *button | flat | float | outline )
           z-table-col 按钮类型
         z-table-row(slot='7')
           z-table-col value
@@ -85,11 +85,6 @@ div
           z-table-col ( *false | true )
           z-table-col 是否显示按钮文字
         z-table-row(slot='9')
-          z-table-col outline
-          z-table-col Boolean
-          z-table-col ( *false | true )
-          z-table-col 背景颜色为白色，是有轮廓的按钮
-        z-table-row(slot='10')
           z-table-col radius
           z-table-col String
           z-table-col ( none | *S | M | L)

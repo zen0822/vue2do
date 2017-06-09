@@ -16,7 +16,19 @@ const delClass = (el, classStr) => {
   el.className = [...classSet].join(' ')
 }
 
+const childrenHeight = (el) => {
+  let children = el.children
+  let totalHeight = 0
+
+  for (let i = 0, len = children.length; i < len; i++) {
+    totalHeight += children[i].offsetHeight
+  }
+
+  return totalHeight
+}
+
 export {
   addClass,
-  delClass
+  delClass,
+  childrenHeight
 }

@@ -2,25 +2,25 @@
 
 $C_PREFIX: $comp-prefix;
 
-$dirction-hub: "up", "down", "left", "right";
+$dirction-hub: "top", "bottom", "left", "right";
 
 @mixin slide($dirction) {
   $transform-data: translateY(0) !default;
 
-  @if $dirction == "down" {
-    $transform-data: translateY(-150%);
+  @if $dirction == "bottom" {
+    $transform-data: translateY(-100%);
   }
 
-  @if $dirction == "up" {
-    $transform-data: translateY(150%);
+  @if $dirction == "top" {
+    $transform-data: translateY(100%);
   }
 
   @if $dirction == "left" {
-    $transform-data: translateX(-150%);
+    $transform-data: translateX(-100%);
   }
 
   @if $dirction == "right" {
-    $transform-data: translateX(150%);
+    $transform-data: translateX(100%);
   }
 
   .#{ $C_PREFIX }-slide-#{ $dirction }-enter,

@@ -7,6 +7,10 @@
 
 $C_PREFIX: $comp-prefix;
 
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 .#{ $C_PREFIX }-device-size {
   position: absolute;
   height: 0;

@@ -15,13 +15,27 @@ export default function (h) {
     btnChildren.push(h('div', {
       class: [this.xclass('value-show')]
     }, this.$slots.default))
-  } else if (this.isLink) {
-    btnChildren.push(h('a', {
-      on: {
-        click: this.click
-      }
-    }, this.$slots.default))
-  } else if (this.isButton) {
+  } else if (this.type === 'flat') {
+    btnChildren.push(
+      h(
+        `${this.link ? 'a' : 'div'}`,
+        {
+          class: [
+            this.xclass('ele'),
+          ],
+          on: {
+            click: this.click,
+            mousedown: this.mousedown,
+            mouseup: this.mouseup
+          },
+          attrs: {
+            href: this.link,
+            tabindex: 0
+          }
+        }, this.$slots.default ? this.$slots.default : this.value
+      )
+    )
+  } else {
     let buttonChildren = []
 
     if (this.createdLoading) {
@@ -38,14 +52,17 @@ export default function (h) {
 
     btnChildren.push(
       h(
-        'button',
+        `${this.link ? 'a' : 'div'}`,
         {
           class: [
-            this.xclass(['ele', this.btnClass, this.sizeClass, this.radiusClass]),
-            { [this.xclass('outline')]: this.outline }
+            this.xclass('ele'),
           ],
           on: {
             click: this.click
+          },
+          attrs: {
+            href: this.link,
+            tabindex: 0
           }
         }, buttonChildren
       )
@@ -56,14 +73,9 @@ export default function (h) {
     'div',
     {
       class: [
-        this.cPrefix,
-        this.xclass(this.themeClass)
+        this.cPrefix, this.btnClass
       ]
     },
-    [
-      h('div', {
-        class: [this.xclass('stage')]
-      }, btnChildren)
-    ]
+    [btnChildren]
   )
 }

@@ -206,9 +206,7 @@ export default function (h) {
   selectMenuEle = [
     h('div',
       {
-        class: [this.xclass('menu'), {
-          [this.xclass('menu-search')]: this.search
-        }],
+        class: [this.xclass('menu')],
         style: [this.selectMenuPoiStyle, this.selectMenuStyle],
         ref: 'selectMenu'
       },

@@ -7,10 +7,6 @@ html, body {
   font-weight: normal;
   font-family: "Microsoft Yahei" ,"simSun", "Arial";
   margin: 0;
-
-  @include device-type('<l') {
-    font-size: $h3;
-  }
 }
 
 ul {
