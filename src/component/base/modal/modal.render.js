@@ -2,72 +2,13 @@
  * pop.render.js
  */
 
+import headerChildrenRender from './modal.header.render'
+
 export default function (h) {
   let modalChildren = []
-  let headerChildren = []
+  let headerChildren = headerChildrenRender.call(this, h)
 
-  if (this.isFull) {
-    if (!this.isBiggerFull) {
-      headerChildren.push(
-        h('column',
-          {
-            class: [this.xclass('header-nav')],
-            props: {
-              xs: 2,
-              l: 1
-            }
-          },
-          [
-            h('icon', {
-              props: {
-                kind: this.commit ? 'close' : 'arrow-left',
-                size: 'L'
-              }
-            })
-          ]
-        )
-      )
-    }
-
-    headerChildren.push(
-      h('column',
-        {
-          props: {
-            xs: this.commit ? 8 : 9,
-            l: this.commit ? 10 : 11,
-          }
-        },
-        [
-          h('span', {
-            class: this.xclass('header-title')
-          }, this.header)
-        ]
-      )
-    )
-
-    if (!this.isBiggerFull && this.commit) {
-      headerChildren.push(
-        h('column', {
-          props: {
-            xs: 2,
-            l: 1
-          }
-        }, [h('span', this.okBtn)])
-      )
-    }
-  } else {
-    headerChildren.push(
-      h('column', { props: { span: 12 } },
-        [
-          h('span', {
-            class: this.xclass('header-title')
-          }, this.header)
-        ]
-      )
-    )
-  }
-
-  if (this.headerDisplay) {
+  if (this.headerDisplay && (this.isFull || !this.isFull && this.modalHeader)) {
     modalChildren.push(
       h('header',
         {
@@ -75,7 +16,8 @@ export default function (h) {
             mousedown: this.mouseDown,
             mouseup: this.mouseUp
           }
-        }, [
+        },
+        [
           h('row', {
             props: { justify: 'justify' }
           }, headerChildren)
@@ -86,7 +28,6 @@ export default function (h) {
 
   modalChildren.push(
     h('article',
-      { class: { [this.xclass('has-scroller')]: this.hasScroller } },
       [
         h('scroller', {
           class: [this.xclass('scroller')],
@@ -131,11 +72,13 @@ export default function (h) {
           props: {
             value: this.okBtn,
             type: 'flat'
+          },
+          on: {
+            click: this.ok
           }
         })
       )
     }
-
 
     modalChildren.push(
       h('footer', {
@@ -156,7 +99,8 @@ export default function (h) {
           class: [
             this.cPrefix,
             this.xclass([this.themeClass]),
-            this.xclass(`type-${this.type}`)
+            this.xclass(`type-${this.type}`),
+            { [this.xclass('has-scroller')]: this.hasScroller }
           ],
           directives: [{
             name: 'show',
@@ -181,9 +125,7 @@ export default function (h) {
                   value: this.modalDisplay
                 }],
                 on: {
-                  click: () => {
-                    this.hide()
-                  }
+                  click: this.no
                 }
               })
             ]

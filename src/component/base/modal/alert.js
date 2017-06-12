@@ -15,7 +15,7 @@ let alertHub = []
 /**
  * 创建 alert 组件的实例
  **/
-const createTip = () => {
+const createAlert = () => {
   const alertCompVm = new Vue({
     name: 'alert',
     mixins: [baseMixin],
@@ -32,6 +32,7 @@ const createTip = () => {
     template: `
       <div :class="[cPrefix]">
         <modal
+            no-btn=""
             ref="alert"
             type="alert"></modal>
       </div>
@@ -86,7 +87,7 @@ const alert = (opt) => {
         alert(alertHub.shift())
       }
 
-      opt.cb && opt.cb()
+      option.cb && option.cb()
       vm.hide()
     })
     .show(() => {
@@ -94,7 +95,7 @@ const alert = (opt) => {
     })
 }
 
-createTip()
+createAlert()
 
 export default alert
 

@@ -33,7 +33,6 @@ export default {
       on: {
         beforeEnter: (el) => {
           el.style.opacity = 0
-
           el.style.transition = this.transition
 
           this.$emit('beforeEnter')

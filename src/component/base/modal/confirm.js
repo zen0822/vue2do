@@ -15,7 +15,7 @@ let confirmHub = []
 /**
  * 创建 confirm 组件的实例
  **/
-const createTip = () => {
+const createConfirm = () => {
   const confirmCompVm = new Vue({
     name: 'confirm',
     mixins: [baseMixin],
@@ -46,18 +46,24 @@ const createTip = () => {
  * 调用 confirm
  **/
 const confirm = (opt) => {
-  if (confirming) {
-    confirmHub.push(opt)
-
-    return false
-  }
+  let option = {}
 
   if (opt === undefined) {
-    opt.message = '未知错误！'
+    Object.assign(option, {
+      message: 'vue2do: 调用 confirm 传的参数错误!'
+    })
   } else if (typeof opt === 'string') {
-    opt = {
-      message: opt
-    }
+    Object.assign(option, {
+      message: opt.toString()
+    })
+  } else {
+    option = opt
+  }
+
+  if (confirming) {
+    confirmHub.push(option)
+
+    return false
   }
 
   const commonVuex = new Vue({
@@ -69,8 +75,8 @@ const confirm = (opt) => {
     .getters[commonStore.confirm.get]
     .$refs
     .confirm
-    .title(opt.title)
-    .info(opt.message)
+    .title(option.title)
+    .info(option.message)
     .setOkCb((vm) => {
       confirming = false
 
@@ -78,7 +84,7 @@ const confirm = (opt) => {
         confirm(confirmHub.shift())
       }
 
-      opt.cb && opt.cb()
+      option.cb && option.cb()
       vm.hide()
     })
     .show(() => {
@@ -86,6 +92,6 @@ const confirm = (opt) => {
     })
 }
 
-createTip()
+createConfirm()
 
 export default confirm

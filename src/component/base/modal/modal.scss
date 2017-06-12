@@ -38,15 +38,19 @@ $POP_CONTAINER_PADDING: 24px;
     overflow: hidden;
     transform: rotate(0);
     box-shadow: $shadow;
+    padding-top: 24px;
 
     > header {
       cursor: move;
-      padding: $gap-h-double $gap-v-double $gap-h;
+      padding: 0 24px 20px;
       box-sizing: border-box;
       width: 100%;
 
       .#{ $C_PREFIX }-header-title {
-        font-size: $h2;
+        font-size: $h3;
+        line-height: 1;
+        font-weight: bold;
+        color: $grey-dark;
       }
     }
 
@@ -57,24 +61,13 @@ $POP_CONTAINER_PADDING: 24px;
 
       & > .#{ $C_PREFIX }-scroller
           > .#{ $SCROLLER_PREFIX }-box {
-        padding: $gap-h $gap-v-double $gap-h-double;
+        padding: 0 24px 24px;
         box-sizing: border-box;
-      }
-
-      &.#{ $C_PREFIX }-has-scroller {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      .#{ $C_PREFIX }-alert-message{
-        text-align: center;
-        white-space: pre-line;
-        font-size: 18px;
       }
     }
 
     > footer {
-      padding: $gap-h $gap-h $gap-h-double $gap-v-double;
+      padding: 8px 8px 8px 24px;
       box-sizing: border-box;
       line-height: normal;
       text-align: right;
@@ -84,9 +77,34 @@ $POP_CONTAINER_PADDING: 24px;
       > .#{ $BTN_PREFIX } {
         margin: 0 $gap-h-half;
       }
+    }
+  }
 
-      &.#{ $C_PREFIX }-no-footer {
-        padding: 0;
+  &.#{ $C_PREFIX }-has-scroller {
+    .#{ $C_PREFIX }-pop {
+      & > header {
+        border-bottom: $border-color $border-thin solid;
+      }
+      
+      & > article {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      & > footer {
+        border-top: $border-color $border-thin solid;
+      }
+    }
+  }
+
+  &.#{ $C_PREFIX }-type-alert {
+    .#{ $C_PREFIX }-pop {
+      & > article {
+        min-height: auto;
+      }
+
+      & > footer {
+        
       }
     }
   }
@@ -124,58 +142,6 @@ $POP_CONTAINER_PADDING: 24px;
   }
 
   &.#{ $C_PREFIX }-theme-primary {
-    &.#{ $C_PREFIX }-tip-stage {
-      .#{ $C_PREFIX }-container {
-        border-radius: $border-radius;
-        padding: $gap-v-double $gap-v;
-        line-height: $font-base * 2;
-        max-width: 220px;
-        height: auto;
-        min-height: auto;
-
-        article {
-          @extend %text-omit;
-          padding: 0;
-          text-align: center;
-          min-height: auto;
-        }
-      }
-    }
-
-    &.#{ $C_PREFIX }-alert-stage {
-      article {
-        font-size: $h3;
-        text-align: center;
-      }
-    }
-
-    .#{ $C_PREFIX }-container {
-      width: 500px;
-      border-radius: 10px;
-
-      > header {
-        background-color: $secondary-color;
-        color: #fff;
-
-        &.#{ $C_PREFIX }-no-header-title {
-          background-color: transparent;
-        }
-      }
-
-      > article {
-        min-height: 100px;
-        width: 100%;
-      }
-
-      > footer {
-        .btn-stage {
-          width: 180px;
-
-          .btn {
-            width: 100%;
-          }
-        }
-      }
-    }
+    
   }
 }

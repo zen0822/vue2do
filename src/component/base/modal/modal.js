@@ -68,7 +68,7 @@ const modalComp = {
     headerClass() {
       return {
         [`${this.cPrefix}-no-header`]: !this.headerDisplay,
-        [`${this.cPrefix}-no-header-title`]: !this.popHeaderName
+        [`${this.cPrefix}-no-header-title`]: !this.modalHeader
       }
     },
     // 组件的 footer 的 class 名字
@@ -125,14 +125,6 @@ const modalComp = {
     footerDisplay: {
       type: Boolean,
       default: true
-    },
-    pure: {
-      type: Boolean,
-      default: false
-    },
-    noClickBgHide: {
-      type: Boolean,
-      default: false
     }
   },
 
@@ -145,7 +137,7 @@ const modalComp = {
       isMousedown: false,
       modalDisplay: false,
       modalMessage: '',
-      popHeaderName: '',
+      modalHeader: '',
       // scroller 是否有滚动条
       hasScroller: false
     }
@@ -185,7 +177,7 @@ const modalComp = {
      */
     _setDataOpt() {
       this.modalMessage = this.message
-      this.popHeaderName = this.headerName
+      this.modalHeader = this.header
     },
 
     /**
@@ -283,7 +275,7 @@ const modalComp = {
      */
     ok() {
       if (this.okCb) {
-        this.okCb()
+        this.okCb(this)
 
         return this.$emit('ok')
       }
@@ -298,7 +290,7 @@ const modalComp = {
      */
     no() {
       if (this.noCb) {
-        this.noCb()
+        this.noCb(this)
 
         return this.$emit('no')
       }
@@ -313,7 +305,7 @@ const modalComp = {
      */
     title(text) {
       if (text === '' || text) {
-        this.popHeaderName = text
+        this.modalHeader = text
       }
 
       return this

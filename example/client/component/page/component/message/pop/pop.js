@@ -26,7 +26,8 @@ export default {
 
     confirm() {
       confirm({
-        message: '这是一个弹窗'
+        message: '这是一个弹窗',
+        title: '测试确认弹出'
       })
     },
 
