@@ -58,7 +58,8 @@ export default function (h) {
             this.xclass('ele'),
           ],
           on: {
-            click: this.click
+            focus: this.focus,
+            blur: this.blur
           },
           attrs: {
             href: this.link,
@@ -73,9 +74,27 @@ export default function (h) {
     'div',
     {
       class: [
-        this.cPrefix, this.btnClass
-      ]
+        this.cPrefix,
+        this.btnClass,
+        { [this.xclass('rip')]: this.motion }
+      ],
+      on: {
+        click: this.click,
+        mousedown: this.mousedown,
+        mouseup: this.mouseup
+      }
     },
-    [btnChildren]
+    [
+      btnChildren,
+      h('div',
+        {
+          class: [this.xclass('rip')],
+          directives: [{
+            name: 'show',
+            value: this.motion
+          }]
+        }
+      )
+    ]
   )
 }

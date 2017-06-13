@@ -91,7 +91,19 @@ const popComp = {
         window.addEventListener('resize', (event) => {
           this.computePosition()
         })
+
+        this.$refs.transition.$on('beforeEnter', () => {
+          this.computePosition()
+        })
       }
+    },
+
+    /**
+     * 设置 pop 的位置
+     */
+    position({top, left}) {
+      this.left = left
+      this.top = top
     },
 
     /**

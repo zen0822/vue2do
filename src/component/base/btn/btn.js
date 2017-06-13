@@ -15,6 +15,7 @@
  */
 
 import './btn.scss'
+import './btn.device.scss'
 
 import loadingComp from '../../base/loading/loading'
 import render from './btn.render'
@@ -95,7 +96,11 @@ const btnComp = {
       // 按钮值显示状态
       btnValueDisplay: false,
       // 是否已经创建了按钮的 loading 组件
-      createdLoading: false
+      createdLoading: false,
+      // 按钮的沦漪效果
+      motion: false,
+      // 不执行 focus 事件
+      allowFocus: true
     }
   },
 
@@ -111,11 +116,21 @@ const btnComp = {
     },
 
     mouseup() {
-
+      this.allowFocus = true
     },
 
     mousedown() {
+      this.allowFocus = false
+    },
 
+    focus() {
+      if (this.allowFocus) {
+        this.motion = true
+      }
+    },
+
+    blur() {
+      this.motion = false
     },
 
     /**

@@ -149,22 +149,26 @@ const modalComp = {
     },
 
     _initModal() {
-      this.$el.style.visibility = 'hidden'
-      this.$el.style.display = ''
-
-      this.$refs.pop.$el.style.visibility = 'hidden'
-      this.$refs.pop.$el.style.display = ''
-
       this.$refs.scroller.$on('changeScroller', ({ scrollerHeight }) => {
+        let popVisibility = this.$refs.pop.$el.style.visibility
+        let popDisplay = this.$refs.pop.$el.style.display
+
+        let elVisibility = this.$el.style.visibility
+        let elDisplay = this.$el.style.display
+
+        this.$refs.pop.$el.style.visibility = 'hidden'
+        this.$refs.pop.$el.style.display = ''
+
+        this.$el.style.visibility = 'hidden'
+        this.$el.style.display = ''
+
         this.$refs.pop.computePosition()
 
-        this.$refs.pop.$el.style.visibility = ''
-        this.$refs.pop.$el.style.display = 'none'
+        this.$refs.pop.$el.style.visibility = popVisibility
+        this.$refs.pop.$el.style.display = popDisplay
 
-        this.$el.style.visibility = ''
-        this.$el.style.display = 'none'
-
-        this.$refs.scroller.$off()
+        this.$el.style.visibility = elVisibility
+        this.$el.style.display = elDisplay
       })
 
       this.$refs.scroller.$on('changeYBar', ({ hasScroller }) => {
@@ -231,6 +235,8 @@ const modalComp = {
      * @return {Object, Boolean}
      */
     mouseMove(event) {
+      event.preventDefault()
+
       if (!this.isMousedown) {
         return false
       }
@@ -240,8 +246,10 @@ const modalComp = {
       let top = parseFloat(styleHub.top, 10)
       let left = parseFloat(styleHub.left, 10)
 
-      $this.style.top = `${top + event.clientY - this.pointStart.y}px`
-      $this.style.left = `${left + event.clientX - this.pointStart.x}px`
+      this.$refs.pop.position({
+        top: top + event.clientY - this.pointStart.y,
+        left: left + event.clientX - this.pointStart.x
+      })
 
       this.pointStart = {
         x: event.clientX,

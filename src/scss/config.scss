@@ -26,11 +26,11 @@ $success-dark-color: #338a3e !default;
 $warning-dark-color: #c9bc1f !default;
 $orange-dark-color: #c77800 !default;
 
-$blue-lighter-color: rgba(33, 150, 243, 0.2);
-$danger-lighter-color: rgba(239, 83, 80, 0.2);
-$success-lighter-color: rgba(102, 187, 106, 0.2);
-$warning-lighter-color: rgba(255, 238, 88, 0.2);
-$orange-lighter-color: rgba(255, 217, 91, 0.2);
+$blue-lighter-color: rgba($blue-color, 0.2);
+$danger-lighter-color: rgba($danger-color, 0.2);
+$success-lighter-color: rgba($success-color, 0.2);
+$warning-lighter-color: rgba($warning-color, 0.2);
+$orange-lighter-color: rgba($orange-color, 0.2);
 
 $primary-color: $danger-color !default;
 $primary-light-color: $danger-light-color !default;
