@@ -86,6 +86,19 @@ export default function (h) {
     },
     [
       btnChildren,
+      h('rip-transition',
+        [
+          h('div',
+            {
+              class: [this.xclass('rip')],
+              directives: [{
+                name: 'show',
+                value: this.motion
+              }]
+            }
+          )
+        ]
+      ),
       h('div',
         {
           class: [this.xclass('rip')],

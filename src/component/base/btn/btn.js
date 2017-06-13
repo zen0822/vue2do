@@ -17,10 +17,12 @@
 import './btn.scss'
 import './btn.device.scss'
 
-import loadingComp from '../../base/loading/loading'
 import render from './btn.render'
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
+
+import loadingComp from '../../base/loading/loading'
+import ripTransition from '../../transition/rip'
 
 const BTN_TYPE_LINK = 'link'
 const BTN_TYPE_BUTTON = 'button'
@@ -37,7 +39,8 @@ const btnComp = {
   render,
 
   components: {
-    loading: loadingComp
+    loading: loadingComp,
+    'rip-transition': ripTransition
   },
 
   props: {
