@@ -7,6 +7,7 @@
  */
 
 $kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
+$C_PREFIX: #{ $COMP_BTN };
 
 @mixin btn-button($color, $dark-color, $lighter-color) {
   background-color: $color;
@@ -38,8 +39,6 @@ $kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
     background-color: $default-color;
   }
 }
-
-$C_PREFIX: #{ $COMP_BTN };
 
 .#{ $C_PREFIX } {
   position: relative;
@@ -200,27 +199,6 @@ $C_PREFIX: #{ $COMP_BTN };
     }
   }
 
-  & > .#{ $C_PREFIX }-rip {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-
-    &:after {
-      content: "";
-      position: absolute;
-      background-color: rgba(255, 255, 255, .3);
-      top: 50%;
-      left: 50%;
-      width: 80%;
-      height: 200%;
-      border-radius: 50%;
-      animation: rip 2.5s ease-in infinite alternate;
-    }
-  }
-
   .#{ $C_PREFIX }-value-show {
     display: inline-block;
   }
@@ -232,17 +210,5 @@ $C_PREFIX: #{ $COMP_BTN };
     border-radius: $border-radius;
     cursor: not-allowed;
     z-index: 1;
-  }
-
-  @keyframes rip {
-    0% {
-      transform: translate(-50%, -50%);
-    }
-    50% {
-      transform: translate(-50%, -50%) scaleX(.9);
-    }
-    100% {
-      transform: translate(-50%, -50%);
-    }
   }
 }

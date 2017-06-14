@@ -87,13 +87,20 @@ export default function (h) {
     [
       btnChildren,
       h('rip-transition',
+        {
+          on: {
+            'afterEnter': () => {
+              this.pressing = false
+            }
+          }
+        },
         [
           h('div',
             {
               class: [this.xclass('rip')],
               directives: [{
                 name: 'show',
-                value: this.motion
+                value: this.pressing
               }]
             }
           )
@@ -101,7 +108,7 @@ export default function (h) {
       ),
       h('div',
         {
-          class: [this.xclass('rip')],
+          class: [this.prefixClass('g-rip')],
           directives: [{
             name: 'show',
             value: this.motion

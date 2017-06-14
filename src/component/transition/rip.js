@@ -2,39 +2,41 @@
  * rip(涟漪) transition component
  */
 
+import { addClass, delClass } from '../../util/dom/element'
+import baseMixin from '../../mixin/base'
+
 export default {
-  functional: true,
-  render(h, { children, props }) {
+  mixins: [baseMixin],
+
+  render(h, context) {
     const data = {
       on: {
-        beforeEnter(el) {
-          el.style.height = 0
+        beforeEnter: (el) => {
+          addClass(el, this.prefixClass('g-rip'))
+          el.style.transition = 'all 1.5s'
         },
 
-        enter(el) {
-          el.style.height = `${el.firstChild.offsetHeight}px`
+        enter: (el) => {
         },
 
-        afterEnter(el) {
-          el.style.height = ''
+        afterEnter: (el) => {
+          delClass(el, this.prefixClass('g-rip'))
+          el.style.transition = ''
+
+          this.$emit('afterEnter')
         },
 
-        beforeLeave(el) {
-          el.style.height = el.scrollHeight + 'px'
+        beforeLeave: (el) => {
         },
 
-        leave(el) {
-          if (el.scrollHeight !== 0) {
-            el.style.height = 0
-          }
+        leave: (el) => {
         },
 
-        afterLeave(el) {
-          el.style.height = ''
+        afterLeave: (el) => {
         }
       }
     }
 
-    return h('transition', data, children)
+    return h('transition', data, this.$slots.default)
   }
 }

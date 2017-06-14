@@ -103,7 +103,9 @@ const btnComp = {
       // 按钮的沦漪效果
       motion: false,
       // 不执行 focus 事件
-      allowFocus: true
+      allowFocus: true,
+      // 点击按钮中
+      pressing: false
     }
   },
 
@@ -124,6 +126,7 @@ const btnComp = {
 
     mousedown() {
       this.allowFocus = false
+      this.pressing = true
     },
 
     focus() {
