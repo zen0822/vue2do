@@ -75,17 +75,19 @@ const confirm = (opt) => {
     .getters[commonStore.confirm.get]
     .$refs
     .confirm
-    .title(option.title)
-    .info(option.message)
-    .setOkCb((vm) => {
-      confirming = false
+    .set({
+      title: option.title,
+      message: option.message,
+      okCb: (vm) => {
+        confirming = false
 
-      if (confirmHub.length > 0) {
-        confirm(confirmHub.shift())
+        if (confirmHub.length > 0) {
+          confirm(confirmHub.shift())
+        }
+
+        option.cb && option.cb()
+        vm.hide()
       }
-
-      option.cb && option.cb()
-      vm.hide()
     })
     .show(() => {
       confirming = true

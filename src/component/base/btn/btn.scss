@@ -1,44 +1,13 @@
 @import "../../../scss/config.scss";
 @import "../../../scss/extend.scss";
 @import "../../../scss/name.scss";
+@import "./btn.type.scss";
 
 /**
  * btn 组件样式
  */
 
-$kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
 $C_PREFIX: #{ $COMP_BTN };
-
-@mixin btn-button($color, $dark-color, $lighter-color) {
-  background-color: $color;
-  border-color: $color;
-
-  &:focus {
-    outline-style: none;
-  }
-}
-
-@mixin btn-flat($color, $lighter-color) {
-  color: $color;
-  border: rgba(0, 0, 0, 0) $border-thin solid;
-  -webkit-tap-highlight-color: $lighter-color;
-
-  &:focus {
-    outline-style: none;
-    background-color: $lighter-color;
-    border-color: $lighter-color;
-  }
-}
-
-@mixin btn-outline($color) {
-  border-color: $color;
-  color: $color;
-
-  &:focus {
-    outline-style: none;
-    background-color: $default-color;
-  }
-}
 
 .#{ $C_PREFIX } {
   position: relative;
@@ -58,6 +27,7 @@ $C_PREFIX: #{ $COMP_BTN };
     font-size: $font-base;
     line-height: 1.42857;
     white-space: nowrap;
+    transform: rotate(0);
     transition-duration: 200ms;
     transition-property: background-color, box-shadow, color;
 
@@ -65,6 +35,7 @@ $C_PREFIX: #{ $COMP_BTN };
     &:visited,
     &:hover,
     &:active,
+    &:focus,
     &:focus:active {
       color: #fff;
       outline: none;
@@ -98,104 +69,6 @@ $C_PREFIX: #{ $COMP_BTN };
 
     &-l > .#{ $C_PREFIX }-ele {
       border-radius: 30px;
-    }
-  }
-
-  &.#{ $C_PREFIX }-type-button {
-    & > .#{ $C_PREFIX }-ele {
-      background-color: #fff;
-      border: $border-thin solid transparent;
-      border-radius: $border-radius;
-      box-shadow: $shadow-lower;
-
-      &:hover {
-        box-shadow: $shadow-lower;
-      }
-    }
-
-    &.#{ $C_PREFIX }-kind {
-      &-primary > .#{ $C_PREFIX }-ele {
-        @include btn-button($primary-color, $primary-dark-color, $primary-lighter-color);
-      }
-
-      &-danger > .#{ $C_PREFIX }-ele {
-        @include btn-button($danger-color, $danger-dark-color, $danger-lighter-color);
-      }
-
-      &-success > .#{ $C_PREFIX }-ele {
-        @include btn-button($success-color, $success-dark-color, $success-lighter-color);
-      }
-
-      &-warning > .#{ $C_PREFIX }-ele {
-        @include btn-button($warning-color, $warning-dark-color, $warning-lighter-color);
-      }
-
-      &-default > .#{ $C_PREFIX }-ele {
-        @include btn-button(#fff, $border-light-color, $border-lightest-color);
-        border-color: $grey-dark;
-        color: $grey-dark;
-
-        &:hover,
-        &:active {
-          color: $grey-dark;
-          border-color: $grey-dark;
-        }
-      }
-    }
-  }
-
-  &.#{ $C_PREFIX }-type-flat {
-    & > .#{ $C_PREFIX }-ele {
-      background-color: #fff;
-      padding: 7.5px $gap-v;
-    }
-
-    &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {
-      @include btn-flat($primary-color, $primary-lighter-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-danger > .#{ $C_PREFIX }-ele {
-      @include btn-flat($danger-color, $danger-lighter-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-success > .#{ $C_PREFIX }-ele {
-      @include btn-flat($success-color, $success-lighter-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-warning > .#{ $C_PREFIX }-ele {
-      @include btn-flat($warning-color, $warning-lighter-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-default > .#{ $C_PREFIX }-ele {
-      @include btn-flat($grey-light, $warning-lighter-color);
-    }
-  }
-
-  &.#{ $C_PREFIX }-type-outline {
-    & > .#{ $C_PREFIX }-ele {
-      background-color: #fff;
-      border-style: solid;
-      border-width: $border-thin;
-    }
-
-    &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {
-      @include btn-outline($primary-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-dange > .#{ $C_PREFIX }-eler {
-      @include btn-outline($danger-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-success > .#{ $C_PREFIX }-ele {
-      @include btn-outline($success-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-warning > .#{ $C_PREFIX }-ele {
-      @include btn-outline($warning-color);
-    }
-
-    &.#{ $C_PREFIX }-kind-default > .#{ $C_PREFIX }-ele {
-      @include btn-outline($grey-light);
     }
   }
 

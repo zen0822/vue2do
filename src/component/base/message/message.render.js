@@ -7,7 +7,10 @@ export default function (h) {
     {
       class: [
         this.cPrefix,
-        this.xclass([this.themeClass])
+        this.xclass([
+          this.themeClass,
+          'type' + this.messageType
+        ])
       ],
       directives: [{
         name: 'show',
@@ -20,7 +23,7 @@ export default function (h) {
           class: [this.xclass('pop')],
           ref: 'pop'
         },
-        this.$slots.default ? this.$slots.default : this.message
+        this.$slots.default ? this.$slots.default : this.infoMessage
       )
     ]
   )

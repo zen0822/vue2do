@@ -9,7 +9,10 @@ export default function (h) {
         direction: this.direction,
         speed: this.speed,
         top: this.top,
-        left: this.left
+        left: this.left,
+        beforeEnter: () => {
+          return this.computePosition()
+        }
       },
       ref: 'transition'
     },

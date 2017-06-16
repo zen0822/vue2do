@@ -3,12 +3,12 @@
  *
  * @prop message - 信息
  * @prop direction - 信息出现方向
- * @prop type - 弹窗类型(pop | bar)
+ * @prop type - 信息(pop | bar | header)
  *
  * @slot - 弹窗的主体内容
  *
- * @event ok - 点击确定按钮
- * @event no - 点击取消按钮
+ * @event show - 显示之后的钩子函数
+ * @event hide - 隐藏之后的钩子函数
  */
 
 import './message.scss'
@@ -71,7 +71,12 @@ const messageComp = {
 
   data: () => {
     return {
-      messageDisplay: false
+      // 需要展示的信息
+      infoMessage: '',
+      // 信息类型
+      messageType: '',
+      messageDisplay: false,
+      hideCb: null
     }
   },
 
@@ -88,38 +93,53 @@ const messageComp = {
      * 设置数据
      */
     _setDataOpt() {
-      this.messageMessage = this.message
+      this.infoMessage = this.message
     },
 
     /**
-     * 显示pop
+     * 显示
      *
-     * @param {Number} - 当前页码
-     * @return {Object}
+     * @param {Object} opt - 选项
+     *                       {Function} cb - 显示之后的回调函数
+     * @return {Promise}
      */
-    show() {
-      this.messageDisplay = true
-      this.$refs.pop.show({
-        cb: () => {
-          setTimeout(() => {
-            this.hide()
-          }, TIP_DISPLAY_TIME)
-        }
-      })
+    show({ cb } = {}) {
+      return this.$nextTick(() => {
+        this.messageDisplay = true
 
-      return this
+        this.$refs.pop.show({
+          cb: () => {
+            setTimeout(() => {
+              this.hide()
+            }, TIP_DISPLAY_TIME)
+
+            cb && cb()
+
+            return this.$emit('hide')
+          }
+        })
+
+        return this
+      })
     },
 
     /**
      * 隐藏pop
      *
+     * @param {Object} opt - 选项
+     *                       {Function} cb - 隐藏之后的回调函数
      * @return {Object}
      */
-    hide() {
+    hide({ cb } = {}) {
       this.$refs.pop.hide({
         cb: () => {
           this.messageDisplay = false
           this.isMousedown = false
+
+          this.hideCb && this.hideCb()
+          cb && cb()
+
+          return this.$emit('hide')
         }
       })
 
@@ -134,8 +154,28 @@ const messageComp = {
      */
     info(text) {
       if (text === '' || text) {
-        this.messageMessage = text
+        this.infoMessage = text
       }
+
+      return this
+    },
+
+    /**
+     * 设置各个组件的配置数据
+     *
+     * @param {Object} opt - 选项
+     *                       {Function} hideCb - 隐藏之后的回调函数
+     *                       {String} type - 组件类型
+     *                       {Function} message - 需要展示的信息
+     */
+    set({
+      hideCb,
+      type = 'pop',
+      message = ''
+    } = {}) {
+      this.infoMessage = message
+      this.hideCb = hideCb
+      this.messageType = type
 
       return this
     }

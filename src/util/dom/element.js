@@ -1,19 +1,43 @@
-const addClass = (el, classStr) => {
-  let newClassList = classStr.trim() + ' ' + el.className
-  let classSet = new Set(newClassList.split(' '))
+const addClass = (el, classHub) => {
+  if (!(Array.isArray(classHub) && classHub.length > 0
+      || typeof classHub === 'string')) {
+    return false
+  }
+
+  let localClass = el.className.split(' ')
+  let classSet
+
+  if (Array.isArray(classHub)) {
+    classSet = new Set(localClass.concat(classHub))
+  } else if (typeof classHub === 'string') {
+    classSet = new Set(localClass.concat(classHub.trim().split(' ')))
+  }
 
   el.className = [...classSet].join(' ')
 }
 
-const delClass = (el, classStr) => {
-  let classSet = new Set(el.className.split(' '))
-  let classList = classStr.split(' ')
+const delClass = (el, classHub) => {
+  if (!(Array.isArray(classHub) && classHub.length > 0
+      || typeof classHub === 'string')) {
+    return false
+  }
 
-  classList.forEach((item, index) => {
-    classSet.delete(item)
+  let localClass = new Set(el.className.split(' '))
+  let classSet
+
+  if (Array.isArray(classHub)) {
+    classSet = new Set(classHub)
+  } else if (typeof classHub === 'string') {
+    classSet = new Set(
+      classHub.trim().split(' ')
+    )
+  }
+
+  classSet.forEach((item) => {
+    localClass.delete(item)
   })
 
-  el.className = [...classSet].join(' ')
+  el.className = [...localClass].join(' ')
 }
 
 const childrenHeight = (el) => {

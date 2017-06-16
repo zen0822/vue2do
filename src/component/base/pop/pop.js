@@ -8,6 +8,8 @@
  *
  * @slot - 弹窗的主体内容
  *
+ * @event show - 显示之后的钩子函数
+ * @event hide - 隐藏之后的钩子函数
  */
 
 import './pop.scss'
@@ -91,19 +93,22 @@ const popComp = {
         window.addEventListener('resize', (event) => {
           this.computePosition()
         })
-
-        this.$refs.transition.$on('beforeEnter', () => {
-          this.computePosition()
-        })
       }
     },
 
     /**
      * 设置 pop 的位置
      */
-    position({top, left}) {
+    position({ top, left }) {
+      this.$el.style.top = top
+      this.$el.style.left = left
       this.left = left
       this.top = top
+
+      return {
+        top,
+        left
+      }
     },
 
     /**
@@ -121,8 +126,10 @@ const popComp = {
       let left = offsetW < 0 ? 0 : offsetW / 2
       let top = offsetH < 0 ? 0 : offsetH / 2
 
-      this.left = left
-      this.top = top
+      return this.position({
+        top,
+        left
+      })
     },
 
     /**
@@ -141,14 +148,18 @@ const popComp = {
     /**
      * 显示pop
      *
-     * @param {Number} - 当前页码
+     * @param {Object} opt - 选项
+     *                       {Function} cb - 显示之后的回调函数
      * @return {Object}
      */
     show({ cb } = {}) {
       this.popDisplay = true
 
+      this.$refs.transition.$off('afterEnter')
       this.$refs.transition.$on('afterEnter', () => {
         cb && cb()
+
+        return this.$emit('show')
       })
 
       return this
@@ -157,13 +168,18 @@ const popComp = {
     /**
      * 隐藏pop
      *
+     * @param {Object} opt - 选项
+     *                       {Function} cb - 隐藏之后的回调函数
      * @return {Object}
      */
     hide({ cb } = {}) {
       this.popDisplay = false
 
+      this.$refs.transition.$off('afterLeave')
       this.$refs.transition.$on('afterLeave', () => {
         cb && cb()
+
+        return this.$emit('hide')
       })
 
       return this

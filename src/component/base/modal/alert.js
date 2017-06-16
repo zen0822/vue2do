@@ -78,17 +78,19 @@ const alert = (opt) => {
     .getters[commonStore.alert.get]
     .$refs
     .alert
-    .title(option.title)
-    .info(option.message)
-    .setOkCb((vm) => {
-      alerting = false
+    .set({
+      title: option.title,
+      message: option.message,
+      okCb: (vm) => {
+        alerting = false
 
-      if (alertHub.length > 0) {
-        alert(alertHub.shift())
+        if (alertHub.length > 0) {
+          alert(alertHub.shift())
+        }
+
+        option.cb && option.cb()
+        vm.hide()
       }
-
-      option.cb && option.cb()
-      vm.hide()
     })
     .show(() => {
       alerting = true

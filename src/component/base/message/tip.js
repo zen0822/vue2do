@@ -5,7 +5,6 @@
 import Vue from 'vue'
 
 import messageComp from './message'
-import alert from '../modal/alert'
 
 import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
@@ -68,12 +67,6 @@ const tip = (opt) => {
     option = opt
   }
 
-  if (option.message.length > 20) {
-    alert(option)
-
-    return false
-  }
-
   const commonVuex = new Vue({
     store
   })
@@ -83,18 +76,22 @@ const tip = (opt) => {
     .getters[commonStore.tip.get]
     .$refs
     .tip
-    .info(option.message)
-    .setOkCb(() => {
-      tiping = false
+    .set({
+      message: option.message,
+      type: option.type,
+      hideCb: () => {
+        tiping = false
+        option.cb && option.cb()
 
-      if (tipHub.length > 0) {
-        tip(tipHub.shift())
+        if (tipHub.length > 0) {
+          return tip(tipHub.shift())
+        }
       }
-
-      option.cb && option.cb()
     })
-    .show(() => {
-      tiping = true
+    .show({
+      cb: () => {
+        tiping = true
+      }
     })
 }
 

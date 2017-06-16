@@ -4,6 +4,7 @@
  * @prop direction - 弹出方向（left | right | top | bottom）
  * @prop speed - 弹出速度
  * @prop type - 弹出类型
+ * @prop beforeEnter - 进来过渡之前回调函数（返回相关信息）
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -30,26 +31,36 @@ export default {
     left: {
       type: Number,
       default: 0
-    }
+    },
+    beforeEnter: Function
   },
 
   computed: {
     translate() {
-      switch (this.direction) {
-        case 'top':
-          return `translateY(calc(-100% - ${this.top}px))`
-        case 'bottom':
-          return `translateY(calc(100% + ${this.top}px))`
-        case 'left':
-          return `translateX(calc(-100% - ${this.left}px))`
-        case 'right':
-          return `translateX(calc(100% + ${this.left}px))`
-        default:
-          return `translateY(calc(-100% - ${this.top}px))`
-      }
+      return this.getTranslate({
+        top: this.top,
+        left: this.left
+      })
     },
     transition() {
       return `transform ${this.transitionTime} ease-out`
+    }
+  },
+
+  methods: {
+    getTranslate({ top, left }) {
+      switch (this.direction) {
+        case 'top':
+          return `translateY(calc(-200% - ${top}px))`
+        case 'bottom':
+          return `translateY(calc(200% + ${top}px))`
+        case 'left':
+          return `translateX(calc(-200% - ${left}px))`
+        case 'right':
+          return `translateX(calc(200% + ${left}px))`
+        default:
+          return `translateY(calc(-200% - ${top}px))`
+      }
     }
   },
 
@@ -60,9 +71,10 @@ export default {
           el.style.visibility = 'hidden'
           el.style.display = ''
 
-          el.style.transform = this.translate
+          let elPoi = this.beforeEnter()
+          el.style.transform = this.getTranslate(elPoi)
 
-          this.$emit('beforeEnter')
+          return this.$emit('beforeEnter')
         },
 
         enter: (el) => {
@@ -73,34 +85,34 @@ export default {
           el.style.visibility = ''
           el.style.transform = ''
 
-          this.$emit('enter')
+          return this.$emit('enter')
         },
 
         afterEnter: (el) => {
           el.style.transition = ''
 
-          this.$emit('afterEnter')
+          return this.$emit('afterEnter')
         },
 
         beforeLeave: (el) => {
           el.style.transform = ''
           el.style.transition = this.transition
 
-          this.$emit('beforeLeave')
+          return this.$emit('beforeLeave')
         },
 
         leave: (el) => {
           el.style.visibility = ''
           el.style.transform = this.translate
 
-          this.$emit('leave')
+          return this.$emit('leave')
         },
 
         afterLeave: (el) => {
           el.style.transition = ''
           el.style.transform = ''
 
-          this.$emit('afterLeave')
+          return this.$emit('afterLeave')
         }
       }
     }, this.$slots.default)

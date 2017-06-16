@@ -334,26 +334,24 @@ const modalComp = {
     },
 
     /**
-     * alert, confirm 设置弹窗的确定按钮的回调函数
-     * 显示完 tip 的回调函数
+     * 设置各个组件的配置数据
      *
-     * @param {Function}
-     * @return {Object}
+     * @param {Object} opt - 选项
+     *                       {Function} okCb - 点击的回调函数
+     *                       {Function} noCb - 取消的回调函数
+     *                       {String} title - 模态框标题
+     *                       {Function} message - 需要展示的信息
      */
-    setOkCb(cb) {
-      this.okCb = cb
-
-      return this
-    },
-
-    /**
-     * alert, confirm 设置弹窗的确定按钮的回调函数
-     *
-     * @param {Function}
-     * @return {Object}
-     */
-    setNoCb(cb) {
-      this.noCb = cb
+    set({
+      okCb,
+      noCb,
+      title = '',
+      message = ''
+    } = {}) {
+      this.okCb = okCb
+      this.noCb = noCb
+      this.modalHeader = title
+      this.modalMessage = message
 
       return this
     }

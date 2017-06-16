@@ -24,9 +24,8 @@ export default function (h) {
             this.xclass('ele'),
           ],
           on: {
-            click: this.click,
-            mousedown: this.mousedown,
-            mouseup: this.mouseup
+            focus: this.focus,
+            blur: this.blur
           },
           attrs: {
             href: this.link,
@@ -88,27 +87,22 @@ export default function (h) {
       btnChildren,
       h('rip-transition',
         {
+          class: [this.xclass('rip')],
+          props: {
+            assign: true,
+            mousePoi: this.mousePoi,
+            switch: this.pressing
+          },
           on: {
             'afterEnter': () => {
               this.pressing = false
             }
           }
-        },
-        [
-          h('div',
-            {
-              class: [this.xclass('rip')],
-              directives: [{
-                name: 'show',
-                value: this.pressing
-              }]
-            }
-          )
-        ]
+        }
       ),
       h('div',
         {
-          class: [this.prefixClass('g-rip')],
+          class: [this.prefixClass('global-rip')],
           directives: [{
             name: 'show',
             value: this.motion

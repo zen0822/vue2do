@@ -105,7 +105,12 @@ const btnComp = {
       // 不执行 focus 事件
       allowFocus: true,
       // 点击按钮中
-      pressing: false
+      pressing: false,
+      // 点击按钮的鼠标位置
+      mousePoi: {
+        top: 0,
+        left: 0
+      }
     }
   },
 
@@ -124,9 +129,16 @@ const btnComp = {
       this.allowFocus = true
     },
 
-    mousedown() {
+    mousedown(event) {
+      event.preventDefault()
+
       this.allowFocus = false
       this.pressing = true
+
+      this.mousePoi = {
+        x: event.offsetX,
+        y: event.offsetY
+      }
     },
 
     focus() {
@@ -143,7 +155,9 @@ const btnComp = {
      * 点击按钮
      * @return {Object} this - 组件
      */
-    click() {
+    click(event) {
+      event.preventDefault()
+
       return this.$emit('click')
     },
 
