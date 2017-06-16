@@ -3,53 +3,9 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-input
+      z-check(:init-opt='testOpt')
       z-code.
-        #{'<z-input></z-input>'}
-    +section('textarea', '输入区域')
-      z-input(
-        type='row',
-        :row='4',
-        placeholder='请输入...')
-      z-code.
-        #{'<z-input type="row" :row="4" placeholder="请输入..."></z-input>'}
-    +section('completion', '补全功能')
-      z-input(
-          completion
-          placeholder='请输入...会补全的...'
-          ref='input')
-        z-search(
-          :option='testOpt'
-          :input='false'
-          ref='completion'
-          slot='completion')
-      z-code.
-        #{'<z-input'}
-            #{'completion'}
-            #{'placeholder="请输入...会补全的..."'}
-            #{'ref="input">'}
-          #{'<z-search'}
-              #{':option="testOpt"'}
-              #{'ref="completion"'}
-              #{'slot="completion"></z-search>'}
-        #{'<z-input>'}
-    +section('verify', '验证功能')
-      z-input(
-          :min='2'
-          :max='10'
-          error-message='邮箱'
-          placeholder='限制只能输入2-10位以内'
-          verifedType='email'
-          ref='verifyInput')
-      z-btn(class='z-m-l' @click.native='clickVerifyInput') 点击验证是否为邮箱
-      z-code.
-        #{'<z-input'}
-            :min="2"
-            :max="10"
-            error-message="邮箱"
-            placeholder="限制只能输入2-10位以内"
-            verifedType="email"
-            #{'ref="verifyInput"></z-input>'}
+        #{'<z-check></z-check>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'

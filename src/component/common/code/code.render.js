@@ -69,7 +69,7 @@ export default function (h) {
                 },
                 [
                   h('ul', {
-                    class: [this.prefixClass('ul')]
+                    class: [this.prefix('ul')]
                   }, lineNumEle)
                 ]
               )

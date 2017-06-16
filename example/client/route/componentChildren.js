@@ -31,6 +31,12 @@ export default [{
     title: '按钮组件'
   }
 }, {
+  path: 'check',
+  component: checkPage,
+  meta: {
+    title: '按钮组件'
+  }
+}, {
   path: 'select',
   component: selectPage,
   meta: {

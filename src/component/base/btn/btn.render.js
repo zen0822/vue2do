@@ -102,7 +102,7 @@ export default function (h) {
       ),
       h('div',
         {
-          class: [this.prefixClass('global-rip')],
+          class: [this.prefix('global-rip')],
           directives: [{
             name: 'show',
             value: this.motion

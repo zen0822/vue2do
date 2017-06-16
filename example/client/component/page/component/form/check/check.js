@@ -1,9 +1,9 @@
 import './check.scss'
-import template from './check.tpl'
+import pug from './check.pug'
 import mixin from '../../mixin'
 
 export default {
-  template,
+  template: pug(),
 
   mixins: [mixin],
 

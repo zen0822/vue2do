@@ -71,13 +71,13 @@ const tableColComp = {
       {
         class: [
           this.cPrefix,
-          this.prefixClass('text-' + this.align)
+          this.prefix('text-' + this.align)
         ]
       },
       [
         h('div', {
           class: [{
-            [`${this.prefixClass('text-omit')}`]: this.omit
+            [`${this.prefix('text-omit')}`]: this.omit
           }],
           style: this.colBodyStyle
         }, this.$slots.default)

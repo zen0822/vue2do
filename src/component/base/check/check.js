@@ -24,7 +24,7 @@
 import './check.scss'
 
 import Vue from 'vue'
-import template from './check.tpl'
+import render from './check.render'
 import compEvent from '../../../config/event.json'
 
 import iconComp from '../../base/icon/icon'
@@ -44,7 +44,7 @@ let checkCompConfig = {
 
   mixins: [baseMixin, formMixin],
 
-  template,
+  render,
 
   components: {
     icon: iconComp,
@@ -339,7 +339,10 @@ let checkCompConfig = {
     /**
      * 选择 checkbox
      */
-    check(evt, val) {
+    check(evt) {
+      let index = evt.currentTarget.getAttribute('z-data-index')
+      let val = this.option[parseInt(index, 10)].value
+
       if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
         return false
       }

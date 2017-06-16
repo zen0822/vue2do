@@ -65,7 +65,7 @@ export default function (h) {
       h('transition',
         {
           props: {
-            name: this.prefixClass('slide-up')
+            name: this.prefix('slide-up')
           }
         },
         [

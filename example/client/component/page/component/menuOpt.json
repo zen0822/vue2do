@@ -24,7 +24,20 @@
         "sub": [
           {
             "name": "基本用法",
-            "route": "/component/select#basic"
+            "route": "/component/check#start"
+          },
+          {
+            "name": "多选",
+            "route": "/component/check#multiple"
+          }
+        ]
+      },
+      {
+        "name": "菜单组件",
+        "sub": [
+          {
+            "name": "基本用法",
+            "route": "/component/select#start"
           },
           {
             "name": "标签声明",

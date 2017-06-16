@@ -45,7 +45,7 @@ export default {
     const data = {
       on: {
         beforeEnter: (el) => {
-          addClass(el, this.prefixClass('transition-rip'))
+          addClass(el, this.prefix('transition-rip'))
 
           if (this.assign) {
             let $spot = el.firstChild
@@ -62,7 +62,7 @@ export default {
             $spot.style.top = (this.mousePoi.y - spotH / 2) + 'px'
             $spot.style.left = (this.mousePoi.x - spotW / 2) + 'px'
           } else {
-            addClass(el, this.prefixClass('transition-rip-auto'))
+            addClass(el, this.prefix('transition-rip-auto'))
           }
 
           let height = el.offsetHeight
@@ -75,7 +75,7 @@ export default {
         enter: (el) => {
           let height = el.offsetHeight
 
-          addClass(el, this.prefixClass('transition-rip-active'))
+          addClass(el, this.prefix('transition-rip-active'))
 
           this.$emit('enter')
         },
@@ -84,8 +84,8 @@ export default {
           el.firstChild.style.transition = el.style.transition = ''
 
           delClass(el, [
-            this.prefixClass('transition-rip'),
-            this.prefixClass('transition-rip-active')
+            this.prefix('transition-rip'),
+            this.prefix('transition-rip-active')
           ])
 
           this.$emit('afterEnter')
@@ -103,7 +103,7 @@ export default {
               value: this.show
             }]
           },
-          [h('div', { class: [this.prefixClass('transition-rip-spot')] })]
+          [h('div', { class: [this.prefix('transition-rip-spot')] })]
         )
       ]
     )

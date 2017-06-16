@@ -2,7 +2,7 @@ include ../../mixin.pug
 
 div
   article.example-article
-    +section('basic', '基本用法')
+    +section('start', '开始使用')
       z-table
         template(slot='thead', v-for='item in ["名字", "类型", "可选值", "说明"]')
           z-table-col {{ item }}

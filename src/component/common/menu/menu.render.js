@@ -119,7 +119,7 @@ export default function (h) {
       h('transition',
         {
           props: {
-            name: this.prefixClass(`${this.menuAnimate}-down`)
+            name: this.prefix(`${this.menuAnimate}-down`)
           }
         },
         [

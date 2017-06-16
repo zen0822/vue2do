@@ -95,7 +95,7 @@ export default {
     /**
      * 为组件里面的类名增加前缀
      **/
-    prefixClass(className) {
+    prefix(className) {
       if (Array.isArray(className)) {
         for (let i = 0, len = className.length; i < len; i++) {
           className[i] = `${this.compPrefix}-${className[i]}`
