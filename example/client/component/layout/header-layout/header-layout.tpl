@@ -42,7 +42,7 @@
       @hide="hideMenu"
       :autoSwitch="false"
       :init-opt="menuOpt">
-    <div class="menu-search" slot="tail">
+    <div class="menu-search" slot="end">
       <z-input placeholder="search in vue2do">
         <z-icon slot="head" kind="search"></z-icon>
       </z-input>

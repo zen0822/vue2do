@@ -89,7 +89,7 @@ export default function (h) {
         {
           class: [this.xclass('rip')],
           props: {
-            assign: true,
+            assign: !this.isFloatBtn,
             mousePoi: this.mousePoi,
             switch: this.pressing
           },

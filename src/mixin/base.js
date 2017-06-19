@@ -10,7 +10,7 @@
 import compConfig from '../config/index.json'
 import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
-import { addClass } from '../util/dom/element'
+import { addClass } from '../util/dom/attr'
 
 export default {
   store,

@@ -7,46 +7,55 @@ $C_PREFIX: #{ $comp-prefix }-transition;
 .#{ $C_PREFIX }-rip {
   position: absolute;
 	background-color: rgba(0, 0, 0, .1);
+  border-radius: 100%;
 	opacity: 1;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 	top: 0;
 	left: 0;
 
-  &.#{ $C_PREFIX }-rip-auto {
+  &.#{ $C_PREFIX }-rip-assign {
+    border-radius: 0;
+    overflow: hidden;
+
 		& > .#{ $C_PREFIX }-rip-spot {
-			top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scaleX(.2);
+      top: auto;
+      left: auto;
+      width: 200%;
+      height: 200%;
+      border-radius: 100%;
+			transform: scaleX(.2);
 		}
   }
 
   &.#{ $C_PREFIX }-rip-active {
 		opacity: 0;
 
-    &.#{ $C_PREFIX }-rip-auto {
+    &.#{ $C_PREFIX }-rip-assign {
       & > .#{ $C_PREFIX }-rip-spot {
-        opacity: 0;
-        transform: translate(-50%, -50%) scaleX(1);
+			  transform: scaleX(1);
       }
     }
 
     & > .#{ $C_PREFIX }-rip-spot {
 			opacity: 0;
-			transform: scaleX(1);
+      transform: translate(-50%, -50%) scale(2);
 		}
   }
 
   & > .#{ $C_PREFIX }-rip-spot {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+
     background-color: rgba(0, 0, 0, .2);
-    width: 200%;
-    height: 200%;
-    border-radius: 50%;
+    border-radius: 100%;
 		opacity: 1;
-		will-change: transform;
+
+    will-change: transform;
     transform-origin: 50% 50%;
-    transform: scaleX(.2);
+    transform: translate(-50%, -50%) scale(.5);
   }
 }

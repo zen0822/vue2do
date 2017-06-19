@@ -87,9 +87,9 @@ export default function (h) {
             })
           ]
         ),
-        this.$slots.head,
+        this.$slots.start,
         foldContent.call(this, h, this.initOpt),
-        this.$slots.tail
+        this.$slots.end
       ]
     )
   ]

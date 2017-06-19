@@ -1,4 +1,4 @@
-import { addClass, delClass } from '../../util/dom/element'
+import { addClass, delClass } from '../../util/dom/attr'
 
 /**
  * fold transition component

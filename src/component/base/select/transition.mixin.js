@@ -1,4 +1,4 @@
-import { childrenHeight } from '../../../util/dom/element'
+import { childrenHeight } from '../../../util/dom/prop'
 
 export default {
   methods: {

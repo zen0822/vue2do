@@ -4,7 +4,7 @@
  * @prop assign - 指定涟漪在是什么位置开始
  */
 
-import { addClass, delClass } from '../../util/dom/element'
+import { addClass, delClass } from '../../util/dom/attr'
 import baseMixin from '../../mixin/base'
 import './scss/rip.scss'
 
@@ -48,6 +48,8 @@ export default {
           addClass(el, this.prefix('transition-rip'))
 
           if (this.assign) {
+            addClass(el, this.prefix('transition-rip-assign'))
+
             let $spot = el.firstChild
 
             el.style.visibility = 'hidden'
@@ -56,13 +58,11 @@ export default {
             let spotComputedStyle = getComputedStyle($spot)
             let spotW = parseFloat(spotComputedStyle.width)
             let spotH = parseFloat(spotComputedStyle.height)
-
+            console.log(getComputedStyle(el))
             el.style.visibility = ''
             el.style.display = 'none'
             $spot.style.top = (this.mousePoi.y - spotH / 2) + 'px'
             $spot.style.left = (this.mousePoi.x - spotW / 2) + 'px'
-          } else {
-            addClass(el, this.prefix('transition-rip-auto'))
           }
 
           let height = el.offsetHeight
@@ -85,6 +85,7 @@ export default {
 
           delClass(el, [
             this.prefix('transition-rip'),
+            this.prefix('transition-rip-assign'),
             this.prefix('transition-rip-active')
           ])
 

@@ -20,7 +20,8 @@ $C_PREFIX: #{ $COMP_BTN };
 }
 
 .#{ $C_PREFIX } {
-  &.#{ $C_PREFIX }-type-button {
+  &.#{ $C_PREFIX }-type-button,
+  &.#{ $C_PREFIX }-type-float {
     & > .#{ $C_PREFIX }-ele {
       background-color: #fff;
       border: $border-thin solid transparent;
@@ -60,6 +61,16 @@ $C_PREFIX: #{ $COMP_BTN };
           border-color: $grey-dark;
         }
       }
+    }
+  }
+
+  &.#{ $C_PREFIX }-type-float {
+    & > .#{ $C_PREFIX }-ele {
+      border-radius: 100%;
+      width: 36px;
+      height: 36px;
+      box-sizing: border-box;
+      padding: $gap-h-half;
     }
   }
 

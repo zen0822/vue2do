@@ -135,9 +135,11 @@ const btnComp = {
       this.allowFocus = false
       this.pressing = true
 
+      let el = event.currentTarget
+      debugger
       this.mousePoi = {
-        x: event.offsetX,
-        y: event.offsetY
+        x: event.pageX - el.offsetLeft,
+        y: event.pageY - el.offsetTop
       }
     },
 
@@ -208,8 +210,8 @@ const btnComp = {
       return !this.btnValueDisplay && this.link
     },
 
-    isButton() {
-      return !this.btnValueDisplay && this.type === BTN_TYPE_BUTTON
+    isFloatBtn() {
+      return this.type === 'float'
     },
 
     btnClass() {
