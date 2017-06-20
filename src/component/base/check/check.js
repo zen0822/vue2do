@@ -280,7 +280,7 @@ let checkCompConfig = {
         return false
       }
 
-      if (this.compileVm === 'undefined') {
+      if (typeof this.compileVm === 'undefined') {
         this.compileVm = this.$parent
       }
 
