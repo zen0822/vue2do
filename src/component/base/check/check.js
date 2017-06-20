@@ -12,9 +12,8 @@
  * @prop errorMessage - checkbox 没选的时候显示的错误信息
  * @prop valName - 指定读取 checkboxItems 的 value 值的 key 的名字
  * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
- * @prop remote - 不为空则是远程下载的 url 地址，并且数据是从远程下载
  *
- * @prop beforeCheck - 选择之前的回调函数
+ * @prop beforeCheck - 选择之前的钩子函数
  * @prop success - 选择成功的回调函数
  *
  * @prop checkAll - 全选 checkbox 的选项
@@ -29,10 +28,12 @@ import compEvent from '../../../config/event.json'
 
 import iconComp from '../../base/icon/icon'
 import checkComp from '../../base/check/check'
+import ripTransition from '../../transition/rip'
 import tip from '../../base/message/tip'
 
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
+import apiMixin from './check.api.js'
 
 import { isEmpty as isEmptyArray } from '../../../util/data/array'
 
@@ -42,13 +43,14 @@ const TYPE_CHECKBOX = 'checkbox'
 let checkCompConfig = {
   name: 'check',
 
-  mixins: [baseMixin, formMixin],
+  mixins: [baseMixin, formMixin, apiMixin],
 
   render,
 
   components: {
     icon: iconComp,
-    check: checkComp
+    check: checkComp,
+    'rip-transition': ripTransition
   },
 
   props: {
@@ -102,8 +104,6 @@ let checkCompConfig = {
       type: String,
       default: 'text'
     },
-
-    remote: String,
 
     checkAll: {
       type: Boolean,
@@ -320,183 +320,12 @@ let checkCompConfig = {
       }
 
       return this.value.push(val)
-    },
-
-    /**
-     * checkbox的icon的样式
-     *
-     * @param { String } - checkbox当前值
-     * @return { Function, Object }
-     **/
-    iconName(val) {
-      if (this.isRadio) {
-        return this.value === val ? 'circle-check-o' : 'circle-o'
-      } else if (this.isCheckbox && Array.isArray(this.value)) {
-        return this.value.indexOf(val) !== -1 ? 'square-check-o' : 'square-o'
-      }
-    },
-
-    /**
-     * 选择 checkbox
-     */
-    check(evt) {
-      let index = evt.currentTarget.getAttribute('z-data-index')
-      let val = this.option[parseInt(index, 10)].value
-
-      if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
-        return false
-      }
-
-      if (this.isCheckbox) {
-        this.oldValue = []
-
-        this.value.forEach((item) => {
-          this.oldValue.push(item)
-        })
-
-        this._changeCheckbox(val)
-      } else {
-        this.oldValue = this.value
-
-        this.value = val
-      }
-
-      this.$nextTick(() => {
-        this.success && this.success.call(null, this)
-      })
-    },
-
-    /**
-     * 获取 checkboxItems 数据
-     * @return {Object} this - 组件
-     */
-    fetch(cb) {
-      let _self = this
-
-      $.ajax({
-        type: typeof this.ajaxType === 'undefined' ? 'get' : this.ajaxType,
-        url: this.remote,
-        success(rtn) {
-          if (rtn.code === 0) {
-            cb && cb(rtn)
-          } else {
-            console.warn('复 / 单选框获取远程数据失败')
-          }
-        }
-      })
-    },
-
-    /**
-     * 设置checkbox的text值
-     *
-     * @return {Function, String}
-     **/
-    setText() {
-      if (this.isRadio) {
-        this.text = this.option[this.currentIndex][this.txtName]
-
-        return this
-      } else {
-        if (!Array.isArray(this.value)) {
-          return false
-        }
-
-        this.text = []
-
-        return this.value.forEach((item) => {
-          this.option.forEach((ele) => {
-            if (item === ele[this.valName]) {
-              this.text.push(item)
-            }
-          })
-        })
-      }
-    },
-
-    /**
-     * 设置 currentIndex
-     *
-     * @return {Function, Object}
-     **/
-    setCurrentIndex() {
-      if (this.isRadio) {
-        return this.option.forEach((item, index) => {
-          if (item[this.valName] === this.value) {
-            this.currentIndex = index
-          }
-        })
-      }
-
-      return this
-    },
-
-    /**
-     * 验证数据格式
-     *
-     * @return {Object} - this - 组件
-     */
-    verify() {
-      this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}${this.isRadio ? '单选框' : '复选框'}!`
-
-      return this.verified
-    },
-
-    /**
-     * 验证数据格式并且弹出错误
-     *
-     * @return {Object} - this - 组件
-     */
-    validate() {
-      this.verify()
-
-      if (!this.verified) {
-        tip(this.dangerTip)
-
-        return false
-      }
-
-      return this
-    },
-
-    /**
-     * 全选复选框
-     *
-     * @return {Object} - this - 组件
-     */
-    checkAllOption() {
-      if (!this.selectAllVal) {
-        let value = []
-
-        this.option.forEach((item) => {
-          value.push(item[this.valName])
-        })
-
-        this.value = value
-        this.selectAllVal = value
-      }
-
-      if (this.checkedAll) {
-        this.value = []
-      } else {
-        this.value = this.selectAllVal
-      }
-
-      this.checkedAll = !this.checkedAll
     }
   },
 
   created() {
-    if (this.remote) {
-      this.fetch((rtn) => {
-        this.option = rtn.data
-
-        this._initCheckboxItems()
-        this._initCheckbox()
-      })
-    } else {
-      this._initCheckboxItems()
-      this._initCheckbox()
-    }
+    this._initCheckboxItems()
+    this._initCheckbox()
   }
 }
 

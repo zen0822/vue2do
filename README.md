@@ -24,7 +24,7 @@ Vue.use(vue2do)
 ```
 在项目中使用
 ``` html
-<z-input></input>
+<z-input></z-input>
 ```
 
 ### 局部加载

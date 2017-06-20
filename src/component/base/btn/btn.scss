@@ -20,7 +20,9 @@ $C_PREFIX: #{ $COMP_BTN };
 
   .#{ $C_PREFIX }-ele {
     position: relative;
+    min-width: 88px;
     padding: 7.5px $gap-v-triple / 2;
+    box-sizing: border-box;
     border-radius: $border-radius;
     color: #fff;
     text-align: center;
@@ -50,11 +52,23 @@ $C_PREFIX: #{ $COMP_BTN };
 
   &.#{ $C_PREFIX }-size {
     &-m > .#{ $C_PREFIX }-ele {
-      padding: 7px $gap-v-double * 2;
+      min-width: 108px;
     }
 
     &-l > .#{ $C_PREFIX }-ele {
-      padding: 7px $gap-v-triple * 2;
+      min-width: 128px;
+    }
+
+    &.#{ $C_PREFIX }-type-float {
+      &-m > .#{ $C_PREFIX }-ele {
+        width: 56px;
+        height: 56px;
+      }
+
+      &-l > .#{ $C_PREFIX }-ele {
+        width: 72px;
+        height: 72px;
+      }
     }
   }
 

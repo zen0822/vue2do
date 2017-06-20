@@ -1,6 +1,7 @@
 /**
  * check.render.js
  */
+import Vue from 'vue'
 
 export default function (h) {
   let ulChildren = []
@@ -57,12 +58,34 @@ export default function (h) {
                 class: [this.xclass('box')]
               },
               [
-                h('icon', {
-                  props: {
-                    size: 'm',
-                    kind: this.iconName(item[this.valName])
-                  }
-                }),
+                h('div',
+                  {
+                    class: [this.xclass('icon')]
+                  },
+                  [
+                    h('icon', {
+                      props: {
+                        size: 'm',
+                        kind: this.iconName(item[this.valName])
+                      }
+                    }),
+                    h('rip-transition',
+                      {
+                        class: [this.xclass('rip')],
+                        props: {
+                          switch: this.option[index].pressing
+                        },
+                        on: {
+                          'afterEnter': () => {
+                            Vue.set(this.option, index, Object.assign(this.option[index], {
+                              pressing: false
+                            }))
+                          }
+                        }
+                      }
+                    )
+                  ]
+                ),
                 (() => {
                   if (item[this.txtName]) {
                     return h('span', {

@@ -27,6 +27,7 @@ $C_PREFIX: #{ $COMP_BTN };
       border: $border-thin solid transparent;
       border-radius: $border-radius;
       box-shadow: $shadow-lower;
+      min-width: auto;
 
       &:hover {
         box-shadow: $shadow;
@@ -67,10 +68,19 @@ $C_PREFIX: #{ $COMP_BTN };
   &.#{ $C_PREFIX }-type-float {
     & > .#{ $C_PREFIX }-ele {
       border-radius: 100%;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       box-sizing: border-box;
-      padding: $gap-h-half;
+      padding: 0;
+      box-shadow: $shadow;
+
+      &::after {
+        content: " ";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        width: 0;
+      }
     }
   }
 

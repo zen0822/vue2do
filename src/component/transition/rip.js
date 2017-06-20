@@ -58,7 +58,7 @@ export default {
             let spotComputedStyle = getComputedStyle($spot)
             let spotW = parseFloat(spotComputedStyle.width)
             let spotH = parseFloat(spotComputedStyle.height)
-            console.log(getComputedStyle(el))
+
             el.style.visibility = ''
             el.style.display = 'none'
             $spot.style.top = (this.mousePoi.y - spotH / 2) + 'px'
@@ -67,7 +67,7 @@ export default {
 
           let height = el.offsetHeight
 
-          el.firstChild.style.transition = el.style.transition = 'all 500ms'
+          el.firstChild.style.transition = el.style.transition = 'all 800ms'
 
           this.$emit('beforeEnter', { el })
         },

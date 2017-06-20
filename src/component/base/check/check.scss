@@ -37,17 +37,34 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
       .#{ $C_PREFIX }-box {
         display: inline-block;
 
-        &>.#{ $C_ICON_PREFIX } {
+        & > .#{ $C_PREFIX }-icon {
+          position: relative;
+          display: inline-block;
           vertical-align: middle;
-          width: 14px;
+          line-height: 1;
 
-          .#{ $C_ICON_PREFIX }-ali {
-            text-align: center;
+          & > .#{ $C_PREFIX }-rip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba($primary-color, .2);
+
+            & > .z-transition-rip-spot {
+              background-color: rgba($primary-color, .8);
+            }
           }
 
-          .#{ $C_ICON_PREFIX }-circle-check-o,
-          .#{ $C_ICON_PREFIX }-square-check-o {
-            color: $primary-color;
+          & > .#{ $C_ICON_PREFIX } {
+            vertical-align: middle;
+
+            .#{ $C_ICON_PREFIX }-ali {
+              text-align: center;
+            }
+
+            .#{ $C_ICON_PREFIX }-circle-check-o,
+            .#{ $C_ICON_PREFIX }-square-check-o {
+              color: $primary-color;
+            }
           }
         }
 

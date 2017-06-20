@@ -130,13 +130,12 @@ const btnComp = {
     },
 
     mousedown(event) {
+      let el = event.currentTarget
       event.preventDefault()
 
       this.allowFocus = false
       this.pressing = true
 
-      let el = event.currentTarget
-      debugger
       this.mousePoi = {
         x: event.pageX - el.offsetLeft,
         y: event.pageY - el.offsetTop
