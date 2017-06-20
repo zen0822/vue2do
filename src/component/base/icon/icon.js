@@ -61,7 +61,7 @@ const iconCompConfig = {
       return this.isAli ? `${this.compPrefix}-icon-${this.type}` : this.type
     },
     nameClass() {
-      return this.isAli ? `icon-${this.kind}` : `fa-${this.kind}`
+      return this.isAli ? `ali-icon-${this.kind}` : `fa-${this.kind}`
     }
   }
 }
