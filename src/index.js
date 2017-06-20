@@ -74,7 +74,7 @@ const compHub = [
 ]
 
 const component = {
-  install(Vue, { prefix = 'z' }) {
+  install(Vue, { prefix = 'z' } = {}) {
     compHub.forEach((item) => {
       Vue.component(`${prefix}-${item.name}`, item)
     })
