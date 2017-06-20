@@ -280,7 +280,7 @@ let checkCompConfig = {
         return false
       }
 
-      if (typeof this.compileVm === 'undefined') {
+      if (this.compileVm === 'undefined') {
         this.compileVm = this.$parent
       }
 
@@ -325,6 +325,7 @@ let checkCompConfig = {
 
   created() {
     this._initCheckboxItems()
+
     this._initCheckbox()
   }
 }
