@@ -333,7 +333,6 @@ const menuComp = {
       let over100 = menuHeight > 117
       let top = menuHeight
       let width = menuWidth
-
       menuHeight = over100 ? 117 : menuHeight
 
       if (this.multiple) {
