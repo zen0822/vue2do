@@ -34,13 +34,13 @@ export default function (h) {
   if (this.banState) {
     btnChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
-    }, btnEleChildren))
+    }))
   }
 
   if (this.btnValueDisplay) {
     btnChildren.push(h('div', {
       class: [this.xclass('value-show')]
-    }, this.$slots.default))
+    }, [this.$slots.default, btnEleChildren]))
   } else if (this.type === 'flat') {
     btnChildren.push(
       h(
@@ -109,6 +109,7 @@ export default function (h) {
       class: [
         this.cPrefix,
         this.btnClass,
+        { [this.xclass('ban')]: this.banState },
         { [this.xclass('rip')]: this.motion }
       ],
       on: {

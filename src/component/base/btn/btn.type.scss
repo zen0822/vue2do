@@ -5,12 +5,11 @@ $C_PREFIX: #{ $COMP_BTN };
 
 @mixin btn-button($color, $dark-color, $lighter-color) {
   background-color: $color;
-  border-color: $color;
 }
 
 @mixin btn-flat($color, $lighter-color) {
   color: $color;
-  border: rgba(0, 0, 0, 0) $border-thin solid;
+  border-color: $color;
   -webkit-tap-highlight-color: $lighter-color;
 }
 
@@ -24,10 +23,8 @@ $C_PREFIX: #{ $COMP_BTN };
   &.#{ $C_PREFIX }-type-float {
     & > .#{ $C_PREFIX }-ele {
       background-color: #fff;
-      border: $border-thin solid transparent;
       border-radius: $border-radius;
       box-shadow: $shadow-lower;
-      min-width: auto;
 
       &:hover {
         box-shadow: $shadow;
@@ -53,13 +50,11 @@ $C_PREFIX: #{ $COMP_BTN };
 
       &-default > .#{ $C_PREFIX }-ele {
         @include btn-button(#fff, $border-light-color, $border-lightest-color);
-        border-color: $grey-dark;
         color: $grey-dark;
 
         &:hover,
         &:active {
           color: $grey-dark;
-          border-color: $grey-dark;
         }
       }
     }
@@ -73,6 +68,7 @@ $C_PREFIX: #{ $COMP_BTN };
       box-sizing: border-box;
       padding: 0;
       box-shadow: $shadow;
+      min-width: auto;
 
       &::after {
         content: " ";
@@ -114,8 +110,6 @@ $C_PREFIX: #{ $COMP_BTN };
   &.#{ $C_PREFIX }-type-outline {
     & > .#{ $C_PREFIX }-ele {
       background-color: #fff;
-      border-style: solid;
-      border-width: $border-thin;
     }
 
     &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {

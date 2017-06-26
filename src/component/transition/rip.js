@@ -45,7 +45,7 @@ export default {
     const data = {
       on: {
         beforeEnter: (el) => {
-          addClass(el, this.prefix('transition-rip'))
+          addClass(el, this.prefix('transition-rip-comp'))
 
           if (this.assign) {
             addClass(el, this.prefix('transition-rip-assign'))
@@ -84,7 +84,7 @@ export default {
           el.firstChild.style.transition = el.style.transition = ''
 
           delClass(el, [
-            this.prefix('transition-rip'),
+            this.prefix('transition-rip-comp'),
             this.prefix('transition-rip-assign'),
             this.prefix('transition-rip-active')
           ])
@@ -99,6 +99,7 @@ export default {
       [
         h('div',
           {
+            class: [this.prefix('transition-rip')],
             directives: [{
               name: 'show',
               value: this.show

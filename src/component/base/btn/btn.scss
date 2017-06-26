@@ -20,15 +20,16 @@ $C_PREFIX: #{ $COMP_BTN };
 
   .#{ $C_PREFIX }-ele {
     position: relative;
-    min-width: 88px;
-    padding: 7.5px $gap-v-triple / 2;
+    min-width: 64px;
+    padding: $gutter-v $gap-h;
     box-sizing: border-box;
     border-radius: $border-radius;
+    border: rgba(0, 0, 0, 0) $border-thin solid;
     color: #fff;
     text-align: center;
     font-size: $font-base;
     overflow: hidden;
-    line-height: 1.42857;
+    line-height: 1;
     white-space: nowrap;
     transform: rotate(0);
     transition-duration: 200ms;
@@ -87,16 +88,23 @@ $C_PREFIX: #{ $COMP_BTN };
     }
   }
 
-  .#{ $C_PREFIX }-value-show {
-    display: inline-block;
+  &.#{ $C_PREFIX }-ban {
+    .#{ $C_PREFIX }-ele {
+      color: rgba(0, 0, 0, .3);
+      background-color: rgba(0, 0, 0, .12) !important;
+    }
+
+    .#{ $C_PREFIX }-read-only-shadow {
+      @extend %center-position;
+
+      background-color: rgba(255, 255, 255, .5);
+      border-radius: $border-radius;
+      cursor: not-allowed;
+      z-index: 1;
+    }
   }
 
-  .#{ $C_PREFIX }-read-only-shadow {
-    @extend %center-position;
-
-    background-color: rgba(255, 255, 255, .5);
-    border-radius: $border-radius;
-    cursor: not-allowed;
-    z-index: 1;
+  .#{ $C_PREFIX }-value-show {
+    display: inline-block;
   }
 }
