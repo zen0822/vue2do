@@ -15,14 +15,13 @@
 
     &:hover {
       & > .#{ $C_PREFIX }-selected-box {
-        border-color: $border-dark-color;
+        border-bottom: $border-color $border-thin solid;
       }
     }
 
     &.#{ $C_PREFIX }-selecting {
       & > .#{ $C_PREFIX }-selected-box {
         box-shadow: $shadow-lower;
-        border-color: rgba(#000, 0);
       }
     }
 

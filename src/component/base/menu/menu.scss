@@ -47,7 +47,6 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     position: relative;
 
     padding: $gap-v $gap-h-double;
-    border-bottom: $border-color $border-thin solid;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     min-height: $MENU_HEIGHT;
@@ -56,7 +55,6 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     box-sizing: border-box;
     vertical-align: middle;
     overflow: hidden;
-    transition: all 100ms;
 
     .#{ $C_PREFIX }-init-text,
     .#{ $C_PREFIX }-init-text-input {

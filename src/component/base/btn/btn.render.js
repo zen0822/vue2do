@@ -4,11 +4,37 @@
 
 export default function (h) {
   let btnChildren = []
+  let btnEleChildren = [
+    h('rip-transition',
+      {
+        class: [this.xclass('rip')],
+        props: {
+          assign: !this.isFloatBtn,
+          mousePoi: this.mousePoi,
+          switch: this.pressing
+        },
+        on: {
+          'afterEnter': () => {
+            this.pressing = false
+          }
+        }
+      }
+    ),
+    h('div',
+      {
+        class: [this.prefix('global-rip')],
+        directives: [{
+          name: 'show',
+          value: this.motion
+        }]
+      }
+    )
+  ]
 
   if (this.banState) {
     btnChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
-    }))
+    }, btnEleChildren))
   }
 
   if (this.btnValueDisplay) {
@@ -31,7 +57,11 @@ export default function (h) {
             href: this.link,
             tabindex: 0
           }
-        }, this.$slots.default ? this.$slots.default : this.value
+        },
+        [
+          this.$slots.default ? this.$slots.default : this.value,
+          btnEleChildren
+        ]
       )
     )
   } else {
@@ -64,7 +94,11 @@ export default function (h) {
             href: this.link,
             tabindex: 0
           }
-        }, buttonChildren
+        },
+        [
+          buttonChildren,
+          btnEleChildren
+        ]
       )
     )
   }
@@ -84,31 +118,7 @@ export default function (h) {
       }
     },
     [
-      btnChildren,
-      h('rip-transition',
-        {
-          class: [this.xclass('rip')],
-          props: {
-            assign: !this.isFloatBtn,
-            mousePoi: this.mousePoi,
-            switch: this.pressing
-          },
-          on: {
-            'afterEnter': () => {
-              this.pressing = false
-            }
-          }
-        }
-      ),
-      h('div',
-        {
-          class: [this.prefix('global-rip')],
-          directives: [{
-            name: 'show',
-            value: this.motion
-          }]
-        }
-      )
+      btnChildren
     ]
   )
 }
