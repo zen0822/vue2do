@@ -26,10 +26,6 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
   }
 
   .#{ $C_PREFIX }-opt-ul {
-    &::after {
-      @extend %clear-fix;
-    }
-
     .#{ $C_PREFIX }-opt-li {
       margin: 0 $gap-h-half;
       display: inline-block;
@@ -41,7 +37,6 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
           position: relative;
           display: inline-block;
           vertical-align: middle;
-          line-height: 1;
 
           & > .#{ $C_PREFIX }-rip {
             position: absolute;

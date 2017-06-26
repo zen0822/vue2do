@@ -1,5 +1,5 @@
 /**
- * menu 组件
+ * nav 组件
  *
  * @prop animate - 菜单显示动画()
  * @prop autoSwitch - 菜单是否根据设备响应式切换
@@ -11,12 +11,12 @@
  * @prop spreadAll - 打开全部一级菜单
  * @prop title - 菜单标题
  *
- * @event hide - 隐藏 menu
+ * @event hide - 隐藏 nav
  */
 
-import './menu.scss'
-import './menu.m.scss'
-import render from './menu.render.js'
+import './nav.scss'
+import './nav.m.scss'
+import render from './nav.render.js'
 import baseMixin from '../../../mixin/base'
 import {
   foldComp,
@@ -31,7 +31,7 @@ import colComp from '../../common/layout/col/col'
 const layoutType = ['grid', 'flex', 'flow']
 
 export default {
-  name: 'menu',
+  name: 'nav',
 
   mixins: [baseMixin],
 
@@ -96,14 +96,14 @@ export default {
   data() {
     return {
       isStageActive: false,
-      menuAnimate: ''
+      navAnimate: ''
     }
   },
 
   computed: {
     // 组件类名的前缀
     cPrefix() {
-      return `${this.compPrefix}-menu`
+      return `${this.compPrefix}-nav`
     },
 
     // 设备小于 L 尺寸
@@ -121,9 +121,9 @@ export default {
   methods: {
     _setDataOpt() {
       if (this.type === 'vertical') {
-        this.menuAnimate = this.animate ? this.animate : 'fold'
+        this.navAnimate = this.animate ? this.animate : 'fold'
       } else if (this.type === 'horizontal') {
-        this.menuAnimate = this.animate ? this.animate : 'slide'
+        this.navAnimate = this.animate ? this.animate : 'slide'
       }
     },
 

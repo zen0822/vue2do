@@ -4,7 +4,7 @@
  * @prop id - 实例的唯一标识符
  * @prop name - 实例的中文名字
  * @prop theme - 主题
- *
+ * @prop ui - ui 规范 (material | bootstrap | metro |apple)
  */
 
 import compConfig from '../config/index.json'
@@ -23,6 +23,11 @@ export default {
     theme: {
       type: String,
       default: compConfig.defaultTheme
+    },
+
+    ui: {
+      type: String,
+      default: compConfig.defaultUI
     }
   },
 
@@ -34,8 +39,18 @@ export default {
 
   computed: {
     // 主题的 css 的 class 名字
+    uiClass() {
+      return this.ui ? `ui-${this.ui}` : ''
+    },
+
+    // 主题的 css 的 class 名字
     themeClass() {
       return this.theme ? `theme-${this.theme}` : ''
+    },
+
+    // 组件比加 class
+    compClass() {
+      return [this.uiClass, this.themeClass]
     },
 
     // 组件的统一前缀
@@ -112,11 +127,11 @@ export default {
      **/
     xclass(className) {
       if (Array.isArray(className)) {
-        for (let i = 0, len = className.length; i < len; i++) {
-          className[i] = `${this.cPrefix}-${className[i]}`
-        }
+        let classArr = className.map((item) => {
+          return `${this.cPrefix}-${item}`
+        })
 
-        return className.join(' ')
+        return classArr.join(' ')
       } else {
         return `${this.cPrefix}-${className}`
       }

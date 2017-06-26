@@ -62,10 +62,15 @@ export default function (h) {
         },
         ref: 'scroller'
       }, scrollerChildren),
-      h('transition',
+      h('slide-transition',
         {
           props: {
-            name: this.prefix('slide-up')
+            direction: 'bottom',
+            type: 'slide',
+            speed: 'slow',
+            detail: {
+              top: this.pagerPoi.top
+            }
           }
         },
         [
@@ -85,7 +90,8 @@ export default function (h) {
               on: {
                 'switch': this.switchPage
               },
-              ref: 'pager'
+              ref: 'pager',
+              style: this.pagerStyle
             }, (() => {
               let ele = [
                 h('icon', {

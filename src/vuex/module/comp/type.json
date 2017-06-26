@@ -9,8 +9,8 @@
     "delete": "comp/input/delete",
     "get": "comp/input/get"
   },
-  "select": {
-    "add": "comp/select/add",
-    "delete": "comp/select/delete"
+  "menu": {
+    "add": "comp/menu/add",
+    "delete": "comp/menu/delete"
   }
 }

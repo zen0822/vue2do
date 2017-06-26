@@ -36,7 +36,7 @@
     </z-col>
   </z-row>
 
-  <z-menu
+  <z-nav
       class="mobile-menu"
       ref="mobileMenu"
       @hide="hideMenu"
@@ -47,5 +47,5 @@
         <z-icon slot="head" kind="search"></z-icon>
       </z-input>
     </div>
-  </z-menu>
+  </z-nav>
 </div>

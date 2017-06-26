@@ -4,10 +4,10 @@
 @import "../../../scss/mixin.scss";
 
 /**
- * menu 组件样式
+ * nav 组件样式
  */
 
-$C_PREFIX: #{ $COMP_MENU };
+$C_PREFIX: #{ $COMP_NAV };
 $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
@@ -39,7 +39,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
         background: rgba(0, 0, 0, .8);
 
         & > .#{$C_PREFIX}-transition-container
-            > .#{$C_PREFIX}-close-menu {
+            > .#{$C_PREFIX}-close-nav {
           display: none;
         }
 
@@ -58,7 +58,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
       }
 
       & > .#{$C_PREFIX}-transition-container
-          > .#{$C_PREFIX}-close-menu {
+          > .#{$C_PREFIX}-close-nav {
         position: absolute;
         display: block;
         left: $gap-v;

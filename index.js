@@ -18,7 +18,7 @@ import input from './src/component/base/input/input'
 
 import icon from './src/component/base/icon/icon'
 import loading from './src/component/base/loading/loading'
-import menu from './src/component/common/menu/menu'
+import nav from './src/component/common/nav/nav'
 import page from './src/component/base/page/page'
 import search from './src/component/common/search/search'
 
@@ -37,8 +37,8 @@ import {
   tableRowComp as tableRow
 } from './src/component/common/table/table'
 
-import select from './src/component/base/select/select'
-import selectEle from './src/component/base/select/select-ele'
+import menu from './src/component/base/menu/menu'
+import menuEle from './src/component/base/menu/menu-ele'
 
 import shift from './src/component/base/shift/shift'
 import shiftEle from './src/component/base/shift/shift-ele'
@@ -69,7 +69,7 @@ export {
 
   icon,
   loading,
-  menu,
+  nav,
   page,
   scroller,
   search,
@@ -79,8 +79,8 @@ export {
   tableCol,
   tableRow,
 
-  select,
-  selectEle,
+  menu,
+  menuEle,
 
   shift,
   shiftEle,

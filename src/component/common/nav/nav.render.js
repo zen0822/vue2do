@@ -1,5 +1,5 @@
 /**
- * menu.render.js
+ * nav.render.js
  */
 
 function foldContent(h, foldList) {
@@ -10,12 +10,12 @@ function foldContent(h, foldList) {
   let foldChildren = []
 
   foldList.forEach((item, index) => {
-    let subMenu = item.sub
+    let subNav = item.sub
     let flodNum = index + 1
     let contentChildren = []
 
-    if (Array.isArray(subMenu) && subMenu.length > 0) {
-      contentChildren = foldContent.call(this, h, subMenu)
+    if (Array.isArray(subNav) && subNav.length > 0) {
+      contentChildren = foldContent.call(this, h, subNav)
 
       foldChildren.push(
         h('fold-title', {
@@ -63,7 +63,7 @@ function foldContent(h, foldList) {
 }
 
 export default function (h) {
-  let menuStage = []
+  let navStage = []
   let stageChildren = [
     h('div',
       {
@@ -72,7 +72,7 @@ export default function (h) {
       [
         h('div',
           {
-            class: [this.xclass('close-menu')],
+            class: [this.xclass('close-nav')],
             on: {
               click: () => {
                 this.hide()
@@ -95,14 +95,14 @@ export default function (h) {
   ]
 
   if (this.type === 'vertical') {
-    menuStage.push(
+    navStage.push(
       h('fold-transition',
         [
           h('div',
             {
               class: [
                 this.xclass('stage'),
-                this.xclass(`animate-${this.menuAnimate}`)
+                this.xclass(`animate-${this.navAnimate}`)
               ],
               directives: [{
                 name: 'show',
@@ -115,11 +115,11 @@ export default function (h) {
       )
     )
   } else {
-    menuStage.push(
+    navStage.push(
       h('transition',
         {
           props: {
-            name: this.prefix(`${this.menuAnimate}-down`)
+            name: this.prefix(`${this.navAnimate}-down`)
           }
         },
         [
@@ -127,7 +127,7 @@ export default function (h) {
             {
               class: [
                 this.xclass('stage'),
-                this.xclass(`animate-${this.menuAnimate}`)
+                this.xclass(`animate-${this.navAnimate}`)
               ],
               directives: [{
                 name: 'show',
@@ -186,7 +186,7 @@ export default function (h) {
           ])
         ]
       ),
-      menuStage
+      navStage
     ]
   )
 }

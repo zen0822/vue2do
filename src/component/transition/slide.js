@@ -4,7 +4,8 @@
  * @prop direction - 弹出方向（left | right | top | bottom）
  * @prop speed - 弹出速度
  * @prop type - 弹出类型
- * @prop beforeEnter - 进来过渡之前回调函数（返回相关信息）
+ * @prop detail - 组件信息(top | left | width | height | parentW | parentH)
+ * @prop position - 进来过渡之前回调函数（返回相关信息）
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -24,15 +25,8 @@ export default {
       type: String,
       default: 'top'
     },
-    top: {
-      type: Number,
-      default: 0
-    },
-    left: {
-      type: Number,
-      default: 0
-    },
-    beforeEnter: Function
+    detail: Object,
+    position: Function
   },
 
   computed: {
@@ -48,7 +42,7 @@ export default {
   },
 
   methods: {
-    getTranslate({ top, left }) {
+    getTranslate({ top = this.detail.top, left = this.detail.left } = {}) {
       switch (this.direction) {
         case 'top':
           return `translateY(calc(-200% - ${top}px))`
@@ -68,10 +62,10 @@ export default {
     return h('transition', {
       on: {
         beforeEnter: (el) => {
+          let elPoi = this.position ? this.position() : {}
+
           el.style.visibility = 'hidden'
           el.style.display = ''
-
-          let elPoi = this.beforeEnter()
           el.style.transform = this.getTranslate(elPoi)
 
           return this.$emit('beforeEnter')

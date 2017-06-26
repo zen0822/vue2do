@@ -19,9 +19,9 @@ $C_PREFIX: #{ $COMP_LIST };
     border-top: $border-color $border-thin solid;
     margin: 0 auto;
     position: absolute;
-    bottom: 0;
     left: 0;
     right: 0;
+    transition: top 150ms ease-out;
   }
 
   .#{$C_PREFIX}-ul {

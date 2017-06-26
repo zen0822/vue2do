@@ -17,7 +17,7 @@ $C_PREFIX: #{ $COMP_PAGE };
   }
 
   .#{$C_PREFIX}-more {
-    padding: $gap-v-half 0;
+    padding: $gap-v 0;
     color: $grey;
 
     .#{$C_PREFIX}-load {

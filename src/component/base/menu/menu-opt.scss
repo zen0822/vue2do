@@ -4,27 +4,25 @@
 @import "../../../scss/mixin.scss";
 
 /**
- * select-opt 组件样式
+ * menu-opt 组件样式
  */
 
-$C_PREFIX: #{ $COMP_SELECT_OPT };
+$C_PREFIX: #{ $COMP_MENU_OPT };
 $C_LIST_PREFIX: #{ $COMP_LIST };
 
-$SELECT_HEIGHT: 36px;
-$SELECT_WIDTH: 170px;
-$SELECT_BORDER_WIDTH: 1px;
+$MENU_HEIGHT: 36px;
+$MENU_WIDTH: 170px;
+$MENU_BORDER_WIDTH: 1px;
 $OPTION_UI_PADDING_WIDTH: $gap-v;
-$MULTI_SELECT_WIDTH: 170px + 80px;
+$MULTI_MENU_WIDTH: 170px + 80px;
 
 .#{ $C_PREFIX }-ul {
   display: none;
   position: absolute;
   top: 0;
-  left: $SELECT_WIDTH - $OPTION_UI_PADDING_WIDTH;
-  width: $SELECT_WIDTH;
-
+  left: $MENU_WIDTH - $OPTION_UI_PADDING_WIDTH;
+  width: $MENU_WIDTH;
   background-color: #fff;
-  border: $border-color $border-thin solid;
 
   .#{ $C_PREFIX }-li {
     position: relative;
@@ -55,11 +53,8 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
 
   &.#{ $C_PREFIX }-theme-primary,
   &.#{ $C_PREFIX }-theme-fill {
-    border: $border-dark-color $border-thin solid;
-    border-radius: $border-radius;
-
     .#{ $C_PREFIX }-li {
-      padding: $OPTION_UI_PADDING_WIDTH $OPTION_UI_PADDING_WIDTH $OPTION_UI_PADDING_WIDTH;
+      padding: $gap-v $gap-h-double;
 
       &:hover {
         background-color: $bg-color;
@@ -69,13 +64,25 @@ $MULTI_SELECT_WIDTH: 170px + 80px;
         background-color: transparent;
       }
 
-      & > span {
+      .#{ $C_PREFIX }-li-check {
+        line-height: 1;
+      }
+
+      .#{ $C_PREFIX }-li-text {
         @extend %text-omit;
         display: inline-block;
         vertical-align: middle;
         width: 100%;
+        padding: 0 $gap-v;
+        box-sizing: border-box;
       }
     }
+  }
+}
+
+@include device-type("<l") {
+  .#{ $C_PREFIX }-ul {
+    width: 100%;
   }
 }
 

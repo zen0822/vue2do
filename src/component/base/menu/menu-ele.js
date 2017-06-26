@@ -1,11 +1,11 @@
 /**
- * select 组件里面的 ele 组件
+ * menu 组件里面的 ele 组件
  */
 
 import baseMixin from '../../../mixin/base'
 
 export default {
-  name: 'select-ele',
+  name: 'menu-ele',
 
   template: `
     <div :class="[cPrefix]">
@@ -18,7 +18,7 @@ export default {
   computed: {
     // 组件类名的前缀
     cPrefix() {
-      return `${this.compPrefix}-select-ele`
+      return `${this.compPrefix}-menu-ele`
     }
   }
 }

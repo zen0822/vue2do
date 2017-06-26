@@ -8,9 +8,10 @@ export default {
     transitionBeforeEnter(el) {
       el.style.height = '0px'
       this.transitionFinish = false
-      this.selectMenuStyle = {
+      this.menuMenuStyle = {
         visibility: ''
       }
+
       return new Promise((resolve, reject) => {
         resolve(el)
       })
@@ -67,7 +68,7 @@ export default {
      * 下拉框隐藏过渡完成之后
      */
     transitionAfterLeave(el) {
-      this.selectMenuStyle = {
+      this.menuMenuStyle = {
         visibility: 'hidden'
       }
 

@@ -20,7 +20,7 @@ export default {
      * 选择 checkbox
      */
     check(evt) {
-      let index = evt.currentTarget.getAttribute('z-data-index')
+      let index = evt.currentTarget.getAttribute(this.xclass('data-index'))
       let option = this.option[parseInt(index, 10)]
       let val = option.value
 

@@ -1,16 +1,16 @@
 /**
- * select.render.js
+ * menu.render.js
  */
 export default function (h) {
   let selectedBoxChildren = []
   let menuChildren = []
-  let selectMenuEle = []
+  let menuMenuEle = []
 
   if (this.multiple) {
     let liELe = []
 
     selectedBoxChildren.push(
-      h('input-box', {
+      h('input', {
         class: [
           this.xclass('init-text-input')
         ],
@@ -19,16 +19,16 @@ export default function (h) {
           focus: this.focus
         }
       }),
-      h('input-box', {
+      h('input', {
+        attrs: {
+          placeholder: this.defaultTxt,
+          readOnly: true
+        },
         class: [
           this.defaultValClassName(this.value),
           this.xclass('init-text'),
           { [this.xclass('opacity')]: !this.initTxtDisplay }
-        ],
-        props: {
-          placeholder: this.defaultTxt,
-          readOnly: true
-        }
+        ]
       })
     )
 
@@ -72,7 +72,7 @@ export default function (h) {
           h('ul', {
             class: [
               `${this.compPrefix}-ul`,
-              this.xclass('multiple')
+              this.xclass('multiple-selected-ul')
             ],
             directives: [{
               name: 'show',
@@ -84,28 +84,22 @@ export default function (h) {
     )
   } else {
     selectedBoxChildren.push(
-      h('input-box', {
-        class: [
-          this.xclass('init-text-input')
-        ],
+      h('input', {
+        class: [this.xclass('init-text-input')],
         on: {
-          blur: this.blur,
-          focus: this.focus
-        },
-        props: {
-          readOnly: true
+          focus: this.focus,
+          blur: this.blur
         }
       }),
-
-      h('input-box', {
+      h('input', {
         class: [
           this.defaultValClassName(this.value),
           this.xclass('init-text')
         ],
-        props: {
+        attrs: {
           placeholder: '请选择',
-          initVal: this.text,
-          readOnly: true
+          readOnly: true,
+          value: this.text
         }
       })
     )
@@ -181,7 +175,7 @@ export default function (h) {
       }
 
       menuChildren.push(
-        h('select-opt',
+        h('menu-opt',
           {
             class: [this.xclass('opt-comp')],
             props: {
@@ -192,7 +186,7 @@ export default function (h) {
                 ? this.searchOptionItem : this.option,
               optRoot: this.me
             },
-            ref: 'selectOption',
+            ref: 'menuOption',
             scopedSlots
           }
         ),
@@ -203,12 +197,12 @@ export default function (h) {
     }
   }
 
-  selectMenuEle = [
+  menuMenuEle = [
     h('div',
       {
-        class: [this.xclass('menu')],
-        style: [this.selectMenuPoiStyle, this.selectMenuStyle],
-        ref: 'selectMenu'
+        class: [this.xclass('panel')],
+        style: [this.menuMenuPoiStyle, this.menuMenuStyle],
+        ref: 'menuMenu'
       },
       [menuChildren]
     )
@@ -216,56 +210,52 @@ export default function (h) {
 
   return h('div',
     {
-      class: [this.cPrefix],
+      class: this.menuClass,
       directives: [{
         name: 'clickParent',
         expression: this.clickParent
-      }]
+      }],
+      on: {
+        keydown: this.keydown
+      }
     },
     [
-      h('div',
+      h('div', {
+        class: [this.xclass('read-only')],
+        directives: [{
+          name: 'show',
+          value: this.readOnly
+        }]
+      }),
+      h('div', {
+        class: [this.xclass('selected-box')],
+        on: {
+          click: this.click
+        }
+      }, [selectedBoxChildren]),
+
+      h('transition',
         {
-          class: this.stageClass
-        },
-        [
-          h('div', {
-            class: [this.xclass('read-only')],
-            directives: [{
-              name: 'show',
-              value: this.readOnly
-            }]
-          }),
-          h('div', {
-            class: [this.xclass('selected-box')],
-            on: {
-              click: this.select
-            }
-          }, [selectedBoxChildren]),
+          on: {
+            beforeEnter: this.transitionBeforeEnter,
+            enter: this.transitionEnter,
+            afterEnter: this.transitionAfterEnter,
+            beforeLeave(el) {
+              el.style.height = el.scrollHeight + 'px'
+            },
 
-          h('transition',
-            {
-              on: {
-                beforeEnter: this.transitionBeforeEnter,
-                enter: this.transitionEnter,
-                afterEnter: this.transitionAfterEnter,
-                beforeLeave(el) {
-                  el.style.height = el.scrollHeight + 'px'
-                },
-
-                leave(el) {
-                  if (el.scrollHeight !== 0) {
-                    el.style.height = 0
-                  }
-                },
-
-                afterLeave(el) {
-                  el.style.height = ''
-                }
+            leave(el) {
+              if (el.scrollHeight !== 0) {
+                el.style.height = 0
               }
             },
-            selectMenuEle
-          )
-        ]
+
+            afterLeave(el) {
+              el.style.height = ''
+            }
+          }
+        },
+        menuMenuEle
       )
     ]
   )

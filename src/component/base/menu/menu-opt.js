@@ -1,5 +1,5 @@
 /**
- * select-option -- 作为 select 的 option 的局部组件
+ * menu-option -- 作为 menu 的 option 的局部组件
  *
  * @prop option - 下拉框option数据
  * @prop multiple - 是否是多选
@@ -11,28 +11,35 @@
  *
  */
 
-import './select-opt.scss'
+import './menu-opt.scss'
 import Vue from 'vue'
-import template from './select-opt.tpl'
+import render from './menu-opt.render'
 import compEvent from '../../../config/event.json'
 
 import iconComp from '../../base/icon/icon'
 import checkComp from '../../base/check/check'
 import listComp from '../../common/list/list'
+import rowComp from '../../common/layout/row/row'
+import colComp from '../../common/layout/col/col'
+
+import ripTransition from '../../transition/rip'
 import baseMixin from '../../../mixin/base'
 
 
-const selectOptionComp = {
-  name: 'select-opt',
+const menuOptionComp = {
+  name: 'menu-opt',
 
-  template,
+  render,
 
   mixins: [baseMixin],
 
   components: {
     icon: iconComp,
     check: checkComp,
-    list: listComp
+    list: listComp,
+    row: rowComp,
+    column: colComp,
+    'rip-transition': ripTransition
   },
 
   props: {
@@ -70,14 +77,15 @@ const selectOptionComp = {
       selectedAllCheckOpt: [{
         value: -1,
         text: ''
-      }]
+      }],
+      pressing: false
     }
   },
 
   computed: {
     // 组件类名的前缀
     cPrefix() {
-      return `${this.compPrefix}-select-opt`
+      return `${this.compPrefix}-menu-opt`
     }
   },
 
@@ -103,19 +111,24 @@ const selectOptionComp = {
      * @param {Object} 子下拉框值
      * @return {Function}
      */
-    selectOption(item, index) {
-      if (item.classify) {
+    menuOption(evt) {
+      evt.stopPropagation()
+
+      let index = evt.currentTarget.getAttribute(this.xclass('data-index'))
+      let option = this.option[parseInt(index, 10)]
+
+      if (option.classify) {
         return false
       }
 
-      this.$emit(compEvent.select.option.change, {
+      this.$emit('change', {
         emitter: this,
-        value: item[this.valName],
-        text: item[this.txtName],
+        value: option[this.valName],
+        text: option[this.txtName],
         index: index
       })
     }
   }
 }
 
-export default selectOptionComp
+export default menuOptionComp

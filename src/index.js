@@ -10,7 +10,7 @@ import message from './component/base/message/message'
 
 import code from './component/common/code/code'
 import loading from './component/base/loading/loading'
-import menu from './component/common/menu/menu'
+import nav from './component/common/nav/nav'
 
 import page from './component/base/page/page'
 import scroller from './component/base/scroller/scroller'
@@ -29,8 +29,8 @@ import {
   tableRowComp as tableRow
 } from './component/common/table/table'
 
-import select from './component/base/select/select'
-import selectEle from './component/base/select/select-ele'
+import menu from './component/base/menu/menu'
+import menuEle from './component/base/menu/menu-ele'
 
 import shift from './component/base/shift/shift'
 import shiftEle from './component/base/shift/shift-ele'
@@ -50,16 +50,16 @@ const compHub = [
   foldTitle,
   foldContent,
   modal,
-  menu,
   message,
+  nav,
   input,
   icon,
   list,
   loading,
   pop,
   page,
-  select,
-  selectEle,
+  menu,
+  menuEle,
   scroller,
   shift,
   shiftEle,

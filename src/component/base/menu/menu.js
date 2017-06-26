@@ -1,5 +1,5 @@
 /**
- * select 组件
+ * menu 组件
  *
  * @prop classifyOpt - 分类下拉框的数据
  * @prop defaultVal - 默认的选项值
@@ -19,21 +19,21 @@
  * @prop txtName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
  * @prop valName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
  *
- * @porps classify - 有值（数组类型）就开启标题下拉框 option 分类模式
+ * @prop classify - 有值（数组类型）就开启标题下拉框 option 分类模式
  * @prop multiple - 是为多选
- * @porps search - 开启搜索过滤
+ * @prop search - 开启搜索过滤
  *
  * @prop selectAll - 启动全选的功能
  * @prop selectAllTxt - 全选选项的名字
  *
  */
 
-import './select.scss'
+import './menu.scss'
 
 import Vue from 'vue'
-import optionComp from './select-opt'
+import optionComp from './menu-opt'
 
-import render from './select.render'
+import render from './menu.render'
 import store from '../../../vuex/store'
 import hubStore from '../../../vuex/module/hub/type.json'
 import compStore from '../../../vuex/module/comp/type.json'
@@ -46,6 +46,7 @@ import scrollerComp from '../../base/scroller/scroller'
 
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
+import apiMixin from './menu.api'
 import transitionMixin from './transition.mixin'
 
 import uid from '../../../util/uid'
@@ -53,21 +54,21 @@ import { dataType } from '../../../util/data/data'
 import { unique as uniqueArray } from '../../../util/data/array'
 
 // 下拉框的 border 宽度
-const SELECT_BORDER_WIDTH = 1
+const MENU_BORDER_WIDTH = 1
 // 搜索功能的函数节流的间隔时间
 const SEARCH_KEY_UP_INTERVAL = 500
 
-const selectComp = {
-  name: 'select',
+const menuComp = {
+  name: 'menu',
 
   render,
 
-  mixins: [baseMixin, formMixin, transitionMixin],
+  mixins: [baseMixin, formMixin, transitionMixin, apiMixin],
 
   store,
 
   components: {
-    'select-opt': optionComp,
+    'menu-opt': optionComp,
     'input-box': inputComp,
     icon: iconComp,
     check: checkComp,
@@ -161,7 +162,7 @@ const selectComp = {
 
   data() {
     // 组件名字
-    this.compName = 'select'
+    this.compName = 'menu'
     // 组件唯一标识符
     this.uid = ''
 
@@ -177,13 +178,13 @@ const selectComp = {
       // 是否以验证通过
       verified: true,
       // 下拉菜单的显示状态
-      selectMenuDisplay: false,
+      menuMenuDisplay: false,
       // 下拉菜单的样式
-      selectMenuStyle: {
+      menuMenuStyle: {
         visibility: 'hidden'
       },
       // 下拉菜单位置的样式
-      selectMenuPoiStyle: {},
+      menuMenuPoiStyle: {},
       // 是否是 slot 定义的 option
       hasSlotOption: false,
       // option 值的当前游标
@@ -203,25 +204,31 @@ const selectComp = {
       // 自定义下拉框的显示状态
       customOptionDisplay: false,
       // 下拉框显示过渡完成的标识符
-      transitionFinish: false
+      transitionFinish: false,
+      // 正在处于 focus 状态
+      focusing: false
     }
   },
 
   computed: {
     // 组件类名的前缀
     cPrefix() {
-      return `${this.compPrefix}-select`
+      return `${this.compPrefix}-menu`
     },
     me() {
       return this
     },
     // 组件 stage 的 class 的名字
-    stageClass() {
-      return [{
-        [`${this.cPrefix}-selected`]: this.selectMenuDisplay
-      }, {
-        [`${this.cPrefix}-multiple-stage`]: this.multiple
-      }].concat(this.xclass(['stage', this.themeClass]))
+    menuClass() {
+      let classArr = [
+        this.cPrefix,
+        this.xclass(this.compClass),
+        { [this.xclass('selecting')]: this.menuMenuDisplay },
+        { [this.xclass('focusing')]: this.focusing },
+        { [this.xclass('multiple')]: this.multiple }
+      ]
+
+      return classArr
     },
     // 自定义下拉框的显示状态
     isCustomOption() {
@@ -239,8 +246,8 @@ const selectComp = {
         this.selectedAll = val.length > 0 && val.length === this.allOptionVal.length
       }
 
-      return this._initSelectTxt().$nextTick(() => {
-        this._adjustselectMenuPoiStyle()
+      return this._initMenuTxt().$nextTick(() => {
+        this._adjustmenuMenuPoiStyle()
       })
     },
     initVal(val) {
@@ -250,19 +257,19 @@ const selectComp = {
       return this._processOption(val.slice())
     },
     classifyOpt(val) {
-      return this._processOption(val)._initAllOptionVal()._initSelectTxt()
+      return this._processOption(val)._initAllOptionVal()._initMenuTxt()
     },
     deviceSize(val) {
       this.changeByDeviceSize(val)
     },
-    selectMenuDisplay(val) {
+    menuMenuDisplay(val) {
       if (val) {
-        this.transitionBeforeEnter(this.$refs.selectMenu)
+        this.transitionBeforeEnter(this.$refs.menuMenu)
           .then(this.transitionEnter)
           .then(this.transitionAfterEnter)
           .catch()
       } else {
-        this.transitionBeforeLeave(this.$refs.selectMenu)
+        this.transitionBeforeLeave(this.$refs.menuMenu)
           .then(this.transitionLeave)
           .then(this.transitionAfterLeave)
           .catch()
@@ -283,13 +290,19 @@ const selectComp = {
         return false
       }
 
-      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
-        this._adjustselectMenuPoiStyle({
+      this.$refs.scroller && this.$refs.scroller.$on('changeScroller', ({ boxHeight }) => {
+        this._adjustmenuMenuPoiStyle({
           height: boxHeight
         })
       })
 
-      this.$refs.selectOption && this.$refs.selectOption.$on('selectOptChange', ({ value, text, index }) => {
+      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
+        this._adjustmenuMenuPoiStyle({
+          height: boxHeight
+        })
+      })
+
+      this.$refs.menuOption && this.$refs.menuOption.$on('change', ({ value, text, index }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
 
@@ -306,7 +319,7 @@ const selectComp = {
         } else {
           this.value = value
 
-          return this.fold()
+          return this.toggleMenuDisplay(false)
         }
       })
     },
@@ -314,23 +327,24 @@ const selectComp = {
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustselectMenuPoiStyle({ height, cb } = {}) {
-      let selectHeight = height || this.$el.offsetHeight
-      let selectWidth = this.$el.offsetWidth
-      let over100 = selectHeight > 100
-      selectHeight = over100 ? 100 : selectHeight
-      let top = selectHeight + SELECT_BORDER_WIDTH * 2 + 1
-      let width = selectWidth - SELECT_BORDER_WIDTH * 2
+    _adjustmenuMenuPoiStyle({ height, cb } = {}) {
+      let menuHeight = height || this.$el.offsetHeight
+      let menuWidth = this.$el.offsetWidth
+      let over100 = menuHeight > 117
+      let top = menuHeight
+      let width = menuWidth
+
+      menuHeight = over100 ? 117 : menuHeight
 
       if (this.multiple) {
         if (over100) {
-          top = selectHeight + SELECT_BORDER_WIDTH * 2 + 3
+          top = menuHeight + MENU_BORDER_WIDTH * 2
         } else {
-          top = height ? selectHeight + SELECT_BORDER_WIDTH * 2 + 3 : selectHeight + SELECT_BORDER_WIDTH * 2 + 1
+          top = height ? menuHeight + MENU_BORDER_WIDTH * 2 : menuHeight
         }
       }
 
-      this.selectMenuPoiStyle = {
+      this.menuMenuPoiStyle = {
         top: `${top}px`,
         width: `${width}px`
       }
@@ -370,14 +384,14 @@ const selectComp = {
      */
     _initOption() {
       if (this.classifyOpt) {
-        return this._processOption(this.classifyOpt)._initAllOptionVal()._initSelectTxt()
+        return this._processOption(this.classifyOpt)._initAllOptionVal()._initMenuTxt()
       } else {
-        let slotOption = this._initSelectSlot()
+        let slotOption = this._initMenuSlot()
         if (slotOption) {
           this.option = slotOption
         }
 
-        return this._processOption(this.option.slice())._initAllOptionVal()._initSelectTxt()
+        return this._processOption(this.option.slice())._initAllOptionVal()._initMenuTxt()
       }
     },
 
@@ -386,7 +400,7 @@ const selectComp = {
      *
      * @return { Array } optionItem - 返回在 slot 取得的 option
      */
-    _initSelectSlot() {
+    _initMenuSlot() {
       const $defaultSlotContent = this.$slots.default
 
       // slot default 没数据就退出
@@ -427,11 +441,11 @@ const selectComp = {
     /**
      * 初始化下拉菜单的值
      */
-    _initSelectTxt() {
+    _initMenuTxt() {
       if (this.multiple) {
-        this._initMultipleSelectTxt()
+        this._initMultipleMenuTxt()
       } else {
-        this._initSingleSelectTxt()
+        this._initSingleMenuTxt()
       }
 
       return this
@@ -440,7 +454,7 @@ const selectComp = {
     /**
      *  初始化多选下拉菜单
      */
-    _initMultipleSelectTxt() {
+    _initMultipleMenuTxt() {
       if (!Array.isArray(this.option)) {
         return this
       }
@@ -477,7 +491,7 @@ const selectComp = {
     /**
      * 初始化单选下拉菜单
      */
-    _initSingleSelectTxt(val, txt) {
+    _initSingleMenuTxt(val, txt) {
       if (!Array.isArray(this.option)) {
         return this
       }
@@ -605,7 +619,7 @@ const selectComp = {
 
       if (this.searchOptionItem.length === 0) {
         this.searchOptionItem.push({
-          [this.valName]: `${this.compPrefix}-select: search not found`,
+          [this.valName]: `${this.compPrefix}-menu: search not found`,
           [this.txtName]: '查无此数据',
           classify: true
         })
@@ -618,7 +632,7 @@ const selectComp = {
     _watchOption() {
       this.unwatchOption = this.$watch('option', function (val, oldVal) {
         if (!this.hasSlotOption) {
-          return this._processOption(val)._initAllOptionVal()._initSelectTxt()
+          return this._processOption(val)._initAllOptionVal()._initMenuTxt()
         }
       })
     },
@@ -683,193 +697,6 @@ const selectComp = {
       this.optionItemCopy = allOption
 
       return optionTemp
-    },
-
-    /**
-     * 当设备改变尺寸
-     */
-    changeByDeviceSize(size) {
-      return this._adjustselectMenuPoiStyle()
-    },
-
-    /**
-     * 多选下拉框的复选框赋值情况
-     *
-     * @param {String, Number} - 多选下拉框的值
-     */
-    checkboxVal(val) {
-      if (this._isExistedVal(val)) {
-        return [-1]
-      }
-
-      return []
-    },
-
-    /**
-     * 默认值的 css 的 class 名字
-     */
-    defaultValClassName(value) {
-      return this.defaultVal === value ? `${this.cPrefix}-default-text` : ''
-    },
-
-    /**
-     * 验证数据格式是否正确
-     * 现在只有 是否必选
-     *
-     * @return {Object} - this - 组件
-     */
-    verify() {
-      this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}下拉框!`
-
-      if (this.multiple) {
-        this.verified = this.value.length >= this.min
-
-        return this.verified
-      } else if (this.required) {
-        this.verified = this.value !== -1
-
-        return this.verified
-      }
-
-      return this.verified
-    },
-
-    /**
-     * 移除 多选下拉框 已选的值
-     *
-     * @param {String, Number} - 多选下拉框的值
-     */
-    removeMultiSelected(val, index) {
-      if (this.min !== 0 && this.value.length === this.min) {
-        tip(`至少需选择 ${this.min} 项！`)
-
-        const valTmp = this.value
-        this.value = []
-        this.value = valTmp
-
-        return this.value
-      }
-
-      this.value.splice(index, 1)
-    },
-
-    /**
-     * 移除 多选下拉框 已选的值
-     *
-     * @param {String, Number} - 多选下拉框的值
-     */
-    clickMultiSelected(event) {
-      event.stopPropagation()
-
-      return this.removeMultiSelected(event.currentTarget.getAttribute('data-index'))
-    },
-
-    /**
-     * 点击父元素
-     *
-     */
-    clickParent() {
-      return this.toggleMenuDisplay(false)
-    },
-
-    /**
-    * 下拉框展示失去焦点
-    *
-    * @return {Object} this - 组件
-    */
-    blur() {
-      if (!this.multiple) {
-        return this.toggleMenuDisplay(false)
-      }
-    },
-
-    /**
-    * 下拉框展示的焦点
-    *
-    * @return {Object} this - 组件
-    */
-    focus() {
-      return this.toggleMenuDisplay(true)
-    },
-
-    /**
-     * 点击下拉框
-     *
-     * @return {Object} this - 组件
-     */
-    select(event) {
-      event.stopPropagation()
-
-      return this.toggleMenuDisplay()
-    },
-
-    /**
-     * 下拉框的显示操作
-     *
-     * @param {Boolean} opt - 操作状态,
-     *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
-     *
-     * @return {Object} - this组件
-     */
-    toggleMenuDisplay(opt) {
-      let selectHub = this.$store.state.comp.select
-
-      for (let name in selectHub) {
-        if (selectHub.hasOwnProperty(name) && !Object.is(this, selectHub[name])) {
-          selectHub[name].selectMenuDisplay = false
-        }
-      }
-
-      return this._adjustselectMenuPoiStyle({
-        cb: () => {
-          this.selectMenuDisplay = opt === undefined
-            ? !this.selectMenuDisplay : opt
-        }
-      })
-    },
-
-    /**
-     * 收起下拉框
-     *
-     * @return {Object} - this - 组件
-     */
-    hideMenu() {
-      this.selectMenuDisplay = false
-    },
-
-    /**
-     * 全选多选下拉框
-     *
-     * @return {Object} - this - 组件
-     */
-    selectAllOption() {
-      if (this.selectedAll) {
-        this.value = []
-      } else {
-        this.value = this.allOptionVal.slice()
-      }
-
-      this.selectedAll = !this.selectedAll
-    },
-
-    /**
-     * 收起下拉框
-     * @return {Object} this - 组件
-     */
-    fold() {
-      this.selectMenuDisplay = false
-
-      return this
-    },
-
-    /**
-     * 展開下拉框
-     * @return {Object} this - 组件
-     */
-    spread() {
-      this.selectMenuDisplay = true
-
-      return this
     }
   },
 
@@ -900,4 +727,4 @@ const selectComp = {
   }
 }
 
-export default selectComp
+export default menuComp

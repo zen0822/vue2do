@@ -25,7 +25,7 @@
 		<template scope="props">
 			<div
 					:class="liClass(props.item.classify, props.item.value)"
-					@click.stop="selectOption(props.item, props.index)">
+					@click.stop="menuOption(props.item, props.index)">
 				<check
 						v-if="multiple && !props.item.classify"
 						theme="default"
@@ -46,11 +46,11 @@
 				</slot>
 
 				<icon v-if="hasSubOption(props.item)" kind="caret-right"></icon>
-				<select-opt
+				<menu-opt
 						:multiple="multiple"
 						:option="props.item.sub"
 						:opt-root="optRoot"
-						v-if="hasSubOption(props.item)"></select-opt>
+						v-if="hasSubOption(props.item)"></menu-opt>
 			</div>
 		</template>
   </list>

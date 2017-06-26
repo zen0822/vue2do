@@ -4,46 +4,46 @@ div
   article.example-article
     +section('start', '开始使用')
       p.section-description 直接传入 init-opt
-      z-select(:init-opt='selectOpt')
+      z-menu(:init-opt='selectOpt')
       z-code.
-        #{'<z-select :init-opt="selectOpt"></z-select>'}
+        #{'<z-menu :init-opt="selectOpt"></z-menu>'}
     +section('tag', '添加子标签')
       p.section-description 用直观的标签声明下拉框的数据
-      z-select(id='test')
-        z-select-ele(value='1') {{ testName }}
-        z-select-ele(value='2')
+      z-menu(id='test')
+        z-menu-ele(value='1') {{ testName }}
+        z-menu-ele(value='2')
           z-btn 按钮
-        z-select-ele(value='3') 测试3
-        z-select-ele(value='4') 测试4
-        z-select-ele(value='5') 测试5
+        z-menu-ele(value='3') 测试3
+        z-menu-ele(value='4') 测试4
+        z-menu-ele(value='5') 测试5
       z-code(v-pre).
-        #{'<z-select>'}
-          #{'<z-select-ele value="1">{{ testName }}</z-select-ele>'}
-          #{'<z-select-ele value="2">'}
+        #{'<z-menu>'}
+          #{'<z-menu-ele value="1">{{ testName }}</z-menu-ele>'}
+          #{'<z-menu-ele value="2">'}
             #{'<z-btn>按钮</z-btn>'}
-          #{'</z-select-ele>'}
-          #{'<z-select-ele value="3">测试222</z-select-ele>'}
-          #{'<z-select-ele value="4">测试3</z-select-ele>'}
-          #{'<z-select-ele value="5">测试4</z-select-ele>'}
-        #{'</z-select>'}
+          #{'</z-menu-ele>'}
+          #{'<z-menu-ele value="3">测试222</z-menu-ele>'}
+          #{'<z-menu-ele value="4">测试3</z-menu-ele>'}
+          #{'<z-menu-ele value="5">测试4</z-menu-ele>'}
+        #{'</z-menu>'}
     +section('custom', '自定义下拉框内容')
       p.section-description 用自定义标签声明下拉框的数据
-      z-select(:init-opt='selectOpt')
+      z-menu(:init-opt='selectOpt')
         template(slot='custom', scope='props')
-          z-select-ele {{ props.item.text }}-custom
+          z-menu-ele {{ props.item.text }}-custom
       z-code(v-pre).
-        #{'<z-select :init-opt="selectOpt">'}
+        #{'<z-menu :init-opt="selectOpt">'}
           #{'<template slot="custom" scope="props">'}
-            #{'<z-select-ele>{{ props.item.text }}-custom</z-select-ele>'}
+            #{'<z-menu-ele>{{ props.item.text }}-custom</z-menu-ele>'}
           #{'</template>'}
-        #{'</z-select>'}
+        #{'</z-menu>'}
     +section('classify', '分类下拉选择')
-      z-select(
+      z-menu(
         select-all
         :classify='[{key: "recent",text: "最近"}, {key: "hot",text: "热门"}]'
         :classify-opt='classifyOpt')
       z-code.
-        #{'<z-select'}
+        #{'<z-menu'}
           :select-all="true"
           :classify="[{
             key: 'recent',
@@ -52,23 +52,23 @@ div
             key: 'hot',
             text: '热门'
           }]"
-        #{'  :classify-opt="classifyOpt"></z-select>'}
+        #{'  :classify-opt="classifyOpt"></z-menu>'}
     +section('multiple', '多选下拉框')
-      z-select(
+      z-menu(
         multiple
         :init-opt="selectOpt")
       z-code.
-        #{ '<z-select' }
+        #{ '<z-menu' }
           multiple
-          #{ ':init-opt="selectOpt"></z-select>'}
+          #{ ':init-opt="selectOpt"></z-menu>'}
     +section('search', '搜索功能')
-      z-select(search, :init-opt='selectOpt')
+      z-menu(search, :init-opt='selectOpt')
       z-code.
-        #{'<z-select search :init-opt="selectOpt"></z-select>'}
+        #{'<z-menu search :init-opt="selectOpt"></z-menu>'}
     +section('init', '指定选定下拉选项')
-      z-select(:init-val='2', :init-opt='selectOpt')
+      z-menu(:init-val='2', :init-opt='selectOpt')
       z-code.
-        #{'<z-select :init-val="2" :init-opt="selectOpt"></z-select>'}
+        #{'<z-menu :init-val="2" :init-opt="selectOpt"></z-menu>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'

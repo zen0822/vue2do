@@ -8,9 +8,11 @@ export default function (h) {
       props: {
         direction: this.direction,
         speed: this.speed,
-        top: this.top,
-        left: this.left,
-        beforeEnter: () => {
+        detail: {
+          top: this.top,
+          left: this.left
+        },
+        position: () => {
           return this.computePosition()
         }
       },

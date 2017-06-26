@@ -7,7 +7,7 @@
  * @prop readOnly - 只读
  * @prop required - 是否必选
  * @prop theme - 主题
- * @prop type - input 的 type(radio | checkbox)
+ * @prop multiple - 是否为多选
  *
  * @prop errorMessage - checkbox 没选的时候显示的错误信息
  * @prop valName - 指定读取 checkboxItems 的 value 值的 key 的名字
@@ -64,9 +64,9 @@ let checkCompConfig = {
       default: ''
     },
 
-    type: {
-      type: String,
-      default: TYPE_RADIO
+    multiple: {
+      type: Boolean,
+      default: false
     },
 
     readOnly: {
@@ -140,10 +140,10 @@ let checkCompConfig = {
       return `${this.compPrefix}-check`
     },
     isCheckbox() {
-      return this.type === TYPE_CHECKBOX
+      return this.multiple
     },
     isRadio() {
-      return this.type === TYPE_RADIO
+      return !this.multiple
     }
   },
 

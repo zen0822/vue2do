@@ -45,7 +45,7 @@ export default function (h) {
         h('li',
           {
             attrs: {
-              [this.prefix('data-index')]: index
+              [this.xclass('data-index')]: index
             },
             class: [this.prefix('li'), this.xclass('opt-li')],
             on: {

@@ -10,8 +10,9 @@
  * @prop required - 是否为必填，默认否
  * @prop row - textarea 的行数
  * @prop textLengthTip - 显示当前输入的长度
- * @prop type - 输入框类型( text | textarea )
+ * @prop type - 输入框类型( field | area )
  * @prop theme - 主题
+ * @prop ui - UI 规范
  *
  * @prop completion - 是否启用自动搜索补全功能
  * @prop errorMessage - input 为空和格式不对的错误信息
@@ -22,10 +23,16 @@
  * @prop regex - 验证值的正则
  * @prop verifedType - 验证值的类型
  *
+ * @prop headerSpan - 输入框头附加项的横向阑珊格
+ * @prop footerSpan - 输入框尾附加项的横向阑珊格
+ *
  * @event change - input的值改变
  * @event blur - input的blur
  * @event focus - input的focus
  * @event keyup - input的keyup
+ *
+ * @slot header
+ * @slot footer
  *
  */
 
@@ -38,6 +45,7 @@ import initVerfication from './validate.js'
 
 import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
+import apiMixin from './input.api'
 
 import rowComp from '../../common/layout/row/row'
 import colComp from '../../common/layout/col/col'
@@ -46,9 +54,8 @@ import { dataType } from '../../../util/data/data'
 
 const tip = {}
 
-const KEYUP_INTERVAL_TIME = 500
-const TYPE_TEXT_AREA = 'textarea'
-const TYPE_TEXT = 'text'
+const TYPE_TEXT_AREA = 'area'
+const TYPE_TEXT = 'field'
 const ERROR_MESSAGE_TIP = 'tip'
 const ERROR_MESSAGE_BUBBLE = 'bubble'
 
@@ -57,7 +64,7 @@ const inputComp = {
 
   render,
 
-  mixins: [baseMixin, formMixin],
+  mixins: [baseMixin, formMixin, apiMixin],
 
   components: {
     row: rowComp,
@@ -111,7 +118,7 @@ const inputComp = {
 
     type: {
       type: String,
-      default: 'text'
+      default: 'field'
     },
 
     required: {
@@ -142,6 +149,16 @@ const inputComp = {
     completion: {
       type: Boolean,
       default: false
+    },
+
+    headerSpan: {
+      type: Number,
+      default: 1
+    },
+
+    footerSpan: {
+      type: Number,
+      default: 1
     }
   },
 
@@ -212,13 +229,15 @@ const inputComp = {
     },
     // input 的阑珊的格数
     inputBoxCol() {
-      let slotHead = this.$slots.head
-      let slotTail = this.$slots.tail
+      let slotHead = this.$slots.header
+      let slotTail = this.$slots.footer
 
       if (slotHead && slotTail) {
-        return 10
-      } else if (slotHead || slotTail) {
-        return 11
+        return 12 - this.footerSpan - this.headerSpan
+      } else if (slotHead) {
+        return 12 - this.headerSpan
+      } else if (slotTail) {
+        return 12 - this.footerSpan
       } else {
         return 12
       }
@@ -305,156 +324,6 @@ const inputComp = {
         verified: true,
         dangerTip
       }
-    },
-
-    /**
-     * 验证数据格式
-     *
-     * @param {Boolean} - 是否是第一次验证
-     * @return {Object} - this - 组件
-     */
-    verify(firstVerify) {
-      let verified = true
-      let dangerTip = ''
-
-      const returnFun = () => {
-        if (!verified) {
-          document.body.scrollTop = this.$el.offsetTop
-        }
-
-        this.verified = verified
-        this.dangerTip = dangerTip
-
-        return verified
-      }
-
-      if (!this.number) {
-        this.value = this.value.trim()
-      }
-
-      if (!this.value && this.value !== 0) {
-        let verifyEmpty = this._verifyEmpty()
-
-        verified = verifyEmpty.verified
-        dangerTip = verifyEmpty.dangerTip
-
-        return returnFun()
-      } else {
-        if (this.number && isNaN(this.value)) {
-          dangerTip = `${this.errorMessage}请输入数字类型`
-          verified = false
-
-          return returnFun()
-        }
-
-        if (this.min) {
-          if (this.number) {
-            verified = this.min <= this.value
-            dangerTip = verified ? '' : `${this.lengthMessage}不能小于${this.min}!`
-          } else {
-            verified = this.min <= this.value.toString().length
-            dangerTip = verified ? '' : `${this.lengthMessage}长度不能小于${this.min}个字符!`
-          }
-
-          if (!verified) {
-            return returnFun()
-          }
-        }
-
-        if (this.max) {
-          if (this.number) {
-            verified = this.max >= this.value
-            dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.max}!`
-          } else {
-            verified = this.max >= this.value.toString().length
-            dangerTip = verified ? '' : `${this.lengthMessage}长度不能大于${this.max}个字符!`
-          }
-
-          if (!verified) {
-            return returnFun()
-          }
-        }
-
-        if ((this.regex || this.verifedType) && !this.regexObj.test(this.value)) {
-          verified = false
-
-          if (firstVerify) {
-            dangerTip = ''
-          } else {
-            dangerTip = this.formatMessage ? this.formatMessage : this._formatMessage
-          }
-
-          return returnFun()
-        }
-      }
-
-      return returnFun()
-    },
-
-    /**
-     * 验证数据格式并且弹出错误
-     *
-     * @return {Object} - this - 组件
-     */
-    validate() {
-      this.verify()
-
-      if (!this.verified) {
-        tip(this.dangerTip)
-
-        return false
-      }
-
-      return this
-    },
-
-    /**
-     * 输入框 focus 状态触发的方法
-     * @return {Object} this - 组件
-     */
-    focus(evt) {
-      this.verified = true
-      this.focusing = true
-
-      return this.$emit('focus', {
-        emitter: this,
-        valeu: this.value,
-        event: evt
-      })
-    },
-
-    /**
-     * 输入框 blur 状态触发的方法
-     * @return {Object} this - 组件
-     */
-    blur(evt) {
-      this.focusing = false
-
-      if (this.number) {
-        this.value = this._switchNum(this.value)
-      }
-
-      return this.$emit('blur', {
-        emitter: this,
-        valeu: this.value,
-        event: evt
-      })
-    },
-
-    /**
-     * 输入框 keyup 状态触发的方法
-     * @return {Object}
-     */
-    keyup() {
-      if (this.keyuping) {
-        return false
-      }
-
-      this.keyuping = true
-
-      setTimeout(() => {
-        this.keyuping = false
-      }, KEYUP_INTERVAL_TIME)
     },
 
     /**

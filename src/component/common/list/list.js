@@ -24,6 +24,7 @@ import iconComp from '../../base/icon/icon'
 import loadingComp from '../../base/loading/loading'
 import pageComp from '../../base/page/page'
 import scrollerComp from '../../base/scroller/scroller'
+import slideTransition from '../../transition/slide'
 
 import { findGrandpa } from '../../../util/util'
 
@@ -41,7 +42,8 @@ const listComp = {
     icon: iconComp,
     loading: loadingComp,
     page: pageComp,
-    scroller: scrollerComp
+    scroller: scrollerComp,
+    'slide-transition': slideTransition
   },
 
   props: {
@@ -101,7 +103,12 @@ const listComp = {
       // 是否正在加载列表数据
       loadingListData: false,
       // 下拉框祖先元素
-      selectGrandpa: {}
+      selectGrandpa: {},
+      // 分页的位置
+      pagerPoi: {
+        top: 0,
+        left: 0
+      }
     }
   },
 
@@ -123,6 +130,13 @@ const listComp = {
     // 是否是加载更多的触发方式
     isPageTypeMore() {
       return this.pageType === PAGE_TYPE_MORE
+    },
+    // 分页组件的样式
+    pagerStyle() {
+      return {
+        top: this.pagerPoi.top + 'px',
+        left: this.pagerPoi.left + 'px'
+      }
     }
   },
 
@@ -141,6 +155,9 @@ const listComp = {
 
   methods: {
     _init() {
+      this.pagerPoi = {
+        top: 164
+      }
       this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({isBottom}) => {
         this.scrollerAlmostInBottom = isBottom
       })

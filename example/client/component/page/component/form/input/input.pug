@@ -8,7 +8,7 @@ div
         #{'<z-input></z-input>'}
     +section('textarea', '输入区域')
       z-input(
-        type='row',
+        type='area',
         :row='4',
         placeholder='请输入...')
       z-code.
@@ -41,6 +41,26 @@ div
           placeholder='限制只能输入2-10位以内'
           verifedType='email'
           ref='verifyInput')
+      z-btn(class='z-m-l' @click.native='clickVerifyInput') 点击验证是否为邮箱
+      z-code.
+        #{'<z-input'}
+            :min="2"
+            :max="10"
+            error-message="邮箱"
+            placeholder="限制只能输入2-10位以内"
+            verifedType="email"
+            #{'ref="verifyInput"></z-input>'}
+    +section('append', '添加附加项')
+      z-input(
+          :min='2'
+          :max='10'
+          error-message='邮箱'
+          placeholder='限制只能输入2-10位以内'
+          verifedType='email'
+          :header-span='4'
+          ref='verifyInput')
+        div(slot='header')
+          z-menu(:init-opt='testOpt', style={width: '40px'})
       z-btn(class='z-m-l' @click.native='clickVerifyInput') 点击验证是否为邮箱
       z-code.
         #{'<z-input'}

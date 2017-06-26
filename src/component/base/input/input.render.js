@@ -51,21 +51,23 @@ export default function (h) {
 
   return h('div',
     {
-      class: [this.cPrefix]
+      class: this.stageClass.concat(
+        this.cPrefix,
+        this.xclass(`type-${this.type}`),
+        this.xclass([this.themeClass, this.uiClass])
+      ),
+      directives: [{
+        name: 'show',
+        value: !this.hidden
+      }]
     },
     [
       h('div',
-        {
-          class: this.stageClass.concat(this.xclass(['stage', this.themeClass])),
-          directives: [{
-            name: 'show',
-            value: !this.hidden
-          }]
-        },
+        { class: this.wrapClass },
         [
           h('div',
             {
-              class: this.wrapClass
+              class: [this.xclass('wrap-border')]
             },
             [
               h('row',
@@ -78,13 +80,13 @@ export default function (h) {
                   h('column',
                     {
                       props: {
-                        span: this.$slots.head ? 1 : 0
+                        span: this.$slots.header ? this.headerSpan : 0
                       }
                     },
                     [
                       h('div', {
-                        class: this.xclass('edit-box-left')
-                      }, this.$slots.head)
+                        class: this.xclass('edit-box-header')
+                      }, this.$slots.header)
                     ]
                   ),
                   h('column',
@@ -107,55 +109,56 @@ export default function (h) {
                   h('column',
                     {
                       props: {
-                        span: 1
+                        span: this.$slots.footer ? this.footerSpan : 0
                       }
                     },
                     [
                       h('div', {
-                        class: this.xclass('edit-box-right')
-                      }, this.$slots.tail)
+                        class: this.xclass('edit-box-footer')
+                      }, this.$slots.footer)
                     ]
                   )
                 ]
-              ),
-              h('div',
-                {
-                  class: [this.xclass('completion')],
-                  directives: [{
-                    name: 'show',
-                    value: this.completion
-                  }]
-                }, this.$slots.completion
               )
             ]
           ),
-
-          h('transition',
-            {
-              props: {
-                name: 'fade'
-              }
-            },
-            [
-              h('div', {
-                class: [this.xclass('danger-tip')],
-                directives: [{
-                  name: 'show',
-                  value: this.dangerTipDisplay
-                }]
-              }, this.dangerTip)
-            ]
-          ),
-
-          (() => {
-            if (this.maxLength && this.textLengthTip) {
-              return h('div', {
-                class: [this.xclass('limit-txt')]
-              }, [h('span', this.limitLen), h('span', this.maxLength)])
-            }
-          })()
         ]
-      )
+      ),
+
+      h('div',
+        {
+          class: [this.xclass('completion')],
+          directives: [{
+            name: 'show',
+            value: this.completion
+          }]
+        }, this.$slots.completion
+      ),
+
+      h('transition',
+        {
+          props: {
+            name: 'fade'
+          }
+        },
+        [
+          h('div', {
+            class: [this.xclass('danger-tip')],
+            directives: [{
+              name: 'show',
+              value: this.dangerTipDisplay
+            }]
+          }, this.dangerTip)
+        ]
+      ),
+
+      (() => {
+        if (this.maxLength && this.textLengthTip) {
+          return h('div', {
+            class: [this.xclass('limit-txt')]
+          }, [h('span', this.limitLen), h('span', this.maxLength)])
+        }
+      })()
     ]
   )
 }
