@@ -5,12 +5,16 @@
  *                不用确认直接提交的模态框，默认为否
  * @prop header - 弹窗头部标题
  * @prop message - 模态框信息
+ *
  * @prop okBtn - 确定按钮名字
  * @prop noBtn - 取消按钮名字
  * @prop okBtnDisplay - 确定按钮是否显示
  * @prop noBtnDisplay - 取消按钮是否显示
+ *
  * @prop headerDisplay - 是否显示弹窗头部
  * @prop footerDisplay - 是否显示弹窗底部
+ *
+ * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
  * @prop type - 弹窗类型（full | alert | confirm | simple | long）
  *
  * @slot - 弹窗的主体内容
@@ -120,6 +124,10 @@ const modalComp = {
     },
     // 模态框的内容的高度
     modalHeight() {
+      if (this.height) {
+        return this.height
+      }
+
       switch (this.type) {
         case 'full':
           return this.isBiggerFull ? 300 : '100%'
@@ -169,7 +177,8 @@ const modalComp = {
     footerDisplay: {
       type: Boolean,
       default: true
-    }
+    },
+    height: [Number, String]
   },
 
   data: () => {
