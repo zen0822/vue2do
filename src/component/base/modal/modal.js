@@ -117,6 +117,15 @@ const modalComp = {
         default:
           return true
       }
+    },
+    // 模态框的内容的高度
+    modalHeight() {
+      switch (this.type) {
+        case 'full':
+          return this.isBiggerFull ? 300 : '100%'
+        default:
+          return 120
+      }
     }
   },
 

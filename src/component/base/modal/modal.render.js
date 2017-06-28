@@ -34,7 +34,7 @@ export default function (h) {
         h('scroller', {
           class: [this.xclass('scroller')],
           props: {
-            height: this.isFull ? (this.isBiggerFull ? 300 : '100%') : 120,
+            height: this.modalHeight,
             autoHide: true
           },
           ref: 'scroller'
@@ -78,6 +78,7 @@ export default function (h) {
             this.cPrefix,
             this.xclass([this.themeClass]),
             this.xclass(`type-${this.type}`),
+            { [this.xclass('no-header')]: !this.modalHeaderDisplay },
             { [this.xclass('has-scroller')]: this.hasScroller }
           ],
           directives: [{

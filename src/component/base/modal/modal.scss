@@ -22,6 +22,15 @@ $POP_CONTAINER_PADDING: 24px;
   width: 100%;
   z-index: $z-index-modal;
 
+  &.#{ $C_PREFIX }-no-header {
+    .#{ $C_PREFIX }-pop > article {
+      & > .#{ $C_PREFIX }-scroller
+          > .#{ $SCROLLER_PREFIX }-box {
+        padding-top: $gap-v-triple;
+      }
+    }
+  }
+
   .#{ $C_PREFIX }-bg {
     background: rgba(0, 0, 0, .12);
     height: 100%;
@@ -39,11 +48,9 @@ $POP_CONTAINER_PADDING: 24px;
     transform: rotate(0);
     box-shadow: $shadow;
 
-    padding-top: $gap-v-triple;
-
     > header {
       cursor: move;
-      padding: 0 24px 20px;
+      padding: $gap-v-triple $gap-h-triple $gutter-v-double;
       box-sizing: border-box;
       width: 100%;
 
@@ -105,16 +112,9 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{ $C_PREFIX }-type-simple {
-    .#{ $C_PREFIX }-pop {
-
-    }
-  }
-
   &.#{ $C_PREFIX }-type-full {
     &.#{ $C_PREFIX }-has-scroller
-        .#{ $C_PREFIX }-pop
-        & > header {
+        .#{ $C_PREFIX }-pop > header {
       border-color: $primary-color;
     }
 
