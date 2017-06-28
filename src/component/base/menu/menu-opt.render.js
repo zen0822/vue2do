@@ -9,7 +9,7 @@ export default function (h) {
     menuOptEle.push(
       h('div',
         {
-          class: [this.xclass(li)],
+          class: [this.xclass('li')],
           on: {
             click: this.$parent.selectAllOption
           }

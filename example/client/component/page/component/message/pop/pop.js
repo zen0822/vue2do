@@ -18,25 +18,29 @@ export default {
   },
 
   methods: {
+    simple() {
+      this.$refs.simple.show()
+    },
+
     alert() {
       alert({
-        message: '这是一个弹窗'
+        message: '这是一个警告弹窗'
       })
     },
 
     confirm() {
       confirm({
-        message: '这是一个弹窗',
+        message: '这是一个确认弹窗',
         title: '测试确认弹出'
       })
     },
 
-    customPop() {
-      this.$refs.pop.show()
+    showFullPop() {
+      this.$refs.fullPop.show()
     },
 
-    hideCustomPop() {
-      this.$refs.pop.hide()
+    hideFullPop() {
+      this.$refs.fullPop.hide()
     },
 
     purePop() {

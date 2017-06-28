@@ -13,19 +13,19 @@
       <h1 class="anchor-title" id="select-component">
         <a href="#select-component">下拉框组件</a>
       </h1>
-      <z-select
+      <z-menu
           :multiple="true"
           :search="true"
           :select-all="true"
           :init-val="initVal">
-        <z-select-ele value="1">{{ testName }}</z-select-ele>
-        <z-select-ele value="2">测试2</z-select-ele>
-        <z-select-ele value="3">测试222</z-select-ele>
-        <z-select-ele value="4">测试3</z-select-ele>
-        <z-select-ele value="5">测试4</z-select-ele>
-      </z-select>
+        <z-menu-ele value="1">{{ testName }}</z-menu-ele>
+        <z-menu-ele value="2">测试2</z-menu-ele>
+        <z-menu-ele value="3">测试222</z-menu-ele>
+        <z-menu-ele value="4">测试3</z-menu-ele>
+        <z-menu-ele value="5">测试4</z-menu-ele>
+      </z-menu>
 
-      <z-select
+      <z-menu
           :multiple="true"
           :search="true"
           :select-all="true"
@@ -37,7 +37,7 @@
             key: 'hot',
             text: '热门'
           }]"
-          :classify-opt="classifyOpt"></z-select>
+          :classify-opt="classifyOpt"></z-menu>
     </section>
 
     <section>
@@ -49,11 +49,11 @@
           <z-row :gap="10">
             <z-col :span="6">test2: </z-col>
             <z-col :span="6">
-              <z-select
+              <z-menu
                   :init-opt="dropMenuOpt"
                   :init-val="2"
                   :opt-processor="optProcessor"
-                  query-name="test3"></z-select>
+                  query-name="test3"></z-menu>
             </z-col>
           </z-row>
 
@@ -135,13 +135,13 @@
       <z-row :gap="10">
         <z-col :grid="{xs: 10, s: 8}" :m="4" :xs="12" :span="6">test1: </z-col>
         <z-col :span="6">
-          <z-select
+          <z-menu
               @click="clickIcon"
               query-name="test2"
               init-val="2">
-            <z-select-ele value="1">{{ testName }}</z-select-ele>
-            <z-select-ele value="2">测试2</z-select-ele>
-          </z-select>
+            <z-menu-ele value="1">{{ testName }}</z-menu-ele>
+            <z-menu-ele value="2">测试2</z-menu-ele>
+          </z-menu>
         </z-col>
       </z-row>
 

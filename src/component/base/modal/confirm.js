@@ -31,7 +31,7 @@ const createConfirm = () => {
     store,
     template: `
       <div :class="[cPrefix]">
-        <modal ref="confirm"></modal>
+        <modal type="confirm" ref="confirm"></modal>
       </div>
     `,
     mounted() {

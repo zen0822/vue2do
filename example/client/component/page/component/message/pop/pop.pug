@@ -3,53 +3,39 @@ include ../../mixin.pug
 div.component-pop
   article.example-article
     z-message(ref='message', message='wanyea玩野啊')
-    +section('confirm', '弹窗')
-      z-btn(@click='alert') 确认
+    +section('start', '弹窗')
+      z-btn(@click='simple') 确认
+      z-modal(ref='simple')
+        p 这是一个简单
+        p 的小弹窗
+      z-code.
+        #{'<z-btn @click="simple">'}
+          确认
+        #{'</z-btn>'}
+    +section('alert', '警告弹窗')
+      z-btn(@click='alert') 警告弹窗
       z-code.
         #{'<z-btn @click="alert">'}
-          确认
+          警告弹窗
         #{'</z-btn>'}
     +section('confirm', '确认弹窗')
       z-btn(@click='confirm') 确认弹窗
       z-code.
         #{'<z-btn @click="confirm">'}
-          确认
+          这是一个确认弹窗
         #{'</z-btn>'}
-    +section('custom', '自定义弹窗')
-      z-btn(@click='customPop') 自定义弹窗
-      z-btn(@click='hideCustomPop') 隐藏自定义弹窗
+    +section('full', '全屏弹窗 (移动端) ')
+      z-btn(@click='showFullPop') 全屏弹窗
+      z-btn(@click='hideFullPop') 隐藏全屏弹窗
       z-modal(
           commit
           header='dasfdfasdf'
           ok-btn='发布'
-          ref='pop')
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
-        p custom
+          type='full'
+          ref='fullPop')
+        - var n = 0
+        while n < 6
+          p full-#{n++}
       z-code.
         #{'<z-pop header-name="custom" ref="pop">'}
           #{'<p>custom</p>'}

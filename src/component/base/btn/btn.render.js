@@ -3,64 +3,31 @@
  */
 
 export default function (h) {
-  let btnChildren = []
-  let btnEleChildren = [
-    h('rip-transition',
-      {
-        class: [this.xclass('rip')],
-        props: {
-          assign: !this.isFloatBtn,
-          mousePoi: this.mousePoi,
-          switch: this.pressing
-        },
-        on: {
-          'afterEnter': () => {
-            this.pressing = false
-          }
-        }
-      }
-    ),
-    h('div',
-      {
-        class: [this.prefix('global-rip')],
-        directives: [{
-          name: 'show',
-          value: this.motion
-        }]
-      }
-    )
-  ]
+  let btnEleChildren = []
 
   if (this.banState) {
-    btnChildren.push(h('div', {
+    btnEleChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
     }))
   }
 
   if (this.btnValueDisplay) {
-    btnChildren.push(h('div', {
-      class: [this.xclass('value-show')]
-    }, [this.$slots.default, btnEleChildren]))
+    btnEleChildren.push(
+      h('div', {
+        class: [this.xclass('value-show')]
+      }, [this.$slots.default])
+    )
   } else if (this.type === 'flat') {
-    btnChildren.push(
+    btnEleChildren.push(
       h(
         `${this.link ? 'a' : 'div'}`,
         {
           class: [
-            this.xclass('ele'),
+            this.xclass('ele-border'),
           ],
-          on: {
-            focus: this.focus,
-            blur: this.blur
-          },
-          attrs: {
-            href: this.link,
-            tabindex: 0
-          }
         },
         [
           this.$slots.default ? this.$slots.default : this.value,
-          btnEleChildren
         ]
       )
     )
@@ -79,25 +46,16 @@ export default function (h) {
 
     buttonChildren.push(this.$slots.default ? this.$slots.default : this.value)
 
-    btnChildren.push(
+    btnEleChildren.push(
       h(
         `${this.link ? 'a' : 'div'}`,
         {
           class: [
-            this.xclass('ele'),
-          ],
-          on: {
-            focus: this.focus,
-            blur: this.blur
-          },
-          attrs: {
-            href: this.link,
-            tabindex: 0
-          }
+            this.xclass('ele-border'),
+          ]
         },
         [
-          buttonChildren,
-          btnEleChildren
+          buttonChildren
         ]
       )
     )
@@ -119,7 +77,46 @@ export default function (h) {
       }
     },
     [
-      btnChildren
+      h('div',
+        {
+          class: [this.xclass('ele')],
+          on: {
+            focus: this.focus,
+            blur: this.blur
+          },
+          attrs: {
+            href: this.link,
+            tabindex: 0
+          }
+        },
+        [
+          btnEleChildren,
+          h('rip-transition',
+            {
+              class: [this.xclass('rip')],
+              props: {
+                assign: !this.isFloatBtn,
+                mousePoi: this.mousePoi,
+                switch: this.pressing
+              },
+              on: {
+                'afterEnter': () => {
+                  this.pressing = false
+                }
+              }
+            }
+          ),
+          h('div',
+            {
+              class: [this.prefix('global-rip')],
+              directives: [{
+                name: 'show',
+                value: this.motion
+              }]
+            }
+          )
+        ]
+      )
     ]
   )
 }

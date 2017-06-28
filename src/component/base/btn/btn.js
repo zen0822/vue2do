@@ -126,12 +126,21 @@ const btnComp = {
     },
 
     mouseup() {
+      if (this.banState) {
+        return false
+      }
+
       this.allowFocus = true
     },
 
     mousedown(event) {
-      let el = event.currentTarget
       event.preventDefault()
+
+      if (this.banState) {
+        return false
+      }
+
+      let el = event.currentTarget
 
       this.allowFocus = false
       this.pressing = true
@@ -158,6 +167,10 @@ const btnComp = {
      */
     click(event) {
       event.preventDefault()
+
+      if (this.banState) {
+        return false
+      }
 
       return this.$emit('click')
     },

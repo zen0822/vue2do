@@ -154,6 +154,10 @@ export default {
       let option = []
 
       $defaultSlotContent.forEach((item) => {
+        if (!item.elm) {
+          return false
+        }
+
         if (item.elm.className === opt.compClass) {
           const el = item.elm
           const $el = $(el)

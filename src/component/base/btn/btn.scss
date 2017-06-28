@@ -21,28 +21,26 @@ $C_PREFIX: #{ $COMP_BTN };
   .#{ $C_PREFIX }-ele {
     position: relative;
     min-width: 64px;
-    padding: $gutter-v $gap-h;
     box-sizing: border-box;
     border-radius: $border-radius;
-    border: rgba(0, 0, 0, 0) $border-thin solid;
     color: #fff;
     text-align: center;
     font-size: $font-base;
     overflow: hidden;
     line-height: 1;
     white-space: nowrap;
+
     transform: rotate(0);
     transition-duration: 200ms;
     transition-property: background-color, box-shadow, color;
 
-    &:link,
-    &:visited,
-    &:hover,
-    &:active,
-    &:focus,
-    &:focus:active {
-      color: #fff;
-      outline: none;
+    &:focus {
+      outline-style: none;
+    }
+
+    & > .#{ $C_PREFIX }-ele-border {
+      border: rgba(0, 0, 0, 0) $border-thin solid;
+      padding: $gutter-v $gap-h;
     }
 
     .#{ $C_PREFIX }-loading {
@@ -90,7 +88,7 @@ $C_PREFIX: #{ $COMP_BTN };
 
   &.#{ $C_PREFIX }-ban {
     .#{ $C_PREFIX }-ele {
-      color: rgba(0, 0, 0, .3);
+      color: rgba(0, 0, 0, .4);
       background-color: rgba(0, 0, 0, .12) !important;
     }
 

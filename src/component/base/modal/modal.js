@@ -2,7 +2,7 @@
  * modal 模态框组件
  *
  * @prop commit - 当是 full 类型的时候，
- *                是否作为不用确认直接提交的模态框，默认为否
+ *                不用确认直接提交的模态框，默认为否
  * @prop header - 弹窗头部标题
  * @prop message - 模态框信息
  * @prop okBtn - 确定按钮名字
@@ -79,9 +79,43 @@ const modalComp = {
     isFull() {
       return this.type === 'full'
     },
+    // 是否是 simple modal
+    isSimple() {
+      return this.type === 'simple'
+    },
     // 判断是否在中大型设备并且是 full 模态框
     isBiggerFull() {
-      return this.isFull && this.deviceRange > 575
+      return this.isFull && this.deviceRange > 575 || !this.isFull
+    },
+    // 模态框的头部显示状态
+    modalHeaderDisplay() {
+      if (!this.headerDisplay) {
+        return false
+      }
+
+      switch (this.type) {
+        case 'full':
+          return true
+        case 'simple':
+          return false
+        default:
+          return !!this.modalHeader
+      }
+    },
+    // 模态框的尾部显示状态
+    modalFooterDisplay() {
+      if (!this.footerDisplay) {
+        return false
+      }
+
+      switch (this.type) {
+        case 'full':
+          return this.isBiggerFull
+        case 'simple':
+          return false
+        default:
+          return true
+      }
     }
   },
 
@@ -92,7 +126,7 @@ const modalComp = {
     },
     type: {
       type: String,
-      default: TYPE_CONFIRM
+      default: 'simple'
     },
     header: {
       type: String,
@@ -182,6 +216,17 @@ const modalComp = {
     _setDataOpt() {
       this.modalMessage = this.message
       this.modalHeader = this.header
+    },
+
+    /**
+     * 点击 Full 的导航按钮
+     */
+    clickFullNav() {
+      if (this.commit) {
+        this.no()
+      } else {
+        this.hide()
+      }
     },
 
     /**

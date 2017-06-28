@@ -6,44 +6,88 @@
 
 // margin top
 .#{ $comp-prefix }-m-t-half {
-    margin-top: $gap-v-half;
+    margin-top: $gutter-v-half;
 }
 .#{ $comp-prefix }-m-t {
-    margin-top: $gap-v;
+    margin-top: $gutter-v;
 }
 .#{ $comp-prefix }-m-t-double {
-    margin-top: $gap-v-double;
+    margin-top: $gutter-v-double;
 }
 
 // margin right
 .#{ $comp-prefix }-m-r-half {
-    margin-right: $gap-h-half;
+    margin-right: $gutter-h-half;
 }
 .#{ $comp-prefix }-m-r {
-    margin-right: $gap-h;
+    margin-right: $gutter-h;
 }
 .#{ $comp-prefix }-m-r-double {
-    margin-right: $gap-v-double;
+    margin-right: $gutter-v-double;
 }
 
 // margin bottom
 .#{ $comp-prefix }-m-b-half {
-    margin-bottom: $gap-v-half;
+    margin-bottom: $gutter-v-half;
 }
 .#{ $comp-prefix }-m-b {
-    margin-bottom: $gap-v;
+    margin-bottom: $gutter-v;
 }
 .#{ $comp-prefix }-m-b-double {
-    margin-bottom: $gap-v-double;
+    margin-bottom: $gutter-v-double;
 }
 
 // margin left
 .#{ $comp-prefix }-m-l-half {
-    margin-left: $gap-h-half;
+    margin-left: $gutter-h-half;
 }
 .#{ $comp-prefix }-m-l {
-    margin-left: $gap-h;
+    margin-left: $gutter-h;
 }
 .#{ $comp-prefix }-m-l-double {
-    margin-left: $gap-h-double;
+    margin-left: $gutter-h-double;
+}
+
+// padding top
+.#{ $comp-prefix }-p-t-half {
+    padding-top: $gap-v-half;
+}
+.#{ $comp-prefix }-p-t {
+    padding-top: $gap-v;
+}
+.#{ $comp-prefix }-p-t-double {
+    padding-top: $gap-v-double;
+}
+
+// padding right
+.#{ $comp-prefix }-p-r-half {
+    padding-right: $gap-h-half;
+}
+.#{ $comp-prefix }-p-r {
+    padding-right: $gap-h;
+}
+.#{ $comp-prefix }-p-r-double {
+    padding-right: $gap-v-double;
+}
+
+// padding bottom
+.#{ $comp-prefix }-p-b-half {
+    padding-bottom: $gap-v-half;
+}
+.#{ $comp-prefix }-p-b {
+    padding-bottom: $gap-v;
+}
+.#{ $comp-prefix }-p-b-double {
+    padding-bottom: $gap-v-double;
+}
+
+// padding left
+.#{ $comp-prefix }-p-l-half {
+    padding-left: $gap-h-half;
+}
+.#{ $comp-prefix }-p-l {
+    padding-left: $gap-h;
+}
+.#{ $comp-prefix }-p-l-double {
+    padding-left: $gap-h-double;
 }

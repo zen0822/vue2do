@@ -7,6 +7,7 @@ import inputPage from '../component/page/component/form/input/input'
 import popPage from '../component/page/component/message/pop/pop'
 import tipPage from '../component/page/component/message/tip/tip'
 import tablePage from '../component/page/component/data/table/table'
+import tabPage from '../component/page/component/other/tab/tab'
 import listPage from '../component/page/component/data/list/list'
 import pagerPage from '../component/page/component/data/page/page'
 import gridPage from '../component/page/component/layout/grid/grid'
@@ -101,5 +102,11 @@ export default [{
   component: scrollerPage,
   meta: {
     title: '滚动条组件'
+  }
+}, {
+  path: 'tab',
+  component: tabPage,
+  meta: {
+    title: '选项卡组件'
   }
 }]

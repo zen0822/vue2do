@@ -38,30 +38,6 @@
           {
             "name": "基本用法",
             "route": "/component/select#start"
-          },
-          {
-            "name": "标签声明",
-            "route": "/component/select#tag"
-          },
-          {
-            "name": "自定义内容",
-            "route": "/component/select#custom"
-          },
-          {
-            "name": "分类下拉框",
-            "route": "/component/select#classify"
-          },
-          {
-            "name": "多选下拉框",
-            "route": "/component/select#multiple"
-          },
-          {
-            "name": "搜索功能",
-            "route": "/component/select#search"
-          },
-          {
-            "name": "指定下拉框选项",
-            "route": "/component/select#init"
           }
         ]
       },
@@ -143,6 +119,10 @@
       {
         "name": "滚动条组件",
         "route": "/component/scroller"
+      },
+      {
+        "name": "选项卡组件",
+        "route": "/component/tab"
       }
     ]
   }

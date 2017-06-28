@@ -10,6 +10,9 @@ export default function (h) {
             props: {
               xs: 2,
               l: 1
+            },
+            nativeOn: {
+              click: this.clickFullNav
             }
           },
           [

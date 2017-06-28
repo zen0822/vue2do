@@ -10,7 +10,6 @@ $C_PREFIX: #{ $COMP_BTN };
 @mixin btn-flat($color, $lighter-color) {
   color: $color;
   border-color: $color;
-  -webkit-tap-highlight-color: $lighter-color;
 }
 
 @mixin btn-outline($color) {
@@ -83,7 +82,6 @@ $C_PREFIX: #{ $COMP_BTN };
   &.#{ $C_PREFIX }-type-flat {
     & > .#{ $C_PREFIX }-ele {
       background-color: #fff;
-      padding: 7.5px $gap-v;
     }
 
     &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {
@@ -112,23 +110,33 @@ $C_PREFIX: #{ $COMP_BTN };
       background-color: #fff;
     }
 
-    &.#{ $C_PREFIX }-kind-primary > .#{ $C_PREFIX }-ele {
+    &.#{ $C_PREFIX }-kind-primary
+        > .#{ $C_PREFIX }-ele
+        > .#{ $C_PREFIX }-ele-border {
       @include btn-outline($primary-color);
     }
 
-    &.#{ $C_PREFIX }-kind-dange > .#{ $C_PREFIX }-eler {
+    &.#{ $C_PREFIX }-kind-dange
+        > .#{ $C_PREFIX }-ele
+        > .#{ $C_PREFIX }-ele-border {
       @include btn-outline($danger-color);
     }
 
-    &.#{ $C_PREFIX }-kind-success > .#{ $C_PREFIX }-ele {
+    &.#{ $C_PREFIX }-kind-success
+        > .#{ $C_PREFIX }-ele
+        > .#{ $C_PREFIX }-ele-border {
       @include btn-outline($success-color);
     }
 
-    &.#{ $C_PREFIX }-kind-warning > .#{ $C_PREFIX }-ele {
+    &.#{ $C_PREFIX }-kind-warning
+        > .#{ $C_PREFIX }-ele
+        > .#{ $C_PREFIX }-ele-border {
       @include btn-outline($warning-color);
     }
 
-    &.#{ $C_PREFIX }-kind-default > .#{ $C_PREFIX }-ele {
+    &.#{ $C_PREFIX }-kind-default
+        > .#{ $C_PREFIX }-ele
+        > .#{ $C_PREFIX }-ele-border {
       @include btn-outline($grey-light);
     }
   }

@@ -38,7 +38,8 @@ $POP_CONTAINER_PADDING: 24px;
     overflow: hidden;
     transform: rotate(0);
     box-shadow: $shadow;
-    padding-top: 24px;
+
+    padding-top: $gap-v-triple;
 
     > header {
       cursor: move;
@@ -50,7 +51,6 @@ $POP_CONTAINER_PADDING: 24px;
         font-size: $h3;
         line-height: 1;
         font-weight: bold;
-        color: $grey-dark;
       }
     }
 
@@ -112,8 +112,15 @@ $POP_CONTAINER_PADDING: 24px;
   }
 
   &.#{ $C_PREFIX }-type-full {
+    &.#{ $C_PREFIX }-has-scroller
+        .#{ $C_PREFIX }-pop
+        & > header {
+      border-color: $primary-color;
+    }
+
     .#{ $C_PREFIX }-pop {
       width: 530px;
+      padding-top: 0;
 
       & > header {
         color: #fff;
@@ -132,7 +139,7 @@ $POP_CONTAINER_PADDING: 24px;
       }
 
       & > article {
-        min-height: 300px;
+        height: 300px;
       }
 
       & > footer {

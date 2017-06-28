@@ -3,12 +3,14 @@
  */
 
 import headerChildrenRender from './modal.header.render'
+import footerChildrenRender from './modal.footer.render'
 
 export default function (h) {
   let modalChildren = []
   let headerChildren = headerChildrenRender.call(this, h)
+  let footerChildren = footerChildrenRender.call(this, h)
 
-  if (this.headerDisplay && (this.isFull || !this.isFull && this.modalHeader)) {
+  if (this.modalHeaderDisplay) {
     modalChildren.push(
       h('header',
         {
@@ -51,38 +53,14 @@ export default function (h) {
     )
   )
 
-  if (this.footerDisplay || (this.footerDisplay && this.isFull && this.isBiggerFull)) {
-    let footerChildren = []
-
-    if (this.noBtn) {
-      footerChildren.push(h('btn', {
-        props: {
-          value: this.noBtn,
-          type: 'flat'
-        },
-        on: {
-          click: this.no
-        }
-      }))
-    }
-
-    if (this.okBtn) {
-      footerChildren.push(
-        h('btn', {
-          props: {
-            value: this.okBtn,
-            type: 'flat'
-          },
-          on: {
-            click: this.ok
-          }
-        })
-      )
-    }
-
+  if (this.modalFooterDisplay) {
     modalChildren.push(
       h('footer', {
-        class: this.footerClass
+        class: this.footerClass,
+        directives: [{
+          name: 'show',
+          value: this.isBiggerFull
+        }]
       }, footerChildren)
     )
   }
