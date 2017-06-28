@@ -12,6 +12,10 @@ div.component-pop
         #{'<z-btn @click="simple">'}
           确认
         #{'</z-btn>'}
+        #{'<z-modal ref="simple">'}
+          #{'<p> 这是一个简单</p>'}
+          #{'<p> 的小弹窗</p>'}
+        #{'</z-modal>'}
     +section('alert', '警告弹窗')
       z-btn(@click='alert') 警告弹窗
       z-code.
@@ -39,19 +43,4 @@ div.component-pop
       z-code.
         #{'<z-pop header-name="custom" ref="pop">'}
           #{'<p>custom</p>'}
-        #{'</z-pop>'}
-    +section('pure', '纯自定义弹窗')
-      z-btn(@click='purePop') 自定义弹窗
-      z-pop(
-          no-click-bg-hide,
-          pop
-          ref='purePop')
-        img(
-          width='100%'
-          :src='homeBgImg')
-      z-code.
-        #{'<z-pop'}
-            header-name="custom"
-            ref="pop"
-          #{'<p>pure custom</p>'}
         #{'</z-pop>'}
