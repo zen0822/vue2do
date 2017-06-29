@@ -5,46 +5,51 @@
  * 如果bubble有祖父元素有相对定位的，请启用 props 的
  *
  * @prop theme - 主题
- * @prop poptype - 弹窗类型
  * @prop width - bubble最大宽度
- * @prop headername - 弹窗头部名字
- * @prop message - alert信息
- * @prop bubbleDisplay - 是否立即显示bubble
+ * @prop message - bubble 信息
+ * @prop display - 是否立即显示bubble
  * @prop relative - 是否启用相对位置的 bubble
  * @prop hideRightNow - 马上显示和隐藏 bubble，就是纯显示的 bubble 要启用
  *
- * @slot body - confirm弹窗的主体内容
+ * @slot - 主体内容
  *
  */
 import Vue from 'vue'
 
+import './bubble.scss'
+import iconComp from '../icon/icon'
+import render from './bubble.render'
 import baseMixin from '../../../mixin/base'
-const COMMON = {}
-require('../icon/icon')
+import bubbleTransition from '../../transition/bubble'
 
-require('./bubble.scss')
-var template = require('./bubble.tpl')
+import { offset as childrenHeight } from '../../../util/dom/prop'
 
 const ARROW_HEIGHT = 20
 
 const bubbleComp = {
   name: 'bubble',
 
-  template,
+  render,
 
   mixins: [baseMixin],
+
+  components: {
+    icon: iconComp,
+    'bubble-transition': bubbleTransition
+  },
 
   props: {
     theme: {
       type: String,
       default: 'primary'
     },
+
     message: {
       type: String,
       default: ''
     },
 
-    bubbleDisplay: {
+    display: {
       type: Boolean,
       default: false
     },
@@ -65,14 +70,21 @@ const bubbleComp = {
     }
   },
 
-  data: () => {
+  data() {
     this.compName = 'bubble'
 
     return {
-      popDisplay: false,
+      bubbleDisplay: false,
       mouseOnBubble: false,
       bubbleDisplayCounter: {},
       displayInterval: 800
+    }
+  },
+
+  computed: {
+    // 组件类名的前缀
+    cPrefix() {
+      return `${this.compPrefix}-bubble`
     }
   },
 
@@ -82,27 +94,37 @@ const bubbleComp = {
         this.displayInterval = 0
       }
     },
+    _setDataOpt() {
+      this.bubbleDisplay = this.display
+    },
     /**
      * 初始化bubble位置
      * @return {Object} - 组件本身
      */
     _initPosition(target) {
-      var $target = $(target)
-      var position = this.relative ? $target.position() : $target.offset()
+      let $el = this.$el
 
-      var width = $target.outerWidth()
-      var height = $target.outerHeight()
+      if ($el.style.display === 'none') {
+        Object.assign($el.style, {
+          visibility: 'hidden',
+          display: ''
+        })
+      }
 
-      var $el = $(this.$el)
-      var bubbleWidth = $el.outerWidth()
-      var bubbleHeight = $el.outerHeight()
+      let position = childrenHeight(target)
 
-      $el.css({
-        top: position.top + height + ARROW_HEIGHT / 2,
-        left: position.left - bubbleWidth / 2 + width / 2
+      let width = target.offsetWidth
+      let height = target.offsetHeight
+
+      let bubbleWidth = this.$el.offsetWidth
+      let bubbleHeight = this.$el.offsetWidth
+
+      Object.assign(this.$el.style, {
+        top: position.top + height + ARROW_HEIGHT / 2 + 'px',
+        left: position.left - bubbleWidth / 2 + width / 2 + 'px',
+        display: 'none',
+        visibility: ''
       })
-
-      return this
     },
 
     /**
@@ -110,11 +132,18 @@ const bubbleComp = {
      * @return {Functio} - 初始化bubble位置
      */
     show(target) {
-      clearTimeout(this.bubbleDisplayCounter)
-      this.bubbleDisplay = true
+      if (this.bubbleDisplay) {
+        return this
+      }
 
-      this.$nextTick(() => {
-        this._initPosition(target)
+      clearTimeout(this.bubbleDisplayCounter)
+
+      this._initPosition(target)
+
+      this.$refs.transition.enter()
+
+      this.$refs.transition.$on('entering', () => {
+        this.bubbleDisplay = true
       })
 
       return this
@@ -126,7 +155,11 @@ const bubbleComp = {
      */
     hide() {
       clearTimeout(this.bubbleDisplayCounter)
-      this.setTimeoutBubbleDisplay()
+
+      this.$refs.transition.$on('afterLeave', () => {
+        this.bubbleDisplay = false
+      })
+      this.$refs.transition.leave()
 
       return this
     },
@@ -162,11 +195,18 @@ const bubbleComp = {
     },
 
     /**
-     * 设置bubble显示的定时器
+     * 点击
+     */
+    click(event) {
+      return event.stopPropagation()
+    },
+
+    /**
+     * 延迟隐藏
      **/
-    setTimeoutBubbleDisplay() {
+    delayHide() {
       this.bubbleDisplayCounter = setTimeout(() => {
-        this.bubbleDisplay = false
+        this.hide()
       }, this.displayInterval)
     }
   }

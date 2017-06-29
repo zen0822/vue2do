@@ -1,66 +1,65 @@
-//bubble组件样式
+/**
+ * tip 组件样式
+ */
 
-@import "~config.scss";
-@import "~extend.scss";
+@import "../../../scss/config.scss";
+@import "../../../scss/extend.scss";
+@import "../../../scss/name.scss";
 
-.bubble-stage,
-.bubble-stage.theme-default {
+$C_PREFIX: #{ $COMP_BUBBLE };
+$ICON_PREFIX: #{ $COMP_ICON };
+
+.#{$C_PREFIX} {
   position: absolute;
   left: 0;
   top: 0;
   z-index: $z-index;
   background: #fff;
   border: $grey-light $border-thin solid;
-  padding: 15px;
+  border-radius: $border-radius;
+  padding: $gap-v;
 
-  .bubble-slot {
+  &-slot {
     max-width: 300px;
 
-    .bubble-text {
+    .#{$C_PREFIX}-text {
       @extend %text-omit;
       width: 100%;
       display: inline-block;
     }
   }
 
-  &.customize-bubble .bubble-slot {
+  &.#{$C_PREFIX}-custom .#{$C_PREFIX}-slot {
     max-width: none;
   }
 
-  .arrow {
+  .#{$C_PREFIX}-arrow {
     position: absolute;
-    top: -12px;
+    top: -10px;
     left: 0;
     right: 0;
-    height: 19px;
+    height: 15px;
     width: 16px;
     margin: auto;
     overflow: hidden;
 
-    .icon-stage {
+    .#{$ICON_PREFIX} {
       position: absolute;
       top: 0;
       left: 0;
 
-      .fa {
-        font-size: 26px;
-        line-height: 16px;
+      .z-icon-triangle-up {
+        font-size: $h3;
       }
     }
 
-    .arrow-border {
+    .#{$C_PREFIX}-border {
       top: -1.5px;
       color: $grey-dark;
     }
-    .arrow-body {
+
+    .#{$C_PREFIX}-body {
       color: #fff;
     }
   }
-}
-
-.bubble-stage.theme-primary {
-  border-radius: $border-radius;
-}
-.bubble-stage.theme-primary:active {
-  color: #333;
 }

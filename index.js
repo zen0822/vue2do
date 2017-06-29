@@ -22,6 +22,7 @@ import nav from './src/component/common/nav/nav'
 import page from './src/component/base/page/page'
 import search from './src/component/common/search/search'
 
+import bubble from './src/component/base/bubble/bubble'
 import pop from './src/component/base/pop/pop'
 import modal from './src/component/base/modal/modal'
 import alert from './src/component/base/modal/alert'
@@ -55,6 +56,7 @@ export default pluginInstall
 
 export {
   alert,
+  bubble,
   confirm,
   modal,
   message,

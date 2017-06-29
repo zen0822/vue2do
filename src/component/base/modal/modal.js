@@ -131,6 +131,8 @@ const modalComp = {
       switch (this.type) {
         case 'full':
           return this.isBiggerFull ? 300 : '100%'
+        case 'simple':
+          return 150
         default:
           return 120
       }

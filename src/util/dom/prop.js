@@ -38,7 +38,7 @@ const client = (el) => {
  *                    left - 离页面的
  *                    right - 纵坐标
  */
-const pagePosition = (el) => {
+const offset = (el) => {
   function offsetParent(el, offset = { top: 0, left: 0 }) {
     if (el.offsetParent) {
       return offsetParent(el.offsetParent, {
@@ -56,5 +56,5 @@ const pagePosition = (el) => {
 export {
   childrenHeight,
   client,
-  pagePosition
+  offset
 }

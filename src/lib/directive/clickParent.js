@@ -10,12 +10,18 @@ document.body.addEventListener('click', function () {
 export default {
   bind(el, binding, vnode) {
     const id = nodeList.push(el) - 1
-    const context = el.context
+    const context = vnode.context
+    let expression = binding.expression
+
+    if (typeof expression === 'string') {
+      expression = vnode.context[expression]
+    }
 
     el[storeName] = {
       id,
-      expression: binding.expression,
-      value: binding.value
+      expression,
+      value: binding.value,
+      vm: vnode.context
     }
   },
 

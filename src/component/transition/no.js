@@ -9,13 +9,6 @@ import baseMixin from './mixin'
 export default {
   mixins: [baseMixin],
 
-  props: {
-    speed: {
-      type: [Number, String],
-      default: 'normal'
-    }
-  },
-
   computed: {
     transition() {
       return `${this.transitionTime} ease-out`

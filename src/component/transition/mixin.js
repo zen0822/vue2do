@@ -20,17 +20,20 @@ export default {
   },
 
   computed: {
-    transitionTime() {
+    time() {
       switch (this.speed) {
         case 'normal':
-          return '300ms'
+          return 300
         case 'fast':
-          return '150ms'
+          return 150
         case 'slow':
-          return '450ms'
+          return 450
         default:
-          return '300ms'
+          return 300
       }
+    },
+    transitionTime() {
+      return this.time + 'ms'
     }
   }
 }

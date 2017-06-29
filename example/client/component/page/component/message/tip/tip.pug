@@ -1,0 +1,20 @@
+include ../../mixin.pug
+
+div.component-pop
+  article.example-article
+    +section('start', '弹窗')
+      z-btn(@click='tip') 提示
+      z-code.
+        #{'<z-btn @click="tip">'}
+          提示
+        #{'</z-btn>'}
+    +section('bubble', '泡泡提示')
+      z-btn(
+        @click='bubble'
+        v-bubble='bubbleTip'
+      ) 泡泡提示
+      z-bubble(
+        ref='bubble'
+        v-click-parent='clickParent'
+      )
+        p 泡泡提示

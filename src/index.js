@@ -4,6 +4,7 @@ import form from './component/base/form/form'
 import input from './component/base/input/input'
 import icon from './component/base/icon/icon'
 
+import bubble from './component/base/bubble/bubble'
 import modal from './component/base/modal/modal'
 import pop from './component/base/pop/pop'
 import message from './component/base/message/message'
@@ -43,6 +44,7 @@ import row from './component/common/layout/row/row'
 
 const compHub = [
   btn,
+  bubble,
   check,
   code,
   form,

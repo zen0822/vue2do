@@ -11,11 +11,6 @@ export default {
   mixins: [baseMixin],
 
   props: {
-    speed: {
-      type: [Number, String],
-      default: 'normal'
-    },
-
     opacity: {
       tyep: Boolean,
       default: false
