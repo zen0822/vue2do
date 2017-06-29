@@ -39,6 +39,12 @@ const client = (el) => {
  *                    right - 纵坐标
  */
 const offset = (el) => {
+  if (!el) {
+    console.warn('vue2do: el must alive!')
+
+    return false
+  }
+
   function offsetParent(el, offset = { top: 0, left: 0 }) {
     if (el.offsetParent) {
       return offsetParent(el.offsetParent, {

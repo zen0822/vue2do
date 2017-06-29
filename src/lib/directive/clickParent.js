@@ -25,8 +25,14 @@ export default {
     }
   },
 
-  update(el, binding) {
-    el[storeName].expression = binding.expression
+  update(el, binding, vnode) {
+    let expression = binding.expression
+
+    if (typeof expression === 'string') {
+      expression = vnode.context[expression]
+    }
+
+    el[storeName].expression = expression
     el[storeName].value = binding.value
   },
 

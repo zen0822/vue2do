@@ -153,15 +153,18 @@ const bubbleComp = {
      * 隐藏bubble
      * @return {Object} - 组件本身
      */
-    hide() {
+    async hide() {
       clearTimeout(this.bubbleDisplayCounter)
 
       this.$refs.transition.$on('afterLeave', () => {
         this.bubbleDisplay = false
       })
-      this.$refs.transition.leave()
 
-      return this
+      await this.$refs.transition.leave()
+
+      return new Promise((resolve, reject) => {
+        return resolve()
+      })
     },
 
     /**

@@ -16,12 +16,24 @@ export default {
   },
 
   methods: {
-    enter() {
-      return this.beforeEnter()
+    async enter() {
+      await this.beforeEnter()
+      await this.entering()
+      await this.afterEnter()
+
+      return new Promise((resolve, reject) => {
+        return resolve()
+      })
     },
 
-    leave() {
-      this.beforeLeave()
+    async leave() {
+      await this.beforeLeave()
+      await this.leaveing()
+      await this.afterLeave()
+
+      return new Promise((resolve, reject) => {
+        return resolve()
+      })
     },
 
     beforeEnter() {
@@ -34,10 +46,12 @@ export default {
         'transform': 'scale(0)',
       })
 
-      setTimeout(() => {
-        el.style.display = ''
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          el.style.display = ''
 
-        this.entering()
+          return resolve()
+        })
       })
     },
 
@@ -46,15 +60,17 @@ export default {
 
       this.$emit('entering')
 
-      setTimeout(() => {
-        Object.assign(el.style, {
-          'transform': ''
-        })
-
+      return new Promise((resolve, reject) => {
         setTimeout(() => {
-          this.afterEnter()
-        }, this.time)
-      }, 10)
+          Object.assign(el.style, {
+            'transform': ''
+          })
+
+          setTimeout(() => {
+            return resolve()
+          }, this.time)
+        }, 10)
+      })
     },
 
     afterEnter() {
@@ -84,13 +100,17 @@ export default {
     leaveing() {
       let el = this.$el
 
+      this.$emit('leaving')
+
       Object.assign(el.style, {
         'transform': 'scale(0)',
       })
 
-      this.$emit('leaving')
-
-      return this.afterLeave()
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          return resolve()
+        }, 50)
+      })
     },
 
     afterLeave() {

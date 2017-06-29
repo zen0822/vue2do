@@ -24,13 +24,18 @@ export default {
       tip('这是一个提示')
     },
 
-    bubble(evnet) {
+    async bubble(event) {
+      let target = event.currentTarget
+
       event.stopPropagation()
-      this.$refs.bubble.show(event.currentTarget)
+
+      await this.$refs.bubble.hide()
+
+      this.$refs.bubble.show(target)
     },
 
     clickParent() {
-      this.$refs.bubble.hide(event.currentTarget)
+      this.$refs.bubble.hide()
     }
   }
 }

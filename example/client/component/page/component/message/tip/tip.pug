@@ -10,7 +10,7 @@ div.component-pop
         #{'</z-btn>'}
     +section('bubble', '泡泡提示')
       z-btn(
-        @click='bubble'
+        @click.native='bubble'
         v-bubble='bubbleTip'
       ) 泡泡提示
       z-bubble(
