@@ -16,26 +16,6 @@ export default {
   },
 
   methods: {
-    async enter() {
-      await this.beforeEnter()
-      await this.entering()
-      await this.afterEnter()
-
-      return new Promise((resolve, reject) => {
-        return resolve()
-      })
-    },
-
-    async leave() {
-      await this.beforeLeave()
-      await this.leaveing()
-      await this.afterLeave()
-
-      return new Promise((resolve, reject) => {
-        return resolve()
-      })
-    },
-
     beforeEnter() {
       this.$emit('beforeEnter')
       let el = this.$el
@@ -51,25 +31,25 @@ export default {
           el.style.display = ''
 
           return resolve()
-        })
+        }, 10)
       })
     },
 
     entering() {
       let el = this.$el
+      // HACK: trigger browser reflow
+      let height = el.offsetHeight
+
+      Object.assign(el.style, {
+        'transform': ''
+      })
 
       this.$emit('entering')
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          Object.assign(el.style, {
-            'transform': ''
-          })
-
-          setTimeout(() => {
-            return resolve()
-          }, this.time)
-        }, 10)
+          return resolve()
+        }, this.time)
       })
     },
 
@@ -87,12 +67,13 @@ export default {
     beforeLeave() {
       let el = this.$el
 
+      this.$emit('beforeLeave')
+
       Object.assign(el.style, {
+        'transform': '',
         'transform-origin': '50% 0',
         'transition': this.transition
       })
-
-      this.$emit('beforeLeave')
 
       return this.leaveing()
     },
@@ -108,8 +89,10 @@ export default {
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
+          el.style.display = 'none'
+
           return resolve()
-        }, 50)
+        }, this.time)
       })
     },
 
@@ -117,6 +100,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'transform': '',
         'transform-origin': '',
         'transition': ''
       })

@@ -23,9 +23,13 @@ export default {
      */
     show() {
       this.modalDisplay = true
-      this.$refs.pop.show()
 
-      return this
+      return this.$nextTick(() => {
+        this.$refs.fadeTransition.enter()
+        this.$refs.pop.show()
+
+        return this
+      })
     },
 
     /**
@@ -34,6 +38,8 @@ export default {
      * @return {Object}
      */
     hide() {
+      this.$refs.fadeTransition.leave()
+
       this.$refs.pop.hide({
         cb: () => {
           this.modalDisplay = false

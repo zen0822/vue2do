@@ -1,6 +1,9 @@
 /**
  * input api
  */
+
+import tip from '../../base/message/tip'
+
 const KEYUP_INTERVAL_TIME = 100
 
 export default {

@@ -51,8 +51,7 @@ import rowComp from '../../common/layout/row/row'
 import colComp from '../../common/layout/col/col'
 
 import { dataType } from '../../../util/data/data'
-
-const tip = {}
+import tip from '../../base/message/tip'
 
 const TYPE_TEXT_AREA = 'area'
 const TYPE_TEXT = 'field'
@@ -244,6 +243,22 @@ const inputComp = {
     }
   },
 
+  watch: {
+    initVal(val, oldVal) {
+      this.value = val
+    },
+    value(val, oldVal) {
+      // 限制长度显示
+      this.limitLen = String(val).length
+
+      if (this.completion && this.$slots.completion) {
+        this.$slots.completion[0].componentInstance.search(val)
+      }
+
+      this._dispatchChange()
+    }
+  },
+
   methods: {
     /**
      * 初始化验证规则
@@ -355,22 +370,6 @@ const inputComp = {
       }
 
       return Number(strTemp)
-    }
-  },
-
-  watch: {
-    initVal(val, oldVal) {
-      this.value = val
-    },
-    value(val, oldVal) {
-      // 限制长度显示
-      this.limitLen = String(val).length
-
-      if (this.completion && this.$slots.completion) {
-        this.$slots.completion[0].componentInstance.search(val)
-      }
-
-      this._dispatchChange()
     }
   },
 

@@ -10,6 +10,8 @@
 import compConfig from '../config/index.json'
 import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
+
+import { prop as eleProp } from '../util/dom/prop'
 import { addClass } from '../util/dom/attr'
 
 export default {
@@ -105,6 +107,15 @@ export default {
         default:
           return Number.MAX_VALUE
       }
+    },
+
+    /**
+     * 获取元素高度（无论是否是隐藏状态）
+     *
+     * @param {Element} element - dom 节点
+     */
+    elementProp(element = this.$el) {
+      return eleProp(element)
     },
 
     /**

@@ -42,6 +42,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     width: 16px;
     margin: auto;
     overflow: hidden;
+    transform: rotate(0);
 
     .#{$ICON_PREFIX} {
       position: absolute;

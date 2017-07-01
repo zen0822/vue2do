@@ -68,10 +68,9 @@ export default function (h) {
             direction: 'bottom',
             type: 'slide',
             speed: 'slow',
-            detail: {
-              top: this.pagerPoi.top
-            }
-          }
+            detail: this.pageDetail
+          },
+          ref: 'slideTransition'
         },
         [
           h(
@@ -80,7 +79,7 @@ export default function (h) {
               class: [this.xclass('page')],
               directives: [{
                 name: 'show',
-                value: this.pagerDisplay && this.pager
+                value: this.pagerDisplay
               }],
               props: {
                 data: this.pageData,
@@ -90,7 +89,7 @@ export default function (h) {
               on: {
                 'switch': this.switchPage
               },
-              ref: 'pager',
+              ref: 'page',
               style: this.pagerStyle
             }, (() => {
               let ele = [

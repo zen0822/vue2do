@@ -23,58 +23,102 @@ export default {
     }
   },
 
-  render(h) {
-    return h('transition', {
-      on: {
-        beforeEnter: (el) => {
-          el.style.opacity = 0
-          el.style.transition = this.transition
+  methods: {
+    beforeEnter() {
+      this.$emit('beforeEnter')
 
-          this.$emit('beforeEnter')
-        },
+      let el = this.$el
 
-        enter: (el) => {
-          // HACK: 触发重绘
-          let height = this.$el.offsetHeight
+      Object.assign(el.style, {
+        'transition': this.transition,
+        'opacity': 0,
+      })
 
-          el.style.opacity = this.opacity ? '' : 1
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          el.style.display = ''
 
-          this.$emit('enter')
-        },
+          return resolve()
+        })
+      })
+    },
 
-        afterEnter: (el) => {
-          el.style.transition = ''
+    entering() {
+      let el = this.$el
 
-          if (!this.opacity) {
-            el.style.opacity = ''
-          }
+      this.$emit('entering')
 
-          this.$emit('afterEnter')
-        },
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          Object.assign(el.style, {
+            'opacity': this.opacity ? '' : 1
+          })
 
-        beforeLeave: (el) => {
-          if (!this.opacity) {
-            el.style.opacity = 1
-          }
+          setTimeout(() => {
+            return resolve()
+          }, this.time)
+        }, 10)
+      })
+    },
 
-          el.style.transition = this.transition
+    afterEnter() {
+      let el = this.$el
 
-          this.$emit('beforeLeave')
-        },
+      Object.assign(el.style, {
+        'transition': '',
+        'opacity': ''
+      })
 
-        leave: (el) => {
-          el.style.opacity = 0
+      this.$emit('afterEnter')
+    },
 
-          this.$emit('leave')
-        },
+    beforeLeave() {
+      let el = this.$el
 
-        afterLeave: (el) => {
-          el.style.transition = ''
-          el.style.opacity = ''
+      this.$emit('beforeLeave')
 
-          this.$emit('afterLeave')
-        }
+      Object.assign(el.style, {
+        'transition': this.transition
+      })
+
+      if (!this.opacity) {
+        el.style.opacity = 1
       }
-    }, this.$slots.default)
+
+      return this.leaveing()
+    },
+
+    leaveing() {
+      let el = this.$el
+
+      this.$emit('leaving')
+
+      Object.assign(el.style, {
+        'opacity': 0
+      })
+
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          el.style.display = 'none'
+
+          return resolve()
+        }, this.time)
+      })
+    },
+
+    afterLeave() {
+      let el = this.$el
+
+      Object.assign(el.style, {
+        'transition': '',
+        'opacity': ''
+      })
+
+      return this.$emit('afterLeave')
+    }
+  },
+
+  render(h) {
+    return h('transition', this.$slots.default)
   }
 }

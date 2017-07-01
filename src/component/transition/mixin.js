@@ -35,5 +35,35 @@ export default {
     transitionTime() {
       return this.time + 'ms'
     }
+  },
+
+  methods: {
+    async enter() {
+      this.transiting = this.isEntering = true
+
+      await this.beforeEnter()
+      await this.entering()
+      await this.afterEnter()
+
+      this.transiting = this.isEntering = false
+
+      return new Promise((resolve, reject) => {
+        return resolve()
+      })
+    },
+
+    async leave() {
+      this.transiting = this.isEntering = true
+
+      await this.beforeLeave()
+      await this.leaveing()
+      await this.afterLeave()
+
+      this.transiting = this.isEntering = false
+
+      return new Promise((resolve, reject) => {
+        return resolve()
+      })
+    }
   }
 }

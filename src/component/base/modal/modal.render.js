@@ -65,59 +65,51 @@ export default function (h) {
     )
   }
 
-  return h('no-transition',
+  return h('div',
     {
-      props: {
-        speed: 'fast'
+      class: [
+        this.cPrefix,
+        this.xclass([this.themeClass]),
+        this.xclass(`type-${this.type}`),
+        { [this.xclass('no-header')]: !this.modalHeaderDisplay },
+        { [this.xclass('has-scroller')]: this.hasScroller }
+      ],
+      directives: [{
+        name: 'show',
+        value: this.modalDisplay
+      }],
+      on: {
+        mousemove: this.mouseMove
       }
     },
     [
-      h('div',
+      h('fade-transition',
         {
-          class: [
-            this.cPrefix,
-            this.xclass([this.themeClass]),
-            this.xclass(`type-${this.type}`),
-            { [this.xclass('no-header')]: !this.modalHeaderDisplay },
-            { [this.xclass('has-scroller')]: this.hasScroller }
-          ],
-          directives: [{
-            name: 'show',
-            value: this.modalDisplay
-          }],
-          on: {
-            mousemove: this.mouseMove
-          }
+          props: {
+            speed: 'fast'
+          },
+          ref: 'fadeTransition'
         },
         [
-          h('fade-transition',
-            {
-              props: {
-                speed: 'fast'
-              }
-            },
-            [
-              h('div', {
-                class: this.xclass('bg'),
-                directives: [{
-                  name: 'show',
-                  value: this.modalDisplay
-                }],
-                on: {
-                  click: this.no
-                }
-              })
-            ]
-          ),
-
-          h('pop',
-            {
-              class: [this.xclass('pop')],
-              ref: 'pop'
-            },
-            [modalChildren]
-          )
+          h('div', {
+            class: this.xclass('bg'),
+            directives: [{
+              name: 'show',
+              value: this.modalDisplay
+            }],
+            on: {
+              click: this.no
+            }
+          })
         ]
+      ),
+
+      h('pop',
+        {
+          class: [this.xclass('pop')],
+          ref: 'pop'
+        },
+        [modalChildren]
       )
     ]
   )

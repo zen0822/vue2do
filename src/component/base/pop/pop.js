@@ -153,14 +153,17 @@ const popComp = {
      * @return {Object}
      */
     show({ cb } = {}) {
-      this.popDisplay = true
 
       this.$refs.transition.$off('afterEnter')
       this.$refs.transition.$on('afterEnter', () => {
         cb && cb()
 
+        this.popDisplay = true
+
         return this.$emit('show')
       })
+
+      this.$refs.transition.enter()
 
       return this
     },
@@ -173,14 +176,16 @@ const popComp = {
      * @return {Object}
      */
     hide({ cb } = {}) {
-      this.popDisplay = false
-
       this.$refs.transition.$off('afterLeave')
       this.$refs.transition.$on('afterLeave', () => {
         cb && cb()
 
+        this.popDisplay = false
+
         return this.$emit('hide')
       })
+
+      this.$refs.transition.leave()
 
       return this
     }

@@ -103,8 +103,9 @@ const bubbleComp = {
      */
     _initPosition(target) {
       let $el = this.$el
+      let hide = getComputedStyle($el).display === 'none'
 
-      if ($el.style.display === 'none') {
+      if (hide) {
         Object.assign($el.style, {
           visibility: 'hidden',
           display: ''
@@ -122,9 +123,14 @@ const bubbleComp = {
       Object.assign(this.$el.style, {
         top: position.top + height + ARROW_HEIGHT / 2 + 'px',
         left: position.left - bubbleWidth / 2 + width / 2 + 'px',
-        display: 'none',
-        visibility: ''
       })
+
+      if (hide) {
+        Object.assign($el.style, {
+          display: 'none',
+          visibility: ''
+        })
+      }
     },
 
     /**
@@ -140,11 +146,13 @@ const bubbleComp = {
 
       this._initPosition(target)
 
-      this.$refs.transition.enter()
 
-      this.$refs.transition.$on('entering', () => {
+      this.$refs.transition.$off('afterEnter')
+      this.$refs.transition.$on('afterEnter', () => {
         this.bubbleDisplay = true
       })
+
+      this.$refs.transition.enter()
 
       return this
     },
@@ -156,6 +164,7 @@ const bubbleComp = {
     async hide() {
       clearTimeout(this.bubbleDisplayCounter)
 
+      this.$refs.transition.$off('afterLeave')
       this.$refs.transition.$on('afterLeave', () => {
         this.bubbleDisplay = false
       })

@@ -16,8 +16,6 @@
 
 import './list.scss'
 import render from './list.render'
-import baseMixin from '../../../mixin/base'
-import listMixin from '../../../mixin/list'
 import tip from '../../base/message/tip'
 
 import iconComp from '../../base/icon/icon'
@@ -25,6 +23,10 @@ import loadingComp from '../../base/loading/loading'
 import pageComp from '../../base/page/page'
 import scrollerComp from '../../base/scroller/scroller'
 import slideTransition from '../../transition/slide'
+
+import baseMixin from '../../../mixin/base'
+import apiMixin from './list.api'
+import listMixin from '../../../mixin/list'
 
 import { findGrandpa } from '../../../util/util'
 
@@ -36,7 +38,7 @@ const listComp = {
 
   render,
 
-  mixins: [baseMixin, listMixin],
+  mixins: [baseMixin, listMixin, apiMixin],
 
   components: {
     icon: iconComp,
@@ -105,10 +107,11 @@ const listComp = {
       // 下拉框祖先元素
       selectGrandpa: {},
       // 分页的位置
-      pagerPoi: {
-        top: 0,
-        left: 0
-      }
+      pageDetail: {},
+      // 分页显示状态
+      pagerDisplay: false,
+      // 分页动画队列
+      transitionQueue: []
     }
   },
 
@@ -124,7 +127,7 @@ const listComp = {
       }
     },
     // 分页的显示状态
-    pagerDisplay() {
+    pagerDisplayStatus() {
       return (!this.selectGrandpa || this.selectGrandpa.transitionFinish) && this.pageData.current !== this.pageData.total && this.scrollerAlmostInBottom
     },
     // 是否是加载更多的触发方式
@@ -134,8 +137,8 @@ const listComp = {
     // 分页组件的样式
     pagerStyle() {
       return {
-        top: this.pagerPoi.top + 'px',
-        left: this.pagerPoi.left + 'px'
+        top: this.pageDetail.top + 'px',
+        left: this.pageDetail.left + 'px'
       }
     }
   },
@@ -150,153 +153,68 @@ const listComp = {
         pageNum: this.pageData.current,
         listItem: val
       })
+    },
+    pagerDisplayStatus(val) {
+      if (this.$refs.slideTransition.transiting) {
+
+      }
+
+      if (val) {
+        this.$refs.slideTransition.$off('afterEnter')
+        this.$refs.slideTransition.$on('afterEnter', () => {
+          this.pagerDisplay = true
+        })
+
+        this.$refs.slideTransition.enter()
+      } else {
+        this.$refs.slideTransition.$off('afterLeave')
+        this.$refs.slideTransition.$on('afterLeave', () => {
+          this.pagerDisplay = false
+        })
+
+        this.$refs.slideTransition.leave()
+      }
     }
   },
 
   methods: {
     _init() {
-      this.pagerPoi = {
-        top: 164
-      }
-      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({isBottom}) => {
-        this.scrollerAlmostInBottom = isBottom
+      this.$refs.scroller.$on('changeScroller', ({
+        scrollerHeight, emitter
+      }) => {
+        let ele = this.elementProp(this.$refs.page.$el)
+
+        // TODO
+        this.pageDetail = Object.assign({}, this.pageDetail, {
+          top: ele.offsetTop,
+          left: ele.offsetLeft,
+          width: ele.offsetWidth,
+          height: ele.offsetHeight,
+          parentWidth: this.$el.offsetWidth,
+          parentHeight: this.$el.offsetHeight
+        })
+
+        this.scrollerAlmostInBottom = emitter.yComputed.isBottom
+      })
+
+      this.$refs.scroller.$on('changeYBar', ({ isBottom }) => {
+        if (!this.$el.offsetHeight) {
+          return false
+        }
+
+        return this.scrollerAlmostInBottom = isBottom
       })
     },
 
     /**
-     * 初始化分页
+     * 处理分页过渡动画的队列
      */
-    initPage(pageData = {}) {
-      if (!this.auto) {
-        this.pageData = Object.assign({}, pageData)
-
-        return this
-      }
-
-      this.pageData = Object.assign(pageData, {
-        length: this.item.length,
-        size: this.pageSize,
-        current: 1,
-        total: Math.ceil(this.item.length / this.pageSize)
-      })
-
-      return this
-    },
-
-    /**
-     * 初始化列表数据
-     */
-    initList({pageNum, pageData, listItem}) {
-      if (!this.auto) {
-        this.listItem = listItem
-
-        this.initPage(Object.assign(pageData, {
-          current: pageNum
-        }))
-
-        return this
-      }
-
-      let startSlice = 0
-      let endSlice = 0
-
-      if (this.pageType === PAGE_TYPE_NUM) {
-        startSlice = (pageNum - 1) * this.pageSize
-        endSlice = startSlice + this.pageSize
-      } else {
-        endSlice = pageNum * this.pageSize
-      }
-
-      this.listItem = this.getListItemByPage({
-        listItem: this.item.slice(),
-        pageNum,
-        pageSize: this.auto ? this.pageSize : false,
-        pageType: this.pageType
-      })
-
-      return this
-    },
-
-    /**
-     * 切换页数
-     */
-    switchPage(currentPage) {
-      if (this.pageData.current > this.pageData.total) {
-        return false
-      }
-
-      if (this.loadingListData) {
-        return false
-      }
-
-      this.$emit('switchPage', {
-        currentPage,
-        emitter: this
-      })
-
-      if (this.auto) {
-        this.showLoading()
-        this.loadingListData = true
-        this.pageData.current = currentPage
-
-        setTimeout(() => {
-          this.loadingListData = false
-
-          this.initList({
-            pageNum: currentPage,
-            listItem: this.item
-          })
-
-          this.hideLoading()
-        }, 1000)
-      }
-    },
-
-    /**
-     * scroller 滚动触发事件
-     */
-    scroll({ offset, top, isBottom }) {
-      if (this.pageTrigger === 'scroll') {
-        if (offset - top < 5 && this.pageData.current + 1 <= this.pageData.total) {
-          return this.switchPage(this.pageData.current + 1)
+    _transitionQueueOperator() {
+      return {
+        add: (transition) => {
+          this.transitionQueue.push(transition)
         }
       }
-
-      this.scrollerAlmostInBottom = offset - top < 30
-    },
-
-    /**
-     * 显示 loading
-     *
-     * @return { Object }
-     */
-    showLoading() {
-      if (this.isPageTypeMore) {
-        this.$refs.loadingOfMore.show()
-      } else {
-        this.$refs.loading.show()
-      }
-
-      this.arrowOfMoreDisplay = false
-
-      return this
-    },
-
-    /**
-     * 隐藏 loading
-     *
-     * @return { Object }
-     */
-    hideLoading() {
-      if (this.isPageTypeMore) {
-        this.$refs.loadingOfMore.hide()
-      } else {
-        this.$refs.loading.hide()
-      }
-
-      this.arrowOfMoreDisplay = true
-
-      return this
     }
   },
 

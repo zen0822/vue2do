@@ -21,9 +21,7 @@ export default {
     },
 
     clickVerifyInput() {
-      let verified = this.$refs.verifyInput.verify()
-
-      !verified && tip(this.$refs.verifyInput.dangerTip)
+      let verified = this.$refs.verifyInput.validate()
     }
   }
 }
