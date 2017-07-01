@@ -134,5 +134,6 @@ export {
   childrenHeight,
   client,
   offset,
-  prop
+  prop,
+  handleEleDisplay
 }

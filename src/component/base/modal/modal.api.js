@@ -119,10 +119,10 @@ export default {
      * @return {Object}
      */
     ok() {
-      if (this.okCb) {
-        this.okCb(this)
+      this.$emit('ok')
 
-        return this.$emit('ok')
+      if (this.okCb) {
+        return this.okCb(this)
       }
 
       this.hide()
@@ -134,10 +134,10 @@ export default {
      * @return {Object}
      */
     no() {
-      if (this.noCb) {
-        this.noCb(this)
+      this.$emit('no')
 
-        return this.$emit('no')
+      if (this.noCb) {
+        return this.noCb(this)
       }
 
       this.hide()

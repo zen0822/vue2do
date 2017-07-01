@@ -20,8 +20,10 @@
  * @prop formatMessage - 格式错误的提示信息
  * @prop min - input，textarea 可输入最小长度（数字）
  * @prop max - input，textarea 可输入最大长度（数字）
+ * @prop minNum - input，textarea 可输入最小数字
+ * @prop maxNum - input，textarea 可输入最大数字
  * @prop regex - 验证值的正则
- * @prop verifedType - 验证值的类型
+ * @prop verifiedType - 验证值的类型
  *
  * @prop headerSpan - 输入框头附加项的横向阑珊格
  * @prop footerSpan - 输入框尾附加项的横向阑珊格
@@ -141,9 +143,13 @@ const inputComp = {
 
     max: Number,
 
+    minNum: Number,
+
+    maxNum: Number,
+
     regex: String,
 
-    verifedType: String,
+    verifiedType: String,
 
     completion: {
       type: Boolean,
@@ -271,7 +277,7 @@ const inputComp = {
         return this
       }
 
-      var verify = initVerfication(this.verifedType)
+      var verify = initVerfication(this.verifiedType)
 
       if (verify) {
         this.regexObj = verify.regex

@@ -8,13 +8,7 @@ export default function (h) {
       props: {
         direction: this.direction,
         speed: this.speed,
-        detail: {
-          top: this.top,
-          left: this.left
-        },
-        position: () => {
-          return this.computePosition()
-        }
+        detail: this.popDetail
       },
       ref: 'transition'
     },

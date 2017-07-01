@@ -86,7 +86,7 @@ const messageComp = {
     },
 
     _initmessage() {
-      this.$refs.pop.initPosition()
+      this.$refs.pop.computePosition()
     },
 
     /**

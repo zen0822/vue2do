@@ -106,12 +106,21 @@ const listComp = {
       loadingListData: false,
       // 下拉框祖先元素
       selectGrandpa: {},
-      // 分页的位置
-      pageDetail: {},
+      // 分页的相关信息
+      pageDetail: {
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+        parentWidth: 0,
+        parentHeight: 0
+      },
       // 分页显示状态
       pagerDisplay: false,
       // 分页动画队列
-      transitionQueue: []
+      transitionQueue: [],
+      // 轮询分页动画定时器
+      transitedQueueInterval: {}
     }
   },
 
@@ -156,24 +165,10 @@ const listComp = {
     },
     pagerDisplayStatus(val) {
       if (this.$refs.slideTransition.transiting) {
-
+        return this._transitionQueueOperator().add(val)
       }
 
-      if (val) {
-        this.$refs.slideTransition.$off('afterEnter')
-        this.$refs.slideTransition.$on('afterEnter', () => {
-          this.pagerDisplay = true
-        })
-
-        this.$refs.slideTransition.enter()
-      } else {
-        this.$refs.slideTransition.$off('afterLeave')
-        this.$refs.slideTransition.$on('afterLeave', () => {
-          this.pagerDisplay = false
-        })
-
-        this.$refs.slideTransition.leave()
-      }
+      this._transitePage(val)
     }
   },
 
@@ -184,9 +179,8 @@ const listComp = {
       }) => {
         let ele = this.elementProp(this.$refs.page.$el)
 
-        // TODO
         this.pageDetail = Object.assign({}, this.pageDetail, {
-          top: ele.offsetTop,
+          top: this.$el.offsetHeight - ele.offsetHeight,
           left: ele.offsetLeft,
           width: ele.offsetWidth,
           height: ele.offsetHeight,
@@ -207,12 +201,49 @@ const listComp = {
     },
 
     /**
+     * 执行分页过渡动画
+     */
+    _transitePage(show = true) {
+      if (show) {
+        this.$refs.slideTransition.$off('afterEnter')
+        this.$refs.slideTransition.$on('afterEnter', () => {
+          this.pagerDisplay = true
+        })
+
+        this.$refs.slideTransition.enter()
+      } else {
+        this.$refs.slideTransition.$off('afterLeave')
+        this.$refs.slideTransition.$on('afterLeave', () => {
+          this.pagerDisplay = false
+        })
+
+        this.$refs.slideTransition.leave()
+      }
+    },
+
+    /**
      * 处理分页过渡动画的队列
      */
     _transitionQueueOperator() {
+      let _self = this
+
       return {
-        add: (transition) => {
-          this.transitionQueue.push(transition)
+        add(transition) {
+          _self.transitionQueue.push(transition)
+          this.handle()
+        },
+        handle: () => {
+          _self.transitedQueueInterval = setInterval(() => {
+            if (_self.transitionQueue.length === 0) {
+              return clearInterval(_self.transitedQueueInterval)
+            }
+
+            if (_self.$refs.slideTransition.transiting) {
+              return false
+            }
+
+            _self._transitePage(_self.transitionQueue.shift())
+          }, 0)
         }
       }
     }

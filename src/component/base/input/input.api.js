@@ -63,20 +63,25 @@ export default {
         }
 
         if (this.max) {
-          if (this.number) {
-            verified = this.max >= this.value
-            dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.max}!`
-          } else {
-            verified = this.max >= this.value.toString().length
-            dangerTip = verified ? '' : `${this.lengthMessage}长度不能大于${this.max}个字符!`
-          }
+          verified = this.max >= this.value.toString().length
+          dangerTip = verified ? '' : `${this.lengthMessage}长度不能大于${this.max}个字符!`
 
           if (!verified) {
             return returnFun()
           }
         }
 
-        if ((this.regex || this.verifedType) && !this.regexObj.test(this.value)) {
+        if (this.minNum && this.number) {
+          verified = this.minNum <= this.value
+          dangerTip = verified ? '' : `${this.lengthMessage}不能小于${this.minNum}!`
+        }
+
+        if (this.maxNum && this.number) {
+          verified = this.maxNum >= this.value
+          dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.max}!`
+        }
+
+        if ((this.regex || this.verifiedType) && !this.regexObj.test(this.value)) {
           verified = false
 
           if (firstVerify) {

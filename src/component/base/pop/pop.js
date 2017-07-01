@@ -56,10 +56,15 @@ const popComp = {
     return {
       // 弹出层显示状态
       popDisplay: false,
-      // 弹出层的 top
-      top: 0,
-      // 弹出层的 left
-      left: 0
+      // 弹窗的相关信息
+      popDetail: {
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+        parentWidth: 0,
+        parentHeight: 0
+      }
     }
   },
 
@@ -81,8 +86,8 @@ const popComp = {
     // 弹出层的位置样式
     positionStyle() {
       return {
-        top: this.top + 'px',
-        left: this.left + 'px'
+        top: this.popDetail.top + 'px',
+        left: this.popDetail.left + 'px'
       }
     }
   },
@@ -97,52 +102,20 @@ const popComp = {
     },
 
     /**
-     * 设置 pop 的位置
-     */
-    position({ top, left }) {
-      this.$el.style.top = top
-      this.$el.style.left = left
-      this.left = left
-      this.top = top
-
-      return {
-        top,
-        left
-      }
-    },
-
-    /**
     * 计算弹出层的位置
     */
-    computePosition({
-      popW = this.$el.offsetWidth,
-      popH = this.$el.offsetHeight,
-      parentW = window.innerWidth,
-      parentH = window.innerHeight,
-      cb
-    } = {}) {
-      let offsetW = parentW - popW
-      let offsetH = parentH - popH
-      let left = offsetW < 0 ? 0 : offsetW / 2
-      let top = offsetH < 0 ? 0 : offsetH / 2
+    computePosition() {
+      let ele = this.elementProp(this.$el)
 
-      return this.position({
-        top,
-        left
+      this.popDetail = Object.assign({}, this.popDetail, {
+        top: (window.innerHeight - ele.offsetHeight) / 2,
+        left: (window.innerWidth - ele.offsetWidth) / 2
       })
-    },
 
-    /**
-     * 初始化弹出层的位置
-     */
-    initPosition({ parentW = 0, parentH = 0, cb } = {}) {
-      this.$el.style.visibility = 'hidden'
-      this.$el.style.display = ''
-
-      this.computePosition()
-
-      this.$el.style.display = 'none'
-      this.$el.style.visibility = ''
+      Object.assign(this.$el.style, {
+        top: this.popDetail.top,
+        left: this.popDetail.left
+      })
     },
 
     /**
@@ -153,7 +126,6 @@ const popComp = {
      * @return {Object}
      */
     show({ cb } = {}) {
-
       this.$refs.transition.$off('afterEnter')
       this.$refs.transition.$on('afterEnter', () => {
         cb && cb()

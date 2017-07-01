@@ -40,6 +40,8 @@ import colComp from '../../common/layout/col/col'
 import fadeTransition from '../../transition/fade'
 import noTransition from '../../transition/no'
 
+import { handleEleDisplay } from '../../../util/dom/prop'
+
 const TYPE_ALERT = 'alert'
 const TYPE_CONFIRM = 'confirm'
 const TYPE_TIP = 'tip'
@@ -204,26 +206,20 @@ const modalComp = {
     },
 
     _initModal() {
+      handleEleDisplay({
+        element: this.$el,
+        cb: () => {
+          this.$refs.pop.computePosition()
+        }
+      })
+
       this.$refs.scroller.$on('changeScroller', ({ scrollerHeight }) => {
-        let popVisibility = this.$refs.pop.$el.style.visibility
-        let popDisplay = this.$refs.pop.$el.style.display
-
-        let elVisibility = this.$el.style.visibility
-        let elDisplay = this.$el.style.display
-
-        this.$refs.pop.$el.style.visibility = 'hidden'
-        this.$refs.pop.$el.style.display = ''
-
-        this.$el.style.visibility = 'hidden'
-        this.$el.style.display = ''
-
-        this.$refs.pop.computePosition()
-
-        this.$refs.pop.$el.style.visibility = popVisibility
-        this.$refs.pop.$el.style.display = popDisplay
-
-        this.$el.style.visibility = elVisibility
-        this.$el.style.display = elDisplay
+        handleEleDisplay({
+          element: this.$el,
+          cb: () => {
+            this.$refs.pop.computePosition()
+          }
+        })
       })
 
       this.$refs.scroller.$on('changeYBar', ({ hasScroller }) => {
