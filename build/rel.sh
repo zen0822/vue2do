@@ -1,5 +1,5 @@
 #!/bin/sh
-
+npm -v
 set -o errexit
 
 if [[ -z $1 ]]; then
@@ -14,13 +14,13 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo "Releasing $VERSION ..."
 
-  # # commit
-  # git add -A
-  # git commit -m "[build] $VERSION"
-  # npm version $VERSION --message "[release] $VERSION"
+  # commit
+  git add -A
+  git commit -m "[build] $VERSION"
+  npm version $VERSION --message "[release] $VERSION"
 
-  # # publish
-  # git push
+  # publish
+  git push
   if [[ -z $RELEASE_TAG ]]; then
     npm publish
   else

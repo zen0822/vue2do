@@ -8,14 +8,10 @@
 
 $C_PREFIX: #{ $COMP_POP };
 
-.#{ $C_PREFIX } {
-  @include device-type("<l") {
-    .#{ $C_PREFIX }-stage {
-      &.#{ $C_PREFIX }-theme-primary {
-        .#{ $C_PREFIX }-container {
-          width: 95%;
-        }
-      }
+@include device-type("<l") {
+  .#{ $C_PREFIX } {
+    & > .#{ $C_PREFIX }-pop {
+      max-width: 100px;
     }
   }
 }

@@ -118,6 +118,7 @@ export default {
       this.verify()
 
       if (!this.verified) {
+        this.errorBorderDisplay = false
         tip(this.dangerTip)
 
         return false
@@ -131,6 +132,7 @@ export default {
      * @return {Object} this - 组件
      */
     focus(evt) {
+      this.errorBorderDisplay = true
       this.verified = true
       this.focusing = true
 

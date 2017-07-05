@@ -100,8 +100,6 @@ const inputComp = {
       default: ''
     },
 
-    errorTipName: String,
-
     readOnly: {
       type: Boolean,
       default: false
@@ -188,6 +186,8 @@ const inputComp = {
       bubbleDisplay: false,
       // 当前输入框值的长度
       inputTextLength: 0,
+      // 错误提示框的显示状态
+      errorBorderDisplay: false
     }
   },
 
@@ -208,9 +208,6 @@ const inputComp = {
     },
     isText() {
       return this.type === TYPE_TEXT
-    },
-    errorBorderDisplay() {
-      return !this.verified
     },
     inputHub() {
       return this.$store.getters[hubStore.input.get]
