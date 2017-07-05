@@ -11,8 +11,10 @@ export default {
     val(newVal) {
       if (newVal || newVal === 0 || newVal === '') {
         this.value = newVal
+
         return this
       }
+
       return this.value
     },
 

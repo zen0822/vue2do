@@ -121,11 +121,15 @@ export default {
     ok() {
       this.$emit('ok')
 
-      if (this.okCb) {
-        return this.okCb(this)
+      if (this.okCbFun) {
+        if (typeof this.okCbFun === 'function') {
+          this.okCbFun(this)
+        }
+
+        return this
       }
 
-      this.hide()
+      return this.hide()
     },
 
     /**
@@ -136,8 +140,12 @@ export default {
     no() {
       this.$emit('no')
 
-      if (this.noCb) {
-        return this.noCb(this)
+      if (this.noCbFun) {
+        if (typeof this.noCbFun === 'function') {
+          this.noCbFun(this)
+        }
+
+        return this
       }
 
       this.hide()
@@ -185,8 +193,8 @@ export default {
       title = '',
       message = ''
     } = {}) {
-      this.okCb = okCb
-      this.noCb = noCb
+      this.okCbFun = okCb
+      this.noCbFun = noCb
       this.modalHeader = title
       this.modalMessage = message
 

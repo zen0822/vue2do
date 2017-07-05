@@ -21,6 +21,8 @@ import popComp from '../../base/pop/pop'
 import btnComp from '../../base/btn/btn'
 import iconComp from '../../base/icon/icon'
 
+import { handleEleDisplay } from '../../../util/dom/prop'
+
 const TIP_DISPLAY_TIME = 1500
 
 const messageComp = {
@@ -80,13 +82,26 @@ const messageComp = {
     }
   },
 
+  watch: {
+    infoMessage(val) {
+      return this.$nextTick(() => {
+        this._initmessage()
+      })
+    }
+  },
+
   methods: {
     _init() {
       this._initmessage()
     },
 
     _initmessage() {
-      this.$refs.pop.computePosition()
+      handleEleDisplay({
+        element: this.$el,
+        cb: () => {
+          this.$refs.pop.computePosition()
+        }
+      })
     },
 
     /**
@@ -104,6 +119,8 @@ const messageComp = {
      * @return {Promise}
      */
     show({ cb } = {}) {
+      this._initmessage()
+
       return this.$nextTick(() => {
         this.messageDisplay = true
 

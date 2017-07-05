@@ -23,5 +23,13 @@ export default {
     clickVerifyInput() {
       let verified = this.$refs.verifyInput.validate()
     }
+  },
+
+  mounted() {
+    this.$refs.startInput.val('dedd')
+
+    setTimeout(() => {
+      this.$refs.startInput.val('')
+    }, 2000)
   }
 }

@@ -28,7 +28,7 @@ export default {
      */
     initPage(pageData = {}) {
       if (!this.auto) {
-        this.pageData = Object.assign({}, pageData)
+        this.pageData = Object.assign({}, this.pageData, pageData)
 
         return this
       }
@@ -46,7 +46,7 @@ export default {
     /**
      * 初始化列表数据
      */
-    initList({ pageNum, pageData, listItem }) {
+    initList({ pageNum = 1, pageData = {}, listItem } = {}) {
       if (!this.auto) {
         this.listItem = listItem
 
@@ -80,7 +80,7 @@ export default {
     /**
      * 切换页数
      */
-    switchPage(currentPage) {
+    switchPage({ currentPage }) {
       if (this.pageData.current > this.pageData.total) {
         return false
       }

@@ -261,7 +261,10 @@ const pageComp = {
 
       this.pageData.current = pageNum
 
-      return this.$emit('switch', pageNum)
+      return this.$emit('switch', {
+        currentPage: pageNum,
+        emitter: this
+      })
     }
   },
 

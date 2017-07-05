@@ -110,7 +110,9 @@ const btnComp = {
       mousePoi: {
         top: 0,
         left: 0
-      }
+      },
+      // 判断是否在触摸屏
+      inTouch: 'ontouchstart' in document
     }
   },
 
@@ -125,7 +127,39 @@ const btnComp = {
       this.banState = this.ban
     },
 
+    touchstart(event) {
+      if (this.banState) {
+        return false
+      }
+
+      let el = event.currentTarget
+
+      this.allowFocus = false
+      this.pressing = true
+
+      this.mousePoi = {
+        x: event.changedTouches[0].pageX - el.offsetLeft,
+        y: event.changedTouches[0].pageY - el.offsetTop
+      }
+    },
+
+    touchmove(event) {
+      event.preventDefault()
+    },
+
+    touchend() {
+      if (this.banState) {
+        return false
+      }
+
+      this.allowFocus = true
+    },
+
     mouseup() {
+      if (this.inTouch) {
+        return false
+      }
+
       if (this.banState) {
         return false
       }
@@ -135,6 +169,10 @@ const btnComp = {
 
     mousedown(event) {
       event.preventDefault()
+
+      if (this.inTouch) {
+        return false
+      }
 
       if (this.banState) {
         return false
@@ -152,6 +190,10 @@ const btnComp = {
     },
 
     focus() {
+      if (inTouch) {
+        return false
+      }
+
       if (this.allowFocus) {
         this.motion = true
       }

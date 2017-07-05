@@ -21,7 +21,7 @@ export default {
 
   methods: {
     tip() {
-      tip('这是一个提示')
+      tip('验证码校验啊速度放缓i吧 435345')
     },
 
     async bubble(event) {

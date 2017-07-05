@@ -9,7 +9,7 @@ export default function (h) {
         this.cPrefix,
         this.xclass([
           this.themeClass,
-          'type' + this.messageType
+          'type-' + this.messageType
         ])
       ],
       directives: [{

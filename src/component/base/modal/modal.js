@@ -6,6 +6,8 @@
  * @prop header - 弹窗头部标题
  * @prop message - 模态框信息
  *
+ * @prop okCb - 确定的回调函数，布尔值为 false 则执行默认的回掉函数，否则如果是函数就执行，不是就不执行
+ * @prop noCb - 同上的取消回调函数
  * @prop okBtn - 确定按钮名字
  * @prop noBtn - 取消按钮名字
  * @prop okBtnDisplay - 确定按钮是否显示
@@ -154,6 +156,14 @@ const modalComp = {
       type: String,
       default: ''
     },
+    okCb: {
+      type: [Function, Boolean],
+      default: false
+    },
+    noCb: {
+      type: [Function, Boolean],
+      default: false
+    },
     okBtn: {
       type: String,
       default: '确定'
@@ -195,6 +205,8 @@ const modalComp = {
       modalDisplay: false,
       modalMessage: '',
       modalHeader: '',
+      okCbFun: {},
+      noCbFun: {},
       // scroller 是否有滚动条
       hasScroller: false
     }
@@ -233,6 +245,9 @@ const modalComp = {
     _setDataOpt() {
       this.modalMessage = this.message
       this.modalHeader = this.header
+
+      this.okCbFun = this.okCb
+      this.noCbFun = this.noCb
     }
   }
 }

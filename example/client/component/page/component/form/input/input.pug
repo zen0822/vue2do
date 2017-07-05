@@ -3,7 +3,7 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-input
+      z-input(ref='startInput')
       z-code.
         #{'<z-input></z-input>'}
     +section('textarea', '输入区域')

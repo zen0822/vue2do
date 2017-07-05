@@ -6,10 +6,10 @@ div.component-pop
       z-list(
           page-type='more'
           page-trigger='click'
-          auto
           pager
           class='z-m-t'
-          :page-size='7'
+          ref='list'
+          :page='pageData'
           :item='testOpt')
         template(scope='props')
           div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf

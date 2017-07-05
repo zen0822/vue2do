@@ -7,6 +7,9 @@ export default function (h) {
 
   if (this.isText) {
     editBoxEle = h('input', {
+      domProps: {
+        value: this.value
+      },
       attrs: {
         value: this.value,
         maxlength: this.number ? undefined : this.max,

@@ -72,13 +72,25 @@ export default {
         }
 
         if (this.minNum && this.number) {
-          verified = this.minNum <= this.value
+          let value = Number(this.value)
+
+          verified = this.minNum <= value
           dangerTip = verified ? '' : `${this.lengthMessage}不能小于${this.minNum}!`
+
+          if (!verified) {
+            return returnFun()
+          }
         }
 
         if (this.maxNum && this.number) {
-          verified = this.maxNum >= this.value
-          dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.max}!`
+          let value = Number(this.value)
+
+          verified = this.maxNum >= value
+          dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.maxNum}!`
+
+          if (!verified) {
+            return returnFun()
+          }
         }
 
         if ((this.regex || this.verifiedType) && !this.regexObj.test(this.value)) {

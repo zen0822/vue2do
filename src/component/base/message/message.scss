@@ -14,6 +14,7 @@ $C_PREFIX: #{ $COMP_MESSAGE };
   z-index: $z-index-message;
 
   & > .#{ $C_PREFIX }-pop {
+    max-width: 80px;
     background: #fff;
     overflow: hidden;
     transform: rotate(0);

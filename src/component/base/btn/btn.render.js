@@ -73,7 +73,10 @@ export default function (h) {
       on: {
         click: this.click,
         mousedown: this.mousedown,
-        mouseup: this.mouseup
+        mouseup: this.mouseup,
+        touchstart: this.touchstart,
+        touchmove: this.touchmove,
+        touchend: this.touchend
       }
     },
     [
