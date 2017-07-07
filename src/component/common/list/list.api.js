@@ -46,9 +46,9 @@ export default {
     /**
      * 初始化列表数据
      */
-    initList({ pageNum = 1, pageData = {}, listItem } = {}) {
+    initList({ pageNum = 1, pageData = {}, listItem = [] } = {}) {
       if (!this.auto) {
-        this.listItem = listItem
+        this.listItem = listItem.slice()
 
         this.initPage(Object.assign(pageData, {
           current: pageNum
@@ -60,11 +60,11 @@ export default {
       let startSlice = 0
       let endSlice = 0
 
-      if (this.pageType === PAGE_TYPE_NUM) {
+      if (this.isPageTypeMore) {
+        endSlice = pageNum * this.pageSize
+      } else {
         startSlice = (pageNum - 1) * this.pageSize
         endSlice = startSlice + this.pageSize
-      } else {
-        endSlice = pageNum * this.pageSize
       }
 
       this.listItem = this.getListItemByPage({

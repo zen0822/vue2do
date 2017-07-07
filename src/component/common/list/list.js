@@ -3,6 +3,7 @@
  *
  * @prop auto - 根据传入的列表数据自动生成分页数据
  * @prop autoHideScroller - 是否自动隐藏滚动条
+ * @prop autoHidePage - 是否自动隐藏分页触发器
  * @prop item - 列表数据
  * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @prop pager - 启动分页功能
@@ -12,7 +13,7 @@
  *
  * @event switchPage - 换页触发事件
  *
- */
+*/
 
 import './list.scss'
 import render from './list.render'
@@ -82,6 +83,11 @@ const listComp = {
     },
 
     autoHideScroller: {
+      type: Boolean,
+      default: false
+    },
+
+    autoHidePage: {
       type: Boolean,
       default: false
     },
