@@ -13,7 +13,7 @@
  *
  * @event switchPage - 换页触发事件
  *
-*/
+ */
 
 import './list.scss'
 import render from './list.render'
