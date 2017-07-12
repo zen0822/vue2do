@@ -126,17 +126,18 @@ export default function (h) {
         }
       },
       [
-        h('icon', {
-          props: {
-            kind: 'search'
-          }
-        }),
         h('input-box', {
           props: {
-            placeholder: '请输入搜索值',
-            type: 'text'
+            placeholder: '请输入搜索值'
           }
-        })
+        }, [
+          h('icon', {
+            props: {
+              kind: 'search'
+            },
+            slot: 'header'
+          })
+        ])
       ]
     ))
   }
@@ -201,6 +202,10 @@ export default function (h) {
     h('div',
       {
         class: [this.xclass('panel')],
+        directives: [{
+          name: 'show',
+          value: this.menuMenuDisplay
+        }],
         style: [this.menuMenuPoiStyle, this.menuMenuStyle],
         ref: 'menuMenu'
       },
@@ -234,26 +239,27 @@ export default function (h) {
         }
       }, [selectedBoxChildren]),
 
-      h('transition',
+      h('fold-transition',
         {
-          on: {
-            beforeEnter: this.transitionBeforeEnter,
-            enter: this.transitionEnter,
-            afterEnter: this.transitionAfterEnter,
-            beforeLeave(el) {
-              el.style.height = el.scrollHeight + 'px'
-            },
+          // on: {
+          //   beforeEnter: this.transitionBeforeEnter,
+          //   enter: this.transitionEnter,
+          //   afterEnter: this.transitionAfterEnter,
+          //   beforeLeave(el) {
+          //     el.style.height = el.scrollHeight + 'px'
+          //   },
 
-            leave(el) {
-              if (el.scrollHeight !== 0) {
-                el.style.height = 0
-              }
-            },
+          //   leave(el) {
+          //     if (el.scrollHeight !== 0) {
+          //       el.style.height = 0
+          //     }
+          //   },
 
-            afterLeave(el) {
-              el.style.height = ''
-            }
-          }
+          //   afterLeave(el) {
+          //     el.style.height = ''
+          //   }
+          // }
+          ref: 'transition'
         },
         menuMenuEle
       )

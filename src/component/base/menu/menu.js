@@ -48,6 +48,7 @@ import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
 import apiMixin from './menu.api'
 import transitionMixin from './transition.mixin'
+import foldTransition from '../../transition/fold'
 
 import uid from '../../../util/uid'
 import { dataType } from '../../../util/data/data'
@@ -63,13 +64,14 @@ const menuComp = {
 
   render,
 
-  mixins: [baseMixin, formMixin, transitionMixin, apiMixin],
+  mixins: [baseMixin, formMixin, apiMixin, foldTransition],
 
   store,
 
   components: {
     'menu-opt': optionComp,
     'input-box': inputComp,
+    'fold-transition': foldTransition,
     icon: iconComp,
     check: checkComp,
     scroller: scrollerComp
@@ -181,7 +183,6 @@ const menuComp = {
       menuMenuDisplay: false,
       // 下拉菜单的样式
       menuMenuStyle: {
-        visibility: 'hidden'
       },
       // 下拉菜单位置的样式
       menuMenuPoiStyle: {},
@@ -264,15 +265,9 @@ const menuComp = {
     },
     menuMenuDisplay(val) {
       if (val) {
-        this.transitionBeforeEnter(this.$refs.menuMenu)
-          .then(this.transitionEnter)
-          .then(this.transitionAfterEnter)
-          .catch()
+        this.$refs.transition.enter()
       } else {
-        this.transitionBeforeLeave(this.$refs.menuMenu)
-          .then(this.transitionLeave)
-          .then(this.transitionAfterLeave)
-          .catch()
+        this.$refs.transition.leave()
       }
     }
   },

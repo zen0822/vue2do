@@ -13,12 +13,6 @@
       }
     }
 
-    &:hover {
-      & > .#{ $C_PREFIX }-selected-box {
-        border-bottom: $border-color $border-thin solid;
-      }
-    }
-
     &.#{ $C_PREFIX }-selecting {
       & > .#{ $C_PREFIX }-selected-box {
         box-shadow: $shadow-lower;
