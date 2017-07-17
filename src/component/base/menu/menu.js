@@ -179,6 +179,8 @@ const menuComp = {
       value: undefined,
       // 是否以验证通过
       verified: true,
+      // 下拉菜单的高度
+      menuHeight: 0,
       // 下拉菜单的显示状态
       menuMenuDisplay: false,
       // 下拉菜单的样式
@@ -238,6 +240,10 @@ const menuComp = {
     // 多选框的默认值显示状态
     initTxtDisplay() {
       return this.multiple && this.value.length === 0
+    },
+    // 下拉菜单是子标签加载
+    isTagMenu(val) {
+      return this.initOpt.length === 0 && !this.classify
     }
   },
 
@@ -262,13 +268,6 @@ const menuComp = {
     },
     deviceSize(val) {
       this.changeByDeviceSize(val)
-    },
-    menuMenuDisplay(val) {
-      if (val) {
-        this.$refs.transition.enter()
-      } else {
-        this.$refs.transition.leave()
-      }
     }
   },
 
@@ -285,19 +284,21 @@ const menuComp = {
         return false
       }
 
-      this.$refs.scroller && this.$refs.scroller.$on('changeScroller', ({ boxHeight }) => {
-        this._adjustmenuMenuPoiStyle({
-          height: boxHeight
+      if (this.$refs.scroller) {
+        this.$refs.scroller.$on('changeScroller', ({ boxHeight }) => {
+          this._adjustmenuMenuPoiStyle({
+            height: boxHeight
+          })
         })
-      })
 
-      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
-        this._adjustmenuMenuPoiStyle({
-          height: boxHeight
+        this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
+          this._adjustmenuMenuPoiStyle({
+            height: boxHeight
+          })
         })
-      })
+      }
 
-      this.$refs.menuOption && this.$refs.menuOption.$on('change', ({ value, text, index }) => {
+      !this.isTagMenu && this.$refs.menuOption.$on('change', ({ value, text, index }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
 
@@ -309,7 +310,7 @@ const menuComp = {
 
             return this.value.push(value)
           } else {
-            return this.removeMultiSelected(value, selectedItem.index)
+            return this.removeMultiSelected(selectedItem.index + 1)
           }
         } else {
           this.value = value
@@ -332,7 +333,7 @@ const menuComp = {
 
       if (this.multiple) {
         if (over100) {
-          top = menuHeight + MENU_BORDER_WIDTH * 2
+          top = menuHeight
         } else {
           top = height ? menuHeight + MENU_BORDER_WIDTH * 2 : menuHeight
         }

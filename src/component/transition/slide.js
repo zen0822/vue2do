@@ -2,6 +2,7 @@
  * slide transition component - 滑动过度效果
  *
  * @prop speed - 淡出速度
+ * @prop position - 即时获取元素位置
  */
 
 import baseMixin from './mixin'

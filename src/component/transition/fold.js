@@ -1,7 +1,8 @@
 /**
  * fold(折叠) transition component
  *
- * @event finish - 过渡完成
+ * @prop height - 被过渡的元素高度
+ *
  */
 
 import { addClass, delClass } from '../../util/dom/attr'
@@ -9,6 +10,10 @@ import baseMixin from './mixin'
 
 export default {
   mixins: [baseMixin],
+
+  props: {
+    height: Number
+  },
 
   computed: {
     transition() {
@@ -18,7 +23,6 @@ export default {
 
   methods: {
     beforeEnter() {
-      debugger
       this.$emit('beforeEnter')
       let el = this.$el
 
@@ -37,12 +41,9 @@ export default {
     },
 
     entering() {
-      debugger
       let el = this.$el
-      // HACK: 获取 offsetHeight 触发重绘，让 css3 过渡发生变化
-      let height = el.firstChild ? el.firstChild.offsetHeight : 0
 
-      el.style.height = `${height}px`
+      el.style.height = `${this.height}px`
 
       this.$emit('entering')
 
@@ -54,7 +55,6 @@ export default {
     },
 
     afterEnter() {
-      debugger
       let el = this.$el
 
       Object.assign(el.style, {
@@ -70,6 +70,8 @@ export default {
 
       this.$emit('beforeLeave')
 
+      el.style.height = `${this.height}px`
+
       Object.assign(el.style, {
         'transition': this.transition
       })
@@ -79,11 +81,12 @@ export default {
 
     leaveing() {
       let el = this.$el
+      let height = el.offsetHeight
 
       this.$emit('leaving')
 
       Object.assign(el.style, {
-        'height': el.scrollHeight + 'px',
+        'height': 0
       })
 
       return new Promise((resolve, reject) => {
@@ -99,7 +102,8 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'transition': ''
+        'transition': '',
+        'height': ''
       })
 
       return this.$emit('afterLeave')

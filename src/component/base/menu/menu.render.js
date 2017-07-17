@@ -34,15 +34,13 @@ export default function (h) {
 
     this.text.forEach((txt, index) => {
       liELe.push(h('li',
-        {
-          attrs: {
-            'data-value': this.value[index],
-            'data-index': index
-          }
-        }, [
+        [
           h('span', txt),
           h('span',
             {
+              attrs: {
+                [this.xclass('data-index')]: index + 1
+              },
               on: {
                 click: this.clickMultiSelected
               }
@@ -131,13 +129,13 @@ export default function (h) {
             placeholder: '请输入搜索值'
           }
         }, [
-          h('icon', {
-            props: {
-              kind: 'search'
-            },
-            slot: 'header'
-          })
-        ])
+            h('icon', {
+              props: {
+                kind: 'search'
+              },
+              slot: 'header'
+            })
+          ])
       ]
     ))
   }
@@ -146,13 +144,14 @@ export default function (h) {
     let scopedSlots = []
 
     // 当下拉菜单是以子标签加载的时候
-    if (this.initOpt.length === 0 && !this.classify) {
+    if (this.isTagMenu) {
       menuChildren.push(
         h('scroller',
           {
             props: {
               height: 200
-            }
+            },
+            ref: 'tagScroller'
           },
           [
             h('div', {
@@ -207,7 +206,7 @@ export default function (h) {
           value: this.menuMenuDisplay
         }],
         style: [this.menuMenuPoiStyle, this.menuMenuStyle],
-        ref: 'menuMenu'
+        ref: 'menu'
       },
       [menuChildren]
     )
@@ -241,24 +240,9 @@ export default function (h) {
 
       h('fold-transition',
         {
-          // on: {
-          //   beforeEnter: this.transitionBeforeEnter,
-          //   enter: this.transitionEnter,
-          //   afterEnter: this.transitionAfterEnter,
-          //   beforeLeave(el) {
-          //     el.style.height = el.scrollHeight + 'px'
-          //   },
-
-          //   leave(el) {
-          //     if (el.scrollHeight !== 0) {
-          //       el.style.height = 0
-          //     }
-          //   },
-
-          //   afterLeave(el) {
-          //     el.style.height = ''
-          //   }
-          // }
+          props: {
+            height: this.menuHeight
+          },
           ref: 'transition'
         },
         menuMenuEle

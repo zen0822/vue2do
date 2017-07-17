@@ -46,7 +46,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     display: inline-block;
     position: relative;
 
-    padding: $gap-v $gap-h-double;
+    padding: $gap-v $gutter-h-triple $gap-v $gap-h-double;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     min-height: $MENU_HEIGHT;
@@ -135,12 +135,11 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     min-height: $MENU_HEIGHT;
 
     .#{ $C_PREFIX }-init-text {
-      position: absolute;
-      top: 0;
-      left: 0;
-
       &.#{ $C_PREFIX }-opacity {
         opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
     }
 

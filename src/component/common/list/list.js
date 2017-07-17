@@ -12,7 +12,7 @@
  * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
  *
  * @event switchPage - 换页触发事件
- *
+ * @event changeScroller - 滚动区域的高度/宽度变化
  */
 
 import './list.scss'
@@ -186,7 +186,7 @@ const listComp = {
       this.pageData = Object.assign({}, this.page)
     },
 
-    _init() {
+    _binder() {
       this.$refs.scroller.$on('changeScroller', ({
         scrollerHeight, emitter
       }) => {
@@ -202,6 +202,10 @@ const listComp = {
         })
 
         this.scrollerAlmostInBottom = emitter.yComputed.isBottom
+
+        return this.$emit('changeScroller',{
+          emitter: this
+        })
       })
 
       this.$refs.scroller.$on('changeYBar', ({ isBottom }) => {
