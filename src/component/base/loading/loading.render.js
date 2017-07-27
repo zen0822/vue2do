@@ -44,8 +44,7 @@ export default function (h) {
 
     loadingChildren.push(
       h(
-        'div',
-        {
+        'div', {
           class: [this.xclass('spot')]
         }, spotChildren
       )
@@ -59,19 +58,19 @@ export default function (h) {
   }
 
   return h(
-    'div',
-    {
+    'div', {
       class: [
         this.cPrefix,
         `${this.cPrefix}-${this.themeClass}`,
-        { [`${this.cPrefix}-mark`]: this.bgDisplay }
+        {
+          [`${this.cPrefix}-mark`]: this.bgDisplay
+        }
       ],
       directives: [{
         name: 'show',
         value: this.display
       }]
-    },
-    [
+    }, [
       h('div', {
         class: [this.xclass('wrap')]
       }, loadingChildren)

@@ -113,5 +113,9 @@
     "webpack-dev-server": "^2.2.0-rc.0",
     "webpack-hot-middleware": "^2.15.0",
     "webpack-merge": "*"
+  },
+  "dependencies": {
+    "cnpm": "^5.0.0",
+    "rimraf": "^2.6.1"
   }
 }
