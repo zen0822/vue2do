@@ -8,7 +8,7 @@
     <z-col :span="4">
       <z-row class="nav-menu-box">
         <z-col>
-          <router-link to="/component">组件</router-link>
+          <router-link to="/component/start">组件</router-link>
         </z-col>
         <z-col>
           <router-link to="/build">构建</router-link>

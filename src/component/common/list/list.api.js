@@ -118,7 +118,9 @@ export default {
     scroll({ offset, top, isBottom }) {
       if (this.pageTrigger === 'scroll') {
         if (offset - top < 5 && this.pageData.current + 1 <= this.pageData.total) {
-          return this.switchPage(this.pageData.current + 1)
+          return this.switchPage({
+            currentPage: this.pageData.current + 1
+          })
         }
       }
 

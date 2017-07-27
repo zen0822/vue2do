@@ -423,6 +423,43 @@ const scrollerComp = {
       })
     },
 
+    /**
+     * 计算滚动条的高度或者宽度
+     * @param {Object} opt - 选项
+     */
+    scrollerProp({
+      type = 'y',
+      length = type === 'y' ? this.height : this.width,
+      boxLength = type === 'y' ? this.$refs.box.offsetHeight : this.$refs.box.offsetWidth,
+      scrollerLength = type === 'y' ? this.scrollerHeight : this.scrollerWidth
+    } = {}) {
+      let scrollerContainBox = false
+
+      if (type === 'y') {
+        if (length === '100%') {
+          return this.boxHeight
+        } else if (length === 'auto') {
+          scrollerContainBox = true
+          scrollerLength = scrollerContainBox ? boxLength : length
+
+          return scrollerLength
+        } else {
+          scrollerContainBox = length >= boxLength
+          scrollerLength = scrollerContainBox ? boxLength : length
+
+          return scrollerLength
+        }
+      } else {
+        if (length === '100%') {
+          return scrollerWidth
+        } else {
+          scrollerContainBox = length >= boxLength
+
+          return scrollerContainBox ? boxLength : length
+        }
+      }
+    },
+
     barClick(evt) {
       evt.preventDefault()
       evt.stopPropagation()

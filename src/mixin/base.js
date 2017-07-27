@@ -110,7 +110,7 @@ export default {
     },
 
     /**
-     * 获取元素高度（无论是否是隐藏状态）
+     * 获取元素相关的属性（无论是否是隐藏状态）
      *
      * @param {Element} element - dom 节点
      */

@@ -48,6 +48,7 @@ import baseMixin from '../../../mixin/base'
 import formMixin from '../../../mixin/form'
 import apiMixin from './menu.api'
 import transitionMixin from './transition.mixin'
+import foldTransition from '../../transition/fold'
 
 import uid from '../../../util/uid'
 import { dataType } from '../../../util/data/data'
@@ -63,13 +64,14 @@ const menuComp = {
 
   render,
 
-  mixins: [baseMixin, formMixin, transitionMixin, apiMixin],
+  mixins: [baseMixin, formMixin, apiMixin, foldTransition],
 
   store,
 
   components: {
     'menu-opt': optionComp,
     'input-box': inputComp,
+    'fold-transition': foldTransition,
     icon: iconComp,
     check: checkComp,
     scroller: scrollerComp
@@ -177,11 +179,12 @@ const menuComp = {
       value: undefined,
       // 是否以验证通过
       verified: true,
+      // 下拉菜单的高度
+      menuHeight: 0,
       // 下拉菜单的显示状态
       menuMenuDisplay: false,
       // 下拉菜单的样式
       menuMenuStyle: {
-        visibility: 'hidden'
       },
       // 下拉菜单位置的样式
       menuMenuPoiStyle: {},
@@ -237,6 +240,10 @@ const menuComp = {
     // 多选框的默认值显示状态
     initTxtDisplay() {
       return this.multiple && this.value.length === 0
+    },
+    // 下拉菜单是子标签加载
+    isTagMenu(val) {
+      return this.initOpt.length === 0 && !this.classify
     }
   },
 
@@ -261,19 +268,6 @@ const menuComp = {
     },
     deviceSize(val) {
       this.changeByDeviceSize(val)
-    },
-    menuMenuDisplay(val) {
-      if (val) {
-        this.transitionBeforeEnter(this.$refs.menuMenu)
-          .then(this.transitionEnter)
-          .then(this.transitionAfterEnter)
-          .catch()
-      } else {
-        this.transitionBeforeLeave(this.$refs.menuMenu)
-          .then(this.transitionLeave)
-          .then(this.transitionAfterLeave)
-          .catch()
-      }
     }
   },
 
@@ -290,19 +284,21 @@ const menuComp = {
         return false
       }
 
-      this.$refs.scroller && this.$refs.scroller.$on('changeScroller', ({ boxHeight }) => {
-        this._adjustmenuMenuPoiStyle({
-          height: boxHeight
+      if (this.$refs.scroller) {
+        this.$refs.scroller.$on('changeScroller', ({ boxHeight }) => {
+          this._adjustmenuMenuPoiStyle({
+            height: boxHeight
+          })
         })
-      })
 
-      this.$refs.scroller && this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
-        this._adjustmenuMenuPoiStyle({
-          height: boxHeight
+        this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
+          this._adjustmenuMenuPoiStyle({
+            height: boxHeight
+          })
         })
-      })
+      }
 
-      this.$refs.menuOption && this.$refs.menuOption.$on('change', ({ value, text, index }) => {
+      !this.isTagMenu && this.$refs.menuOption.$on('change', ({ value, text, index }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
 
@@ -314,7 +310,7 @@ const menuComp = {
 
             return this.value.push(value)
           } else {
-            return this.removeMultiSelected(value, selectedItem.index)
+            return this.removeMultiSelected(selectedItem.index + 1)
           }
         } else {
           this.value = value
@@ -337,7 +333,7 @@ const menuComp = {
 
       if (this.multiple) {
         if (over100) {
-          top = menuHeight + MENU_BORDER_WIDTH * 2
+          top = menuHeight
         } else {
           top = height ? menuHeight + MENU_BORDER_WIDTH * 2 : menuHeight
         }

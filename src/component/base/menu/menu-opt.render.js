@@ -144,7 +144,8 @@ export default function (h) {
         },
         scopedSlots: {
           default: scopedSlots
-        }
+        },
+        ref: 'list'
       }
     )
   )

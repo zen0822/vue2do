@@ -1,6 +1,9 @@
 /**
  * menu.api
  */
+
+import { handleEleDisplay } from '../../../util/dom/prop'
+
 export default {
   methods: {
     /**
@@ -57,7 +60,7 @@ export default {
      *
      * @param {String, Number} - 多选下拉框的值
      */
-    removeMultiSelected(val, index) {
+    removeMultiSelected(index) {
       if (this.min !== 0 && this.value.length === this.min) {
         tip(`至少需选择 ${this.min} 项！`)
 
@@ -68,7 +71,7 @@ export default {
         return this.value
       }
 
-      this.value.splice(index, 1)
+      this.value.splice(index - 1, 1)
     },
 
     /**
@@ -79,7 +82,7 @@ export default {
     clickMultiSelected(event) {
       event.stopPropagation()
 
-      return this.removeMultiSelected(event.currentTarget.getAttribute('data-index'))
+      return this.removeMultiSelected(event.currentTarget.getAttribute(this.xclass('data-index')))
     },
 
     /**
@@ -146,17 +149,45 @@ export default {
      */
     toggleMenuDisplay(opt) {
       let menuHub = this.$store.state.comp.menu
+      const getMenuHeight = (vm) => {
+        handleEleDisplay({
+          element: vm.$refs.menu,
+          cb: (element) => {
+            vm.menuHeight = vm.isTagMenu
+              ? vm.$refs.tagScroller.scrollerProp()
+              : vm.$refs.menuOption.$refs.list.$refs.scroller.scrollerProp()
+          }
+        })
+      }
+      const transite = (state, vm) => {
+        if (state) {
+          if (this.$refs.menu) {
+            getMenuHeight(vm)
+
+            vm.menuMenuDisplay = true
+            vm.$refs.transition.enter()
+          }
+        } else {
+          getMenuHeight(vm)
+          vm.$refs.transition.$on('afterLeave', () => {
+            vm.menuMenuDisplay = false
+          })
+
+          vm.$refs.transition.leave()
+        }
+      }
 
       for (let name in menuHub) {
         if (menuHub.hasOwnProperty(name) && !Object.is(this, menuHub[name])) {
-          menuHub[name].menuMenuDisplay = false
+          transite(false, menuHub[name])
         }
       }
 
       return this._adjustmenuMenuPoiStyle({
         cb: () => {
-          this.menuMenuDisplay = opt === undefined
-            ? !this.menuMenuDisplay : opt
+          let display = opt === undefined ? !this.menuMenuDisplay : opt
+
+          transite(display, this)
         }
       })
     },

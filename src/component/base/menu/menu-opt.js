@@ -2,13 +2,13 @@
  * menu-option -- 作为 menu 的 option 的局部组件
  *
  * @prop option - 下拉框option数据
- * @prop multiple - 是否是多选
+ * @prop multiple - 是否为多选
  * @prop optRoot - 递归调用的父元素
  * @prop valName - 下拉框 options 的 value 值的 key name
  * @prop txtName - 下拉框 options 的 text 值的 key name
  *
  * @event change - checkbox的option值改变
- *
+ * @event changeScroller - 滚动区域的高度/宽度变化
  */
 
 import './menu-opt.scss'
@@ -90,6 +90,14 @@ const menuOptionComp = {
   },
 
   methods: {
+    _binder() {
+      this.$refs.list.$on('changeScroller', () => {
+        this.$emit('changeScroller', {
+          emitter: this
+        })
+      })
+    },
+
     // 组件的 li 的 class 名字
     liClass(classify, value) {
       return [
@@ -115,7 +123,7 @@ const menuOptionComp = {
       evt.stopPropagation()
 
       let index = evt.currentTarget.getAttribute(this.xclass('data-index'))
-      let option = this.option[parseInt(index, 10)]
+      let option = this.option[parseInt(index - 1, 10)]
 
       if (option.classify) {
         return false
