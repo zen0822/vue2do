@@ -26,7 +26,7 @@
       border-top-right-radius: 0;
       border: none;
 
-      &>.#{ $C_OPT_PREFIX }-li:first-child {
+      & > .#{ $C_OPT_PREFIX }-li:first-child {
         border-top: $border-lightest-color $border-thin solid;
       }
     }

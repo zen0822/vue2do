@@ -263,11 +263,17 @@ const scrollerComp = {
 
     // 初始化滚动条
     _initScroller() {
-      this.scrollerWidth = this.$el.offsetWidth
-      this.scrollerHeight = this.$el.offsetHeight
+      let scrollerHeight = this.$el.offsetHeight
+      let scrollerWidth = this.$el.offsetWidth
 
-      this.boxHeight = this.$box.offsetHeight
-      this.boxWidth = this.$box.offsetWidth
+      let boxHeight = this.$box.offsetHeight
+      let boxWidth = this.$box.offsetWidth
+
+      this.scrollerWidth = scrollerWidth
+      this.scrollerHeight = scrollerHeight
+
+      this.boxHeight = boxHeight
+      this.boxWidth = boxWidth
 
       let firstChildWidth = this.$box.firstChild ? this.$box.firstChild.offsetWidth : 0
 
