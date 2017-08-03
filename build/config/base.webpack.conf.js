@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = function (opt) {
   var path = require('path')
@@ -39,68 +39,75 @@ module.exports = function (opt) {
     },
 
     module: {
-      rules: [
-        {
-          test: /\.vue$/,
-          loader: 'vue',
-          query: {
-            loaders: utils.cssLoaders()
-          }
-        }, {
-          test: /\.js$/,
-          // exclude: /(node_modules|bower_components)/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: ['env']
-            }
-          }
-        }, {
-          test: /\.(html|tpl)$/,
-          loader: 'html-loader'
-        }, {
-          test: /\.(css|scss)$/,
-          use: [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-            'sass-loader'
-          ]
-        }, {
-          test: /\.json$/,
-          loader: 'json-loader'
-        }, {
-          test: /\.pug$/,
-          loader: 'pug-loader'
-        }, {
-          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-          loader: 'url-loader',
+      rules: [{
+        test: /\.vue$/,
+        loader: 'vue',
+        query: {
+          loaders: utils.cssLoaders()
+        }
+      }, {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'eslint-loader',
+        query: {
+          configFile: '.eslintrc.js',
+          formatter: require('eslint-friendly-formatter')
+        },
+        exclude: [/node_modules/]
+      }, {
+        test: /\.js$/,
+        // exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
           options: {
-            limit: 10000,
-            name: utils.assetsPath('img/[name].[hash:7].[ext]')
-          }
-        }, {
-          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-          }
-        }, {
-          test: /\.ts$/,
-          exclude: /node_modules|vue\/src/,
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/]
-          }
-        }, {
-          test: /\.vue$/,
-          loader: 'vue-loader',
-          options: {
-            esModule: true
+            presets: ['env']
           }
         }
-      ]
+      }, {
+        test: /\.(html|tpl)$/,
+        loader: 'html-loader'
+      }, {
+        test: /\.(css|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }, {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }, {
+        test: /\.pug$/,
+        loader: 'pug-loader'
+      }, {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        }
+      }, {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        }
+      }, {
+        test: /\.ts$/,
+        exclude: /node_modules|vue\/src/,
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        }
+      }, {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          esModule: true
+        }
+      }]
     },
 
     performance: {

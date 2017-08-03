@@ -29,7 +29,9 @@ import baseMixin from '../../../mixin/base'
 import apiMixin from './list.api'
 import listMixin from '../../../mixin/list'
 
-import { findGrandpa } from '../../../util/util'
+import {
+  findGrandpa
+} from '../../../util/util'
 
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
@@ -143,10 +145,10 @@ const listComp = {
     },
     // 分页的显示状态
     pagerDisplayStatus() {
-      return (!this.selectGrandpa || this.selectGrandpa.transitionFinish)
-        && this.pageData.total !== 0
-        && this.pageData.current !== this.pageData.total
-        && this.scrollerAlmostInBottom
+      return (!this.selectGrandpa || this.selectGrandpa.transitionFinish) &&
+        this.pageData.total !== 0 &&
+        this.pageData.current !== this.pageData.total &&
+        this.scrollerAlmostInBottom
     },
     // 是否是加载更多的触发方式
     isPageTypeMore() {
@@ -188,7 +190,8 @@ const listComp = {
 
     _binder() {
       this.$refs.scroller.$on('changeScroller', ({
-        scrollerHeight, emitter
+        scrollerHeight,
+        emitter
       }) => {
         let ele = this.elementProp(this.$refs.page.$el)
 
@@ -203,17 +206,19 @@ const listComp = {
 
         this.scrollerAlmostInBottom = emitter.yComputed.isBottom
 
-        return this.$emit('changeScroller',{
+        return this.$emit('changeScroller', {
           emitter: this
         })
       })
 
-      this.$refs.scroller.$on('changeYBar', ({ isBottom }) => {
+      this.$refs.scroller.$on('changeYBar', ({
+        isBottom
+      }) => {
         if (!this.$el.offsetHeight) {
           return false
         }
 
-        return this.scrollerAlmostInBottom = isBottom
+        this.scrollerAlmostInBottom = isBottom
       })
     },
 

@@ -76,7 +76,7 @@ export default {
 
       Object.assign(el.style, {
         'transition': this.transition,
-        'transform': this._getTranslate(elPoi),
+        'transform': this._getTranslate(elPoi)
       })
 
       return new Promise((resolve, reject) => {

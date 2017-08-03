@@ -23,11 +23,11 @@ export default function (h) {
         `${this.link ? 'a' : 'div'}`,
         {
           class: [
-            this.xclass('ele-border'),
-          ],
+            this.xclass('ele-border')
+          ]
         },
         [
-          this.$slots.default ? this.$slots.default : this.value,
+          this.$slots.default ? this.$slots.default : this.value
         ]
       )
     )
@@ -51,7 +51,7 @@ export default function (h) {
         `${this.link ? 'a' : 'div'}`,
         {
           class: [
-            this.xclass('ele-border'),
+            this.xclass('ele-border')
           ]
         },
         [

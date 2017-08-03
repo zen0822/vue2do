@@ -23,7 +23,7 @@ export default {
       Object.assign(el.style, {
         'transform-origin': '50% 0',
         'transition': this.transition,
-        'transform': 'scale(0)',
+        'transform': 'scale(0)'
       })
 
       return new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ export default {
       this.$emit('leaving')
 
       Object.assign(el.style, {
-        'transform': 'scale(0)',
+        'transform': 'scale(0)'
       })
 
       return new Promise((resolve, reject) => {

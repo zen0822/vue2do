@@ -12,7 +12,9 @@ import './tab.scss'
 import baseMixin from '../../../mixin/base'
 import render from './tab.render.js'
 import shiftComp from '../../base/shift/shift'
-import { search as urlSearch } from '../../../util/url'
+import {
+  search as urlSearch
+} from '../../../util/url'
 
 export default {
   name: 'tab',
@@ -98,7 +100,7 @@ export default {
       let currentIndex = 0
 
       this.option.every((item, index) => {
-        if ((weak && item.value == val) || (!weak && item.value === val)) {
+        if ((weak && Number(item.value) === Number(val)) || (!weak && item.value === val)) {
           currentIndex = index + 1
 
           return false

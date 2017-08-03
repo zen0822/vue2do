@@ -2,7 +2,10 @@
  * menu.api
  */
 
-import { handleEleDisplay } from '../../../util/dom/prop'
+import tip from '../../base/message/tip'
+import {
+  handleEleDisplay
+} from '../../../util/dom/prop'
 
 export default {
   methods: {
@@ -94,10 +97,10 @@ export default {
     },
 
     /**
-    * 下拉框展示失去焦点
-    *
-    * @return {Object} this - 组件
-    */
+     * 下拉框展示失去焦点
+     *
+     * @return {Object} this - 组件
+     */
     blur() {
       this.focusing = false
 
@@ -107,10 +110,10 @@ export default {
     },
 
     /**
-    * 下拉框展示的焦点
-    *
-    * @return {Object} this - 组件
-    */
+     * 下拉框展示的焦点
+     *
+     * @return {Object} this - 组件
+     */
     focus() {
       this.focusing = true
     },
@@ -153,9 +156,10 @@ export default {
         handleEleDisplay({
           element: vm.$refs.menu,
           cb: (element) => {
-            vm.menuHeight = vm.isTagMenu
-              ? vm.$refs.tagScroller.scrollerProp()
-              : vm.$refs.menuOption.$refs.list.$refs.scroller.scrollerProp()
+            let scrollerComp = vm.isTagMenu ? vm.$refs.tagScroller : vm.$refs.menuOption.$refs.list.$refs.scroller
+            scrollerComp._initScroller()
+
+            vm.menuHeight = scrollerComp.scrollerHeight
           }
         })
       }
@@ -169,6 +173,7 @@ export default {
           }
         } else {
           getMenuHeight(vm)
+
           vm.$refs.transition.$on('afterLeave', () => {
             vm.menuMenuDisplay = false
           })

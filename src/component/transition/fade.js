@@ -31,7 +31,7 @@ export default {
 
       Object.assign(el.style, {
         'transition': this.transition,
-        'opacity': 0,
+        'opacity': 0
       })
 
       return new Promise((resolve, reject) => {

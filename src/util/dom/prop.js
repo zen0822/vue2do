@@ -5,7 +5,10 @@
  *                     @param {Element} element
  *                     @param {Function} cb
  */
-const handleEleDisplay = ({ element, cb} = {}) => {
+const handleEleDisplay = ({
+  element,
+  cb
+} = {}) => {
   if (element && element.nodeType !== 1) {
     return false
   }
@@ -116,7 +119,10 @@ const offset = (el) => {
     return false
   }
 
-  function offsetParent(el, offset = { top: 0, left: 0 }) {
+  function offsetParent(el, offset = {
+    top: 0,
+    left: 0
+  }) {
     if (el.offsetParent) {
       return offsetParent(el.offsetParent, {
         top: el.offsetTop + offset.top,

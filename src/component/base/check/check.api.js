@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import tip from '../../base/message/tip'
 
 export default {
   methods: {

@@ -190,7 +190,7 @@ const btnComp = {
     },
 
     focus() {
-      if (inTouch) {
+      if (this.inTouch) {
         return false
       }
 

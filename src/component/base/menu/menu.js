@@ -51,8 +51,12 @@ import transitionMixin from './transition.mixin'
 import foldTransition from '../../transition/fold'
 
 import uid from '../../../util/uid'
-import { dataType } from '../../../util/data/data'
-import { unique as uniqueArray } from '../../../util/data/array'
+import {
+  dataType
+} from '../../../util/data/data'
+import {
+  unique as uniqueArray
+} from '../../../util/data/array'
 
 // 下拉框的 border 宽度
 const MENU_BORDER_WIDTH = 1
@@ -184,8 +188,7 @@ const menuComp = {
       // 下拉菜单的显示状态
       menuMenuDisplay: false,
       // 下拉菜单的样式
-      menuMenuStyle: {
-      },
+      menuMenuStyle: {},
       // 下拉菜单位置的样式
       menuMenuPoiStyle: {},
       // 是否是 slot 定义的 option
@@ -226,9 +229,15 @@ const menuComp = {
       let classArr = [
         this.cPrefix,
         this.xclass(this.compClass),
-        { [this.xclass('selecting')]: this.menuMenuDisplay },
-        { [this.xclass('focusing')]: this.focusing },
-        { [this.xclass('multiple')]: this.multiple }
+        {
+          [this.xclass('selecting')]: this.menuMenuDisplay
+        },
+        {
+          [this.xclass('focusing')]: this.focusing
+        },
+        {
+          [this.xclass('multiple')]: this.multiple
+        }
       ]
 
       return classArr
@@ -285,20 +294,28 @@ const menuComp = {
       }
 
       if (this.$refs.scroller) {
-        this.$refs.scroller.$on('changeScroller', ({ boxHeight }) => {
+        this.$refs.scroller.$on('changeScroller', ({
+          boxHeight
+        }) => {
           this._adjustmenuMenuPoiStyle({
             height: boxHeight
           })
         })
 
-        this.$refs.scroller.$on('changeYBar', ({ boxHeight }) => {
+        this.$refs.scroller.$on('changeYBar', ({
+          boxHeight
+        }) => {
           this._adjustmenuMenuPoiStyle({
             height: boxHeight
           })
         })
       }
 
-      !this.isTagMenu && this.$refs.menuOption.$on('change', ({ value, text, index }) => {
+      !this.isTagMenu && this.$refs.menuOption.$on('change', ({
+        value,
+        text,
+        index
+      }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
 
@@ -323,7 +340,10 @@ const menuComp = {
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustmenuMenuPoiStyle({ height, cb } = {}) {
+    _adjustmenuMenuPoiStyle({
+      height,
+      cb
+    } = {}) {
       let menuHeight = height || this.$el.offsetHeight
       let menuWidth = this.$el.offsetWidth
       let over100 = menuHeight > 117
@@ -420,9 +440,7 @@ const menuComp = {
         }
 
         let attrs = item.data ? item.data.attrs : {}
-        let text = attrs.text === undefined
-          ? (children ? (children.text ? children.text : '(empty)') : '')
-          : attrs.text
+        let text = attrs.text === undefined ? (children ? (children.text ? children.text : '(empty)') : '') : attrs.text
 
         optionItem.push({
           value: attrs.value,
@@ -555,7 +573,11 @@ const menuComp = {
     /**
      * 处理下拉框的 text 和 value
      */
-    _setTxtVal({ value, text, replace = false }) {
+    _setTxtVal({
+      value,
+      text,
+      replace = false
+    }) {
       if (!this.multiple || replace) {
         if (value !== undefined) {
           this.value = value

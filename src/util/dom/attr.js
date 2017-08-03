@@ -1,6 +1,6 @@
 const addClass = (el, classHub) => {
-  if (!(Array.isArray(classHub) && classHub.length > 0
-      || typeof classHub === 'string')) {
+  if (!((Array.isArray(classHub) && classHub.length > 0) ||
+      typeof classHub === 'string')) {
     return false
   }
 
@@ -17,8 +17,8 @@ const addClass = (el, classHub) => {
 }
 
 const delClass = (el, classHub) => {
-  if (!(Array.isArray(classHub) && classHub.length > 0
-      || typeof classHub === 'string')) {
+  if (!((Array.isArray(classHub) && classHub.length > 0) ||
+      typeof classHub === 'string')) {
     return false
   }
 

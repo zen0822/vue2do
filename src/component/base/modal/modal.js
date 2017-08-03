@@ -42,7 +42,9 @@ import colComp from '../../common/layout/col/col'
 import fadeTransition from '../../transition/fade'
 import noTransition from '../../transition/no'
 
-import { handleEleDisplay } from '../../../util/dom/prop'
+import {
+  handleEleDisplay
+} from '../../../util/dom/prop'
 
 const TYPE_ALERT = 'alert'
 const TYPE_CONFIRM = 'confirm'
@@ -82,7 +84,9 @@ const modalComp = {
     },
     // 组件的 footer 的 class 名字
     footerClass() {
-      return { [`${this.cPrefix}-no-footer`]: !this.footerDisplay }
+      return {
+        [`${this.cPrefix}-no-footer`]: !this.footerDisplay
+      }
     },
     // 是否是 full modal
     isFull() {
@@ -94,7 +98,7 @@ const modalComp = {
     },
     // 判断是否在中大型设备并且是 full 模态框
     isBiggerFull() {
-      return this.isFull && this.deviceRange > 575 || !this.isFull
+      return (this.isFull && this.deviceRange > 575) || !this.isFull
     },
     // 模态框的头部显示状态
     modalHeaderDisplay() {
@@ -225,7 +229,9 @@ const modalComp = {
         }
       })
 
-      this.$refs.scroller.$on('changeScroller', ({ scrollerHeight }) => {
+      this.$refs.scroller.$on('changeScroller', ({
+        scrollerHeight
+      }) => {
         handleEleDisplay({
           element: this.$el,
           cb: () => {
@@ -234,7 +240,9 @@ const modalComp = {
         })
       })
 
-      this.$refs.scroller.$on('changeYBar', ({ hasScroller }) => {
+      this.$refs.scroller.$on('changeYBar', ({
+        hasScroller
+      }) => {
         this.hasScroller = hasScroller
       })
     },

@@ -156,9 +156,9 @@ const scrollerComp = {
     },
 
     scrollerStyle() {
-      return this.height === '100%'
-        ? {}
-        : { 'height': this.scrollerHeight + 'px' }
+      return this.height === '100%' ? {} : {
+        'height': this.scrollerHeight + 'px'
+      }
     },
 
     // x 方向的计算属性
@@ -215,12 +215,7 @@ const scrollerComp = {
     },
 
     boxWidth(boxWidth) {
-      this._initScrollerData({
-        length: this.width,
-        scrollerLength: this.scrollerWidth,
-        boxLength: boxWidth,
-        type: 'x'
-      })
+
     },
 
     scrollerHeight(scrollerHeight) {
@@ -235,14 +230,7 @@ const scrollerComp = {
     },
 
     scrollerWidth(scrollerWidth) {
-      this._initScrollerData({
-        length: this.width,
-        scrollerLength: scrollerWidth,
-        boxLength: this.boxWidth,
-        type: 'x'
-      })
 
-      return this._changeScroller()
     }
   },
 
@@ -269,20 +257,62 @@ const scrollerComp = {
       let boxHeight = this.$box.offsetHeight
       let boxWidth = this.$box.offsetWidth
 
-      this.scrollerWidth = scrollerWidth
-      this.scrollerHeight = scrollerHeight
-
-      this.boxHeight = boxHeight
-      this.boxWidth = boxWidth
-
       let firstChildWidth = this.$box.firstChild ? this.$box.firstChild.offsetWidth : 0
 
-      if (firstChildWidth > this.boxWidth) {
+      if (firstChildWidth > boxWidth) {
         this.boxStyleWidth = firstChildWidth + 'px'
-      } else if (this.boxWidth <= this.scrollerWidth) {
-        this.boxStyleWidth = this.scrollerWidth + 'px'
+      } else if (boxWidth <= scrollerWidth) {
+        this.boxStyleWidth = scrollerWidth + 'px'
       } else {
         this.boxStyleWidth = 'auto'
+      }
+
+      if (scrollerHeight !== this.scrollerHeight) {
+        this.scrollerHeight = scrollerHeight
+
+        this._initScrollerData({
+          length: this.height,
+          scrollerLength: scrollerHeight,
+          boxLength: boxHeight,
+          type: 'y'
+        })
+
+        this._changeScroller()
+      }
+
+      if (scrollerWidth !== this.scrollerWidth) {
+        this.scrollerWidth = scrollerWidth
+
+        this._initScrollerData({
+          length: this.width,
+          scrollerLength: scrollerWidth,
+          boxLength: boxWidth,
+          type: 'x'
+        })
+
+        this._changeScroller()
+      }
+
+      if (boxHeight !== this.boxHeight) {
+        this.boxHeight = boxHeight
+
+        this._initScrollerData({
+          length: this.height,
+          scrollerLength: scrollerHeight,
+          boxLength: boxHeight,
+          type: 'y'
+        })
+      }
+
+      if (boxWidth !== this.boxWidth) {
+        this.boxWidth = boxWidth
+
+        this._initScrollerData({
+          length: this.width,
+          scrollerLength: scrollerWidth,
+          boxLength: boxWidth,
+          type: 'x'
+        })
       }
     },
 
@@ -294,7 +324,12 @@ const scrollerComp = {
      *                   boxLength - 滚动内容的高度/宽度
      *                   length - 指定的滚动区域的高度/宽度
      */
-    _initScrollerData({ type, scrollerLength, boxLength, length }) {
+    _initScrollerData({
+      type,
+      scrollerLength,
+      boxLength,
+      length
+    }) {
       // 滚动条数据的名字
       let barName = type + 'Data'
       // 滚动区域是否大过滚动内容
@@ -358,8 +393,7 @@ const scrollerComp = {
       this[barName].boxAndScrollerOffset = boxAndScrollerOffset
       this[barName].barAndScrollerOffset = barAndScrollerOffset
 
-      this[barName][barPositionName] = scrollerContainBox ? 0
-        : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
+      this[barName][barPositionName] = scrollerContainBox ? 0 : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
 
       this._boxAndBarScroll({
         type: 'y',
@@ -373,6 +407,13 @@ const scrollerComp = {
       })
 
       this.triggerChangeBar(type)
+
+      return {
+        boxHeight: this.boxHeight,
+        boxWidth: this.boxWidth,
+        scrollerHeight: this.scrollerHeight,
+        scrollerWidth: this.scrollerWidth
+      }
     },
 
     /**
@@ -382,7 +423,11 @@ const scrollerComp = {
      *                   barDistance - 滚动条的位移
      *                   boxDistance - 滚动内容的位移
      */
-    _boxAndBarScroll({ type, boxDistance, barDistance }) {
+    _boxAndBarScroll({
+      type,
+      boxDistance,
+      barDistance
+    }) {
       let barName = type + 'Data'
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
@@ -421,43 +466,6 @@ const scrollerComp = {
           scrollerHeight: this.scrollerHeight
         })
       })
-    },
-
-    /**
-     * 计算滚动条的高度或者宽度
-     * @param {Object} opt - 选项
-     */
-    scrollerProp({
-      type = 'y',
-      length = type === 'y' ? this.height : this.width,
-      boxLength = type === 'y' ? this.$refs.box.offsetHeight : this.$refs.box.offsetWidth,
-      scrollerLength = type === 'y' ? this.scrollerHeight : this.scrollerWidth
-    } = {}) {
-      let scrollerContainBox = false
-
-      if (type === 'y') {
-        if (length === '100%') {
-          return this.boxHeight
-        } else if (length === 'auto') {
-          scrollerContainBox = true
-          scrollerLength = scrollerContainBox ? boxLength : length
-
-          return scrollerLength
-        } else {
-          scrollerContainBox = length >= boxLength
-          scrollerLength = scrollerContainBox ? boxLength : length
-
-          return scrollerLength
-        }
-      } else {
-        if (length === '100%') {
-          return scrollerWidth
-        } else {
-          scrollerContainBox = length >= boxLength
-
-          return scrollerContainBox ? boxLength : length
-        }
-      }
     },
 
     barClick(evt) {
@@ -610,13 +618,11 @@ const scrollerComp = {
       // 滚动区域正方向移动
       // TODO: 优化，可以在滚动到底部得时候触发父容器得滚动事件
       if (yDistance > 0) {
-        if (this.yComputed.isBottom && !this.hasScrollerGrandpa) {
-        } else {
+        if (this.yComputed.isBottom && !this.hasScrollerGrandpa) {} else {
           evt.preventDefault()
         }
       } else {
-        if (this.yComputed.isTop && !this.hasScrollerGrandpa) {
-        } else {
+        if (this.yComputed.isTop && !this.hasScrollerGrandpa) {} else {
           evt.preventDefault()
         }
       }

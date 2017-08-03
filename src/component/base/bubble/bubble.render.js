@@ -6,7 +6,7 @@ export default function (h) {
   return h('bubble-transition',
     {
       props: { speed: 'fast' },
-      ref: 'transition',
+      ref: 'transition'
     },
     [
       h('div',
