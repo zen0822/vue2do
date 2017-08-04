@@ -377,6 +377,7 @@ const menuComp = {
         return this._processOption(this.classifyOpt)._initAllOptionVal()._initMenuTxt()
       } else {
         let slotOption = this._initMenuSlot()
+
         if (slotOption) {
           this.option = slotOption
         }
