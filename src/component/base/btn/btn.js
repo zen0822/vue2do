@@ -112,7 +112,7 @@ const btnComp = {
         left: 0
       },
       // 判断是否在触摸屏
-      inTouch: 'ontouchstart' in document
+      inTouch: false
     }
   },
 
@@ -125,34 +125,6 @@ const btnComp = {
   methods: {
     _setDataOpt() {
       this.banState = this.ban
-    },
-
-    touchstart(event) {
-      if (this.banState) {
-        return false
-      }
-
-      let el = event.currentTarget
-
-      this.allowFocus = false
-      this.pressing = true
-
-      this.mousePoi = {
-        x: event.changedTouches[0].pageX - el.offsetLeft,
-        y: event.changedTouches[0].pageY - el.offsetTop
-      }
-    },
-
-    touchmove(event) {
-      event.preventDefault()
-    },
-
-    touchend() {
-      if (this.banState) {
-        return false
-      }
-
-      this.allowFocus = true
     },
 
     mouseup() {
@@ -208,13 +180,20 @@ const btnComp = {
      * @return {Object} this - 组件
      */
     click(event) {
-      event.preventDefault()
-
       if (this.banState) {
         return false
       }
 
       return this.$emit('click')
+    },
+
+    /**
+     * keyup 句柄
+     */
+    keyup(event) {
+      if (event.keyCode === 13) {
+        return this.$emit('click')
+      }
     },
 
     /**

@@ -10,3 +10,23 @@
 ***
 
 ## localStorage、sessionStorage、session、cookie
+
+***
+
+## mousedown, mouseup, click, touchend, touchstart, touchmove 触发顺序
+
+### 平板二合一电脑
+
+#### 鼠标点击
+
+* mousedown -> focus -> mouseup -> click
+
+#### 触摸点击
+
+* touchstart -> touchend -> mousedown -> focus -> mouseup -> click
+
+#### 触摸点击（移动）
+
+* touchstart -> touchmove -> touchend
+
+***

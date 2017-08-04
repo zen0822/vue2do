@@ -393,8 +393,6 @@ const scrollerComp = {
       this[barName].boxAndScrollerOffset = boxAndScrollerOffset
       this[barName].barAndScrollerOffset = barAndScrollerOffset
 
-      this[barName][barPositionName] = scrollerContainBox ? 0 : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
-
       this._boxAndBarScroll({
         type: 'y',
         boxDistance: 0,
@@ -431,27 +429,23 @@ const scrollerComp = {
       let barName = type + 'Data'
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
-      let boxPosition = this[boxPositionName] + boxDistance
-      let barPosition = this[barName][barPositionName] + barDistance
+
       let barAndScrollerOffset = this[barName].barAndScrollerOffset
       let boxAndScrollerOffset = this[barName].boxAndScrollerOffset
 
+      // 调整内容区域和滚动条的位置
+      this[boxPositionName] = this[boxPositionName] < -boxAndScrollerOffset ? -boxAndScrollerOffset : this[boxPositionName]
+      this[barName][barPositionName] = this.scrollerContainBox ? 0 : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
+
+      let boxPosition = this[boxPositionName] + boxDistance
+      let barPosition = this[barName][barPositionName] + barDistance
+
       if (boxDistance >= 0) {
-        if (type === 'y') {
-          this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition
-          this[boxPositionName] = boxPosition > 0 ? 0 : boxPosition
-        } else {
-          this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition
-          this[boxPositionName] = boxPosition > 0 ? 0 : boxPosition
-        }
+        this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition
+        this[boxPositionName] = boxPosition > 0 ? 0 : boxPosition
       } else {
-        if (type === 'y') {
-          this[barName][barPositionName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
-          this[boxPositionName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
-        } else {
-          this[barName][barPositionName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
-          this[boxPositionName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
-        }
+        this[barName][barPositionName] = barPosition > barAndScrollerOffset ? barAndScrollerOffset : barPosition
+        this[boxPositionName] = boxPosition < -boxAndScrollerOffset ? -boxAndScrollerOffset : boxPosition
       }
     },
 

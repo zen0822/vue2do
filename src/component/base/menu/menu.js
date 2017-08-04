@@ -294,20 +294,8 @@ const menuComp = {
       }
 
       if (this.$refs.scroller) {
-        this.$refs.scroller.$on('changeScroller', ({
-          boxHeight
-        }) => {
-          this._adjustmenuMenuPoiStyle({
-            height: boxHeight
-          })
-        })
-
-        this.$refs.scroller.$on('changeYBar', ({
-          boxHeight
-        }) => {
-          this._adjustmenuMenuPoiStyle({
-            height: boxHeight
-          })
+        this.$refs.scroller.$on('changeScroller', () => {
+          this._adjustmenuMenuPoiStyle()
         })
       }
 
@@ -341,23 +329,10 @@ const menuComp = {
      * 调整多选下拉框的选择值的样式
      */
     _adjustmenuMenuPoiStyle({
-      height,
       cb
     } = {}) {
-      let menuHeight = height || this.$el.offsetHeight
-      let menuWidth = this.$el.offsetWidth
-      let over100 = menuHeight > 117
-      let top = menuHeight
-      let width = menuWidth
-      menuHeight = over100 ? 117 : menuHeight
-
-      if (this.multiple) {
-        if (over100) {
-          top = menuHeight
-        } else {
-          top = height ? menuHeight + MENU_BORDER_WIDTH * 2 : menuHeight
-        }
-      }
+      let top = this.$el.offsetHeight
+      let width = this.$el.offsetWidth
 
       this.menuMenuPoiStyle = {
         top: `${top}px`,
