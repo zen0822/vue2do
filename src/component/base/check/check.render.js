@@ -45,7 +45,7 @@ export default function (h) {
         h('li',
           {
             attrs: {
-              [this.xclass('data-index')]: index
+              [this.xclass('data-index')]: index + 1
             },
             class: [this.prefix('li'), this.xclass('opt-li')],
             on: {
@@ -72,16 +72,7 @@ export default function (h) {
                     h('rip-transition',
                       {
                         class: [this.xclass('rip')],
-                        props: {
-                          switch: this.option[index].pressing
-                        },
-                        on: {
-                          'afterEnter': () => {
-                            Vue.set(this.option, index, Object.assign(this.option[index], {
-                              pressing: false
-                            }))
-                          }
-                        }
+                        ref: `checkTransition${index + 1}`
                       }
                     )
                   ]

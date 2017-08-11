@@ -27,6 +27,7 @@ module.exports = {
     'no-unused-vars': 0,
     'no-multiple-empty-lines': 0,
     'no-useless-escape': 0,
-    'import/no-webpack-loader-syntax': 0
+    'import/no-webpack-loader-syntax': 0,
+    'no-trailing-spaces': ['error', { 'skipBlankLines': true }]
   }
 }

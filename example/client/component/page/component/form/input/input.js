@@ -26,10 +26,10 @@ export default {
   },
 
   mounted() {
-    this.$refs.startInput.val('dedd')
+    this.$refs.startInput && this.$refs.startInput.val('dedd')
 
     setTimeout(() => {
-      this.$refs.startInput.val('')
+      this.$refs.startInput && this.$refs.startInput.val('')
     }, 2000)
   }
 }

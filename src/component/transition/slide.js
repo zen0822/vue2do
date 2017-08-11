@@ -121,12 +121,10 @@ export default {
 
       this.$emit('beforeLeave')
 
-      Object.assign(el.style, {
+      return Object.assign(el.style, {
         'transition': this.transition,
         'transform': ''
       })
-
-      return this.leaveing()
     },
 
     leaveing() {

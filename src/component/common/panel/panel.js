@@ -98,6 +98,11 @@ export default {
     // 组件类名的前缀
     cPrefix() {
       return `${this.compPrefix}-panel`
+    },
+
+    // 设备小于 L 尺寸
+    isSmallDevice() {
+      return this.deviceRange <= this._deviceTypeRange('<l')
     }
   },
 
@@ -123,11 +128,7 @@ export default {
     },
 
     changeByDeviceSize(size) {
-      if (size === '<xl') {
-        this.show()
-      } else {
-        this.hide()
-      }
+      this.isSmallDevice ? this.hide() : this.show()
     }
   },
 

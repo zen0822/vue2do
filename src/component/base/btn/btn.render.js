@@ -97,14 +97,9 @@ export default function (h) {
               class: [this.xclass('rip')],
               props: {
                 assign: !this.isFloatBtn,
-                mousePoi: this.mousePoi,
-                switch: this.pressing
+                mousePoi: this.mousePoi
               },
-              on: {
-                'afterEnter': () => {
-                  this.pressing = false
-                }
-              }
+              ref: 'transition'
             }
           ),
           h('div',

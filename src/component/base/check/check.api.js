@@ -21,7 +21,7 @@ export default {
      * 选择 checkbox
      */
     check(evt) {
-      let index = evt.currentTarget.getAttribute(this.xclass('data-index'))
+      let index = evt.currentTarget.getAttribute(this.xclass('data-index')) - 1
       let option = this.option[parseInt(index, 10)]
       let val = option.value
 
@@ -29,7 +29,7 @@ export default {
         return false
       }
 
-      option.pressing = true
+      this.$refs[`checkTransition${index + 1}`].enter()
 
       if (this.isCheckbox) {
         this.oldValue = []

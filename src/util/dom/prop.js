@@ -9,7 +9,7 @@ const handleEleDisplay = ({
   element,
   cb
 } = {}) => {
-  if (element && element.nodeType !== 1) {
+  if (!element || element.nodeType !== 1) {
     return false
   }
 

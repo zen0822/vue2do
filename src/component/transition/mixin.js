@@ -38,12 +38,16 @@ export default {
   },
 
   methods: {
-    async enter() {
+    /**
+     * 启动进来时的过渡动画
+     * @param {Object} opt 
+     */
+    async enter(opt = {}) {
       this.transiting = this.isEntering = true
 
-      await this.beforeEnter()
-      await this.entering()
-      await this.afterEnter()
+      await this.beforeEnter(opt)
+      await this.entering(opt)
+      await this.afterEnter(opt)
 
       this.transiting = this.isEntering = false
 
@@ -52,18 +56,50 @@ export default {
       })
     },
 
-    async leave() {
+    /**
+     * 启动离开时的过渡动画
+     * @param {Object} opt 
+     */
+    async leave(opt = {}) {
       this.transiting = this.isEntering = true
 
-      await this.beforeLeave()
-      await this.leaveing()
-      await this.afterLeave()
+      await this.beforeLeave(opt)
+      await this.leaveing(opt)
+      await this.afterLeave(opt)
 
       this.transiting = this.isEntering = false
 
       return new Promise((resolve, reject) => {
         return resolve()
       })
+    },
+
+    beforeEnter() {
+      this.$el.style.display = ''
+
+      return this.$emit('beforeEnter')
+    },
+
+    entering() {
+      return this.$emit('entering')
+    },
+
+    afterEnter() {
+      return this.$emit('afterEnter')
+    },
+
+    beforeLeave() {
+      this.$el.style.display = 'none'
+
+      return this.$emit('beforeLeave')
+    },
+
+    leaveing() {
+      return this.$emit('leaveing')
+    },
+
+    afterLeave() {
+      return this.$emit('afterLeave')
     }
   }
 }

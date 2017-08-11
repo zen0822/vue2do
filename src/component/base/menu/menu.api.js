@@ -153,6 +153,10 @@ export default {
     toggleMenuDisplay(opt) {
       let menuHub = this.$store.state.comp.menu
       const getMenuHeight = (vm) => {
+        if (!vm.$refs.transition) {
+          return false
+        }
+
         handleEleDisplay({
           element: vm.$refs.menu,
           cb: (element) => {
@@ -164,6 +168,10 @@ export default {
         })
       }
       const transite = (state, vm) => {
+        if (!vm.$refs.transition) {
+          return false
+        }
+
         if (state) {
           if (this.$refs.menu) {
             getMenuHeight(vm)

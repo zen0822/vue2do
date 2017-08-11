@@ -146,11 +146,7 @@ export default {
         return false
       }
 
-      if (size === '<xl') {
-        this.show()
-      } else {
-        this.hide()
-      }
+      this.isSmallDevice ? this.hide() : this.show()
     }
   },
 

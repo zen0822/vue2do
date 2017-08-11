@@ -104,8 +104,6 @@ const btnComp = {
       motion: false,
       // 不执行 focus 事件
       allowFocus: true,
-      // 点击按钮中
-      pressing: false,
       // 点击按钮的鼠标位置
       mousePoi: {
         top: 0,
@@ -153,12 +151,17 @@ const btnComp = {
       let el = event.currentTarget
 
       this.allowFocus = false
-      this.pressing = true
-
       this.mousePoi = {
         x: event.pageX - el.offsetLeft,
         y: event.pageY - el.offsetTop
       }
+
+      this.$refs.transition.enter({
+        mousePoi: {
+          x: event.pageX - el.offsetLeft,
+          y: event.pageY - el.offsetTop
+        }
+      })
     },
 
     focus() {
