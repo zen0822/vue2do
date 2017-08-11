@@ -54,7 +54,6 @@ export default {
 
       // HACK: trigger browser reflow
       let height = el.offsetHeight
-
       el.firstChild.style.transition = el.style.transition = 'all 800ms'
 
       return new Promise((resolve, reject) => {
