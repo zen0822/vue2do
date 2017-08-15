@@ -30,25 +30,22 @@ function foldContent(h, foldList) {
       )
     } else {
       foldChildren.push(
-        h('fold-title',
-          {
-            slot: 'title-' + flodNum
-          },
-          [
-            h('router-link', {
-              props: {
-                to: item.route
-              },
-              nativeOn: {
-                click: () => {
-                  if (this.isSmallDevice) {
-                    this.hide()
-                  }
+        h('fold-title', {
+          slot: 'title-' + flodNum
+        }, [
+          h('router-link', {
+            props: {
+              to: item.route
+            },
+            nativeOn: {
+              click: () => {
+                if (this.isSmallDevice) {
+                  this.hide()
                 }
               }
-            }, item.name)
-          ]
-        )
+            }
+          }, item.name)
+        ])
       )
     }
   })
@@ -65,128 +62,114 @@ function foldContent(h, foldList) {
 export default function (h) {
   let navStage = []
   let stageChildren = [
-    h('div',
-      {
-        class: [this.xclass('transition-container')]
-      },
-      [
-        h('div',
-          {
-            class: [this.xclass('close-nav')],
-            on: {
-              click: () => {
-                this.hide()
-              }
-            }
-          },
-          [
-            h('icon', {
-              props: {
-                kind: 'close'
-              }
-            })
-          ]
-        ),
-        this.$slots.start,
-        foldContent.call(this, h, this.initOpt),
-        this.$slots.end
-      ]
-    )
+    h('div', {
+      class: [this.xclass('transition-container')]
+    }, [
+      h('div', {
+        class: [this.xclass('close-nav')],
+        on: {
+          click: () => {
+            this.hide()
+          }
+        }
+      }, [
+        h('icon', {
+          props: {
+            kind: 'close'
+          }
+        })
+      ]),
+      this.$slots.start,
+      foldContent.call(this, h, this.initOpt),
+      this.$slots.end
+    ])
   ]
 
-  if (this.type === 'vertical') {
+  if (this.isVerticalType) {
     navStage.push(
-      h('fold-transition',
-        [
-          h('div',
-            {
-              class: [
-                this.xclass('stage'),
-                this.xclass(`animate-${this.navAnimate}`)
-              ],
-              directives: [{
-                name: 'show',
-                value: this.isStageActive
-              }]
-            },
-            stageChildren
-          )
-        ]
-      )
+      h('fold-transition', {
+        directives: [{
+          name: 'show',
+          value: this.isStageActive
+        }],
+        ref: 'transition'
+      }, [
+        h('div', {
+            class: [
+              this.xclass('stage'),
+              this.xclass(`animate-${this.navAnimate}`)
+            ]
+          },
+          stageChildren
+        )
+      ])
     )
   } else {
     navStage.push(
-      h('transition',
-        {
-          props: {
-            name: this.prefix(`${this.navAnimate}-down`)
+      h('slide-transition', {
+        props: {
+          direction: 'top',
+          detail: {
+            top: 0
           }
         },
-        [
-          h('div',
-            {
-              class: [
-                this.xclass('stage'),
-                this.xclass(`animate-${this.navAnimate}`)
-              ],
-              directives: [{
-                name: 'show',
-                value: this.isStageActive
-              }]
-            },
-            stageChildren
-          )
-        ]
-      )
+        directives: [{
+          name: 'show',
+          value: this.isStageActive
+        }],
+        ref: 'transition'
+      }, [
+        h('div', {
+            class: [
+              this.xclass('stage'),
+              this.xclass(`animate-${this.navAnimate}`)
+            ]
+          },
+          stageChildren
+        )
+      ])
     )
   }
 
-  return h('div',
-    {
-      class: [this.cPrefix, this.xclass(this.themeClass)]
-    },
-    [
-      h('div',
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass)]
+  }, [
+    h('div', {
+      class: [
+        this.xclass('trigger'),
         {
-          class: [
-            this.xclass('trigger'),
-            { [this.xclass('active')]: this.isStageActive }
-          ],
-          directives: [{
-            name: 'show',
-            value: this.trigger === 'show'
-          }],
-          on: {
-            click: this.toggle
+          [this.xclass('active')]: this.isStageActive
+        }
+      ],
+      directives: [{
+        name: 'show',
+        value: this.trigger === 'show'
+      }],
+      on: {
+        click: this.toggle
+      }
+    }, [
+      h('row', [
+        h('column', {
+          props: {
+            span: 6
           }
-        },
-        [
-          h('row', [
-            h('column', {
-              props: {
-                span: 6
-              }
-            }, this.title),
-            h('column',
-              {
-                class: [`${this.compPrefix}-text-right`],
-                props: {
-                  span: 6
-                }
-              },
-              [
-                h('icon', {
-                  props: {
-                    kind: this.isStageActive ? 'spread' : 'fold',
-                    size: 'l'
-                  }
-                })
-              ]
-            )
-          ])
-        ]
-      ),
-      navStage
-    ]
-  )
+        }, this.title),
+        h('column', {
+          class: [`${this.compPrefix}-text-right`],
+          props: {
+            span: 6
+          }
+        }, [
+          h('icon', {
+            props: {
+              kind: this.isStageActive ? 'spread' : 'fold',
+              size: 'l'
+            }
+          })
+        ])
+      ])
+    ]),
+    navStage
+  ])
 }

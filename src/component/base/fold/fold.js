@@ -16,6 +16,10 @@ import baseMixin from '../../../mixin/base'
 import iconComp from '../../base/icon/icon'
 import foldTransition from '../../transition/fold'
 
+import {
+  handleEleDisplay
+} from '../../../util/dom/prop'
+
 const foldTitleComp = {
   name: 'fold-title',
   mixins: [baseMixin],
@@ -93,7 +97,9 @@ const foldComp = {
       // 前一个打开的面板
       preIndex: 1,
       // 折叠版数据
-      foldData: []
+      foldData: [],
+      // 过渡动画的元素高度
+      transitionChildHeight: 0
     }
   },
 
@@ -191,28 +197,49 @@ const foldComp = {
       }
 
       if (this.only) {
+        this.switch(this.preIndex)
+
         Vue.set(this.foldData, this.preIndex - 1, Object.assign(this.foldData[this.preIndex - 1], {
           folding: true
         }))
       }
+
+      this.switch(this.currentIndex, !folding)
 
       Vue.set(this.foldData, currentIndex - 1, Object.assign(currentData, {
         folding: !folding
       }))
     },
 
-    foldingStatus(currentIndex) {
+    /**
+     *
+     * @param {Number} currentIndex - 折叠的序号
+     * @param {Boolean} fold - true 为折叠 false 为展开
+     */
+    switch (currentIndex, fold = true) {
       let currentData = this.foldData[currentIndex - 1]
+      let $transition = this.$refs[`transition${currentIndex}`]
 
-      return currentData && currentData.folding
+      if (!$transition) {
+        return false
+      }
+
+      let transitionHeight = this.elementProp($transition.$el).offsetHeight
+      $transition.setHeight(transitionHeight)
+
+      if (fold) {
+        return $transition.leave()
+      } else {
+        return $transition.enter()
+      }
     },
 
     foldTitleIcon(contentIndex) {
-      return this.foldingStatus(contentIndex) ? 'fold' : 'spread'
+      return this.foldData[contentIndex - 1].folding ? 'fold' : 'spread'
     },
 
     foldContentActive(contentIndex) {
-      return this.foldingStatus(contentIndex) ? `${this.cPrefix}-folding` : ''
+      return this.foldData[contentIndex - 1].folding ? `${this.cPrefix}-folding` : ''
     }
   },
 

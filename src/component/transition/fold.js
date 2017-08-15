@@ -5,14 +5,25 @@
  *
  */
 
-import { addClass, delClass } from '../../util/dom/attr'
-import baseMixin from './mixin'
+import {
+  addClass,
+  delClass
+} from '../../util/dom/attr'
+
+import baseMixin from '../../mixin/base'
+import transitionMixin from '../../mixin/transition'
 
 export default {
-  mixins: [baseMixin],
+  mixins: [baseMixin, transitionMixin],
 
   props: {
     height: Number
+  },
+
+  data() {
+    return {
+      transitionHeight: 0
+    }
   },
 
   computed: {
@@ -21,7 +32,32 @@ export default {
     }
   },
 
+  watch: {
+    height(val) {
+      return this.setHeight(val)
+    }
+  },
+
   methods: {
+    _setDataOpt() {
+      this.transitionHeight = this.height
+    },
+
+    _init() {
+      if (this.height === undefined && this.$el.firstChild) {
+        this.transitionHeight = this.$el.firstChild.offsetHeight
+      }
+    },
+
+    /**
+     * 设置高度
+     *
+     * @param { Number }
+     */
+    setHeight(height) {
+      this.transitionHeight = height
+    },
+
     beforeEnter() {
       this.$emit('beforeEnter')
       let el = this.$el
@@ -42,8 +78,10 @@ export default {
 
     entering() {
       let el = this.$el
+      // HACK: trigger browser reflow
+      let height = el.offsetHeight
 
-      el.style.height = `${this.height}px`
+      el.style.height = `${this.transitionHeight}px`
 
       this.$emit('entering')
 
@@ -70,7 +108,7 @@ export default {
 
       this.$emit('beforeLeave')
 
-      el.style.height = `${this.height}px`
+      el.style.height = `${this.transitionHeight}px`
 
       Object.assign(el.style, {
         'transition': this.transition

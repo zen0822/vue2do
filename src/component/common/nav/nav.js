@@ -24,6 +24,7 @@ import {
   foldContentComp
 } from '../../base/fold/fold'
 import foldTransition from '../../transition/fold'
+import slideTransition from '../../transition/slide'
 import iconComp from '../../base/icon/icon'
 import rowComp from '../../common/layout/row/row'
 import colComp from '../../common/layout/col/col'
@@ -42,6 +43,7 @@ export default {
     'fold-title': foldTitleComp,
     'fold-content': foldContentComp,
     'fold-transition': foldTransition,
+    'slide-transition': slideTransition,
     row: rowComp,
     column: colComp,
     icon: iconComp
@@ -109,11 +111,23 @@ export default {
     // 设备小于 L 尺寸
     isSmallDevice() {
       return this.deviceRange <= this._deviceTypeRange('<l')
+    },
+
+    isVerticalType() {
+      return this.type === 'vertical'
+    },
+
+    isFoldAnimate() {
+      return this.navAnimate === 'fold'
     }
   },
 
   watch: {
     deviceSize(val) {
+      if (!val) {
+        return false
+      }
+
       this.changeByDeviceSize(val)
     }
   },
@@ -128,31 +142,43 @@ export default {
     },
 
     show() {
+      let transitionRef = this.$refs.transition
+
       this.isStageActive = true
+
+      if (this.isFoldAnimate) {
+        let transitionHeight = this.elementProp(transitionRef.$el).offsetHeight
+
+        transitionRef.setHeight(transitionHeight)
+      }
+
+      transitionRef.enter()
       this.$emit('show')
     },
 
     hide() {
+      this.$refs.transition.leave()
+
       this.isStageActive = false
       this.$emit('hide')
     },
 
     toggle() {
       this.isStageActive = !this.isStageActive
+
+      if (this.isStageActive) {
+        return this.show()
+      } else {
+        return this.hide()
+      }
     },
 
-    changeByDeviceSize(size) {
+    changeByDeviceSize() {
       if (!this.autoSwitch) {
         return false
       }
 
       this.isSmallDevice ? this.hide() : this.show()
     }
-  },
-
-  mounted() {
-    this.$nextTick(() => [
-      this.changeByDeviceSize(this.deviceSize)
-    ])
   }
 }

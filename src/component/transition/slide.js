@@ -5,7 +5,7 @@
  * @prop position - 即时获取元素位置
  */
 
-import baseMixin from './mixin'
+import baseMixin from '../../mixin/transition'
 
 export default {
   mixins: [baseMixin],

@@ -12,7 +12,7 @@ export default {
       logoUrl: require('src/asset/img/z-white.png'),
       menuOpt: [{
         'name': '组件',
-        'route': '/component'
+        'route': '/component/start'
       }, {
         'name': '构建',
         'route': '/build'

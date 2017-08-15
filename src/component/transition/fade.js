@@ -5,7 +5,7 @@
  * @prop opacity - 使用 css 定义的 opacity 淡入淡出
  */
 
-import baseMixin from './mixin'
+import baseMixin from '../../mixin/transition'
 
 export default {
   mixins: [baseMixin],

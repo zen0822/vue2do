@@ -4,7 +4,7 @@
  * @prop speed - 淡出速度
  */
 
-import baseMixin from './mixin'
+import baseMixin from '../../mixin/transition'
 
 export default {
   mixins: [baseMixin],

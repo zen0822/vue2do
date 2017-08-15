@@ -32,59 +32,46 @@ export default function (h) {
       }
 
       foldChildren.push(
-        h('dt',
-          {
-            attrs: {
-              'data-index': contentIndex
-            },
-            class: [this.foldContentActive(contentIndex)],
-            on: {
-              click: slotEle ? this.clickTitle : () => {
-                return false
-              }
+        h('dt', {
+          attrs: {
+            'data-index': contentIndex
+          },
+          class: [this.foldContentActive(contentIndex)],
+          on: {
+            click: slotEle ? this.clickTitle : () => {
+              return false
             }
-          }, foldTitle
-        )
+          }
+        }, foldTitle)
       )
 
       foldChildren.push(
-        h('dd',
-          {
-            attrs: {
-              'data-index': contentIndex
-            },
-            class: [this.foldContentActive(contentIndex)]
+        h('dd', {
+          attrs: {
+            'data-index': contentIndex
           },
-          [
-            h('fold-transition',
-              [
-                h('div', {
-                  class: [this.xclass('transition')],
-                  css: false,
-                  directives: [{
-                    name: 'show',
-                    value: !this.foldingStatus(contentIndex)
-                  }],
-                  style: this.foldData[index].style
-                }, slotEle)
-              ]
-            )
-          ]
-        )
+          class: [this.foldContentActive(contentIndex)]
+        }, [
+          h('fold-transition', {
+            height: this.transitionChildHeight,
+            ref: `transition${contentIndex}`
+          }, [
+            h('div', {
+              class: [this.xclass('transition')],
+              css: false,
+              style: this.foldData[index].style
+            }, slotEle)
+          ])
+        ])
       )
     })
   }
 
-  return h('div',
-    {
-      class: [this.cPrefix, this.xclass(this.themeClass)]
-    },
-    [
-      h('dl',
-        {
-          class: [this.xclass('dl')]
-        }, foldChildren
-      )
-    ]
-  )
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass)]
+  }, [
+    h('dl', {
+      class: [this.xclass('dl')]
+    }, foldChildren)
+  ])
 }
