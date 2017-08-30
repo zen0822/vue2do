@@ -82,10 +82,10 @@ export default {
      *
      * @param {String, Number} - 多选下拉框的值
      */
-    clickMultiSelected(event) {
+    clickMultiSelected(event, index) {
       event.stopPropagation()
 
-      return this.removeMultiSelected(event.currentTarget.getAttribute(this.xclass('data-index')))
+      return this.removeMultiSelected(index)
     },
 
     /**

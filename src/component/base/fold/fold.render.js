@@ -33,12 +33,13 @@ export default function (h) {
 
       foldChildren.push(
         h('dt', {
-          attrs: {
-            'data-index': contentIndex
-          },
           class: [this.foldContentActive(contentIndex)],
           on: {
-            click: slotEle ? this.clickTitle : () => {
+            click: (event) => {
+              if (slotEle) {
+                return this.clickTitle(event, contentIndex)
+              }
+
               return false
             }
           }
@@ -47,9 +48,6 @@ export default function (h) {
 
       foldChildren.push(
         h('dd', {
-          attrs: {
-            'data-index': contentIndex
-          },
           class: [this.foldContentActive(contentIndex)]
         }, [
           h('fold-transition', {

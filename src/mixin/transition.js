@@ -40,6 +40,7 @@ export default {
   methods: {
     /**
      * 启动进来时的过渡动画
+     *
      * @param {Object} opt
      */
     async enter(opt = {}) {
@@ -58,6 +59,7 @@ export default {
 
     /**
      * 启动离开时的过渡动画
+     *
      * @param {Object} opt
      */
     async leave(opt = {}) {

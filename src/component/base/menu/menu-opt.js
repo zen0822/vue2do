@@ -119,10 +119,9 @@ const menuOptionComp = {
      * @param {Object} 子下拉框值
      * @return {Function}
      */
-    menuOption(evt) {
+    menuOption(evt, index) {
       evt.stopPropagation()
 
-      let index = evt.currentTarget.getAttribute(this.xclass('data-index'))
       let option = this.option[parseInt(index - 1, 10)]
 
       if (option.classify) {

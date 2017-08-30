@@ -20,16 +20,15 @@ export default {
     /**
      * 选择 checkbox
      */
-    check(evt) {
-      let index = evt.currentTarget.getAttribute(this.xclass('data-index')) - 1
-      let option = this.option[parseInt(index, 10)]
+    check(evt, index) {
+      let option = this.option[parseInt(index - 1, 10)]
       let val = option.value
 
       if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
         return false
       }
 
-      this.$refs[`checkTransition${index + 1}`].enter()
+      this.$refs[`checkTransition${index}`].enter()
 
       if (this.isCheckbox) {
         this.oldValue = []

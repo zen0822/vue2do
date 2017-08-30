@@ -115,13 +115,10 @@ export default {
     /**
      * 点击tab触发的事件
      *
-     * @param { Number } - 点击tab按钮
      * @return { Object }
      */
-    tab(evt) {
-      let currentIndex = parseInt(evt.currentTarget.getAttribute('data-index'), 10)
-
-      this.currentIndex = currentIndex
+    tab(evt, index) {
+      this.currentIndex = index
 
       this.$emit('click')
     }

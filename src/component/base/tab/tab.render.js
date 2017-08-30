@@ -8,12 +8,9 @@ export default function (h) {
   if (this.initOpt.length > 0) {
     tabOption = this.option.map((item, index) => {
       return h('div', {
-        attrs: {
-          'data-index': index + 1
-        },
         class: [this.xclass('ele')],
         on: {
-          click: this.tab
+          click: (event) => this.tab(event, index + 1)
         },
         slot: index + 1
       }, item.text)
@@ -46,11 +43,8 @@ export default function (h) {
 
       tabOption.push(
         h('div', {
-          attrs: {
-            'data-index': index + 1
-          },
           on: {
-            click: this.tab
+            click: (event) => this.tab(event, index + 1)
           },
           slot: item
         }, this.$slots[item])
@@ -63,17 +57,14 @@ export default function (h) {
   return h(
     'div', {
       class: [this.cPrefix, this.xclass(this.themeClass)]
-    },
-    [
-      h('shift',
-        {
-          class: [this.xclass('shift')],
-          props: {
-            after: `${this.cPrefix}-active`
-          },
-          ref: 'shift'
-        }, tabOption
-      )
+    }, [
+      h('shift', {
+        class: [this.xclass('shift')],
+        props: {
+          after: `${this.cPrefix}-active`
+        },
+        ref: 'shift'
+      }, tabOption)
     ]
   )
 }

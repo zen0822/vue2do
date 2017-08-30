@@ -27,58 +27,49 @@ export default function (h) {
         class: [
           this.defaultValClassName(this.value),
           this.xclass('init-text'),
-          { [this.xclass('opacity')]: !this.initTxtDisplay }
+          {
+            [this.xclass('opacity')]: !this.initTxtDisplay
+          }
         ]
       })
     )
 
     this.text.forEach((txt, index) => {
-      liELe.push(h('li',
-        [
-          h('span', txt),
-          h('span',
-            {
-              attrs: {
-                [this.xclass('data-index')]: index + 1
-              },
-              on: {
-                click: this.clickMultiSelected
-              }
-            },
-            [
-              h('icon', {
-                props: {
-                  kind: 'close'
-                }
-              })
-            ]
-          )
+      liELe.push(h('li', [
+        h('span', txt),
+        h('span', {
+          on: {
+            click: (event) => this.clickMultiSelected(event, index + 1)
+          }
+        }, [
+          h('icon', {
+            props: {
+              kind: 'close'
+            }
+          })
         ])
-      )
+      ]))
     })
 
     selectedBoxChildren.push(
-      h('scroller',
-        {
-          class: [this.xclass('scroller')],
-          props: {
-            height: 100
-          },
-          ref: 'scroller'
+      h('scroller', {
+        class: [this.xclass('scroller')],
+        props: {
+          height: 100
         },
-        [
-          h('ul', {
-            class: [
-              `${this.compPrefix}-ul`,
-              this.xclass('multiple-selected-ul')
-            ],
-            directives: [{
-              name: 'show',
-              value: !this.initTxtDisplay
-            }]
-          }, [liELe])
-        ]
-      )
+        ref: 'scroller'
+      }, [
+        h('ul', {
+          class: [
+            `${this.compPrefix}-ul`,
+            this.xclass('multiple-selected-ul')
+          ],
+          directives: [{
+            name: 'show',
+            value: !this.initTxtDisplay
+          }]
+        }, [liELe])
+      ])
     )
   } else {
     selectedBoxChildren.push(
@@ -111,33 +102,30 @@ export default function (h) {
   }))
 
   if (this.search) {
-    menuChildren.push(h('div',
-      {
-        class: [
-          this.xclass('search-input')
-        ],
-        on: {
-          click(event) {
-            event.stopPropagation()
-          },
-          input: this._searchKeyup
+    menuChildren.push(h('div', {
+      class: [
+        this.xclass('search-input')
+      ],
+      on: {
+        click(event) {
+          event.stopPropagation()
+        },
+        input: this._searchKeyup
+      }
+    }, [
+      h('input-box', {
+        props: {
+          placeholder: '请输入搜索值'
         }
-      },
-      [
-        h('input-box', {
+      }, [
+        h('icon', {
           props: {
-            placeholder: '请输入搜索值'
-          }
-        }, [
-            h('icon', {
-              props: {
-                kind: 'search'
-              },
-              slot: 'header'
-            })
-          ])
-      ]
-    ))
+            kind: 'search'
+          },
+          slot: 'header'
+        })
+      ])
+    ]))
   }
 
   if (Array.isArray(this.option)) {
@@ -146,19 +134,16 @@ export default function (h) {
     // 当下拉菜单是以子标签加载的时候
     if (this.isTagMenu) {
       menuChildren.push(
-        h('scroller',
-          {
-            props: {
-              height: 200
-            },
-            ref: 'tagScroller'
+        h('scroller', {
+          props: {
+            height: 200
           },
-          [
-            h('div', {
-              class: this.xclass('tag-opt')
-            }, [this.$slots.default])
-          ]
-        )
+          ref: 'tagScroller'
+        }, [
+          h('div', {
+            class: this.xclass('tag-opt')
+          }, [this.$slots.default])
+        ])
       )
     } else {
       if (this.$scopedSlots && this.$scopedSlots['custom']) {
@@ -175,21 +160,18 @@ export default function (h) {
       }
 
       menuChildren.push(
-        h('menu-opt',
-          {
-            class: [this.xclass('opt-comp')],
-            props: {
-              multiple: this.multiple,
-              valName: this.valName,
-              txtName: this.txtName,
-              option: this.searchOptionDisplay
-                ? this.searchOptionItem : this.option,
-              optRoot: this.me
-            },
-            ref: 'menuOption',
-            scopedSlots
-          }
-        ),
+        h('menu-opt', {
+          class: [this.xclass('opt-comp')],
+          props: {
+            multiple: this.multiple,
+            valName: this.valName,
+            txtName: this.txtName,
+            option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
+            optRoot: this.me
+          },
+          ref: 'menuOption',
+          scopedSlots
+        }),
         h('div', {
           class: [this.xclass('option-slot'), `${this.compPrefix}-hide`]
         }, this.$slots.default)
@@ -198,55 +180,48 @@ export default function (h) {
   }
 
   menuMenuEle = [
-    h('div',
-      {
-        class: [this.xclass('panel')],
-        directives: [{
-          name: 'show',
-          value: this.menuMenuDisplay
-        }],
-        style: [this.menuMenuPoiStyle, this.menuMenuStyle],
-        ref: 'menu'
-      },
-      [menuChildren]
-    )
+    h('div', {
+      class: [this.xclass('panel')],
+      directives: [{
+        name: 'show',
+        value: this.menuMenuDisplay
+      }],
+      style: [this.menuMenuPoiStyle, this.menuMenuStyle],
+      ref: 'menu'
+    }, [menuChildren])
   ]
 
-  return h('div',
-    {
-      class: this.menuClass,
+  return h('div', {
+    class: this.menuClass,
+    directives: [{
+      name: 'clickParent',
+      expression: this.clickParent
+    }],
+    on: {
+      keydown: this.keydown
+    }
+  }, [
+    h('div', {
+      class: [this.xclass('read-only')],
       directives: [{
-        name: 'clickParent',
-        expression: this.clickParent
-      }],
+        name: 'show',
+        value: this.readOnly
+      }]
+    }),
+    h('div', {
+      class: [this.xclass('selected-box')],
       on: {
-        keydown: this.keydown
+        click: this.click
       }
-    },
-    [
-      h('div', {
-        class: [this.xclass('read-only')],
-        directives: [{
-          name: 'show',
-          value: this.readOnly
-        }]
-      }),
-      h('div', {
-        class: [this.xclass('selected-box')],
-        on: {
-          click: this.click
-        }
-      }, [selectedBoxChildren]),
+    }, [selectedBoxChildren]),
 
-      h('fold-transition',
-        {
-          props: {
-            height: this.menuHeight
-          },
-          ref: 'transition'
+    h('fold-transition', {
+        props: {
+          height: this.menuHeight
         },
-        menuMenuEle
-      )
-    ]
-  )
+        ref: 'transition'
+      },
+      menuMenuEle
+    )
+  ])
 }

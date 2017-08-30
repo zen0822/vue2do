@@ -180,10 +180,9 @@ const foldComp = {
       this.foldData = foldData
     },
 
-    clickTitle(evt) {
+    clickTitle(evt, currentIndex) {
       evt.stopPropagation()
 
-      let currentIndex = Number(evt.currentTarget.getAttribute('data-index'))
       let currentData = this.foldData[currentIndex - 1]
       let folding = currentData.folding
 

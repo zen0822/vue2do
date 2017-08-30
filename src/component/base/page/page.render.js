@@ -127,16 +127,13 @@ export default function (h) {
                       let pageNum = index + 1
 
                       return h('li', {
-                        attrs: {
-                          'data-index': pageNum
-                        },
                         class: [
                           this.xclass('li'),
                           this.xclass('ele'),
                           { [this.xclass('li-active')]: pageNum === this.pageData.current }
                         ],
                         on: {
-                          click: this.click
+                          click: (event) => this.click(event, pageNum)
                         }
                       }, pageNum)
                     }))

@@ -186,10 +186,8 @@ const pageComp = {
      * @param {Number} - 当前页码
      * @return {Function}
      */
-    click(event = {}) {
+    click(event = {}, currentPage) {
       event.stopPropagation && event.stopPropagation()
-
-      let currentPage = parseInt(event.currentTarget.getAttribute('data-index'), 10)
 
       if (currentPage === this.pageData.current) {
         return false

@@ -75,8 +75,10 @@ const searchComp = {
       this.search(this.keyword)
     },
 
-    // 点击匹配的搜索选项
-    _clickMatchOpt() {
+    /**
+     * 点击匹配的搜索选项
+     */
+    _clickMatchOpt(event, index) {
 
     },
 

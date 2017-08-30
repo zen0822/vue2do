@@ -299,30 +299,33 @@ const menuComp = {
         })
       }
 
-      !this.isTagMenu && this.$refs.menuOption.$on('change', ({
-        value,
-        text,
-        index
-      }) => {
-        this.currentIndex = index
-        let selectedItem = this._isExistedVal(value)
+      if (!this.isTagMenu) {
+        this.$refs.menuOption.$off('change')
+        this.$refs.menuOption.$on('change', ({
+          value,
+          text,
+          index
+        }) => {
+          this.currentIndex = index
+          let selectedItem = this._isExistedVal(value)
 
-        if (this.multiple) {
-          if (!selectedItem) {
-            if (this.max !== 0 && this.value.length === this.max) {
-              return false
+          if (this.multiple) {
+            if (!selectedItem) {
+              if (this.max !== 0 && this.value.length === this.max) {
+                return false
+              }
+
+              return this.value.push(value)
+            } else {
+              return this.removeMultiSelected(selectedItem.index + 1)
             }
-
-            return this.value.push(value)
           } else {
-            return this.removeMultiSelected(selectedItem.index + 1)
-          }
-        } else {
-          this.value = value
+            this.value = value
 
-          return this.toggleMenuDisplay(false)
-        }
-      })
+            return this.toggleMenuDisplay(false)
+          }
+        })
+      }
     },
 
     /**
