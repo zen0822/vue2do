@@ -10,6 +10,10 @@ import {
   delClass
 } from '../../util/dom/attr'
 
+import {
+  prop as elementProp
+} from '../../util/dom/prop'
+
 import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
 
@@ -44,8 +48,8 @@ export default {
     },
 
     _init() {
-      if (this.height === undefined && this.$el.firstChild) {
-        this.transitionHeight = this.$el.firstChild.offsetHeight
+      if (this.height === undefined) {
+        this.transitionHeight = elementProp(this.$el).offsetHeight
       }
     },
 
@@ -64,6 +68,7 @@ export default {
 
       Object.assign(el.style, {
         'height': 0,
+        'overflow': 'hidden',
         'transition': this.transition
       })
 
@@ -97,6 +102,7 @@ export default {
 
       Object.assign(el.style, {
         'height': '',
+        'overflow': '',
         'transition': ''
       })
 
@@ -108,7 +114,10 @@ export default {
 
       this.$emit('beforeLeave')
 
-      el.style.height = `${this.transitionHeight}px`
+      Object.assign(el.style, {
+        height: `${this.transitionHeight}px`,
+        'overflow': 'hidden'
+      })
 
       Object.assign(el.style, {
         'transition': this.transition
@@ -141,7 +150,8 @@ export default {
 
       Object.assign(el.style, {
         'transition': '',
-        'height': ''
+        'height': '',
+        overflow: ''
       })
 
       return this.$emit('afterLeave')
