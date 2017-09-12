@@ -180,5 +180,9 @@ export default {
 
       this.isSmallDevice ? this.hide() : this.show()
     }
+  },
+
+  mounted() {
+    this.changeByDeviceSize()
   }
 }

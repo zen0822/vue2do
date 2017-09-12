@@ -108,10 +108,7 @@ export default function (h) {
     navStage.push(
       h('slide-transition', {
         props: {
-          direction: 'top',
-          detail: {
-            top: 0
-          }
+          offset: 0
         },
         directives: [{
           name: 'show',

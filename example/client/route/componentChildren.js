@@ -4,7 +4,8 @@ import startPage from '../component/page/component/start/start'
 import selectPage from '../component/page/component/form/select/select'
 import checkPage from '../component/page/component/form/check/check'
 import inputPage from '../component/page/component/form/input/input'
-import popPage from '../component/page/component/message/pop/pop'
+import modalPage from '../component/page/component/message/modal/modal'
+import popPage from '../component/page/component/other/pop/pop'
 import tipPage from '../component/page/component/message/tip/tip'
 import tablePage from '../component/page/component/data/table/table'
 import tabPage from '../component/page/component/other/tab/tab'
@@ -56,8 +57,8 @@ export default [{
     title: '选择框组件'
   }
 }, {
-  path: 'pop',
-  component: popPage,
+  path: 'modal',
+  component: modalPage,
   meta: {
     title: '弹窗组件'
   }
@@ -65,7 +66,7 @@ export default [{
   path: 'pop',
   component: popPage,
   meta: {
-    title: '弹窗组件'
+    title: '弹出组件'
   }
 }, {
   path: 'tip',

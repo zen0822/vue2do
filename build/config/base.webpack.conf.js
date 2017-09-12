@@ -27,7 +27,7 @@ module.exports = function (opt) {
     context: path.resolve(__dirname, 'app'),
 
     resolve: {
-      modules: ["node_modules", path.resolve(__dirname, `${config.global.root}/src/scss`)],
+      modules: ['node_modules', path.resolve(__dirname, `${config.global.root}/src/scss`)],
       extensions: ['.js'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
@@ -56,7 +56,6 @@ module.exports = function (opt) {
         exclude: [/node_modules/]
       }, {
         test: /\.js$/,
-        // exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {

@@ -37,7 +37,6 @@ module.exports = function (opt = {}) {
         debug: true
       }),
 
-      // nodejs 的全局变量混入到 javascript 中
       new webpack.DefinePlugin({
         'process.env': config.dev.env
       }),

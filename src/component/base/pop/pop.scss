@@ -16,19 +16,19 @@ $C_PREFIX: #{ $COMP_POP };
     position: absolute;
   }
 
-  &.#{ $C_PREFIX }-direction-top {
+  &.#{ $C_PREFIX }-position-top {
     top: 0;
   }
 
-  &.#{ $C_PREFIX }-direction-bottom {
+  &.#{ $C_PREFIX }-position-bottom {
     bottom: 0;
   }
 
-  &.#{ $C_PREFIX }-direction-left {
+  &.#{ $C_PREFIX }-position-left {
     left: 0;
   }
 
-  &.#{ $C_PREFIX }-direction-right {
+  &.#{ $C_PREFIX }-position-right {
     right: 0;
   }
 }

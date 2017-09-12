@@ -65,10 +65,8 @@ export default function (h) {
       h('slide-transition',
         {
           props: {
-            direction: 'bottom',
-            type: 'slide',
-            speed: 'slow',
-            detail: this.pageDetail
+            direction: 'north',
+            offset: this.pageDetail.bottom
           },
           ref: 'slideTransition'
         },

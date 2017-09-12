@@ -1,10 +1,11 @@
 /**
  * pop 弹出层组件
  *
- * @prop direction - 弹出方向（left | right | top | bottom）
+ * @prop direction - 只有当 position 为 center 生效，弹出方向（north | east | west | south）
+ * @prop part - 在一个父类元素弹出，默认为否即在当前文档之外弹窗
+ * @prop position - 弹出层最终的所在位置 (top | right | bottom | left | center)
  * @prop speed - 弹出速度
  * @prop type - 弹出类型
- * @prop part - 在一个父类元素弹出，默认为否即在当前文档之外弹窗
  *
  * @slot - 弹窗的主体内容
  *
@@ -38,7 +39,7 @@ const popComp = {
     },
     direction: {
       type: String,
-      default: 'top'
+      default: 'south'
     },
     speed: {
       type: String,
@@ -47,6 +48,10 @@ const popComp = {
     part: {
       type: Boolean,
       default: false
+    },
+    position: {
+      type: String,
+      default: 'center'
     }
   },
 
@@ -59,12 +64,10 @@ const popComp = {
       // 弹窗的相关信息
       popDetail: {
         top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
-        parentWidth: 0,
-        parentHeight: 0
-      }
+        left: 0
+      },
+      // 弹出层的方向
+      popDirection: 'south'
     }
   },
 
@@ -77,10 +80,12 @@ const popComp = {
     compClass() {
       return [
         this.cPrefix,
-        this.xclass(`direction-${this.direction}`),
+        this.xclass(`direction-${this.popDirection}`),
         this.xclass(`type-${this.type}`),
         this.xclass(`speed-${this.speed}`),
-        { [this.xclass('part')]: this.part }
+        {
+          [this.xclass('part')]: this.part
+        }
       ]
     },
     // 弹出层的位置样式
@@ -92,7 +97,37 @@ const popComp = {
     }
   },
 
+  watch: {
+    direction(val) {
+      this.popDirection = val
+    }
+  },
+
   methods: {
+    _setDataOpt() {
+      this.popDirection = this.direction
+
+      if (this.position !== 'center') {
+        switch (this.position) {
+          case 'bottom':
+            this.popDirection = 'north'
+            break
+          case 'top':
+            this.popDirection = 'south'
+            break
+          case 'right':
+            this.popDirection = 'west'
+            break
+          case 'left':
+            this.popDirection = 'east'
+            break
+          default:
+            this.popDirection = 'south'
+            break
+        }
+      }
+    },
+
     _init() {
       if (!this.part) {
         window.addEventListener('resize', (event) => {
@@ -102,20 +137,90 @@ const popComp = {
     },
 
     /**
-    * 计算弹出层的位置
-    */
-    computePosition() {
+     * 初始化弹出层
+     */
+    initPop() {
       let ele = this.elementProp(this.$el)
+      let parentWidth = window.innerWidth
+      let parentHeight = window.innerHeight
+      let height = ele.offsetHeight
+      let width = ele.offsetWidth
+      let slideOffset = 0
+      let popStyle = {}
 
-      this.popDetail = Object.assign({}, this.popDetail, {
-        top: (window.innerHeight - ele.offsetHeight) / 2,
-        left: (window.innerWidth - ele.offsetWidth) / 2
-      })
+      if (this.position !== 'center') {
+        switch (this.position) {
+          case 'bottom':
+            popStyle = {
+              top: parentHeight - height,
+              left: (parentWidth - width) / 2
+            }
 
-      Object.assign(this.$el.style, {
-        top: this.popDetail.top,
-        left: this.popDetail.left
-      })
+            break
+          case 'top':
+            popStyle = {
+              top: 0,
+              left: (parentWidth - width) / 2
+            }
+
+            break
+          case 'right':
+            popStyle = {
+              top: (parentHeight - height) / 2,
+              left: parentWidth - width
+            }
+
+            break
+          case 'left':
+            popStyle = {
+              top: (parentHeight - height) / 2,
+              left: 0
+            }
+
+            break
+          default:
+            popStyle = {
+              top: 0,
+              left: (parentWidth - width) / 2
+            }
+        }
+
+        slideOffset = 0
+      } else {
+        let top = (parentHeight - height) / 2
+        let left = (parentWidth - width) / 2
+
+        switch (this.popDirection) {
+          case 'north':
+          case 'south':
+            slideOffset = top
+
+            break
+          case 'west':
+          case 'east':
+            slideOffset = left
+
+            break
+          default:
+            slideOffset = top
+        }
+
+        popStyle = {
+          top,
+          left
+        }
+      }
+
+      this.popDetail = Object.assign({}, this.popDetail, popStyle)
+      Object.assign(this.$el.style, popStyle)
+      this.$refs.transition.setOffset(slideOffset)
+    },
+
+    /**
+     * 计算弹出层的位置
+     */
+    computePosition() {
+      return this.initPop()
     },
 
     /**
@@ -125,7 +230,9 @@ const popComp = {
      *                       {Function} cb - 显示之后的回调函数
      * @return {Object}
      */
-    show({ cb } = {}) {
+    show({
+      cb
+    } = {}) {
       this.$refs.transition.$off('afterEnter')
       this.$refs.transition.$on('afterEnter', () => {
         cb && cb()
@@ -147,7 +254,9 @@ const popComp = {
      *                       {Function} cb - 隐藏之后的回调函数
      * @return {Object}
      */
-    hide({ cb } = {}) {
+    hide({
+      cb
+    } = {}) {
       this.$refs.transition.$off('afterLeave')
       this.$refs.transition.$on('afterLeave', () => {
         cb && cb()
@@ -161,6 +270,10 @@ const popComp = {
 
       return this
     }
+  },
+
+  mounted() {
+    this.computePosition()
   }
 }
 

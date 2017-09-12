@@ -8,38 +8,15 @@
     "sub": [
       {
         "name": "按钮组件",
-        "sub": [
-          {
-            "name": "基本用法",
-            "route": "/component/btn#start"
-          },
-          {
-            "name": "按钮类别",
-            "route": "/component/btn#kind"
-          }
-        ]
+        "route": "/component/btn"
       },
       {
         "name": "选择组件",
-        "sub": [
-          {
-            "name": "基本用法",
-            "route": "/component/check#start"
-          },
-          {
-            "name": "多选",
-            "route": "/component/check#multiple"
-          }
-        ]
+        "route": "/component/check"
       },
       {
         "name": "菜单组件",
-        "sub": [
-          {
-            "name": "基本用法",
-            "route": "/component/select#start"
-          }
-        ]
+        "route": "/component/select"
       },
       {
         "name": "输入组件",
@@ -55,11 +32,11 @@
         "sub": [
           {
             "name": "确认弹窗",
-            "route": "/component/pop#confirm"
+            "route": "/component/modal#confirm"
           },
           {
             "name": "消息弹窗",
-            "route": "/component/pop#alert"
+            "route": "/component/modal#alert"
           }
         ]
       },
@@ -123,6 +100,10 @@
       {
         "name": "选项卡组件",
         "route": "/component/tab"
+      },
+      {
+        "name": "弹出组件",
+        "route": "/component/pop"
       }
     ]
   }

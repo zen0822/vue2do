@@ -1,8 +1,13 @@
 /**
  * slide transition component - 滑动过度效果
  *
+ * @prop offset - 元素滑动的偏移值,
+ *                direction 为 south：实例顶部距离实例的 offsetParent 的顶部的偏移值
+ *                direction 为 north：实例低部距离实例的 offsetParent 的低部的偏移值
+ *                direction 为 west：实例右边距离实例的 offsetParent 的右边的偏移值
+ *                direction 为 east：实例左边距离实例的 offsetParent 的左边的偏移值
+ * @prop direction - 滑动方向(north | east | west | south)
  * @prop speed - 淡出速度
- * @prop position - 即时获取元素位置
  */
 
 import baseMixin from '../../mixin/transition'
@@ -13,17 +18,20 @@ export default {
   props: {
     direction: {
       type: String,
-      default: 'top'
+      default: 'south'
     },
-    detail: Object,
-    position: Function
+    offset: {
+      type: Number,
+      default: 0
+    }
   },
 
   data() {
     return {
       transiting: false,
       isEnter: false,
-      isLeaving: false
+      isLeaving: false,
+      slideOffset: {}
     }
   },
 
@@ -33,14 +41,6 @@ export default {
     },
     transition() {
       return `transform ${this.transitionTime} ease-out`
-    },
-    // 过渡体的 bottom 值，就是过渡体底部离父元素底部的偏移值
-    bottom() {
-      return this.detail.parentHeight - this.detail.top - this.detail.height
-    },
-    // 过渡体的 right 值，就是过渡体右侧离父元素右侧的偏移值
-    right() {
-      return this.detail.parentWidth - this.detail.left - this.detail.width
     }
   },
 
@@ -53,30 +53,38 @@ export default {
      * @return {String} - 过渡的样式声明
      *
      */
-    _getTranslate({ top = this.detail.top, left = this.detail.left } = {}) {
+    _getTranslate() {
       switch (this.direction) {
-        case 'top':
-          return `translateY(calc(-110% - ${top}px))`
-        case 'bottom':
-          return `translateY(calc(110% + ${this.bottom}px))`
-        case 'left':
-          return `translateX(calc(-110% - ${left}px))`
-        case 'right':
-          return `translateX(calc(110% + ${this.right}px))`
+        case 'south':
+          return `translateY(calc(-110% - ${this.slideOffset}px))`
+        case 'north':
+          return `translateY(calc(110% + ${this.slideOffset}px))`
+        case 'east':
+          return `translateX(calc(-110% - ${this.slideOffset}px))`
+        case 'west':
+          return `translateX(calc(110% + ${this.slideOffset}px))`
         default:
-          return `translateY(calc(-110% - ${top}px))`
+          return `translateY(calc(-110% - ${this.slideOffset}px))`
       }
+    },
+
+    /**
+     * 设置 offset 属性
+     */
+    setOffset(value) {
+      this.slideOffset = value
+
+      return this
     },
 
     beforeEnter() {
       this.$emit('beforeEnter')
 
       let el = this.$el
-      let elPoi = this.position ? this.position() : {}
 
       Object.assign(el.style, {
         'transition': this.transition,
-        'transform': this._getTranslate(elPoi)
+        'transform': this._getTranslate()
       })
 
       return new Promise((resolve, reject) => {
@@ -159,5 +167,9 @@ export default {
 
   render(h) {
     return h('transition', this.$slots.default)
+  },
+
+  created() {
+    this.slideOffset = this.offset
   }
 }

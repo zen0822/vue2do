@@ -118,10 +118,7 @@ const listComp = {
       pageDetail: {
         top: 0,
         left: 0,
-        width: 0,
-        height: 0,
-        parentWidth: 0,
-        parentHeight: 0
+        bottom: 0
       },
       // 分页显示状态
       pagerDisplay: false,
@@ -194,14 +191,14 @@ const listComp = {
         emitter
       }) => {
         let ele = this.elementProp(this.$refs.page.$el)
+        let parentHeight = this.$el.offsetHeight
+        let height = ele.offsetHeight
+        let top = parentHeight - height
 
         this.pageDetail = Object.assign({}, this.pageDetail, {
-          top: this.$el.offsetHeight - ele.offsetHeight,
+          top,
           left: ele.offsetLeft,
-          width: ele.offsetWidth,
-          height: ele.offsetHeight,
-          parentWidth: this.$el.offsetWidth,
-          parentHeight: this.$el.offsetHeight
+          bottom: 0
         })
 
         this.scrollerAlmostInBottom = emitter.yComputed.isBottom

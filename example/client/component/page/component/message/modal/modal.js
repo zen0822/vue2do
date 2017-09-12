@@ -1,5 +1,5 @@
-import './pop.scss'
-import pugTpl from './pop.pug'
+import './modal.scss'
+import pugTpl from './modal.pug'
 import mixin from '../../mixin'
 import { alert, confirm } from 'vue2do/index.js'
 

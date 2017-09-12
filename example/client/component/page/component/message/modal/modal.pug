@@ -1,6 +1,6 @@
 include ../../mixin.pug
 
-div.component-pop
+div.component-modal
   article.example-article
     +section('start', '弹窗')
       z-btn(@click='simple') 确认
@@ -40,6 +40,6 @@ div.component-pop
         while n < 8
           p full-#{n++}
       z-code.
-        #{'<z-pop header-name="custom" ref="pop">'}
+        #{'<z-modal header-name="custom" ref="modal">'}
           #{'<p>custom</p>'}
-        #{'</z-pop>'}
+        #{'</z-modal>'}
