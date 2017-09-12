@@ -11,7 +11,7 @@ $C_PREFIX: $comp-prefix;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.#{ $C_PREFIX }-device-size {
+.#{$C_PREFIX}-device-size {
   position: absolute;
   height: 0;
   width: 0;
@@ -48,13 +48,13 @@ $C_PREFIX: $comp-prefix;
   }
 }
 
-.#{ $C_PREFIX }-ul {
+.#{$C_PREFIX}-ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.#{ $C_PREFIX }-global-rip {
+.#{$C_PREFIX}-global-rip {
   background-color: rgba(0, 0, 0, .2);
   position: absolute;
   width: 100%;
@@ -73,10 +73,10 @@ $C_PREFIX: $comp-prefix;
     height: 200%;
     border-radius: 50%;
     transform: translate(-50%, -50%) scaleX(1);
-    animation: #{ $C_PREFIX }-global-rip 2s infinite alternate;
+    animation: #{$C_PREFIX}-global-rip 2s infinite alternate;
   }
 
-  @keyframes #{ $C_PREFIX }-global-rip {
+  @keyframes #{$C_PREFIX}-global-rip {
     0% {
       transform: translate(-50%, -50%) scaleX(1);
     }

@@ -1,5 +1,5 @@
 %loading-type-rotate {
-  @keyframes #{ $C_PREFIX }-rotate {
+  @keyframes #{$C_PREFIX}-rotate {
     0% {
       transform: rotateZ(0deg);
     }
@@ -11,10 +11,10 @@
     }
   }
 
-  .#{ $C_PREFIX }-icon {
+  .#{$C_PREFIX}-icon {
     line-height: 0;
     transform-origin: 50%;
-    animation: #{ $C_PREFIX }-rotate 1s linear infinite;
+    animation: #{$C_PREFIX}-rotate 1s linear infinite;
     margin: 0;
   }
 }

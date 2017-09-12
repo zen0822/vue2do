@@ -12,11 +12,11 @@ $device-type: span, xs, s, m, l, xl;
 
 @mixin device-style($type) {
   @for $i from 1 through 12 {
-    &.#{ $C_PREFIX }-#{$type}-#{$i} {
+    &.#{$C_PREFIX}-#{$type}-#{$i} {
       width: 100% * $i / 12;
 
       @each $gap in $gap-hub {
-        &.#{ $C_PREFIX }-gap-#{$gap} {
+        &.#{$C_PREFIX}-gap-#{$gap} {
           @if $i == 12 {
             width: 100%;
             margin-right: 0;
@@ -50,7 +50,7 @@ $device-type: span, xs, s, m, l, xl;
 
 $C_PREFIX: #{ $COMP_COL };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   display: inline-block;
   vertical-align: middle;
   box-sizing: border-box;
@@ -66,46 +66,46 @@ $C_PREFIX: #{ $COMP_COL };
   }
 
   @each $gap in $gap-hub {
-    &.#{ $C_PREFIX }-gap-#{$gap}:first-child {
+    &.#{$C_PREFIX}-gap-#{$gap}:first-child {
       margin-left: 0;
     }
 
-    &.#{ $C_PREFIX }-gap-#{$gap}:last-child {
+    &.#{$C_PREFIX}-gap-#{$gap}:last-child {
       margin-right: 0;
     }
   }
 
   @for $i from 1 through 12 {
-    &.#{ $C_PREFIX }-pull-#{$i},
-    &.#{ $C_PREFIX }-push-#{$i} {
+    &.#{$C_PREFIX}-pull-#{$i},
+    &.#{$C_PREFIX}-push-#{$i} {
       position: relative;
     }
 
-    &.#{ $C_PREFIX }-offset-#{$i} {
+    &.#{$C_PREFIX}-offset-#{$i} {
       margin-left: 100% * $i / 12;
 
       @each $gap in $gap-hub {
-        &.#{ $C_PREFIX }-gap-#{$gap}:first-child:last-child {
+        &.#{$C_PREFIX}-gap-#{$gap}:first-child:last-child {
           margin-left: calc(#{100% * $i / 12} + #{$gap / 2}px);
         }
       }
     }
 
-    &.#{ $C_PREFIX }-pull-#{$i} {
+    &.#{$C_PREFIX}-pull-#{$i} {
       left: -100% * $i / 12;
 
       @each $gap in $gap-hub {
-        &.#{ $C_PREFIX }-gap-#{$gap}:last-child {
+        &.#{$C_PREFIX}-gap-#{$gap}:last-child {
           left: calc(-#{100% * $i / 12} - #{$gap / 2}px);
         }
       }
     }
 
-    &.#{ $C_PREFIX }-push-#{$i} {
+    &.#{$C_PREFIX}-push-#{$i} {
       left: 100% * $i / 12;
 
       @each $gap in $gap-hub {
-        &.#{ $C_PREFIX }-gap-#{$gap}:first-child {
+        &.#{$C_PREFIX}-gap-#{$gap}:first-child {
           left: calc(#{100% * $i / 12} + #{$gap / 2}px);
         }
       }

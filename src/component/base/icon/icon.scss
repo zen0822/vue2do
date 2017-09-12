@@ -8,11 +8,11 @@
 
 $C_PREFIX: #{ $COMP_ICON };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   display: inline-block;
   line-height: 1;
 
-  .#{ $C_PREFIX }-ali {
+  .#{$C_PREFIX}-ali {
     width: 1em;
     height: 1em;
     vertical-align: -0.15em;
@@ -20,19 +20,19 @@ $C_PREFIX: #{ $COMP_ICON };
     overflow: hidden;
   }
 
-  .#{ $C_PREFIX }-s {
+  .#{$C_PREFIX}-s {
     font-size: $h4;
   }
 
-  .#{ $C_PREFIX }-m {
+  .#{$C_PREFIX}-m {
     font-size: $h3;
   }
 
-  .#{ $C_PREFIX }-l {
+  .#{$C_PREFIX}-l {
     font-size: $h2;
   }
 
-  .#{ $C_PREFIX }-xl {
+  .#{$C_PREFIX}-xl {
     font-size: $h1;
   }
 }

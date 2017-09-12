@@ -14,7 +14,7 @@ $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
 $POP_CONTAINER_PADDING: 24px;
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   position: fixed;
   left: 0;
   top: 0;
@@ -22,16 +22,16 @@ $POP_CONTAINER_PADDING: 24px;
   width: 100%;
   z-index: $z-index-modal;
 
-  &.#{ $C_PREFIX }-no-header {
-    .#{ $C_PREFIX }-pop > article {
-      & > .#{ $C_PREFIX }-scroller
+  &.#{$C_PREFIX}-no-header {
+    .#{$C_PREFIX}-pop > article {
+      & > .#{$C_PREFIX}-scroller
           > .#{ $SCROLLER_PREFIX }-box {
         padding-top: $gap-v-triple;
       }
     }
   }
 
-  .#{ $C_PREFIX }-bg {
+  .#{$C_PREFIX}-bg {
     background: rgba(0, 0, 0, .12);
     height: 100%;
     width: 100%;
@@ -40,7 +40,7 @@ $POP_CONTAINER_PADDING: 24px;
     top: 0;
   }
 
-  .#{ $C_PREFIX }-pop {
+  .#{$C_PREFIX}-pop {
     position: absolute;
     background: #fff;
     border-radius: $border-radius;
@@ -54,7 +54,7 @@ $POP_CONTAINER_PADDING: 24px;
       box-sizing: border-box;
       width: 100%;
 
-      .#{ $C_PREFIX }-header-title {
+      .#{$C_PREFIX}-header-title {
         font-size: $h3;
         line-height: 1;
         font-weight: bold;
@@ -66,7 +66,7 @@ $POP_CONTAINER_PADDING: 24px;
       max-width: 100%;
       min-width: 280px;
 
-      & > .#{ $C_PREFIX }-scroller
+      & > .#{$C_PREFIX}-scroller
           > .#{ $SCROLLER_PREFIX }-box {
         padding: 0 24px 24px;
         box-sizing: border-box;
@@ -87,8 +87,8 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{ $C_PREFIX }-has-scroller {
-    .#{ $C_PREFIX }-pop {
+  &.#{$C_PREFIX}-has-scroller {
+    .#{$C_PREFIX}-pop {
       & > header {
         border-bottom: $border-color $border-thin solid;
       }
@@ -104,21 +104,21 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{ $C_PREFIX }-type-alert {
-    .#{ $C_PREFIX }-pop {
+  &.#{$C_PREFIX}-type-alert {
+    .#{$C_PREFIX}-pop {
       & > article {
         min-height: auto;
       }
     }
   }
 
-  &.#{ $C_PREFIX }-type-full {
-    &.#{ $C_PREFIX }-has-scroller
-        .#{ $C_PREFIX }-pop > header {
+  &.#{$C_PREFIX}-type-full {
+    &.#{$C_PREFIX}-has-scroller
+        .#{$C_PREFIX}-pop > header {
       border-color: $primary-color;
     }
 
-    .#{ $C_PREFIX }-pop {
+    .#{$C_PREFIX}-pop {
       width: 530px;
       padding-top: 0;
 
@@ -133,7 +133,7 @@ $POP_CONTAINER_PADDING: 24px;
           min-height: 36px;
         }
 
-        .#{ $C_PREFIX }-header-nav {
+        .#{$C_PREFIX}-header-nav {
           line-height: 1;
         }
       }
@@ -150,7 +150,7 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{ $C_PREFIX }-theme-primary {
+  &.#{$C_PREFIX}-theme-primary {
 
   }
 }

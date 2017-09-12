@@ -4,24 +4,24 @@ $INPUT_HEIGHT: 36px;
 $INPUT_WIDTH: 170px;
 $INPUT_BORDER_WIDTH: 1px;
 
-.#{ $C_PREFIX } {
-  &.#{ $C_PREFIX }-theme-primary,
-  &.#{ $C_PREFIX }-theme-fill {
-    .#{ $C_PREFIX }-wrap {
-      .#{ $C_PREFIX }-edit-box {
+.#{$C_PREFIX} {
+  &.#{$C_PREFIX}-theme-primary,
+  &.#{$C_PREFIX}-theme-fill {
+    .#{$C_PREFIX}-wrap {
+      .#{$C_PREFIX}-edit-box {
         & > input,
         & > textarea {
           padding: 7.5px;
         }
       }
 
-      .#{ $C_PREFIX }-auto-completion {
+      .#{$C_PREFIX}-auto-completion {
         border-bottom-left-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
       }
     }
 
-    .#{ $C_PREFIX }-danger-tip {
+    .#{$C_PREFIX}-danger-tip {
       position: absolute;
       top: $INPUT_HEIGHT + 5;
       width: 100%;
@@ -51,13 +51,13 @@ $INPUT_BORDER_WIDTH: 1px;
     }
   }
 
-  &.#{ $C_PREFIX }-theme-fill {
+  &.#{$C_PREFIX}-theme-fill {
     width: 100%;
   }
 }
 
 @include device-type("<l") {
-  .#{ $C_PREFIX } {
+  .#{$C_PREFIX} {
     width: 100%;
   }
 }

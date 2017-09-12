@@ -10,19 +10,19 @@ $C_PREFIX: #{ $COMP_LOADING };
  * loading 组件样式
  */
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   display: inline-block;
 
-  .#{ $C_PREFIX }-wrap {
+  .#{$C_PREFIX}-wrap {
     width: 100%;
     height: 100%;
 
-    .#{ $C_PREFIX }-rotate {
+    .#{$C_PREFIX}-rotate {
       display: inline-block;
     }
   }
 
-  &.#{ $C_PREFIX }-mark {
+  &.#{$C_PREFIX}-mark {
     position: absolute;
     top: 0;
     left: 0;
@@ -31,12 +31,12 @@ $C_PREFIX: #{ $COMP_LOADING };
     margin: auto;
     z-index: $z-index - 50;
 
-    .#{ $C_PREFIX }-wrap {
+    .#{$C_PREFIX}-wrap {
       position: relative;
       z-index: 2;
     }
 
-    .#{ $C_PREFIX }-bg {
+    .#{$C_PREFIX}-bg {
       @extend %center-position;
 
       background: rgba(256, 256, 256, .6);
@@ -45,9 +45,9 @@ $C_PREFIX: #{ $COMP_LOADING };
     }
   }
 
-  &.#{ $C_PREFIX }-theme-primary {
-    &.#{ $C_PREFIX }-mark {
-      .#{ $C_PREFIX }-spot {
+  &.#{$C_PREFIX}-theme-primary {
+    &.#{$C_PREFIX}-mark {
+      .#{$C_PREFIX}-spot {
         z-index: 2;
         position: absolute;
 
@@ -57,7 +57,7 @@ $C_PREFIX: #{ $COMP_LOADING };
         transform: translate(-50%, -50%)
       }
 
-      .#{ $C_PREFIX }-rotate {
+      .#{$C_PREFIX}-rotate {
         position: absolute;
         z-index: 2;
 
@@ -68,25 +68,25 @@ $C_PREFIX: #{ $COMP_LOADING };
       }
     }
 
-    .#{ $C_PREFIX }-spot{
+    .#{$C_PREFIX}-spot{
       @extend %loading-type-spot;
     }
 
-    .#{ $C_PREFIX }-rotate {
+    .#{$C_PREFIX}-rotate {
       @extend %loading-type-rotate;
     }
   }
 
-  &.#{ $C_PREFIX }-theme-secondary {
-    &.#{ $C_PREFIX }-mark {
-      .#{ $C_PREFIX }-bg {
+  &.#{$C_PREFIX}-theme-secondary {
+    &.#{$C_PREFIX}-mark {
+      .#{$C_PREFIX}-bg {
         @extend %center-position;
 
         background: $grey;
         opacity: .6;
       }
 
-      .#{ $C_PREFIX }-rotate {
+      .#{$C_PREFIX}-rotate {
         position: absolute;
         z-index: 2;
 
@@ -95,14 +95,14 @@ $C_PREFIX: #{ $COMP_LOADING };
       }
     }
 
-    .#{ $C_PREFIX }-rotate {
+    .#{$C_PREFIX}-rotate {
       @extend %loading-type-rotate;
 
       background-color: #fff;
       border-radius: $border-radius;
       padding: $gap-v-half;
 
-      .#{ $C_PREFIX }-icon i {
+      .#{$C_PREFIX}-icon i {
         color: $grey;
       }
     }

@@ -9,7 +9,7 @@
 
 $C_PREFIX: #{ $COMP_BTN };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   @include device-type("xl") {
 
   }

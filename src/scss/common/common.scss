@@ -7,7 +7,7 @@
 
 $C_PREFIX: $comp-prefix;
 
-.#{ $C_PREFIX }-clear-fix {
+.#{$C_PREFIX}-clear-fix {
   &:after {
     display: block;
     clear: both;
@@ -15,46 +15,46 @@ $C_PREFIX: $comp-prefix;
   }
 }
 
-.#{ $C_PREFIX }-float-left {
+.#{$C_PREFIX}-float-left {
   float: left;
 }
 
-.#{ $C_PREFIX }-float-right {
+.#{$C_PREFIX}-float-right {
   float: right;
 }
 
-.#{ $C_PREFIX }-text--left {
+.#{$C_PREFIX}-text--left {
   text-align: left;
 }
 
-.#{ $C_PREFIX }-text-center {
+.#{$C_PREFIX}-text-center {
   text-align: center;
 }
 
-.#{ $C_PREFIX }-text-right {
+.#{$C_PREFIX}-text-right {
   text-align: right;
 }
 
-.#{ $C_PREFIX }-vertical-middle {
+.#{$C_PREFIX}-vertical-middle {
   vertical-align: middle;
 }
 
-.#{ $C_PREFIX }-cursor-pointer {
+.#{$C_PREFIX}-cursor-pointer {
   cursor: pointer;
 }
 
-.#{ $C_PREFIX }-hide {
+.#{$C_PREFIX}-hide {
   display: none !important;
 }
 
-.#{ $C_PREFIX }-invisible {
+.#{$C_PREFIX}-invisible {
   visibility: hidden !important;
 }
 
-.#{ $C_PREFIX }-transition {
+.#{$C_PREFIX}-transition {
   @extend %transition;
 }
 
-.#{ $C_PREFIX }-text-omit {
+.#{$C_PREFIX}-text-omit {
   @extend %text-omit;
 }

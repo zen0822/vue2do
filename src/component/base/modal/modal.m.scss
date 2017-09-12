@@ -8,17 +8,17 @@
 
 $C_PREFIX: #{ $COMP_MODAL };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   @include device-type("<s") {
-    .#{ $C_PREFIX }-bg {
+    .#{$C_PREFIX}-bg {
       background: rgba(0, 0, 0, .5);
     }
-    .#{ $C_PREFIX }-pop {
+    .#{$C_PREFIX}-pop {
       width: 96%;
     }
 
-    &.#{ $C_PREFIX }-type-full {
-      .#{ $C_PREFIX }-pop {
+    &.#{$C_PREFIX}-type-full {
+      .#{$C_PREFIX}-pop {
         width: 100%;
         height: 100%;
         position: relative;

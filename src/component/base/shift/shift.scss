@@ -8,22 +8,22 @@
 
 $C_PREFIX: #{ $COMP_SHIFT };
 
-.#{ $C_PREFIX } {
-  .#{ $C_PREFIX }-before-display {
+.#{$C_PREFIX} {
+  .#{$C_PREFIX}-before-display {
     display: none;
   }
 
-  .#{ $C_PREFIX }-before-move {
+  .#{$C_PREFIX}-before-move {
     display: none;
   }
-  .#{ $C_PREFIX }-after-move {
+  .#{$C_PREFIX}-after-move {
 
   }
 
-  .#{ $C_PREFIX }-before-opacity {
+  .#{$C_PREFIX}-before-opacity {
     display: none;
   }
-  .#{ $C_PREFIX }-after-opacity {
+  .#{$C_PREFIX}-after-opacity {
 
   }
 }

@@ -8,7 +8,7 @@
 
 $C_PREFIX: #{ $COMP_POP };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   @include device-type("<l") {
 
   }

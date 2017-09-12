@@ -9,20 +9,20 @@
 
 $C_PREFIX: #{ $COMP_ROW };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  &.#{ $C_PREFIX }-wrap {
+  &.#{$C_PREFIX}-wrap {
     flex-wrap: wrap;
   }
 
-  &.#{ $C_PREFIX }-nowrap {
+  &.#{$C_PREFIX}-nowrap {
     flex-wrap: nowrap;
   }
 
-  &.#{ $C_PREFIX }-align {
+  &.#{$C_PREFIX}-align {
     &-start {
       align-items: flex-start;
     }
@@ -32,7 +32,7 @@ $C_PREFIX: #{ $COMP_ROW };
     }
   }
 
-  &.#{ $C_PREFIX }-justify {
+  &.#{$C_PREFIX}-justify {
     &-justify {
       justify-content: space-between;
     }

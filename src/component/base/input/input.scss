@@ -14,50 +14,50 @@ $INPUT_WIDTH: 170px;
 $INPUT_BORDER_WIDTH: 1px;
 $input-gap-v: 8px;
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   display: inline-block;
   vertical-align: middle;
   width: $INPUT_WIDTH;
   position: relative;
 
   &:hover {
-    .#{ $C_PREFIX }-wrap {
-      & > .#{ $C_PREFIX }-wrap-border {
+    .#{$C_PREFIX}-wrap {
+      & > .#{$C_PREFIX}-wrap-border {
         border-color: $border-dark-color;
       }
 
       border-color: $border-dark-color;
     }
 
-    &.#{ $C_PREFIX }-type-area {
-      .#{ $C_PREFIX }-wrap {
+    &.#{$C_PREFIX}-type-area {
+      .#{$C_PREFIX}-wrap {
         border: $border-dark-color $border-thin solid;
 
-        & > .#{ $C_PREFIX }-wrap-border {
+        & > .#{$C_PREFIX}-wrap-border {
           border: $border-dark-color $border-thin solid;
         }
       }
     }
   }
 
-  &.#{ $C_PREFIX }-type-area {
-    .#{ $C_PREFIX }-wrap {
+  &.#{$C_PREFIX}-type-area {
+    .#{$C_PREFIX}-wrap {
       border: $border-color $border-thin solid;
       border-radius: $border-radius;
 
-      & > .#{ $C_PREFIX }-wrap-border {
+      & > .#{$C_PREFIX}-wrap-border {
         border-radius: $border-radius;
         border: rgba(#000, 0) $border-thin solid;
       }
     }
   }
 
-  .#{ $C_PREFIX }-limit-txt{
+  .#{$C_PREFIX}-limit-txt{
     padding: $gap-v 0;
     text-align: right;
   }
 
-  .#{ $C_PREFIX }-wrap {
+  .#{$C_PREFIX}-wrap {
     position: relative;
     border-bottom: $border-color $border-thin solid;
     background-color: #fff;
@@ -79,18 +79,18 @@ $input-gap-v: 8px;
       transition: all 300ms ease-out;
     }
 
-    & > .#{ $C_PREFIX }-wrap-border {
+    & > .#{$C_PREFIX}-wrap-border {
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
       border-bottom: rgba(#000, 0) $border-thin solid;
       transition: all 100ms ease-out;
     }
 
-    &.#{ $C_PREFIX }-error-border{
+    &.#{$C_PREFIX}-error-border{
       border: $danger-color $border-thin solid;
     }
 
-    &.#{ $C_PREFIX }-editting {
+    &.#{$C_PREFIX}-editting {
       &::after {
         width: 100%;
         background-color: $primary-color;
@@ -98,18 +98,18 @@ $input-gap-v: 8px;
       }
     }
 
-    .#{ $C_PREFIX }-hide {
+    .#{$C_PREFIX}-hide {
       display: none;
     }
 
-    .#{ $C_PREFIX }-edit-box-start {
-      & > .#{ $C_PREFIX }-icon-stage {
+    .#{$C_PREFIX}-edit-box-start {
+      & > .#{$C_PREFIX}-icon-stage {
         line-height: $INPUT_HEIGHT - $INPUT_BORDER_WIDTH * 2;
         padding-left: $gap-h;
       }
     }
 
-    .#{ $C_PREFIX }-edit-box {
+    .#{$C_PREFIX}-edit-box {
       & > input,
       & > textarea {
         border: none;
@@ -135,7 +135,7 @@ $input-gap-v: 8px;
     }
   }
 
-  .#{ $C_PREFIX }-danger-tip {
+  .#{$C_PREFIX}-danger-tip {
     color: $danger-color;
     margin-top: $gap-v-half;
     font-size: $h5;

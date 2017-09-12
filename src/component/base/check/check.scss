@@ -9,12 +9,12 @@
 $C_PREFIX: #{ $COMP_CHECK };
 $C_ICON_PREFIX: #{ $COMP_ICON };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   display: inline-block;
   vertical-align: middle;
   position: relative;
 
-  .#{ $C_PREFIX }-read-only {
+  .#{$C_PREFIX}-read-only {
     position: absolute;
     top: 0;
     left: 0;
@@ -25,21 +25,21 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
     opacity: 0;
   }
 
-  .#{ $C_PREFIX }-opt-ul {
-    .#{ $C_PREFIX }-opt-li {
+  .#{$C_PREFIX}-opt-ul {
+    .#{$C_PREFIX}-opt-li {
       margin: 0 $gap-h-half;
       display: inline-block;
 
-      .#{ $C_PREFIX }-box {
+      .#{$C_PREFIX}-box {
         display: inline-block;
 
-        & > .#{ $C_PREFIX }-icon {
+        & > .#{$C_PREFIX}-icon {
           position: relative;
           display: inline-block;
           vertical-align: middle;
           line-height: 1;
 
-          & > .#{ $C_PREFIX }-rip {
+          & > .#{$C_PREFIX}-rip {
             position: absolute;
             top: 0;
             left: 0;
@@ -64,7 +64,7 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
           }
         }
 
-        .#{ $C_PREFIX }-lable {
+        .#{$C_PREFIX}-lable {
           display: inline-block;
           vertical-align: middle;
           line-height: 1;
@@ -75,7 +75,7 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
     }
   }
 
-  .#{ $C_PREFIX }-opt-check-all {
+  .#{$C_PREFIX}-opt-check-all {
     margin-bottom: $gap-v;
 
     &>.#{ $C_ICON_PREFIX } {
@@ -87,14 +87,14 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
       }
     }
 
-    .#{ $C_PREFIX }-lable {
+    .#{$C_PREFIX}-lable {
       cursor: default;
     }
   }
 
   &.theme-primary {
-    .#{ $C_PREFIX }-opt-ul {
-      .#{ $C_PREFIX }-opt-li {
+    .#{$C_PREFIX}-opt-ul {
+      .#{$C_PREFIX}-opt-li {
         margin-bottom: $gap-h;
       }
     }

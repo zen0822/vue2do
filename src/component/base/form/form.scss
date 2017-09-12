@@ -8,8 +8,8 @@
 
 $C_PREFIX: #{ $COMP_FORM };
 
-.#{ $C_PREFIX } {
-  &.#{ $C_PREFIX }-theme-primary {
+.#{$C_PREFIX} {
+  &.#{$C_PREFIX}-theme-primary {
     .col-sm-10 {
       .date-time-stage {
         width: 47.2%;

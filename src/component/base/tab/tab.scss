@@ -10,11 +10,11 @@ $C_PREFIX: #{ $COMP_TAB };
 $C_ELE_PREFIX: #{ $COMP_TAB_ELE };
 $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   border-right: $border-color $border-thin solid;
   cursor: pointer;
 
-  & > .#{ $C_PREFIX }-shift
+  & > .#{$C_PREFIX}-shift
   > .#{ $C_SHIFT_PREFIX }-ul {
     &::after {
       @extend %clear-fix;
@@ -23,7 +23,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
     > .#{ $C_SHIFT_PREFIX }-li {
       float: left;
 
-      &.#{ $C_PREFIX }-active {
+      &.#{$C_PREFIX}-active {
         border-bottom: $border-color $border-thin solid;
       }
 
@@ -33,7 +33,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
     }
   }
 
-  &.#{ $C_PREFIX }-theme-primary {
+  &.#{$C_PREFIX}-theme-primary {
     display: inline-block;
     vertical-align: middle;
     border: #d6d6d6 $border-thin solid;
@@ -41,7 +41,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
     box-shadow: 0 1px 1px 0 #d6d6d6;
     overflow: hidden;
 
-    & > .#{ $C_PREFIX }-shift
+    & > .#{$C_PREFIX}-shift
     > .#{ $C_SHIFT_PREFIX }-ul
     > .#{ $C_SHIFT_PREFIX }-li {
       border: none;
@@ -65,7 +65,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
       }
 
 
-      &.#{ $C_PREFIX }-active {
+      &.#{$C_PREFIX}-active {
         .z-tab-ele {
           background-color: #f3f3f3;
           color: $grey-dark;
@@ -74,10 +74,10 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
     }
   }
 
-  &.#{ $C_PREFIX }-theme-secondary {
+  &.#{$C_PREFIX}-theme-secondary {
     border-bottom: $border-thin solid $border-color;
 
-    > .#{ $C_PREFIX }-shift
+    > .#{$C_PREFIX}-shift
     > .#{ $C_SHIFT_PREFIX }-ul
     > .#{ $C_SHIFT_PREFIX }-li {
       min-width: 100px;
@@ -89,7 +89,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
         color: $primary-color;
       }
 
-      &.#{ $C_PREFIX }-active {
+      &.#{$C_PREFIX}-active {
         border-bottom: $primary-color $border-thick solid;
         color: $primary-color;
       }

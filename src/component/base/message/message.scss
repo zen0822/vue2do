@@ -9,11 +9,11 @@
 
 $C_PREFIX: #{ $COMP_MESSAGE };
 
-.#{ $C_PREFIX } {
+.#{$C_PREFIX} {
   position: absolute;
   z-index: $z-index-message;
 
-  & > .#{ $C_PREFIX }-pop {
+  & > .#{$C_PREFIX}-pop {
     max-width: 100px;
     background: #fff;
     overflow: hidden;

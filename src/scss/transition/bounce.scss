@@ -101,14 +101,14 @@ $dirction-hub: "top", "bottom", "left", "right";
     }
   }
 
-  .#{ $C_PREFIX }-bounce-#{ $dirction }-enter-active,
-  .#{ $C_PREFIX }-bounce-#{ $dirction }-leave-active {
+  .#{$C_PREFIX}-bounce-#{ $dirction }-enter-active,
+  .#{$C_PREFIX}-bounce-#{ $dirction }-leave-active {
     animation-duration: 1s !important;
   }
-  .#{ $C_PREFIX }-bounce-#{ $dirction }-enter-active {
+  .#{$C_PREFIX}-bounce-#{ $dirction }-enter-active {
     animation-name: bounce-in-#{ $dirction } !important;
   }
-  .#{ $C_PREFIX }-bounce-#{ $dirction }-leave-active {
+  .#{$C_PREFIX}-bounce-#{ $dirction }-leave-active {
     animation-name: bounce-out-#{ $dirction } !important;
   }
 }

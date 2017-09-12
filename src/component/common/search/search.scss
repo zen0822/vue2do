@@ -13,8 +13,8 @@ $INPUT_HEIGHT: 36px;
 $INPUT_WIDTH: 170px;
 $INPUT_BORDER_WIDTH: 1px;
 
-.#{ $C_PREFIX } {
-  .#{ $C_PREFIX }-match {
+.#{$C_PREFIX} {
+  .#{$C_PREFIX}-match {
     position: absolute;
     top: $INPUT_HEIGHT - 4;
     left: -$INPUT_BORDER_WIDTH;
@@ -27,7 +27,7 @@ $INPUT_BORDER_WIDTH: 1px;
     border-bottom-right-radius: $border-radius;
     overflow: hidden;
 
-    .#{ $C_PREFIX }-list-content {
+    .#{$C_PREFIX}-list-content {
       @extend %text-omit;
       cursor: default;
       width: 100%;

@@ -16,7 +16,7 @@ $MENU_BORDER_WIDTH: 1px;
 $OPTION_UI_PADDING_WIDTH: $gap-v;
 $MULTI_MENU_WIDTH: 170px + 80px;
 
-.#{ $C_PREFIX }-ul {
+.#{$C_PREFIX}-ul {
   display: none;
   position: absolute;
   top: 0;
@@ -24,7 +24,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   width: $MENU_WIDTH;
   background-color: #fff;
 
-  .#{ $C_PREFIX }-li {
+  .#{$C_PREFIX}-li {
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -38,7 +38,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
       padding-bottom: $OPTION_UI_PADDING_WIDTH;
     }
 
-    &:hover > .#{ $C_PREFIX }-ul {
+    &:hover > .#{$C_PREFIX}-ul {
       display: block;
     }
 
@@ -51,25 +51,26 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     }
   }
 
-  &.#{ $C_PREFIX }-theme-primary,
-  &.#{ $C_PREFIX }-theme-fill {
-    .#{ $C_PREFIX }-li {
+  &.#{$C_PREFIX}-theme-primary,
+  &.#{$C_PREFIX}-theme-fill {
+    .#{$C_PREFIX}-li {
       padding: $gap-v $gap-h-double;
 
       &:hover {
         background-color: $bg-color;
       }
 
-      &:hover.#{ $C_PREFIX }-classify-title {
+      &:hover.#{$C_PREFIX}-classify-title {
         background-color: transparent;
       }
 
-      .#{ $C_PREFIX }-li-check {
+      .#{$C_PREFIX}-li-check {
         line-height: 1;
       }
 
-      .#{ $C_PREFIX }-li-text {
+      .#{$C_PREFIX}-li-text {
         @extend %text-omit;
+
         display: inline-block;
         vertical-align: middle;
         width: 100%;
@@ -81,7 +82,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
 }
 
 @include device-type("<l") {
-  .#{ $C_PREFIX }-ul {
+  .#{$C_PREFIX}-ul {
     width: 100%;
   }
 }

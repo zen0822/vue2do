@@ -9,8 +9,8 @@
 $C_PREFIX: #{ $COMP_POP };
 
 @include device-type("<l") {
-  .#{ $C_PREFIX } {
-    & > .#{ $C_PREFIX }-pop {
+  .#{$C_PREFIX} {
+    & > .#{$C_PREFIX}-pop {
       max-width: 100px;
     }
   }

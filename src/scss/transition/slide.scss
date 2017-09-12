@@ -23,14 +23,14 @@ $dirction-hub: "top", "bottom", "left", "right";
     $transform-data: translateX(100%);
   }
 
-  .#{ $C_PREFIX }-slide-#{ $dirction }-enter,
-  .#{ $C_PREFIX }-slide-#{ $dirction }-enter-active,
-  .#{ $C_PREFIX }-slide-#{ $dirction }-leave-active {
+  .#{$C_PREFIX}-slide-#{ $dirction }-enter,
+  .#{$C_PREFIX}-slide-#{ $dirction }-enter-active,
+  .#{$C_PREFIX}-slide-#{ $dirction }-leave-active {
     transition: transform 500ms ease-out !important;
   }
 
-  .#{ $C_PREFIX }-slide-#{ $dirction }-enter,
-  .#{ $C_PREFIX }-slide-#{ $dirction }-leave-active {
+  .#{$C_PREFIX}-slide-#{ $dirction }-enter,
+  .#{$C_PREFIX}-slide-#{ $dirction }-leave-active {
     transform: $transform-data !important;
   }
 }
