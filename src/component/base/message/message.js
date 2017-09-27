@@ -3,6 +3,7 @@
  *
  * @prop message - 信息
  * @prop direction - 信息出现方向
+ * @prop position - 信息展示的位置
  * @prop type - 信息(pop | bar | header)
  *
  * @slot - 弹窗的主体内容
@@ -63,11 +64,15 @@ const messageComp = {
     },
     direction: {
       type: String,
-      default: 'top'
+      default: 'south'
     },
     message: {
       type: String,
       default: ''
+    },
+    position: {
+      type: String,
+      default: 'center'
     }
   },
 

@@ -29,6 +29,7 @@ import alert from './src/component/base/modal/alert'
 import confirm from './src/component/base/modal/confirm'
 import message from './src/component/base/message/message'
 import tip from './src/component/base/message/tip'
+import toast from './src/component/base/message/toast'
 
 import scroller from './src/component/base/scroller/scroller'
 import list from './src/component/common/list/list'
@@ -62,6 +63,7 @@ export {
   message,
   pop,
   tip,
+  toast,
 
   btn,
   check,

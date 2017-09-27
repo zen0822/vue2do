@@ -122,6 +122,9 @@ const modalComp = {
       }
 
       switch (this.type) {
+        case 'alert':
+        case 'confirm':
+          return true
         case 'full':
           return this.isBiggerFull
         case 'simple':

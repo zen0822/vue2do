@@ -1,5 +1,5 @@
 /**
- * tip 组件
+ * toast 底部提示组件
  */
 
 import Vue from 'vue'
@@ -10,20 +10,20 @@ import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
 import baseMixin from '../../../mixin/base'
 
-let tiping = false
-let tipHub = []
+let toasting = false
+let toastHub = []
 
 /**
- * 创建 tip 组件的实例
+ * 创建 toast 组件的实例
  **/
-const createTip = () => {
-  const tipCompVm = new Vue({
-    name: 'tip',
+const createToast = () => {
+  const toastCompVm = new Vue({
+    name: 'toast',
     mixins: [baseMixin],
     computed: {
       // 组件类名的前缀
       cPrefix() {
-        return `${this.compPrefix}-tip`
+        return `${this.compPrefix}-toast`
       }
     },
     components: {
@@ -35,16 +35,19 @@ const createTip = () => {
         class: [this.cPrefix]
       }, [
         h('message', {
-          ref: 'tip'
+          props: {
+            position: 'bottom'
+          },
+          ref: 'toast'
         })
       ])
     },
     mounted() {
-      this.$store.dispatch(commonStore.tip.add, this)
+      this.$store.dispatch(commonStore.toast.add, this)
     }
   }).$mount()
 
-  document.body.appendChild(tipCompVm.$el)
+  document.body.appendChild(toastCompVm.$el)
 }
 
 const commonVuex = new Vue({
@@ -52,11 +55,11 @@ const commonVuex = new Vue({
 })
 
 /**
- * 调用 tip
+ * 调用 toast
  **/
-const tip = (opt) => {
-  if (tiping) {
-    tipHub.push(opt)
+const toast = (opt) => {
+  if (toasting) {
+    toastHub.push(opt)
 
     return false
   }
@@ -77,28 +80,28 @@ const tip = (opt) => {
 
   return commonVuex
     .$store
-    .getters[commonStore.tip.get]
+    .getters[commonStore.toast.get]
     .$refs
-    .tip
+    .toast
     .set({
       message: option.message,
       type: option.type,
       hideCb: () => {
-        tiping = false
+        toasting = false
         option.cb && option.cb()
 
-        if (tipHub.length > 0) {
-          return tip(tipHub.shift())
+        if (toastHub.length > 0) {
+          return toast(toastHub.shift())
         }
       }
     })
     .show({
       cb: () => {
-        tiping = true
+        toasting = true
       }
     })
 }
 
-createTip()
+createToast()
 
-export default tip
+export default toast

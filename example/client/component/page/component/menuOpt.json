@@ -25,7 +25,7 @@
     ]
   },
   {
-    "name": "消息和提示",
+    "name": "消息提示",
     "sub": [
       {
         "name": "弹窗",
@@ -50,6 +50,10 @@
           {
             "name": "弹窗提示",
             "route": "/component/tip#alert"
+          },
+          {
+            "name": "底部提示",
+            "route": "/component/tip#toast"
           }
         ]
       }

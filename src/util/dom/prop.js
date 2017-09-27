@@ -88,19 +88,12 @@ const childrenHeight = (el) => {
 }
 
 /**
- * 相对于当前客户端可是界面的相关特性
+ * 相对于当前客户端可视觉界面的相关特性
  *
  * @param {*} el - dom 节点
  */
 const client = (el) => {
-  let children = el.children
-  let totalHeight = 0
-
-  for (let i = 0, len = children.length; i < len; i++) {
-    totalHeight += children[i].offsetHeight
-  }
-
-  return totalHeight
+  // TODO
 }
 
 /**

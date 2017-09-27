@@ -42,6 +42,10 @@ const createConfirm = () => {
   document.body.appendChild(confirmCompVm.$el)
 }
 
+const commonVuex = new Vue({
+  store
+})
+
 /**
  * 调用 confirm
  **/
@@ -65,10 +69,6 @@ const confirm = (opt) => {
 
     return false
   }
-
-  const commonVuex = new Vue({
-    store
-  })
 
   return commonVuex
     .$store

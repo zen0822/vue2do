@@ -20,6 +20,12 @@ import render from './pop.render'
 import baseMixin from '../../../mixin/base'
 
 import slideTransition from '../../transition/slide'
+import {
+  hasScroller
+} from '../../../util/dom'
+
+
+const scrollBarWidth = 20
 
 const popComp = {
   name: 'pop',
@@ -152,7 +158,9 @@ const popComp = {
         switch (this.position) {
           case 'bottom':
             popStyle = {
-              top: parentHeight - height,
+              top: hasScroller(undefined, 'horizontal') ?
+                parentHeight - height - scrollBarWidth :
+                parentHeight - height,
               left: (parentWidth - width) / 2
             }
 

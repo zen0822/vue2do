@@ -15,20 +15,4 @@ $C_PREFIX: #{ $COMP_POP };
   &.#{$C_PREFIX}-part {
     position: absolute;
   }
-
-  &.#{$C_PREFIX}-position-top {
-    top: 0;
-  }
-
-  &.#{$C_PREFIX}-position-bottom {
-    bottom: 0;
-  }
-
-  &.#{$C_PREFIX}-position-left {
-    left: 0;
-  }
-
-  &.#{$C_PREFIX}-position-right {
-    right: 0;
-  }
 }

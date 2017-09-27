@@ -14,5 +14,10 @@
     "get": "common/tip/get"
   },
 
+  "toast": {
+    "add": "common/toast/add",
+    "get": "common/toast/get"
+  },
+
   "deviceSize": "common/deviceSize"
 }

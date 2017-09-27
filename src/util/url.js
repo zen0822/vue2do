@@ -1,5 +1,7 @@
 /**
  * 解析 url 搜索参数
+ *
+ * @param {string} urlSearch - url 中的 search 值
  */
 const search = (urlSearch) => {
   if (!urlSearch) {

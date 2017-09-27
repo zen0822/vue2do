@@ -45,6 +45,10 @@ const createAlert = () => {
   document.body.appendChild(alertCompVm.$el)
 }
 
+const commonVuex = new Vue({
+  store
+})
+
 /**
  * 调用 alert
  **/
@@ -68,10 +72,6 @@ const alert = (opt) => {
 
     return false
   }
-
-  const commonVuex = new Vue({
-    store
-  })
 
   return commonVuex
     .$store
@@ -100,4 +100,3 @@ const alert = (opt) => {
 createAlert()
 
 export default alert
-

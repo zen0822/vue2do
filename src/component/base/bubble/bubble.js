@@ -2,7 +2,7 @@
  * bubble 组件
  *
  * 注意要用自定义的 bubble 的时候，bubble的所有祖父元素都不能为相对定位
- * 如果bubble有祖父元素有相对定位的，请启用 props 的
+ * 如果bubble有祖父元素有相对定位的，请启用 props 的 relative
  *
  * @prop theme - 主题
  * @prop width - bubble最大宽度

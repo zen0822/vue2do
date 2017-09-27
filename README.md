@@ -41,3 +41,4 @@ Vue.component('yourPrefix' + input.compName, input)
 
 获取更多信息请访问 vue2do 的 [文档网站](https://zen0822.github.io)。
 
+本项目遵循 [semver](http://semver.org/lang/zh-CN/) 版本管理

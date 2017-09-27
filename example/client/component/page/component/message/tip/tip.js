@@ -2,6 +2,7 @@ import './tip.scss'
 import template from './tip.pug'
 import mixin from '../../mixin'
 import tip from 'src/component/base/message/tip'
+import toast from 'src/component/base/message/toast'
 
 export default {
   name: 'page-comp-tip',
@@ -13,15 +14,17 @@ export default {
   data() {
     return {
       testName: 'test',
-      bubbleTip: {
-
-      }
+      bubbleTip: {}
     }
   },
 
   methods: {
     tip() {
       tip('验证码校验啊速度放缓i吧 435345')
+    },
+
+    toast() {
+      toast('底部弹出提示信息！')
     },
 
     async bubble(event) {
