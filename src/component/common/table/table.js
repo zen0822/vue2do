@@ -134,7 +134,7 @@ const tableComp = {
   },
 
   methods: {
-    _init() {
+    _initComp() {
       this.tableWidth = this.$el.offsetWidth
     },
 

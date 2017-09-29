@@ -18,6 +18,8 @@ import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
 
 export default {
+  name: 'fold-transition',
+
   mixins: [baseMixin, transitionMixin],
 
   props: {
@@ -47,7 +49,7 @@ export default {
       this.transitionHeight = this.height
     },
 
-    _init() {
+    _initComp() {
       if (this.height === undefined) {
         this.transitionHeight = elementProp(this.$el).offsetHeight
       }

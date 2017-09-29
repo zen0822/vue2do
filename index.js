@@ -51,6 +51,12 @@ import tabEle from './src/component/base/tab/tab-ele'
 import col from './src/component/common/layout/col/col'
 import row from './src/component/common/layout/row/row'
 
+import fadeTransition from './src/component/transition/fade'
+import foldTransition from './src/component/transition/fold'
+import slideTransition from './src/component/transition/slide'
+import ripTransition from './src/component/transition/rip'
+import zoomTransition from './src/component/transition/zoom'
+
 setConfig.lang(cnLang)
 
 export default pluginInstall
@@ -94,6 +100,12 @@ export {
 
   col,
   row,
+
+  fadeTransition,
+  foldTransition,
+  ripTransition,
+  slideTransition,
+  zoomTransition,
 
   setConfig as set
 }

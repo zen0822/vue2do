@@ -15,7 +15,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
   top: 0;
   z-index: $z-index;
   background: #fff;
-  border: $grey-light $border-thin solid;
+  box-shadow: $shadow;
   border-radius: $border-radius;
   padding: $gap-v;
 
@@ -55,8 +55,8 @@ $ICON_PREFIX: #{ $COMP_ICON };
     }
 
     .#{$C_PREFIX}-border {
-      top: -1.5px;
-      color: $grey-dark;
+      top: -1px;
+      color: $border-color;
     }
 
     .#{$C_PREFIX}-body {

@@ -3,12 +3,15 @@
  */
 
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 
 import messageComp from './message'
 
 import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
 import baseMixin from '../../../mixin/base'
+
+Vue.use(VueRouter)
 
 let tiping = false
 let tipHub = []

@@ -3,7 +3,7 @@
  */
 
 export default function (h) {
-  return h('bubble-transition',
+  return h('zoom-transition',
     {
       props: { speed: 'fast' },
       ref: 'transition'

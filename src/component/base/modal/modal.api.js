@@ -83,10 +83,7 @@ export default {
       let top = parseFloat(styleHub.top, 10)
       let left = parseFloat(styleHub.left, 10)
 
-      this.$refs.pop.position({
-        top: top + event.clientY - this.pointStart.y,
-        left: left + event.clientX - this.pointStart.x
-      })
+      this.$refs.pop.computePosition()
 
       this.pointStart = {
         x: event.clientX,

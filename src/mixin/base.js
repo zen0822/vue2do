@@ -11,8 +11,12 @@ import compConfig from '../config/index.json'
 import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
 
-import { prop as eleProp } from '../util/dom/prop'
-import { addClass } from '../util/dom/attr'
+import {
+  prop as eleProp
+} from '../util/dom/prop'
+import {
+  addClass
+} from '../util/dom/attr'
 
 export default {
   store,
@@ -34,7 +38,7 @@ export default {
   },
 
   directives: {
-    'xclass'(el, binding) {
+    'xclass' (el, binding) {
       addClass(el, binding.value)
     }
   },
@@ -75,7 +79,7 @@ export default {
     /**
      * 安装完组件后初始化实例
      */
-    _init() {
+    _initComp() {
       // TODO
     },
 
@@ -202,11 +206,12 @@ export default {
   },
 
   mounted() {
-    this.$nextTick(() => {
-      this._binder()
+    this._binder()
+    this._initComp()
 
-      let deviceSizeClass = `${compConfig.prefix}-device-size`
+    let deviceSizeClass = `${compConfig.prefix}-device-size`
 
+    if (document.getElementsByClassName(deviceSizeClass).length === 0) {
       if (!document.querySelector('.' + deviceSizeClass)) {
         let deviceSizeEle = document.createElement('div')
         deviceSizeEle.className = `${compConfig.prefix}-device-size`
@@ -225,8 +230,6 @@ export default {
           })
         })
       }
-
-      this._init()
-    })
+    }
   }
 }

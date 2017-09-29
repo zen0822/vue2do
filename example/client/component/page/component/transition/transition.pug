@@ -1,0 +1,21 @@
+include ../mixin.pug
+
+div.component-pop
+  article.example-article
+    +section('zoom', '缩放')
+      z-btn(@click='zoomIn') 缩放过渡（进来）
+      z-btn(@click='zoomOut' class='z-m-l') 缩放过渡（离开）
+      z-slide-transition(
+          ref='slide'
+          :offset='100'
+          style={
+            display: 'none',
+            position: 'absolute'
+          }
+      )
+        span 过渡效果
+      z-code.
+        html:
+        #{'<z-btn @click="tip">'}
+          提示
+        #{'</z-btn>'}

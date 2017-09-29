@@ -12,7 +12,7 @@ for (let i = 0, len = 33; i < len; i++) {
 
 export default {
   methods: {
-    _init() {
+    _initComp() {
 
     },
 
@@ -33,6 +33,6 @@ export default {
   },
 
   mounted() {
-    this._init()
+    this._initComp()
   }
 }

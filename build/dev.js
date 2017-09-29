@@ -8,7 +8,7 @@ module.exports = function ({ appName }) {
   const webpack = require('webpack')
   const config = require('./config')
   const proxyMiddleware = require('http-proxy-middleware')
-  const WebpackDevServer = require("webpack-dev-server")
+  const WebpackDevServer = require('webpack-dev-server')
 
   const webpackConfig = process.env.NODE_ENV === 'testing'
     ? require('./config/prod.webpack.conf')({
@@ -29,7 +29,7 @@ module.exports = function ({ appName }) {
 
     proxy: config.dev.proxyTable,
 
-    clientLogLevel: "info",
+    clientLogLevel: 'info',
 
     watchOptions: {
       aggregateTimeout: 300,
@@ -39,7 +39,7 @@ module.exports = function ({ appName }) {
     publicPath: webpackConfig.output.publicPath,
 
     headers: {
-      "X-Custom-Header": "yes"
+      'X-Custom-Header': 'yes'
     },
 
     stats: {
@@ -49,13 +49,13 @@ module.exports = function ({ appName }) {
     inline: true,
 
     disableHostCheck: true
-  });
+  })
 
   server.listen(port, function (err) {
     if (err) {
       console.log(err)
 
-      return false;
+      return false
     }
     console.log(`Listening at http://localhost:${port}\n`)
   })

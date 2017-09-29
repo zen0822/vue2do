@@ -1,5 +1,5 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path');
+var path = require('path')
 
 module.exports = {
   global: {
@@ -13,12 +13,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
     productionSourceMap: true,
-    productionGzip: false,
+    productionGzip: true,
     productionGzipExtensions: ['js', 'css']
   },
   dev: {
     env: require('./dev.env'),
-    port: 8889,
+    port: 5168,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {

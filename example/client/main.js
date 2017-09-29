@@ -29,6 +29,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-const app = new Vue(Object.assign(appComp, {
+const app = new Vue({
+  ...appComp,
   router
-})).$mount('#app')
+}).$mount('#app')

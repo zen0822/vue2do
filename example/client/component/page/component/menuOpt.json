@@ -110,5 +110,30 @@
         "route": "/component/pop"
       }
     ]
+  },
+  {
+    "name": "过渡动画",
+    "sub": [
+      {
+        "name": "放大缩小",
+        "route": "/component/transition#zoom"
+      },
+      {
+        "name": "淡入淡出",
+        "route": "/component/transition#bubble"
+      },
+      {
+        "name": "折叠展开",
+        "route": "/component/transition#fold"
+      },
+      {
+        "name": "滑来滑去",
+        "route": "/component/transition#slide"
+      },
+      {
+        "name": "涟漪效果",
+        "route": "/component/transition#rip"
+      }
+    ]
   }
 ]

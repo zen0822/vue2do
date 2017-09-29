@@ -13,6 +13,7 @@ import listPage from '../component/page/component/data/list/list'
 import pagerPage from '../component/page/component/data/page/page'
 import gridPage from '../component/page/component/layout/grid/grid'
 import scrollerPage from '../component/page/component/other/scroller/scroller'
+import transitionPage from '../component/page/component/transition/transition'
 
 export default [{
   path: '',
@@ -109,5 +110,11 @@ export default [{
   component: tabPage,
   meta: {
     title: '选项卡组件'
+  }
+}, {
+  path: 'transition',
+  component: transitionPage,
+  meta: {
+    title: '过渡效果组件'
   }
 }]

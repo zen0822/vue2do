@@ -235,7 +235,7 @@ const scrollerComp = {
   },
 
   methods: {
-    _init() {
+    _initComp() {
       this.$box = this.$refs.box
       this._initScroller()
 

@@ -14,9 +14,9 @@ module.exports = function (opt) {
   const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
   var baseWebpackConfig = require('./base.webpack.conf')(opt)
 
-  var env = process.env.NODE_ENV === 'testing'
-    ? require('../config/test.env')
-    : config.build.env
+  var env = process.env.NODE_ENV === 'testing' ?
+    require('../config/test.env') :
+    config.build.env
   const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
 
   var webpackConfig = merge(baseWebpackConfig, {
@@ -37,9 +37,9 @@ module.exports = function (opt) {
       }),
 
       new HtmlWebpackPlugin({
-        filename: process.env.NODE_ENV === 'testing'
-          ? 'index.html'
-          : config.build.index,
+        filename: process.env.NODE_ENV === 'testing' ?
+          'index.html' :
+          config.build.index,
         template,
         inject: true,
         minify: {
@@ -77,11 +77,7 @@ module.exports = function (opt) {
       new CompressionWebpackPlugin({
         asset: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(
-          '\\.(' +
-          config.build.productionGzipExtensions.join('|') +
-          ')$'
-        ),
+        test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
         threshold: 10240,
         minRatio: 0.8
       })

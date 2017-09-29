@@ -8,6 +8,8 @@
 import baseMixin from '../../mixin/transition'
 
 export default {
+  name: 'fade-transition',
+
   mixins: [baseMixin],
 
   props: {

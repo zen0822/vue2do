@@ -43,17 +43,21 @@ export default {
      *
      * @param {Object} opt
      */
-    async enter(opt = {}) {
-      this.transiting = this.isEntering = true
+    enter(opt = {}) {
+      return new Promise(async(resolve, reject) => {
+        try {
+          this.transiting = this.isEntering = true
 
-      await this.beforeEnter(opt)
-      await this.entering(opt)
-      await this.afterEnter(opt)
+          await this.beforeEnter(opt)
+          await this.entering(opt)
+          await this.afterEnter(opt)
 
-      this.transiting = this.isEntering = false
+          this.transiting = this.isEntering = false
 
-      return new Promise((resolve, reject) => {
-        return resolve()
+          resolve()
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
@@ -62,17 +66,21 @@ export default {
      *
      * @param {Object} opt
      */
-    async leave(opt = {}) {
-      this.transiting = this.isEntering = true
+    leave(opt = {}) {
+      return new Promise(async(resolve, reject) => {
+        try {
+          this.transiting = this.isEntering = true
 
-      await this.beforeLeave(opt)
-      await this.leaveing(opt)
-      await this.afterLeave(opt)
+          await this.beforeLeave(opt)
+          await this.leaveing(opt)
+          await this.afterLeave(opt)
 
-      this.transiting = this.isEntering = false
+          this.transiting = this.isEntering = false
 
-      return new Promise((resolve, reject) => {
-        return resolve()
+          resolve()
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 

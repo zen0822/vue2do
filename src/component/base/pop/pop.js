@@ -134,7 +134,7 @@ const popComp = {
       }
     },
 
-    _init() {
+    _initComp() {
       if (!this.part) {
         window.addEventListener('resize', (event) => {
           this.computePosition()

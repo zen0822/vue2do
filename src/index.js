@@ -42,6 +42,12 @@ import tabEle from './component/base/tab/tab-ele'
 import col from './component/common/layout/col/col'
 import row from './component/common/layout/row/row'
 
+import fadeTransition from './component/transition/fade'
+import foldTransition from './component/transition/fold'
+import slideTransition from './component/transition/slide'
+import ripTransition from './component/transition/rip'
+import zoomTransition from './component/transition/zoom'
+
 const compHub = [
   btn,
   bubble,
@@ -72,7 +78,13 @@ const compHub = [
   row,
   table,
   tableRow,
-  tableCol
+  tableCol,
+
+  fadeTransition,
+  foldTransition,
+  ripTransition,
+  slideTransition,
+  zoomTransition
 ]
 
 const component = {

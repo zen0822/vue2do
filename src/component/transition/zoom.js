@@ -1,5 +1,5 @@
 /**
- * bubble transition component - 吹泡泡效果
+ * zoom transition component - 放大缩小效果
  *
  * @prop speed - 淡出速度
  */
@@ -7,6 +7,8 @@
 import baseMixin from '../../mixin/transition'
 
 export default {
+  name: 'zoom-transition',
+
   mixins: [baseMixin],
 
   computed: {

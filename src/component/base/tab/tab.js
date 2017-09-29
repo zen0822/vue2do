@@ -75,7 +75,7 @@ export default {
       this.urlSearchOpt = urlSearch(urlHash.slice(urlHash.indexOf('?')))
     },
 
-    _init() {
+    _initComp() {
       let hasOption = this._initOptionSlot({
         slotRef: this.$refs.optionSlot,
         compClass: `${this.compPrefix}-tab-ele`

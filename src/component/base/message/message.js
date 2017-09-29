@@ -96,7 +96,7 @@ const messageComp = {
   },
 
   methods: {
-    _init() {
+    _initComp() {
       this._initmessage()
     },
 

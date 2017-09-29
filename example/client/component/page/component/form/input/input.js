@@ -16,10 +16,6 @@ export default {
   },
 
   methods: {
-    _init() {
-
-    },
-
     clickVerifyInput() {
       let verified = this.$refs.verifyInput.validate()
     }

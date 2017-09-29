@@ -133,7 +133,7 @@ const uploadComp = {
   },
 
   methods: {
-    _init() {
+    _initComp() {
       this._initRegex()
     },
 
@@ -307,7 +307,7 @@ const uploadComp = {
   },
 
   ready() {
-    this._init()
+    this._initComp()
   }
 }
 

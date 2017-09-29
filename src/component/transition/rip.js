@@ -12,6 +12,8 @@ import transitionMixin from '../../mixin/transition'
 import './scss/rip.scss'
 
 export default {
+  name: 'rip-transition',
+
   mixins: [baseMixin, transitionMixin],
 
   props: {

@@ -20,7 +20,7 @@ import './bubble.scss'
 import iconComp from '../icon/icon'
 import render from './bubble.render'
 import baseMixin from '../../../mixin/base'
-import bubbleTransition from '../../transition/bubble'
+import zoomTransition from '../../transition/zoom'
 
 import { offset as childrenHeight } from '../../../util/dom/prop'
 
@@ -35,7 +35,7 @@ const bubbleComp = {
 
   components: {
     icon: iconComp,
-    'bubble-transition': bubbleTransition
+    'zoom-transition': zoomTransition
   },
 
   props: {
@@ -89,7 +89,7 @@ const bubbleComp = {
   },
 
   methods: {
-    _init() {
+    _initComp() {
       if (this.hideRightNow) {
         this.displayInterval = 0
       }

@@ -71,7 +71,7 @@ const searchComp = {
       this.matchOpt = this.option.slice()
     },
 
-    _init() {
+    _initComp() {
       this.search(this.keyword)
     },
 

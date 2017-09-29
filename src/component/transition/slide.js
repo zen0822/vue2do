@@ -13,6 +13,8 @@
 import baseMixin from '../../mixin/transition'
 
 export default {
+  name: 'slide-transition',
+
   mixins: [baseMixin],
 
   props: {

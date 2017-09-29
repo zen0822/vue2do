@@ -40,7 +40,6 @@ import rowComp from '../../common/layout/row/row'
 import colComp from '../../common/layout/col/col'
 
 import fadeTransition from '../../transition/fade'
-import noTransition from '../../transition/no'
 
 import {
   handleEleDisplay
@@ -66,8 +65,7 @@ const modalComp = {
     scroller: scrollerComp,
     row: rowComp,
     column: colComp,
-    'fade-transition': fadeTransition,
-    'no-transition': noTransition
+    'fade-transition': fadeTransition
   },
 
   computed: {
@@ -220,7 +218,7 @@ const modalComp = {
   },
 
   methods: {
-    _init() {
+    _initComp() {
       this._initModal()
     },
 
