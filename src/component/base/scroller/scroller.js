@@ -435,7 +435,7 @@ const scrollerComp = {
 
       // 调整内容区域和滚动条的位置
       this[boxPositionName] = this[boxPositionName] < -boxAndScrollerOffset ? -boxAndScrollerOffset : this[boxPositionName]
-      this[barName][barPositionName] = this.scrollerContainBox ? 0 : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
+      this[barName][barPositionName] = this[barName].scrollerContainBox ? 0 : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
 
       let boxPosition = this[boxPositionName] + boxDistance
       let barPosition = this[barName][barPositionName] + barDistance

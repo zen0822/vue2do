@@ -7,7 +7,7 @@
  * @prop speed - 弹出速度
  * @prop type - 弹出类型
  *
- * @slot - 弹窗的主体内容
+ * @slot - 弹出层的主体内容
  *
  * @event show - 显示之后的钩子函数
  * @event hide - 隐藏之后的钩子函数
