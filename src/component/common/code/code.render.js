@@ -13,70 +13,52 @@ export default function (h) {
     lineNumEle.push(h('li', i))
   }
 
-  return h('div',
-    {
-      class: [this.cPrefix, this.xclass(this.themeClass)]
-    },
-    [
-      h('scroller',
-        {
-          props: {
-            height: 200
-          }
-        },
-        [
-          h('div',
-            {
-              class: [this.xclass('stage')]
-            },
-            [
-              h('header', {
-                class: [
-                  this.xclass('header')
-                ]
-              }, $slots.header || this.header),
-              h('article',
-                {
-                  class: [
-                    this.xclass('article')
-                  ]
-                },
-                [
-                  h('scroller',
-                    {
-                      props: {
-                        height: 'auto'
-                      }
-                    },
-                    [
-                      h('pre', {
-                        class: [this.xclass('pre')]
-                      }, $slots.default || this.code)
-                    ]
-                  )
-                ]
-              ),
-              h('footer', {
-                class: [
-                  this.xclass('footer')
-                ]
-              }, $slots.footer || this.footer),
-              h('aside',
-                {
-                  class: [
-                    this.xclass('line-num')
-                  ]
-                },
-                [
-                  h('ul', {
-                    class: [this.prefix('ul')]
-                  }, lineNumEle)
-                ]
-              )
-            ]
-          )
-        ]
-      )
-    ]
-  )
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass)]
+  }, [
+    h('scroller', {
+      props: {
+        height: 200
+      }
+    }, [
+      h('div', {
+        class: [this.xclass('stage')]
+      }, [
+        h('header', {
+          class: [
+            this.xclass('header')
+          ]
+        }, this.type),
+        h('article', {
+          class: [
+            this.xclass('article')
+          ]
+        }, [
+          h('scroller', {
+            props: {
+              height: 'auto'
+            }
+          }, [
+            h('pre', {
+              class: [this.xclass('pre')]
+            }, $slots.default || this.code),
+            h('aside', {
+              class: [
+                this.xclass('line-num')
+              ]
+            }, [
+              h('ul', {
+                class: [this.prefix('ul')]
+              }, lineNumEle)
+            ])
+          ])
+        ]),
+        h('footer', {
+          class: [
+            this.xclass('footer')
+          ]
+        }, $slots.footer || this.footer)
+      ])
+    ])
+  ])
 }

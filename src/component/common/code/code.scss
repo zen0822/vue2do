@@ -17,14 +17,22 @@ $C_PREFIX: #{ $COMP_CODE };
 
   .#{$C_PREFIX}-stage {
     position: relative;
-    padding: $gap-v $gap-v $gap-v 50px;
+    padding: $gap-v $gap-h-double;
+  }
+
+  .#{$C_PREFIX}-header {
+    color: $border-color;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: $gutter-v-half;
   }
 
   .#{$C_PREFIX}-article {
     .#{$C_PREFIX}-pre {
       font-family: 'Roboto Mono', Monaco, courier, monospace;
       font-size: 1em;
-      margin: 0;
+      line-height: 16px;
+      margin: 0 0 0 50px;
       -webkit-font-smoothing: initial;
       -moz-osx-font-smoothing: initial;
     }
@@ -33,8 +41,8 @@ $C_PREFIX: #{ $COMP_CODE };
   .#{$C_PREFIX}-line-num {
     font-family: 'Roboto Mono', Monaco, courier, monospace;
     position: absolute;
-    top: $gap-v;
-    left: 5px;
+    top: 0;
+    left: 0;
     padding-right: 5px;
     border-right: $border-thin * 2 $primary-color solid;
     text-align: right;

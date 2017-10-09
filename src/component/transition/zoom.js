@@ -23,6 +23,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'position': 'absolute',
         'transform-origin': '50% 0',
         'transition': this.transition,
         'transform': 'scale(0)'
@@ -59,6 +60,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'position': '',
         'transform-origin': '',
         'transition': ''
       })
@@ -72,6 +74,7 @@ export default {
       this.$emit('beforeLeave')
 
       Object.assign(el.style, {
+        'position': 'absolute',
         'transform': '',
         'transform-origin': '50% 0',
         'transition': this.transition
@@ -102,6 +105,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'position': '',
         'transform': '',
         'transform-origin': '',
         'transition': ''
@@ -112,7 +116,12 @@ export default {
   },
 
   render(h) {
-    return h('transition', {
-    }, this.$slots.default)
+    return h('transition', {}, this.$slots.default)
+  },
+
+  mounted() {
+    if (!this.display) {
+      this.$el.style.display = 'none'
+    }
   }
 }

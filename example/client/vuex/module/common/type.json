@@ -1,0 +1,6 @@
+{
+  "window": {
+    "add": "common/window/add",
+    "get": "common/window/get"
+  }
+}

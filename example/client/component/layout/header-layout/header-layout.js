@@ -1,11 +1,11 @@
 import './header-layout.scss'
-import template from './header-layout.tpl'
+import template from './header-layout.pug'
 import compMenuOpt from '../../page/component/menuOpt.json'
 
 export default {
   name: 'header-layout',
 
-  template,
+  template: template(),
 
   data() {
     return {

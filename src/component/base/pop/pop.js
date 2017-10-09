@@ -135,11 +135,7 @@ const popComp = {
     },
 
     _initComp() {
-      if (!this.part) {
-        window.addEventListener('resize', (event) => {
-          this.computePosition()
-        })
-      }
+
     },
 
     /**
@@ -159,8 +155,7 @@ const popComp = {
           case 'bottom':
             popStyle = {
               top: hasScroller(undefined, 'horizontal') ?
-                parentHeight - height - scrollBarWidth :
-                parentHeight - height,
+                parentHeight - height - scrollBarWidth : parentHeight - height,
               left: (parentWidth - width) / 2
             }
 
@@ -241,6 +236,10 @@ const popComp = {
     show({
       cb
     } = {}) {
+      if (!this.part) {
+        this.computePosition()
+      }
+
       this.$refs.transition.$off('afterEnter')
       this.$refs.transition.$on('afterEnter', () => {
         cb && cb()

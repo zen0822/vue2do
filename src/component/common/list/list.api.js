@@ -122,9 +122,9 @@ export default {
             currentPage: this.pageData.current + 1
           })
         }
-      }
 
-      this.scrollerAlmostInBottom = offset - top < 30
+        this.scrollerAlmostInBottom = offset - top < 30
+      }
     },
 
     /**

@@ -4,7 +4,6 @@
   text-align: left;
 
   .example-article {
-
     & > section {
       border-bottom: $border-dark-color $border-thin solid;
       padding-bottom: $gap-v-double;
@@ -21,7 +20,5 @@
         }
       }
     }
-
   }
-
 }

@@ -213,22 +213,21 @@ export default {
 
     if (document.getElementsByClassName(deviceSizeClass).length === 0) {
       if (!document.querySelector('.' + deviceSizeClass)) {
+        // 添加存储设备尺寸的 dom 到页面上
         let deviceSizeEle = document.createElement('div')
         deviceSizeEle.className = `${compConfig.prefix}-device-size`
-
         document.body.appendChild(deviceSizeEle)
 
-        this.$nextTick(() => {
+        const updateDeviceSize = () => {
           let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
           this.$store.dispatch(commonStore.deviceSize, content)
-        })
+        }
 
         window.addEventListener('resize', () => {
-          this.$nextTick(() => {
-            let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
-            this.$store.dispatch(commonStore.deviceSize, content)
-          })
+          updateDeviceSize()
         })
+
+        updateDeviceSize()
       }
     }
   }

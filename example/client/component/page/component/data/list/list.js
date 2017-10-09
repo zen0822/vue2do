@@ -9,19 +9,7 @@ export default {
 
   data() {
     return {
-      testName: 'test',
-      pageData: {
-        current: 1,
-        size: 10,
-        total: 2
-      }
+      testName: 'test'
     }
-  },
-
-  mounted() {
-    this.$refs.list.$on('switchPage', ({ currentPage }) => {
-      this.pageData.total++
-      this.pageData.current++
-    })
   }
 }

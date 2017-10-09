@@ -4,23 +4,25 @@ div.component-pop
   article.example-article
     +section('start', '开始使用')
       z-list(
+          auto
+          class='z-m-t'
+          :page-size='7'
           page-type='more'
           page-trigger='click'
           pager
-          class='z-m-t'
           ref='list'
-          :page='pageData'
           :item='testOpt')
         template(scope='props')
           div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf
       z-code(v-pre).
         #{'<z-list'}
-            page-type="more"
-            page-trigger="click"
             auto
-            pager
             class="z-m-t"
             :page-size="7"
+            page-type="more"
+            page-trigger="click"
+            pager
+            ref="list"
             :item="testOpt"#{'>'}
           #{'<template scope="props">'}
             #{'<div>'}

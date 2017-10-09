@@ -1,0 +1,36 @@
+div.header-layout-stage
+  z-row.nav-box
+    z-col(:span="7")
+      router-link(to="/")
+        img.logo-box(:src="logoUrl")
+    z-col(:span="5")
+      z-row.nav-menu-box
+        z-col(:span="3")
+          router-link(to="/component/start") 组件
+        z-col(:span="3")
+          router-link(to="/build") 构建
+        z-col(:span="3")
+          router-link(to="/about") 关于
+        z-col(:span="3")
+          a(href="//github.com/zen0822/vue2do")
+            z-icon(size="L", kind="github")
+
+  z-row.nav-box.nav-box-mobile
+    z-col(:span="4")
+      div(@click.stop="showMenu")
+        z-icon(kind="sort", v-show="sortIconDisplay")
+    z-col.z-text-center(:span="4")
+      img.logo-box(:src="logoUrl")
+    z-col.z-text-right(:span="4")
+      div(@click.stop="showMenu")
+        z-icon(kind="search")
+
+  z-nav(
+      class="mobile-menu"
+      ref="mobileMenu"
+      @hide="hideMenu"
+      :init-opt="menuOpt"
+  )
+    div.menu-search(slot="end")
+      z-input(placeholder="search in vue2do")
+        z-icon(slot="head" kind="search")

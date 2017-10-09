@@ -1,5 +1,5 @@
 import './component.scss'
-import template from './component.tpl'
+import template from './component.pug'
 import menuOpt from './menuOpt.json'
 import mixin from './mixin'
 import { alert, confirm, tip } from 'vue2do/index.js'
@@ -7,7 +7,7 @@ import { alert, confirm, tip } from 'vue2do/index.js'
 export default {
   name: 'page-component-layout',
 
-  template,
+  template: template(),
 
   data() {
     return {

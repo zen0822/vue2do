@@ -8,6 +8,7 @@
  *
  */
 
+import '../../../asset/icon/iconfont.svg.js' // iconfont 的 svg 图标文件
 import './icon.scss'
 
 import Vue from 'vue'

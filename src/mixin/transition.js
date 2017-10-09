@@ -1,6 +1,7 @@
 /**
  * transition 组件的 mixin
  *
+ * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
  *
  * @event beforeEnter - 进来过渡之前
@@ -13,6 +14,10 @@
 
 export default {
   props: {
+    display: {
+      type: Boolean,
+      default: false
+    },
     speed: {
       type: [Number, String],
       default: 'normal'

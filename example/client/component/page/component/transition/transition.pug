@@ -1,21 +1,65 @@
 include ../mixin.pug
 
-div.component-pop
+div.component-transition
   article.example-article
     +section('zoom', '缩放')
       z-btn(@click='zoomIn') 缩放过渡（进来）
       z-btn(@click='zoomOut' class='z-m-l') 缩放过渡（离开）
-      z-slide-transition(
-          ref='slide'
-          :offset='100'
-          style={
-            display: 'none',
-            position: 'absolute'
-          }
-      )
-        span 过渡效果
-      z-code.
-        html:
-        #{'<z-btn @click="tip">'}
-          提示
+      div.transitioner
+        z-zoom-transition(
+            ref='zoom'
+        )
+          div 我被缩放了！
+      z-code(type='html').
+        #{'<z-btn @click="zoomIn">'}
+          缩放过渡（进来）
         #{'</z-btn>'}
+
+        #{'<z-btn @click="zoomOut">'}
+          缩放过渡（离开）
+        #{'</z-btn>'}
+
+        #{'<z-zoom-transition ref="zoom">'}
+          #{'<div>我被缩放了！</div>'}
+        #{'</z-zoom-transition>'}
+      z-code(type='js').
+        ...
+          methods: {
+            zoomIn() {
+              this.$refs.zoom.enter()
+            },
+            zoomOut() {
+              this.$refs.zoom.leave()
+            }
+          }
+    +section('slide', '滑动')
+      z-btn(@click='slideIn') 滑动过渡（进来）
+      z-btn(@click='slideOut' class='z-m-l') 滑动过渡（离开）
+      div.transitioner
+        z-slide-transition(
+            ref='slide'
+            :offset='100'
+        )
+          div 我被滑动了
+      z-code(type='html').
+        #{'<z-btn @click="slideIn">'}
+          滑动过渡（进来）
+        #{'</z-btn>'}
+
+        #{'<z-btn @click="slideOut">'}
+          滑动过渡（离开）
+        #{'</z-btn>'}
+
+        #{'<z-slide-transition ref="slide">'}
+          #{'<div>我被滑动了！</div>'}
+        #{'</z-slide-transition>'}
+      z-code(type='js').
+        ...
+          methods: {
+            slideIn() {
+              this.$refs.slide.enter()
+            },
+            slideOut() {
+              this.$refs.slide.leave()
+            }
+          }

@@ -2,6 +2,7 @@
  * code 组件
  *
  * @prop code - 代码
+ * @prop type - 语言类型
  *
  */
 
@@ -25,6 +26,10 @@ export default {
     code: {
       type: String,
       default: ''
+    },
+    type: {
+      type: String,
+      default: 'text'
     }
   },
 
@@ -39,8 +44,5 @@ export default {
     cPrefix() {
       return `${this.compPrefix}-code`
     }
-  },
-
-  beforeCreate() {
   }
 }

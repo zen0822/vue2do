@@ -85,6 +85,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'position': 'absolute',
         'transition': this.transition,
         'transform': this._getTranslate()
       })
@@ -120,6 +121,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'position': '',
         'transition': ''
       })
 
@@ -132,6 +134,7 @@ export default {
       this.$emit('beforeLeave')
 
       return Object.assign(el.style, {
+        'position': 'absolute',
         'transition': this.transition,
         'transform': ''
       })
@@ -159,6 +162,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
+        'position': '',
         'transition': '',
         'transform': ''
       })
@@ -173,5 +177,11 @@ export default {
 
   created() {
     this.slideOffset = this.offset
+  },
+
+  mounted() {
+    if (!this.display) {
+      this.$el.style.display = 'none'
+    }
   }
 }

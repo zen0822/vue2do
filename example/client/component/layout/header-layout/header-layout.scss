@@ -30,6 +30,10 @@
     }
 
     .nav-menu-box {
+      .z-icon .z-icon-l {
+        font-size: 40px;
+      }
+
       .router-link-active {
         color: $bg-color;
 

@@ -1,3 +1,5 @@
+import './transition.scss'
+
 import template from './transition.pug'
 import mixin from '../mixin'
 
@@ -16,9 +18,15 @@ export default {
 
   methods: {
     zoomIn() {
-      this.$refs.slide.enter()
+      this.$refs.zoom.enter()
     },
     zoomOut() {
+      this.$refs.zoom.leave()
+    },
+    slideIn() {
+      this.$refs.slide.enter()
+    },
+    slideOut() {
       this.$refs.slide.leave()
     }
   }

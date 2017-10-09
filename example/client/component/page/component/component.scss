@@ -6,6 +6,7 @@
 
   max-width: 1024px;
   margin: 0 auto;
+  padding-bottom: 6 * $gap-v;
 
   .#{$PAGE_PREFIX}-component-stage {
     margin-top: $gap-v-double;
