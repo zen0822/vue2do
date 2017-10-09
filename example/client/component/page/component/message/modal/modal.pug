@@ -42,3 +42,126 @@ div.component-modal
         #{'<z-modal header-name="custom" ref="modal">'}
           #{'<p>custom</p>'}
         #{'</z-modal>'}
+
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col coommit
+          z-table-col boolean
+          z-table-col *false | true
+          z-table-col 当是 full 类型的时候，不用确认直接提交的模态框，默认为否
+        z-table-row(slot='2')
+          z-table-col header
+          z-table-col string
+          z-table-col ——
+          z-table-col 弹窗头部标题
+        z-table-row(slot='3')
+          z-table-col message
+          z-table-col string
+          z-table-col ——
+          z-table-col 模态框信息
+        z-table-row(slot='4')
+          z-table-col okCb
+          z-table-col function | boolean
+          z-table-col ——
+          z-table-col 确定的回调函数，如果为 false 则执行默认的回调函数，否则如果是函数就执行，不是就不执行
+        z-table-row(slot='5')
+          z-table-col noCb
+          z-table-col function | boolean
+          z-table-col ——
+          z-table-col 取消的回调函数，如果为 false 则执行默认的回调函数，否则如果是函数就执行，不是就不执行
+        z-table-row(slot='6')
+          z-table-col okBtn
+          z-table-col string
+          z-table-col 确定
+          z-table-col 确定按钮的名字
+        z-table-row(slot='7')
+          z-table-col noBtn
+          z-table-col string
+          z-table-col 取消
+          z-table-col 取消按钮的名字
+        z-table-row(slot='8')
+          z-table-col noBtnDisplay
+          z-table-col boolean
+          z-table-col *false | true
+          z-table-col 取消按钮是否显示
+        z-table-row(slot='9')
+          z-table-col headerDisplay
+          z-table-col boolean
+          z-table-col *false | true
+          z-table-col 是否显示弹窗头部
+        z-table-row(slot='10')
+          z-table-col footerDisplay
+          z-table-col boolean
+          z-table-col *false | true
+          z-table-col 是否显示弹窗低部
+        z-table-row(slot='11')
+          z-table-col height
+          z-table-col string | number
+          z-table-col ([Number] | 'auto' | '100%')
+          z-table-col 弹窗内容的高度
+        z-table-row(slot='12')
+          z-table-col type
+          z-table-col string
+          z-table-col full | alert | confirm | simple | long
+          z-table-col 弹窗类型
+    +section('events', 'events 组件事件')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col show
+          z-table-col Object
+          z-table-col
+            P 显示之后事件
+            p 以下的为返回值说明
+            ul
+             li emitter - 派送事件的组件上下文
+        z-table-row(slot='2')
+          z-table-col hide
+          z-table-col Object
+          z-table-col
+            p 隐藏之后事件
+            p 以下的为返回值说明
+            ul
+             li emitter - 派送事件的组件上下文
+        z-table-row(slot='3')
+          z-table-col ok
+          z-table-col Object
+          z-table-col
+            p 点击确定按钮事件
+            p 以下的为返回值说明
+            ul
+             li emitter - 派送事件的组件上下文
+        z-table-row(slot='4')
+          z-table-col no
+          z-table-col Object
+          z-table-col
+            p 点击取消按钮事件
+            p 以下的为返回值说明
+            ul
+             li emitter - 派送事件的组件上下文
+    +section('slots', 'slots 内容分发')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col —— (default)
+          z-table-col 弹窗的主体内容

@@ -10,7 +10,6 @@
  * @prop noCb - 同上的取消回调函数
  * @prop okBtn - 确定按钮名字
  * @prop noBtn - 取消按钮名字
- * @prop okBtnDisplay - 确定按钮是否显示
  * @prop noBtnDisplay - 取消按钮是否显示
  *
  * @prop headerDisplay - 是否显示弹窗头部
@@ -23,6 +22,8 @@
  *
  * @event ok - 点击确定按钮
  * @event no - 点击取消按钮
+ * @event show - 显示之后事件
+ * @event hide - 隐藏之后事件
  */
 
 import './modal.scss'
@@ -183,19 +184,19 @@ const modalComp = {
     },
     headerDisplay: {
       type: Boolean,
-      default: true
+      default: false
     },
     headerNoBtnDisplay: {
       type: Boolean,
-      default: true
+      default: false
     },
     noBtnDisplay: {
       type: Boolean,
-      default: true
+      default: false
     },
     footerDisplay: {
       type: Boolean,
-      default: true
+      default: false
     },
     height: [Number, String]
   },
@@ -220,6 +221,22 @@ const modalComp = {
   methods: {
     _initComp() {
       this._initModal()
+    },
+
+    _binder() {
+      this.$refs.pop.$on('show', (opt) => {
+        return this.$emit('show', {
+          ...opt,
+          emitter: this
+        })
+      })
+
+      this.$refs.pop.$on('hide', (opt) => {
+        return this.$emit('show', {
+          ...opt,
+          emitter: this
+        })
+      })
     },
 
     _initModal() {
