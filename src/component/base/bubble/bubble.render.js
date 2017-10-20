@@ -5,7 +5,10 @@
 export default function (h) {
   return h('zoom-transition',
     {
-      props: { speed: 'fast' },
+      props: {
+        speed: 'fast',
+        origin: '50% 0'
+      },
       ref: 'transition'
     },
     [

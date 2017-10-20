@@ -42,7 +42,7 @@ div
           verified-type='mobile'
           :header-span='4'
           ref='verifyInput')
-      z-btn(class='z-m-l' @click.native='clickVerifyInput') 点击验证是否为手机
+      z-btn(class='z-css-m-l' @click.native='clickVerifyInput') 点击验证是否为手机
       z-code.
         #{'<z-input'}
             :min="2"
@@ -61,7 +61,7 @@ div
           :header-span='4')
         div(slot='header')
           z-menu(:init-opt='testOpt', style={width: '40px'})
-      z-btn(class='z-m-l') 点击验证是否为邮箱
+      z-btn(class='z-css-m-l') 点击验证是否为邮箱
       z-code.
         #{'<z-input'}
             :min="2"

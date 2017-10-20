@@ -17,12 +17,27 @@ function formatParam(data) {
 }
 
 /**
+ * 转换 responseType 用于 xhr 的 overrideMimeType 方法
+ */
+function getResponseType(type) {
+  switch (type) {
+    case 'json':
+      return 'application/json; charset = utf-8'
+    case 'text':
+      return 'text/plain; charset=utf-8'
+    default:
+      return 'text/plain; charset=utf-8'
+  }
+}
+
+/**
  *
  * @param {Object} opt - 选项参数（同 jquery）
+ *                     dataType - 支持 XMLHttpRequest level 2 浏览器的 responseType 属性，不支持则只能选择（json | text）
  */
 const ajax = ({
   type = 'GET',
-  dataType = 'json',
+  dataType = '',
   url = '',
   data = {},
   async = true
@@ -34,7 +49,22 @@ const ajax = ({
 
   return new Promise((resolve, reject) => {
     xhr.withCredentials = true
-    xhr.responseType = dataType
+
+    // IE not support this state
+    if (xhr.responseType !== undefined) {
+      // IE 10/11 not support 'json', so change to string and JSON.parse
+      if ('ActiveXObject' in window && dataType === 'json') {
+        dataType = 'text'
+
+        xhr.overrideMimeType(getResponseType(dataType))
+      } else {
+        xhr.responseType = dataType
+      }
+    } else {
+      dataType = 'text'
+
+      xhr.overrideMimeType(getResponseType(dataType))
+    }
 
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
@@ -45,8 +75,10 @@ const ajax = ({
 
           if (dataType === 'json') {
             responseData = xhr.response
-          } else {
+          } else if (dataType === 'text' || dataType === '') {
             responseData = JSON.parse(xhr.responseText)
+          } else {
+            responseData = xhr.response
           }
 
           resolve(responseData)

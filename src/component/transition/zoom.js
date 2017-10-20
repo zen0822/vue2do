@@ -2,6 +2,7 @@
  * zoom transition component - 放大缩小效果
  *
  * @prop speed - 淡出速度
+ * @prop origin - 放大缩小的起始位置 (同 css 里的属性 transform-origin)
  */
 
 import baseMixin from '../../mixin/transition'
@@ -10,6 +11,13 @@ export default {
   name: 'zoom-transition',
 
   mixins: [baseMixin],
+
+  props: {
+    origin: {
+      type: String,
+      default: '50% 50%'
+    }
+  },
 
   computed: {
     transition() {
@@ -24,7 +32,7 @@ export default {
 
       Object.assign(el.style, {
         'position': 'absolute',
-        'transform-origin': '50% 0',
+        'transform-origin': this.origin,
         'transition': this.transition,
         'transform': 'scale(0)'
       })
@@ -76,7 +84,7 @@ export default {
       Object.assign(el.style, {
         'position': 'absolute',
         'transform': '',
-        'transform-origin': '50% 0',
+        'transform-origin': this.origin,
         'transition': this.transition
       })
 

@@ -26,7 +26,7 @@ export default function (h) {
           click: this.more
         }
       }, [
-          h('span', {
+          h('div', {
             class: [this.xclass('load')]
           }, (() => {
             return this.$slots.loadMore ? this.$slots.loadMore : this.loadMoreText

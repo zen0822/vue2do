@@ -4,7 +4,7 @@ div.component-transition
   article.example-article
     +section('zoom', '缩放')
       z-btn(@click='zoomIn') 缩放过渡（进来）
-      z-btn(@click='zoomOut' class='z-m-l') 缩放过渡（离开）
+      z-btn(@click='zoomOut' class='z-css-m-l') 缩放过渡（离开）
       div.transitioner
         z-zoom-transition(
             ref='zoom'
@@ -34,7 +34,7 @@ div.component-transition
           }
     +section('slide', '滑动')
       z-btn(@click='slideIn') 滑动过渡（进来）
-      z-btn(@click='slideOut' class='z-m-l') 滑动过渡（离开）
+      z-btn(@click='slideOut' class='z-css-m-l') 滑动过渡（离开）
       div.transitioner
         z-slide-transition(
             ref='slide'

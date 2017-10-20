@@ -88,7 +88,7 @@
           pager
           :page-size="7"
           :item="dropMenuOpt"
-          class="z-m-t">
+          class="z-css-m-t">
         <template scope="props">
           <div>{{ props.item.text }}</div>
         </template>
