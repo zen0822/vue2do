@@ -27,7 +27,8 @@ export default function (h) {
         input: (event) => {
           this.value = event.target.value
         }
-      }
+      },
+      ref: 'input'
     })
   } else {
     editBoxEle = h('textarea', {
@@ -48,7 +49,8 @@ export default function (h) {
         input: (event) => {
           this.value = event.target.value
         }
-      }
+      },
+      ref: 'input'
     }, this.value)
   }
 

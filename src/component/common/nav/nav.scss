@@ -12,6 +12,9 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
   position: relative;
+  &-arrow {
+    text-align: right;
+  }
 
   .#{$C_PREFIX}-trigger {
     display: none;

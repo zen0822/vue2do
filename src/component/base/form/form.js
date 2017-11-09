@@ -1,16 +1,7 @@
 /**
  * form 组件
  *
- * @prop action - 提交url
- * @prop jsonData - 提交 json 数据格式
- * @prop type - ( Post | Get)
- *
- * @prop beforeSubmit - 提交之前的钩子函数
- * @prop success - 提交成功的回调函数
- * @prop fail - 提交失败的回调函数
- *
  * @slot - 表单控件
- *
  */
 
 import './form.scss'
@@ -33,21 +24,7 @@ const formComp = {
   template,
 
   props: {
-    action: String,
-
-    jsonData: {
-      type: Boolean,
-      default: false
-    },
-
-    type: {
-      type: String,
-      default: 'post'
-    },
-
-    success: Function,
-
-    beforeSubmit: Function
+    // TODO
   },
 
   data: function () {
@@ -89,16 +66,16 @@ const formComp = {
 
       var deepInit = function (comp) {
         comp.$children.forEach((comp, index) => {
-          if (comp.queryName && comp.value !== 'undefined') {
+          if (comp.param && comp.value !== 'undefined') {
             INIT_FORM_CONTROL.forEach((controlName) => {
               if (comp.compName === controlName) {
-                let compQueryName = comp.queryName
+                let compParamName = comp.param
                 let queryOpt = _self.queryOpt
 
-                if (compQueryName in queryOpt) {
-                  _self.query(comp, { toArray: true })
+                if (compParamName in queryOpt) {
+                  _self._query(comp, { toArray: true })
                 } else {
-                  _self.query(comp)
+                  _self._query(comp)
                 }
               }
             })
@@ -110,7 +87,7 @@ const formComp = {
         })
       }
 
-      this.query(null, { empty: true })
+      this._query(null, { empty: true })
       deepInit(this)
     },
 
@@ -122,7 +99,7 @@ const formComp = {
      *                   toArray - 是否是需要将 query 值转换成多个
      *                   empty - 清空 query 值
      */
-    query(comp = {}, {toArray, empty} = {}) {
+    _query(comp = {}, {toArray, empty} = {}) {
       if (empty) {
         this.queryOpt = {}
         this.queryInfo = {}
@@ -130,24 +107,24 @@ const formComp = {
         return true
       }
 
-      var compQueryName = comp.queryName
+      var compParamName = comp.param
       var queryOpt = this.queryOpt
       var queryInfo = this.queryInfo
 
       var setQueryOpt = (comp, change, couple) => {
         if (change) {
-          queryOpt[compQueryName] = [queryOpt[compQueryName]]
-          queryInfo[compQueryName] = [queryInfo[compQueryName]]
+          queryOpt[compParamName] = [queryOpt[compParamName]]
+          queryInfo[compParamName] = [queryInfo[compParamName]]
         } else {
-          queryOpt[compQueryName].push(comp.value)
+          queryOpt[compParamName].push(comp.value)
 
           if (couple) {
-            queryInfo[compQueryName].push({
+            queryInfo[compParamName].push({
               value: comp.value,
               text: comp.text
             })
           } else {
-            queryInfo[compQueryName].push(comp.value)
+            queryInfo[compParamName].push(comp.value)
           }
         }
       }
@@ -157,13 +134,13 @@ const formComp = {
           if (toArray) {
             if (comp.multiple) {
               // 判断是否有两层的数组
-              if (!Array.isArray(queryOpt[compQueryName][0])) {
+              if (!Array.isArray(queryOpt[compParamName][0])) {
                 setQueryOpt(comp, true, true)
               }
 
               setQueryOpt(comp, false, true)
             } else {
-              if (!Array.isArray(queryOpt[compQueryName])) {
+              if (!Array.isArray(queryOpt[compParamName])) {
                 setQueryOpt(comp, true, true)
               }
 
@@ -173,8 +150,8 @@ const formComp = {
             break
           }
 
-          queryOpt[compQueryName] = comp.value
-          queryInfo[compQueryName] = {
+          queryOpt[compParamName] = comp.value
+          queryInfo[compParamName] = {
             value: comp.value,
             text: comp.text
           }
@@ -190,11 +167,11 @@ const formComp = {
             }
 
             if (comp.max === 1) {
-              this.queryOpt[comp.queryName] = uploadVal[0]
-              this.queryInfo[comp.queryName] = uploadItems
+              this.queryOpt[comp.param] = uploadVal[0]
+              this.queryInfo[comp.param] = uploadItems
             } else {
-              this.queryOpt[comp.queryName] = uploadVal
-              this.queryInfo[comp.queryName] = uploadItems
+              this.queryOpt[comp.param] = uploadVal
+              this.queryInfo[comp.param] = uploadItems
             }
           } else {
             console.warn('未知上传文件类型！！请解决')
@@ -205,13 +182,13 @@ const formComp = {
           if (toArray) {
             if (this._isArrayValue(comp)) {
               // 判断是否有两层的数组
-              if (!Array.isArray(queryOpt[compQueryName][0])) {
+              if (!Array.isArray(queryOpt[compParamName][0])) {
                 setQueryOpt(comp, true, false)
               }
 
               setQueryOpt(comp, false, false)
             } else {
-              if (!Array.isArray(queryOpt[compQueryName])) {
+              if (!Array.isArray(queryOpt[compParamName])) {
                 setQueryOpt(comp, true, false)
               }
 
@@ -221,8 +198,8 @@ const formComp = {
             break
           }
 
-          queryOpt[compQueryName] = comp.value
-          queryInfo[compQueryName] = comp.value
+          queryOpt[compParamName] = comp.value
+          queryInfo[compParamName] = comp.value
 
           break
       }
@@ -298,48 +275,6 @@ const formComp = {
     },
 
     /**
-     * 提交表单
-     * @param {Object} opt - 选项
-     *                     test {Function} - 提交数据成功之后测试的回调函数
-     * @return {Object} this - 组件
-     */
-    submit(opt = {}) {
-      if (!this.action) {
-        console.error('提交表单的地址（action）不能为空！')
-
-        return false
-      }
-
-      if (!this.verify()) {
-        return false
-      }
-
-      if (this.beforeSubmit && this.beforeSubmit.call(null, this.queryOpt, this) === false) {
-        return false
-      }
-
-      const ajaxConf = {
-        type: this.type,
-        url: this.action,
-        data: this.queryOpt,
-        success: (rtn) => {
-          this.$nextTick(() => {
-            this.success.call(null, rtn)
-          })
-        }
-      }
-
-      if (this.jsonData) {
-        Object.assign(ajaxConf, {
-          data: JSON.stringify(this.queryOpt),
-          contentType: 'application/json'
-        })
-      }
-
-      return $.ajax(ajaxConf)
-    },
-
-    /**
      * 重设表单数据
      * @return {Object}
      */
@@ -366,23 +301,10 @@ const formComp = {
     },
 
     /**
-     * 单元测试的 submit
+     * 获取表单控件的形参和参数值
      */
-    testSubmit(opt) {
-      var ajaxConf = {
-        type: this.type,
-        url: this.action,
-        data: this.queryOpt
-      }
-
-      if (this.jsonData) {
-        ajaxConf = Object.assign(ajaxConf, {
-          data: JSON.stringify(this.queryOpt),
-          contentType: 'application/json'
-        })
-      }
-
-      return $.ajax(ajaxConf)
+    query() {
+      return this.queryInfo
     }
   },
 

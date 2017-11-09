@@ -39,7 +39,7 @@ export default function (h) {
     for (let i = 1; i <= 3; i++) {
       spotChildren.push(h('span', {
         class: [this.xclass(`spot-${i}`)]
-      }))
+      }, '.'))
     }
 
     loadingChildren.push(

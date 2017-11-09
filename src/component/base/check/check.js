@@ -2,7 +2,7 @@
  * check - 多选框组件
  *
  * @prop initVal - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
- * @prop queryName - 参数名
+ * @prop param - 参数名
  * @prop initOpt - 复选框数据
  * @prop readOnly - 只读
  * @prop required - 是否必选
@@ -74,7 +74,7 @@ let checkCompConfig = {
       default: false
     },
 
-    queryName: {
+    param: {
       type: String,
       default: ''
     },

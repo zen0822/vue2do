@@ -215,7 +215,7 @@ export default {
       if (!document.querySelector('.' + deviceSizeClass)) {
         // 添加存储设备尺寸的 dom 到页面上
         let deviceSizeEle = document.createElement('div')
-        deviceSizeEle.className = `${compConfig.prefix}-device-size`
+        deviceSizeEle.className = `${compConfig.prefix}-css-device-size`
         document.body.appendChild(deviceSizeEle)
 
         const updateDeviceSize = () => {

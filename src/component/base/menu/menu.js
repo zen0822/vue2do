@@ -6,7 +6,7 @@
  * @prop defaultTxt - 默认的选项文本值
  * @prop initVal - 默认第一个显示的值
  * @prop initOpt - 下拉框的 option 数据
- * @prop queryName - 搜索参数名
+ * @prop param - 搜索参数名
  * @prop store - 储存实例化的信息
  * @prop theme - 主题
  *
@@ -87,7 +87,7 @@ const menuComp = {
       default: () => []
     },
 
-    queryName: {
+    param: {
       type: String,
       default: ''
     },

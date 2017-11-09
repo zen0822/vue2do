@@ -20,14 +20,14 @@
 }
 
 %loading-type-spot {
-  .spot-1,
-  .spot-2,
-  .spot-3 {
+  .#{$C_PREFIX}-spot-1,
+  .#{$C_PREFIX}-spot-2,
+  .#{$C_PREFIX}-spot-3 {
     opacity: 0;
   }
 
-  .spot-1 {
-    @keyframes spot-fade-1 {
+  .#{$C_PREFIX}-spot-1 {
+    @keyframes #{$C_PREFIX}-spot-fade-1 {
       0% {
         opacity: 0;
       }
@@ -41,11 +41,11 @@
         opacity: 1;
       }
     }
-    animation: spot-fade-1 2s infinite;
+    animation: #{$C_PREFIX}-spot-fade-1 2s infinite;
   }
 
-  .spot-2 {
-    @keyframes spot-fade-2 {
+  .#{$C_PREFIX}-spot-2 {
+    @keyframes #{$C_PREFIX}-spot-fade-2 {
       0% {
         opacity: 0;
       }
@@ -59,11 +59,11 @@
         opacity: 1;
       }
     }
-    animation: spot-fade-2 2s infinite;
+    animation: #{$C_PREFIX}-spot-fade-2 2s infinite;
   }
 
-  .spot-3 {
-    @keyframes spot-fade-3 {
+  .#{$C_PREFIX}-spot-3 {
+    @keyframes #{$C_PREFIX}-spot-fade-3 {
       0% {
         opacity: 0;
       }
@@ -77,6 +77,6 @@
         opacity: 1;
       }
     }
-    animation: spot-fade-3 2s infinite;
+    animation: #{$C_PREFIX}-spot-fade-3 2s infinite;
   }
 }

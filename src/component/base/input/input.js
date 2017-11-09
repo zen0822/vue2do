@@ -5,7 +5,7 @@
  * @prop initVal - 设置当前输入框的值
  * @prop number - 输入框的数字指定为 nmuber 类型
  * @prop placeholder - 占位符
- * @prop queryName - 查询参数名
+ * @prop param - 查询参数名
  * @prop readOnly - 只读，不能編輯
  * @prop required - 是否为必填，默认否
  * @prop row - textarea 的行数
@@ -95,7 +95,7 @@ const inputComp = {
       default: ''
     },
 
-    queryName: {
+    param: {
       type: String,
       default: ''
     },

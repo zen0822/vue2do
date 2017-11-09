@@ -153,7 +153,7 @@ export default function (h) {
           }
         }, this.title),
         h('column', {
-          class: [`${this.compPrefix}-text-right`],
+          class: [this.xclass('arrow')],
           props: {
             span: 6
           }

@@ -39,6 +39,14 @@ $C_PREFIX: #{$comp-prefix}-css;
   vertical-align: middle;
 }
 
+.#{$C_PREFIX}-display-block {
+  display: block;
+}
+
+.#{$C_PREFIX}-display-inline-block {
+  display: inline-block;
+}
+
 .#{$C_PREFIX}-cursor-pointer {
   cursor: pointer;
 }

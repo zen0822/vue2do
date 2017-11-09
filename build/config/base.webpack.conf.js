@@ -28,7 +28,7 @@ module.exports = function (opt) {
 
     resolve: {
       modules: ['node_modules', path.resolve(__dirname, `${config.global.root}/src/scss`)],
-      extensions: ['.js'],
+      extensions: ['.js', '.jsx'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
         'vue2do': path.resolve(__dirname, `${config.global.root}`),
@@ -47,7 +47,7 @@ module.exports = function (opt) {
         }
       }, {
         enforce: 'pre',
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
         query: {
           configFile: '.eslintrc.js',
@@ -55,7 +55,7 @@ module.exports = function (opt) {
         },
         exclude: [/node_modules/]
       }, {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         use: {
           loader: 'babel-loader',
           options: {

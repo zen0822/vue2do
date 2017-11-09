@@ -104,7 +104,7 @@ export default function (h) {
           ),
           h('div',
             {
-              class: [this.prefix('global-rip')],
+              class: [this.prefix('css-transition-rip')],
               directives: [{
                 name: 'show',
                 value: this.motion

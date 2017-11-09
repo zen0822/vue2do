@@ -12,7 +12,7 @@
  * @prop size - 图片尺寸（像素）：宽 * 高（300*200）
  * @prop instruction - 上传说明文字
  * @prop uploadItems - 已上传图片的地址数组
- * @prop queryName - 上传图片参数名
+ * @prop param - 上传图片参数名
  * @prop store - 父组件暂存在组件的数据，充当和父亲组件通信时传递的数据
  * @prop success - 上传文件成功的钩子函数
  * @prop queryOpt - 申请上传文件时的数据
@@ -41,7 +41,7 @@ const uploadComp = {
       default: TYPE_IMG
     },
 
-    queryName: String,
+    param: String,
 
     space: Number,
 
