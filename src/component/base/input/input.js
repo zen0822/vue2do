@@ -35,7 +35,6 @@
  *
  * @slot header
  * @slot footer
- *
  */
 
 import './input.scss'

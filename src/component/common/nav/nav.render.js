@@ -161,7 +161,7 @@ export default function (h) {
           h('icon', {
             props: {
               kind: this.isStageActive ? 'spread' : 'fold',
-              size: 'l'
+              size: 's'
             }
           })
         ])
