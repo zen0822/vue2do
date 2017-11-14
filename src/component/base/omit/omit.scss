@@ -1,0 +1,71 @@
+  /*
+ * omit 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import "../../scss/extend.scss";
+
+$C_PREFIX: #{$comp-prefix}-omit;
+
+$line-height: 20;
+$line: 4;
+$omit-width: 19;
+$font-size: 16;
+
+.#{$C_PREFIX} {
+    width: 100%;
+    overflow: hidden;
+
+    &-multiple {
+        position: relative;
+        width: 100%;
+        max-height: #{$line-height * $line}px;
+        line-height: #{$line-height}px;
+    }
+    &-container {
+        position: relative;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: $line;
+        font-size: #{$omit-width}px;
+        color: transparent;
+    }
+    &-content {
+        color: #000;
+        display: inline-block;
+        word-break: break-word;
+        vertical-align: top;
+        font-size: #{$font-size}px;
+    }
+    &-ghost {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        color: #000;
+    }
+    &-ghost:before {
+        content: "";
+        display: block;
+        float: right;
+        width: 50%;
+        height: 100%;
+    }
+    &-placeholder {
+        display: block;
+        float: right;
+        width: 50%;
+        height: #{$line-height * $line}px;
+    }
+    &-more {
+        background-color: #fff;
+        float: right;
+        font-size: #{$font-size}px;
+        width: #{$omit-width}px;
+        height: #{$line-height}px;
+        margin-top: -#{$line-height}px;
+        text-align: right;
+    }
+}
