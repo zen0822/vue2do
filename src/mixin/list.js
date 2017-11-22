@@ -2,9 +2,9 @@
  * list 混入
  */
 
-import scrollerComp from '../component/base/scroller/scroller'
-import loadingComp from '../component/base/loading/loading'
-import pageComp from '../component/base/page/page'
+import scrollerComp from '../component/scroller/scroller'
+import loadingComp from '../component/loading/loading'
+import pageComp from '../component/page/page'
 
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'

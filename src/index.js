@@ -1,46 +1,46 @@
-import btn from './component/base/btn/btn'
-import check from './component/base/check/check'
-import form from './component/base/form/form'
-import input from './component/base/input/input'
-import icon from './component/base/icon/icon'
+import btn from './component/btn/btn'
+import check from './component/check/check'
+import form from './component/form/form'
+import input from './component/input/input'
+import icon from './component/icon/icon'
 
-import bubble from './component/base/bubble/bubble'
-import modal from './component/base/modal/modal'
-import pop from './component/base/pop/pop'
-import message from './component/base/message/message'
+import bubble from './component/bubble/bubble'
+import modal from './component/modal/modal'
+import pop from './component/pop/pop'
+import message from './component/message/message'
 
-import code from './component/common/code/code'
-import loading from './component/base/loading/loading'
-import nav from './component/common/nav/nav'
+import code from './component/code/code'
+import loading from './component/loading/loading'
+import nav from './component/nav/nav'
 
-import page from './component/base/page/page'
-import scroller from './component/base/scroller/scroller'
-import search from './component/common/search/search'
+import page from './component/page/page'
+import scroller from './component/scroller/scroller'
+import search from './component/search/search'
 
 import {
   foldComp as fold,
   foldTitleComp as foldTitle,
   foldContentComp as foldContent
-} from './component/base/fold/fold'
+} from './component/fold/fold'
 
-import list from './component/common/list/list'
+import list from './component/list/list'
 import {
   tableComp as table,
   tableColComp as tableCol,
   tableRowComp as tableRow
-} from './component/common/table/table'
+} from './component/table/table'
 
-import menu from './component/base/menu/menu'
-import menuEle from './component/base/menu/menu-ele'
+import menu from './component/menu/menu'
+import menuEle from './component/menu/menu-ele'
 
-import shift from './component/base/shift/shift'
-import shiftEle from './component/base/shift/shift-ele'
+import shift from './component/shift/shift'
+import shiftEle from './component/shift/shift-ele'
 
-import tab from './component/base/tab/tab'
-import tabEle from './component/base/tab/tab-ele'
+import tab from './component/tab/tab'
+import tabEle from './component/tab/tab-ele'
 
-import col from './component/common/layout/col/col'
-import row from './component/common/layout/row/row'
+import col from './component/col/col'
+import row from './component/row/row'
 
 import fadeTransition from './component/transition/fade'
 import foldTransition from './component/transition/fold'

@@ -1,0 +1,98 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+/**
+ * table 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_TABLE };
+$COL_PREFIX: #{ $COMP_TABLE_COL };
+
+.#{$C_PREFIX} {
+  position: relative;
+
+  .#{$COL_PREFIX} > div {
+    display: inline-block;
+  }
+
+  &.#{$C_PREFIX}-border-row,
+  &.#{$C_PREFIX}-border-all {
+    .#{$C_PREFIX}-row-group {
+      .#{$C_PREFIX}-row {
+        border-bottom: $border-color $border-thin solid;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-border-col,
+  &.#{$C_PREFIX}-border-all {
+    .#{$C_PREFIX}-row {
+      .#{$C_PREFIX}-col {
+        border-right: $border-color $border-thin solid;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-theme-primary {
+    border-radius: $border-radius;
+    border: $border-color $border-thin solid;
+    overflow: hidden;
+
+    .#{$C_PREFIX}-header-group {
+      .#{$COL_PREFIX} {
+        color: $grey-dark;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-empty-data {
+    color: $danger-color;
+    text-align: center;
+    padding: $gap-v 0;
+  }
+
+  .#{$C_PREFIX}-wrap {
+    background: #fff;
+    border-collapse: collapse;
+    display: table;
+    min-width: 100%;
+  }
+
+  .#{$C_PREFIX}-header-group {
+    background: $bg-color;
+    display: table-header-group;
+    padding: $gap-v;
+  }
+
+  .#{$C_PREFIX}-row-group {
+    display: table-row-group;
+  }
+
+  .#{$C_PREFIX}-row {
+    display: table-row;
+
+    &:nth-child(2n) {
+      background: $bg-light-color;
+    }
+  }
+
+  .#{$C_PREFIX}-header {
+    display: table-header;
+    padding: $gap-v-double;
+  }
+
+  .#{$COL_PREFIX} {
+    display: table-cell;
+    padding: $gap-v $gap-v;
+  }
+}

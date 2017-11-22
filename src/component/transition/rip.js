@@ -9,7 +9,7 @@ import { addClass, delClass } from '../../util/dom/attr'
 import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
 
-import './scss/rip.scss'
+import './rip.scss'
 
 export default {
   name: 'rip-transition',

@@ -1,0 +1,87 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+/**
+ * nav 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_NAV };
+$ICON_PREFIX: #{ $COMP_ICON };
+
+.#{$C_PREFIX} {
+  @include device-type("<l") {
+    font-size: $h3;
+
+    .#{$C_PREFIX}-trigger {
+      display: block;
+      font-size: $h2;
+    }
+
+    .#{$C_PREFIX}-stage {
+      box-sizing: border-box;
+      transition: all 500ms ease-in-out;
+      width: 100%;
+      z-index: $z-index;
+
+      &.#{$C_PREFIX}-animate-slide {
+        position: fixed;
+        padding: 15% 10% 10%;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, .8);
+      }
+
+      &.#{$C_PREFIX}-animate-fold {
+        overflow: hidden;
+        background: rgba(0, 0, 0, .8);
+
+        & > .#{$C_PREFIX}-transition-container
+            > .#{$C_PREFIX}-close-nav {
+          display: none;
+        }
+
+        & > .#{$C_PREFIX}-transition-container
+            > .#{$C_PREFIX}-sub-fold {
+          padding: $gap-v-triple $gap-h-triple 40px;
+        }
+
+        .router-link-active {
+          color: $primary-color;
+        }
+
+        .#{$C_PREFIX}-sub-fold {
+          padding: 0 $gap-h;
+        }
+      }
+
+      & > .#{$C_PREFIX}-transition-container
+          > .#{$C_PREFIX}-close-nav {
+        position: absolute;
+        display: block;
+        left: $gap-v;
+        top: $gap-v;
+
+        .#{$ICON_PREFIX}-close {
+          font-size: 30px;
+        }
+      }
+
+      .#{$ICON_PREFIX}-ali {
+        color: #fff;
+        font-size: 20px;
+      }
+
+      .#{$C_PREFIX}-sub-fold {
+        color: #fff !important;
+
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

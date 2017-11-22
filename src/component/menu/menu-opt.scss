@@ -1,0 +1,89 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+/**
+ * menu-opt 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_MENU_OPT };
+$C_LIST_PREFIX: #{ $COMP_LIST };
+
+$MENU_HEIGHT: 36px;
+$MENU_WIDTH: 170px;
+$MENU_BORDER_WIDTH: 1px;
+$OPTION_UI_PADDING_WIDTH: $gap-v;
+$MULTI_MENU_WIDTH: 170px + 80px;
+
+.#{$C_PREFIX}-ul {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: $MENU_WIDTH - $OPTION_UI_PADDING_WIDTH;
+  width: $MENU_WIDTH;
+  background-color: #fff;
+
+  .#{$C_PREFIX}-li {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    cursor: default;
+
+    &:first-child {
+      padding-top: $OPTION_UI_PADDING_WIDTH;
+    }
+    &:last-child {
+      padding-bottom: $OPTION_UI_PADDING_WIDTH;
+    }
+
+    &:hover > .#{$C_PREFIX}-ul {
+      display: block;
+    }
+
+    &.default-txt {
+      color: #999;
+    }
+
+    &.classify-title {
+      font-weight: bold;
+    }
+  }
+
+  &.#{$C_PREFIX}-theme-primary,
+  &.#{$C_PREFIX}-theme-fill {
+    .#{$C_PREFIX}-li {
+      padding: $gap-v $gap-h-double;
+
+      &:hover {
+        background-color: $bg-color;
+      }
+
+      &:hover.#{$C_PREFIX}-classify-title {
+        background-color: transparent;
+      }
+
+      .#{$C_PREFIX}-li-check {
+        line-height: 1;
+      }
+
+      .#{$C_PREFIX}-li-text {
+        @extend %text-omit;
+
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        padding: 0 $gap-v;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+@include device-type("<l") {
+  .#{$C_PREFIX}-ul {
+    width: 100%;
+  }
+}
+

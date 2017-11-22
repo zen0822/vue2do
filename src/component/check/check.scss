@@ -1,0 +1,102 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+
+/*
+* check 组件样式
+*/
+
+$C_PREFIX: #{ $COMP_CHECK };
+$C_ICON_PREFIX: #{ $COMP_ICON };
+
+.#{$C_PREFIX} {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+
+  .#{$C_PREFIX}-read-only {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0;
+  }
+
+  .#{$C_PREFIX}-opt-ul {
+    .#{$C_PREFIX}-opt-li {
+      margin: 0 $gap-h-half;
+      display: inline-block;
+
+      .#{$C_PREFIX}-box {
+        display: inline-block;
+
+        & > .#{$C_PREFIX}-icon {
+          position: relative;
+          display: inline-block;
+          vertical-align: middle;
+          line-height: 1;
+
+          & > .#{$C_PREFIX}-rip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba($primary-color, .2);
+
+            & > .z-transition-rip-spot {
+              background-color: rgba($primary-color, .8);
+            }
+          }
+
+          & > .#{ $C_ICON_PREFIX } {
+            vertical-align: middle;
+
+            .#{ $C_ICON_PREFIX }-ali {
+              text-align: center;
+            }
+
+            .#{ $C_ICON_PREFIX }-circle-check-o,
+            .#{ $C_ICON_PREFIX }-square-check-o {
+              color: $primary-color;
+            }
+          }
+        }
+
+        .#{$C_PREFIX}-lable {
+          display: inline-block;
+          vertical-align: middle;
+          line-height: 1;
+          margin-left: $gap-h-half;
+          cursor: default;
+        }
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-opt-check-all {
+    margin-bottom: $gap-v;
+
+    &>.#{ $C_ICON_PREFIX } {
+      width: 14px;
+      margin-right: 0;
+
+      .#{ $C_ICON_PREFIX }-square-check {
+        color: $primary-color
+      }
+    }
+
+    .#{$C_PREFIX}-lable {
+      cursor: default;
+    }
+  }
+
+  &.theme-primary {
+    .#{$C_PREFIX}-opt-ul {
+      .#{$C_PREFIX}-opt-li {
+        margin-bottom: $gap-h;
+      }
+    }
+  }
+}
