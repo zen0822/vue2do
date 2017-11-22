@@ -93,14 +93,14 @@ div.component-modal
           z-table-col *false | true
           z-table-col 取消按钮是否显示
         z-table-row(slot='9')
-          z-table-col headerState
-          z-table-col string
-          z-table-col * | show | hide
+          z-table-col headerDisplay
+          z-table-col boolean
+          z-table-col *(空)没有默认值 | false | true
           z-table-col 弹窗头部状态，只有两种 显示和隐藏，默认为空则根据 type 属性来判断
         z-table-row(slot='10')
-          z-table-col footerState
-          z-table-col string
-          z-table-col * | show | hide
+          z-table-col footerDisplay
+          z-table-col boolean
+          z-table-col *(空)没有默认值 | false | true
           z-table-col 弹窗低部状态，只有两种 显示和隐藏，默认为空则根据 type 属性来判断
         z-table-row(slot='11')
           z-table-col height

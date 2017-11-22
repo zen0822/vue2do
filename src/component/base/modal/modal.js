@@ -12,8 +12,8 @@
  * @prop noBtn - 取消按钮名字
  * @prop noBtnDisplay - 取消按钮是否显示
  *
- * @prop headerState - 弹窗头部的状态可选（show | hide），默认为空则根据 type 属性来判断
- * @prop footerState - 弹窗低部的状态可选（show | hide），默认为空则根据 type 属性来判断
+ * @prop headerDisplay - 是否显示弹窗头部
+ * @prop footerDisplay - 是否显示弹窗底部
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
  * @prop type - 弹窗类型（full | alert | confirm | simple | long）
@@ -102,9 +102,11 @@ const modalComp = {
       type: String,
       default: ''
     },
-    headerState: {
-      type: String,
-      default: ''
+    headerDisplay: {
+      type: Boolean,
+      default() {
+        return undefined
+      }
     },
     headerNoBtnDisplay: {
       type: Boolean,
@@ -114,9 +116,11 @@ const modalComp = {
       type: Boolean,
       default: false
     },
-    footerState: {
-      type: String,
-      default: ''
+    footerDisplay: {
+      type: Boolean,
+      default() {
+        return undefined
+      }
     },
     height: [Number, String]
   },
@@ -129,14 +133,14 @@ const modalComp = {
     // 组件的 header 的 class 名字
     headerClass() {
       return {
-        [`${this.cPrefix}-no-header`]: !this.headerDisplay,
+        [`${this.cPrefix}-no-header`]: !this.modalHeaderDisplay,
         [`${this.cPrefix}-no-header-title`]: !this.modalHeader
       }
     },
     // 组件的 footer 的 class 名字
     footerClass() {
       return {
-        [`${this.cPrefix}-no-footer`]: !this.footerDisplay
+        [`${this.cPrefix}-no-footer`]: !this.modalFooterDisplay
       }
     },
     // 是否是 full modal
@@ -153,8 +157,8 @@ const modalComp = {
     },
     // 模态框的头部显示状态
     modalHeaderDisplay() {
-      if (this.headerState !== '') {
-        return this.headerState === 'show'
+      if (this.headerDisplay !== undefined) {
+        return this.headerDisplay
       }
 
       switch (this.type) {
@@ -168,8 +172,8 @@ const modalComp = {
     },
     // 模态框的尾部显示状态
     modalFooterDisplay() {
-      if (this.headerState !== '') {
-        return this.headerState === 'show'
+      if (this.footerDisplay !== undefined) {
+        return this.footerDisplay
       }
 
       switch (this.type) {
