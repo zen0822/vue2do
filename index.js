@@ -36,9 +36,9 @@ import Message from './src/component/Message/Message'
 import Scroller from './src/component/Scroller/Scroller'
 import List from './src/component/List/List'
 
-import Table from './component/Table/Table'
-import TableRow from './component/Table/TableRow'
-import TableCol from './component/Table/TableCol'
+import Table from './src/component/Table/Table'
+import TableRow from './src/component/Table/TableRow'
+import TableCol from './src/component/Table/TableCol'
 
 import Menu from './src/component/Menu/Menu'
 import MenuEle from './src/component/Menu/MenuEle'

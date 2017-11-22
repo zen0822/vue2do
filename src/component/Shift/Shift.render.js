@@ -25,7 +25,7 @@ export default function (h) {
     class: [this.cPrefix]
   }, [
     h('ul', {
-      class: [`${this.compPrefix}-ul`, this.xclass('ul')]
+      class: [`${this.compPrefix}-css-ul`, this.xclass('ul')]
     }, shiftOption)
   ])
 }

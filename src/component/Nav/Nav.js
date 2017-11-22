@@ -18,11 +18,11 @@ import './Nav.scss'
 import './Nav.m.scss'
 import render from './Nav.render.js'
 import baseMixin from '../../mixin/base'
-import {
-  foldComp,
-  foldTitleComp,
-  foldContentComp
-} from '../Fold/Fold'
+
+import foldComp from '../Fold/Fold'
+import foldTitleComp from '../Fold/FoldTitle'
+import foldContentComp from '../Fold/FoldContent'
+
 import foldTransition from '../transition/fold'
 import slideTransition from '../transition/slide'
 import iconComp from '../Icon/Icon'

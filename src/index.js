@@ -17,9 +17,9 @@ import Page from './component/Page/Page'
 import Scroller from './component/Scroller/Scroller'
 import Search from './component/Search/Search'
 
-import Fold from './src/component/Fold/Fold'
-import FoldTitle from './src/component/Fold/FoldTitle'
-import FoldContent from './src/component/Fold/FoldContent'
+import Fold from './component/Fold/Fold'
+import FoldTitle from './component/Fold/FoldTitle'
+import FoldContent from './component/Fold/FoldContent'
 
 import List from './component/List/List'
 

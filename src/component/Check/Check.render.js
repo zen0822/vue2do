@@ -19,7 +19,7 @@ export default function (h) {
         }, [
           h('icon', {
             props: {
-              size: 'm',
+              size: 'XS',
               kind: this.checkedAll ? 'square-check-o' : 'square-o'
             }
           }),
@@ -50,7 +50,7 @@ export default function (h) {
             }, [
               h('icon', {
                 props: {
-                  size: 'm',
+                  size: 'xs',
                   kind: this.iconName(item[this.valName])
                 }
               }),
