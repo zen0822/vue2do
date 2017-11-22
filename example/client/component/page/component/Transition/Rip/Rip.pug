@@ -1,0 +1,28 @@
+include ../../mixin.pug
+
+div.component-transition
+  article.example-article
+    +section('rip', '涟漪')
+      z-btn(@click='rip') 开始涟漪
+      div.transitioner
+        div.transitioner-rip
+          div 我有涟漪效果了！
+          z-rip-transition(
+              ref='rip'
+              :offset='100'
+          )
+      z-code(type='html').
+        #{'<z-btn @click="rip">'}
+          开始涟漪
+        #{'</z-btn>'}
+
+        #{'<z-rip-transition ref="rip">'}
+          #{'<div>我有涟漪效果了！</div>'}
+        #{'</z-rip-transition>'}
+      z-code(type='js').
+        ...
+          methods: {
+            rip() {
+              this.$refs.rip.enter()
+            }
+          }

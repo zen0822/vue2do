@@ -89,7 +89,7 @@
           :page-size="7"
           :item="dropMenuOpt"
           class="z-css-m-t">
-        <template scope="props">
+        <template slot-scope="props">
           <div>{{ props.item.text }}</div>
         </template>
       </z-list>
@@ -107,7 +107,7 @@
           <z-table-col>{{ item }}</z-table-col>
         </template>
 
-        <template slot="tbody" scope="props">
+        <template slot="tbody" slot-scope="props">
           <z-table-col>{{ props.item.text }}</z-table-col>
           <z-table-col>{{ props.item.name }}</z-table-col>
           <z-table-col>{{ props.item.en }}</z-table-col>

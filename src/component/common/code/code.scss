@@ -39,13 +39,16 @@ $C_PREFIX: #{ $COMP_CODE };
   }
 
   .#{$C_PREFIX}-line-num {
+    border-right: $border-thin * 2 $primary-color solid;
     font-family: 'Roboto Mono', Monaco, courier, monospace;
+    line-height: 16px;
+    text-align: right;
+
     position: absolute;
     top: 0;
     left: 0;
+
     padding-right: 5px;
-    border-right: $border-thin * 2 $primary-color solid;
-    text-align: right;
     width: 24px;
   }
 }

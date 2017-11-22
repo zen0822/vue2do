@@ -12,8 +12,8 @@
  * @prop noBtn - 取消按钮名字
  * @prop noBtnDisplay - 取消按钮是否显示
  *
- * @prop headerDisplay - 是否显示弹窗头部
- * @prop footerDisplay - 是否显示弹窗底部
+ * @prop headerState - 弹窗头部的状态可选（show | hide），默认为空则根据 type 属性来判断
+ * @prop footerState - 弹窗低部的状态可选（show | hide），默认为空则根据 type 属性来判断
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
  * @prop type - 弹窗类型（full | alert | confirm | simple | long）
@@ -69,86 +69,6 @@ const modalComp = {
     'fade-transition': fadeTransition
   },
 
-  computed: {
-    // 组件类名的前缀
-    cPrefix() {
-      return `${this.compPrefix}-modal`
-    },
-    // 组件的 header 的 class 名字
-    headerClass() {
-      return {
-        [`${this.cPrefix}-no-header`]: !this.headerDisplay,
-        [`${this.cPrefix}-no-header-title`]: !this.modalHeader
-      }
-    },
-    // 组件的 footer 的 class 名字
-    footerClass() {
-      return {
-        [`${this.cPrefix}-no-footer`]: !this.footerDisplay
-      }
-    },
-    // 是否是 full modal
-    isFull() {
-      return this.type === 'full'
-    },
-    // 是否是 simple modal
-    isSimple() {
-      return this.type === 'simple'
-    },
-    // 判断是否在中大型设备并且是 full 模态框
-    isBiggerFull() {
-      return (this.isFull && this.deviceRange > 575) || !this.isFull
-    },
-    // 模态框的头部显示状态
-    modalHeaderDisplay() {
-      if (!this.headerDisplay) {
-        return false
-      }
-
-      switch (this.type) {
-        case 'full':
-          return true
-        case 'simple':
-          return false
-        default:
-          return !!this.modalHeader
-      }
-    },
-    // 模态框的尾部显示状态
-    modalFooterDisplay() {
-      if (!this.footerDisplay) {
-        return false
-      }
-
-      switch (this.type) {
-        case 'alert':
-        case 'confirm':
-          return true
-        case 'full':
-          return this.isBiggerFull
-        case 'simple':
-          return false
-        default:
-          return true
-      }
-    },
-    // 模态框的内容的高度
-    modalHeight() {
-      if (this.height) {
-        return this.height
-      }
-
-      switch (this.type) {
-        case 'full':
-          return this.isBiggerFull ? 300 : '100%'
-        case 'simple':
-          return 150
-        default:
-          return 120
-      }
-    }
-  },
-
   props: {
     commit: {
       type: Boolean,
@@ -182,9 +102,9 @@ const modalComp = {
       type: String,
       default: ''
     },
-    headerDisplay: {
-      type: Boolean,
-      default: false
+    headerState: {
+      type: String,
+      default: ''
     },
     headerNoBtnDisplay: {
       type: Boolean,
@@ -194,11 +114,91 @@ const modalComp = {
       type: Boolean,
       default: false
     },
-    footerDisplay: {
-      type: Boolean,
-      default: false
+    footerState: {
+      type: String,
+      default: ''
     },
     height: [Number, String]
+  },
+
+  computed: {
+    // 组件类名的前缀
+    cPrefix() {
+      return `${this.compPrefix}-modal`
+    },
+    // 组件的 header 的 class 名字
+    headerClass() {
+      return {
+        [`${this.cPrefix}-no-header`]: !this.headerDisplay,
+        [`${this.cPrefix}-no-header-title`]: !this.modalHeader
+      }
+    },
+    // 组件的 footer 的 class 名字
+    footerClass() {
+      return {
+        [`${this.cPrefix}-no-footer`]: !this.footerDisplay
+      }
+    },
+    // 是否是 full modal
+    isFull() {
+      return this.type === 'full'
+    },
+    // 是否是 simple modal
+    isSimple() {
+      return this.type === 'simple'
+    },
+    // 判断是否在中大型设备并且是 full 模态框
+    isBiggerFull() {
+      return (this.isFull && this.deviceRange > 575) || !this.isFull
+    },
+    // 模态框的头部显示状态
+    modalHeaderDisplay() {
+      if (this.headerState !== '') {
+        return this.headerState === 'show'
+      }
+
+      switch (this.type) {
+        case 'full':
+          return true
+        case 'simple':
+          return false
+        default:
+          return !!this.modalHeader
+      }
+    },
+    // 模态框的尾部显示状态
+    modalFooterDisplay() {
+      if (this.headerState !== '') {
+        return this.headerState === 'show'
+      }
+
+      switch (this.type) {
+        case 'alert':
+        case 'confirm':
+          return true
+        case 'full':
+          return this.isBiggerFull
+        case 'simple':
+          return false
+        default:
+          return true
+      }
+    },
+    // 模态框的内容的高度
+    modalHeight() {
+      if (this.height) {
+        return this.height
+      }
+
+      switch (this.type) {
+        case 'full':
+          return this.isBiggerFull ? 300 : '100%'
+        case 'simple':
+          return 150
+        default:
+          return 120
+      }
+    }
   },
 
   data: () => {
@@ -213,8 +213,7 @@ const modalComp = {
       modalHeader: '',
       okCbFun: {},
       noCbFun: {},
-      // scroller 是否有滚动条
-      hasScroller: false
+      hasScroller: false // scroller 是否有滚动条
     }
   },
 

@@ -48,7 +48,7 @@ export default function (h) {
               ]
             }, [
               h('ul', {
-                class: [this.prefix('ul')]
+                class: [this.prefix('css-ul')]
               }, lineNumEle)
             ])
           ])

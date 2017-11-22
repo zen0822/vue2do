@@ -241,7 +241,7 @@ const scrollerComp = {
 
       setInterval(() => {
         this._initScroller()
-      }, 10)
+      }, 80)
     },
 
     _binder() {

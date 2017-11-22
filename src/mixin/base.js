@@ -209,13 +209,13 @@ export default {
     this._binder()
     this._initComp()
 
-    let deviceSizeClass = `${compConfig.prefix}-device-size`
+    let deviceSizeClass = `${compConfig.prefix}-css-device-size`
 
     if (document.getElementsByClassName(deviceSizeClass).length === 0) {
       if (!document.querySelector('.' + deviceSizeClass)) {
         // 添加存储设备尺寸的 dom 到页面上
         let deviceSizeEle = document.createElement('div')
-        deviceSizeEle.className = `${compConfig.prefix}-css-device-size`
+        deviceSizeEle.className = deviceSizeClass
         document.body.appendChild(deviceSizeEle)
 
         const updateDeviceSize = () => {

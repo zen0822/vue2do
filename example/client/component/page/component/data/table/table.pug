@@ -57,7 +57,7 @@ div
           z-table-col(max-width='30%') test
           z-table-col name
           z-table-col(max-width='100px') en
-        template(slot='tbody', scope='props')
+        template(slot='tbody', slot-scope='props')
           z-table-col {{ props.item.text }}
           z-table-col {{ props.item.name }}
           z-table-col {{ props.item.en }}
@@ -74,7 +74,7 @@ div
             #{'<z-table-col>name</z-table-col>'}
             #{'<z-table-col max-width="100px">en</z-table-col>'}
           #{'</template>'}
-          #{'<template slot="tbody" scope="props">'}
+          #{'<template slot="tbody" slot-scope="props">'}
             #{'<z-table-col>{{ props.item.text }}</z-table-col>'}
             #{'<z-table-col>{{ props.item.name }}</z-table-col>'}
             #{'<z-table-col>{{ props.item.en }}</z-table-col>'}

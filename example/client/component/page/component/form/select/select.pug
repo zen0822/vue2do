@@ -29,11 +29,11 @@ div
     +section('custom', '自定义下拉框内容')
       p.section-description 用自定义标签声明下拉框的数据
       z-menu(:init-opt='selectOpt')
-        template(slot='custom', scope='props')
+        template(slot='custom', slot-scope='props')
           z-menu-ele {{ props.item.text }}-custom
       z-code(v-pre).
         #{'<z-menu :init-opt="selectOpt">'}
-          #{'<template slot="custom" scope="props">'}
+          #{'<template slot="custom" slot-scope="props">'}
             #{'<z-menu-ele>{{ props.item.text }}-custom</z-menu-ele>'}
           #{'</template>'}
         #{'</z-menu>'}

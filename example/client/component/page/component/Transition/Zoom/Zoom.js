@@ -1,10 +1,10 @@
-import './transition.scss'
+import '../Transition.scss'
 
-import template from './transition.pug'
-import mixin from '../mixin'
+import template from './Zoom.pug'
+import mixin from '../../mixin'
 
 export default {
-  name: 'page-comp-transition',
+  name: 'PageCompTransitionZoom',
 
   template: template(),
 
@@ -22,12 +22,6 @@ export default {
     },
     zoomOut() {
       this.$refs.zoom.leave()
-    },
-    slideIn() {
-      this.$refs.slide.enter()
-    },
-    slideOut() {
-      this.$refs.slide.leave()
     }
   }
 }

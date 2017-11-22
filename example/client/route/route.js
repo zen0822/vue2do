@@ -19,7 +19,7 @@ export default [
   },
   {
     path: '*',
-    'component': notFoundPage,
+    component: notFoundPage,
     meta: {
       title: '404'
     }

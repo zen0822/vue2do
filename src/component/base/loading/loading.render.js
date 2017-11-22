@@ -11,7 +11,6 @@ export default function (h) {
     rotateChildren.push(h('icon', {
       class: [this.xclass('icon')],
       props: {
-        size: 'm',
         kind: 'spinner'
       }
     }))

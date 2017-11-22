@@ -12,6 +12,7 @@ import './search.scss'
 import render from './search.render'
 import baseMixin from '../../../mixin/base'
 
+import tip from '../../base/message/tip'
 import inputComp from '../../base/input/input'
 import listComp from '../../common/list/list'
 
@@ -79,7 +80,7 @@ const searchComp = {
      * 点击匹配的搜索选项
      */
     _clickMatchOpt(event, index) {
-
+      tip('功能未完成')
     },
 
     /**
