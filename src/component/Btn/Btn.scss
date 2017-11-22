@@ -1,0 +1,108 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "./Btn.type.scss";
+
+/**
+ * btn 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_BTN };
+
+.#{$C_PREFIX} {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  & > a {
+    width: 100%;
+  }
+
+  .#{$C_PREFIX}-ele {
+    position: relative;
+    min-width: 64px;
+    box-sizing: border-box;
+    border-radius: $border-radius;
+    color: #fff;
+    text-align: center;
+    font-size: $font-base;
+    overflow: hidden;
+    line-height: 1;
+    white-space: nowrap;
+
+    transform: rotate(0);
+    transition-duration: 200ms;
+    transition-property: background-color, box-shadow, color;
+
+    &:focus {
+      outline-style: none;
+    }
+
+    & > .#{$C_PREFIX}-ele-border {
+      border: rgba(0, 0, 0, 0) $border-thin solid;
+      padding: $gutter-v $gap-h;
+    }
+
+    .#{$C_PREFIX}-loading {
+      position: absolute;
+      left: $gap-v;
+      z-index: 2;
+    }
+  }
+
+  &.#{$C_PREFIX}-size {
+    &-m > .#{$C_PREFIX}-ele {
+      min-width: 108px;
+    }
+
+    &-l > .#{$C_PREFIX}-ele {
+      min-width: 128px;
+    }
+
+    &.#{$C_PREFIX}-type-float {
+      &-m > .#{$C_PREFIX}-ele {
+        width: 56px;
+        height: 56px;
+      }
+
+      &-l > .#{$C_PREFIX}-ele {
+        width: 72px;
+        height: 72px;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-radius {
+    &-none > .#{$C_PREFIX}-ele {
+      border-radius: 0;
+    }
+
+    &-m > .#{$C_PREFIX}-ele {
+      border-radius: 10px;
+    }
+
+    &-l > .#{$C_PREFIX}-ele {
+      border-radius: 30px;
+    }
+  }
+
+  &.#{$C_PREFIX}-ban {
+    .#{$C_PREFIX}-ele {
+      color: rgba(0, 0, 0, .4);
+      background-color: rgba(0, 0, 0, .12) !important;
+    }
+
+    .#{$C_PREFIX}-read-only-shadow {
+      @extend %center-position;
+
+      background-color: rgba(255, 255, 255, .5);
+      border-radius: $border-radius;
+      cursor: not-allowed;
+      z-index: 1;
+    }
+  }
+
+  .#{$C_PREFIX}-value-show {
+    display: inline-block;
+  }
+}
