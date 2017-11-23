@@ -133,9 +133,9 @@ class Omit extends Component {
             ? (
               <div
                 className={`
-                                    ${index + 1 === lineLength ? _xclass('line-last') : ''}
-                                    ${_xclass('line')}
-                                `}
+                    ${index + 1 === lineLength ? _xclass('line-last') : ''}
+                    ${_xclass('line')}
+                `}
                 key={index.toString()}
               >
                 {item}
