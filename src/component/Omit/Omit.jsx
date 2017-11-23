@@ -117,7 +117,6 @@ class Omit extends Component {
 
   componentDidMount() {
     this.boxWidth = this.refs.me.offsetWidth - 1
-
     this.splite()
   }
 
