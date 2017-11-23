@@ -2,7 +2,6 @@
  * omit 省略组件
  *
  * @prop line - 多行省略规定的行数，默认是 1 行
- *
  */
 
 import './Omit.scss'
