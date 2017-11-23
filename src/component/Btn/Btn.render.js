@@ -20,13 +20,11 @@ export default function (h) {
   } else if (this.type === 'flat') {
     btnEleChildren.push(
       h(
-        `${this.link ? 'a' : 'div'}`,
-        {
+        `${this.link ? 'a' : 'div'}`, {
           class: [
             this.xclass('ele-border')
           ]
-        },
-        [
+        }, [
           this.$slots.default ? this.$slots.default : this.value
         ]
       )
@@ -48,13 +46,11 @@ export default function (h) {
 
     btnEleChildren.push(
       h(
-        `${this.link ? 'a' : 'div'}`,
-        {
+        `${this.link ? 'a' : 'div'}`, {
           class: [
             this.xclass('ele-border')
           ]
-        },
-        [
+        }, [
           buttonChildren
         ]
       )
@@ -62,13 +58,16 @@ export default function (h) {
   }
 
   return h(
-    'div',
-    {
+    'div', {
       class: [
         this.cPrefix,
         this.btnClass,
-        { [this.xclass('ban')]: this.banState },
-        { [this.xclass('rip')]: this.motion }
+        {
+          [this.xclass('ban')]: this.banState
+        },
+        {
+          [this.xclass('rip')]: this.motion
+        }
       ],
       on: {
         click: this.click,
@@ -76,43 +75,35 @@ export default function (h) {
         mouseup: this.mouseup,
         keyup: this.keyup
       }
-    },
-    [
-      h('div',
-        {
-          class: [this.xclass('ele')],
-          on: {
-            focus: this.focus,
-            blur: this.blur
-          },
-          attrs: {
-            href: this.link,
-            tabindex: 0
-          }
+    }, [
+      h('div', {
+        class: [this.xclass('ele')],
+        on: {
+          focus: this.focus,
+          blur: this.blur
         },
-        [
-          btnEleChildren,
-          h('rip-transition',
-            {
-              class: [this.xclass('rip')],
-              props: {
-                assign: !this.isFloatBtn,
-                mousePoi: this.mousePoi
-              },
-              ref: 'transition'
-            }
-          ),
-          h('div',
-            {
-              class: [this.prefix('css-transition-rip')],
-              directives: [{
-                name: 'show',
-                value: this.motion
-              }]
-            }
-          )
-        ]
-      )
+        attrs: {
+          href: this.link,
+          tabindex: 0
+        }
+      }, [
+        btnEleChildren,
+        h('rip-transition', {
+          class: [this.xclass('rip')],
+          props: {
+            assign: !this.isFloatBtn,
+            mousePoi: this.mousePoi
+          },
+          ref: 'transition'
+        }),
+        h('div', {
+          class: [this.prefix('css-transition-rip')],
+          directives: [{
+            name: 'show',
+            value: this.motion
+          }]
+        })
+      ])
     ]
   )
 }
