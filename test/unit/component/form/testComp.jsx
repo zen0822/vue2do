@@ -1,5 +1,5 @@
 /**
- * 测试 form 组件的
+ * 测试 form 组件
  */
 
 import Vue from 'vue'
