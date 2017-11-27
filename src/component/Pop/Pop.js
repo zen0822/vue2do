@@ -214,7 +214,11 @@ const popComp = {
         }
       }
 
-      this.popDetail = Object.assign({}, this.popDetail, popStyle)
+      this.popDetail = {
+        ...this.popDetail,
+        ...popStyle
+      }
+
       Object.assign(this.$el.style, popStyle)
       this.$refs.transition.setOffset(slideOffset)
     },

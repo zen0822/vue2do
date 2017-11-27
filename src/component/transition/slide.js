@@ -7,6 +7,7 @@
  *                direction 为 west：实例右边距离实例的 offsetParent 的右边的偏移值
  *                direction 为 east：实例左边距离实例的 offsetParent 的左边的偏移值
  * @prop direction - 滑动方向(north | east | west | south)
+ * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
  * @prop speed - 淡出速度
  */
 
@@ -21,6 +22,10 @@ export default {
     direction: {
       type: String,
       default: 'south'
+    },
+    global: {
+      type: Boolean,
+      default: false
     },
     offset: {
       type: Number,
@@ -43,6 +48,9 @@ export default {
     },
     transition() {
       return `transform ${this.transitionTime} ease-out`
+    },
+    positionType() {
+      return this.global ? 'fixed' : 'absolute'
     }
   },
 
@@ -58,15 +66,15 @@ export default {
     _getTranslate() {
       switch (this.direction) {
         case 'south':
-          return `translateY(calc(-110% - ${this.slideOffset}px))`
+          return `translateY(calc(-100% - ${this.slideOffset}px))`
         case 'north':
-          return `translateY(calc(110% + ${this.slideOffset}px))`
+          return `translateY(calc(100% + ${this.slideOffset}px))`
         case 'east':
-          return `translateX(calc(-110% - ${this.slideOffset}px))`
+          return `translateX(calc(-100% - ${this.slideOffset}px))`
         case 'west':
-          return `translateX(calc(110% + ${this.slideOffset}px))`
+          return `translateX(calc(100% + ${this.slideOffset}px))`
         default:
-          return `translateY(calc(-110% - ${this.slideOffset}px))`
+          return `translateY(calc(-100% - ${this.slideOffset}px))`
       }
     },
 
@@ -85,7 +93,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'position': 'absolute',
+        'position': this.positionType,
         'transition': this.transition,
         'transform': this._getTranslate()
       })
@@ -134,7 +142,7 @@ export default {
       this.$emit('beforeLeave')
 
       return Object.assign(el.style, {
-        'position': 'absolute',
+        'position': this.positionType,
         'transition': this.transition,
         'transform': ''
       })

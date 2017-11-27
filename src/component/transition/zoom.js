@@ -3,6 +3,7 @@
  *
  * @prop speed - 淡出速度
  * @prop origin - 放大缩小的起始位置 (同 css 里的属性 transform-origin)
+ * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
  */
 
 import baseMixin from '../../mixin/transition'
@@ -13,6 +14,10 @@ export default {
   mixins: [baseMixin],
 
   props: {
+    global: {
+      type: Boolean,
+      default: false
+    },
     origin: {
       type: String,
       default: '50% 50%'
@@ -20,6 +25,9 @@ export default {
   },
 
   computed: {
+    positionType() {
+      return this.global ? 'fixed' : 'absolute'
+    },
     transition() {
       return `transform ${this.transitionTime} ease-out`
     }
@@ -31,7 +39,7 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'position': 'absolute',
+        'position': this.positionType,
         'transform-origin': this.origin,
         'transition': this.transition,
         'transform': 'scale(0)'
@@ -82,7 +90,7 @@ export default {
       this.$emit('beforeLeave')
 
       Object.assign(el.style, {
-        'position': 'absolute',
+        'position': this.positionType,
         'transform': '',
         'transform-origin': this.origin,
         'transition': this.transition

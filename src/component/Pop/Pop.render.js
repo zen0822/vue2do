@@ -6,6 +6,7 @@ export default function (h) {
   return h(`${this.type}-transition`, {
     props: {
       direction: this.popDirection,
+      global: !this.part,
       speed: this.speed
     },
     ref: 'transition'
