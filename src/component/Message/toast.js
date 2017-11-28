@@ -60,23 +60,21 @@ const commonVuex = new Vue({
 /**
  * 调用 toast
  **/
-const toast = (opt) => {
+const toast = (opt = {}) => {
   if (toasting) {
     toastHub.push(opt)
 
     return false
   }
 
+  toasting = true
+
   let option = {}
 
-  if (opt === undefined) {
-    Object.assign(option, {
-      message: '信息格式不正确！'
-    })
-  } else if (typeof opt === 'string') {
-    Object.assign(option, {
+  if (typeof opt === 'string') {
+    option = {
       message: opt.toString()
-    })
+    }
   } else {
     option = opt
   }
@@ -91,6 +89,7 @@ const toast = (opt) => {
       type: option.type,
       hideCb: () => {
         toasting = false
+
         option.cb && option.cb()
 
         if (toastHub.length > 0) {
@@ -98,11 +97,7 @@ const toast = (opt) => {
         }
       }
     })
-    .show({
-      cb: () => {
-        toasting = true
-      }
-    })
+    .show()
 }
 
 createToast()

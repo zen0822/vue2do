@@ -26,17 +26,15 @@ const addCookie = (name, value, expiresHours) => {
  * @return {[type]}      [description] cookie值
  *
  */
-const getCookie = (name) => {
-  let strCookie = document.cookie
-  let arrCookie = strCookie.split('; ')
-
-  for (let i = 0; i < arrCookie.length; i++) {
-    let arr = arrCookie[i].split('=')
-
-    if (arr[0] === name) return arr[1]
-  }
-
-  return ''
+const getCookie = (name, cookies = document.cookie) => {
+  return decodeURIComponent(
+    cookies.replace(
+      new RegExp(
+        `(?:(?:^|.*;)\\s*${encodeURIComponent(name).replace(/[\-\.\+\*]/g, '\\$&')}\\s*\\=\\s*([^;]*).*$)|^.*$`
+      ),
+      '$1'
+    )
+  ) || null
 }
 
 /**

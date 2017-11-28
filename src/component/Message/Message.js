@@ -18,11 +18,13 @@ import './Message.m.scss'
 import render from './Message.render'
 import baseMixin from '../../mixin/base'
 
-import popComp from '../Pop/Pop'
-import btnComp from '../Btn/Btn'
-import iconComp from '../Icon/Icon'
+import Pop from '../Pop/Pop'
+import Btn from '../Btn/Btn'
+import Icon from '../Icon/Icon'
 
-import { handleEleDisplay } from '../../util/dom/prop'
+import {
+  handleEleDisplay
+} from '../../util/dom/prop'
 
 const TIP_DISPLAY_TIME = 1500
 
@@ -34,26 +36,25 @@ const messageComp = {
   mixins: [baseMixin],
 
   components: {
-    btn: btnComp,
-    icon: iconComp,
-    pop: popComp
+    btn: Btn,
+    icon: Icon,
+    pop: Pop
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-message`
     },
-    // 组件的 header 的 class 名字
-    headerClass() {
+    headerClass() { // 组件的 header 的 class 名字
       return {
         [`${this.cPrefix}-no-header`]: !this.headerDisplay,
         [`${this.cPrefix}-no-header-title`]: !this.popHeaderName
       }
     },
-    // 组件的 footer 的 class 名字
-    footerClass() {
-      return { [`${this.cPrefix}-no-footer`]: !this.footerDisplay }
+    footerClass() { // 组件的 footer 的 class 名字
+      return {
+        [`${this.cPrefix}-no-footer`]: !this.footerDisplay
+      }
     }
   },
 
@@ -64,7 +65,10 @@ const messageComp = {
     },
     direction: {
       type: String,
-      default: 'south'
+      default: 'south',
+      validator(val) {
+        return ['north', 'east', 'west', 'south'].includes(val)
+      }
     },
     message: {
       type: String,
@@ -72,34 +76,23 @@ const messageComp = {
     },
     position: {
       type: String,
-      default: 'center'
+      default: 'center',
+      validator(val) {
+        return ['top', 'right', 'bottom', 'left', 'center'].includes(val)
+      }
     }
   },
 
   data: () => {
     return {
-      // 需要展示的信息
-      infoMessage: '',
-      // 信息类型
-      messageType: '',
+      infoMessage: '', // 需要展示的信息
+      messageType: '', // 信息类型
       messageDisplay: false,
       hideCb: null
     }
   },
 
-  watch: {
-    infoMessage(val) {
-      return this.$nextTick(() => {
-        this._initmessage()
-      })
-    }
-  },
-
   methods: {
-    _initComp() {
-      this._initmessage()
-    },
-
     _initmessage() {
       handleEleDisplay({
         element: this.$el,
@@ -123,12 +116,12 @@ const messageComp = {
      *                       {Function} cb - 显示之后的回调函数
      * @return {Promise}
      */
-    show({ cb } = {}) {
-      this._initmessage()
+    show({
+      cb
+    } = {}) {
+      this.messageDisplay = true
 
       return this.$nextTick(() => {
-        this.messageDisplay = true
-
         this.$refs.pop.show({
           cb: () => {
             setTimeout(() => {
@@ -152,8 +145,10 @@ const messageComp = {
      *                       {Function} cb - 隐藏之后的回调函数
      * @return {Object}
      */
-    hide({ cb } = {}) {
-      this.$refs.pop.hide({
+    hide({
+      cb
+    } = {}) {
+      return this.$refs.pop.hide({
         cb: () => {
           this.messageDisplay = false
           this.isMousedown = false
@@ -164,8 +159,6 @@ const messageComp = {
           return this.$emit('hide')
         }
       })
-
-      return this
     },
 
     /**

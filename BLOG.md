@@ -9,10 +9,6 @@
 
 ***
 
-## localStorage、sessionStorage、session、cookie
-
-***
-
 ## mousedown, mouseup, click, touchend, touchstart, touchmove 触发顺序
 
 ### 平板二合一电脑

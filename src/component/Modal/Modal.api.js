@@ -181,17 +181,23 @@ export default {
      * @param {Object} opt - 选项
      *                       {Function} okCb - 点击的回调函数
      *                       {Function} noCb - 取消的回调函数
+     *                       {Function} showCb - 显示之后的回调函数
+     *                       {Function} hideCb - 隐藏之后的回调函数
      *                       {String} title - 模态框标题
      *                       {Function} message - 需要展示的信息
      */
     set({
       okCb,
       noCb,
+      showCb,
+      hideCb,
       title = '',
       message = ''
     } = {}) {
       this.okCbFun = okCb
       this.noCbFun = noCb
+      this.showCb = showCb
+      this.hideCb = hideCb
       this.modalHeader = title
       this.modalMessage = message
 

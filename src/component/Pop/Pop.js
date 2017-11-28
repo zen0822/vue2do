@@ -4,7 +4,7 @@
  * @prop direction - 只有当 position 为 center 生效，弹出方向（north | east | west | south）
  * @prop part - 在一个父类元素弹出，默认为否即在当前文档之外弹窗
  * @prop position - 弹出层最终的所在位置 (top | right | bottom | left | center)
- * @prop speed - 弹出速度
+ * @prop speed - 弹出速度(slow|normal|fast)
  * @prop type - 弹出类型
  *
  * @slot - 弹出层的主体内容
@@ -19,7 +19,7 @@ import './Pop.m.scss'
 import render from './Pop.render'
 import baseMixin from '../../mixin/base'
 
-import slideTransition from '../transition/slide'
+import TransitionSlide from '../transition/slide'
 import {
   hasScroller
 } from '../../util/dom'
@@ -35,7 +35,7 @@ const popComp = {
   mixins: [baseMixin],
 
   components: {
-    'slide-transition': slideTransition
+    'slide-transition': TransitionSlide
   },
 
   props: {
@@ -45,11 +45,17 @@ const popComp = {
     },
     direction: {
       type: String,
-      default: 'south'
+      default: 'south',
+      validator(val) {
+        return ['north', 'east', 'west', 'south'].includes(val)
+      }
     },
     speed: {
       type: String,
-      default: 'normal'
+      default: 'normal',
+      validator(val) {
+        return ['slow', 'normal', 'fast'].includes(val)
+      }
     },
     part: {
       type: Boolean,
@@ -57,23 +63,23 @@ const popComp = {
     },
     position: {
       type: String,
-      default: 'center'
+      default: 'center',
+      validator(val) {
+        return ['top', 'right', 'bottom', 'left', 'center'].includes(val)
+      }
     }
   },
 
   data() {
     this.compName = 'pop'
+    this.popDisplay = false // 弹出层显示状态
 
     return {
-      // 弹出层显示状态
-      popDisplay: false,
-      // 弹窗的相关信息
-      popDetail: {
+      popDetail: { // 弹窗的相关信息
         top: 0,
         left: 0
       },
-      // 弹出层的方向
-      popDirection: 'south'
+      popDirection: 'south' // 弹出层的方向
     }
   },
 

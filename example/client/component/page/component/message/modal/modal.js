@@ -23,9 +23,7 @@ export default {
     },
 
     alert() {
-      alert({
-        message: '这是一个警告弹窗'
-      })
+      alert('这是一个警告弹窗')
     },
 
     confirm() {

@@ -21,7 +21,10 @@ export default {
   props: {
     direction: {
       type: String,
-      default: 'south'
+      default: 'south',
+      validator(val) {
+        return ['north', 'east', 'west', 'south'].includes(val)
+      }
     },
     global: {
       type: Boolean,
@@ -103,7 +106,7 @@ export default {
           el.style.display = ''
 
           return resolve()
-        })
+        }, 100)
       })
     },
 

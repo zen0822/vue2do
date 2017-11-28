@@ -57,23 +57,21 @@ const commonVuex = new Vue({
 /**
  * 调用 tip
  **/
-const tip = (opt) => {
+const tip = (opt = '') => {
   if (tiping) {
     tipHub.push(opt)
 
     return false
   }
 
+  tiping = true
+
   let option = {}
 
-  if (opt === undefined) {
-    Object.assign(option, {
-      message: '信息格式不正确！'
-    })
-  } else if (typeof opt === 'string') {
-    Object.assign(option, {
+  if (typeof opt === 'string') {
+    option = {
       message: opt.toString()
-    })
+    }
   } else {
     option = opt
   }
@@ -95,11 +93,7 @@ const tip = (opt) => {
         }
       }
     })
-    .show({
-      cb: () => {
-        tiping = true
-      }
-    })
+    .show()
 }
 
 createTip()

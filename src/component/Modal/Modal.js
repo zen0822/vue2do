@@ -33,14 +33,14 @@ import render from './Modal.render'
 import baseMixin from '../../mixin/base'
 import apiMixin from './Modal.api'
 
-import popComp from '../Pop/Pop'
-import btnComp from '../Btn/Btn'
-import iconComp from '../Icon/Icon'
-import scrollerComp from '../Scroller/Scroller'
-import rowComp from '../Row/Row'
-import colComp from '../Col/Col'
+import Pop from '../Pop/Pop'
+import Btn from '../Btn/Btn'
+import Icon from '../Icon/Icon'
+import Scroller from '../Scroller/Scroller'
+import Row from '../Row/Row'
+import Col from '../Col/Col'
 
-import fadeTransition from '../transition/fade'
+import TransitionFade from '../transition/fade'
 
 import {
   handleEleDisplay
@@ -60,13 +60,13 @@ const modalComp = {
   mixins: [baseMixin, apiMixin],
 
   components: {
-    btn: btnComp,
-    icon: iconComp,
-    pop: popComp,
-    scroller: scrollerComp,
-    row: rowComp,
-    column: colComp,
-    'fade-transition': fadeTransition
+    btn: Btn,
+    icon: Icon,
+    pop: Pop,
+    scroller: Scroller,
+    row: Row,
+    column: Col,
+    'fade-transition': TransitionFade
   },
 
   props: {
@@ -215,8 +215,10 @@ const modalComp = {
       modalDisplay: false,
       modalMessage: '',
       modalHeader: '',
-      okCbFun: {},
-      noCbFun: {},
+      showCb: null, // 模态框显示之后的回调函数
+      hideCb: null, // 模态框隐藏之后的回调函数
+      okCbFun: null,
+      noCbFun: null,
       hasScroller: false // scroller 是否有滚动条
     }
   },
@@ -228,6 +230,8 @@ const modalComp = {
 
     _binder() {
       this.$refs.pop.$on('show', (opt) => {
+        this.showCb && this.showCb()
+
         return this.$emit('show', {
           ...opt,
           emitter: this
@@ -235,6 +239,8 @@ const modalComp = {
       })
 
       this.$refs.pop.$on('hide', (opt) => {
+        this.hideCb && this.hideCb()
+
         return this.$emit('show', {
           ...opt,
           emitter: this
@@ -277,6 +283,13 @@ const modalComp = {
 
       this.okCbFun = this.okCb
       this.noCbFun = this.noCb
+    },
+
+    /**
+     * 点击模态框背景的句柄
+     */
+    _clickBg() {
+      //
     }
   }
 }

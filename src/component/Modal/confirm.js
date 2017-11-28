@@ -52,25 +52,23 @@ const commonVuex = new Vue({
 /**
  * 调用 confirm
  **/
-const confirm = (opt) => {
+const confirm = (opt = '') => {
+  if (confirming) {
+    confirmHub.push(opt)
+
+    return false
+  }
+
+  confirming = true
+
   let option = {}
 
-  if (opt === undefined) {
-    Object.assign(option, {
-      message: 'vue2do: 调用 confirm 传的参数错误!'
-    })
-  } else if (typeof opt === 'string') {
+  if (typeof opt === 'string') {
     Object.assign(option, {
       message: opt.toString()
     })
   } else {
     option = opt
-  }
-
-  if (confirming) {
-    confirmHub.push(option)
-
-    return false
   }
 
   return commonVuex
@@ -82,19 +80,18 @@ const confirm = (opt) => {
       title: option.title,
       message: option.message,
       okCb: (vm) => {
+        option.cb && option.cb()
+        vm.hide()
+      },
+      hideCb: () => {
         confirming = false
 
         if (confirmHub.length > 0) {
           confirm(confirmHub.shift())
         }
-
-        option.cb && option.cb()
-        vm.hide()
       }
     })
-    .show(() => {
-      confirming = true
-    })
+    .show(() => {})
 }
 
 createConfirm()

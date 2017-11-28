@@ -55,25 +55,23 @@ const commonVuex = new Vue({
 /**
  * 调用 alert
  **/
-const alert = (opt) => {
-  let option = {}
-
-  if (opt === undefined) {
-    Object.assign(option, {
-      message: 'vue2do: 调用 alert 传的参数错误!'
-    })
-  } else if (typeof opt === 'string') {
-    Object.assign(option, {
-      message: opt.toString()
-    })
-  } else {
-    option = opt
-  }
-
+const alert = (opt = '') => {
   if (alerting) {
-    alertHub.push(option)
+    alertHub.push(opt)
 
     return false
+  }
+
+  alerting = true
+
+  let option = {}
+
+  if (typeof opt === 'string') {
+    option = {
+      message: opt
+    }
+  } else {
+    option = opt
   }
 
   return commonVuex
@@ -85,19 +83,18 @@ const alert = (opt) => {
       title: option.title,
       message: option.message,
       okCb: (vm) => {
+        option.cb && option.cb()
+        vm.hide()
+      },
+      hideCb: () => {
         alerting = false
 
         if (alertHub.length > 0) {
           alert(alertHub.shift())
         }
-
-        option.cb && option.cb()
-        vm.hide()
       }
     })
-    .show(() => {
-      alerting = true
-    })
+    .show()
 }
 
 createAlert()

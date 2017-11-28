@@ -39,6 +39,12 @@ Vue.component('select', select)
 Vue.component('yourPrefix' + input.compName, input)
 ```
 
+### 只打包指定的单个文件
+
+#### 因为从 vue2do/index.js 文件加载的时候会加载所有的组件，所以如果只要加载其中制定的组件只需要加载 vue2do/src/component/[componentName]/[componentName]
+
+***
+
 获取更多信息请访问 vue2do 的 [文档网站](https://zen0822.github.io)。
 
 本项目遵循 [semver](http://semver.org/lang/zh-CN/) 版本管理

@@ -17,10 +17,10 @@
 import Vue from 'vue'
 
 import './Bubble.scss'
-import iconComp from '../Icon/Icon'
+import Icon from '../Icon/Icon'
 import render from './Bubble.render'
 import baseMixin from '../../mixin/base'
-import zoomTransition from '../transition/zoom'
+import TransitionZoom from '../transition/zoom'
 
 import { offset as childrenHeight } from '../../util/dom/prop'
 
@@ -34,8 +34,8 @@ const bubbleComp = {
   mixins: [baseMixin],
 
   components: {
-    icon: iconComp,
-    'zoom-transition': zoomTransition
+    icon: Icon,
+    'zoom-transition': TransitionZoom
   },
 
   props: {
@@ -72,9 +72,9 @@ const bubbleComp = {
 
   data() {
     this.compName = 'bubble'
+    this.bubbleDisplay = false
 
     return {
-      bubbleDisplay: false,
       mouseOnBubble: false,
       bubbleDisplayCounter: {},
       displayInterval: 800
@@ -145,7 +145,6 @@ const bubbleComp = {
       clearTimeout(this.bubbleDisplayCounter)
 
       this._initPosition(target)
-
 
       this.$refs.transition.$off('afterEnter')
       this.$refs.transition.$on('afterEnter', () => {
