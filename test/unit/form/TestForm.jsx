@@ -3,8 +3,8 @@
  */
 
 import Vue from 'vue'
-import FormComp from '../../../../src/component/base/form/form'
-import InputComp from '../../../../src/component/base/input/input'
+import FormComp from '../../../src/component/Form/Form'
+import InputComp from '../../../src/component/Input/Input'
 
 export default {
   render() {

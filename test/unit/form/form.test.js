@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import testCompConfig from './Test'
+import testCompConfig from './TestForm'
 
 describe('form 组件的相关测试', () => {
   const Ctor = Vue.extend(testCompConfig)

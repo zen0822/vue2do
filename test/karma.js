@@ -27,7 +27,7 @@ const customLaunchers = {
     browserName: 'internet explorer',
     platform: 'Windows 8.1',
     version: '11'
-  },
+  }
   // 'SL_Safari': {
   //   base: 'SauceLabs',
   //   browserName: 'safari',
