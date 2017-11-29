@@ -5,12 +5,12 @@
 
 [![vue2do](https://nodei.co/npm/vue2do.png)](https://npmjs.org/package/vue2do)
 
-[![Build Status](https://saucelabs.com/browser-matrix/zen_n.svg)](https://saucelabs.com/beta/builds/e8ac8e3b1d664ce5997afc6879f2858b)
+<!-- [![Build Status](https://saucelabs.com/browser-matrix/zen_n.svg)](https://saucelabs.com/beta/builds/e8ac8e3b1d664ce5997afc6879f2858b) -->
 
 
 ## 安装
 ```sh
-npm install vue2do -S
+npm i vue2do -S
 ```
 
 ## 开始使用
