@@ -11,20 +11,8 @@ delete webpackConf.entry
 
 module.exports = function (config) {
   config.set({
-    autoWatch: true,
     browsers: ['Chrome'],
     captureTimeout: 120000,
-    coverageReporter: {
-      dir: path.join(__dirname, 'coverage'),
-      reporters: [{
-          type: 'html'
-        },
-        {
-          type: 'lcov',
-          subdir: 'lcov'
-        }
-      ]
-    },
     colors: true,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'], // 这是测试入口文件
@@ -38,6 +26,5 @@ module.exports = function (config) {
     webpackMiddleware: {
       noInfo: true
     }
-    // logLevel: config.LOG_ERROR
   })
 }
