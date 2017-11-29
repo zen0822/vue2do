@@ -59,7 +59,7 @@ const TYPE_TEXT = 'field'
 const ERROR_MESSAGE_TIP = 'tip'
 const ERROR_MESSAGE_BUBBLE = 'bubble'
 
-const inputComp = {
+export default {
   name: 'input',
 
   render,
@@ -386,5 +386,3 @@ const inputComp = {
     this.$store.dispatch(hubStore.input.add, this)
   }
 }
-
-export default inputComp

@@ -14,8 +14,7 @@ export default {
   mixins: [baseMixin],
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-check-ele`
     }
   }

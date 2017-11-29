@@ -18,7 +18,7 @@ import baseMixin from '../../mixin/base'
 const TYPE_ALI = 'ali'
 const TYPE_FA = 'fa'
 
-const iconCompConfig = {
+export default {
   name: 'icon',
 
   render,
@@ -61,5 +61,3 @@ const iconCompConfig = {
     }
   }
 }
-
-export default iconCompConfig

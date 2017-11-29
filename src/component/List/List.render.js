@@ -9,12 +9,12 @@ export default function (h) {
     let listItems = []
 
     this.listItem.forEach((item, index) => {
-      let $slot = this.$scopedSlots
-        ? [this.$scopedSlots.default({
+      let $slot = this.$scopedSlots ?
+        [this.$scopedSlots.default({
           index: index + 1,
           item
-        })]
-        : this.$slots.default
+        })] :
+        this.$slots.default
 
       listItems.push(
         h('li', {
@@ -48,92 +48,86 @@ export default function (h) {
     }))
   }
 
-  return h('div',
-    { class: [this.cPrefix, this.xclass(this.themeClass)] },
-    [
-      h('scroller', {
-        class: [this.xclass('scroller')],
-        props: {
-          autoHide: this.autoHideScroller,
-          height: this.scrollerHeight
-        },
-        on: {
-          scrollY: this.scroll
-        },
-        ref: 'scroller'
-      }, scrollerChildren),
-      h('slide-transition',
-        {
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass)]
+  }, [
+    h('scroller', {
+      class: [this.xclass('scroller')],
+      props: {
+        autoHide: this.autoHideScroller,
+        height: this.scrollerHeight
+      },
+      on: {
+        scrollY: this.scroll
+      },
+      ref: 'scroller'
+    }, scrollerChildren),
+    h('slide-transition', {
+      props: {
+        direction: 'north',
+        offset: this.pageDetail.bottom
+      },
+      ref: 'slideTransition'
+    }, [
+      h(
+        'page', {
+          class: [this.xclass('page')],
+          directives: [{
+            name: 'show',
+            value: this.pagerDisplay
+          }],
           props: {
-            direction: 'north',
-            offset: this.pageDetail.bottom
+            data: this.pageData,
+            type: this.pageType,
+            loadMoreText: this.loadMoreText
           },
-          ref: 'slideTransition'
-        },
-        [
-          h(
-            'page',
-            {
-              class: [this.xclass('page')],
-              directives: [{
-                name: 'show',
-                value: this.pagerDisplay
-              }],
+          on: {
+            'switch': this.switchPage
+          },
+          ref: 'page',
+          style: this.pagerStyle
+        }, (() => {
+          let ele = [
+            h('icon', {
+              class: [`${this.compPrefix}-m-r-half`],
               props: {
-                data: this.pageData,
-                type: this.pageType,
-                loadMoreText: this.loadMoreText
-              },
-              on: {
-                'switch': this.switchPage
-              },
-              ref: 'page',
-              style: this.pagerStyle
-            }, (() => {
-              let ele = [
-                h('icon', {
-                  class: [`${this.compPrefix}-m-r-half`],
-                  props: {
-                    kind: 'arrow'
-                  }
-                }),
-                h('span', this.loadMoreText)
-              ]
-
-              if (this.isPageTypeMore) {
-                return [
-                  h(
-                    'div',
-                    {
-                      slot: 'loadMore'
-                    },
-                    [
-                      h('loading', {
-                        class: [`${this.compPrefix}-m-r-half`].concat(
-                          this.xclass(['loading', 'loading-more'])
-                        ),
-                        ref: 'loadingOfMore'
-                      }),
-                      h('icon', {
-                        class: [`${this.compPrefix}-m-r-half`],
-                        directives: [{
-                          name: 'show',
-                          value: this.arrowOfMoreDisplay
-                        }],
-                        props: {
-                          kind: 'arrow'
-                        }
-                      }),
-                      h('span', this.loadMoreText)
-                    ]
-                  )]
+                kind: 'arrow'
               }
+            }),
+            h('span', this.loadMoreText)
+          ]
 
-              return ele
-            })()
-          )
-        ]
+          if (this.isPageTypeMore) {
+            return [
+              h(
+                'div', {
+                  slot: 'loadMore'
+                }, [
+                  h('loading', {
+                    class: [`${this.compPrefix}-m-r-half`].concat(
+                      this.xclass(['loading', 'loading-more'])
+                    ),
+                    ref: 'loadingOfMore'
+                  }),
+                  h('icon', {
+                    class: [`${this.compPrefix}-m-r-half`],
+                    directives: [{
+                      name: 'show',
+                      value: this.arrowOfMoreDisplay
+                    }],
+                    props: {
+                      kind: 'arrow'
+                    }
+                  }),
+                  h('span', this.loadMoreText)
+                ]
+              )
+            ]
+          }
+
+          return ele
+        })()
       )
-    ].concat(loadingOfNum)
-  )
+    ])
+  ].concat(loadingOfNum))
 }

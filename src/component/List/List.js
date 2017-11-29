@@ -19,11 +19,11 @@ import './List.scss'
 import render from './List.render'
 import tip from '../Message/tip'
 
-import iconComp from '../Icon/Icon'
-import loadingComp from '../Loading/Loading'
-import pageComp from '../Page/Page'
-import scrollerComp from '../Scroller/Scroller'
-import slideTransition from '../transition/slide'
+import Icon from '../Icon/Icon'
+import Loading from '../Loading/Loading'
+import Pager from '../Page/Page'
+import Scroller from '../Scroller/Scroller'
+import TransitionSlide from '../transition/slide'
 
 import baseMixin from '../../mixin/base'
 import apiMixin from './List.api'
@@ -36,7 +36,7 @@ import {
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
 
-const listComp = {
+export default {
   name: 'list',
 
   render,
@@ -44,11 +44,11 @@ const listComp = {
   mixins: [baseMixin, listMixin, apiMixin],
 
   components: {
-    icon: iconComp,
-    loading: loadingComp,
-    page: pageComp,
-    scroller: scrollerComp,
-    'slide-transition': slideTransition
+    icon: Icon,
+    loading: Loading,
+    page: Pager,
+    scroller: Scroller,
+    'slide-transition': TransitionSlide
   },
 
   props: {
@@ -279,5 +279,3 @@ const listComp = {
     this.selectGrandpa = findGrandpa(this.$parent, 'select')
   }
 }
-
-export default listComp

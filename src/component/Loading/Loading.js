@@ -19,7 +19,7 @@ const TYPE_ROTATE = 'rotate'
 const TYPE_ROTATE_2 = 'rotate2'
 const TYPE_SPOT = 'spot'
 
-const loadingComp = {
+export default {
   name: 'loading',
 
   mixins: [baseMixin],
@@ -113,5 +113,3 @@ const loadingComp = {
     }
   }
 }
-
-export default loadingComp

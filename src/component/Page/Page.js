@@ -21,11 +21,11 @@
 
 import './Page.scss'
 
-import btnComp from '../Btn/Btn'
-import iconComp from '../Icon/Icon'
-import inputComp from '../Input/Input'
-import rowComp from '../Row/Row'
-import columnComp from '../Col/Col'
+import Btn from '../Btn/Btn'
+import Icon from '../Icon/Icon'
+import Input from '../Input/Input'
+import Row from '../Row/Row'
+import Column from '../Col/Col'
 
 import baseMixin from '../../mixin/base'
 import render from './Page.render'
@@ -38,11 +38,11 @@ const pageComp = {
   mixins: [baseMixin],
 
   components: {
-    btn: btnComp,
-    icon: iconComp,
-    row: rowComp,
-    column: columnComp,
-    'input-box': inputComp
+    btn: Btn,
+    icon: Icon,
+    row: Row,
+    column: Column,
+    'input-box': Input
   },
 
   props: {
@@ -50,32 +50,26 @@ const pageComp = {
       type: Boolean,
       required: false
     },
-
     data: {
       type: Object,
       required: true
     },
-
     display: {
       type: Boolean,
       default: true
     },
-
     loadMoreText: {
       type: String,
       default: '点击加载更多'
     },
-
     onePageDisplay: {
       type: Boolean,
       default: false
     },
-
     size: {
       type: String,
       default: 'm'
     },
-
     type: {
       type: String,
       default: 'num'
@@ -84,27 +78,21 @@ const pageComp = {
 
   data() {
     return {
-      // 分页数据
-      pageData: {},
-      // 分页的数字按钮
-      pageItem: []
+      pageData: {}, // 分页数据
+      pageItem: [] // 分页的数字按钮
     }
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-page`
     },
-
     moreDisplay() {
       return this.type === 'more'
     },
-
     numDisplay() {
       return this.type === 'num'
     },
-
     nextDisplay() {
       if (this.pageData.current === this.pageData.total) {
         return true
@@ -112,7 +100,6 @@ const pageComp = {
 
       return false
     },
-
     preDisplay() {
       if (this.pageData.current === 1) {
         return true
@@ -120,7 +107,6 @@ const pageComp = {
 
       return false
     },
-
     pageDisplay() {
       return this.display && (this.onePageDisplay || this.pageData.total > 1)
     }
@@ -252,7 +238,7 @@ const pageComp = {
     /**
      * 切换页码
      */
-    switch(pageNum) {
+    switch (pageNum) {
       if (isNaN(pageNum)) {
         return false
       }

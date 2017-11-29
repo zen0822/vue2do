@@ -31,7 +31,7 @@ const SIZE_S = 'S'
 const SIZE_M = 'M'
 const SIZE_L = 'L'
 
-const btnComp = {
+export default {
   name: 'btn',
 
   mixins: [baseMixin, formMixin],
@@ -261,5 +261,3 @@ const btnComp = {
     }
   }
 }
-
-export default btnComp
