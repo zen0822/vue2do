@@ -1,24 +1,19 @@
+/**
+ * 使用 mocha 测试框架 http://mochajs.org/
+ * chai 的 测试断言框架 http://chaijs.com/api/bdd/#method_a
+ */
+
 const path = require('path')
 const config = require('./config.json')
 const webpackConf = require('../build/config/base.webpack.conf')(config.appName)
-const customLaunchers = require('./launcher.sauceLab.json')
 
 delete webpackConf.entry
 
 module.exports = function (config) {
-  process.env.SAUCE_USERNAME = 'zen_n'
-  process.env.SAUCE_ACCESS_KEY = 'ab082b18-8c48-4378-be1a-2f85059acc71'
-
-  if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
-    console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
-    process.exit(1)
-  }
-
   config.set({
-    basePath: '',
-    browsers: Object.keys(customLaunchers),
+    autoWatch: true,
+    browsers: ['Chrome'],
     captureTimeout: 120000,
-    colors: true,
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),
       reporters: [{
@@ -30,27 +25,19 @@ module.exports = function (config) {
         }
       ]
     },
-    customLaunchers,
+    colors: true,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'], // 这是测试入口文件
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap', 'coverage']
     },
-    reporters: ['spec', 'coverage', 'saucelabs'],
-    singleRun: true,
-    sauceLabs: {
-      testName: 'vue2do test',
-      recordScreenshots: false,
-      connectOptions: {
-        port: 5757,
-        logfile: 'sauce_connect.log'
-      },
-      public: 'public'
-    },
-    // Increase timeout in case connection in CI is slow
+    port: 9877,
+    reporters: ['spec', 'coverage'],
+    singleRun: false,
     webpack: webpackConf,
     webpackMiddleware: {
-      stats: 'errors-only'
+      noInfo: true
     }
+    // logLevel: config.LOG_ERROR
   })
 }
