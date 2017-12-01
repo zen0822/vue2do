@@ -1,0 +1,143 @@
+// btn.type 样式
+
+$kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
+$C_PREFIX: #{ $COMP_BTN };
+
+@mixin btn-button($color, $dark-color, $lighter-color) {
+  background-color: $color;
+}
+
+@mixin btn-flat($color, $lighter-color) {
+  color: $color;
+  border-color: $color;
+}
+
+@mixin btn-outline($color) {
+  border-color: $color;
+  color: $color;
+}
+
+.#{$C_PREFIX} {
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      background-color: #fff;
+      border-radius: $border-radius;
+      box-shadow: $shadow-lower;
+
+      &:hover {
+        box-shadow: $shadow;
+      }
+    }
+
+    &.#{$C_PREFIX}-kind {
+      &-primary > .#{$C_PREFIX}-ele {
+        @include btn-button($primary-color, $primary-dark-color, $primary-lighter-color);
+      }
+
+      &-danger > .#{$C_PREFIX}-ele {
+        @include btn-button($danger-color, $danger-dark-color, $danger-lighter-color);
+      }
+
+      &-success > .#{$C_PREFIX}-ele {
+        @include btn-button($success-color, $success-dark-color, $success-lighter-color);
+      }
+
+      &-warning > .#{$C_PREFIX}-ele {
+        @include btn-button($warning-color, $warning-dark-color, $warning-lighter-color);
+      }
+
+      &-default > .#{$C_PREFIX}-ele {
+        @include btn-button(#fff, $border-light-color, $border-lightest-color);
+        color: $grey-dark;
+
+        &:hover,
+        &:active {
+          color: $grey-dark;
+        }
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+      box-sizing: border-box;
+      padding: 0;
+      box-shadow: $shadow;
+      min-width: auto;
+
+      &::after {
+        content: " ";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        width: 0;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-type-flat {
+    & > .#{$C_PREFIX}-ele {
+      background-color: #fff;
+    }
+
+    &.#{$C_PREFIX}-kind-primary > .#{$C_PREFIX}-ele {
+      @include btn-flat($primary-color, $primary-lighter-color);
+    }
+
+    &.#{$C_PREFIX}-kind-danger > .#{$C_PREFIX}-ele {
+      @include btn-flat($danger-color, $danger-lighter-color);
+    }
+
+    &.#{$C_PREFIX}-kind-success > .#{$C_PREFIX}-ele {
+      @include btn-flat($success-color, $success-lighter-color);
+    }
+
+    &.#{$C_PREFIX}-kind-warning > .#{$C_PREFIX}-ele {
+      @include btn-flat($warning-color, $warning-lighter-color);
+    }
+
+    &.#{$C_PREFIX}-kind-default > .#{$C_PREFIX}-ele {
+      @include btn-flat($grey-light, $warning-lighter-color);
+    }
+  }
+
+  &.#{$C_PREFIX}-type-outline {
+    & > .#{$C_PREFIX}-ele {
+      background-color: #fff;
+    }
+
+    &.#{$C_PREFIX}-kind-primary
+        > .#{$C_PREFIX}-ele
+        > .#{$C_PREFIX}-ele-border {
+      @include btn-outline($primary-color);
+    }
+
+    &.#{$C_PREFIX}-kind-dange
+        > .#{$C_PREFIX}-ele
+        > .#{$C_PREFIX}-ele-border {
+      @include btn-outline($danger-color);
+    }
+
+    &.#{$C_PREFIX}-kind-success
+        > .#{$C_PREFIX}-ele
+        > .#{$C_PREFIX}-ele-border {
+      @include btn-outline($success-color);
+    }
+
+    &.#{$C_PREFIX}-kind-warning
+        > .#{$C_PREFIX}-ele
+        > .#{$C_PREFIX}-ele-border {
+      @include btn-outline($warning-color);
+    }
+
+    &.#{$C_PREFIX}-kind-default
+        > .#{$C_PREFIX}-ele
+        > .#{$C_PREFIX}-ele-border {
+      @include btn-outline($grey-light);
+    }
+  }
+}

@@ -1,0 +1,129 @@
+// vue2/scss/config.scss
+
+//---------------- main ----------------
+
+$comp-prefix: z !default;
+
+//---------------- color ----------------
+
+// base color
+$blue-color: #2196f3 !default;
+$danger-color: #ef5350 !default;
+$success-color: #66bb6a !default;
+$warning-color: #ffee58 !default;
+$default-color: #e6e6e6 !default;
+$orange-color: #ffa726 !default;
+
+$blue-light-color: #6ec6ff !default;
+$danger-light-color: #ff867c !default;
+$success-light-color: #98ee99 !default;
+$warning-light-color: #ffff8b !default;
+$orange-light-color: #ffd95b !default;
+
+$blue-dark-color: #0069c0 !default;
+$danger-dark-color: #b61827 !default;
+$success-dark-color: #338a3e !default;
+$warning-dark-color: #c9bc1f !default;
+$orange-dark-color: #c77800 !default;
+
+$blue-lighter-color: rgba($blue-color, 0.2);
+$danger-lighter-color: rgba($danger-color, 0.2);
+$success-lighter-color: rgba($success-color, 0.2);
+$warning-lighter-color: rgba($warning-color, 0.2);
+$orange-lighter-color: rgba($orange-color, 0.2);
+
+$primary-color: $danger-color !default;
+$primary-light-color: $danger-light-color !default;
+$primary-lighter-color: $danger-lighter-color !default;
+$primary-dark-color: $danger-dark-color !default;
+
+$secondary-color: #999999 !default;
+
+$grey: #666666 !default;
+$grey-dark: #333333 !default;
+$grey-light: $secondary-color !default;
+$grey-lightest: #cccccc !default;
+
+// background
+$bg-color: #f5f5f5 !default;
+$bg-light-color: #fafafa !default;
+
+// link
+$link-color: $primary-color !default;
+
+// border
+$border-color: #d6d6d6 !default;
+$border-lightest-color: #f0f0f0 !default;
+$border-light-color: #e5e5e5 !default;
+$border-dark-color: $grey-light !default;
+
+//---------------- gap padding 间隔参数 ----------------
+
+$gap-base: 8px !default;
+
+// 垂直方向的空隙值
+$gap-v: $gap-base !default;
+$gap-v-half: $gap-v / 2 !default;
+$gap-v-double: $gap-v * 2 !default;
+$gap-v-triple: $gap-v * 3 !default;
+
+// 水平方向的空隙值
+$gap-h: $gap-base !default;
+$gap-h-half: $gap-v / 2 !default;
+$gap-h-double: $gap-v * 2 !default;
+$gap-h-triple: $gap-v * 3 !default;
+
+//---------------- gutter margin 间隔参数 ----------------
+
+$gutter-base: 10px !default;
+
+// 垂直方向的空隙值
+$gutter-v: $gutter-base !default;
+$gutter-v-half: $gutter-v / 2 !default;
+$gutter-v-double: $gutter-v * 2 !default;
+$gutter-v-triple: $gutter-v * 3 !default;
+
+// 水平方向的空隙值
+$gutter-h: $gutter-base !default;
+$gutter-h-half: $gutter-v / 2 !default;
+$gutter-h-double: $gutter-v * 2 !default;
+$gutter-h-triple: $gutter-v * 3 !default;
+
+//---------------- border ----------------
+
+$border-thin: 1px !default;
+$border-thick: 2px !default;
+
+$border-radius: 3px !default;
+
+//---------------- font ----------------
+
+$font-base: 14px !default;
+
+$h1: 28px !default;
+$h2: 21px !default;
+$h3: 16px !default;
+$h4: $font-base !default;
+$h5: 12px;
+
+//---------------- other ----------------
+
+$z-index-lower: 998 !default;
+$z-index: 999 !default;
+$z-index-higher: 1000 !default;
+
+$z-index-modal: $z-index-higher !default;
+$z-index-message: 1001 !default;
+
+$shadow-lower:
+    0 2px 2px 0 rgba(0,0,0,0.14),
+    0 3px 1px -2px rgba(0,0,0,0.12),
+    0 1px 5px 0 rgba(0,0,0,0.2);
+$shadow:
+    0 8px 10px 1px rgba(0,0,0,0.14),
+    0 3px 14px 2px rgba(0,0,0,0.12),
+    0 5px 5px -3px rgba(0,0,0,0.2);
+$shadow-highter:
+    0 8px 10px 1px rgba(0,0,0,0.14),
+    0 3px 14px 2px rgba(0,0,0,0.12),
+    0 5px 5px -3px rgba(0,0,0,0.2);

@@ -1,0 +1,13 @@
+div.p-component
+  z-row(:gap='30', align='start')
+    z-col(:xs='12', :s='12', :l='3')
+      z-nav(
+          type='vertical'
+          class='p-component-menu'
+          title='组件导航'
+          trigger='show'
+          spread-all
+          :init-opt='menuOpt'
+      )
+    z-col.p-component-stage(:xs='12', :s='12', :l='9')
+      router-view

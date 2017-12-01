@@ -1,0 +1,43 @@
+{
+  "select": {
+    "option": {
+      "change": "selectOptChange"
+    }
+  },
+  "input": {
+    "focus": "focusInput",
+    "blur": "blurInput",
+    "keyup": "keyupInput",
+    "change": "changeInput",
+    "completion": {
+      "click": "clickCompletion"
+    }
+  },
+  "tab": {
+    "change": "tabChange"
+  },
+  "checkbox": {
+    "change": "checkboxChange"
+  },
+  "btn": {
+    "click": "clickBtn"
+  },
+  "scroller": {
+    "change": {
+      "height": "changeHeight",
+      "bar": {
+        "y": "changeYBar",
+        "x": "changeXBar"
+      }
+    },
+    "scroll": {
+      "y": "scrollY",
+      "x": "scrollX"
+    }
+  },
+  "common": {
+    "searchTool": {
+      "change": "searchQueryChange"
+    }
+  }
+}

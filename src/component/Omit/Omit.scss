@@ -1,0 +1,24 @@
+/*
+ * omit 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import "../../scss/extend.scss";
+
+$C_PREFIX: #{$comp-prefix}-omit;
+
+.#{$C_PREFIX} {
+    width: 100%;
+
+    &-font-width {
+        visibility: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    &-omit-line {
+        width: 100%;
+
+        @extend %text-omit;
+    }
+}

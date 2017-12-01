@@ -1,0 +1,8 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
+
+.footer-layout-stage {
+  background-color: $grey-dark;
+  padding: $gap-v;
+  text-align: center;
+}

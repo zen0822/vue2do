@@ -1,0 +1,105 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
+
+.header-layout-stage {
+  position: relative;
+  background-color: $grey-dark;
+  height: 88px;
+  padding: 0 $gap-h;
+
+  & > .nav-box-mobile {
+    display: none;
+
+    .z-icon .z-icon-ali {
+      font-size: 30px;
+      color: #fff;
+    }
+
+    .z-icon .z-icon-sort {
+      font-size: 40px;
+    }
+  }
+
+  & > .nav-box {
+    max-width: 1024px;
+    height: 100%;
+    margin: 0 auto;
+
+    .logo-box {
+      width: 30px;
+    }
+
+    .nav-menu-box {
+      .z-icon .z-icon-l {
+        font-size: 40px;
+      }
+
+      .router-link-active {
+        color: $bg-color;
+
+        &::after {
+          content: " ";
+          width: 100%;
+          bottom: -33px;
+          left: 0;
+          position: absolute;
+          border-bottom: #fff $border-thin * 5 solid;
+        }
+      }
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .z-col {
+        position: relative;
+        font-size: $h3;
+        width: 100px;
+        text-align: center;
+      }
+    }
+  }
+
+  & > .mobile-menu {
+    margin: 0 -$gap-h;
+    display: none;
+
+    .menu-search {
+      border-bottom: #fff $border-thin solid;
+
+      & > .z-input {
+        width: 100%;
+
+        .z-input-wrap {
+          background-color: rgba(0, 0, 0, 0);
+          border: none;
+
+          .z-icon .z-icon-search {
+            font-size: $h1;
+          }
+
+          input {
+            font-size: $h2;
+          }
+        }
+      }
+    }
+  }
+
+  @include device-type('<l') {
+    height: 60px;
+
+    & > .nav-box {
+      display: none;
+    }
+
+    & > .nav-box-mobile {
+      display: flex;
+    }
+
+    & > .mobile-menu {
+      display: block;
+    }
+  }
+}

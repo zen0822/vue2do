@@ -1,0 +1,14 @@
+$C_PREFIX: #{ $COMP_INPUT };
+
+.#{$C_PREFIX} {
+  &.#{$C_PREFIX}-ui-bootstrap {
+    .#{$C_PREFIX}-wrap {
+      border: $border-color $border-thin solid;
+      border-radius: $border-radius;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

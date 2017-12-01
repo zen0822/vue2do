@@ -1,0 +1,35 @@
+include ../../mixin.pug
+
+div.component-transition
+  article.example-article
+    +section('fade', '淡淡')
+      z-btn(@click='fadeIn') 淡入
+      z-btn(@click='fadeOut' class='z-css-m-l') 淡出
+      div.transitioner
+        z-fade-transition(
+            ref='fade'
+            :offset='100'
+        )
+          div 我被淡淡了！
+      z-code(type='html').
+        #{'<z-btn @click="fadeIn">'}
+          淡入
+        #{'</z-btn>'}
+
+        #{'<z-btn @click="fadeOut">'}
+          淡出
+        #{'</z-btn>'}
+
+        #{'<z-fade-transition ref="fade">'}
+          #{'<div>我被淡淡了！</div>'}
+        #{'</z-fade-transition>'}
+      z-code(type='js').
+        ...
+          methods: {
+            fadeIn() {
+              this.$refs.fade.enter()
+            },
+            fadeOut() {
+              this.$refs.fade.leave()
+            }
+          }

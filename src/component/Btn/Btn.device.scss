@@ -1,0 +1,16 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+/**
+ * btn 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_BTN };
+
+.#{$C_PREFIX} {
+  @include device-type("xl") {
+
+  }
+}

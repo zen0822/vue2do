@@ -1,0 +1,68 @@
+/**
+ * 组件公共类样式
+ */
+
+@import "../config.scss";
+@import "../extend.scss";
+
+$C_PREFIX: #{$comp-prefix}-css;
+
+.#{$C_PREFIX}-clear-fix {
+  &:after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+}
+
+.#{$C_PREFIX}-float-left {
+  float: left;
+}
+
+.#{$C_PREFIX}-float-right {
+  float: right;
+}
+
+.#{$C_PREFIX}-text-left {
+  text-align: left;
+}
+
+.#{$C_PREFIX}-text-center {
+  text-align: center;
+}
+
+.#{$C_PREFIX}-text-right {
+  text-align: right;
+}
+
+.#{$C_PREFIX}-vertical-middle {
+  vertical-align: middle;
+}
+
+.#{$C_PREFIX}-display-block {
+  display: block;
+}
+
+.#{$C_PREFIX}-display-inline-block {
+  display: inline-block;
+}
+
+.#{$C_PREFIX}-cursor-pointer {
+  cursor: pointer;
+}
+
+.#{$C_PREFIX}-hide {
+  display: none !important;
+}
+
+.#{$C_PREFIX}-invisible {
+  visibility: hidden !important;
+}
+
+.#{$C_PREFIX}-transition {
+  @extend %transition;
+}
+
+.#{$C_PREFIX}-text-omit {
+  @extend %text-omit;
+}

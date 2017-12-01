@@ -1,0 +1,44 @@
+.#{$C_PREFIX} {
+  &.#{$C_PREFIX}-theme-primary,
+  &.#{$C_PREFIX}-theme-fill {
+    vertical-align: middle;
+    border-radius: $border-radius;
+
+    &.#{$C_PREFIX}-multiple-stage {
+      .#{ $C_OPT_PREFIX }-li > span {
+        @extend %text-omit;
+        display: inline-block;
+        vertical-align: middle;
+        width: calc(100% - 25px);
+      }
+    }
+
+    &.#{$C_PREFIX}-selecting {
+      & > .#{$C_PREFIX}-selected-box {
+        box-shadow: $shadow-lower;
+      }
+    }
+
+    .#{$C_PREFIX}-opt-comp {
+      width: 100%;
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border: none;
+
+      & > .#{ $C_OPT_PREFIX }-li:first-child {
+        border-top: $border-lightest-color $border-thin solid;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-theme-fill {
+    width: 100%;
+  }
+}
+
+@include device-type("<l") {
+  .#{$C_PREFIX} {
+    width: 100%;
+  }
+}

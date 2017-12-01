@@ -1,0 +1,48 @@
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+/**
+ * row 组件样式
+ */
+
+$C_PREFIX: #{ $COMP_ROW };
+
+.#{$C_PREFIX} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.#{$C_PREFIX}-wrap {
+    flex-wrap: wrap;
+  }
+
+  &.#{$C_PREFIX}-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  &.#{$C_PREFIX}-align {
+    &-start {
+      align-items: flex-start;
+    }
+
+    &-end {
+      align-items: flex-end;
+    }
+  }
+
+  &.#{$C_PREFIX}-justify {
+    &-justify {
+      justify-content: space-between;
+    }
+
+    &-start {
+      justify-content: flex-start;
+    }
+
+    &-end {
+      justify-content: flex-end;
+    }
+  }
+}
