@@ -13,6 +13,7 @@ import Code from './component/Code/Code'
 import Loading from './component/Loading/Loading'
 import Nav from './component/Nav/Nav'
 
+import Omit from './component/Omit/Omit'
 import Page from './component/Page/Page'
 import Scroller from './component/Scroller/Scroller'
 import Search from './component/Search/Search'
@@ -61,6 +62,7 @@ const compHub = [
   Icon,
   List,
   Loading,
+  Omit,
   Pop,
   Page,
   Menu,

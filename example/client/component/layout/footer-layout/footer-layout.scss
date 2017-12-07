@@ -2,7 +2,12 @@
 @import "../../../scss/mixin.scss";
 
 .footer-layout-stage {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
   background-color: $grey-dark;
+  box-sizing: border-box;
   padding: $gap-v;
   text-align: center;
 }

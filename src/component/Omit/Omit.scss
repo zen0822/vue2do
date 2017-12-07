@@ -17,9 +17,11 @@ $C_PREFIX: #{ $COMP_OMIT };
         z-index: -1;
     }
 
-    &-omit-line {
+    &-line {
         width: 100%;
 
-        @extend %text-omit;
+        &-last {
+            @extend %text-omit;
+        }
     }
 }

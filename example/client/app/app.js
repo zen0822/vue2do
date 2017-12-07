@@ -38,7 +38,7 @@ export default {
       let bodyHeight = document.body.offsetHeight
 
       if (bodyHeight < val.innerHeight) {
-        this.bodyHeight = val.innerHeight - this.$refs.header.$el.offsetHeight - this.$refs.footer.$el.offsetHeight
+        this.bodyHeight = val.innerHeight - this.$refs.header.$el.offsetHeight
       }
     }
   },

@@ -120,7 +120,11 @@ export default {
     tab(evt, index) {
       this.currentIndex = index
 
-      this.$emit('click')
+      this.$emit('click', {
+        emitter: this,
+        value: this.value,
+        text: this.initOpt[index - 1].text
+      })
     }
   }
 }

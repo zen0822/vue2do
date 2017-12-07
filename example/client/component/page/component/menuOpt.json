@@ -1,12 +1,10 @@
-[
-  {
+[{
     "name": "开始使用",
     "route": "/component/start"
   },
   {
     "name": "表单控件",
-    "sub": [
-      {
+    "sub": [{
         "name": "按钮组件",
         "route": "/component/btn"
       },
@@ -26,11 +24,9 @@
   },
   {
     "name": "消息提示",
-    "sub": [
-      {
+    "sub": [{
         "name": "弹窗",
-        "sub": [
-          {
+        "sub": [{
             "name": "确认弹窗",
             "route": "/component/modal#confirm"
           },
@@ -42,8 +38,7 @@
       },
       {
         "name": "提示",
-        "sub": [
-          {
+        "sub": [{
             "name": "泡泡提示",
             "route": "/component/tip#bubble"
           },
@@ -61,8 +56,7 @@
   },
   {
     "name": "数据展示",
-    "sub": [
-      {
+    "sub": [{
         "name": "表格数据",
         "route": "/component/table"
       },
@@ -72,8 +66,7 @@
       },
       {
         "name": "分页控件",
-        "sub": [
-          {
+        "sub": [{
             "name": "加载更多",
             "route": "/component/pager#more"
           },
@@ -87,17 +80,14 @@
   },
   {
     "name": "布局相关",
-    "sub": [
-      {
-        "name": "布局组件",
-        "route": "/component/grid"
-      }
-    ]
+    "sub": [{
+      "name": "布局组件",
+      "route": "/component/grid"
+    }]
   },
   {
     "name": "其他组件",
-    "sub": [
-      {
+    "sub": [{
         "name": "滚动条组件",
         "route": "/component/scroller"
       },
@@ -108,13 +98,16 @@
       {
         "name": "弹出组件",
         "route": "/component/pop"
+      },
+      {
+        "name": "省略组件",
+        "route": "/component/omit"
       }
     ]
   },
   {
     "name": "过渡动画",
-    "sub": [
-      {
+    "sub": [{
         "name": "放大缩小",
         "route": "/component/transition/zoom"
       },

@@ -5,10 +5,11 @@ import selectPage from '../component/page/component/form/select/select'
 import checkPage from '../component/page/component/form/check/check'
 import inputPage from '../component/page/component/form/input/input'
 import modalPage from '../component/page/component/message/modal/modal'
+import PageOmit from '../component/page/component/other/Omit/Omit'
 import popPage from '../component/page/component/other/pop/pop'
 import tipPage from '../component/page/component/message/tip/tip'
 import tablePage from '../component/page/component/data/table/table'
-import TabPage from '../component/page/component/other/Tab/Tab'
+import PageTab from '../component/page/component/other/Tab/Tab'
 import listPage from '../component/page/component/data/list/list'
 import pagerPage from '../component/page/component/data/page/page'
 import gridPage from '../component/page/component/layout/grid/grid'
@@ -66,6 +67,12 @@ export default [{
     title: '弹窗组件'
   }
 }, {
+  path: 'omit',
+  component: PageOmit,
+  meta: {
+    title: '省略组件'
+  }
+}, {
   path: 'pop',
   component: popPage,
   meta: {
@@ -109,7 +116,7 @@ export default [{
   }
 }, {
   path: 'tab',
-  component: TabPage,
+  component: PageTab,
   meta: {
     title: '选项卡组件'
   }

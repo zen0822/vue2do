@@ -1,5 +1,7 @@
 div.app-container
   header-layout(ref='header')
-  div.app-content
+  div.app-content(
+    :style='{height: `${bodyHeight}px`}'
+  )
     router-view
   footer-layout(ref='footer')
