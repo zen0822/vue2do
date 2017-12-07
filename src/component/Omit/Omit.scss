@@ -4,8 +4,9 @@
 
 @import '../../scss/config.scss';
 @import "../../scss/extend.scss";
+@import "../../scss/name.scss";
 
-$C_PREFIX: #{$comp-prefix}-omit;
+$C_PREFIX: #{ $COMP_OMIT };
 
 .#{$C_PREFIX} {
     width: 100%;

@@ -8,7 +8,7 @@ import modalPage from '../component/page/component/message/modal/modal'
 import popPage from '../component/page/component/other/pop/pop'
 import tipPage from '../component/page/component/message/tip/tip'
 import tablePage from '../component/page/component/data/table/table'
-import tabPage from '../component/page/component/other/tab/tab'
+import TabPage from '../component/page/component/other/Tab/Tab'
 import listPage from '../component/page/component/data/list/list'
 import pagerPage from '../component/page/component/data/page/page'
 import gridPage from '../component/page/component/layout/grid/grid'
@@ -109,7 +109,7 @@ export default [{
   }
 }, {
   path: 'tab',
-  component: tabPage,
+  component: TabPage,
   meta: {
     title: '选项卡组件'
   }

@@ -1,5 +1,5 @@
-import './tab.scss'
-import pug from './tab.pug'
+import './Tab.scss'
+import pug from './Tab.pug'
 import mixin from '../../mixin'
 
 export default {
