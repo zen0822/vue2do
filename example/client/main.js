@@ -9,7 +9,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import routes from './route/route'
-import appComp from './app/app'
+import App from './App/App'
 import vue2do from 'vue2do'
 // import { set as setConfig } from 'vue2do'
 import enLang from 'src/language/en.json'
@@ -30,6 +30,6 @@ router.beforeEach((to, from, next) => {
 })
 
 const app = new Vue({
-  ...appComp,
+  ...App,
   router
 }).$mount('#app')

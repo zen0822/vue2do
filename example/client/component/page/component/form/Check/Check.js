@@ -1,5 +1,5 @@
-import './List.scss'
-import pug from './List.pug'
+import './check.scss'
+import pug from './check.pug'
 import mixin from '../../mixin'
 
 export default {

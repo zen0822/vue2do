@@ -1,5 +1,5 @@
-import './List.scss'
-import pug from './List.pug'
+import './scroller.scss'
+import pug from './scroller.pug'
 import mixin from '../../mixin'
 
 export default {

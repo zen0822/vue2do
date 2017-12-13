@@ -1,19 +1,19 @@
 import total from '../component/page/component/total/total'
-import btnPage from '../component/page/component/form/btn/btn'
-import startPage from '../component/page/component/start/start'
-import selectPage from '../component/page/component/form/select/select'
-import checkPage from '../component/page/component/form/check/check'
-import inputPage from '../component/page/component/form/input/input'
-import modalPage from '../component/page/component/message/modal/modal'
+import PageBtn from '../component/page/component/form/Btn/Btn'
+import PageStart from '../component/page/component/Start/Start'
+import PageSelect from '../component/page/component/form/Select/Select'
+import PageCheck from '../component/page/component/form/Check/Check'
+import PageInput from '../component/page/component/form/input/input'
+import PageModal from '../component/page/component/message/Modal/Modal'
 import PageOmit from '../component/page/component/other/Omit/Omit'
-import popPage from '../component/page/component/other/pop/pop'
-import tipPage from '../component/page/component/message/tip/tip'
-import tablePage from '../component/page/component/data/table/table'
+import PagePop from '../component/page/component/other/Pop/Pop'
+import PageTip from '../component/page/component/message/Tip/Tip'
+import PageTable from '../component/page/component/data/Table/Table'
 import PageTab from '../component/page/component/other/Tab/Tab'
-import listPage from '../component/page/component/data/list/list'
-import pagerPage from '../component/page/component/data/page/page'
-import gridPage from '../component/page/component/layout/grid/grid'
-import scrollerPage from '../component/page/component/other/scroller/scroller'
+import PageList from '../component/page/component/data/List/List'
+import PagePager from '../component/page/component/data/Page/Page'
+import PageGrid from '../component/page/component/layout/Grid/Grid'
+import PageScroller from '../component/page/component/other/Scroller/Scroller'
 import TransitionPage from '../component/page/component/Transition/Transition'
 
 import transitionChildren from './transitionChildren.js'
@@ -26,43 +26,37 @@ export default [{
   }
 }, {
   path: 'start',
-  component: startPage,
+  component: PageStart,
   meta: {
     title: '开始使用'
   }
 }, {
   path: 'btn',
-  component: btnPage,
+  component: PageBtn,
   meta: {
     title: '按钮组件'
   }
 }, {
   path: 'check',
-  component: checkPage,
+  component: PageCheck,
   meta: {
     title: '按钮组件'
   }
 }, {
   path: 'select',
-  component: selectPage,
+  component: PageSelect,
   meta: {
     title: '下拉框组件'
   }
 }, {
   path: 'input',
-  component: inputPage,
+  component: PageInput,
   meta: {
     title: '输入组件'
   }
 }, {
-  path: 'check',
-  component: checkPage,
-  meta: {
-    title: '选择框组件'
-  }
-}, {
   path: 'modal',
-  component: modalPage,
+  component: PageModal,
   meta: {
     title: '弹窗组件'
   }
@@ -74,43 +68,43 @@ export default [{
   }
 }, {
   path: 'pop',
-  component: popPage,
+  component: PagePop,
   meta: {
     title: '弹出组件'
   }
 }, {
   path: 'tip',
-  component: tipPage,
+  component: PageTip,
   meta: {
     title: '提示组件'
   }
 }, {
   path: 'table',
-  component: tablePage,
+  component: PageTable,
   meta: {
     title: '表格组件'
   }
 }, {
   path: 'list',
-  component: listPage,
+  component: PageList,
   meta: {
     title: '列表组件'
   }
 }, {
   path: 'pager',
-  component: pagerPage,
+  component: PagePager,
   meta: {
     title: '分页组件'
   }
 }, {
   path: 'grid',
-  component: gridPage,
+  component: PageGrid,
   meta: {
     title: '表格布局组件'
   }
 }, {
   path: 'scroller',
-  component: scrollerPage,
+  component: PageScroller,
   meta: {
     title: '滚动条组件'
   }
