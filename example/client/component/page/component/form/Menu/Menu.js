@@ -1,5 +1,5 @@
-import './select.scss'
-import pug from './select.pug'
+import './Menu.scss'
+import pug from './Menu.pug'
 import mixin from '../../mixin'
 
 export default {

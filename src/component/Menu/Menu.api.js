@@ -93,7 +93,9 @@ export default {
      *
      */
     clickParent() {
-      return this.toggleMenuDisplay(false)
+      if (this.menuMenuDisplay) {
+        return this.toggleMenuDisplay(false)
+      }
     },
 
     /**
@@ -155,18 +157,15 @@ export default {
     /**
      * 下拉框的显示操作
      *
-     * @param {Boolean} opt - 操作状态,
+     * @param {Boolean} optVal - 操作状态,
      *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
      *
      * @return {Object} - this组件
      */
-    toggleMenuDisplay(opt) {
+    toggleMenuDisplay(optVal) {
       let menuHub = this.$store.state.comp.menu
-      const getMenuHeight = (vm) => {
-        if (!vm.$refs.transition) {
-          return false
-        }
 
+      const getMenuHeight = (vm) => {
         handleEleDisplay({
           element: vm.$refs.menu,
           cb: (element) => {
@@ -177,38 +176,32 @@ export default {
           }
         })
       }
+
       const transite = (state, vm) => {
-        if (!vm.$refs.transition) {
-          return false
-        }
-
         if (state) {
-          if (this.$refs.menu) {
-            getMenuHeight(vm)
+          getMenuHeight(vm)
 
-            vm.menuMenuDisplay = true
-            vm.$refs.transition.enter()
-          }
+          vm.menuMenuDisplay = true
+          vm.$refs.transition.enter()
         } else {
           getMenuHeight(vm)
 
-          vm.$refs.transition.$on('afterLeave', () => {
-            vm.menuMenuDisplay = false
-          })
-
+          this.menuMenuDisplay = false
           vm.$refs.transition.leave()
         }
       }
 
-      for (let name in menuHub) {
-        if (menuHub.hasOwnProperty(name) && !Object.is(this, menuHub[name])) {
-          transite(false, menuHub[name])
+      Object.keys(menuHub).forEach((item) => {
+        const menuVm = menuHub[item]
+
+        if (menuVm.menuMenuDisplay && item !== this.uid) {
+          transite(false, menuVm)
         }
-      }
+      })
 
       return this._adjustmenuMenuPoiStyle({
         cb: () => {
-          let display = opt === undefined ? !this.menuMenuDisplay : opt
+          let display = optVal === undefined ? !this.menuMenuDisplay : optVal
 
           transite(display, this)
         }

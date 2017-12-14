@@ -1,6 +1,5 @@
 .#{$C_PREFIX} {
-  &.#{$C_PREFIX}-theme-primary,
-  &.#{$C_PREFIX}-theme-fill {
+  &.#{$C_PREFIX}-theme-primary {
     vertical-align: middle;
     border-radius: $border-radius;
 
@@ -15,7 +14,34 @@
 
     &.#{$C_PREFIX}-selecting {
       & > .#{$C_PREFIX}-selected-box {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.#{$C_PREFIX}-focusing {
+      & > .#{$C_PREFIX}-selected-box {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    & > .#{$C_PREFIX}-selected-box {
+      &::after {
         box-shadow: $shadow-lower;
+        content: '';
+
+        opacity: 0;
+        transition: opacity 300ms ease-out;
+
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        left: 0;
+        top: 0;
       }
     }
 
@@ -30,10 +56,6 @@
         border-top: $border-lightest-color $border-thin solid;
       }
     }
-  }
-
-  &.#{$C_PREFIX}-theme-fill {
-    width: 100%;
   }
 }
 

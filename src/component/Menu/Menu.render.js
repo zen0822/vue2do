@@ -184,7 +184,7 @@ export default function (h) {
       class: [this.xclass('panel')],
       directives: [{
         name: 'show',
-        value: this.menuMenuDisplay
+        value: false
       }],
       style: [this.menuMenuPoiStyle, this.menuMenuStyle],
       ref: 'menu'

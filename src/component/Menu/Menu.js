@@ -195,15 +195,15 @@ const menuComp = {
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-menu`
     },
+
     me() {
       return this
     },
-    // 组件 stage 的 class 的名字
-    menuClass() {
+
+    menuClass() { // 组件 stage 的 class 的名字
       let classArr = [
         this.cPrefix,
         this.xclass(this.compClass),
@@ -220,16 +220,16 @@ const menuComp = {
 
       return classArr
     },
-    // 自定义下拉框的显示状态
-    isCustomOption() {
+
+    isCustomOption() { // 自定义下拉框的显示状态
       return this.initOpt.length > 0 && this.customOptionDisplay
     },
-    // 多选框的默认值显示状态
-    initTxtDisplay() {
+
+    initTxtDisplay() { // 多选框的默认值显示状态
       return this.multiple && this.value.length === 0
     },
-    // 下拉菜单是子标签加载
-    isTagMenu(val) {
+
+    isTagMenu(val) { // 下拉菜单是子标签加载
       return this.initOpt.length === 0 && !this.classify
     }
   },
@@ -278,6 +278,7 @@ const menuComp = {
       }
 
       if (!this.isTagMenu) {
+        // TODO: 待验证
         this.$refs.menuOption.$off('change')
         this.$refs.menuOption.$on('change', ({
           value,

@@ -1,7 +1,7 @@
 import total from '../component/page/component/total/total'
 import PageBtn from '../component/page/component/form/Btn/Btn'
 import PageStart from '../component/page/component/Start/Start'
-import PageSelect from '../component/page/component/form/Select/Select'
+import PageMenu from '../component/page/component/form/Menu/Menu'
 import PageCheck from '../component/page/component/form/Check/Check'
 import PageInput from '../component/page/component/form/input/input'
 import PageModal from '../component/page/component/message/Modal/Modal'
@@ -44,7 +44,7 @@ export default [{
   }
 }, {
   path: 'select',
-  component: PageSelect,
+  component: PageMenu,
   meta: {
     title: '下拉框组件'
   }

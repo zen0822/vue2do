@@ -28,12 +28,6 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   background-color: #fff;
   cursor: default;
 
-  &.#{$C_PREFIX}-focusing {
-    & > .#{$C_PREFIX}-selected-box {
-      box-shadow: $shadow-lower;
-    }
-  }
-
   & > .#{$C_PREFIX}-read-only {
     position: absolute;
     width: 100%;
@@ -54,7 +48,6 @@ $MULTI_MENU_WIDTH: 170px + 80px;
 
     box-sizing: border-box;
     vertical-align: middle;
-    overflow: hidden;
 
     .#{$C_PREFIX}-init-text,
     .#{$C_PREFIX}-init-text-input {

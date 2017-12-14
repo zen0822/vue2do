@@ -28,12 +28,18 @@ export default {
 
     theme: {
       type: String,
-      default: compConfig.defaultTheme
+      default: compConfig.defaultTheme,
+      validator(val) {
+        return ['primary', 'secondary', 'default', 'success', 'danger'].includes(val)
+      }
     },
 
     ui: {
       type: String,
-      default: compConfig.defaultUI
+      default: compConfig.defaultUI,
+      validator(val) {
+        return ['material', 'bootstrap', 'metro', 'apple'].includes(val)
+      }
     }
   },
 
