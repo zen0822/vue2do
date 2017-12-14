@@ -124,7 +124,17 @@ export default {
      * @return {Object} this - 组件
      */
     click(event) {
+      if (this.clicking) {
+        return false
+      }
+
       event.stopPropagation()
+
+      this.clicking = true
+
+      this.intervalClicking = setInterval(() => {
+        this.clicking = false
+      }, 500)
 
       return this.toggleMenuDisplay()
     },

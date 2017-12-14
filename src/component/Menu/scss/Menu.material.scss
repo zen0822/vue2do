@@ -37,7 +37,7 @@
   }
 }
 
-@include device-type("<l") {
+@include device-type("s") {
   .#{$C_PREFIX} {
     width: 100%;
   }

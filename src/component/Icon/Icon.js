@@ -48,7 +48,7 @@ export default {
       return `${this.compPrefix}-icon`
     },
     sizeClass() {
-      return `${this.compPrefix}-icon-${this.size.toLowerCase()}`
+      return `${this.compPrefix}-icon-size-${this.size.toLowerCase()}`
     },
     isAli() {
       return this.type === 'ali'

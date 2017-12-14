@@ -5,9 +5,15 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 999;
 
   background-color: $grey-dark;
   box-sizing: border-box;
+  font-size: 12px;
   padding: $gap-v;
   text-align: center;
+
+  @include device-type('s'){
+    position: static;
+  }
 }

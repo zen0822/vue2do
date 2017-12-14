@@ -9,7 +9,7 @@
 $C_PREFIX: #{ $COMP_MODAL };
 
 .#{$C_PREFIX} {
-  @include device-type("<s") {
+  @include device-type("s") {
     .#{$C_PREFIX}-bg {
       background: rgba(0, 0, 0, .5);
     }

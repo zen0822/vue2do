@@ -87,7 +87,7 @@
     }
   }
 
-  @include device-type('<l') {
+  @include device-type('s') {
     height: 60px;
 
     & > .nav-box {

@@ -97,19 +97,19 @@ $DEVICE_XL_RANGE: "1200px ~ --px";
   }
 
   @if $type == s {
-    @media only screen and (min-width: $DEVICE_SIZE_XS) {
+    @media only screen and (max-width: $DEVICE_SIZE_XS) {
       @content;
     }
   }
 
   @if $type == m {
-    @media only screen and (min-width: $DEVICE_SIZE_S) {
+    @media only screen and (max-width: $DEVICE_SIZE_S) {
       @content;
     }
   }
 
   @if $type == l {
-    @media only screen and (min-width: $DEVICE_SIZE_M) {
+    @media only screen and (max-width: $DEVICE_SIZE_M) {
       @content;
     }
   }

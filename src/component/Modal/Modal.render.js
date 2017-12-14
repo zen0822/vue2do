@@ -12,45 +12,42 @@ export default function (h) {
 
   if (this.modalHeaderDisplay) {
     modalChildren.push(
-      h('header',
-        {
-          on: {
-            mousedown: this.mouseDown,
-            mouseup: this.mouseUp
+      h('header', {
+        on: {
+          mousedown: this.mouseDown,
+          mouseup: this.mouseUp
+        }
+      }, [
+        h('row', {
+          props: {
+            justify: 'justify'
           }
-        },
-        [
-          h('row', {
-            props: { justify: 'justify' }
-          }, headerChildren)
-        ]
-      )
+        }, headerChildren)
+      ])
     )
   }
 
   modalChildren.push(
-    h('article',
-      [
-        h('scroller', {
-          class: [this.xclass('scroller')],
-          props: {
-            height: this.modalHeight,
-            autoHide: true
-          },
-          ref: 'scroller'
-        }, (() => {
-          if (this.$slots.default) {
-            return this.$slots.default
-          } else {
-            return [
-              h('div', {
-                class: this.xclass('alert-message')
-              }, this.modalMessage)
-            ]
-          }
-        })())
-      ]
-    )
+    h('article', [
+      h('scroller', {
+        class: [this.xclass('scroller')],
+        props: {
+          height: this.modalHeight,
+          autoHide: true
+        },
+        ref: 'scroller'
+      }, (() => {
+        if (this.$slots.default) {
+          return this.$slots.default
+        } else {
+          return [
+            h('div', {
+              class: this.xclass('alert-message')
+            }, this.modalMessage)
+          ]
+        }
+      })())
+    ])
   )
 
   if (this.modalFooterDisplay) {
@@ -65,52 +62,47 @@ export default function (h) {
     )
   }
 
-  return h('div',
-    {
-      class: [
-        this.cPrefix,
-        this.xclass([this.themeClass]),
-        this.xclass(`type-${this.type}`),
-        { [this.xclass('no-header')]: !this.modalHeaderDisplay },
-        { [this.xclass('has-scroller')]: this.hasScroller }
-      ],
-      directives: [{
-        name: 'show',
-        value: this.modalDisplay
-      }],
-      on: {
-        mousemove: this.mouseMove
+  return h('div', {
+    class: [
+      this.cPrefix,
+      this.xclass([this.themeClass]),
+      this.xclass(`type-${this.type}`),
+      {
+        [this.xclass('no-header')]: !this.modalHeaderDisplay
+      },
+      {
+        [this.xclass('has-scroller')]: this.hasScroller
       }
-    },
-    [
-      h('fade-transition',
-        {
-          props: {
-            speed: 'fast'
-          },
-          ref: 'fadeTransition'
-        },
-        [
-          h('div', {
-            class: this.xclass('bg'),
-            directives: [{
-              name: 'show',
-              value: this.modalDisplay
-            }],
-            on: {
-              click: this.no
-            }
-          })
-        ]
-      ),
+    ],
+    directives: [{
+      name: 'show',
+      value: this.modalDisplay
+    }],
+    on: {
+      mousemove: this.mouseMove
+    }
+  }, [
+    h('fade-transition', {
+      props: {
+        speed: 'fast'
+      },
+      ref: 'fadeTransition'
+    }, [
+      h('div', {
+        class: this.xclass('bg'),
+        directives: [{
+          name: 'show',
+          value: this.modalDisplay
+        }],
+        on: {
+          click: this.no
+        }
+      })
+    ]),
 
-      h('pop',
-        {
-          class: [this.xclass('pop')],
-          ref: 'pop'
-        },
-        [modalChildren]
-      )
-    ]
-  )
+    h('pop', {
+      class: [this.xclass('pop')],
+      ref: 'pop'
+    }, [modalChildren])
+  ])
 }

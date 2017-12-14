@@ -6,10 +6,10 @@
  * pop 组件样式
  */
 
-$C_PREFIX: #{ $COMP_POP };
+$C_PREFIX: #{$COMP_POP};
 
 .#{$C_PREFIX} {
-  @include device-type("<l") {
+  @include device-type("s") {
 
   }
 }

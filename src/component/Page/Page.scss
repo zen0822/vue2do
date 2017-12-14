@@ -89,7 +89,7 @@ $C_PREFIX: #{ $COMP_PAGE };
     text-align: center;
   }
 
-  @include device-type('<l') {
+  @include device-type("s") {
     &.#{$C_PREFIX}-type-more {
       width: 100%;
     }

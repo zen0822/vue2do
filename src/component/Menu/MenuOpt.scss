@@ -81,7 +81,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   }
 }
 
-@include device-type("<l") {
+@include device-type("s") {
   .#{$C_PREFIX}-ul {
     width: 100%;
   }

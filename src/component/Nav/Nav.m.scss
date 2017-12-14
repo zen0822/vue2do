@@ -11,7 +11,7 @@ $C_PREFIX: #{ $COMP_NAV };
 $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
-  @include device-type("<l") {
+  @include device-type("s") {
     font-size: $h3;
 
     .#{$C_PREFIX}-trigger {

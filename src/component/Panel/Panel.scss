@@ -42,7 +42,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     display: none;
   }
 
-  @include device-type("<l") {
+  @include device-type("s") {
     font-size: $h2;
 
     .#{$C_PREFIX}-sub-fold a {

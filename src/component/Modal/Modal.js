@@ -104,7 +104,7 @@ const modalComp = {
     },
     headerDisplay: {
       type: Boolean,
-      default() {
+      default () {
         return undefined
       }
     },
@@ -118,7 +118,7 @@ const modalComp = {
     },
     footerDisplay: {
       type: Boolean,
-      default() {
+      default () {
         return undefined
       }
     },
@@ -153,7 +153,13 @@ const modalComp = {
     },
     // 判断是否在中大型设备并且是 full 模态框
     isBiggerFull() {
-      return (this.isFull && this.deviceRange > 575) || !this.isFull
+      return (this.isFull &&
+        (
+          this.deviceSize === 'm' ||
+          this.deviceSize === 'l' ||
+          this.deviceSize === 'xl'
+        )
+      ) || !this.isFull
     },
     // 模态框的头部显示状态
     modalHeaderDisplay() {

@@ -10,37 +10,44 @@ $C_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
   display: inline-block;
-  line-height: 1;
+  line-height: 0;
 
-  .#{$C_PREFIX}-ali {
+  &-stage {
+    display: inline-block;
+    line-height: 0;
+  }
+
+  &-size {
+    &-xxs {
+      font-size: 12px;
+    }
+
+    &-xs {
+      font-size: 14px;
+    }
+
+    &-s {
+      font-size: 20px;
+    }
+
+    &-m {
+      font-size: 30px;
+    }
+
+    &-l {
+      font-size: 40px;
+    }
+
+    &-xl {
+      font-size: 50px;
+    }
+  }
+
+  &-ali {
     width: 1em;
     height: 1em;
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
-  }
-
-  .#{$C_PREFIX}-xxs {
-    font-size: 12px;
-  }
-
-  .#{$C_PREFIX}-xs {
-    font-size: 14px;
-  }
-
-  .#{$C_PREFIX}-s {
-    font-size: 20px;
-  }
-
-  .#{$C_PREFIX}-m {
-    font-size: 30px;
-  }
-
-  .#{$C_PREFIX}-l {
-    font-size: 40px;
-  }
-
-  .#{$C_PREFIX}-xl {
-    font-size: 50px;
   }
 }

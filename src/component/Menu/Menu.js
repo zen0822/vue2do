@@ -167,52 +167,30 @@ const menuComp = {
   },
 
   data() {
-    // 组件名字
-    this.compName = 'menu'
-    // 组件唯一标识符
-    this.uid = ''
+    this.compName = 'menu' // 组件名字
 
     return {
-      // props 里面 optionItem 的 data 替换值
-      option: [],
-      // optionItem 里面的全部的 value
-      allOptionVal: [],
-      // 当前下拉框的 text 值
-      text: undefined,
-      // 当前下拉框的 value 值
-      value: undefined,
-      // 是否以验证通过
-      verified: true,
-      // 下拉菜单的高度
-      menuHeight: 0,
-      // 下拉菜单的显示状态
-      menuMenuDisplay: false,
-      // 下拉菜单的样式
-      menuMenuStyle: {},
-      // 下拉菜单位置的样式
-      menuMenuPoiStyle: {},
-      // 是否是 slot 定义的 option
-      hasSlotOption: false,
-      // option 值的当前游标
-      currentIndex: 0,
-      // 搜索按键的状态
-      searchKeyuped: false,
-      // 是否显示搜索 optionItem
-      searchOptionDisplay: false,
-      // 搜索出来的 option
-      searchOptionItem: {},
-      // 取消观察 option
-      unwatchOption: {},
-      // 当下拉框为 classify 的时候，将 option 转换为数组
-      optionItemCopy: {},
-      // 是否全选多选下拉框的标记
-      selectedAll: false,
-      // 自定义下拉框的显示状态
-      customOptionDisplay: false,
-      // 下拉框显示过渡完成的标识符
-      transitionFinish: false,
-      // 正在处于 focus 状态
-      focusing: false
+      option: [], // props 里面 optionItem 的 data 替换值
+      allOptionVal: [], // optionItem 里面的全部的 value
+      text: undefined, // 当前下拉框的 text 值
+      value: undefined, // 当前下拉框的 value 值
+      verified: true, // 是否以验证通过
+      menuHeight: 0, // 下拉菜单的高度
+      menuMenuDisplay: false, // 下拉菜单的显示状态
+      menuMenuStyle: {}, // 下拉菜单的样式
+      menuMenuPoiStyle: {}, // 下拉菜单位置的样式
+      hasSlotOption: false, // 是否是 slot 定义的 option
+      currentIndex: 0, // option 值的当前游标
+      searchKeyuped: false, // 搜索按键的状态
+      searchOptionDisplay: false, // 是否显示搜索 optionItem
+      searchOptionItem: {}, // 搜索出来的 option
+      unwatchOption: {}, // 取消观察 option
+      optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
+      selectedAll: false, // 是否全选多选下拉框的标记
+      customOptionDisplay: false, // 自定义下拉框的显示状态
+      transitionFinish: false, // 下拉框显示过渡完成的标识符
+      focusing: false, // 正在处于 focus 状态
+      uid: '' // 组件唯一标识符
     }
   },
 

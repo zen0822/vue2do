@@ -36,7 +36,7 @@
     }
   }
 
-  @include device-type("<l") {
+  @include device-type("s") {
     .welcome-bg {
       background-position: center;
       padding: 30px 0 100% * 0.618;

@@ -20,30 +20,30 @@ $C_PREFIX: #{$comp-prefix}-css;
   z-index: -$z-index;
 
   &::after {
-    content: ">xl";
+    content: "xl";
   }
 
-  @include device-type("<xl") {
+  @include device-type("l") {
     &::after {
-      content: "<xl";
+      content: "l";
     }
   }
 
-  @include device-type("<l") {
+  @include device-type("m") {
     &::after {
-      content: "<l";
+      content: "m";
     }
   }
 
-  @include device-type("<m") {
+  @include device-type("s") {
     &::after {
-      content: "<m";
+      content: "s";
     }
   }
 
-  @include device-type("<s") {
+  @include device-type("xs") {
     &::after {
-      content: "<s";
+      content: "xs";
     }
   }
 }

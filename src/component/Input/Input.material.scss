@@ -56,7 +56,7 @@ $INPUT_BORDER_WIDTH: 1px;
   }
 }
 
-@include device-type("<l") {
+@include device-type("s") {
   .#{$C_PREFIX} {
     width: 100%;
   }

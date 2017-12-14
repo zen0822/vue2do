@@ -30,14 +30,25 @@ export default {
   computed: {
     windowProps() {
       return this.$store.getters[commonStore.window.get]
+    },
+
+    appStyle() {
+      if (this.bodyHeight === 0) {
+        return {}
+      }
+
+      return {
+        height: `${this.bodyHeight}px`
+      }
     }
   },
 
   watch: {
     'windowProps' (val) {
       let bodyHeight = document.body.offsetHeight
+      let deviceType = getComputedStyle(document.querySelector('.z-css-device-size'), ':after').getPropertyValue('content')
 
-      if (bodyHeight < val.innerHeight) {
+      if (deviceType !== '"xs"' && bodyHeight < val.innerHeight) {
         this.bodyHeight = val.innerHeight - this.$refs.header.$el.offsetHeight
       }
     }

@@ -103,14 +103,12 @@ export default {
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-nav`
     },
 
-    // 设备小于 L 尺寸
-    isSmallDevice() {
-      return this.deviceRange <= this._deviceTypeRange('<l')
+    isSmallDevice() { // 判断设备是否小于 s 尺寸
+      return this.deviceSize === 's' || this.deviceSize === 'xs'
     },
 
     isVerticalType() {

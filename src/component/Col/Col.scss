@@ -8,7 +8,7 @@
  */
 
 $gap-hub: (5, 10, 20, 30, 40, 50);
-$device-type: span, xs, s, m, l, xl;
+$device-type: span, xl, l, m, s, xs;
 
 @mixin device-style($type) {
   @for $i from 1 through 12 {

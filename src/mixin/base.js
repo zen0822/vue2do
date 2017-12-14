@@ -100,13 +100,13 @@ export default {
     // 设备尺寸范围
     _deviceTypeRange(type = this.deviceSize) {
       switch (type) {
-        case '<s':
+        case 'xs':
           return 575
-        case '<m':
+        case 's':
           return 765
-        case '<l':
+        case 'm':
           return 991
-        case '<xl':
+        case 'l':
           return 1911
         default:
           return Number.MAX_VALUE
@@ -220,6 +220,7 @@ export default {
 
         const updateDeviceSize = () => {
           let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+
           this.$store.dispatch(commonStore.deviceSize, content)
         }
 
