@@ -3,6 +3,7 @@
  *
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
+ * @prop sync - 调用多次动画时，动画与动画之间是否时同步
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -24,6 +25,10 @@ export default {
       validator(val) {
         return ['normal', 'fast', 'slow'].includes(val)
       }
+    },
+    sync: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -52,6 +57,10 @@ export default {
      * @param {Object} opt
      */
     enter(opt = {}) {
+      if (this.sync && this.transiting) {
+        return false
+      }
+
       return new Promise(async(resolve, reject) => {
         try {
           this.transiting = this.isEntering = true
@@ -75,15 +84,19 @@ export default {
      * @param {Object} opt
      */
     leave(opt = {}) {
+      if (this.sync && this.transiting) {
+        return false
+      }
+
       return new Promise(async(resolve, reject) => {
         try {
-          this.transiting = this.isEntering = true
+          this.transiting = this.isLeaving = true
 
           await this.beforeLeave(opt)
           await this.leaveing(opt)
           await this.afterLeave(opt)
 
-          this.transiting = this.isEntering = false
+          this.transiting = this.isLeaving = false
 
           resolve()
         } catch (error) {

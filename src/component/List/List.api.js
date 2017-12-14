@@ -8,10 +8,10 @@ const PAGE_TYPE_MORE = 'more'
 export default {
   methods: {
     /**
-    * 更新列表数据
-    *
-    * @param {Array} listItem - 列表数据
-    */
+     * 更新列表数据
+     *
+     * @param {Array} listItem - 列表数据
+     */
     update(listItem) {
       if (this.auto) {
         this.initPage()
@@ -46,7 +46,11 @@ export default {
     /**
      * 初始化列表数据
      */
-    initList({ pageNum = 1, pageData = {}, listItem = [] } = {}) {
+    initList({
+      pageNum = 1,
+      pageData = {},
+      listItem = []
+    } = {}) {
       if (!this.auto) {
         this.listItem = listItem.slice()
 
@@ -80,7 +84,9 @@ export default {
     /**
      * 切换页数
      */
-    switchPage({ currentPage }) {
+    switchPage({
+      currentPage
+    }) {
       if (this.pageData.current > this.pageData.total) {
         return false
       }
@@ -115,7 +121,11 @@ export default {
     /**
      * scroller 滚动触发事件
      */
-    scroll({ offset, top, isBottom }) {
+    scroll({
+      offset,
+      top,
+      isBottom
+    }) {
       if (this.pageTrigger === 'scroll') {
         if (offset - top < 5 && this.pageData.current + 1 <= this.pageData.total) {
           return this.switchPage({
@@ -159,6 +169,22 @@ export default {
       this.arrowOfMoreDisplay = true
 
       return this
+    },
+
+    /**
+     * 初始化分页组件的位置
+     */
+    initPagePosition() {
+      let ele = this.elementProp(this.$refs.page.$el)
+      let parentHeight = this.$el.offsetHeight
+      let height = ele.offsetHeight
+      let top = parentHeight - height
+
+      this.pageDetail = Object.assign({}, this.pageDetail, {
+        top,
+        left: ele.offsetLeft,
+        bottom: 0
+      })
     }
   }
 }

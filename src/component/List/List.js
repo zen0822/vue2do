@@ -184,17 +184,7 @@ export default {
         scrollerHeight,
         emitter
       }) => {
-        let ele = this.elementProp(this.$refs.page.$el)
-        let parentHeight = this.$el.offsetHeight
-        let height = ele.offsetHeight
-        let top = parentHeight - height
-
-        this.pageDetail = Object.assign({}, this.pageDetail, {
-          top,
-          left: ele.offsetLeft,
-          bottom: 0
-        })
-
+        this.initPagePosition()
         this.scrollerAlmostInBottom = emitter.yComputed.isBottom
 
         return this.$emit('changeScroller', {

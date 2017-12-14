@@ -187,7 +187,7 @@ export default function (h) {
         value: false
       }],
       style: [this.menuMenuPoiStyle, this.menuMenuStyle],
-      ref: 'menu'
+      ref: 'menuPanel'
     }, [menuChildren])
   ]
 
@@ -217,7 +217,8 @@ export default function (h) {
 
     h('fold-transition', {
         props: {
-          height: this.menuHeight
+          height: this.menuHeight,
+          sync: true
         },
         ref: 'transition'
       },

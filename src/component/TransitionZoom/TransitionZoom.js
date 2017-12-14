@@ -24,6 +24,12 @@ export default {
     }
   },
 
+  data() {
+    this.transiting = false // 是否正则执行过渡动画
+
+    return {}
+  },
+
   computed: {
     positionType() {
       return this.global ? 'fixed' : 'absolute'

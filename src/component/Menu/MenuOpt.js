@@ -134,6 +134,13 @@ const menuOptionComp = {
         text: option[this.txtName],
         index: index
       })
+    },
+
+    /**
+     * 初始化列表的分页组件位置
+     */
+    initPagePosition() {
+      return this.$refs.list.initPagePosition()
     }
   }
 }

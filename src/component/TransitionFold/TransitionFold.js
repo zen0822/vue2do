@@ -27,6 +27,8 @@ export default {
   },
 
   data() {
+    this.transiting = false // 是否正则执行过渡动画
+
     return {
       transitionHeight: 0
     }

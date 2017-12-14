@@ -168,6 +168,8 @@ const menuComp = {
 
   data() {
     this.compName = 'menu' // 组件名字
+    this.uid = '' // 组件唯一标识符
+    this.togglingMenu = false // 300ms 之内只能点击一次的标识
 
     return {
       option: [], // props 里面 optionItem 的 data 替换值
@@ -189,8 +191,7 @@ const menuComp = {
       selectedAll: false, // 是否全选多选下拉框的标记
       customOptionDisplay: false, // 自定义下拉框的显示状态
       transitionFinish: false, // 下拉框显示过渡完成的标识符
-      focusing: false, // 正在处于 focus 状态
-      uid: '' // 组件唯一标识符
+      focusing: false // 正在处于 focus 状态
     }
   },
 
@@ -278,6 +279,10 @@ const menuComp = {
       }
 
       if (!this.isTagMenu) {
+        this.$refs.transition.$on('afterEnter', () => {
+          return this.$refs.menuOption.initPagePosition()
+        })
+
         // TODO: 待验证
         this.$refs.menuOption.$off('change')
         this.$refs.menuOption.$on('change', ({

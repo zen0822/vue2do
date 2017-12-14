@@ -126,23 +126,13 @@ export default {
      * @return {Object} this - 组件
      */
     click(event) {
-      if (this.clicking) {
-        return false
-      }
-
       event.stopPropagation()
-
-      this.clicking = true
-
-      this.intervalClicking = setInterval(() => {
-        this.clicking = false
-      }, 500)
 
       return this.toggleMenuDisplay()
     },
 
     /**
-     * keyon
+     * keydown
      */
     keydown(event) {
       if (!this.focusing) {
@@ -162,12 +152,22 @@ export default {
      *
      * @return {Object} - this组件
      */
-    toggleMenuDisplay(optVal) {
+    toggleMenuDisplay(optVal = !this.menuMenuDisplay) {
+      if (this.togglingMenu) {
+        return false
+      }
+
+      this.togglingMenu = true
+
+      setTimeout(() => {
+        this.togglingMenu = false
+      }, 300)
+
       let menuHub = this.$store.state.comp.menu
 
       const getMenuHeight = (vm) => {
         handleEleDisplay({
-          element: vm.$refs.menu,
+          element: vm.$refs.menuPanel,
           cb: (element) => {
             let scrollerComp = vm.isTagMenu ? vm.$refs.tagScroller : vm.$refs.menuOption.$refs.list.$refs.scroller
             scrollerComp._initScroller()
@@ -186,7 +186,7 @@ export default {
         } else {
           getMenuHeight(vm)
 
-          this.menuMenuDisplay = false
+          vm.menuMenuDisplay = false
           vm.$refs.transition.leave()
         }
       }
@@ -201,9 +201,7 @@ export default {
 
       return this._adjustmenuMenuPoiStyle({
         cb: () => {
-          let display = optVal === undefined ? !this.menuMenuDisplay : optVal
-
-          transite(display, this)
+          return transite(optVal, this)
         }
       })
     },
@@ -228,9 +226,7 @@ export default {
      * @return {Object} this - 组件
      */
     spread() {
-      this.menuMenuDisplay = true
-
-      return this
+      return this.toggleMenuDisplay(true)
     }
   }
 }

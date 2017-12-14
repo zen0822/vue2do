@@ -212,8 +212,10 @@ export default {
   },
 
   mounted() {
-    this._binder()
-    this._initComp()
+    this.$nextTick(() => {
+      this._binder()
+      this._initComp()
+    })
 
     let deviceSizeClass = `${compConfig.prefix}-css-device-size`
 

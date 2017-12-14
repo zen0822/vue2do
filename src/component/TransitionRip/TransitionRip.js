@@ -4,7 +4,10 @@
  * @prop assign - 指定涟漪在是什么位置开始
  */
 
-import { addClass, delClass } from '../../util/dom/attr'
+import {
+  addClass,
+  delClass
+} from '../../util/dom/attr'
 
 import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
@@ -23,8 +26,16 @@ export default {
     }
   },
 
+  data() {
+    this.transiting = false // 是否正则执行过渡动画
+
+    return {}
+  },
+
   methods: {
-    beforeEnter({ mousePoi } = {}) {
+    beforeEnter({
+      mousePoi
+    } = {}) {
       this.$emit('beforeEnter')
 
       let el = this.$el
@@ -101,15 +112,12 @@ export default {
   },
 
   render(h, context) {
-    return h('transition',
-      [
-        h('div',
-          {
-            class: [this.prefix('transition-rip')]
-          },
-          [h('div', { class: [this.prefix('transition-rip-spot')] })]
-        )
-      ]
-    )
+    return h('transition', [
+      h('div', {
+        class: [this.prefix('transition-rip')]
+      }, [h('div', {
+        class: [this.prefix('transition-rip-spot')]
+      })])
+    ])
   }
 }
