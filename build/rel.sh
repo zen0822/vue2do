@@ -1,6 +1,7 @@
 #!/bin/sh
 npm -v
 
+echo "Current npm version is "
 set -o errexit
 if [[ -z $1 ]]; then
   echo "Enter new version: "
