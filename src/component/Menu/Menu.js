@@ -47,7 +47,6 @@ import scrollerComp from '../Scroller/Scroller'
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 import apiMixin from './Menu.api'
-import transitionMixin from './transition.mixin'
 import foldTransition from '../TransitionFold/TransitionFold'
 
 import uid from '../../util/uid'
@@ -58,8 +57,6 @@ import {
   unique as uniqueArray
 } from '../../util/data/array'
 
-// 下拉框的 border 宽度
-const MENU_BORDER_WIDTH = 1
 // 搜索功能的函数节流的间隔时间
 const SEARCH_KEY_UP_INTERVAL = 500
 
@@ -172,26 +169,28 @@ const menuComp = {
     this.togglingMenu = false // 300ms 之内只能点击一次的标识
 
     return {
-      option: [], // props 里面 optionItem 的 data 替换值
       allOptionVal: [], // optionItem 里面的全部的 value
-      text: undefined, // 当前下拉框的 text 值
-      value: undefined, // 当前下拉框的 value 值
-      verified: true, // 是否以验证通过
+      currentIndex: 0, // option 值的当前游标
+      customOptionDisplay: false, // 自定义下拉框的显示状态
+      focusing: false, // 正在处于 focus 状态
+      hasSlotOption: false, // 是否是 slot 定义的 option
       menuHeight: 0, // 下拉菜单的高度
       menuMenuDisplay: false, // 下拉菜单的显示状态
       menuMenuStyle: {}, // 下拉菜单的样式
       menuMenuPoiStyle: {}, // 下拉菜单位置的样式
-      hasSlotOption: false, // 是否是 slot 定义的 option
-      currentIndex: 0, // option 值的当前游标
+      optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
+      option: [], // props 里面 optionItem 的 data 替换值
+      listPageHide: true,
+      listScrollerHide: true,
+      unwatchOption: {}, // 取消观察 option
+      value: undefined, // 当前下拉框的 value 值
+      verified: true, // 是否以验证通过
       searchKeyuped: false, // 搜索按键的状态
       searchOptionDisplay: false, // 是否显示搜索 optionItem
       searchOptionItem: {}, // 搜索出来的 option
-      unwatchOption: {}, // 取消观察 option
-      optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
       selectedAll: false, // 是否全选多选下拉框的标记
-      customOptionDisplay: false, // 自定义下拉框的显示状态
       transitionFinish: false, // 下拉框显示过渡完成的标识符
-      focusing: false // 正在处于 focus 状态
+      text: undefined // 当前下拉框的 text 值
     }
   },
 
@@ -278,11 +277,22 @@ const menuComp = {
         })
       }
 
-      if (!this.isTagMenu) {
-        this.$refs.transition.$on('afterEnter', () => {
-          return this.$refs.menuOption.initPagePosition()
-        })
+      this.$refs.transition.$on('afterEnter', () => {
+        this.listPageHide = false
+        this.listScrollerHide = false
 
+        this.$nextTick(() => {
+          !this.isTagMenu && this.$refs.menuOption.initPagePosition()
+        })
+      })
+
+      this.$refs.transition.$on('afterLeave', () => {
+        this.menuMenuDisplay = false
+        this.listScrollerHide = true
+        this.listPageHide = true
+      })
+
+      if (!this.isTagMenu) {
         // TODO: 待验证
         this.$refs.menuOption.$off('change')
         this.$refs.menuOption.$on('change', ({

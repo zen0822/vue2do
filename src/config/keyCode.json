@@ -1,0 +1,11 @@
+{
+  "backspace": 8,
+  "ctrl": 17,
+  "enter": 13,
+  "tab": 9,
+  "shift": 16,
+  "up": 38,
+  "down": 40,
+  "left": 37,
+  "right": 39
+}

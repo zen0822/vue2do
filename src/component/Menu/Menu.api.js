@@ -2,6 +2,7 @@
  * menu.api
  */
 
+import keyCode from '../../config/keyCode.json'
 import tip from '../Message/tip'
 import {
   handleEleDisplay
@@ -139,8 +140,8 @@ export default {
         return false
       }
 
-      if (event.keyCode === 13) {
-        this.toggleMenuDisplay(true)
+      if (event.keyCode === keyCode.enter) {
+        this.toggleMenuDisplay()
       }
     },
 
@@ -186,7 +187,6 @@ export default {
         } else {
           getMenuHeight(vm)
 
-          vm.menuMenuDisplay = false
           vm.$refs.transition.leave()
         }
       }

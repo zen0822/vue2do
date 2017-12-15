@@ -134,12 +134,14 @@ export default function (h) {
     h('list', {
       class: this.xclass('list'),
       props: {
-        item: this.option,
-        pageSize: 6,
         auto: true,
+        item: this.option,
+        pageHide: this.listPageHide,
+        pageSize: 6,
         pageType: 'more',
         pager: true,
         scrollerHeight: 200,
+        scrollerHide: this.listScrollerHide,
         theme: 'default'
       },
       scopedSlots: {

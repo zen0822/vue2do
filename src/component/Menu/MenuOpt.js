@@ -1,8 +1,10 @@
 /**
  * menu-option -- 作为 menu 的 option 的局部组件
  *
- * @prop option - 下拉框option数据
+ * @prop listPageHide - 隐藏列表分页
+ * @prop listScrollerHide - 隐藏列表滚动条
  * @prop multiple - 是否为多选
+ * @prop option - 下拉框option数据
  * @prop optRoot - 递归调用的父元素
  * @prop valName - 下拉框 options 的 value 值的 key name
  * @prop txtName - 下拉框 options 的 text 值的 key name
@@ -25,7 +27,6 @@ import colComp from '../Col/Col'
 import ripTransition from '../TransitionRip/TransitionRip'
 import baseMixin from '../../mixin/base'
 
-
 const menuOptionComp = {
   name: 'menu-opt',
 
@@ -43,6 +44,16 @@ const menuOptionComp = {
   },
 
   props: {
+    listPageHide: {
+      type: Boolean,
+      default: false
+    },
+
+    listScrollerHide: {
+      type: Boolean,
+      default: false
+    },
+
     option: {
       type: Array,
       default: () => []

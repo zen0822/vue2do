@@ -72,33 +72,23 @@ const scrollerComp = {
   },
 
   data() {
-    // 组件名字
-    this.compName = 'scroller'
+    this.compName = 'scroller' // 组件名字
+    this.interValInitScroller = '' // 初始化滚动条定时器
 
     return {
-      // y-scroller detail
-      yData: {
-        // 滚动条和滚动区域的偏移值
-        barAndScrollerOffset: 0,
-        // 滚动条的高度
-        barLength: 0,
-        // bar 的高度
-        barTop: 0,
-        // 滚动容器 / 滚动条区域
-        boxBarRate: 0,
-        // 滚动内容和滚动区域的偏移值
-        boxAndScrollerOffset: 0,
-        // 滚动条的 mousedown 事件
-        isMousedown: false,
-        // 记录上一次滚动条的高度
-        oldBarTop: 0,
-        // 滚动一次的滚动条走的像素大小
-        scrollBarPixel: 0,
-        // 滚动条的高度是否大于滚动容器
-        scrollerContainBox: false
+      yData: { // y-scroller detail
+        barAndScrollerOffset: 0, // 滚动条和滚动区域的偏移值
+        barLength: 0, // 滚动条的高度
+        barTop: 0, // bar 的高度
+        boxBarRate: 0, // 滚动容器 / 滚动条区域
+        boxAndScrollerOffset: 0, // 滚动内容和滚动区域的偏移值
+        isMousedown: false, // 滚动条的 mousedown 事件
+        oldBarTop: 0, // 记录上一次滚动条的高度
+        scrollBarPixel: 0, // 滚动一次的滚动条走的像素大小
+        scrollerContainBox: false // 滚动条的高度是否大于滚动容器
       },
-      // x-scroller detail
-      xData: {
+
+      xData: { // x-scroller detail
         barLength: 0,
         barLeft: 0,
         barAndScrollerOffset: 0,
@@ -109,37 +99,25 @@ const scrollerComp = {
         scrollBarPixel: 0,
         scrollerContainBox: false
       },
-      // box 离最顶端的偏移值
-      boxTop: 0,
-      // box 离最开始的偏移值
-      boxLeft: 0,
-      // 滚动区域的高度
-      boxHeight: 0,
-      // 滚动区域的宽度
-      boxWidth: 0,
-      // 滚动区域的样式宽度
-      boxStyleWidth: '',
-      // 滚动容器的高度
-      scrollerHeight: 0,
-      // 滚动容器的宽度
-      scrollerWidth: 0,
-      // 滚动条自动隐藏的状态
-      showBar: false,
-      // 滚动区域的 touchend 事件
-      isTouchStart: false,
-      // 记录连续滚动的标注
-      scrolling: false,
-      // 记录是否还在触摸移动中
-      moving: false,
-      // 是否有 scroller 组件的祖先
-      hasScrollerGrandpa: false,
-      // 记录开始触摸滚动区域的坐标
-      touchStart: {
+      boxTop: 0, // box 离最顶端的偏移值
+      boxLeft: 0, // box 离最开始的偏移值
+      boxHeight: 0, // 滚动区域的高度
+      boxWidth: 0, // 滚动区域的宽度
+      boxStyleWidth: '', // 滚动区域的样式宽度
+      scrollerHeight: 0, // 滚动容器的高度
+      scrollerWidth: 0, // 滚动容器的宽度
+      showBar: false, // 滚动条自动隐藏的状态
+      isTouchStart: false, // 滚动区域的 touchend 事件
+      scrolling: false, // 记录连续滚动的标注
+      moving: false, // 记录是否还在触摸移动中
+      hasScrollerGrandpa: false, // 是否有 scroller 组件的祖先
+
+      touchStart: { // 记录开始触摸滚动区域的坐标
         x: 0,
         y: 0
       },
-      // 记录开始点击滚动条的坐标
-      pointStart: {
+
+      pointStart: { // 记录开始点击滚动条的坐标
         x: 0,
         y: 0
       }
@@ -161,8 +139,7 @@ const scrollerComp = {
       }
     },
 
-    // x 方向的计算属性
-    xComputed() {
+    xComputed() { // x 方向的计算属性
       return {
         barDisplay: !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
         isLeft: this.xData.barLeft === 0,
@@ -174,8 +151,7 @@ const scrollerComp = {
       }
     },
 
-    // y 方向的计算属性
-    yComputed() {
+    yComputed() { // y 方向的计算属性
       return {
         // 是否显示滚动条
         barDisplay: !this.yData.scrollerContainBox && (!this.autoHide || this.showBar),
@@ -190,8 +166,7 @@ const scrollerComp = {
       }
     },
 
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-scroller`
     }
   },
@@ -239,9 +214,9 @@ const scrollerComp = {
       this.$box = this.$refs.box
       this._initScroller()
 
-      setInterval(() => {
+      this.interValInitScroller = setInterval(() => {
         this._initScroller()
-      }, 80)
+      }, 50)
     },
 
     _binder() {
@@ -700,6 +675,10 @@ const scrollerComp = {
     }
 
     this.hasScrollerGrandpa = checkScrollerParent(this.$parent)
+  },
+
+  destroyed() {
+    clearInterval(this.interValInitScroller)
   }
 }
 

@@ -23,14 +23,13 @@ $C_PREFIX: #{ $COMP_SCROLLER };
   .#{$C_PREFIX}-bar {
     position: absolute;
     border-radius: 4px;
-    background-color: $grey;
+    background-color: $grey-light;
     opacity: .4;
 
     z-index: 1;
 
     &:hover{
-      background-color: $grey-dark;
-      opacity: 1;
+      opacity: .8;
     }
 
     &.#{$C_PREFIX}-x-bar {

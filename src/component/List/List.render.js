@@ -3,7 +3,9 @@
  */
 
 export default function (h) {
+  let listChildren = []
   let scrollerChildren = []
+  let loadingOfNum = []
 
   if (this.listItem.length > 0) {
     let listItems = []
@@ -34,9 +36,6 @@ export default function (h) {
     }, '暂无数据')]
   }
 
-
-  let loadingOfNum = []
-
   if (!this.isPageTypeMore) {
     loadingOfNum.push(h('loading', {
       class: this.xclass(['loading', 'loading-num']),
@@ -47,9 +46,7 @@ export default function (h) {
     }))
   }
 
-  return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
-  }, [
+  listChildren.push(
     h('scroller', {
       class: [this.xclass('scroller')],
       props: {
@@ -60,73 +57,83 @@ export default function (h) {
         scrollY: this.scroll
       },
       ref: 'scroller'
-    }, scrollerChildren),
-    h('slide-transition', {
-      props: {
-        direction: 'north',
-        offset: this.pageDetail.bottom
-      },
-      ref: 'slideTransition'
-    }, [
-      h(
-        'page', {
-          class: [this.xclass('page')],
-          directives: [{
-            name: 'show',
-            value: this.pagerDisplay
-          }],
-          props: {
-            data: this.pageData,
-            type: this.pageType,
-            loadMoreText: this.loadMoreText
-          },
-          on: {
-            'switch': this.switchPage
-          },
-          ref: 'page',
-          style: this.pagerStyle
-        }, (() => {
-          let ele = [
-            h('icon', {
-              class: [`${this.compPrefix}-m-r-half`],
-              props: {
-                kind: 'arrow'
-              }
-            }),
-            h('span', this.loadMoreText)
-          ]
+    }, scrollerChildren)
+  )
 
-          if (this.isPageTypeMore) {
-            return [
-              h(
-                'div', {
-                  slot: 'loadMore'
-                }, [
-                  h('loading', {
-                    class: [`${this.compPrefix}-m-r-half`].concat(
-                      this.xclass(['loading', 'loading-more'])
-                    ),
-                    ref: 'loadingOfMore'
-                  }),
-                  h('icon', {
-                    class: [`${this.compPrefix}-m-r-half`],
-                    directives: [{
-                      name: 'show',
-                      value: this.arrowOfMoreDisplay
-                    }],
-                    props: {
-                      kind: 'arrow'
-                    }
-                  }),
-                  h('span', this.loadMoreText)
-                ]
-              )
+  if (!this.pageHide) {
+    listChildren.push(
+      h('slide-transition', {
+        props: {
+          direction: 'north',
+          offset: this.pageDetail.bottom
+        },
+        ref: 'pageSlideTransition'
+      }, [
+        h(
+          'page', {
+            class: [this.xclass('page')],
+            props: {
+              data: this.pageData,
+              type: this.pageType,
+              loadMoreText: this.loadMoreText
+            },
+            on: {
+              'switch': this.switchPage
+            },
+            ref: 'page',
+            style: this.pagerStyle
+          }, (() => {
+            let ele = [
+              h('icon', {
+                class: [`${this.compPrefix}-m-r-half`],
+                props: {
+                  kind: 'arrow'
+                }
+              }),
+              h('span', this.loadMoreText)
             ]
-          }
 
-          return ele
-        })()
-      )
-    ])
-  ].concat(loadingOfNum))
+            if (this.isPageTypeMore) {
+              return [
+                h(
+                  'div', {
+                    slot: 'loadMore'
+                  }, [
+                    h('loading', {
+                      class: [`${this.compPrefix}-m-r-half`].concat(
+                        this.xclass(['loading', 'loading-more'])
+                      ),
+                      ref: 'loadingOfMore'
+                    }),
+                    h('icon', {
+                      class: [`${this.compPrefix}-m-r-half`],
+                      directives: [{
+                        name: 'show',
+                        value: this.arrowOfMoreDisplay
+                      }],
+                      props: {
+                        kind: 'arrow'
+                      }
+                    }),
+                    h('span', this.loadMoreText)
+                  ]
+                )
+              ]
+            }
+
+            return ele
+          })()
+        )
+      ])
+    )
+  }
+
+  listChildren.push(loadingOfNum)
+
+  return h('div', {
+    class: [
+      this.cPrefix,
+      this.xclass(this.themeClass)
+    ]
+  }, listChildren)
 }

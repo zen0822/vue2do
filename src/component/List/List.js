@@ -7,9 +7,11 @@
  * @prop item - 列表数据
  * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @prop pager - 启动分页功能
+ * @prop pageHide - 隐藏分页
  * @prop pageSize - 将列表数据（item）分为每页多少条数据
  * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
  * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
+ * @prop scrollerHide - 隐藏滚动条
  *
  * @event switchPage - 换页触发事件
  * @event changeScroller - 滚动区域的高度/宽度变化
@@ -57,6 +59,11 @@ export default {
       default: false
     },
 
+    scrollerHide: {
+      type: Boolean,
+      default: false
+    },
+
     item: {
       type: Array,
       default: () => []
@@ -65,6 +72,11 @@ export default {
     page: Object,
 
     pager: {
+      type: Boolean,
+      default: false
+    },
+
+    pageHide: {
       type: Boolean,
       default: false
     },
@@ -114,7 +126,6 @@ export default {
       moreDisplay: false, // 加载更多的显示状态
       scrollerAlmostInBottom: false, // 滚动条是否在底部
       loadingListData: false, // 是否正在加载列表数据
-      selectGrandpa: {}, // 下拉框祖先元素
       pageDetail: { // 分页的相关信息
         top: 0,
         left: 0,
@@ -136,8 +147,7 @@ export default {
       }
     },
     pagerDisplayStatus() { // 分页的显示状态
-      return (!this.selectGrandpa || this.selectGrandpa.transitionFinish) &&
-        this.pageData.total !== 0 &&
+      return this.pageData.total !== 0 &&
         this.pageData.current !== this.pageData.total &&
         this.scrollerAlmostInBottom
     },
@@ -164,10 +174,6 @@ export default {
       })
     },
     pagerDisplayStatus(val) {
-      if (this.$refs.slideTransition && this.$refs.slideTransition.transiting) {
-        return this._transitionQueueOperator().add(val)
-      }
-
       this._transitePage(val)
     }
   },
@@ -180,25 +186,25 @@ export default {
     },
 
     _binder() {
-      this.$refs.scroller.$on('changeScroller', ({
+      const refScroller = this.$refs.scroller
+
+      refScroller.$on('changeScroller', ({
         scrollerHeight,
         emitter
       }) => {
-        this.initPagePosition()
-        this.scrollerAlmostInBottom = emitter.yComputed.isBottom
-
         return this.$emit('changeScroller', {
           emitter: this
         })
       })
 
-      this.$refs.scroller.$on('changeYBar', ({
+      refScroller.$on('changeYBar', ({
         isBottom
       }) => {
         if (!this.$el.offsetHeight) {
           return false
         }
 
+        this.initPagePosition()
         this.scrollerAlmostInBottom = isBottom
       })
     },
@@ -207,47 +213,16 @@ export default {
      * 执行分页过渡动画
      */
     _transitePage(show = true) {
-      if (show) {
-        this.$refs.slideTransition.$off('afterEnter')
-        this.$refs.slideTransition.$on('afterEnter', () => {
-          this.pagerDisplay = true
-        })
-
-        this.$refs.slideTransition.enter()
-      } else {
-        this.$refs.slideTransition.$off('afterLeave')
-        this.$refs.slideTransition.$on('afterLeave', () => {
-          this.pagerDisplay = false
-        })
-
-        this.$refs.slideTransition.leave()
+      if (this.pageHide) {
+        return false
       }
-    },
 
-    /**
-     * 处理分页过渡动画的队列
-     */
-    _transitionQueueOperator() {
-      let _self = this
+      const refPageTransition = this.$refs.pageSlideTransition
 
-      return {
-        add(transition) {
-          _self.transitionQueue.push(transition)
-          this.handle()
-        },
-        handle: () => {
-          _self.transitedQueueInterval = setInterval(() => {
-            if (_self.transitionQueue.length === 0) {
-              return clearInterval(_self.transitedQueueInterval)
-            }
-
-            if (_self.$refs.slideTransition.transiting) {
-              return false
-            }
-
-            _self._transitePage(_self.transitionQueue.shift())
-          }, 0)
-        }
+      if (show) {
+        return refPageTransition.enter()
+      } else {
+        return refPageTransition.leave()
       }
     }
   },
@@ -257,9 +232,5 @@ export default {
       pageNum: this.pageData.current,
       listItem: this.item
     })
-  },
-
-  beforeMount() {
-    this.selectGrandpa = findGrandpa(this.$parent, 'select')
   }
 }

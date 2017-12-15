@@ -163,6 +163,8 @@ export default function (h) {
         h('menu-opt', {
           class: [this.xclass('opt-comp')],
           props: {
+            listPageHide: this.listPageHide,
+            listScrollerHide: this.listScrollerHide,
             multiple: this.multiple,
             valName: this.valName,
             txtName: this.txtName,
