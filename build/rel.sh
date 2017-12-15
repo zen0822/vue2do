@@ -1,7 +1,6 @@
 #!/bin/sh
 npm -v
 
-echo "Current npm version is "
 set -o errexit
 if [[ -z $1 ]]; then
   echo "Enter new version: "
@@ -21,9 +20,5 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   npm version $VERSION --message "[release] $VERSION"
   # publish
   git push
-  if [[ -z $RELEASE_TAG ]]; then
-    npm publish
-  else
-    npm publish --tag $RELEASE_TAG
-  fi
+  npm publish
 fi
