@@ -1,7 +1,8 @@
 #!/bin/sh
-npm -v
-
+CURRENT_VERSION=`npm view vue2do version`
+echo "Current vue2do version is $CURRENT_VERSION"
 set -o errexit
+
 if [[ -z $1 ]]; then
   echo "Enter new version: "
   read VERSION
@@ -18,7 +19,12 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   git add -A
   git commit -m "[build] $VERSION"
   npm version $VERSION --message "[release] $VERSION"
+
   # publish
   git push
-  npm publish
+  if [[ -z $RELEASE_TAG ]]; then
+    npm publish
+  else
+    npm publish --tag $RELEASE_TAG
+  fi
 fi
