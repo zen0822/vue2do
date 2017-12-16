@@ -15,7 +15,6 @@ echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   echo "Releasing $VERSION ..."
-
   # commit
   git add -A
   git commit -m "[build] $VERSION"
