@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
-const nodeArgv = process.argv
-const optimist = require("optimist")
-
-const argv = optimist.argv
-
-if (!argv.app) {
-  console.warn('argv app must alive')
-
-  return false;
-}
+const argv = require('yargs')
+  .usage('Usage: $0 --app [string]')
+  .example('$0 --app example', 'Lunch dev server')
+  .option('app', {
+    alias: 'a',
+    demandOption: true,
+    describe: 'App name',
+    type: 'string',
+    requiresArg: true
+  })
+  .argv
 
 require('../build/dev')({
   appName: argv.app

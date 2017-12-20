@@ -40,9 +40,52 @@ Vue.component('yourPrefix' + input.compName, input)
 
 #### 因为从 vue2do/index.js 文件加载的时候会加载所有的组件，所以只加载指定组件就可以只打包这个组件的文件
 ```js
-  import Input 'vue2do/component/Input'
+import Input 'vue2do/component/Input'
 
-  Vue.component('Input', Input)
+Vue.component('Input', Input)
+```
+
+## 构建单页应用（spa）和多页应用（mpa）
+
+### 全局安装 vue2do
+
+```
+npm i vue2do -g
+```
+
+### 命令行
+
+#### 初始化应用项目
+
+* projectName: 项目名字
+
+```
+vue2do init project [projectName]
+```
+
+#### 构建应用
+
+* appType: 应用类型，可选 spa 和 mpa
+* appName: 应用名字
+
+```
+cd [projectName] // 初始化的项目应用目录下
+vue2do build <appType> [appName]
+```
+
+### 例子
+
+#### 在当前目录构建名字为 zenProject 的应用项目
+
+```
+vue2do init project zenProject
+```
+
+#### 在当前应用项目构建 名字为 zenMpa 的多页应用
+
+```
+cd zenProject
+vue2do build mpa zenMpa
 ```
 
 ***
