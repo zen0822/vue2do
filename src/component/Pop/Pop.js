@@ -19,7 +19,7 @@ import './Pop.m.scss'
 import render from './Pop.render'
 import baseMixin from '../../mixin/base'
 
-import TransitionSlide from '../TransitionSlide/TransitionSlide'
+import MotionSlide from '../MotionSlide/MotionSlide'
 import {
   hasScroller
 } from '../../util/dom'
@@ -35,7 +35,7 @@ const popComp = {
   mixins: [baseMixin],
 
   components: {
-    'slide-transition': TransitionSlide
+    'slide-transition': MotionSlide
   },
 
   props: {

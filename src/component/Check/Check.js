@@ -29,7 +29,7 @@ import compEvent from '../../config/event.json'
 import Col from '../Col/Col'
 import Row from '../Row/Row'
 import Icon from '../Icon/Icon'
-import TransitionRip from '../TransitionRip/TransitionRip'
+import MotionRip from '../MotionRip/MotionRip'
 
 import tip from '../Message/tip'
 
@@ -53,7 +53,7 @@ let checkCompConfig = {
     column: Col,
     row: Row,
     icon: Icon,
-    'rip-transition': TransitionRip
+    'rip-transition': MotionRip
   },
 
   props: {

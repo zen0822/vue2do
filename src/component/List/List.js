@@ -25,7 +25,7 @@ import Icon from '../Icon/Icon'
 import Loading from '../Loading/Loading'
 import Pager from '../Page/Page'
 import Scroller from '../Scroller/Scroller'
-import TransitionSlide from '../TransitionSlide/TransitionSlide'
+import MotionSlide from '../MotionSlide/MotionSlide'
 
 import baseMixin from '../../mixin/base'
 import apiMixin from './List.api'
@@ -50,7 +50,7 @@ export default {
     loading: Loading,
     page: Pager,
     scroller: Scroller,
-    'slide-transition': TransitionSlide
+    'slide-transition': MotionSlide
   },
 
   props: {

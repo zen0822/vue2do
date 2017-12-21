@@ -20,7 +20,7 @@ import render from './Col.render.js'
 import baseMixin from '../../mixin/base'
 
 export default {
-  name: 'col',
+  name: 'Col',
 
   mixins: [baseMixin],
 

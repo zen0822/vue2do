@@ -33,7 +33,7 @@ import './Scroller.scss'
 import baseMixin from '../../mixin/base'
 import render from './Scroller.render.js'
 
-import fadeTransition from '../TransitionFade/TransitionFade'
+import fadeTransition from '../MotionFade/MotionFade'
 
 // 滚动一次的滚动区域走的像素大小
 const SCROLL_PIXEL = 10

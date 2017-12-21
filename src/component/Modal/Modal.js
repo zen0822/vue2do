@@ -40,7 +40,7 @@ import Scroller from '../Scroller/Scroller'
 import Row from '../Row/Row'
 import Col from '../Col/Col'
 
-import TransitionFade from '../TransitionFade/TransitionFade'
+import MotionFade from '../MotionFade/MotionFade'
 
 import {
   handleEleDisplay
@@ -66,7 +66,7 @@ const modalComp = {
     scroller: Scroller,
     row: Row,
     column: Col,
-    'fade-transition': TransitionFade
+    'fade-transition': MotionFade
   },
 
   props: {

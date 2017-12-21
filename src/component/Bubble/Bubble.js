@@ -20,7 +20,7 @@ import './Bubble.scss'
 import Icon from '../Icon/Icon'
 import render from './Bubble.render'
 import baseMixin from '../../mixin/base'
-import TransitionZoom from '../TransitionZoom/TransitionZoom'
+import MotionZoom from '../MotionZoom/MotionZoom'
 
 import { offset as childrenHeight } from '../../util/dom/prop'
 
@@ -35,7 +35,7 @@ export default {
 
   components: {
     icon: Icon,
-    'zoom-transition': TransitionZoom
+    'zoom-transition': MotionZoom
   },
 
   props: {

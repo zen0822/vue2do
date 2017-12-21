@@ -24,7 +24,7 @@ import listComp from '../List/List'
 import rowComp from '../Row/Row'
 import colComp from '../Col/Col'
 
-import ripTransition from '../TransitionRip/TransitionRip'
+import ripTransition from '../MotionRip/MotionRip'
 import baseMixin from '../../mixin/base'
 
 const menuOptionComp = {

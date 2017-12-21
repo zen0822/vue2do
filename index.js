@@ -44,11 +44,11 @@ import Table from './src/component/Table/Table'
 import TableRow from './src/component/Table/TableRow'
 import TableCol from './src/component/Table/TableCol'
 
-import TransitionFade from './src/component/TransitionFade/TransitionFade'
-import TransitionFold from './src/component/TransitionFold/TransitionFold'
-import TransitionRip from './src/component/TransitionRip/TransitionRip'
-import TransitionSlide from './src/component/TransitionSlide/TransitionSlide'
-import TransitionZoom from './src/component/TransitionZoom/TransitionZoom'
+import MotionFade from './src/component/MotionFade/MotionFade'
+import MotionFold from './src/component/MotionFold/MotionFold'
+import MotionRip from './src/component/MotionRip/MotionRip'
+import MotionSlide from './src/component/MotionSlide/MotionSlide'
+import MotionZoom from './src/component/MotionZoom/MotionZoom'
 
 setConfig.lang(cnLang)
 
@@ -91,11 +91,11 @@ export {
   TableCol,
   TableRow,
 
-  TransitionFade,
-  TransitionFold,
-  TransitionRip,
-  TransitionSlide,
-  TransitionZoom,
+  MotionFade,
+  MotionFold,
+  MotionRip,
+  MotionSlide,
+  MotionZoom,
 
   setConfig as set
 }

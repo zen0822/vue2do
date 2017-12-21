@@ -40,11 +40,11 @@ import TabEle from './component/Tab/TabEle'
 import Col from './component/Col/Col'
 import Row from './component/Row/Row'
 
-import TransitionFade from './component/TransitionFade/TransitionFade'
-import TransitionFold from './component/TransitionFold/TransitionFold'
-import TransitionRip from './component/TransitionRip/TransitionRip'
-import TransitionSlide from './component/TransitionSlide/TransitionSlide'
-import TransitionZoom from './component/TransitionZoom/TransitionZoom'
+import MotionFade from './component/MotionFade/MotionFade'
+import MotionFold from './component/MotionFold/MotionFold'
+import MotionRip from './component/MotionRip/MotionRip'
+import MotionSlide from './component/MotionSlide/MotionSlide'
+import MotionZoom from './component/MotionZoom/MotionZoom'
 
 const compHub = [
   Btn,
@@ -55,9 +55,6 @@ const compHub = [
   Fold,
   FoldTitle,
   FoldContent,
-  Modal,
-  Message,
-  Nav,
   Input,
   Icon,
   List,
@@ -65,8 +62,16 @@ const compHub = [
   Omit,
   Pop,
   Page,
+  Message,
   Menu,
+  Modal,
   MenuEle,
+  MotionFade,
+  MotionFold,
+  MotionRip,
+  MotionSlide,
+  MotionZoom,
+  Nav,
   Scroller,
   Shift,
   ShiftEle,
@@ -77,12 +82,7 @@ const compHub = [
   Row,
   Table,
   TableRow,
-  TableCol,
-  TransitionFade,
-  TransitionFold,
-  TransitionRip,
-  TransitionSlide,
-  TransitionZoom
+  TableCol
 ]
 
 const component = {

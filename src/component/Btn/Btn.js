@@ -22,7 +22,7 @@ import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 
 import Loading from '../Loading/Loading'
-import ripTransition from '../TransitionRip/TransitionRip'
+import ripTransition from '../MotionRip/MotionRip'
 
 const BTN_TYPE_LINK = 'link'
 const BTN_TYPE_BUTTON = 'button'

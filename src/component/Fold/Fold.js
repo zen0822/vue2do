@@ -14,7 +14,7 @@ import './Fold.scss'
 import render from './Fold.render.js'
 import baseMixin from '../../mixin/base'
 import iconComp from '../Icon/Icon'
-import foldTransition from '../TransitionFold/TransitionFold'
+import foldTransition from '../MotionFold/MotionFold'
 
 import {
   handleEleDisplay

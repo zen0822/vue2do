@@ -20,7 +20,7 @@ import {
   foldTitleComp,
   foldContentComp
 } from '../Fold/Fold'
-import foldTransition from '../TransitionFold/TransitionFold'
+import foldTransition from '../MotionFold/MotionFold'
 import iconComp from '../Icon/Icon'
 import rowComp from '../Row/Row'
 import colComp from '../Col/Col'

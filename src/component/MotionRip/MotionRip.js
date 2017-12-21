@@ -12,7 +12,7 @@ import {
 import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
 
-import './TransitionRip.scss'
+import './MotionRip.scss'
 
 export default {
   name: 'rip-transition',

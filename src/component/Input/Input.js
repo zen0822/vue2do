@@ -60,7 +60,7 @@ const ERROR_MESSAGE_TIP = 'tip'
 const ERROR_MESSAGE_BUBBLE = 'bubble'
 
 export default {
-  name: 'input',
+  name: 'Input',
 
   render,
 

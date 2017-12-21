@@ -47,7 +47,7 @@ import scrollerComp from '../Scroller/Scroller'
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 import apiMixin from './Menu.api'
-import foldTransition from '../TransitionFold/TransitionFold'
+import foldTransition from '../MotionFold/MotionFold'
 
 import uid from '../../util/uid'
 import {
