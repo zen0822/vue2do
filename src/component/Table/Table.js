@@ -28,7 +28,7 @@ import { findGrandpa } from '../../util/util'
 const COL_PADDING_BORDER_LENGTH = 22
 
 const Table = {
-  name: 'table',
+  name: 'Table',
 
   render,
 

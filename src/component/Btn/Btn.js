@@ -32,7 +32,7 @@ const SIZE_M = 'M'
 const SIZE_L = 'L'
 
 export default {
-  name: 'btn',
+  name: 'Btn',
 
   mixins: [baseMixin, formMixin],
 

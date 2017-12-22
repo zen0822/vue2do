@@ -19,7 +19,7 @@ const TYPE_ALI = 'ali'
 const TYPE_FA = 'fa'
 
 export default {
-  name: 'icon',
+  name: 'Icon',
 
   render,
 

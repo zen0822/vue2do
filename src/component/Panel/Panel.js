@@ -28,7 +28,7 @@ import colComp from '../Col/Col'
 const layoutType = ['grid', 'flex', 'flow']
 
 export default {
-  name: 'panel',
+  name: 'Panel',
 
   mixins: [baseMixin],
 

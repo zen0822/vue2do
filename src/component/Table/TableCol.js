@@ -16,7 +16,7 @@ import { findGrandpa } from '../../util/util'
 const COL_PADDING_BORDER_LENGTH = 22
 
 const tableColComp = {
-  name: 'table-col',
+  name: 'TableCol',
   mixins: [baseMixin],
   props: {
     align: {

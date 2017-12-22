@@ -16,7 +16,7 @@ import baseMixin from '../../mixin/base'
 const SHIFT_TYPE = ['display', 'move', 'opacity']
 
 export default {
-  name: 'shift',
+  name: 'Shift',
 
   render,
 

@@ -15,7 +15,7 @@ import transitionMixin from '../../mixin/transition'
 import './MotionRip.scss'
 
 export default {
-  name: 'rip-transition',
+  name: 'MotionRip',
 
   mixins: [baseMixin, transitionMixin],
 

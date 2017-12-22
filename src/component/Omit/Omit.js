@@ -10,7 +10,7 @@ import render from './Omit.render.js'
 import baseMixin from '../../mixin/base'
 
 export default {
-  name: 'omit',
+  name: 'Omit',
 
   mixins: [baseMixin],
 

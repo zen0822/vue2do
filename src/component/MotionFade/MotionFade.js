@@ -8,7 +8,7 @@
 import baseMixin from '../../mixin/transition'
 
 export default {
-  name: 'fade-transition',
+  name: 'MotionFade',
 
   mixins: [baseMixin],
 

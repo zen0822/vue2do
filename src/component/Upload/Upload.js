@@ -33,6 +33,8 @@ const TYPE_IMG = 'img'
 const TYPE_DOC = 'doc'
 
 const uploadComp = {
+  name: 'Upload',
+
   template,
 
   props: {

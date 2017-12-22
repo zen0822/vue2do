@@ -39,7 +39,7 @@ import fadeTransition from '../MotionFade/MotionFade'
 const SCROLL_PIXEL = 10
 
 const scrollerComp = {
-  name: 'scroller',
+  name: 'Scroller',
 
   mixins: [baseMixin],
 

@@ -5,7 +5,7 @@
 import baseMixin from '../../mixin/base'
 
 export default {
-  name: 'menu-ele',
+  name: 'MenuEle',
 
   template: `
     <div :class="[cPrefix]">

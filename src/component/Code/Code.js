@@ -12,7 +12,7 @@ import baseMixin from '../../mixin/base'
 import scrollerComp from '../Scroller/Scroller'
 
 export default {
-  name: 'code',
+  name: 'Code',
 
   mixins: [baseMixin],
 

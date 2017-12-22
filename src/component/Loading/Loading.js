@@ -20,7 +20,7 @@ const TYPE_ROTATE_2 = 'rotate2'
 const TYPE_SPOT = 'spot'
 
 export default {
-  name: 'loading',
+  name: 'Loading',
 
   mixins: [baseMixin],
 

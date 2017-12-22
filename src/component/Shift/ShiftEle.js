@@ -6,6 +6,8 @@
 import baseMixin from '../../mixin/base'
 
 export default {
+  name: 'ShiftEle',
+
   mixins: [baseMixin],
 
   computed: {

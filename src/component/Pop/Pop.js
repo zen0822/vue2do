@@ -28,7 +28,7 @@ import {
 const scrollBarWidth = 20
 
 const popComp = {
-  name: 'pop',
+  name: 'Pop',
 
   render,
 

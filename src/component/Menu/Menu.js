@@ -61,7 +61,7 @@ import {
 const SEARCH_KEY_UP_INTERVAL = 500
 
 const menuComp = {
-  name: 'menu',
+  name: 'Menu',
 
   render,
 

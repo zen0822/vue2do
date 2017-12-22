@@ -29,7 +29,7 @@ import {
 const TIP_DISPLAY_TIME = 1500
 
 const messageComp = {
-  name: 'message',
+  name: 'Message',
 
   render,
 

@@ -43,7 +43,7 @@ const TYPE_RADIO = 'radio'
 const TYPE_CHECKBOX = 'checkbox'
 
 let checkCompConfig = {
-  name: 'check',
+  name: 'Check',
 
   mixins: [baseMixin, formMixin, apiMixin],
 

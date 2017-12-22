@@ -85,14 +85,18 @@ const compHub = [
   TableCol
 ]
 
-const component = {
+export default {
   install(Vue, {
     prefix = 'z'
   } = {}) {
     compHub.forEach((item) => {
-      Vue.component(`${prefix}-${item.name}`, item)
+      let compName = ''
+
+      if (item.name !== undefined) {
+        compName = item.name.replace(/([A-Z])/g, '-$1').toLowerCase()
+      }
+
+      Vue.component(`${prefix}${compName}`, item)
     })
   }
 }
-
-export default component

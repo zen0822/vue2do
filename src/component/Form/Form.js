@@ -17,7 +17,7 @@ const TYPE_POST = 'post'
 const TYPE_GET = 'get'
 
 const formComp = {
-  name: 'form',
+  name: 'Form',
 
   mixins: [baseMixin],
 

@@ -7,18 +7,19 @@ import './common'
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VueI18n from 'vue-i18n'
 import routes from './route/route'
 import App from './App/App'
-import vue2do from 'vue2do'
-// import { set as setConfig } from 'vue2do'
+import vue2do, {
+  set as setVue2do
+} from 'vue2do'
 import enLang from 'src/language/en.json'
 
 Vue.use(vue2do, {
   prefix: 'z'
 })
 Vue.use(VueRouter)
-// setConfig.lang(enLang)
+
+const vue2doLang = setVue2do.lang(enLang)
 
 const router = new VueRouter({
   routes
@@ -31,5 +32,6 @@ router.beforeEach((to, from, next) => {
 
 const app = new Vue({
   ...App,
+  i18n: vue2doLang,
   router
 }).$mount('#app')

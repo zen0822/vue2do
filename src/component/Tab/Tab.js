@@ -17,7 +17,7 @@ import {
 } from '../../util/url'
 
 export default {
-  name: 'tab',
+  name: 'Tab',
 
   mixins: [baseMixin],
 

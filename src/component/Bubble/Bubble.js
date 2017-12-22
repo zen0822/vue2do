@@ -27,7 +27,7 @@ import { offset as childrenHeight } from '../../util/dom/prop'
 const ARROW_HEIGHT = 20
 
 export default {
-  name: 'bubble',
+  name: 'Bubble',
 
   render,
 

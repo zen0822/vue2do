@@ -9,7 +9,7 @@
 import baseMixin from '../../mixin/transition'
 
 export default {
-  name: 'zoom-transition',
+  name: 'MotionZoom',
 
   mixins: [baseMixin],
 

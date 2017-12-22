@@ -31,7 +31,7 @@ import baseMixin from '../../mixin/base'
 import render from './Page.render'
 
 const pageComp = {
-  name: 'page',
+  name: 'Page',
 
   render,
 

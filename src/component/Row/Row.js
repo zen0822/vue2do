@@ -18,7 +18,7 @@ import baseMixin from '../../mixin/base'
 const layoutType = ['grid', 'flex', 'flow']
 
 export default {
-  name: 'row',
+  name: 'Row',
 
   mixins: [baseMixin],
 

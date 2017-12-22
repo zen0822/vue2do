@@ -1,7 +1,7 @@
 import baseMixin from '../../mixin/base'
 
 export default {
-  name: 'fold-title',
+  name: 'FoldTitle',
   mixins: [baseMixin],
   computed: {
     // 组件类名的前缀

@@ -21,7 +21,7 @@ import {
 } from '../../util/dom/prop'
 
 const Fold = {
-  name: 'fold',
+  name: 'Fold',
 
   mixins: [baseMixin],
 

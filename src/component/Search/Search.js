@@ -17,7 +17,7 @@ import inputComp from '../Input/Input'
 import listComp from '../List/List'
 
 const searchComp = {
-  name: 'search',
+  name: 'Search',
 
   render,
 

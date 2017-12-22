@@ -5,7 +5,7 @@
 import baseMixin from '../../mixin/base'
 
 const tableRowComp = {
-  name: 'table-row',
+  name: 'TableRow',
   mixins: [baseMixin],
   computed: {
     cPrefix() {

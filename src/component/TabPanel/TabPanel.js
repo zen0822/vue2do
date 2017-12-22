@@ -9,7 +9,7 @@ import template from './TabPanel.tpl'
 import './TabPanel.scss'
 
 const tabPanelComp = {
-  name: 'tab-panel',
+  name: 'TabPanel',
 
   mixins: [baseMixin],
 

@@ -53,7 +53,7 @@ const TYPE_TIP = 'tip'
 const TIP_SHOW_TIME = 1500
 
 const modalComp = {
-  name: 'modal',
+  name: 'Modal',
 
   render,
 

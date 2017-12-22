@@ -50,8 +50,6 @@ import MotionRip from './src/component/MotionRip/MotionRip'
 import MotionSlide from './src/component/MotionSlide/MotionSlide'
 import MotionZoom from './src/component/MotionZoom/MotionZoom'
 
-setConfig.lang(cnLang)
-
 export default pluginInstall
 
 export {

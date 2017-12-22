@@ -39,7 +39,7 @@ const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
 
 export default {
-  name: 'list',
+  name: 'List',
 
   render,
 

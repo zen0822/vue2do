@@ -18,7 +18,7 @@ import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
 
 export default {
-  name: 'fold-transition',
+  name: 'MotionFold',
 
   mixins: [baseMixin, transitionMixin],
 

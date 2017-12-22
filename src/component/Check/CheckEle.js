@@ -5,6 +5,7 @@
 import baseMixin from '../../mixin/base'
 
 export default {
+  name: 'CheckEle',
   template: `
     <div :class="[cPrefix]">
       <slot></slot>
