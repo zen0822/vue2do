@@ -17,7 +17,7 @@ import PageGrid from '../component/page/Component/style&layout/Grid/Grid'
 import PageScroller from '../component/page/Component/other/Scroller/Scroller'
 import PageMotion from '../component/page/Component/Motion/Motion'
 
-import transitionChildren from './transitionChildren.js'
+import motionChildren from './motionChildren.js'
 
 export default [{
   path: '',
@@ -122,7 +122,7 @@ export default [{
     title: '选项卡组件'
   }
 }, {
-  path: 'transition',
+  path: 'motion',
   component: PageMotion,
-  children: transitionChildren
+  children: motionChildren
 }]

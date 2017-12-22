@@ -1,8 +1,8 @@
-import ZoomMotion from '../component/page/component/Motion/Zoom/Zoom'
-import SlideMotion from '../component/page/component/Motion/Slide/Slide'
-import FadeMotion from '../component/page/component/Motion/Fade/Fade'
-import RipMotion from '../component/page/component/Motion/Rip/Rip'
-import FoldMotion from '../component/page/component/Motion/Fold/Fold'
+import ZoomMotion from '../component/page/Component/Motion/Zoom/Zoom'
+import SlideMotion from '../component/page/Component/Motion/Slide/Slide'
+import FadeMotion from '../component/page/Component/Motion/Fade/Fade'
+import RipMotion from '../component/page/Component/Motion/Rip/Rip'
+import FoldMotion from '../component/page/Component/Motion/Fold/Fold'
 
 export default [{
   path: 'zoom',

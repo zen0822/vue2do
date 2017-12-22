@@ -1,7 +1,7 @@
 import notFoundPage from '../component/404/404'
-import welcome from '../component/page/welcome/welcome'
+import welcome from '../component/page/Welcome/Welcome'
 
-import component from '../component/page/component/component'
+import component from '../component/page/Component/Component'
 import componentChildren from './componentChildren'
 
 export default [
