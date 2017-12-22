@@ -14,6 +14,17 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     captureTimeout: 120000,
     colors: true,
+    coverageReporter: {
+      dir: path.join(__dirname, 'coverage'),
+      reporters: [{
+          type: 'html'
+        },
+        {
+          type: 'lcov',
+          subdir: 'lcov'
+        }
+      ]
+    },
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'], // 这是测试入口文件
     preprocessors: {

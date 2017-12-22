@@ -11,7 +11,7 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 install:
 |
-  npm install -g npm@latest
+  npm install npm@latest -g
   npm --version
   npm install --registry http://registry.npmjs.org
 script:

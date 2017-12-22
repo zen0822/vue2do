@@ -3,6 +3,8 @@ import pug from './Tab.pug'
 import mixin from '../../mixin'
 
 export default {
+  name: 'PageCompTab',
+
   template: pug(),
 
   mixins: [mixin],

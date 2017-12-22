@@ -1,10 +1,12 @@
-import './pop.scss'
-import pugTpl from './pop.pug'
+import './Pop.scss'
+import pugTpl from './Pop.pug'
 import mixin from '../../mixin'
 
 import homeBgImg from 'exAsset/home-bg.jpg'
 
 export default {
+  name: 'PageCompPop',
+
   template: pugTpl(),
 
   mixins: [mixin],

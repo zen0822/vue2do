@@ -1,8 +1,10 @@
-import './start.scss'
-import pug from './start.pug'
+import './Start.scss'
+import pug from './Start.pug'
 import mixin from '../mixin'
 
 export default {
+  name: 'PageCompStart',
+
   template: pug(),
 
   mixins: [mixin],
