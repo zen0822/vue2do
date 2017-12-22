@@ -1,0 +1,93 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
+
+.#{$PAGE_PREFIX}-component {
+  text-align: left;
+
+  max-width: 1024px;
+  margin: 0 auto;
+  padding-bottom: 6 * $gap-v;
+
+  .#{$PAGE_PREFIX}-component-stage {
+    margin-top: $gap-v-double;
+    padding-bottom: $gap-v-triple;
+  }
+
+  .#{$PAGE_PREFIX}-component-menu {
+    margin-top: $gap-v-double;
+
+    a {
+      color: $grey;
+
+      &.router-link-active {
+        color: $primary-color;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .example-article {
+    & > section {
+      padding-bottom: $gap-v-double;
+    }
+
+    & > section:first-child > h1:first-child {
+      margin-top: 0;
+    }
+
+    .section-description {
+      font-size: $h3;
+    }
+
+    .anchor-title {
+      font-size: 2em;
+      cursor: pointer;
+      padding-bottom: $gap-v-double;
+      margin-bottom: $gap-v-double;
+      border-bottom: $border-dark-color $border-thin solid;
+
+      &:hover::after {
+        content: "#";
+        color: $primary-color;
+        margin-left: $gap-v-half;
+      }
+
+      a {
+        color: $grey;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .z-code {
+      margin-top: $gap-v-double;
+    }
+  }
+
+  @include device-type("l") {
+    .example-article .anchor-title::after {
+      content: "#";
+      color: $primary-color;
+      margin-left: $gap-v-half;
+    }
+  }
+
+  @include device-type("s") {
+    .#{$PAGE_PREFIX}-component-menu {
+      margin-top: 0;
+
+      a {
+        color: #fff;
+      }
+    }
+
+    .#{$PAGE_PREFIX}-component-stage {
+      padding: 0 $gap-h $gap-v-triple;
+    }
+  }
+}

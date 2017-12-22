@@ -1,0 +1,14 @@
+@import "../../../../scss/config.scss";
+
+.component-transition {
+  .transitioner {
+    min-height: 30px;
+
+    &-rip {
+      position: relative;
+      height: 30px;
+      width: 150px;
+      overflow: hidden;
+    }
+  }
+}

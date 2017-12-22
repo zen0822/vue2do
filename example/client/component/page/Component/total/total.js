@@ -1,17 +1,13 @@
-import './Component.scss'
-import template from './Component.pug'
-import menuOpt from './menuOpt.json'
-import mixin from './mixin'
+import './total.scss'
+import template from './total.tpl'
 import { alert, confirm, tip } from 'vue2do/index.js'
 
-export default {
-  name: 'PageComponent',
 
-  template: template(),
+export default {
+  template,
 
   data() {
     return {
-      menuOpt,
       testName: 'test',
       dropMenuOpt: [],
       classifyOpt: {

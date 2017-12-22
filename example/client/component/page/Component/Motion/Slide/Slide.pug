@@ -1,0 +1,35 @@
+include ../../mixin.pug
+
+div.component-transition
+  article.example-article
+    +section('slide', '滑动')
+      z-btn(@click='slideIn') 滑动过渡（进来）
+      z-btn(@click='slideOut' class='z-css-m-l') 滑动过渡（离开）
+      div.transitioner
+        z-motion-slide(
+            ref='slide'
+            :offset='100'
+        )
+          div 我被滑动了！
+      z-code(type='html').
+        #{'<z-btn @click="slideIn">'}
+          滑动过渡（进来）
+        #{'</z-btn>'}
+
+        #{'<z-btn @click="slideOut">'}
+          滑动过渡（离开）
+        #{'</z-btn>'}
+
+        #{'<z-motion-slide ref="slide">'}
+          #{'<div>我被滑动了！</div>'}
+        #{'</z-motion-slide>'}
+      z-code(type='js').
+        ...
+          methods: {
+            slideIn() {
+              this.$refs.slide.enter()
+            },
+            slideOut() {
+              this.$refs.slide.leave()
+            }
+          }
