@@ -92,7 +92,8 @@ export default {
     compHub.forEach((item) => {
       let compName = ''
 
-      if (item.name !== undefined) {
+      // FlodEle -> -fold-ele
+      if (item.name) {
         compName = item.name.replace(/([A-Z])/g, '-$1').toLowerCase()
       }
 
