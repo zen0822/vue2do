@@ -204,7 +204,10 @@ export default {
           return false
         }
 
-        this.initPagePosition()
+        if (!this.pageHide) {
+          this.initPagePosition()
+        }
+
         this.scrollerAlmostInBottom = isBottom
       })
     },

@@ -1,10 +1,8 @@
-import '../Transition.scss'
-
 import template from './Rip.pug'
 import mixin from '../../mixin'
 
 export default {
-  name: 'PageCompTransitionRip',
+  name: 'PageCompMotionRip',
 
   template: template(),
 

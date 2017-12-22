@@ -3,6 +3,8 @@ import pug from './Menu.pug'
 import mixin from '../../mixin'
 
 export default {
+  name: 'PageCompMenu',
+
   template: pug(),
 
   mixins: [mixin],

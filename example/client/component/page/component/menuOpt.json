@@ -79,31 +79,14 @@
     ]
   },
   {
-    "name": "布局相关",
+    "name": "样式与布局",
     "sub": [{
       "name": "布局组件",
       "route": "/component/grid"
+    }, {
+      "name": "图标组件",
+      "route": "/component/icon"
     }]
-  },
-  {
-    "name": "其他组件",
-    "sub": [{
-        "name": "滚动条组件",
-        "route": "/component/scroller"
-      },
-      {
-        "name": "选项卡组件",
-        "route": "/component/tab"
-      },
-      {
-        "name": "弹出组件",
-        "route": "/component/pop"
-      },
-      {
-        "name": "省略组件",
-        "route": "/component/omit"
-      }
-    ]
   },
   {
     "name": "过渡动画",
@@ -126,6 +109,26 @@
       {
         "name": "涟漪效果",
         "route": "/component/transition/rip"
+      }
+    ]
+  },
+  {
+    "name": "其他组件",
+    "sub": [{
+        "name": "滚动条组件",
+        "route": "/component/scroller"
+      },
+      {
+        "name": "选项卡组件",
+        "route": "/component/tab"
+      },
+      {
+        "name": "弹出组件",
+        "route": "/component/pop"
+      },
+      {
+        "name": "省略组件",
+        "route": "/component/omit"
       }
     ]
   }

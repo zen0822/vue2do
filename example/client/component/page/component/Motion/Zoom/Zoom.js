@@ -1,10 +1,8 @@
-import '../Transition.scss'
-
 import template from './Zoom.pug'
 import mixin from '../../mixin'
 
 export default {
-  name: 'PageCompTransitionZoom',
+  name: 'PageCompMotionZoom',
 
   template: template(),
 

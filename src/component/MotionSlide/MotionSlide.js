@@ -14,7 +14,7 @@
 import baseMixin from '../../mixin/transition'
 
 export default {
-  name: 'slide-transition',
+  name: 'MotionSlide',
 
   mixins: [baseMixin],
 

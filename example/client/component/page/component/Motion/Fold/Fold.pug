@@ -6,7 +6,7 @@ div.component-transition
       z-btn(@click='fold') 折叠
       z-btn(@click='unfold' class='z-css-m-l') 展开
       div.transitioner
-        z-fold-transition(
+        z-motion-fold(
             ref='fold'
             :height='30'
             :offset='100'
@@ -21,9 +21,9 @@ div.component-transition
           展开
         #{'</z-btn>'}
 
-        #{'<z-fold-transition ref="fold">'}
+        #{'<z-motion-fold ref="fold">'}
           #{'<div>我被折叠展开了！</div>'}
-        #{'</z-fold-transition>'}
+        #{'</z-motion-fold>'}
       z-code(type='js').
         ...
           methods: {

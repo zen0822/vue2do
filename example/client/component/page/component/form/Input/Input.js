@@ -1,10 +1,12 @@
-import './input.scss'
-import pug from './input.pug'
+import './Input.scss'
+import pug from './Input.pug'
 import mixin from '../../mixin'
 
 import { tip } from 'vue2do/index'
 
 export default {
+  name: 'PageCompInput',
+
   template: pug(),
 
   mixins: [mixin],

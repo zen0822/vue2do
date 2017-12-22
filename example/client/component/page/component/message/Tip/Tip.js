@@ -1,11 +1,11 @@
-import './tip.scss'
-import template from './tip.pug'
+import './Tip.scss'
+import template from './Tip.pug'
 import mixin from '../../mixin'
 import tip from 'src/component/Message/tip'
 import toast from 'src/component/Message/toast'
 
 export default {
-  name: 'page-comp-tip',
+  name: 'PageCompTip',
 
   template: template(),
 

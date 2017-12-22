@@ -40,10 +40,10 @@ export default {
 
       let el = this.$el
 
-      addClass(el, this.prefix('transition-rip-comp'))
+      addClass(el, this.prefix('motion-rip-comp'))
 
       if (this.assign) {
-        addClass(el, this.prefix('transition-rip-assign'))
+        addClass(el, this.prefix('motion-rip-assign'))
 
         let $spot = el.firstChild
 
@@ -85,7 +85,7 @@ export default {
 
       this.$emit('entering')
 
-      addClass(el, this.prefix('transition-rip-active'))
+      addClass(el, this.prefix('motion-rip-active'))
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -100,9 +100,9 @@ export default {
       el.firstChild.style.transition = el.style.transition = ''
 
       delClass(el, [
-        this.prefix('transition-rip-comp'),
-        this.prefix('transition-rip-assign'),
-        this.prefix('transition-rip-active')
+        this.prefix('motion-rip-comp'),
+        this.prefix('motion-rip-assign'),
+        this.prefix('motion-rip-active')
       ])
 
       this.$emit('afterEnter')
@@ -114,9 +114,9 @@ export default {
   render(h, context) {
     return h('transition', [
       h('div', {
-        class: [this.prefix('transition-rip')]
+        class: [this.prefix('motion-rip')]
       }, [h('div', {
-        class: [this.prefix('transition-rip-spot')]
+        class: [this.prefix('motion-rip-spot')]
       })])
     ])
   }

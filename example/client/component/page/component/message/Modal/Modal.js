@@ -1,11 +1,13 @@
-import './modal.scss'
-import pugTpl from './modal.pug'
+import './Modal.scss'
+import pugTpl from './Modal.pug'
 import mixin from '../../mixin'
 import { alert, confirm } from 'vue2do/index.js'
 
 import homeBgImg from 'exAsset/home-bg.jpg'
 
 export default {
+  name: 'PageCompModal',
+
   template: pugTpl(),
 
   mixins: [mixin],

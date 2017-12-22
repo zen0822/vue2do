@@ -1,10 +1,10 @@
-import './Transition.scss'
+import './Motion.scss'
 
-import template from './Transition.pug'
+import template from './Motion.pug'
 import mixin from '../mixin'
 
 export default {
-  name: 'PageCompTransition',
+  name: 'PageCompMotion',
 
   template: template(),
 

@@ -1,10 +1,8 @@
-import '../Transition.scss'
-
 import template from './Slide.pug'
 import mixin from '../../mixin'
 
 export default {
-  name: 'PageCompTransitionSlide',
+  name: 'PageCompMotionSlide',
 
   template: template(),
 

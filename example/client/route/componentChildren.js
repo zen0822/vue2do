@@ -1,9 +1,10 @@
-import total from '../component/page/component/total/total'
+import PageTotal from '../component/page/component/total/total'
 import PageBtn from '../component/page/component/form/Btn/Btn'
 import PageStart from '../component/page/component/Start/Start'
 import PageMenu from '../component/page/component/form/Menu/Menu'
 import PageCheck from '../component/page/component/form/Check/Check'
 import PageInput from '../component/page/component/form/input/input'
+import PageIcon from '../component/page/component/style&layout/icon/icon'
 import PageModal from '../component/page/component/message/Modal/Modal'
 import PageOmit from '../component/page/component/other/Omit/Omit'
 import PagePop from '../component/page/component/other/Pop/Pop'
@@ -12,15 +13,15 @@ import PageTable from '../component/page/component/data/Table/Table'
 import PageTab from '../component/page/component/other/Tab/Tab'
 import PageList from '../component/page/component/data/List/List'
 import PagePager from '../component/page/component/data/Page/Page'
-import PageGrid from '../component/page/component/layout/Grid/Grid'
+import PageGrid from '../component/page/component/style&layout/Grid/Grid'
 import PageScroller from '../component/page/component/other/Scroller/Scroller'
-import TransitionPage from '../component/page/component/Transition/Transition'
+import PageMotion from '../component/page/component/Motion/Motion'
 
 import transitionChildren from './transitionChildren.js'
 
 export default [{
   path: '',
-  component: total,
+  component: PageTotal,
   meta: {
     title: '全部组件'
   }
@@ -53,6 +54,12 @@ export default [{
   component: PageInput,
   meta: {
     title: '输入组件'
+  }
+}, {
+  path: 'icon',
+  component: PageIcon,
+  meta: {
+    title: '图标组件'
   }
 }, {
   path: 'modal',
@@ -116,6 +123,6 @@ export default [{
   }
 }, {
   path: 'transition',
-  component: TransitionPage,
+  component: PageMotion,
   children: transitionChildren
 }]

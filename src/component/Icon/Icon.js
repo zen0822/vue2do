@@ -4,7 +4,7 @@
  * @prop theme - 主题
  * @prop size - 大小
  * @prop type - 字符图标类型 (字符图标的 class 名的前缀，用户自己引入的字符图标的前缀)
- * @prop kind - 图标的种类（ex：fa-circle -> kind='circle')
+ * @prop kind - 图标的种类（ex：fa-circle -> kind='circle'，ali-fold -> kind='fold')
  *
  */
 
@@ -28,7 +28,10 @@ export default {
   props: {
     size: {
       type: String,
-      default: 'xs'
+      default: 'xs',
+      validator(val) {
+        return ['xs', 's', 'm', 'l', 'xl'].includes(val.toLowerCase())
+      }
     },
 
     type: {
@@ -43,8 +46,7 @@ export default {
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-icon`
     },
     sizeClass() {

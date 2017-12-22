@@ -1,14 +1,15 @@
 // 自定义的 transiton 的样式文件
 
 @import '../../scss/config.scss';
+@import '../../scss/name.scss';
 
-$C_PREFIX: #{ $comp-prefix }-transition;
+$C_PREFIX: $COMP_MOTION_RIP;
 
-.#{$C_PREFIX}-rip {
+.#{$C_PREFIX} {
   position: absolute;
   top: 0;
 
-  &.#{$C_PREFIX}-rip-comp {
+  &.#{$C_PREFIX}-comp {
     position: absolute;
     background-color: rgba(0, 0, 0, .2);
     border-radius: 100%;
@@ -18,11 +19,11 @@ $C_PREFIX: #{ $comp-prefix }-transition;
     top: 0;
     left: 0;
 
-    &.#{$C_PREFIX}-rip-assign {
+    &.#{$C_PREFIX}-assign {
       border-radius: 0;
       overflow: hidden;
 
-      & > .#{$C_PREFIX}-rip-spot {
+      & > .#{$C_PREFIX}-spot {
         top: auto;
         left: auto;
         width: 200%;
@@ -32,22 +33,22 @@ $C_PREFIX: #{ $comp-prefix }-transition;
       }
     }
 
-    &.#{$C_PREFIX}-rip-active {
+    &.#{$C_PREFIX}-active {
       opacity: 0;
 
-      &.#{$C_PREFIX}-rip-assign {
-        & > .#{$C_PREFIX}-rip-spot {
+      &.#{$C_PREFIX}-assign {
+        & > .#{$C_PREFIX}-spot {
           transform: scaleX(1);
         }
       }
 
-      & > .#{$C_PREFIX}-rip-spot {
+      & > .#{$C_PREFIX}-spot {
         opacity: 0;
         transform: translate(-50%, -50%) scale(2);
       }
     }
 
-    & > .#{$C_PREFIX}-rip-spot {
+    & > .#{$C_PREFIX}-spot {
       position: absolute;
       top: 50%;
       left: 50%;

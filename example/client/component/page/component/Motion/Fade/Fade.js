@@ -1,10 +1,8 @@
-import '../Transition.scss'
-
-import template from './Fold.pug'
+import template from './Fade.pug'
 import mixin from '../../mixin'
 
 export default {
-  name: 'PageCompTransitionFold',
+  name: 'PageCompMotionFade',
 
   template: template(),
 
@@ -17,11 +15,11 @@ export default {
   },
 
   methods: {
-    unfold() {
-      this.$refs.fold.enter()
+    fadeIn() {
+      this.$refs.fade.enter()
     },
-    fold() {
-      this.$refs.fold.leave()
+    fadeOut() {
+      this.$refs.fade.leave()
     }
   }
 }

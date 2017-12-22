@@ -1,10 +1,8 @@
-import './List.scss'
-import pug from './List.pug'
+import './Grid.scss'
+import pug from './Grid.pug'
 import mixin from '../../mixin'
 
 export default {
-  name: 'PageCompList',
-
   template: pug(),
 
   mixins: [mixin],

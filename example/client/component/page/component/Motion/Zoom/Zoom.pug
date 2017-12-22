@@ -6,7 +6,7 @@ div.component-transition
       z-btn(@click='zoomIn') 缩放过渡（进来）
       z-btn(@click='zoomOut' class='z-css-m-l') 缩放过渡（离开）
       div.transitioner
-        z-zoom-transition(
+        z-motion-zoom(
             ref='zoom'
         )
           div 我被缩放了！
@@ -19,9 +19,9 @@ div.component-transition
           缩放过渡（离开）
         #{'</z-btn>'}
 
-        #{'<z-zoom-transition ref="zoom">'}
+        #{'<z-motion-zoom ref="zoom">'}
           #{'<div>我被缩放了！</div>'}
-        #{'</z-zoom-transition>'}
+        #{'</z-motion-zoom>'}
       z-code(type='js').
         ...
           methods: {

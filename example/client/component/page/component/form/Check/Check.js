@@ -1,8 +1,10 @@
-import './check.scss'
-import pug from './check.pug'
+import './Check.scss'
+import pug from './Check.pug'
 import mixin from '../../mixin'
 
 export default {
+  name: 'PageCompCheck',
+
   template: pug(),
 
   mixins: [mixin],

@@ -6,8 +6,9 @@
 * check 组件样式
 */
 
-$C_PREFIX: #{ $COMP_CHECK };
-$C_ICON_PREFIX: #{ $COMP_ICON };
+$C_PREFIX: #{$COMP_CHECK};
+$C_ICON_PREFIX: #{$COMP_ICON};
+$C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
 .#{$C_PREFIX} {
   display: inline-block;
@@ -29,6 +30,7 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
     .#{$C_PREFIX}-opt-col {
       margin: 0 $gap-h-half;
       display: inline-block;
+      line-height: 0;
 
       .#{$C_PREFIX}-box {
         display: inline-block;
@@ -45,20 +47,20 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
             left: 0;
             background-color: rgba($primary-color, .2);
 
-            & > .z-transition-rip-spot {
+            & > .#{$C_MOTION_RIP_PREFIX}-spot {
               background-color: rgba($primary-color, .8);
             }
           }
 
-          & > .#{ $C_ICON_PREFIX } {
+          & > .#{$C_ICON_PREFIX} {
             vertical-align: middle;
 
-            .#{ $C_ICON_PREFIX }-ali {
+            .#{$C_ICON_PREFIX}-ali {
               text-align: center;
             }
 
-            .#{ $C_ICON_PREFIX }-circle-check-o,
-            .#{ $C_ICON_PREFIX }-square-check-o {
+            .#{$C_ICON_PREFIX}-circle-check-o,
+            .#{$C_ICON_PREFIX}-square-check-o {
               color: $primary-color;
             }
           }
@@ -78,11 +80,11 @@ $C_ICON_PREFIX: #{ $COMP_ICON };
   .#{$C_PREFIX}-opt-check-all {
     margin-bottom: $gap-v;
 
-    &>.#{ $C_ICON_PREFIX } {
+    &>.#{$C_ICON_PREFIX} {
       width: 14px;
       margin-right: 0;
 
-      .#{ $C_ICON_PREFIX }-square-check {
+      .#{$C_ICON_PREFIX}-square-check {
         color: $primary-color
       }
     }

@@ -175,6 +175,10 @@ export default {
      * 初始化分页组件的位置
      */
     initPagePosition() {
+      if (!this.$refs.page) {
+        return false
+      }
+
       let ele = this.elementProp(this.$refs.page.$el)
       let parentHeight = this.$el.offsetHeight
       let height = ele.offsetHeight

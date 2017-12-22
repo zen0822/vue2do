@@ -7,7 +7,7 @@ div.component-transition
       div.transitioner
         div.transitioner-rip
           div 我有涟漪效果了！
-          z-rip-transition(
+          z-motion-rip(
               ref='rip'
               :offset='100'
           )
@@ -16,9 +16,9 @@ div.component-transition
           开始涟漪
         #{'</z-btn>'}
 
-        #{'<z-rip-transition ref="rip">'}
+        #{'<z-motion-rip ref="rip">'}
           #{'<div>我有涟漪效果了！</div>'}
-        #{'</z-rip-transition>'}
+        #{'</z-motion-rip>'}
       z-code(type='js').
         ...
           methods: {

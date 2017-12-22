@@ -6,9 +6,9 @@ div.component-transition
       z-btn(@click='fadeIn') 淡入
       z-btn(@click='fadeOut' class='z-css-m-l') 淡出
       div.transitioner
-        z-fade-transition(
-            ref='fade'
-            :offset='100'
+        z-motion-fade(
+          ref='fade'
+          :offset='100'
         )
           div 我被淡淡了！
       z-code(type='html').
@@ -20,9 +20,9 @@ div.component-transition
           淡出
         #{'</z-btn>'}
 
-        #{'<z-fade-transition ref="fade">'}
+        #{'<z-motion-fade ref="fade">'}
           #{'<div>我被淡淡了！</div>'}
-        #{'</z-fade-transition>'}
+        #{'</z-motion-fade>'}
       z-code(type='js').
         ...
           methods: {

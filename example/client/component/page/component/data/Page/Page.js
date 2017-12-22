@@ -3,6 +3,8 @@ import template from './Page.tpl'
 import mixin from '../../mixin'
 
 export default {
+  name: 'PageCompPage',
+
   template,
 
   mixins: [mixin],
