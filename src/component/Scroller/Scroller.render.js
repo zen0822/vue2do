@@ -18,7 +18,7 @@ export default function (h) {
         ref: 'box'
       }, this.$slots.default),
 
-      h('fade-transition', {
+      h('motion-fade', {
         props: {
           opacity: true,
           speed: 'fast'

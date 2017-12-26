@@ -1,7 +1,8 @@
 /**
- * fold(折叠) transition component
+ * 展开菜单的动画
  *
  * @prop height - 被过渡的元素高度
+ * @prop slideLength - 被过渡的元素向下滑动的距离
  *
  */
 
@@ -18,12 +19,13 @@ import baseMixin from '../../mixin/base'
 import transitionMixin from '../../mixin/transition'
 
 export default {
-  name: 'MotionFold',
+  name: 'MotionMenuFold',
 
   mixins: [baseMixin, transitionMixin],
 
   props: {
-    height: Number
+    height: Number,
+    slideLength: Number
   },
 
   data() {
@@ -36,7 +38,7 @@ export default {
 
   computed: {
     transition() {
-      return `height ${this.transitionTime} ease-out`
+      return `all ${this.transitionTime} ease-out`
     }
   },
 
@@ -71,8 +73,10 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'height': 0,
-        'overflow': 'hidden',
+        height: 0,
+        top: 0,
+        overflow: 'hidden',
+        opacity: 0.5,
         'transition': this.transition
       })
 
@@ -90,7 +94,11 @@ export default {
       // HACK: trigger browser reflow
       let height = el.offsetHeight
 
-      el.style.height = `${this.transitionHeight}px`
+      Object.assign(el.style, {
+        height: `${this.transitionHeight}px`,
+        top: `${this.slideLength}px`,
+        opacity: 1
+      })
 
       this.$emit('entering')
 
@@ -105,8 +113,8 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'height': '',
-        'overflow': '',
+        overflow: '',
+        opacity: '',
         'transition': ''
       })
 
@@ -120,7 +128,9 @@ export default {
 
       Object.assign(el.style, {
         height: `${this.transitionHeight}px`,
-        'overflow': 'hidden'
+        top: `${this.slideLength}px`,
+        opacity: 1,
+        overflow: 'hidden'
       })
 
       Object.assign(el.style, {
@@ -137,7 +147,9 @@ export default {
       this.$emit('leaving')
 
       Object.assign(el.style, {
-        'height': 0
+        height: 0,
+        top: `${this.slideLength}px`,
+        opacity: 0
       })
 
       return new Promise((resolve, reject) => {
@@ -153,9 +165,9 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'transition': '',
-        'height': '',
-        overflow: ''
+        overflow: '',
+        opacity: '',
+        'transition': ''
       })
 
       return this.$emit('afterLeave')

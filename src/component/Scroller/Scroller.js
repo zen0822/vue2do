@@ -31,22 +31,23 @@
 import './Scroller.scss'
 
 import baseMixin from '../../mixin/base'
+import apiMixin from './Scroller.api'
 import render from './Scroller.render.js'
 
-import fadeTransition from '../MotionFade/MotionFade'
+import MotionFade from '../MotionFade/MotionFade'
 
 // 滚动一次的滚动区域走的像素大小
 const SCROLL_PIXEL = 10
 
-const scrollerComp = {
+export default {
   name: 'Scroller',
 
-  mixins: [baseMixin],
+  mixins: [baseMixin, apiMixin],
 
   render,
 
   components: {
-    'fade-transition': fadeTransition
+    'motion-fade': MotionFade
   },
 
   props: {
@@ -128,8 +129,7 @@ const scrollerComp = {
     boxStyle() {
       return {
         'top': this.boxTop + 'px',
-        'left': this.boxLeft + 'px',
-        'width': this.boxStyleWidth
+        'left': this.boxLeft + 'px'
       }
     },
 
@@ -189,10 +189,6 @@ const scrollerComp = {
       })
     },
 
-    boxWidth(boxWidth) {
-
-    },
-
     scrollerHeight(scrollerHeight) {
       this._initScrollerData({
         length: this.height,
@@ -202,10 +198,6 @@ const scrollerComp = {
       })
 
       return this._changeScroller()
-    },
-
-    scrollerWidth(scrollerWidth) {
-
     }
   },
 
@@ -228,6 +220,10 @@ const scrollerComp = {
     _initScroller() {
       let scrollerHeight = this.$el.offsetHeight
       let scrollerWidth = this.$el.offsetWidth
+      let boxStyleWidth = 0
+
+      // 让 box 的宽度变成默认值来测量子元素的宽度
+      this.$box.style.width = 'auto'
 
       let boxHeight = this.$box.offsetHeight
       let boxWidth = this.$box.offsetWidth
@@ -235,12 +231,14 @@ const scrollerComp = {
       let firstChildWidth = this.$box.firstChild ? this.$box.firstChild.offsetWidth : 0
 
       if (firstChildWidth > boxWidth) {
-        this.boxStyleWidth = firstChildWidth + 'px'
+        boxStyleWidth = firstChildWidth + 'px'
       } else if (boxWidth <= scrollerWidth) {
-        this.boxStyleWidth = scrollerWidth + 'px'
+        boxStyleWidth = scrollerWidth + 'px'
       } else {
-        this.boxStyleWidth = 'auto'
+        boxStyleWidth = 'auto'
       }
+
+      this.$box.style.width = boxStyleWidth
 
       if (scrollerHeight !== this.scrollerHeight) {
         this.scrollerHeight = scrollerHeight
@@ -435,231 +433,6 @@ const scrollerComp = {
           scrollerHeight: this.scrollerHeight
         })
       })
-    },
-
-    barClick(evt) {
-      evt.preventDefault()
-      evt.stopPropagation()
-    },
-
-    yBarMouseDown(evt) {
-      this.yData.isMousedown = true
-
-      this.pointStart = {
-        x: event.clientX,
-        y: event.clientY
-      }
-    },
-
-    xBarMouseDown(evt) {
-      this.xData.isMousedown = true
-
-      this.pointStart = {
-        x: event.clientX,
-        y: event.clientY
-      }
-    },
-
-    scrollerMouseMove(evt) {
-      if (!this.yData.isMousedown && !this.xData.isMousedown) {
-        return false
-      }
-
-      evt.preventDefault()
-
-      let type = this.yData.isMousedown ? 'y' : 'x'
-      let distance = evt[`client${type.toUpperCase()}`] - this.pointStart[type]
-
-      this._boxAndBarScroll({
-        type,
-        boxDistance: -distance * this[`${type}Data`].boxBarRate,
-        barDistance: distance
-      })
-
-      this.pointStart = {
-        x: evt.clientX,
-        y: evt.clientY
-      }
-
-      return this.triggerScroll(type)
-    },
-
-    scrollerMouseUp(evt) {
-      evt.preventDefault()
-
-      this.yData.isMousedown = false
-      this.xData.isMousedown = false
-    },
-
-    scrollerMouseover(evt) {
-      this.showBar = true
-    },
-
-    scrollerMouseout(evt) {
-      this.showBar = false
-    },
-
-    mouseWheel(evt) {
-      let barTop = 0
-      let boxTop = 0
-
-      this.yData.oldBarTop = this.yData.barTop
-
-      this._boxAndBarScroll({
-        type: 'y',
-        boxDistance: evt.deltaY > 0 ? -SCROLL_PIXEL : SCROLL_PIXEL,
-        barDistance: evt.deltaY > 0 ? this.yData.scrollBarPixel : -this.yData.scrollBarPixel
-      })
-
-      this.triggerScroll('y')
-
-      if (this.yComputed.isBottom || this.yComputed.isTop) {
-        if (this.scrolling) {
-          evt.preventDefault()
-
-          return false
-        }
-
-        this.scrolling = true
-
-        setTimeout(() => {
-          this.scrolling = false
-        }, 200)
-      }
-
-      if (!(this.yComputed.isBottom || this.yComputed.isTop) || this.yData.oldBarTop !== this.yData.barTop) {
-        evt.preventDefault()
-      }
-    },
-
-    scrollerTouchStart(evt) {
-      this.isTouchStart = true
-      this.showBar = true
-
-      this.touchStart = {
-        x: evt.touches[0].clientX,
-        y: evt.touches[0].clientY
-      }
-    },
-
-    scrollerTouchMove(evt) {
-      if (this.yData.scrollerContainBox && this.xData.scrollerContainBox) {
-        this.triggerScroll('y')
-
-        return false
-      }
-
-      this.showBar = true
-
-      if (!this.isTouchStart) {
-        return false
-      }
-
-      let yDistance = this.touchStart.y - evt.touches[0].clientY
-      let xDistance = this.touchStart.x - evt.touches[0].clientX
-
-      if (!this.yData.scrollerContainBox) {
-        this._boxAndBarScroll({
-          type: 'y',
-          boxDistance: -yDistance,
-          barDistance: yDistance / this.yData.boxBarRate
-        })
-
-        this.triggerScroll('y')
-      }
-
-      if (!this.xData.scrollerContainBox) {
-        this._boxAndBarScroll({
-          type: 'x',
-          boxDistance: -xDistance,
-          barDistance: xDistance / this.xData.boxBarRate
-        })
-
-
-        this.triggerScroll('x')
-      }
-
-      this.touchStart = {
-        x: evt.touches[0].clientX,
-        y: evt.touches[0].clientY
-      }
-
-      // 滚动区域正方向移动
-      // TODO: 优化，可以在滚动到底部得时候触发父容器得滚动事件
-      if (yDistance > 0) {
-        if (this.yComputed.isBottom && !this.hasScrollerGrandpa) {} else {
-          evt.preventDefault()
-        }
-      } else {
-        if (this.yComputed.isTop && !this.hasScrollerGrandpa) {} else {
-          evt.preventDefault()
-        }
-      }
-    },
-
-    scrollerTouchEnd(evt) {
-      this.showBar = false
-      this.isTouchStart = false
-      this.moving = false
-    },
-
-    /**
-     * 触发滚动条滚动事件
-     */
-    triggerScroll(type) {
-      let data = {}
-      let eventName = ''
-
-      if (type === 'y') {
-        eventName = 'scrollY'
-        data = {
-          emitter: this,
-          top: this.yData.barTop,
-          offset: this.yData.barAndScrollerOffset,
-          isBottom: this.yComputed.isBottom,
-          isTop: this.yComputed.isTop
-        }
-      } else {
-        eventName = 'scrollX'
-        data = {
-          emitter: this,
-          left: this.xData.barLeft,
-          offset: this.xData.barAndScrollerOffset,
-          isRight: this.xComputed.isRight,
-          isLeft: this.xComputed.isLeft
-        }
-      }
-
-      return this.$nextTick(() => {
-        this.$emit(eventName, data)
-      })
-    },
-
-    triggerChangeBar(type) {
-      let data = {}
-      let eventName = ''
-
-      if (type === 'y') {
-        eventName = 'changeYBar'
-        data = {
-          isBottom: this.yComputed.isBottom,
-          isTop: this.yComputed.isTop,
-          boxWidth: this.boxWidth,
-          boxHeight: this.boxHeight,
-          hasScroller: !this.yData.scrollerContainBox
-        }
-      } else {
-        eventName = 'changeXBar'
-        data = {
-          isLeft: this.xComputed.isLeft,
-          isRight: this.xComputed.isRight,
-          boxWidth: this.boxWidth,
-          boxHeight: this.boxHeight,
-          hasScroller: !this.xData.scrollerContainBox
-        }
-      }
-
-      return this.$emit(eventName, data)
     }
   },
 
@@ -681,5 +454,3 @@ const scrollerComp = {
     clearInterval(this.interValInitScroller)
   }
 }
-
-export default scrollerComp

@@ -11,10 +11,82 @@ import {
 export default {
   methods: {
     /**
+     * 当设备改变尺寸
+     */
+    changeByDeviceSize(size) {
+      return this._adjustmenuMenuPoiStyle()
+    },
+
+    /**
+     * 多选下拉框的复选框赋值情况
+     *
+     * @param {String, Number} - 多选下拉框的值
+     */
+    checkboxVal(val) {
+      if (this._isExistedVal(val)) {
+        return [-1]
+      }
+
+      return []
+    },
+
+    /**
      * 默认值的 css 的 class 名字
      */
     defaultValClassName(value) {
       return this.defaultVal === value ? `${this.cPrefix}-default-text` : ''
+    },
+
+    /**
+     * 验证数据格式是否正确
+     * 现在只有 是否必选
+     *
+     * @return {Object} - this - 组件
+     */
+    verify() {
+      this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}下拉框!`
+
+      if (this.multiple) {
+        this.verified = this.value.length >= this.min
+
+        return this.verified
+      } else if (this.required) {
+        this.verified = this.value !== -1
+
+        return this.verified
+      }
+
+      return this.verified
+    },
+
+    /**
+     * 移除 多选下拉框 已选的值
+     *
+     * @param {String, Number} - 多选下拉框的值
+     */
+    removeMultiSelected(index) {
+      if (this.min !== 0 && this.value.length === this.min) {
+        tip(`至少需选择 ${this.min} 项！`)
+
+        const valTmp = this.value
+        this.value = []
+        this.value = valTmp
+
+        return this.value
+      }
+
+      this.value.splice(index - 1, 1)
+    },
+
+    /**
+     * 移除 多选下拉框 已选的值
+     *
+     * @param {String, Number} - 多选下拉框的值
+     */
+    clickMultiSelected(event, index) {
+      event.stopPropagation()
+
+      return this.removeMultiSelected(index)
     },
 
     /**
@@ -98,7 +170,7 @@ export default {
         handleEleDisplay({
           element: vm.$refs.menuPanel,
           cb: (element) => {
-            let scrollerComp = vm.$refs.scroller
+            let scrollerComp = vm.isTagMenu ? vm.$refs.tagScroller : vm.$refs.menuOption.$refs.list.$refs.scroller
             scrollerComp._initScroller()
 
             vm.menuHeight = scrollerComp.scrollerHeight
@@ -111,11 +183,11 @@ export default {
           getMenuHeight(vm)
 
           vm.menuMenuDisplay = true
-          vm.$refs.motion.enter()
+          vm.$refs.transition.enter()
         } else {
           getMenuHeight(vm)
 
-          vm.$refs.motion.leave()
+          vm.$refs.transition.leave()
         }
       }
 
@@ -132,6 +204,21 @@ export default {
           return transite(optVal, this)
         }
       })
+    },
+
+    /**
+     * 全选多选下拉框
+     *
+     * @return {Object} - this - 组件
+     */
+    selectAllOption() {
+      if (this.selectedAll) {
+        this.value = []
+      } else {
+        this.value = this.allOptionVal.slice()
+      }
+
+      this.selectedAll = !this.selectedAll
     },
 
     /**

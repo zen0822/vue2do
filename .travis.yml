@@ -16,6 +16,5 @@ install:
   npm install --registry http://registry.npmjs.org
 script:
   - npm run test:ci
-  - npm run prod
 after_script:
   - npm run coveralls

@@ -24,11 +24,11 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  width: $MENU_WIDTH;
   background-color: #fff;
   cursor: default;
+  line-height: 0;
 
-  & > .#{$C_PREFIX}-read-only {
+  & > .#{$C_PREFIX}-ban {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -36,133 +36,43 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     opacity: 0;
   }
 
-  & > .#{$C_PREFIX}-selected-box {
-    display: inline-block;
+  & > .#{$C_PREFIX}-trigger {
     position: relative;
+    display: inline-block;
+    line-height: 0;
 
-    padding: $gap-v $gutter-h-triple $gap-v $gap-h-double;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    min-height: $MENU_HEIGHT;
-    width: 100%;
-
-    box-sizing: border-box;
-    vertical-align: middle;
-
-    .#{$C_PREFIX}-init-text,
-    .#{$C_PREFIX}-init-text-input {
+    .#{$C_PREFIX}-trigger-input {
       width: 100%;
       outline: none;
       border: none;
-    }
+      padding: 0;
 
-    .#{$C_PREFIX}-init-text {
-      @extend %text-omit;
-      font-size: $h4;
-
-      &.#{$C_PREFIX}-default-text {
-        color: #999;
-      }
-    }
-
-    .#{$C_PREFIX}-init-text-input {
       position: absolute;
       top: 0;
       left: 0;
       height: 0;
       opacity: 0;
     }
-
-    .#{$C_PREFIX}-caret-down-icon {
-      position: absolute;
-      right: 10px;
-      top: 11px;
-      height: 13px;
-    }
   }
 
   & > .#{$C_PREFIX}-panel {
     position: absolute;
-    top: $MENU_HEIGHT - $MENU_BORDER_WIDTH * 2;
+    top: 0;
     left: 0;
     width: $MENU_WIDTH;
     overflow: hidden;
     box-shadow: $shadow-lower;
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
+    line-height: 1;
     z-index: 2;
 
     transition: top 300ms ease, height 300ms ease;
     will-change: top, height;
 
-    .#{$C_PREFIX}-tag-opt > .#{ $C_ELE_PREFIX } {
+    .#{$C_PREFIX}-opt > .#{ $C_ELE_PREFIX } {
       background-color: #fff;
       padding: $gap-h;
-    }
-
-    .#{$C_PREFIX}-opt-comp {
-      position: static;
-      display: block;
-    }
-
-    .#{$C_PREFIX}-search-input{
-      box-sizing: border-box;
-      box-shadow: 0px 1px 3px rgba(0, 0, 0, .1);
-      background-color: #fff;
-      border-bottom: 1px solid $border-color;
-
-      display:inline-block;
-      width: 100%;
-
-      & > .#{ $INPUT_PREFIX } {
-        width: auto;
-        padding: 0 $gap-h;
-      }
-    }
-  }
-
-  &.#{$C_PREFIX}-multiple {
-    position: relative;
-    width: $MULTI_MENU_WIDTH;
-    height: auto;
-    min-height: $MENU_HEIGHT;
-
-    .#{$C_PREFIX}-init-text {
-      &.#{$C_PREFIX}-opacity {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
-
-    .#{$C_PREFIX}-selected-box
-        > .#{$C_PREFIX}-scroller
-        > .#{ $SCROLLER_PREFIX }-box
-        > .#{$C_PREFIX}-multiple {
-      margin-right: $gap-v-triple;
-    }
-
-    .#{$C_PREFIX}-selected-box {
-      transition: height 300ms ease;
-
-      .#{$C_PREFIX}-multiple-selected-ul {
-        & > li {
-          background-color: $default-color;
-          display: inline-block;
-          margin: 4.5px 3px;
-          padding: 3px;
-
-          &:hover{
-            background-color: $border-color;
-          }
-        }
-      }
-    }
-
-    .#{$C_PREFIX}-panel,
-    .#{$C_PREFIX}-opt-comp {
-      width: $MULTI_MENU_WIDTH;
     }
   }
 }
