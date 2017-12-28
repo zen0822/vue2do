@@ -54,7 +54,7 @@ $C_PREFIX: #{$comp-prefix}-css;
   list-style-type: none;
 }
 
-.#{$C_PREFIX}-transition-rip {
+.#{$C_PREFIX}-motion-rip {
   background-color: rgba(0, 0, 0, .2);
   position: absolute;
   width: 100%;
@@ -73,10 +73,10 @@ $C_PREFIX: #{$comp-prefix}-css;
     height: 200%;
     border-radius: 50%;
     transform: translate(-50%, -50%) scaleX(1);
-    animation: #{$C_PREFIX}-transition-rip 2s infinite alternate;
+    animation: #{$C_PREFIX}-motion-rip 2s infinite alternate;
   }
 
-  @keyframes #{$C_PREFIX}-transition-rip {
+  @keyframes #{$C_PREFIX}-motion-rip {
     0% {
       transform: translate(-50%, -50%) scaleX(1);
     }

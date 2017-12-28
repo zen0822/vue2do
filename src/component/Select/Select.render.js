@@ -4,7 +4,6 @@
 export default function (h) {
   let selectedBoxChildren = []
   let menuChildren = []
-  let menuMenuEle = []
 
   if (this.multiple) {
     let liELe = []
@@ -131,70 +130,40 @@ export default function (h) {
   if (Array.isArray(this.option)) {
     let scopedSlots = []
 
-    // 当下拉菜单是以子标签加载的时候
-    if (this.isTagMenu) {
-      menuChildren.push(
-        h('scroller', {
-          props: {
-            height: 200
-          },
-          ref: 'tagScroller'
-        }, [
-          h('div', {
-            class: this.xclass('tag-opt')
-          }, [this.$slots.default])
-        ])
-      )
-    } else {
-      if (this.$scopedSlots && this.$scopedSlots['custom']) {
-        this.option.forEach((item, index) => {
-          Object.assign(scopedSlots, {
-            [`${index}`]: (props) => {
-              return this.$scopedSlots['custom']({
-                item,
-                index
-              })
-            }
-          })
+    if (this.$scopedSlots && this.$scopedSlots['custom']) {
+      this.option.forEach((item, index) => {
+        Object.assign(scopedSlots, {
+          [`${index}`]: (props) => {
+            return this.$scopedSlots['custom']({
+              item,
+              index
+            })
+          }
         })
-      }
-
-      menuChildren.push(
-        h('menu-opt', {
-          class: [this.xclass('opt-comp')],
-          props: {
-            listPageHide: this.listPageHide,
-            listScrollerHide: this.listScrollerHide,
-            multiple: this.multiple,
-            valName: this.valName,
-            txtName: this.txtName,
-            option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
-            optRoot: this.me
-          },
-          ref: 'menuOption',
-          scopedSlots
-        }),
-        h('div', {
-          class: [this.xclass('option-slot'), `${this.compPrefix}-hide`]
-        }, this.$slots.default)
-      )
+      })
     }
+
+    menuChildren.push(
+      h('select-opt', {
+        class: [this.xclass('opt-comp')],
+        props: {
+          multiple: this.multiple,
+          valName: this.valName,
+          txtName: this.txtName,
+          option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
+          optRoot: this.me
+        },
+        ref: 'option',
+        scopedSlots
+      }),
+      h('div', {
+        class: [this.xclass('option-slot'), `${this.compPrefix}-hide`]
+      }, this.$slots.default)
+    )
   }
 
-  menuMenuEle = [
-    h('div', {
-      class: [this.xclass('panel')],
-      directives: [{
-        name: 'show',
-        value: false
-      }],
-      style: [this.menuMenuPoiStyle, this.menuMenuStyle],
-      ref: 'menuPanel'
-    }, [menuChildren])
-  ]
-
   return h('div', {
-    class: this.menuClass,
+    class: this.selectClass,
     directives: [{
       name: 'clickParent',
       expression: this.clickParent
@@ -210,21 +179,25 @@ export default function (h) {
         value: this.readOnly
       }]
     }),
+
     h('div', {
       class: [this.xclass('selected-box')],
       on: {
         click: this.click
-      }
+      },
+      ref: 'selected'
     }, [selectedBoxChildren]),
 
-    h('fold-transition', {
-        props: {
-          height: this.menuHeight,
-          sync: true
-        },
-        ref: 'transition'
+    h('menu-comp', {
+      class: [this.xclass('menu')],
+      props: {
+        noTrig: true,
+        width: 170,
+        trigHeight: this.selectedHeight
       },
-      menuMenuEle
-    )
+      ref: 'menu'
+    }, [h('div', {
+      class: [this.xclass('panel')]
+    }, [menuChildren])])
   ])
 }

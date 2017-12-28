@@ -7,6 +7,10 @@ const SCROLL_PIXEL = 10
 
 export default {
   methods: {
+    initScroller() {
+      return this._initScroller()
+    },
+
     barClick(evt) {
       evt.preventDefault()
       evt.stopPropagation()
@@ -210,7 +214,7 @@ export default {
       let eventName = ''
 
       if (type === 'y') {
-        eventName = 'changeYBar'
+        eventName = 'yBarChange'
         data = {
           isBottom: this.yComputed.isBottom,
           isTop: this.yComputed.isTop,
@@ -219,7 +223,7 @@ export default {
           hasScroller: !this.yData.scrollerContainBox
         }
       } else {
-        eventName = 'changeXBar'
+        eventName = 'xBarChange'
         data = {
           isLeft: this.xComputed.isLeft,
           isRight: this.xComputed.isRight,

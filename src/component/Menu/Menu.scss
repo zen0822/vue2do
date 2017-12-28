@@ -70,7 +70,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     transition: top 300ms ease, height 300ms ease;
     will-change: top, height;
 
-    .#{$C_PREFIX}-opt > .#{ $C_ELE_PREFIX } {
+    .#{$C_PREFIX}-container > .#{ $C_ELE_PREFIX } {
       background-color: #fff;
       padding: $gap-h;
     }

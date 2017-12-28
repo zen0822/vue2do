@@ -108,7 +108,8 @@ export default function (h) {
           class: [this.xclass('scroller')],
           props: {
             autoHide: this.scrollerAutoHide,
-            height: 300
+            height: 300,
+            width: '100%'
           },
           on: {
             scrollY: this.scroll

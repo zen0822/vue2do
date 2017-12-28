@@ -1,8 +1,11 @@
 /**
  * scroller 组件 滚动条
  *
- * @prop height - 滚动区域的高度(auto | { Number }px | 100% | <{ Number })
- * @prop width - 滚动内容最大高度(auto | {Number}px | 100%)
+ * @prop height - 滚动区域的高度(auto | { Number }px | 100% })，
+ *                auto：根据滚动内容的高度
+ *                { Number }：自定义像素高度
+ *                100%：根据父元素的高度
+ * @prop width - 滚动区域的宽度(auto | {Number}px | 100%)，同上
  * @prop autoHide - 自动隐藏滚动条
  *
  * @event scrollY - 滚动事件
@@ -15,17 +18,17 @@
  *                         isLeft - 滚动条是否到开始的地方
  *                         left - 滚动条到滚动区域的最左边的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
- * @event changeYBar - y-bar 滚动条改变
+ * @event yBarChange - y-bar 滚动条改变
  *                  return isBottom - 滚动条是否到低
  *                         isTop - 滚动条是否到顶
  *                         top - 滚动条到滚动区域的顶部的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
- * @event changeXBar - x-bar 滚动条改变
+ * @event xBarChange - x-bar 滚动条改变
  *                  return isRight - 滚动条是否到结束的地方
  *                         isLeft - 滚动条是否到开始的地方
  *                         left - 滚动条到滚动区域的最左边的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
- * @event changeScroller - 滚动区域的高度/宽度变化
+ * @event scrollerChange - 滚动区域的高度/宽度变化
  */
 
 import './Scroller.scss'
@@ -53,17 +56,30 @@ export default {
   props: {
     height: {
       type: [Number, String],
-      default: '100%'
-    },
-
-    maxHeight: {
-      type: [Number, String],
-      default: 'none'
+      default: 'auto',
+      validator(val) {
+        if (typeof val === 'number') {
+          return true
+        } else if (val === 'auto' || val === '100%') {
+          return true
+        } else {
+          return false
+        }
+      }
     },
 
     width: {
       type: [Number, String],
-      default: '100%'
+      default: 'auto',
+      validator(val) {
+        if (typeof val === 'number') {
+          return true
+        } else if (val === 'auto' || val === '100%') {
+          return true
+        } else {
+          return false
+        }
+      }
     },
 
     autoHide: {
@@ -81,12 +97,12 @@ export default {
         barAndScrollerOffset: 0, // 滚动条和滚动区域的偏移值
         barLength: 0, // 滚动条的高度
         barTop: 0, // bar 的高度
-        boxBarRate: 0, // 滚动容器 / 滚动条区域
+        boxBarRate: 0, // 滚动内容 / 滚动条区域
         boxAndScrollerOffset: 0, // 滚动内容和滚动区域的偏移值
         isMousedown: false, // 滚动条的 mousedown 事件
         oldBarTop: 0, // 记录上一次滚动条的高度
         scrollBarPixel: 0, // 滚动一次的滚动条走的像素大小
-        scrollerContainBox: false // 滚动条的高度是否大于滚动容器
+        scrollerContainBox: false // 滚动条的高度是否大于滚动区域
       },
 
       xData: { // x-scroller detail
@@ -100,13 +116,17 @@ export default {
         scrollBarPixel: 0,
         scrollerContainBox: false
       },
+
       boxTop: 0, // box 离最顶端的偏移值
       boxLeft: 0, // box 离最开始的偏移值
-      boxHeight: 0, // 滚动区域的高度
-      boxWidth: 0, // 滚动区域的宽度
-      boxStyleWidth: '', // 滚动区域的样式宽度
-      scrollerHeight: 0, // 滚动容器的高度
-      scrollerWidth: 0, // 滚动容器的宽度
+      boxHeight: 0, // 滚动内容的高度
+      boxWidth: 0, // 滚动内容的宽度
+      boxStyleHeight: 0, // 滚动内容的样式高度
+      boxStyleWidth: 0, // 滚动内容的样式宽度
+      scrollerHeight: 0, // 滚动区域的高度
+      scrollerWidth: 0, // 滚动区域的宽度
+      parentHeight: 0, // 滚动区域的父元素的高度
+      parentWidth: 0, // 滚动区域的父元素的宽度
       showBar: false, // 滚动条自动隐藏的状态
       isTouchStart: false, // 滚动区域的 touchend 事件
       scrolling: false, // 记录连续滚动的标注
@@ -128,14 +148,15 @@ export default {
   computed: {
     boxStyle() {
       return {
-        'top': this.boxTop + 'px',
-        'left': this.boxLeft + 'px'
+        top: this.boxTop + 'px',
+        left: this.boxLeft + 'px'
       }
     },
 
     scrollerStyle() {
-      return this.height === '100%' ? {} : {
-        'height': this.scrollerHeight + 'px'
+      return {
+        height: this.scrollerHeight + 'px',
+        width: this.scrollerWidth + 'px'
       }
     },
 
@@ -178,26 +199,6 @@ export default {
 
     barLeft(val) {
       this.triggerScroll('x')
-    },
-
-    boxHeight(boxHeight) {
-      this._initScrollerData({
-        length: this.height,
-        scrollerLength: this.scrollerHeight,
-        boxLength: boxHeight,
-        type: 'y'
-      })
-    },
-
-    scrollerHeight(scrollerHeight) {
-      this._initScrollerData({
-        length: this.height,
-        scrollerLength: scrollerHeight,
-        boxLength: this.boxHeight,
-        type: 'y'
-      })
-
-      return this._changeScroller()
     }
   },
 
@@ -218,143 +219,172 @@ export default {
 
     // 初始化滚动条
     _initScroller() {
-      let scrollerHeight = this.$el.offsetHeight
-      let scrollerWidth = this.$el.offsetWidth
-      let boxStyleWidth = 0
+      const $elParent = this.$el.parentElement
+      const parentStyle = getComputedStyle($elParent)
 
-      // 让 box 的宽度变成默认值来测量子元素的宽度
-      this.$box.style.width = 'auto'
+      const parentH = parentStyle.height
+      const parentW = parentStyle.width
+
+      // 根据父元素的高宽都等于 auto 可以断言出元素的祖父元素有可能是隐藏的
+      if (parentW === 'auto' && parentH === 'auto') {
+        return false
+      }
+
+      // TODO: 如果 box 元素里面时绝对定位的元素则不能这样判断
+      // 之后会优化根据 scroller 的父元素来重新定义 box 的元素的高度和宽度
+      // 现在先让 box 的高度和宽度变成默认值来测量元素的宽度
+      Object.assign(this.$box.style, {
+        height: 'auto',
+        width: 'auto'
+      })
 
       let boxHeight = this.$box.offsetHeight
       let boxWidth = this.$box.offsetWidth
 
-      let firstChildWidth = this.$box.firstChild ? this.$box.firstChild.offsetWidth : 0
+      const yData = this._initScrollerData({
+        length: this.height,
+        boxLength: boxHeight,
+        type: 'y'
+      })
 
-      if (firstChildWidth > boxWidth) {
-        boxStyleWidth = firstChildWidth + 'px'
-      } else if (boxWidth <= scrollerWidth) {
-        boxStyleWidth = scrollerWidth + 'px'
+      const xData = this._initScrollerData({
+        length: this.width,
+        boxLength: boxWidth,
+        type: 'x'
+      })
+
+      let scrollerHeight = yData.scrollerLength
+      let scrollerWidth = xData.scrollerLength
+
+      boxHeight = yData.boxLength !== -1 ? yData.boxLength : boxHeight
+      boxWidth = xData.boxLength !== -1 ? xData.boxLength : boxWidth
+
+      const scrollerHeightChanged = scrollerHeight !== this.scrollerHeight
+      const scrollerWidthChanged = scrollerWidth !== this.scrollerWidth
+
+      const boxHeightChanged = boxHeight !== this.boxHeight
+      const boxWidthChanged = boxWidth !== this.boxWidth
+
+      if (scrollerHeightChanged || scrollerWidthChanged) {
+        this._scrollerChange()
+      }
+
+      if (scrollerHeightChanged || boxHeightChanged) {
+        this._initScrollBar({
+          type: 'y',
+          scrollerLength: yData.scrollerLength,
+          scrollerContainBox: yData.scrollerContainBox,
+          boxLength: boxHeight
+        })
+      }
+
+      if (scrollerWidthChanged || boxWidthChanged) {
+        this._initScrollBar({
+          type: 'x',
+          scrollerLength: xData.scrollerLength,
+          scrollerContainBox: xData.scrollerContainBox,
+          boxLength: boxWidth
+        })
+      }
+
+      this.scrollerHeight = yData.scrollerLength
+      this.scrollerWidth = xData.scrollerLength
+
+      this.boxHeight = yData.boxLength !== -1 ? yData.boxLength : boxHeight
+      this.boxWidth = xData.boxLength !== -1 ? xData.boxLength : boxWidth
+
+      Object.assign(this.$el.style, {
+        height: `${this.scrollerHeight}px`,
+        width: `${this.scrollerWidth}px`
+      })
+      Object.assign(this.$box.style, {
+        height: `${this.boxHeight}px`,
+        width: `${this.boxWidth}px`
+      })
+    },
+
+    /**
+     * 初始化滚动区域的数据
+     * @param { Object } - 选项数据
+     *                   type - 滚动条类型
+     *                   parentLength - 滚动的 高度/宽度
+     *                   boxLength - 滚动内容的 高度/宽度
+     *                   length - 指定的滚动区域的 高度/宽度
+     */
+    _initScrollerData({
+      type,
+      boxLength,
+      length
+    }) {
+      let scrollerContainBox = false // 滚动区域是否大过滚动内容
+      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
+      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
+      let scrollerLength = 0 // 滚动区域的高度/宽度
+      let lengthType = type === 'y' ? 'height' : 'width'
+      let parentLength = 0 // 滚动区域的父元素
+      let boxL = -1 // 需要重新赋值给 box 的 高度/宽度 像素
+
+      // 滚动区域的 宽度/高度 需要被滚动内容撑大，
+      // 并且需要检查父元素的 宽度/高度 之后，
+      // 才能正确断言滚动区域的 宽度/高度
+      this.$el.style[lengthType] = boxLength + 'px'
+      const $elParent = this.$el.parentElement
+      const parentStyle = getComputedStyle($elParent)
+      parentLength = Math.round(parseFloat(parentStyle[lengthType]))
+
+      if (length === '100%') {
+        // 因为有些滚动内容的高度/宽度是 100%的，所以
+        // 需要判断之前的滚动区域的高度/宽度是否
+        if (parentLength >= boxLength) {
+          boxL = parentLength
+        }
+
+        scrollerContainBox = parentLength >= boxLength
+        scrollerLength = parentLength
+      } else if (length === 'auto') {
+        scrollerContainBox = true
+        scrollerLength = boxLength
       } else {
-        boxStyleWidth = 'auto'
+        scrollerContainBox = length >= boxLength
+        scrollerLength = scrollerContainBox ? boxLength : length
       }
 
-      this.$box.style.width = boxStyleWidth
-
-      if (scrollerHeight !== this.scrollerHeight) {
-        this.scrollerHeight = scrollerHeight
-
-        this._initScrollerData({
-          length: this.height,
-          scrollerLength: scrollerHeight,
-          boxLength: boxHeight,
-          type: 'y'
-        })
-
-        this._changeScroller()
+      if (scrollerContainBox) {
+        this[boxPositionName] = 0
+        this[barPositionName] = 0
       }
 
-      if (scrollerWidth !== this.scrollerWidth) {
-        this.scrollerWidth = scrollerWidth
-
-        this._initScrollerData({
-          length: this.width,
-          scrollerLength: scrollerWidth,
-          boxLength: boxWidth,
-          type: 'x'
-        })
-
-        this._changeScroller()
-      }
-
-      if (boxHeight !== this.boxHeight) {
-        this.boxHeight = boxHeight
-
-        this._initScrollerData({
-          length: this.height,
-          scrollerLength: scrollerHeight,
-          boxLength: boxHeight,
-          type: 'y'
-        })
-      }
-
-      if (boxWidth !== this.boxWidth) {
-        this.boxWidth = boxWidth
-
-        this._initScrollerData({
-          length: this.width,
-          scrollerLength: scrollerWidth,
-          boxLength: boxWidth,
-          type: 'x'
-        })
+      return {
+        scrollerLength,
+        scrollerContainBox,
+        boxLength: boxL
       }
     },
 
     /**
-     * 初始化滚动的数据
+     * 初始化滚动条的数据
      * @param { Object } - 选项数据
      *                   type - 滚动条类型
-     *                   scrollerLength - 滚动区域的高度/宽度
      *                   boxLength - 滚动内容的高度/宽度
-     *                   length - 指定的滚动区域的高度/宽度
+     *                   scrollerLength - 滚动区域的高度/宽度
+     *                   scrollerContainBox - 滚动区域是否大过滚动内容
      */
-    _initScrollerData({
+    _initScrollBar({
       type,
-      scrollerLength,
       boxLength,
-      length
+      scrollerLength,
+      scrollerContainBox
     }) {
-      // 滚动条数据的名字
-      let barName = type + 'Data'
-      // 滚动区域是否大过滚动内容
-      let scrollerContainBox = false
-      // 滚动内容和滚动条的比
-      let boxBarRate = 0
-      // 滚动条的长度
-      let barLength = 0
-      // 滚动内容和滚动区域的偏移值
-      let boxAndScrollerOffset = 0
-      // 滚动条和滚动区域的偏移值
-      let barAndScrollerOffset = 0
-      // 滚动条位置名字
-      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
-      // 滚动内容位置名字
-      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
+      let barName = type + 'Data' // 滚动条数据的名字
+      let boxBarRate = 0 // 滚动内容和滚动条的比
+      let barLength = 0 // 滚动条的长度
+      let boxAndScrollerOffset = 0 // 滚动内容和滚动区域的偏移值
+      let barAndScrollerOffset = 0 // 滚动条和滚动区域的偏移值
+      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
+      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
 
-      if (type === 'y') {
-        if (length === '100%') {
-          scrollerContainBox = scrollerLength > boxLength
-        } else if (length === 'auto') {
-          scrollerContainBox = true
-          scrollerLength = scrollerContainBox ? boxLength : length
-          this.scrollerHeight = scrollerLength
-        } else {
-          scrollerContainBox = length >= boxLength
-          scrollerLength = scrollerContainBox ? boxLength : length
-          this.scrollerHeight = scrollerLength
-        }
-
-        boxBarRate = boxLength / scrollerLength
-        barLength = scrollerLength / boxBarRate
-
-        if (scrollerContainBox) {
-          this.boxTop = 0
-          this.barTop = 0
-        }
-      } else {
-        if (length === '100%') {
-          scrollerContainBox = scrollerLength >= boxLength
-        } else {
-          scrollerContainBox = length >= boxLength
-        }
-
-        boxBarRate = boxLength / scrollerLength
-        barLength = scrollerLength / boxBarRate
-
-        if (scrollerContainBox) {
-          this.boxLeft = 0
-          this.barLeft = 0
-        }
-      }
+      boxBarRate = boxLength / scrollerLength
+      barLength = scrollerLength / boxBarRate
 
       boxAndScrollerOffset = boxLength - scrollerLength
       barAndScrollerOffset = scrollerLength - barLength
@@ -378,21 +408,14 @@ export default {
       })
 
       this.triggerChangeBar(type)
-
-      return {
-        boxHeight: this.boxHeight,
-        boxWidth: this.boxWidth,
-        scrollerHeight: this.scrollerHeight,
-        scrollerWidth: this.scrollerWidth
-      }
     },
 
     /**
      * 滚动条和滚动区域的滚动操作的相关数据
      * @param { Object } - 选项数据
-     *                   type - 滚动条类型
-     *                   barDistance - 滚动条的位移
-     *                   boxDistance - 滚动内容的位移
+     *                     type - 滚动条类型
+     *                     barDistance - 滚动条的位移
+     *                     boxDistance - 滚动内容的位移
      */
     _boxAndBarScroll({
       type,
@@ -425,9 +448,9 @@ export default {
     /**
      * 滚动条的高度/宽度改变事件
      */
-    _changeScroller() {
+    _scrollerChange() {
       return this.$nextTick(() => {
-        this.$emit('changeScroller', {
+        this.$emit('scrollerChange', {
           emitter: this,
           scrollerWidth: this.scrollerWidth,
           scrollerHeight: this.scrollerHeight

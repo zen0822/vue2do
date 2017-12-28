@@ -14,7 +14,7 @@ export default {
      * 当设备改变尺寸
      */
     changeByDeviceSize(size) {
-      return this._adjustmenuMenuPoiStyle()
+      return this._adjustSelectedPoiStyle()
     },
 
     /**
@@ -94,7 +94,7 @@ export default {
      *
      */
     clickParent() {
-      if (this.menuMenuDisplay) {
+      if (this.menuDisplay) {
         return this.toggleMenuDisplay(false)
       }
     },
@@ -153,7 +153,7 @@ export default {
      *
      * @return {Object} - this组件
      */
-    toggleMenuDisplay(optVal = !this.menuMenuDisplay) {
+    toggleMenuDisplay(optVal = !this.menuDisplay) {
       if (this.togglingMenu) {
         return false
       }
@@ -164,14 +164,14 @@ export default {
         this.togglingMenu = false
       }, 300)
 
-      let menuHub = this.$store.state.comp.menu
+      let menuHub = this.$store.state.comp.select
 
       const getMenuHeight = (vm) => {
         handleEleDisplay({
-          element: vm.$refs.menuPanel,
+          element: vm.$refs.menu.$refs.panel,
           cb: (element) => {
-            let scrollerComp = vm.isTagMenu ? vm.$refs.tagScroller : vm.$refs.menuOption.$refs.list.$refs.scroller
-            scrollerComp._initScroller()
+            let scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
+            scrollerComp.initScroller()
 
             vm.menuHeight = scrollerComp.scrollerHeight
           }
@@ -182,24 +182,29 @@ export default {
         if (state) {
           getMenuHeight(vm)
 
-          vm.menuMenuDisplay = true
-          vm.$refs.transition.enter()
+          vm.menuDisplay = true
+
+          // 等 menu 组件的 height 的值更新了才能正确的展开 menu 组件
+          this.$nextTick(() => {
+            vm.$refs.menu.spread()
+          })
         } else {
           getMenuHeight(vm)
 
-          vm.$refs.transition.leave()
+          vm.menuDisplay = false
+          vm.$refs.menu.fold()
         }
       }
 
       Object.keys(menuHub).forEach((item) => {
         const menuVm = menuHub[item]
 
-        if (menuVm.menuMenuDisplay && item !== this.uid) {
+        if (menuVm.menuDisplay && item !== this.uid) {
           transite(false, menuVm)
         }
       })
 
-      return this._adjustmenuMenuPoiStyle({
+      return this._adjustSelectedPoiStyle({
         cb: () => {
           return transite(optVal, this)
         }

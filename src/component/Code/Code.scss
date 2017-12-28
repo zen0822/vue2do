@@ -16,6 +16,7 @@ $C_PREFIX: #{ $COMP_CODE };
   border-radius: $border-radius;
 
   .#{$C_PREFIX}-stage {
+    box-sizing: border-box;
     position: relative;
     padding: $gap-v $gap-h-double;
   }
@@ -29,6 +30,7 @@ $C_PREFIX: #{ $COMP_CODE };
 
   .#{$C_PREFIX}-article {
     .#{$C_PREFIX}-pre {
+      width: 100%;
       font-family: 'Roboto Mono', Monaco, courier, monospace;
       font-size: 1em;
       line-height: 16px;

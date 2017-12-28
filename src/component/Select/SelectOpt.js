@@ -1,8 +1,6 @@
 /**
- * menu-option -- 作为 menu 的 option 的局部组件
+ * select-option -- 作为 select 的 option 的局部组件
  *
- * @prop listPageHide - 隐藏列表分页
- * @prop listScrollerHide - 隐藏列表滚动条
  * @prop multiple - 是否为多选
  * @prop option - 下拉框option数据
  * @prop optRoot - 递归调用的父元素
@@ -13,9 +11,9 @@
  * @event changeScroller - 滚动区域的高度/宽度变化
  */
 
-import './MenuOpt.scss'
+import './SelectOpt.scss'
 import Vue from 'vue'
-import render from './MenuOpt.render'
+import render from './SelectOpt.render'
 import compEvent from '../../config/event.json'
 
 import iconComp from '../Icon/Icon'
@@ -24,11 +22,11 @@ import listComp from '../List/List'
 import rowComp from '../Row/Row'
 import colComp from '../Col/Col'
 
-import ripTransition from '../MotionRip/MotionRip'
+import MotionRip from '../MotionRip/MotionRip'
 import baseMixin from '../../mixin/base'
 
-const menuOptionComp = {
-  name: 'menu-opt',
+export default {
+  name: 'SelectOpt',
 
   render,
 
@@ -40,20 +38,10 @@ const menuOptionComp = {
     list: listComp,
     row: rowComp,
     column: colComp,
-    'rip-transition': ripTransition
+    'motion-rip': MotionRip
   },
 
   props: {
-    listPageHide: {
-      type: Boolean,
-      default: false
-    },
-
-    listScrollerHide: {
-      type: Boolean,
-      default: false
-    },
-
     option: {
       type: Array,
       default: () => []
@@ -96,13 +84,13 @@ const menuOptionComp = {
   computed: {
     // 组件类名的前缀
     cPrefix() {
-      return `${this.compPrefix}-menu-opt`
+      return `${this.compPrefix}-select-opt`
     }
   },
 
   methods: {
     _binder() {
-      this.$refs.list.$on('changeScroller', () => {
+      this.$refs.list.$on('scrollerChange', () => {
         this.$emit('changeScroller', {
           emitter: this
         })
@@ -130,7 +118,7 @@ const menuOptionComp = {
      * @param {Object} 子下拉框值
      * @return {Function}
      */
-    menuOption(evt, index) {
+    selectOption(evt, index) {
       evt.stopPropagation()
 
       let option = this.option[parseInt(index - 1, 10)]
@@ -155,5 +143,3 @@ const menuOptionComp = {
     }
   }
 }
-
-export default menuOptionComp

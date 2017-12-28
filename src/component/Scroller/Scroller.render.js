@@ -2,7 +2,6 @@ export default function (h) {
   return h(
     'div', {
       class: [this.cPrefix],
-      style: this.scrollerStyle,
       on: {
         mouseover: this.scrollerMouseover,
         mouseout: this.scrollerMouseout,

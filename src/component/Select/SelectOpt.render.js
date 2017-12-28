@@ -114,10 +114,10 @@ export default function (h) {
     return h('div', {
       class: [this.liClass(item.classify, optVal)],
       on: {
-        click: (event) => this.menuOption(event, index)
+        click: (event) => this.selectOption(event, index)
       }
     }, [
-      element, h('rip-transition', {
+      element, h('motion-rip', {
         props: {
           switch: this.pressing
         },
@@ -136,12 +136,10 @@ export default function (h) {
       props: {
         auto: true,
         item: this.option,
-        pageHide: this.listPageHide,
         pageSize: 6,
         pageType: 'more',
         pager: true,
         scrollerHeight: 200,
-        scrollerHide: this.listScrollerHide,
         theme: 'default'
       },
       scopedSlots: {

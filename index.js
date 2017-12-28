@@ -8,10 +8,10 @@ import pluginInstall from './src'
 import cnLang from './src/language/zh-cn.json'
 import { set as setConfig } from './src/config'
 
-import alert from './src/component/Modal/alert'
-import confirm from './src/component/Modal/confirm'
-import tip from './src/component/Message/tip'
-import toast from './src/component/Message/toast'
+// import alert from './src/component/Modal/alert'
+// import confirm from './src/component/Modal/confirm'
+// import tip from './src/component/Message/tip'
+// import toast from './src/component/Message/toast'
 
 import Btn from './src/component/Btn/Btn'
 import Bubble from './src/component/Bubble/Bubble'
@@ -36,6 +36,8 @@ import Pop from './src/component/Pop/Pop'
 import Row from './src/component/Row/Row'
 import Scroller from './src/component/Scroller/Scroller'
 import Search from './src/component/Search/Search'
+import Select from './src/component/Select/Select'
+import SelectEle from './src/component/Select/SelectEle'
 import Shift from './src/component/Shift/Shift'
 import ShiftEle from './src/component/Shift/ShiftEle'
 import Tab from './src/component/Tab/Tab'
@@ -53,10 +55,10 @@ import MotionZoom from './src/component/MotionZoom/MotionZoom'
 export default pluginInstall
 
 export {
-  alert,
-  confirm,
-  tip,
-  toast,
+  // alert,
+  // confirm,
+  // tip,
+  // toast,
 
   Bubble,
   Btn,
@@ -81,6 +83,8 @@ export {
   Row,
   Scroller,
   Search,
+  Select,
+  SelectEle,
   Shift,
   ShiftEle,
   Tab,

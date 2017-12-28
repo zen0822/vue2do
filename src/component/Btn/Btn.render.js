@@ -88,7 +88,7 @@ export default function (h) {
         }
       }, [
         btnEleChildren,
-        h('rip-transition', {
+        h('motion-rip', {
           class: [this.xclass('rip')],
           props: {
             assign: !this.isFloatBtn,
@@ -97,7 +97,7 @@ export default function (h) {
           ref: 'transition'
         }),
         h('div', {
-          class: [this.prefix('css-transition-rip')],
+          class: [this.prefix('css-motion-rip')],
           directives: [{
             name: 'show',
             value: this.motion

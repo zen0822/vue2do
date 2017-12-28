@@ -65,7 +65,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
     background: #fff;
     border-collapse: collapse;
     display: table;
-    min-width: 100%;
+    width: 100%;
   }
 
   .#{$C_PREFIX}-header-group {

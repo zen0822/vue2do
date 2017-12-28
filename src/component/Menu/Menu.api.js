@@ -22,8 +22,8 @@ export default {
      *
      */
     clickParent() {
-      if (this.menuMenuDisplay) {
-        return this.toggleMenuDisplay(false)
+      if (this.panelDisplay) {
+        return this.togglePanelDisplay(false)
       }
     },
 
@@ -36,7 +36,7 @@ export default {
       this.focusing = false
 
       if (!this.multiple) {
-        return this.toggleMenuDisplay(false)
+        return this.togglePanelDisplay(false)
       }
     },
 
@@ -57,7 +57,7 @@ export default {
     click(event) {
       event.stopPropagation()
 
-      return this.toggleMenuDisplay()
+      return this.togglePanelDisplay()
     },
 
     /**
@@ -69,7 +69,7 @@ export default {
       }
 
       if (event.keyCode === keyCode.enter) {
-        this.toggleMenuDisplay()
+        this.togglePanelDisplay()
       }
     },
 
@@ -81,7 +81,7 @@ export default {
      *
      * @return {Object} - this组件
      */
-    toggleMenuDisplay(optVal = !this.menuMenuDisplay) {
+    togglePanelDisplay(optVal = !this.panelDisplay) {
       if (this.togglingMenu) {
         return false
       }
@@ -96,12 +96,16 @@ export default {
 
       const getMenuHeight = (vm) => {
         handleEleDisplay({
-          element: vm.$refs.menuPanel,
+          element: vm.$refs.panel,
           cb: (element) => {
-            let scrollerComp = vm.$refs.scroller
-            scrollerComp._initScroller()
+            if (vm.height === 'auto') {
+              let scrollerComp = vm.$refs.scroller
+              scrollerComp._initScroller()
 
-            vm.menuHeight = scrollerComp.scrollerHeight
+              vm.menuHeight = scrollerComp.scrollerHeight
+            } else {
+              vm.menuHeight = vm.height
+            }
           }
         })
       }
@@ -110,11 +114,12 @@ export default {
         if (state) {
           getMenuHeight(vm)
 
-          vm.menuMenuDisplay = true
+          vm.panelDisplay = true
           vm.$refs.motion.enter()
         } else {
           getMenuHeight(vm)
 
+          vm.panelDisplay = false
           vm.$refs.motion.leave()
         }
       }
@@ -122,16 +127,12 @@ export default {
       Object.keys(menuHub).forEach((item) => {
         const menuVm = menuHub[item]
 
-        if (menuVm.menuMenuDisplay && item !== this.uid) {
+        if (menuVm.panelDisplay && item !== this.uid) {
           transite(false, menuVm)
         }
       })
 
-      return this._adjustmenuMenuPoiStyle({
-        cb: () => {
-          return transite(optVal, this)
-        }
-      })
+      return this._adjustTriggerPoiStyle(transite(optVal, this))
     },
 
     /**
@@ -139,7 +140,23 @@ export default {
      * @return {Object} this - 组件
      */
     spread() {
-      return this.toggleMenuDisplay(true)
+      return this.togglePanelDisplay(true)
+    },
+
+    /**
+     * 折叠下拉框
+     * @return {Object} this - 组件
+     */
+    fold() {
+      return this.togglePanelDisplay(false)
+    },
+
+    /**
+     * 展開/折叠 下拉框
+     * @return {Object} this - 组件
+     */
+    toggle() {
+      return this.togglePanelDisplay()
     }
   }
 }

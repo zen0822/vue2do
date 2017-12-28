@@ -7,14 +7,12 @@
  * @prop item - 列表数据
  * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @prop pager - 启动分页功能
- * @prop pageHide - 隐藏分页
  * @prop pageSize - 将列表数据（item）分为每页多少条数据
  * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
  * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
- * @prop scrollerHide - 隐藏滚动条
  *
  * @event switchPage - 换页触发事件
- * @event changeScroller - 滚动区域的高度/宽度变化
+ * @event scrollerChange - 滚动区域的高度/宽度变化
  */
 
 import './List.scss'
@@ -59,11 +57,6 @@ export default {
       default: false
     },
 
-    scrollerHide: {
-      type: Boolean,
-      default: false
-    },
-
     item: {
       type: Array,
       default: () => []
@@ -72,11 +65,6 @@ export default {
     page: Object,
 
     pager: {
-      type: Boolean,
-      default: false
-    },
-
-    pageHide: {
       type: Boolean,
       default: false
     },
@@ -188,25 +176,23 @@ export default {
     _binder() {
       const refScroller = this.$refs.scroller
 
-      refScroller.$on('changeScroller', ({
-        scrollerHeight,
-        emitter
-      }) => {
-        return this.$emit('changeScroller', {
+      refScroller.$on('scrollerChange', (opt) => {
+        this.initPagePosition(opt.scrollerHeight)
+
+        return this.$emit('scrollerChange', {
+          ...opt,
           emitter: this
         })
       })
 
-      refScroller.$on('changeYBar', ({
+      refScroller.$on('yBarChange', ({
         isBottom
       }) => {
         if (!this.$el.offsetHeight) {
           return false
         }
 
-        if (!this.pageHide) {
-          this.initPagePosition()
-        }
+        this.initPagePosition()
 
         this.scrollerAlmostInBottom = isBottom
       })
@@ -216,17 +202,15 @@ export default {
      * 执行分页过渡动画
      */
     _transitePage(show = true) {
-      if (this.pageHide) {
-        return false
-      }
+      this.$nextTick(() => {
+        const refPageTransition = this.$refs.pageSlideTransition
 
-      const refPageTransition = this.$refs.pageSlideTransition
-
-      if (show) {
-        return refPageTransition.enter()
-      } else {
-        return refPageTransition.leave()
-      }
+        if (show) {
+          return refPageTransition.enter()
+        } else {
+          return refPageTransition.leave()
+        }
+      })
     }
   },
 

@@ -51,7 +51,8 @@ export default function (h) {
       class: [this.xclass('scroller')],
       props: {
         autoHide: this.autoHideScroller,
-        height: this.scrollerHeight
+        height: this.scrollerHeight,
+        width: '100%'
       },
       on: {
         scrollY: this.scroll
@@ -60,73 +61,71 @@ export default function (h) {
     }, scrollerChildren)
   )
 
-  if (!this.pageHide) {
-    listChildren.push(
-      h('slide-transition', {
-        props: {
-          direction: 'north',
-          offset: this.pageDetail.bottom
-        },
-        ref: 'pageSlideTransition'
-      }, [
-        h(
-          'page', {
-            class: [this.xclass('page')],
-            props: {
-              data: this.pageData,
-              type: this.pageType,
-              loadMoreText: this.loadMoreText
-            },
-            on: {
-              'switch': this.switchPage
-            },
-            ref: 'page',
-            style: this.pagerStyle
-          }, (() => {
-            let ele = [
-              h('icon', {
-                class: [`${this.compPrefix}-m-r-half`],
-                props: {
-                  kind: 'arrow'
-                }
-              }),
-              h('span', this.loadMoreText)
+  listChildren.push(
+    h('slide-transition', {
+      props: {
+        direction: 'north',
+        offset: this.pageDetail.bottom
+      },
+      ref: 'pageSlideTransition'
+    }, [
+      h(
+        'page', {
+          class: [this.xclass('page')],
+          props: {
+            data: this.pageData,
+            type: this.pageType,
+            loadMoreText: this.loadMoreText
+          },
+          on: {
+            'switch': this.switchPage
+          },
+          ref: 'page',
+          style: this.pagerStyle
+        }, (() => {
+          let ele = [
+            h('icon', {
+              class: [`${this.compPrefix}-m-r-half`],
+              props: {
+                kind: 'arrow'
+              }
+            }),
+            h('span', this.loadMoreText)
+          ]
+
+          if (this.isPageTypeMore) {
+            return [
+              h(
+                'div', {
+                  slot: 'loadMore'
+                }, [
+                  h('loading', {
+                    class: [`${this.compPrefix}-m-r-half`].concat(
+                      this.xclass(['loading', 'loading-more'])
+                    ),
+                    ref: 'loadingOfMore'
+                  }),
+                  h('icon', {
+                    class: [`${this.compPrefix}-m-r-half`],
+                    directives: [{
+                      name: 'show',
+                      value: this.arrowOfMoreDisplay
+                    }],
+                    props: {
+                      kind: 'arrow'
+                    }
+                  }),
+                  h('span', this.loadMoreText)
+                ]
+              )
             ]
+          }
 
-            if (this.isPageTypeMore) {
-              return [
-                h(
-                  'div', {
-                    slot: 'loadMore'
-                  }, [
-                    h('loading', {
-                      class: [`${this.compPrefix}-m-r-half`].concat(
-                        this.xclass(['loading', 'loading-more'])
-                      ),
-                      ref: 'loadingOfMore'
-                    }),
-                    h('icon', {
-                      class: [`${this.compPrefix}-m-r-half`],
-                      directives: [{
-                        name: 'show',
-                        value: this.arrowOfMoreDisplay
-                      }],
-                      props: {
-                        kind: 'arrow'
-                      }
-                    }),
-                    h('span', this.loadMoreText)
-                  ]
-                )
-              ]
-            }
-
-            return ele
-          })()
-        )
-      ])
-    )
-  }
+          return ele
+        })()
+      )
+    ])
+  )
 
   listChildren.push(loadingOfNum)
 

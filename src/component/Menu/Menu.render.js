@@ -2,45 +2,83 @@
  * menu.render.js
  */
 export default function (h) {
-  let triggerChildren = []
-  let menuChildren = []
-  let menuMenuEle = []
+  let children = []
 
-  triggerChildren.push(
-    h('input', {
-      class: [this.xclass('trigger-input')],
-      on: {
-        focus: this.focus,
-        blur: this.blur
-      }
-    }),
-    this.$slots.trigger
-  )
-
-  menuChildren.push(
-    h('scroller', {
-      props: {
-        height: 200
-      },
-      ref: 'scroller'
-    }, [
-      h('div', {
-        class: this.xclass('opt')
-      }, [this.$slots.default])
-    ])
-  )
-
-  menuMenuEle = [
+  children.push(
     h('div', {
-      class: [this.xclass('panel')],
+      class: [this.xclass('ban')],
       directives: [{
         name: 'show',
-        value: false
-      }],
-      style: [this.menuMenuPoiStyle, this.menuMenuStyle],
-      ref: 'menuPanel'
-    }, [menuChildren])
-  ]
+        value: this.ban
+      }]
+    })
+  )
+
+  if (!this.noTrig) {
+    const $slotTrigger = this.$slots.trigger
+    const triggerBox = $slotTrigger ? this.$slots.trigger : [
+      h('btn', {
+        props: {
+          type: 'float'
+        }
+      }, [h('icon', {
+        props: {
+          color: '#fff',
+          kind: 'sort'
+        }
+      })])
+    ]
+
+    children.push(
+      h('div', {
+        class: [this.xclass('trigger')],
+        on: {
+          click: this.click
+        },
+        ref: 'trigger'
+      }, [h('input', {
+          class: [this.xclass('trigger-input')],
+          on: {
+            focus: this.focus,
+            blur: this.blur
+          }
+        }),
+        triggerBox
+      ])
+    )
+  }
+
+  children.push(
+    h('motion', {
+      props: {
+        height: this.menuHeight,
+        width: this.menuWidth,
+        slideLength: this.triggerHeight,
+        sync: true
+      },
+      ref: 'motion'
+    }, [
+      h('div', {
+        class: [this.xclass('panel')],
+        directives: [{
+          name: 'show',
+          value: false
+        }],
+        style: [this.panelStyle],
+        ref: 'panel'
+      }, [h('scroller', {
+        props: {
+          height: this.height,
+          width: '100%'
+        },
+        ref: 'scroller'
+      }, [
+        h('div', {
+          class: this.xclass('container')
+        }, [this.$slots.default])
+      ])])
+    ])
+  )
 
   return h('div', {
     class: this.menuClass,
@@ -51,32 +89,5 @@ export default function (h) {
     on: {
       keydown: this.keydown
     }
-  }, [
-    h('div', {
-      class: [this.xclass('ban')],
-      directives: [{
-        name: 'show',
-        value: this.ban
-      }]
-    }),
-
-    h('div', {
-      class: [this.xclass('trigger')],
-      on: {
-        click: this.click
-      }
-    }, [triggerChildren]),
-
-    h('motion', {
-        props: {
-          height: this.menuHeight,
-          width: this.menuWidth,
-          slideLength: this.triggerHeight,
-          sync: true
-        },
-        ref: 'motion'
-      },
-      menuMenuEle
-    )
-  ])
+  }, children)
 }

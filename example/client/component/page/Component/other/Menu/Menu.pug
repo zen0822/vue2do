@@ -10,15 +10,8 @@ div
     +section('tag', '添加子标签')
       p.section-description 用直观的标签声明下拉框的数据
       z-menu(id='test')
+        z-btn(slot='trigger' type='flat') 菜单
         z-menu-ele(value='1') {{ testName }}
-        z-menu-ele(value='2')
-          z-btn 按钮
-        z-menu-ele(value='2')
-          z-btn 按钮
-        z-menu-ele(value='2')
-          z-btn 按钮
-        z-menu-ele(value='2')
-          z-btn 按钮
         z-menu-ele(value='2')
           z-btn 按钮
         z-menu-ele(value='3') 测试3

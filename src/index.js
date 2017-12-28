@@ -34,6 +34,9 @@ import MenuEle from './component/Menu/MenuEle'
 import Shift from './component/Shift/Shift'
 import ShiftEle from './component/Shift/ShiftEle'
 
+import Select from './component/Select/Select'
+import SelectEle from './component/Select/SelectEle'
+
 import Tab from './component/Tab/Tab'
 import TabEle from './component/Tab/TabEle'
 
@@ -73,9 +76,11 @@ const compHub = [
   MotionZoom,
   Nav,
   Scroller,
+  Search,
+  Select,
+  SelectEle,
   Shift,
   ShiftEle,
-  Search,
   Tab,
   TabEle,
   Col,

@@ -1,5 +1,4 @@
 // btn.type 样式
-
 $kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
 $C_PREFIX: #{ $COMP_BTN };
 
@@ -76,6 +75,11 @@ $C_PREFIX: #{ $COMP_BTN };
         height: 100%;
         width: 0;
       }
+
+      .#{$C_PREFIX}-ele-border {
+        padding-top: 12px;
+        padding-bottom: 12px
+      }
     }
   }
 
@@ -110,33 +114,23 @@ $C_PREFIX: #{ $COMP_BTN };
       background-color: #fff;
     }
 
-    &.#{$C_PREFIX}-kind-primary
-        > .#{$C_PREFIX}-ele
-        > .#{$C_PREFIX}-ele-border {
+    &.#{$C_PREFIX}-kind-primary > .#{$C_PREFIX}-ele > .#{$C_PREFIX}-ele-border {
       @include btn-outline($primary-color);
     }
 
-    &.#{$C_PREFIX}-kind-dange
-        > .#{$C_PREFIX}-ele
-        > .#{$C_PREFIX}-ele-border {
+    &.#{$C_PREFIX}-kind-dange > .#{$C_PREFIX}-ele > .#{$C_PREFIX}-ele-border {
       @include btn-outline($danger-color);
     }
 
-    &.#{$C_PREFIX}-kind-success
-        > .#{$C_PREFIX}-ele
-        > .#{$C_PREFIX}-ele-border {
+    &.#{$C_PREFIX}-kind-success > .#{$C_PREFIX}-ele > .#{$C_PREFIX}-ele-border {
       @include btn-outline($success-color);
     }
 
-    &.#{$C_PREFIX}-kind-warning
-        > .#{$C_PREFIX}-ele
-        > .#{$C_PREFIX}-ele-border {
+    &.#{$C_PREFIX}-kind-warning > .#{$C_PREFIX}-ele > .#{$C_PREFIX}-ele-border {
       @include btn-outline($warning-color);
     }
 
-    &.#{$C_PREFIX}-kind-default
-        > .#{$C_PREFIX}-ele
-        > .#{$C_PREFIX}-ele-border {
+    &.#{$C_PREFIX}-kind-default > .#{$C_PREFIX}-ele > .#{$C_PREFIX}-ele-border {
       @include btn-outline($grey-light);
     }
   }

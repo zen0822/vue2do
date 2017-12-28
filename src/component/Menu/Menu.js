@@ -3,8 +3,20 @@
  *
  * @prop store - 储存实例化的信息
  * @prop theme - 主题
- * @prop width - 菜单宽度，默认是 250px。可选 ‘auto’，根据 trigger 的宽度。输入数字就是自定义的像素宽度
+ * @prop noTrig - 不使用组件自带的菜单触发器
+ * @prop height - 菜单高度，默认是 auto
+ *                1、auto：根据菜单内容的宽度
+ *                2、数字：输入数字就是自定义的像素高度
+ * @prop width - 菜单宽度，默认是 auto
+ *               1、auto：根据 trigger 的宽度
+ *               2、数字：输入数字就是自定义的像素宽度
+ * @prop trigHeight - 菜单触发器的高度，默认是 auto
+ *                    1、auto：根据菜单内容的宽度
+ *                    2、数字：输入数字就是自定义的像素高度
  *
+ * @event afterSpread - 展开之后的事件
+ * @event afterFold - 折叠之后的事件
+ * @event scrollerChange - 滚动组件发生变化
  */
 
 import './Menu.scss'
@@ -17,6 +29,7 @@ import hubStore from '../../vuex/module/hub/type.json'
 import compStore from '../../vuex/module/comp/type.json'
 import tip from '../Message/tip'
 
+import Btn from '../Btn/Btn'
 import Icon from '../Icon/Icon'
 import Input from '../Input/Input'
 import Motion from './Motion'
@@ -45,7 +58,8 @@ export default {
 
   components: {
     'input-box': Input,
-    'motion': Motion,
+    btn: Btn,
+    motion: Motion,
     icon: Icon,
     scroller: Scroller
   },
@@ -58,13 +72,46 @@ export default {
       default: false
     },
 
-    width: {
-      type: [String, Number],
-      default: 160,
+    noTrig: {
+      type: Boolean,
+      default: false
+    },
+
+    height: {
+      type: [Number, String],
+      default: 'auto',
       validator(val) {
         if (typeof val === 'number') {
           return true
-        } else if (val === '100%') {
+        } else if (val === 'auto') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+
+    width: {
+      type: [String, Number],
+      default: 'auto',
+      validator(val) {
+        if (typeof val === 'number') {
+          return true
+        } else if (val === 'auto') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+
+    trigHeight: {
+      type: [String, Number],
+      default: 'auto',
+      validator(val) {
+        if (typeof val === 'number') {
+          return true
+        } else if (val === 'auto') {
           return true
         } else {
           return false
@@ -81,14 +128,9 @@ export default {
     return {
       focusing: false, // 正在处于 focus 状态
       menuHeight: 0, // 下拉菜单的高度
-      menuWidth: 0, // 下拉菜单的宽度
-      menuMenuDisplay: false, // 下拉菜单的显示状态
-      menuMenuStyle: {}, // 下拉菜单的样式
-      menuMenuPoiStyle: {}, // 下拉菜单位置的样式
-      listPageHide: true,
-      listScrollerHide: true,
-      triggerHeight: 0, // 触发器的高度
-      transitionFinish: false // 下拉框显示过渡完成的标识符
+      panelDisplay: false, // 下拉菜单面板的显示状态
+      panelStyle: {}, // 下拉菜单位置的样式
+      triggerHeight: 0 // 触发器的高度
     }
   },
 
@@ -101,12 +143,12 @@ export default {
       return this
     },
 
-    menuClass() { // 组件 stage 的 class 的名字
+    menuClass() { // 组件 class 的名字
       let classArr = [
         this.cPrefix,
         this.xclass(this.compClass),
         {
-          [this.xclass('selecting')]: this.menuMenuDisplay
+          [this.xclass('selecting')]: this.panelDisplay
         },
         {
           [this.xclass('focusing')]: this.focusing
@@ -128,51 +170,44 @@ export default {
 
   methods: {
     _initComp() {
-      this.triggerHeight = this.$el.offsetHeight
-      this.menuWidth = this.width === '100%' ? this.$el.offsetWidth : this.width
-    },
-
-    _isUndefined(obj) {
-      return dataType(obj) === 'undefined'
+      this.triggerHeight = this.trigHeight === 'auto' ? this.$refs.trigger.offsetHeight : this.trigHeight
     },
 
     /**
      * 绑定事件
      */
     _binder() {
-      if (this.$refs.scroller) {
-        this.$refs.scroller.$on('changeScroller', () => {
-          this._adjustmenuMenuPoiStyle()
+      this.$refs.scroller.$on('scrollerChange', (opt) => {
+        if (this.panelDisplay) {
+          this.spread()
+        }
+
+        return this.$emit('scrollerChange', {
+          ...opt,
+          emitter: this
         })
-      }
+      })
 
       this.$refs.motion.$on('afterEnter', () => {
-        this.listPageHide = false
-        this.listScrollerHide = false
+        this.$emit('afterSpread', {
+          emitter: this
+        })
       })
 
       this.$refs.motion.$on('afterLeave', () => {
-        this.menuMenuDisplay = false
-        this.listScrollerHide = true
-        this.listPageHide = true
+        this.panelDisplay = false
+
+        this.$emit('afterFold', {
+          emitter: this
+        })
       })
     },
 
     /**
-     * 调整多选下拉框的选择值的样式
+     * 调整菜单触发器的样式
      */
-    _adjustmenuMenuPoiStyle({
-      cb
-    } = {}) {
-      let top = 0
-      let width = this.width === '100%' ? this.$el.offsetWidth : this.width
-
-      this.menuMenuPoiStyle = {
-        top: `${top}px`,
-        width: `${width}px`
-      }
-
-      this.triggerHeight = this.$el.offsetHeight
+    _adjustTriggerPoiStyle(cb) {
+      this.triggerHeight = this.trigHeight === 'auto' ? this.$refs.trigger.offsetHeight : this.trigHeight
 
       return cb && cb()
     },
@@ -181,7 +216,7 @@ export default {
      * 当设备改变尺寸
      */
     _changeByDeviceSize(size) {
-      return this._adjustmenuMenuPoiStyle()
+      return this._adjustTriggerPoiStyle()
     }
   },
 

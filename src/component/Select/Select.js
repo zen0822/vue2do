@@ -28,26 +28,33 @@
  *
  */
 
-import './Menu.scss'
+import './Select.scss'
 
 import Vue from 'vue'
-import optionComp from './MenuOpt'
+import SelectOpt from './SelectOpt'
 
-import render from './Menu.render'
+import render from './Select.render'
 import store from '../../vuex/store'
 import hubStore from '../../vuex/module/hub/type.json'
 import compStore from '../../vuex/module/comp/type.json'
 import tip from '../Message/tip'
 
-import iconComp from '../Icon/Icon'
-import inputComp from '../Input/Input'
-import checkComp from '../Check/Check'
-import scrollerComp from '../Scroller/Scroller'
+import Icon from '../Icon/Icon'
+import Input from '../Input/Input'
+import Check from '../Check/Check'
+import Scroller from '../Scroller/Scroller'
+
+import Menu from '../Menu/Menu'
+import MenuTrig from '../Menu/MenuTrig'
 
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
-import apiMixin from './Menu.api'
-import foldTransition from '../MotionFold/MotionFold'
+import apiMixin from './Select.api'
+import MotionFold from '../MotionFold/MotionFold'
+
+import {
+  handleEleDisplay
+} from '../../util/dom/prop'
 
 import uid from '../../util/uid'
 import {
@@ -60,22 +67,24 @@ import {
 // 搜索功能的函数节流的间隔时间
 const SEARCH_KEY_UP_INTERVAL = 500
 
-const menuComp = {
-  name: 'Menu',
+export default {
+  name: 'Select',
 
   render,
 
-  mixins: [baseMixin, formMixin, apiMixin, foldTransition],
+  mixins: [baseMixin, formMixin, apiMixin],
 
   store,
 
   components: {
-    'menu-opt': optionComp,
-    'input-box': inputComp,
-    'fold-transition': foldTransition,
-    icon: iconComp,
-    check: checkComp,
-    scroller: scrollerComp
+    'menu-comp': Menu,
+    'menu-trig': MenuTrig,
+    'select-opt': SelectOpt,
+    'input-box': Input,
+    'fold-transition': MotionFold,
+    icon: Icon,
+    check: Check,
+    scroller: Scroller
   },
 
   props: {
@@ -164,7 +173,7 @@ const menuComp = {
   },
 
   data() {
-    this.compName = 'menu' // 组件名字
+    this.compName = 'select' // 组件名字
     this.uid = '' // 组件唯一标识符
     this.togglingMenu = false // 300ms 之内只能点击一次的标识
 
@@ -175,13 +184,10 @@ const menuComp = {
       focusing: false, // 正在处于 focus 状态
       hasSlotOption: false, // 是否是 slot 定义的 option
       menuHeight: 0, // 下拉菜单的高度
-      menuMenuDisplay: false, // 下拉菜单的显示状态
-      menuMenuStyle: {}, // 下拉菜单的样式
+      menuDisplay: false, // 下拉菜单的显示状态
       menuMenuPoiStyle: {}, // 下拉菜单位置的样式
       optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
       option: [], // props 里面 optionItem 的 data 替换值
-      listPageHide: true,
-      listScrollerHide: true,
       unwatchOption: {}, // 取消观察 option
       value: undefined, // 当前下拉框的 value 值
       verified: true, // 是否以验证通过
@@ -189,6 +195,7 @@ const menuComp = {
       searchOptionDisplay: false, // 是否显示搜索 optionItem
       searchOptionItem: {}, // 搜索出来的 option
       selectedAll: false, // 是否全选多选下拉框的标记
+      selectedHeight: 0, // 当前选择值的高度
       transitionFinish: false, // 下拉框显示过渡完成的标识符
       text: undefined // 当前下拉框的 text 值
     }
@@ -196,19 +203,19 @@ const menuComp = {
 
   computed: {
     cPrefix() { // 组件类名的前缀
-      return `${this.compPrefix}-menu`
+      return `${this.compPrefix}-select`
     },
 
     me() {
       return this
     },
 
-    menuClass() { // 组件 stage 的 class 的名字
+    selectClass() { // 组件 stage 的 class 的名字
       let classArr = [
         this.cPrefix,
         this.xclass(this.compClass),
         {
-          [this.xclass('selecting')]: this.menuMenuDisplay
+          [this.xclass('selecting')]: this.menuDisplay
         },
         {
           [this.xclass('focusing')]: this.focusing
@@ -227,10 +234,6 @@ const menuComp = {
 
     initTxtDisplay() { // 多选框的默认值显示状态
       return this.multiple && this.value.length === 0
-    },
-
-    isTagMenu(val) { // 下拉菜单是子标签加载
-      return this.initOpt.length === 0 && !this.classify
     }
   },
 
@@ -241,7 +244,7 @@ const menuComp = {
       }
 
       return this._initMenuTxt().$nextTick(() => {
-        this._adjustmenuMenuPoiStyle()
+        this._adjustSelectedPoiStyle()
       })
     },
     initVal(val) {
@@ -259,8 +262,8 @@ const menuComp = {
   },
 
   methods: {
-    _isUndefined(obj) {
-      return dataType(obj) === 'undefined'
+    _initComp() {
+      this.selectedHeight = this.$refs.selected.offsetHeight
     },
 
     /**
@@ -272,64 +275,53 @@ const menuComp = {
       }
 
       if (this.$refs.scroller) {
-        this.$refs.scroller.$on('changeScroller', () => {
-          this._adjustmenuMenuPoiStyle()
+        this.$refs.scroller.$on('scrollerChange', () => {
+          this._adjustSelectedPoiStyle()
         })
       }
 
-      this.$refs.transition.$on('afterEnter', () => {
-        this.listPageHide = false
-        this.listScrollerHide = false
-
-        this.$nextTick(() => {
-          !this.isTagMenu && this.$refs.menuOption.initPagePosition()
-        })
+      this.$refs.menu.$on('afterSpread', ({
+        scrollerHeight
+      }) => {
+        this.$refs.option.$refs.list.initPagePosition(scrollerHeight)
       })
 
-      this.$refs.transition.$on('afterLeave', () => {
-        this.menuMenuDisplay = false
-        this.listScrollerHide = true
-        this.listPageHide = true
-      })
+      this.$refs.option.$on('change', ({
+        value,
+        text,
+        index
+      }) => {
+        this.currentIndex = index
+        let selectedItem = this._isExistedVal(value)
 
-      if (!this.isTagMenu) {
-        // TODO: 待验证
-        this.$refs.menuOption.$off('change')
-        this.$refs.menuOption.$on('change', ({
-          value,
-          text,
-          index
-        }) => {
-          this.currentIndex = index
-          let selectedItem = this._isExistedVal(value)
-
-          if (this.multiple) {
-            if (!selectedItem) {
-              if (this.max !== 0 && this.value.length === this.max) {
-                return false
-              }
-
-              return this.value.push(value)
-            } else {
-              return this.removeMultiSelected(selectedItem.index + 1)
+        if (this.multiple) {
+          if (!selectedItem) {
+            if (this.max !== 0 && this.value.length === this.max) {
+              return false
             }
-          } else {
-            this.value = value
 
-            return this.toggleMenuDisplay(false)
+            return this.value.push(value)
+          } else {
+            return this.removeMultiSelected(selectedItem.index + 1)
           }
-        })
-      }
+        } else {
+          this.value = value
+
+          return this.toggleMenuDisplay(false)
+        }
+      })
     },
 
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustmenuMenuPoiStyle({
+    _adjustSelectedPoiStyle({
       cb
     } = {}) {
       let top = this.$el.offsetHeight
       let width = this.$el.offsetWidth
+
+      this.selectedHeight = this.$refs.selected.offsetHeight
 
       this.menuMenuPoiStyle = {
         top: `${top}px`,
@@ -716,5 +708,3 @@ const menuComp = {
     }
   }
 }
-
-export default menuComp

@@ -262,7 +262,7 @@ const modalComp = {
         }
       })
 
-      this.$refs.scroller.$on('changeScroller', ({
+      this.$refs.scroller.$on('scrollerChange', ({
         scrollerHeight
       }) => {
         handleEleDisplay({
@@ -273,7 +273,7 @@ const modalComp = {
         })
       })
 
-      this.$refs.scroller.$on('changeYBar', ({
+      this.$refs.scroller.$on('yBarChange', ({
         hasScroller
       }) => {
         this.hasScroller = hasScroller

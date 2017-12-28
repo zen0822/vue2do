@@ -7,9 +7,9 @@
  * menu 组件样式
  */
 
-$C_PREFIX: #{ $COMP_MENU };
-$C_OPT_PREFIX: #{ $COMP_MENU_OPT };
-$C_ELE_PREFIX: #{ $COMP_MENU_ELE };
+$C_PREFIX: #{ $COMP_SELECT };
+$C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
+$C_ELE_PREFIX: #{ $COMP_SELECT_ELE };
 $INPUT_PREFIX: #{ $COMP_INPUT };
 $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
@@ -81,10 +81,14 @@ $MULTI_MENU_WIDTH: 170px + 80px;
     }
   }
 
-  & > .#{$C_PREFIX}-panel {
+  & > &-menu {
     position: absolute;
-    top: $MENU_HEIGHT - $MENU_BORDER_WIDTH * 2;
     left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .#{$C_PREFIX}-panel {
     width: $MENU_WIDTH;
     overflow: hidden;
     box-shadow: $shadow-lower;
@@ -136,14 +140,14 @@ $MULTI_MENU_WIDTH: 170px + 80px;
       }
     }
 
-    .#{$C_PREFIX}-selected-box
+    & > .#{$C_PREFIX}-selected-box
         > .#{$C_PREFIX}-scroller
         > .#{ $SCROLLER_PREFIX }-box
         > .#{$C_PREFIX}-multiple {
       margin-right: $gap-v-triple;
     }
 
-    .#{$C_PREFIX}-selected-box {
+    & > .#{$C_PREFIX}-selected-box {
       transition: height 300ms ease;
 
       .#{$C_PREFIX}-multiple-selected-ul {
@@ -167,4 +171,4 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   }
 }
 
-@import "./scss/Menu.material.scss"
+@import "./scss/Select.material.scss"

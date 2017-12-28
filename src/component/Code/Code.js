@@ -35,7 +35,8 @@ export default {
 
   data() {
     return {
-      lineNum: 3
+      lineNum: 3,
+      stageWidth: 0 // stage 的宽度
     }
   },
 
@@ -43,6 +44,18 @@ export default {
     // 组件类名的前缀
     cPrefix() {
       return `${this.compPrefix}-code`
+    }
+  },
+
+  methods: {
+    _initComp() {
+      this.stageWidth = this.$el.offsetWidth
+    },
+
+    _binder() {
+      this.$refs.scroller.$on('scrollerChange', () => {
+        this.stageWidth = this.$el.offsetWidth
+      })
     }
   }
 }

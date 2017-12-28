@@ -7,6 +7,7 @@ import compNameSpace from './type.json'
 export default {
   state: {
     menu: {},
+    select: {},
     input: {}
   },
 

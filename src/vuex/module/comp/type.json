@@ -12,5 +12,9 @@
   "menu": {
     "add": "comp/menu/add",
     "delete": "comp/menu/delete"
+  },
+  "select": {
+    "add": "comp/select/add",
+    "delete": "comp/select/delete"
   }
 }

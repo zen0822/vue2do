@@ -18,11 +18,17 @@ export default function (h) {
   }, [
     h('scroller', {
       props: {
-        height: 200
-      }
+        height: 200,
+        width: 'auto'
+      },
+      ref: 'scroller'
     }, [
       h('div', {
-        class: [this.xclass('stage')]
+        class: [this.xclass('stage')],
+        style: {
+          width: this.stageWidth + 'px'
+        },
+        ref: 'stage'
       }, [
         h('header', {
           class: [
@@ -36,8 +42,10 @@ export default function (h) {
         }, [
           h('scroller', {
             props: {
-              height: 'auto'
-            }
+              height: 'auto',
+              width: '100%'
+            },
+            ref: 'scrollerArticle'
           }, [
             h('pre', {
               class: [this.xclass('pre')]
