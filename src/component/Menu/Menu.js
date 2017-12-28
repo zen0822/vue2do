@@ -209,10 +209,6 @@ export default {
     },
 
     /**
-     * 初始化触发器的
-     */
-
-    /**
      * 调整菜单触发器的样式
      */
     _adjustTriggerPoiStyle(cb) {

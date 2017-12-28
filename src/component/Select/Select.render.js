@@ -54,7 +54,8 @@ export default function (h) {
       h('scroller', {
         class: [this.xclass('scroller')],
         props: {
-          height: 100
+          height: 100,
+          width: '100%'
         },
         ref: 'scroller'
       }, [
@@ -193,7 +194,7 @@ export default function (h) {
       props: {
         noTrig: true,
         noCoverTrig: true,
-        width: 170,
+        width: this.menuWidth,
         trigHeight: this.selectedHeight
       },
       ref: 'menu'

@@ -184,8 +184,8 @@ export default {
       focusing: false, // 正在处于 focus 状态
       hasSlotOption: false, // 是否是 slot 定义的 option
       menuHeight: 0, // 下拉菜单的高度
+      menuWidth: 0, // 下拉菜单的高度
       menuDisplay: false, // 下拉菜单的显示状态
-      menuMenuPoiStyle: {}, // 下拉菜单位置的样式
       optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
       option: [], // props 里面 optionItem 的 data 替换值
       unwatchOption: {}, // 取消观察 option
@@ -244,7 +244,9 @@ export default {
       }
 
       return this._initMenuTxt().$nextTick(() => {
-        this._adjustSelectedPoiStyle()
+        this._adjustSelectedPoiStyle(() => {
+          this.$refs.menu.spread()
+        })
       })
     },
     initVal(val) {
@@ -315,20 +317,15 @@ export default {
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustSelectedPoiStyle({
-      cb
-    } = {}) {
+    _adjustSelectedPoiStyle(cb) {
       let top = this.$el.offsetHeight
-      let width = this.$el.offsetWidth
 
+      this.menuWidth = this.$el.offsetWidth
       this.selectedHeight = this.$refs.selected.offsetHeight
 
-      this.menuMenuPoiStyle = {
-        top: `${top}px`,
-        width: `${width}px`
-      }
-
-      return cb && cb()
+      return this.$nextTick(() => {
+        return cb && cb()
+      })
     },
 
     /**

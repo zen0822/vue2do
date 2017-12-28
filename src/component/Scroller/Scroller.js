@@ -330,7 +330,19 @@ export default {
       this.$el.style[lengthType] = boxLength + 'px'
       const $elParent = this.$el.parentElement
       const parentStyle = getComputedStyle($elParent)
-      parentLength = Math.round(parseFloat(parentStyle[lengthType]))
+
+      let paddingLength = 0
+      let borderLength = 0
+
+      if (type === 'y') {
+        paddingLength = paddingLength + Math.round(parseFloat(parentStyle.paddingTop)) + Math.round(parseFloat(parentStyle.paddingBottom))
+        borderLength = borderLength + Math.round(parseFloat(parentStyle.borderTopWidth)) + Math.round(parseFloat(parentStyle.borderBottomWidth))
+      } else {
+        paddingLength = paddingLength + Math.round(parseFloat(parentStyle.paddingLeft)) + Math.round(parseFloat(parentStyle.paddingRight))
+        borderLength = borderLength + Math.round(parseFloat(parentStyle.borderLeftWidth)) + Math.round(parseFloat(parentStyle.borderRightWidth))
+      }
+
+      parentLength = Math.round(parseFloat(parentStyle[lengthType])) - paddingLength - borderLength
 
       if (length === '100%') {
         // 因为有些滚动内容的高度/宽度是 100%的，所以

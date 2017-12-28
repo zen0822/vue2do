@@ -79,9 +79,7 @@ export default {
     },
 
     /**
-     * 移除 多选下拉框 已选的值
-     *
-     * @param {String, Number} - 多选下拉框的值
+     * 点击移除多选下拉框已选的值
      */
     clickMultiSelected(event, index) {
       event.stopPropagation()
@@ -204,10 +202,8 @@ export default {
         }
       })
 
-      return this._adjustSelectedPoiStyle({
-        cb: () => {
-          return transite(optVal, this)
-        }
+      return this._adjustSelectedPoiStyle(() => {
+        return transite(optVal, this)
       })
     },
 
