@@ -20,11 +20,12 @@ export default function (h) {
       h('btn', {
         props: {
           type: 'float'
-        }
+        },
+        ref: 'triggerBtn'
       }, [h('icon', {
         props: {
-          color: '#fff',
-          kind: 'sort'
+          kind: 'sort',
+          size: 'S'
         }
       })])
     ]
@@ -32,19 +33,11 @@ export default function (h) {
     children.push(
       h('div', {
         class: [this.xclass('trigger')],
+        ref: 'trigger',
         on: {
           click: this.click
-        },
-        ref: 'trigger'
-      }, [h('input', {
-          class: [this.xclass('trigger-input')],
-          on: {
-            focus: this.focus,
-            blur: this.blur
-          }
-        }),
-        triggerBox
-      ])
+        }
+      }, [triggerBox])
     )
   }
 
@@ -52,8 +45,7 @@ export default function (h) {
     h('motion', {
       props: {
         height: this.menuHeight,
-        width: this.menuWidth,
-        slideLength: this.triggerHeight,
+        slideLength: this.noCoverTrig ? this.triggerHeight : 0,
         sync: true
       },
       ref: 'motion'
@@ -64,7 +56,12 @@ export default function (h) {
           name: 'show',
           value: false
         }],
-        style: [this.panelStyle],
+        on: {
+          click: (event) => event.stopPropagation()
+        },
+        style: {
+          width: this.width !== 'auto' ? `${this.width}px` : 'auto'
+        },
         ref: 'panel'
       }, [h('scroller', {
         props: {

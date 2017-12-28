@@ -3,14 +3,7 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      p.section-description 直接传入 init-opt
-      z-select(:init-opt='selectOpt')
-      z-code.
-        #{'<z-select :init-opt="selectOpt"></z-select>'}
-    +section('tag', '添加子标签')
-      p.section-description 用直观的标签声明下拉框的数据
-      z-menu(id='test')
-        z-btn(slot='trigger' type='flat') 菜单
+      z-menu
         z-menu-ele(value='1') {{ testName }}
         z-menu-ele(value='2')
           z-btn 按钮
@@ -19,6 +12,26 @@ div
         z-menu-ele(value='5') 测试5
       z-code(v-pre).
         #{'<z-menu>'}
+          #{'<z-menu-ele value="1">{{ testName }}</z-menu-ele>'}
+          #{'<z-menu-ele value="2">'}
+            #{'<z-btn>按钮</z-btn>'}
+          #{'</z-menu-ele>'}
+          #{'<z-menu-ele value="3">测试222</z-menu-ele>'}
+          #{'<z-menu-ele value="4">测试3</z-menu-ele>'}
+          #{'<z-menu-ele value="5">测试4</z-menu-ele>'}
+        #{'</z-menu>'}
+    +section('start', '开始使用')
+      p.section-description 使用自定义的触发器，并且不遮盖触发器
+      z-menu(noCoverTrig)
+        z-btn(slot='trigger' type='flat') 菜单
+        z-menu-ele(value='1') {{ testName }}
+        z-menu-ele(value='2')
+          z-btn 按钮
+        z-menu-ele(value='3') 测试3
+        z-menu-ele(value='4') 测试4
+        z-menu-ele(value='5') 测试5
+      z-code(v-pre).
+        #{'<z-menu noCoverTrig>'}
           #{'<z-menu-trig slot="trigger"><z-btn type="flat" /></z-menu-trig>'}
           #{'<z-menu-ele value="1">{{ testName }}</z-menu-ele>'}
           #{'<z-menu-ele value="2">'}
@@ -28,49 +41,6 @@ div
           #{'<z-menu-ele value="4">测试3</z-menu-ele>'}
           #{'<z-menu-ele value="5">测试4</z-menu-ele>'}
         #{'</z-menu>'}
-    //- +section('custom', '自定义下拉框内容')
-    //-   p.section-description 用自定义标签声明下拉框的数据
-    //-   z-menu(:init-opt='selectOpt')
-    //-     template(slot='custom', slot-scope='props')
-    //-       z-menu-ele {{ props.item.text }}-custom
-    //-   z-code(v-pre).
-    //-     #{'<z-menu :init-opt="selectOpt">'}
-    //-       #{'<template slot="custom" slot-scope="props">'}
-    //-         #{'<z-menu-ele>{{ props.item.text }}-custom</z-menu-ele>'}
-    //-       #{'</template>'}
-    //-     #{'</z-menu>'}
-    //- +section('classify', '分类下拉选择')
-    //-   z-menu(
-    //-     select-all
-    //-     :classify='[{key: "recent",text: "最近"}, {key: "hot",text: "热门"}]'
-    //-     :classify-opt='classifyOpt')
-    //-   z-code.
-    //-     #{'<z-menu'}
-    //-       :select-all="true"
-    //-       :classify="[{
-    //-         key: 'recent',
-    //-         text: '最近'
-    //-       }, {
-    //-         key: 'hot',
-    //-         text: '热门'
-    //-       }]"
-    //-     #{'  :classify-opt="classifyOpt"></z-menu>'}
-    //- +section('multiple', '多选下拉框')
-    //-   z-menu(
-    //-     multiple
-    //-     :init-opt="selectOpt")
-    //-   z-code.
-    //-     #{ '<z-menu' }
-    //-       multiple
-    //-       #{ ':init-opt="selectOpt"></z-menu>'}
-    //- +section('search', '搜索功能')
-    //-   z-menu(search, :init-opt='selectOpt')
-    //-   z-code.
-    //-     #{'<z-menu search :init-opt="selectOpt"></z-menu>'}
-    //- +section('init', '指定选定下拉选项')
-    //-   z-menu(:init-val='2', :init-opt='selectOpt')
-    //-   z-code.
-    //-     #{'<z-menu :init-val="2" :init-opt="selectOpt"></z-menu>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'
@@ -81,92 +51,32 @@ div
             v-for='item in ["名字", "类型", "可选值", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
-          z-table-col classifyOpt
-          z-table-col Object
-          z-table-col ——
-          z-table-col 分类下拉框的数据
-        z-table-row(slot='2')
-          z-table-col defaultVal
-          z-table-col String, Number
-          z-table-col ——
-          z-table-col 按钮种类，默认值 -1
-        z-table-row(slot='3')
-          z-table-col initVal
-          z-table-col String, Number
-          z-table-col ——
-          z-table-col 默认第一个显示的值
-        z-table-row(slot='4')
-          z-table-col initOpt
-          z-table-col Array
-          z-table-col ——
-          z-table-col 下拉框的 option 数据
-        z-table-row(slot='5')
-          z-table-col param
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 搜索参数名 (组件作为表单控时候的搜索参数名)
-        z-table-row(slot='6')
           z-table-col store
-          z-table-col All
+          z-table-col Object
           z-table-col ——
           z-table-col 储存实例化的信息
-        z-table-row(slot='7')
-          z-table-col errorMessage
-          z-table-col String
-          z-table-col ——
-          z-table-col 没选的时候显示的错误信息
-        z-table-row(slot='8')
-          z-table-col max
-          z-table-col Number
-          z-table-col ——
-          z-table-col 多选下拉框最多选择几个（默认是 0）
-        z-table-row(slot='9')
-          z-table-col min
-          z-table-col Number
-          z-table-col ( *false | true )
-          z-table-col 多选下拉框至少选择几个（默认是 0）
-        z-table-row(slot='10')
-          z-table-col required
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 必须选择下拉框的值（默认是 false）
-        z-table-row(slot='11')
-          z-table-col readOnly
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 只读（默认是 false）
-        z-table-row(slot='12')
-          z-table-col txtName
-          z-table-col String
-          z-table-col ——
-          z-table-col 指定读取 下拉框 optionItems 的 text 值的 key 的名字
-        z-table-row(slot='13')
-          z-table-col valName
-          z-table-col String
-          z-table-col ——
-          z-table-col 指定读取下拉框 optionItems 的 value 值的 key 的名字
-        z-table-row(slot='14')
-          z-table-col classify
-          z-table-col Object
-          z-table-col ——
-          z-table-col 有值（数组类型）就开启标题下拉框 option 分类模式
-        z-table-row(slot='15')
-          z-table-col multiple
+        z-table-row(slot='2')
+          z-table-col noCoverTrig
           z-table-col Boolean
           z-table-col ( *false | true )
-          z-table-col 开启多选
-        z-table-row(slot='16')
-          z-table-col search
+          z-table-col 菜单展开是不遮挡触发器，TODO： pc 上默认是不遮挡的，mobile 是默认遮挡的
+        z-table-row(slot='3')
+          z-table-col noTrig
           z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 不使用组件自带的菜单触发器
+        z-table-row(slot='4')
+          z-table-col height
+          z-table-col String, Number
           z-table-col ——
-          z-table-col 开启搜索过滤（默认为 false）
-        z-table-row(slot='17')
-          z-table-col selectAll
-          z-table-col Boolean
+          z-table-col 菜单高度，1、auto：根据菜单内容的高度，2、数字：输入数字就是自定义的像素高度
+        z-table-row(slot='5')
+          z-table-col width
+          z-table-col String, Number
           z-table-col ——
-          z-table-col 启动全选的功能（默认是 false）
-        z-table-row(slot='18')
-          z-table-col selectAllTxt
-          z-table-col String
+          z-table-col 菜单宽度，1、auto：根据菜单内容的宽度，2、数字：输入数字就是自定义的像素高度
+        z-table-row(slot='6')
+          z-table-col trigHeight
+          z-table-col String, Number
           z-table-col ——
-          z-table-col 全选选项的名字
+          z-table-col 菜单触发器的高度，1、auto：根据菜单内容的高度，2、数字：输入数字就是自定义的像素高度

@@ -1,9 +1,9 @@
-import './Menu.scss'
-import pug from './Menu.pug'
+import './Select.scss'
+import pug from './Select.pug'
 import mixin from '../../mixin'
 
 export default {
-  name: 'PageCompMenu',
+  name: 'PageCompSelect',
 
   template: pug(),
 

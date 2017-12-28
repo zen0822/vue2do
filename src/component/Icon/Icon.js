@@ -3,6 +3,7 @@
  *
  * @prop theme - 主题
  * @prop size - 大小
+ * @prop color - 颜色 16 进制
  * @prop type - 字符图标类型 (字符图标的 class 名的前缀，用户自己引入的字符图标的前缀)
  * @prop kind - 图标的种类（ex：fa-circle -> kind='circle'，ali-fold -> kind='fold')
  *
@@ -26,6 +27,11 @@ export default {
   mixins: [baseMixin],
 
   props: {
+    color: {
+      type: String,
+      default: ''
+    },
+
     size: {
       type: String,
       default: 'xs',

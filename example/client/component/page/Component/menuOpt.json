@@ -13,7 +13,7 @@
         "route": "/component/check"
       },
       {
-        "name": "菜单组件",
+        "name": "下拉选择组件",
         "route": "/component/select"
       },
       {
@@ -115,20 +115,24 @@
   {
     "name": "其他组件",
     "sub": [{
-        "name": "滚动条组件",
+        "name": "滚动条",
         "route": "/component/scroller"
       },
       {
-        "name": "选项卡组件",
+        "name": "选项卡",
         "route": "/component/tab"
       },
       {
-        "name": "弹出组件",
+        "name": "弹出",
         "route": "/component/pop"
       },
       {
-        "name": "省略组件",
+        "name": "省略",
         "route": "/component/omit"
+      },
+      {
+        "name": "菜单",
+        "route": "/component/menu"
       }
     ]
   }

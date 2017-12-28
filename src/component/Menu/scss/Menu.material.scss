@@ -2,39 +2,6 @@
   &.#{$C_PREFIX}-theme-primary {
     vertical-align: middle;
     border-radius: $border-radius;
-
-    &.#{$C_PREFIX}-selecting {
-      & > .#{$C_PREFIX}-trigger {
-        &::after {
-          opacity: 1;
-        }
-      }
-    }
-
-    &.#{$C_PREFIX}-focusing {
-      & > .#{$C_PREFIX}-trigger {
-        &::after {
-          opacity: 1;
-        }
-      }
-    }
-
-    & > .#{$C_PREFIX}-trigger {
-      &::after {
-        box-shadow: $shadow-lower;
-        content: '';
-
-        opacity: 0;
-        transition: opacity 300ms ease-out;
-
-        width: 100%;
-        height: 100%;
-
-        position: absolute;
-        left: 0;
-        top: 0;
-      }
-    }
   }
 }
 

@@ -1,7 +1,8 @@
 import PageTotal from '../component/page/Component/total/total'
 import PageBtn from '../component/page/Component/form/Btn/Btn'
 import PageStart from '../component/page/Component/Start/Start'
-import PageMenu from '../component/page/Component/form/Menu/Menu'
+import PageSelect from '../component/page/Component/form/Select/Select'
+import PageMenu from '../component/page/Component/Other/Menu/Menu'
 import PageCheck from '../component/page/Component/form/Check/Check'
 import PageInput from '../component/page/Component/form/Input/Input'
 import PageIcon from '../component/page/Component/style&layout/Icon/Icon'
@@ -45,7 +46,7 @@ export default [{
   }
 }, {
   path: 'select',
-  component: PageMenu,
+  component: PageSelect,
   meta: {
     title: '下拉框组件'
   }
@@ -120,6 +121,12 @@ export default [{
   component: PageTab,
   meta: {
     title: '选项卡组件'
+  }
+}, {
+  path: 'menu',
+  component: PageMenu,
+  meta: {
+    title: '菜单组件'
   }
 }, {
   path: 'motion',

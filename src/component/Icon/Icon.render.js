@@ -25,7 +25,10 @@ export default function (h) {
   return h(
     'div',
     {
-      class: [this.cPrefix]
+      class: [this.cPrefix],
+      style: {
+        color: this.color
+      }
     },
     [
       h('div', {

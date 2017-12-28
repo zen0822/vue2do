@@ -34,10 +34,6 @@ export default {
      */
     blur() {
       this.focusing = false
-
-      if (!this.multiple) {
-        return this.togglePanelDisplay(false)
-      }
     },
 
     /**
@@ -55,9 +51,19 @@ export default {
      * @return {Object} this - 组件
      */
     click(event) {
+      if (this.clicking) {
+        return false
+      }
+
+      this.clicking = true
+
       event.stopPropagation()
 
-      return this.togglePanelDisplay()
+      setTimeout(() => {
+        this.clicking = false
+
+        return this.togglePanelDisplay()
+      }, 100)
     },
 
     /**
@@ -124,13 +130,13 @@ export default {
         }
       }
 
-      Object.keys(menuHub).forEach((item) => {
-        const menuVm = menuHub[item]
+      // Object.keys(menuHub).forEach((item) => {
+      //   const menuVm = menuHub[item]
 
-        if (menuVm.panelDisplay && item !== this.uid) {
-          transite(false, menuVm)
-        }
-      })
+      //   if (menuVm.panelDisplay && item !== this.uid) {
+      //     transite(false, menuVm)
+      //   }
+      // })
 
       return this._adjustTriggerPoiStyle(transite(optVal, this))
     },

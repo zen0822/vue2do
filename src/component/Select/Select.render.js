@@ -192,6 +192,7 @@ export default function (h) {
       class: [this.xclass('menu')],
       props: {
         noTrig: true,
+        noCoverTrig: true,
         width: 170,
         trigHeight: this.selectedHeight
       },

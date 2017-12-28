@@ -12,6 +12,9 @@
  * @prop value - 按钮名字
  *
  * @event click - 点击btn事件
+ * @event keyEnter - focus 时敲击 Enter 键
+ * @event focus
+ * @event blur
  */
 
 import './Btn.scss'
@@ -94,23 +97,17 @@ export default {
 
   data() {
     return {
-      // 按钮的禁用状态
-      banState: false,
-      // 按钮值显示状态
-      btnValueDisplay: false,
-      // 是否已经创建了按钮的 loading 组件
-      createdLoading: false,
-      // 按钮的沦漪效果
-      motion: false,
-      // 不执行 focus 事件
-      allowFocus: true,
-      // 点击按钮的鼠标位置
-      mousePoi: {
+      banState: false, // 按钮的禁用状态
+      btnValueDisplay: false, // 按钮值显示状态
+      createdLoading: false, // 是否已经创建了按钮的 loading 组件
+      focusing: false, // 正在 focus 中
+      motion: false, // 按钮的沦漪效果
+      allowFocus: true, // 不执行 focus 事件
+      mousePoi: { // 点击按钮的鼠标位置
         top: 0,
         left: 0
       },
-      // 判断是否在触摸屏
-      inTouch: false
+      inTouch: false // 判断是否在触摸屏
     }
   },
 
@@ -164,7 +161,14 @@ export default {
       })
     },
 
-    focus() {
+    focus(event) {
+      this.focusing = true
+
+      this.$emit('focus', {
+        event,
+        emitter: this
+      })
+
       if (this.inTouch) {
         return false
       }
@@ -174,7 +178,14 @@ export default {
       }
     },
 
-    blur() {
+    blur(event) {
+      this.focusing = false
+
+      this.$emit('blur', {
+        event,
+        emitter: this
+      })
+
       this.motion = false
     },
 
@@ -187,7 +198,10 @@ export default {
         return false
       }
 
-      return this.$emit('click')
+      return this.$emit('click', {
+        event,
+        emitter: this
+      })
     },
 
     /**
@@ -195,7 +209,10 @@ export default {
      */
     keyup(event) {
       if (event.keyCode === 13) {
-        return this.$emit('click')
+        return this.$emit('keyEnter', {
+          event,
+          emitter: this
+        })
       }
     },
 

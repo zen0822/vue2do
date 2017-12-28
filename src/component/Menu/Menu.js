@@ -2,12 +2,12 @@
  * menu 组件
  *
  * @prop store - 储存实例化的信息
- * @prop theme - 主题
+ * @prop noCoverTrig - 菜单展开是不遮挡触发器，TODO： pc 上默认是不遮挡的，mobile 是默认遮挡的
  * @prop noTrig - 不使用组件自带的菜单触发器
  * @prop height - 菜单高度，默认是 auto
- *                1、auto：根据菜单内容的宽度
+ *                1、auto：根据菜单内容的高度
  *                2、数字：输入数字就是自定义的像素高度
- * @prop width - 菜单宽度，默认是 auto
+ * @prop width - 菜单宽度，默认是 170
  *               1、auto：根据 trigger 的宽度
  *               2、数字：输入数字就是自定义的像素宽度
  * @prop trigHeight - 菜单触发器的高度，默认是 auto
@@ -77,6 +77,11 @@ export default {
       default: false
     },
 
+    noCoverTrig: {
+      type: Boolean,
+      default: false
+    },
+
     height: {
       type: [Number, String],
       default: 'auto',
@@ -93,7 +98,7 @@ export default {
 
     width: {
       type: [String, Number],
-      default: 'auto',
+      default: 170,
       validator(val) {
         if (typeof val === 'number') {
           return true
@@ -127,9 +132,10 @@ export default {
 
     return {
       focusing: false, // 正在处于 focus 状态
+      clicking: false, // 正在点击菜单
       menuHeight: 0, // 下拉菜单的高度
+      menuWidth: 0, // 下拉菜单的宽度
       panelDisplay: false, // 下拉菜单面板的显示状态
-      panelStyle: {}, // 下拉菜单位置的样式
       triggerHeight: 0 // 触发器的高度
     }
   },
@@ -146,16 +152,7 @@ export default {
     menuClass() { // 组件 class 的名字
       let classArr = [
         this.cPrefix,
-        this.xclass(this.compClass),
-        {
-          [this.xclass('selecting')]: this.panelDisplay
-        },
-        {
-          [this.xclass('focusing')]: this.focusing
-        },
-        {
-          [this.xclass('multiple')]: this.multiple
-        }
+        this.xclass(this.compClass)
       ]
 
       return classArr
@@ -201,7 +198,19 @@ export default {
           emitter: this
         })
       })
+
+      if (!this.noTrig) {
+        this.$refs.triggerBtn.$on('keyEnter', ({
+          event
+        }) => {
+          this.click(event)
+        })
+      }
     },
+
+    /**
+     * 初始化触发器的
+     */
 
     /**
      * 调整菜单触发器的样式
