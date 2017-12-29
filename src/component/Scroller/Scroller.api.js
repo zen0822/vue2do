@@ -161,11 +161,11 @@ export default {
       // 滚动区域正方向移动
       // TODO: 优化，可以在滚动到底部得时候触发父容器得滚动事件
       if (yDistance > 0) {
-        if (this.yComputed.isBottom && !this.hasScrollerGrandpa) {} else {
+        if (!this.yComputed.isBottom || this.hasScrollerGrandpa) {
           evt.preventDefault()
         }
       } else {
-        if (this.yComputed.isTop && !this.hasScrollerGrandpa) {} else {
+        if (!this.yComputed.isTop || this.hasScrollerGrandpa) {
           evt.preventDefault()
         }
       }
