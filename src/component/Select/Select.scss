@@ -15,9 +15,6 @@ $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
 $MENU_HEIGHT: 36px;
 $MENU_WIDTH: 170px;
-$MENU_BORDER_WIDTH: 1px;
-$OPTION_UI_PADDING_WIDTH: $gap-v;
-
 $MULTI_MENU_WIDTH: 170px + 80px;
 
 .#{$C_PREFIX} {
@@ -54,6 +51,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
       width: 100%;
       outline: none;
       border: none;
+      cursor: default;
     }
 
     .#{$C_PREFIX}-init-text {
@@ -69,8 +67,10 @@ $MULTI_MENU_WIDTH: 170px + 80px;
       position: absolute;
       top: 0;
       left: 0;
-      height: 0;
+
       opacity: 0;
+      height: 0;
+      padding: 0;
     }
 
     .#{$C_PREFIX}-caret-down-icon {
@@ -89,15 +89,11 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   }
 
   .#{$C_PREFIX}-panel {
-    width: $MENU_WIDTH;
     overflow: hidden;
     box-shadow: $shadow-lower;
     border-bottom-right-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
     z-index: 2;
-
-    transition: top 300ms ease, height 300ms ease;
-    will-change: top, height;
 
     .#{$C_PREFIX}-tag-opt > .#{ $C_ELE_PREFIX } {
       background-color: #fff;
@@ -117,11 +113,6 @@ $MULTI_MENU_WIDTH: 170px + 80px;
 
       display:inline-block;
       width: 100%;
-
-      & > .#{ $INPUT_PREFIX } {
-        width: auto;
-        padding: 0 $gap-h;
-      }
     }
   }
 
@@ -137,6 +128,8 @@ $MULTI_MENU_WIDTH: 170px + 80px;
         position: absolute;
         top: 0;
         left: 0;
+        height: 0;
+        padding: 0;
       }
     }
 
@@ -149,6 +142,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
 
     & > .#{$C_PREFIX}-selected-box {
       transition: height 300ms ease;
+      will-change: height;
 
       .#{$C_PREFIX}-multiple-selected-ul {
         & > li {
@@ -166,7 +160,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
 
     .#{$C_PREFIX}-panel,
     .#{$C_PREFIX}-opt-comp {
-      width: $MULTI_MENU_WIDTH;
+      width: 100%;
     }
   }
 }

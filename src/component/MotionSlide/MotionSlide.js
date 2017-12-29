@@ -1,5 +1,5 @@
 /**
- * slide transition component - 滑动过度效果
+ * slide motion component - 滑动过度效果
  *
  * @prop offset - 元素滑动的偏移值,
  *                direction 为 south：实例顶部距离实例的 offsetParent 的顶部的偏移值
@@ -11,12 +11,12 @@
  * @prop speed - 淡出速度
  */
 
-import baseMixin from '../../mixin/transition'
+import motionMixin from '../../mixin/motion'
 
 export default {
   name: 'MotionSlide',
 
-  mixins: [baseMixin],
+  mixins: [motionMixin],
 
   props: {
     direction: {
@@ -37,7 +37,7 @@ export default {
   },
 
   data() {
-    this.transiting = false // 是否正在执行过渡动画
+    this.moving = false // 是否正在执行过渡动画
 
     return {
       transiting: false,

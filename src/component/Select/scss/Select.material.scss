@@ -42,11 +42,11 @@
         position: absolute;
         left: 0;
         top: 0;
+        z-index: -1;
       }
     }
 
     .#{$C_PREFIX}-opt-comp {
-      width: 100%;
       border-top: none;
       border-top-left-radius: 0;
       border-top-right-radius: 0;

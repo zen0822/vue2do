@@ -21,7 +21,8 @@ export default function (h) {
       h('input', {
         attrs: {
           placeholder: this.defaultTxt,
-          readOnly: true
+          readonly: true,
+          tabindex: -1
         },
         class: [
           this.defaultValClassName(this.value),
@@ -57,17 +58,17 @@ export default function (h) {
           height: 100,
           width: '100%'
         },
+        directives: [{
+          name: 'show',
+          value: !this.initTxtDisplay
+        }],
         ref: 'scroller'
       }, [
         h('ul', {
           class: [
             `${this.compPrefix}-ul`,
             this.xclass('multiple-selected-ul')
-          ],
-          directives: [{
-            name: 'show',
-            value: !this.initTxtDisplay
-          }]
+          ]
         }, [liELe])
       ])
     )
@@ -87,6 +88,7 @@ export default function (h) {
         ],
         attrs: {
           placeholder: '请选择',
+          tabindex: -1,
           readOnly: true,
           value: this.text
         }
@@ -158,7 +160,10 @@ export default function (h) {
         scopedSlots
       }),
       h('div', {
-        class: [this.xclass('option-slot'), `${this.compPrefix}-hide`]
+        class: [this.xclass('option-slot')],
+        style: {
+          display: 'none'
+        }
       }, this.$slots.default)
     )
   }

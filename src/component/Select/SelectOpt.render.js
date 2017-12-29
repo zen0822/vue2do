@@ -2,11 +2,11 @@
  * menu.render.js
  */
 export default function (h) {
-  let menuOptEle = []
+  let selectOptEle = []
   let scopedSlots = {}
 
   if (this.$parent.multiple && this.$parent.selectAll) {
-    menuOptEle.push(
+    selectOptEle.push(
       h('div', {
         class: [this.xclass('li')],
         on: {
@@ -130,7 +130,7 @@ export default function (h) {
     ])
   }
 
-  menuOptEle.push(
+  selectOptEle.push(
     h('list', {
       class: this.xclass('list'),
       props: {
@@ -156,5 +156,5 @@ export default function (h) {
       this.xclass('ul'),
       this.xclass(this.compClass)
     ]
-  }, menuOptEle)
+  }, selectOptEle)
 }

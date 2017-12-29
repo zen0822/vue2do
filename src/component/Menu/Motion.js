@@ -16,12 +16,12 @@ import {
 } from '../../util/dom/prop'
 
 import baseMixin from '../../mixin/base'
-import transitionMixin from '../../mixin/transition'
+import motionMixin from '../../mixin/motion'
 
 export default {
   name: 'MotionMenuFold',
 
-  mixins: [baseMixin, transitionMixin],
+  mixins: [baseMixin, motionMixin],
 
   props: {
     height: Number,
@@ -29,7 +29,7 @@ export default {
   },
 
   data() {
-    this.transiting = false // 是否正在执行过渡动画
+    this.moving = false // 是否正在执行过渡动画
 
     return {
       transitionHeight: 0
@@ -57,6 +57,43 @@ export default {
       if (this.height === undefined) {
         this.transitionHeight = elementProp(this.$el).offsetHeight
       }
+    },
+
+    /**
+     * 重新调整菜单的动画
+     */
+    adjustMotion() {
+      return new Promise(async(resolve, reject) => {
+        try {
+          this.$emit('beforeEnter')
+          let el = this.$el
+
+          Object.assign(el.style, {
+            overflow: 'hidden',
+            transition: this.transition
+          })
+
+          setTimeout(() => {
+            Object.assign(el.style, {
+              display: '',
+              height: `${this.transitionHeight}px`,
+              top: `${this.slideLength}px`
+            })
+
+            setTimeout(() => {
+              Object.assign(el.style, {
+                overflow: '',
+                opacity: '',
+                'transition': ''
+              })
+            }, this.time)
+          }, 10)
+
+          resolve()
+        } catch (error) {
+          reject(error)
+        }
+      })
     },
 
     /**

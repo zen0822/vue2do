@@ -1,5 +1,5 @@
 /**
- * transition 组件的 mixin
+ * motion 组件的 mixin
  *
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
@@ -57,19 +57,19 @@ export default {
      * @param {Object} opt
      */
     enter(opt = {}) {
-      if (this.sync && this.transiting) {
+      if (this.sync && this.moving) {
         return false
       }
 
       return new Promise(async(resolve, reject) => {
         try {
-          this.transiting = this.isEntering = true
+          this.moving = this.isEntering = true
 
           await this.beforeEnter(opt)
           await this.entering(opt)
           await this.afterEnter(opt)
 
-          this.transiting = this.isEntering = false
+          this.moving = this.isEntering = false
 
           resolve()
         } catch (error) {
@@ -84,19 +84,19 @@ export default {
      * @param {Object} opt
      */
     leave(opt = {}) {
-      if (this.sync && this.transiting) {
+      if (this.sync && this.moving) {
         return false
       }
 
       return new Promise(async(resolve, reject) => {
         try {
-          this.transiting = this.isLeaving = true
+          this.moving = this.isLeaving = true
 
           await this.beforeLeave(opt)
           await this.leaveing(opt)
           await this.afterLeave(opt)
 
-          this.transiting = this.isLeaving = false
+          this.moving = this.isLeaving = false
 
           resolve()
         } catch (error) {

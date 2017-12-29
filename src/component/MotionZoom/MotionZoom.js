@@ -1,17 +1,17 @@
 /**
- * zoom transition component - 放大缩小效果
+ * zoom motion component - 放大缩小效果
  *
  * @prop speed - 淡出速度
  * @prop origin - 放大缩小的起始位置 (同 css 里的属性 transform-origin)
  * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
  */
 
-import baseMixin from '../../mixin/transition'
+import motionMixin from '../../mixin/motion'
 
 export default {
   name: 'MotionZoom',
 
-  mixins: [baseMixin],
+  mixins: [motionMixin],
 
   props: {
     global: {
@@ -25,7 +25,7 @@ export default {
   },
 
   data() {
-    this.transiting = false // 是否正在执行过渡动画
+    this.moving = false // 是否正在执行过渡动画
 
     return {}
   },

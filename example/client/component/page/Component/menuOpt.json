@@ -92,23 +92,23 @@
     "name": "过渡动画",
     "sub": [{
         "name": "放大缩小",
-        "route": "/component/transition/zoom"
+        "route": "/component/motion/zoom"
       },
       {
         "name": "淡入淡出",
-        "route": "/component/transition/fade"
+        "route": "/component/motion/fade"
       },
       {
         "name": "折叠展开",
-        "route": "/component/transition/fold"
+        "route": "/component/motion/fold"
       },
       {
         "name": "滑来滑去",
-        "route": "/component/transition/slide"
+        "route": "/component/motion/slide"
       },
       {
         "name": "涟漪效果",
-        "route": "/component/transition/rip"
+        "route": "/component/motion/rip"
       }
     ]
   },

@@ -44,6 +44,9 @@ import {
   dataType
 } from '../../util/data/data'
 import {
+  handleEleDisplay
+} from '../../util/dom/prop'
+import {
   unique as uniqueArray
 } from '../../util/data/array'
 
@@ -128,7 +131,6 @@ export default {
   data() {
     this.compName = 'menu' // 组件名字
     this.uid = '' // 组件唯一标识符
-    this.togglingMenu = false // 300ms 之内只能点击一次的标识
 
     return {
       focusing: false, // 正在处于 focus 状态
@@ -162,17 +164,18 @@ export default {
   watch: {
     deviceSize(val) {
       this._changeByDeviceSize(val)
+    },
+
+    trigHeight(val) {
+      this._adjustTriggerPoiStyle(val)
     }
   },
 
   methods: {
     _initComp() {
-      this.triggerHeight = this.trigHeight === 'auto' ? this.$refs.trigger.offsetHeight : this.trigHeight
+      !this.noTrig && this._adjustTriggerPoiStyle()
     },
 
-    /**
-     * 绑定事件
-     */
     _binder() {
       this.$refs.scroller.$on('scrollerChange', (opt) => {
         if (this.panelDisplay) {
@@ -199,7 +202,7 @@ export default {
         })
       })
 
-      if (!this.noTrig) {
+      if (this.$refs.triggerBtn) {
         this.$refs.triggerBtn.$on('keyEnter', ({
           event
         }) => {
@@ -211,17 +214,69 @@ export default {
     /**
      * 调整菜单触发器的样式
      */
-    _adjustTriggerPoiStyle(cb) {
-      this.triggerHeight = this.trigHeight === 'auto' ? this.$refs.trigger.offsetHeight : this.trigHeight
+    _adjustTriggerPoiStyle(trigHeight = this.trigHeight, cb) {
+      this.triggerHeight = trigHeight === 'auto' ? this.$refs.trigger.offsetHeight : trigHeight
 
-      return cb && cb()
+      return this.$nextTick(() => {
+        cb && cb()
+      })
     },
 
     /**
      * 当设备改变尺寸
      */
     _changeByDeviceSize(size) {
-      return this._adjustTriggerPoiStyle()
+      if (this.panelDisplay) {
+        this.spread()
+      }
+    },
+
+    /**
+     * 下拉框的动画操作
+     *
+     * @param {Boolean} optVal - 操作状态,
+     *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
+     *
+     * @return {Object} - this组件
+     */
+    _togglePanelDisplay(optVal = !this.panelDisplay) {
+      let menuHub = this.$store.state.comp.menu
+
+      const getMenuHeight = (vm) => {
+        handleEleDisplay({
+          element: vm.$refs.panel,
+          cb: (element) => {
+            if (vm.height === 'auto') {
+              let scrollerComp = vm.$refs.scroller
+              scrollerComp._initScroller()
+
+              vm.menuHeight = scrollerComp.scrollerHeight
+            } else {
+              vm.menuHeight = vm.height
+            }
+          }
+        })
+      }
+
+      const transite = (state, vm) => {
+        if (state) {
+          getMenuHeight(vm)
+
+          vm.panelDisplay = true
+          vm.$refs.motion.enter()
+        } else {
+          getMenuHeight(vm)
+
+          vm.panelDisplay = false
+          vm.$refs.motion.leave()
+        }
+      }
+
+      if (this.noTrig) {
+        return transite(optVal, this)
+      } else {
+        return this._adjustTriggerPoiStyle(transite(optVal, this))
+      }
     }
   },
 

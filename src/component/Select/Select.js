@@ -195,7 +195,8 @@ export default {
       searchOptionDisplay: false, // 是否显示搜索 optionItem
       searchOptionItem: {}, // 搜索出来的 option
       selectedAll: false, // 是否全选多选下拉框的标记
-      selectedHeight: 0, // 当前选择值的高度
+      selectedHeight: 0, // 当前选择值的样式高度值
+      selectedStyleHeight: 0, // 当前选择值的样式高度值
       transitionFinish: false, // 下拉框显示过渡完成的标识符
       text: undefined // 当前下拉框的 text 值
     }
@@ -239,15 +240,16 @@ export default {
 
   watch: {
     value(val) {
+      if (this.multiple && this.initTxtDisplay) {
+        // 没有值时
+        return this.$nextTick(() => this._adjustSelectedPoiStyle(''))
+      }
+
       if (this.multiple && this.selectAll) {
         this.selectedAll = val.length > 0 && val.length === this.allOptionVal.length
       }
 
-      return this._initMenuTxt().$nextTick(() => {
-        this._adjustSelectedPoiStyle(() => {
-          this.$refs.menu.spread()
-        })
-      })
+      return this._initSelectTxt()
     },
     initVal(val) {
       this.value = this.multiple ? val.slice() : val
@@ -256,16 +258,19 @@ export default {
       return this._processOption(val.slice())
     },
     classifyOpt(val) {
-      return this._processOption(val)._initAllOptionVal()._initMenuTxt()
+      return this._processOption(val)._initAllOptionVal()._initSelectTxt()
     },
     deviceSize(val) {
       this.changeByDeviceSize(val)
+    },
+    selectedHeight(val) {
+      this._adjustMenuMotion()
     }
   },
 
   methods: {
     _initComp() {
-      this.selectedHeight = this.$refs.selected.offsetHeight
+      this._adjustSelectedPoiStyle()
     },
 
     /**
@@ -277,8 +282,13 @@ export default {
       }
 
       if (this.$refs.scroller) {
-        this.$refs.scroller.$on('scrollerChange', () => {
-          this._adjustSelectedPoiStyle()
+        this.$refs.scroller.$on('scrollerChange', ({
+          scrollerHeight
+        }) => {
+          // 有选择值时需要重新计算已选框的高度
+          if (!this.initTxtDisplay) {
+            return this._adjustSelectedPoiStyle(scrollerHeight + 16)
+          }
         })
       }
 
@@ -298,18 +308,16 @@ export default {
 
         if (this.multiple) {
           if (!selectedItem) {
-            if (this.max !== 0 && this.value.length === this.max) {
-              return false
+            if (this.max === 0 || this.value.length !== this.max) {
+              this.value.push(value)
             }
-
-            return this.value.push(value)
           } else {
-            return this.removeMultiSelected(selectedItem.index + 1)
+            this.removeMultiSelected(selectedItem.index + 1)
           }
         } else {
           this.value = value
 
-          return this.toggleMenuDisplay(false)
+          return this._menuMotion(false)
         }
       })
     },
@@ -317,15 +325,23 @@ export default {
     /**
      * 调整多选下拉框的选择值的样式
      */
-    _adjustSelectedPoiStyle(cb) {
-      let top = this.$el.offsetHeight
+    _adjustSelectedPoiStyle(height, cb) {
+      const refSelected = this.$refs.selected
 
-      this.menuWidth = this.$el.offsetWidth
-      this.selectedHeight = this.$refs.selected.offsetHeight
+      if (height === undefined) {
+        const selectedHeight = refSelected.offsetHeight
 
-      return this.$nextTick(() => {
-        return cb && cb()
-      })
+        this.selectedStyleHeight = selectedHeight + 'px'
+        this.selectedHeight = selectedHeight
+      } else if (height === '') {
+        refSelected.style.height = ''
+        this.selectedHeight = refSelected.offsetHeight
+      } else {
+        this.selectedStyleHeight = height + 'px'
+        this.selectedHeight = height
+      }
+
+      cb && cb()
     },
 
     /**
@@ -360,15 +376,15 @@ export default {
      */
     _initOption() {
       if (this.classifyOpt) {
-        return this._processOption(this.classifyOpt)._initAllOptionVal()._initMenuTxt()
+        return this._processOption(this.classifyOpt)._initAllOptionVal()._initSelectTxt()
       } else {
-        let slotOption = this._initMenuSlot()
+        let slotOption = this._initSelectSlot()
 
         if (slotOption) {
           this.option = slotOption
         }
 
-        return this._processOption(this.option.slice())._initAllOptionVal()._initMenuTxt()
+        return this._processOption(this.option.slice())._initAllOptionVal()._initSelectTxt()
       }
     },
 
@@ -377,7 +393,7 @@ export default {
      *
      * @return { Array } optionItem - 返回在 slot 取得的 option
      */
-    _initMenuSlot() {
+    _initSelectSlot() {
       const $defaultSlotContent = this.$slots.default
 
       // slot default 没数据就退出
@@ -416,11 +432,11 @@ export default {
     /**
      * 初始化下拉菜单的值
      */
-    _initMenuTxt() {
+    _initSelectTxt() {
       if (this.multiple) {
-        this._initMultipleMenuTxt()
+        this._initMultipleSelectTxt()
       } else {
-        this._initSingleMenuTxt()
+        this._initSingleSelectTxt()
       }
 
       return this
@@ -429,7 +445,7 @@ export default {
     /**
      *  初始化多选下拉菜单
      */
-    _initMultipleMenuTxt() {
+    _initMultipleSelectTxt() {
       if (!Array.isArray(this.option)) {
         return this
       }
@@ -466,7 +482,7 @@ export default {
     /**
      * 初始化单选下拉菜单
      */
-    _initSingleMenuTxt(val, txt) {
+    _initSingleSelectTxt(val, txt) {
       if (!Array.isArray(this.option)) {
         return this
       }
@@ -611,7 +627,7 @@ export default {
     _watchOption() {
       this.unwatchOption = this.$watch('option', function (val, oldVal) {
         if (!this.hasSlotOption) {
-          return this._processOption(val)._initAllOptionVal()._initMenuTxt()
+          return this._processOption(val)._initAllOptionVal()._initSelectTxt()
         }
       })
     },
@@ -676,6 +692,58 @@ export default {
       this.optionItemCopy = allOption
 
       return optionTemp
+    },
+
+    /**
+     * 下拉框的显示操作
+     *
+     * @param {Boolean} optVal - 操作状态,
+     *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
+     *
+     * @return {Object} - this组件
+     */
+    _menuMotion(optVal = !this.menuDisplay, vm = this) {
+      const getMenuData = (vm) => {
+        handleEleDisplay({
+          element: vm.$refs.menu.$refs.panel,
+          cb: (element) => {
+            let scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
+            scrollerComp.initScroller()
+
+            vm.menuHeight = scrollerComp.scrollerHeight
+            vm.menuWidth = vm.$el.offsetWidth
+          }
+        })
+      }
+
+      const transite = (state, vm) => {
+        if (state) {
+          getMenuData(vm)
+
+          vm.menuDisplay = true
+
+          // 等 menu 组件的 height 的值更新了才能正确的展开 menu 组件
+          this.$nextTick(() => {
+            vm.$refs.menu.spread()
+          })
+        } else {
+          getMenuData(vm)
+
+          vm.menuDisplay = false
+          vm.$refs.menu.fold()
+        }
+      }
+
+      return transite(optVal, vm)
+    },
+
+    /**
+     * 调整菜单动画（显示的时候）
+     */
+    _adjustMenuMotion() {
+      if (this.menuDisplay) {
+        return this.$refs.menu.adjust()
+      }
     }
   },
 

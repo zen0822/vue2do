@@ -1,16 +1,16 @@
 /**
- * fade transition component
+ * fade motion component
  *
  * @prop speed - 淡出速度
  * @prop opacity - 使用 css 定义的 opacity 淡入淡出
  */
 
-import baseMixin from '../../mixin/transition'
+import motionMixin from '../../mixin/motion'
 
 export default {
   name: 'MotionFade',
 
-  mixins: [baseMixin],
+  mixins: [motionMixin],
 
   props: {
     opacity: {

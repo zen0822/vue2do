@@ -23,6 +23,11 @@ div.component-transition
           z-table-col string
           z-table-col slow | *normal | fast
           z-table-col 过渡的速度
+        z-table-row(slot='3')
+          z-table-col sync
+          z-table-col Boolean
+          z-table-col *false | true
+          z-table-col 调用多次动画时，动画与动画之间是否时同步
     +section('transitionProps', '公共的 event')
       z-table(
           border='row'

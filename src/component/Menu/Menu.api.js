@@ -4,9 +4,6 @@
 
 import keyCode from '../../config/keyCode.json'
 import tip from '../Message/tip'
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
 
 export default {
   methods: {
@@ -23,7 +20,7 @@ export default {
      */
     clickParent() {
       if (this.panelDisplay) {
-        return this.togglePanelDisplay(false)
+        return this._togglePanelDisplay(false)
       }
     },
 
@@ -62,7 +59,7 @@ export default {
       setTimeout(() => {
         this.clicking = false
 
-        return this.togglePanelDisplay()
+        return this._togglePanelDisplay()
       }, 100)
     },
 
@@ -75,70 +72,8 @@ export default {
       }
 
       if (event.keyCode === keyCode.enter) {
-        this.togglePanelDisplay()
+        this._togglePanelDisplay()
       }
-    },
-
-    /**
-     * 下拉框的显示操作
-     *
-     * @param {Boolean} optVal - 操作状态,
-     *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
-     *
-     * @return {Object} - this组件
-     */
-    togglePanelDisplay(optVal = !this.panelDisplay) {
-      if (this.togglingMenu) {
-        return false
-      }
-
-      this.togglingMenu = true
-
-      setTimeout(() => {
-        this.togglingMenu = false
-      }, 300)
-
-      let menuHub = this.$store.state.comp.menu
-
-      const getMenuHeight = (vm) => {
-        handleEleDisplay({
-          element: vm.$refs.panel,
-          cb: (element) => {
-            if (vm.height === 'auto') {
-              let scrollerComp = vm.$refs.scroller
-              scrollerComp._initScroller()
-
-              vm.menuHeight = scrollerComp.scrollerHeight
-            } else {
-              vm.menuHeight = vm.height
-            }
-          }
-        })
-      }
-
-      const transite = (state, vm) => {
-        if (state) {
-          getMenuHeight(vm)
-
-          vm.panelDisplay = true
-          vm.$refs.motion.enter()
-        } else {
-          getMenuHeight(vm)
-
-          vm.panelDisplay = false
-          vm.$refs.motion.leave()
-        }
-      }
-
-      // Object.keys(menuHub).forEach((item) => {
-      //   const menuVm = menuHub[item]
-
-      //   if (menuVm.panelDisplay && item !== this.uid) {
-      //     transite(false, menuVm)
-      //   }
-      // })
-
-      return this._adjustTriggerPoiStyle(transite(optVal, this))
     },
 
     /**
@@ -146,7 +81,7 @@ export default {
      * @return {Object} this - 组件
      */
     spread() {
-      return this.togglePanelDisplay(true)
+      return this._togglePanelDisplay(true)
     },
 
     /**
@@ -154,7 +89,7 @@ export default {
      * @return {Object} this - 组件
      */
     fold() {
-      return this.togglePanelDisplay(false)
+      return this._togglePanelDisplay(false)
     },
 
     /**
@@ -162,7 +97,14 @@ export default {
      * @return {Object} this - 组件
      */
     toggle() {
-      return this.togglePanelDisplay()
+      return this._togglePanelDisplay()
+    },
+
+    /**
+     * 调整菜单动画
+     */
+    adjust(cb) {
+      this.$refs.motion.adjustMotion()
     }
   }
 }

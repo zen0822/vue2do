@@ -1,5 +1,5 @@
 /**
- * rip(涟漪) transition component
+ * rip(涟漪) motion component
  *
  * @prop assign - 指定涟漪在是什么位置开始
  */
@@ -10,14 +10,14 @@ import {
 } from '../../util/dom/attr'
 
 import baseMixin from '../../mixin/base'
-import transitionMixin from '../../mixin/transition'
+import motionMixin from '../../mixin/motion'
 
 import './MotionRip.scss'
 
 export default {
   name: 'MotionRip',
 
-  mixins: [baseMixin, transitionMixin],
+  mixins: [baseMixin, motionMixin],
 
   props: {
     assign: {
@@ -27,7 +27,7 @@ export default {
   },
 
   data() {
-    this.transiting = false // 是否正在执行过渡动画
+    this.moving = false // 是否正在执行过渡动画
 
     return {}
   },

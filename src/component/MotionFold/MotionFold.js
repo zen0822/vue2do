@@ -1,5 +1,5 @@
 /**
- * fold(折叠) transition component
+ * fold(折叠) motion component
  *
  * @prop height - 被过渡的元素高度
  *
@@ -15,19 +15,19 @@ import {
 } from '../../util/dom/prop'
 
 import baseMixin from '../../mixin/base'
-import transitionMixin from '../../mixin/transition'
+import motionMixin from '../../mixin/motion'
 
 export default {
   name: 'MotionFold',
 
-  mixins: [baseMixin, transitionMixin],
+  mixins: [baseMixin, motionMixin],
 
   props: {
     height: Number
   },
 
   data() {
-    this.transiting = false // 是否正在执行过渡动画
+    this.moving = false // 是否正在执行过渡动画
 
     return {
       transitionHeight: 0

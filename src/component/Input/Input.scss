@@ -83,6 +83,7 @@ $input-gap-v: 8px;
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
       border-bottom: rgba(#000, 0) $border-thin solid;
+      padding: 0 $gap-h;
       transition: all 100ms ease-out;
     }
 
@@ -112,6 +113,8 @@ $input-gap-v: 8px;
     .#{$C_PREFIX}-edit-box {
       & > input,
       & > textarea {
+        transform: rotate(0); // HACK: 触发 placeholder 回流
+
         border: none;
         width: 100%;
         font: inherit;

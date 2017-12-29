@@ -93,7 +93,7 @@ export default {
      */
     clickParent() {
       if (this.menuDisplay) {
-        return this.toggleMenuDisplay(false)
+        return this.toggle(false)
       }
     },
 
@@ -104,10 +104,6 @@ export default {
      */
     blur() {
       this.focusing = false
-
-      if (!this.multiple) {
-        return this.toggleMenuDisplay(false)
-      }
     },
 
     /**
@@ -127,7 +123,7 @@ export default {
     click(event) {
       event.stopPropagation()
 
-      return this.toggleMenuDisplay()
+      return this.toggle()
     },
 
     /**
@@ -139,72 +135,8 @@ export default {
       }
 
       if (event.keyCode === keyCode.enter) {
-        this.toggleMenuDisplay()
+        this.toggle()
       }
-    },
-
-    /**
-     * 下拉框的显示操作
-     *
-     * @param {Boolean} optVal - 操作状态,
-     *                        （false: 隐藏， true: 显示，undefined： 切换显示状态）
-     *
-     * @return {Object} - this组件
-     */
-    toggleMenuDisplay(optVal = !this.menuDisplay) {
-      if (this.togglingMenu) {
-        return false
-      }
-
-      this.togglingMenu = true
-
-      setTimeout(() => {
-        this.togglingMenu = false
-      }, 300)
-
-      let menuHub = this.$store.state.comp.select
-
-      const getMenuHeight = (vm) => {
-        handleEleDisplay({
-          element: vm.$refs.menu.$refs.panel,
-          cb: (element) => {
-            let scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
-            scrollerComp.initScroller()
-
-            vm.menuHeight = scrollerComp.scrollerHeight
-          }
-        })
-      }
-
-      const transite = (state, vm) => {
-        if (state) {
-          getMenuHeight(vm)
-
-          vm.menuDisplay = true
-
-          // 等 menu 组件的 height 的值更新了才能正确的展开 menu 组件
-          this.$nextTick(() => {
-            vm.$refs.menu.spread()
-          })
-        } else {
-          getMenuHeight(vm)
-
-          vm.menuDisplay = false
-          vm.$refs.menu.fold()
-        }
-      }
-
-      Object.keys(menuHub).forEach((item) => {
-        const menuVm = menuHub[item]
-
-        if (menuVm.menuDisplay && item !== this.uid) {
-          transite(false, menuVm)
-        }
-      })
-
-      return this._adjustSelectedPoiStyle(() => {
-        return transite(optVal, this)
-      })
     },
 
     /**
@@ -223,11 +155,46 @@ export default {
     },
 
     /**
+     * 切换隐藏显示菜单，会将同一个应用内的所有下拉组件都隐藏
+     */
+    toggle() {
+      if (this.togglingMenu) {
+        return false
+      }
+
+      this.togglingMenu = true
+
+      setTimeout(() => {
+        this.togglingMenu = false
+      }, 300)
+
+      let menuHub = this.$store.state.comp.select
+
+      Object.keys(menuHub).forEach((item) => {
+        const menuVm = menuHub[item]
+
+        if (menuVm.menuDisplay && item !== this.uid) {
+          this._menuMotion(false, menuVm)
+        }
+      })
+
+      return this._menuMotion()
+    },
+
+    /**
      * 展開下拉框
      * @return {Object} this - 组件
      */
     spread() {
-      return this.toggleMenuDisplay(true)
+      return this.toggle(true)
+    },
+
+    /**
+     * 折叠下拉框
+     * @return {Object} this - 组件
+     */
+    fold() {
+      return this.toggle(false)
     }
   }
 }
