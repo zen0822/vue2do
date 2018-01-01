@@ -1,13 +1,13 @@
+/**
+ * btn 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "./Btn.type.scss";
 
-/**
- * btn 组件样式
- */
-
-$C_PREFIX: #{ $COMP_BTN };
+$C_PREFIX: #{$COMP_BTN};
 
 .#{$C_PREFIX} {
   position: relative;
@@ -38,12 +38,7 @@ $C_PREFIX: #{ $COMP_BTN };
     transition-duration: 200ms;
     transition-property: background-color, box-shadow, color;
 
-    &:focus {
-      outline-style: none;
-    }
-
     & > .#{$C_PREFIX}-ele-border {
-
       border: rgba(0, 0, 0, 0) $border-thin solid;
       padding: $gutter-v $gap-h;
     }

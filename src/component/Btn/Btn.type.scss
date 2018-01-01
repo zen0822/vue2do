@@ -1,6 +1,6 @@
 // btn.type 样式
 $kind-hub: ('primary', 'danger', 'success', 'warning', 'default');
-$C_PREFIX: #{ $COMP_BTN };
+$C_PREFIX: #{$COMP_BTN};
 
 @mixin btn-button($color, $dark-color, $lighter-color) {
   background-color: $color;
@@ -22,11 +22,6 @@ $C_PREFIX: #{ $COMP_BTN };
     & > .#{$C_PREFIX}-ele {
       background-color: #fff;
       border-radius: $border-radius;
-      box-shadow: $shadow-lower;
-
-      &:hover {
-        box-shadow: $shadow;
-      }
     }
 
     &.#{$C_PREFIX}-kind {
@@ -135,3 +130,4 @@ $C_PREFIX: #{ $COMP_BTN };
     }
   }
 }
+  

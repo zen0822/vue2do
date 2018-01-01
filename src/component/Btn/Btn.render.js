@@ -57,6 +57,26 @@ export default function (h) {
     )
   }
 
+  if (this.ui === 'material') {
+    btnEleChildren.push(
+      h('motion-rip', {
+        class: [this.xclass('rip')],
+        props: {
+          assign: !this.isFloatBtn,
+          mousePoi: this.mousePoi
+        },
+        ref: 'transition'
+      }),
+      h('div', {
+        class: [this.prefix('css-motion-rip')],
+        directives: [{
+          name: 'show',
+          value: this.motion
+        }]
+      })
+    )
+  }
+
   return h(
     'div', {
       class: [
@@ -86,24 +106,7 @@ export default function (h) {
           href: this.link,
           tabindex: 0
         }
-      }, [
-        btnEleChildren,
-        h('motion-rip', {
-          class: [this.xclass('rip')],
-          props: {
-            assign: !this.isFloatBtn,
-            mousePoi: this.mousePoi
-          },
-          ref: 'transition'
-        }),
-        h('div', {
-          class: [this.prefix('css-motion-rip')],
-          directives: [{
-            name: 'show',
-            value: this.motion
-          }]
-        })
-      ])
+      }, btnEleChildren)
     ]
   )
 }

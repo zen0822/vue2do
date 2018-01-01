@@ -11,8 +11,6 @@
  * @prop row - textarea 的行数
  * @prop textLengthTip - 显示当前输入的长度
  * @prop type - 输入框类型( field | area )
- * @prop theme - 主题
- * @prop ui - UI 规范
  *
  * @prop completion - 是否启用自动搜索补全功能
  * @prop errorMessage - input 为空和格式不对的错误信息

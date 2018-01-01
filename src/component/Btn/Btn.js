@@ -19,6 +19,8 @@
 
 import './Btn.scss'
 import './Btn.device.scss'
+import './Btn.material.scss'
+import './Btn.bootstrap.scss'
 
 import render from './Btn.render'
 import baseMixin from '../../mixin/base'
@@ -66,12 +68,20 @@ export default {
 
     radius: {
       type: String,
-      default: 's'
+      default: 's',
+      validator(val) {
+        const size = val.toLowerCase()
+
+        return ['none', 's', 'm', 'l'].includes(size)
+      }
     },
 
     type: {
       type: String,
-      default: BTN_TYPE_BUTTON
+      default: BTN_TYPE_BUTTON,
+      validator(val) {
+        return ['button', 'float', 'flat', 'outline'].includes(val)
+      }
     },
 
     value: {
@@ -81,7 +91,12 @@ export default {
 
     size: {
       type: String,
-      default: SIZE_S
+      default: SIZE_S,
+      validator(val) {
+        const size = val.toLowerCase()
+
+        return ['s', 'm', 'l'].includes(size)
+      }
     },
 
     submit: {
@@ -135,8 +150,6 @@ export default {
     },
 
     mousedown(event) {
-      event.preventDefault()
-
       if (this.inTouch) {
         return false
       }
@@ -148,12 +161,13 @@ export default {
       let el = event.currentTarget
 
       this.allowFocus = false
+
       this.mousePoi = {
         x: event.pageX - el.offsetLeft,
         y: event.pageY - el.offsetTop
       }
 
-      this.$refs.transition.enter({
+      this.$refs.transition && this.$refs.transition.enter({
         mousePoi: {
           x: event.pageX - el.offsetLeft,
           y: event.pageY - el.offsetTop
@@ -254,7 +268,6 @@ export default {
   },
 
   computed: {
-    // 组件类名的前缀
     cPrefix() {
       return `${this.compPrefix}-btn`
     },
@@ -270,6 +283,7 @@ export default {
     btnClass() {
       return this.xclass([
         this.themeClass,
+        this.uiClass,
         `kind-${this.kind}`,
         `size-${this.size.toLowerCase()}`,
         `radius-${this.radius.toLowerCase()}`,

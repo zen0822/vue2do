@@ -1,0 +1,47 @@
+/**
+ * btn 组件的 bootstrap UI 样式
+ */
+ 
+@import "../../scss/config.scss";
+@import "../../scss/name.scss";
+ 
+$C_PREFIX: #{$COMP_BTN};
+
+@mixin btn-button($color, $dark-color, $darker-color, $lighter-color) {
+  background-color: $color;
+  border-color: $color;
+
+  &:hover {
+    background-color: rgba($darker-color, .8);
+    border-color: rgba($darker-color, .9);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 4px $lighter-color;
+  }
+  
+  &:active {
+    background-color: rgba($darker-color, .9);
+    border-color: $darker-color;
+  }
+}
+
+@mixin btn-outline($color) {
+  border-color: $color;
+  color: $color;
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
+  .#{$C_PREFIX}-ele {
+    &:focus{
+      outline: none;
+    }
+  }
+  
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-button($primary-color, $primary-dark-color, $primary-darker-color, $primary-lighter-color)     
+    }
+  }
+}  

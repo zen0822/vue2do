@@ -1,0 +1,26 @@
+/**
+ * btn 组件的 material UI 样式
+ */
+
+@import "../../scss/name.scss";
+ 
+$C_PREFIX: #{$COMP_BTN};
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  .#{$C_PREFIX}-ele {
+    &:focus{
+      outline: none;
+    }
+  }
+
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      box-shadow: $shadow-lower;
+
+      &:hover {
+        box-shadow: $shadow;
+      }
+    }
+  }
+}  

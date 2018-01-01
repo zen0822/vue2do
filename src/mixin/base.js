@@ -50,12 +50,12 @@ export default {
   },
 
   computed: {
-    // 主题的 css 的 class 名字
+    // UI 的类名
     uiClass() {
       return this.ui ? `ui-${this.ui}` : ''
     },
 
-    // 主题的 css 的 class 名字
+    // 主题的类名
     themeClass() {
       return this.theme ? `theme-${this.theme}` : ''
     },
