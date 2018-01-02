@@ -1,9 +1,9 @@
-import zhCn from './zh-cn.json'
-import zhTw from './zh-tw.json'
-import en from './en.json'
+import zhCN from './zh-CN.json'
+import zhTW from './zh-TW.json'
+import enUS from './en-US.json'
 
 export default {
-  'zh-cn': zhCn,
-  'zh-tw': zhTw,
-  en: en
+  'zh-CN': zhCN,
+  'zh-TW': zhTW,
+  'en-US': enUS
 }
