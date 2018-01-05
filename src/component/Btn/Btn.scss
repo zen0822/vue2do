@@ -5,20 +5,17 @@
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
-@import "./Btn.type.scss";
+@import "./util.scss";
 
 $C_PREFIX: #{$COMP_BTN};
 
-.#{$C_PREFIX} {
+.#{$C_PREFIX},
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-primary {
   position: relative;
   display: inline-block;
   cursor: pointer;
 
-  & > a {
-    width: 100%;
-  }
-
-  .#{$C_PREFIX}-ele {
+  & > .#{$C_PREFIX}-ele {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,8 +32,9 @@ $C_PREFIX: #{$COMP_BTN};
     white-space: nowrap;
 
     transform: rotate(0);
-    transition-duration: 200ms;
-    transition-property: background-color, box-shadow, color;
+    transition-duration: 150ms;
+    transition-property: background-color, border-color, box-shadow, color;
+    transition-timing-function: ease-in-out;
 
     & > .#{$C_PREFIX}-ele-border {
       border: rgba(0, 0, 0, 0) $border-thin solid;
@@ -48,6 +46,15 @@ $C_PREFIX: #{$COMP_BTN};
       left: $gap-v;
       z-index: 2;
     }
+  }
+
+  & > a.#{$C_PREFIX}-ele {
+    width: 100%;
+  }
+
+  &.#{$C_PREFIX}-block {
+    display: block;
+    width: 100%;
   }
 
   &.#{$C_PREFIX}-size {
@@ -102,7 +109,81 @@ $C_PREFIX: #{$COMP_BTN};
     }
   }
 
+  &.#{$C_PREFIX}-type {
+    &-button,
+    &-float {
+      & > .#{$C_PREFIX}-ele {
+        border-radius: $border-radius;
+
+        @include btn-button($primary-color);
+      }
+    }
+
+    &-float {
+      & > .#{$C_PREFIX}-ele {
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        box-sizing: border-box;
+        padding: 0;
+        box-shadow: $shadow;
+        min-width: auto;
+
+        &::after {
+          content: " ";
+          display: inline-block;
+          vertical-align: middle;
+          height: 100%;
+          width: 0;
+        }
+
+        .#{$C_PREFIX}-ele-border {
+          padding-top: 12px;
+          padding-bottom: 12px
+        }
+      }
+    }
+
+    &-flat {
+      & > .#{$C_PREFIX}-ele {
+        background-color: #fff;
+
+        @include btn-flat($primary-color);
+      }
+    }
+
+    &-outline {
+      & > .#{$C_PREFIX}-ele {
+        background-color: #fff;
+        border-style: solid;
+        border-width: $border-thin;
+
+        @include btn-outline($primary-color);
+      }
+    }
+  }
+
   .#{$C_PREFIX}-value-show {
     display: inline-block;
   }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
 }

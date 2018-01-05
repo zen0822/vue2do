@@ -9,22 +9,17 @@ div
         #{'<z-btn>'}
           提交
         #{'</z-btn>'}
-    +section('bootstrap', 'bootstrap 主题')
-      z-btn(ui='bootstrap') 提交
+    +section('bootstrap', 'bootstrap UI 规范')
+      z-btn(ui='bootstrap' block) 提交
 
       z-code.
-        #{'<z-btn>'}
+        #{'<z-btn block>'}
           提交
         #{'</z-btn>'}
-    +section('kind', '按钮种类')
-      <z-btn kind='success'>成功</z-btn>
+    +section('theme', '按钮主题')
+      z-btn.z-css-m-t-double(ui='bootstrap' theme='success', type='outline', radius='none') 只有轮廓
       z-code.
-        #{'<z-btn kind="success">'}
-          #{'成功'}
-        #{'</z-btn>'}
-      z-btn.z-css-m-t-double(kind='success', type='outline', radius='none') 只有轮廓
-      z-code.
-        #{'<z-btn kind="success" outline radius="none">'}
+        #{'<z-btn theme="success" type="outline" radius="none">'}
           #{'只有轮廓'}
         #{'</z-btn>'}
     +section('custom', '自定义按钮内容')

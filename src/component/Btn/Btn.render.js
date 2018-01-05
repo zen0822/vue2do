@@ -57,7 +57,7 @@ export default function (h) {
     )
   }
 
-  if (this.ui === 'material') {
+  if (this.UIMaterial) {
     btnEleChildren.push(
       h('motion-rip', {
         class: [this.xclass('rip')],
@@ -84,6 +84,9 @@ export default function (h) {
         this.btnClass,
         {
           [this.xclass('ban')]: this.banState
+        },
+        {
+          [this.xclass('block')]: this.block
         },
         {
           [this.xclass('rip')]: this.motion

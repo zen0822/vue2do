@@ -7,6 +7,10 @@
 
 $C_PREFIX: #{$COMP_BTN};
 
+@mixin btn-box-shadow($color) {
+  box-shadow: 0 0 0 3px rgba($color, .4);
+}
+
 @mixin btn-button($color, $dark-color) {
   background-color: $color;
   border-color: $color;
@@ -17,7 +21,7 @@ $C_PREFIX: #{$COMP_BTN};
   }
 
   &:focus {
-    box-shadow: 0 0 0 3px rgba($color, .4);
+    @include btn-box-shadow($color)
   }
 
   &:active {
@@ -25,26 +29,82 @@ $C_PREFIX: #{$COMP_BTN};
     border-color: $dark-color;
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba($color, .4);
+      @include btn-box-shadow($color)
     }
   }
 }
 
-@mixin btn-outline($color) {
+@mixin btn-outline($color, $font-color: #fff) {
   border-color: $color;
-  color: $color;
+
+  &:hover {
+    background-color: $color;
+    color: $font-color;
+  }
+
+  &:focus {
+    @include btn-box-shadow($color)
+  }
+
+  &:active {
+    background-color: $color;
+    color: #000;
+
+    &:focus {
+      @include btn-box-shadow($color)
+    }
+  }
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
+@mixin theme-style($type) {
+  $type-color: $primary-color;
+  $type-dark-color: $primary-dark-color;
+
+  @if $type=='primary' {
+    $type-color: $primary-color;
+    $type-dark-color: $primary-dark-color;
+  }
+  @else if $type=='danger' {
+    $type-color: $danger-color;
+    $type-dark-color: $danger-dark-color;
+  }
+  @else if $type=='success' {
+    $type-color: $success-color;
+    $type-dark-color: $success-dark-color;
+  }
+  @else if $type=='waring' {
+    $type-color: $warning-color;
+    $type-dark-color: $warning-dark-color;
+  }
+  @else if $type=='blue' {
+    $type-color: $blue-color;
+    $type-dark-color: $blue-dark-color;
+  }
+  @else {
+    $type-color: $orange-color;
+    $type-dark-color: $orange-dark-color;
+  }
+
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-button($type-color, $type-dark-color)
+    }
+  }
+
+  &.#{$C_PREFIX}-type-outline {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-outline($type-color)
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap,
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-primary {
   & > .#{$C_PREFIX}-ele {
     &:focus {
       outline: none;
     }
-
-    transition: color .15s ease-in-out,
-    background-color .15s ease-in-out,
-    border-color .15s ease-in-out,
-    box-shadow .15s ease-in-out;
   }
 
   &.#{$C_PREFIX}-type-button,
@@ -53,4 +113,30 @@ $C_PREFIX: #{$COMP_BTN};
       @include btn-button($primary-color, $primary-dark-color)
     }
   }
+
+  &.#{$C_PREFIX}-type-outline {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-outline($primary-color)
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
 }

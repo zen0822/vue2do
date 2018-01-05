@@ -3,7 +3,7 @@
  *
  * @prop id - 实例的唯一标识符
  * @prop name - 实例的中文名字
- * @prop theme - 主题
+ * @prop theme - 主题 (primary | success | warning | danger | default | orange | blue)
  * @prop ui - ui 规范 (material | bootstrap | metro |apple)
  */
 
@@ -30,7 +30,10 @@ export default {
       type: String,
       default: compConfig.defaultTheme,
       validator(val) {
-        return ['primary', 'secondary', 'default', 'success', 'danger'].includes(val)
+        return [
+          'primary', 'default', 'success',
+          'danger', 'default', 'blue', 'orange'
+        ].includes(val)
       }
     },
 

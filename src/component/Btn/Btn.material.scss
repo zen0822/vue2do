@@ -3,11 +3,11 @@
  */
 
 @import "../../scss/name.scss";
- 
+
 $C_PREFIX: #{$COMP_BTN};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
-  .#{$C_PREFIX}-ele {
+  & > .#{$C_PREFIX}-ele {
     &:focus{
       outline: none;
     }
@@ -23,4 +23,4 @@ $C_PREFIX: #{$COMP_BTN};
       }
     }
   }
-}  
+}

@@ -2,7 +2,7 @@
  * btn 组件
  *
  * @prop ban - 禁止点击
- * @prop kind - 按钮种类
+ * @prop block - 按钮的宽度是父元素的宽度
  * @prop link - 链接地址
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
  * @prop size - 按钮大小
@@ -18,7 +18,6 @@
  */
 
 import './Btn.scss'
-import './Btn.device.scss'
 import './Btn.material.scss'
 import './Btn.bootstrap.scss'
 
@@ -50,6 +49,11 @@ export default {
 
   props: {
     ban: {
+      type: Boolean,
+      default: false
+    },
+
+    block: {
       type: Boolean,
       default: false
     },
@@ -117,7 +121,7 @@ export default {
       createdLoading: false, // 是否已经创建了按钮的 loading 组件
       focusing: false, // 正在 focus 中
       motion: false, // 按钮的沦漪效果
-      allowFocus: true, // 不执行 focus 事件
+      allowFocus: true, // 允许执行 focus 事件
       mousePoi: { // 点击按钮的鼠标位置
         top: 0,
         left: 0
@@ -129,6 +133,34 @@ export default {
   watch: {
     ban(val) {
       this.banState = val
+    }
+  },
+
+  computed: {
+    cPrefix() {
+      return `${this.compPrefix}-btn`
+    },
+
+    isLink() {
+      return !this.btnValueDisplay && this.link
+    },
+
+    isFloatBtn() {
+      return this.type === 'float'
+    },
+
+    btnClass() {
+      return this.xclass([
+        this.themeClass,
+        this.uiClass,
+        `size-${this.size.toLowerCase()}`,
+        `radius-${this.radius.toLowerCase()}`,
+        `type-${this.type}`
+      ])
+    },
+
+    UIMaterial() {
+      return this.ui === 'material'
     }
   },
 
@@ -162,17 +194,19 @@ export default {
 
       this.allowFocus = false
 
-      this.mousePoi = {
-        x: event.pageX - el.offsetLeft,
-        y: event.pageY - el.offsetTop
-      }
-
-      this.$refs.transition && this.$refs.transition.enter({
-        mousePoi: {
+      if (this.UIMaterial) {
+        this.mousePoi = {
           x: event.pageX - el.offsetLeft,
           y: event.pageY - el.offsetTop
         }
-      })
+
+        this.$refs.transition && this.$refs.transition.enter({
+          mousePoi: {
+            x: event.pageX - el.offsetLeft,
+            y: event.pageY - el.offsetTop
+          }
+        })
+      }
     },
 
     focus(event) {
@@ -264,31 +298,6 @@ export default {
     classLoading(state) {
       this.allowBtn()
       this.$refs.loading.hide()
-    }
-  },
-
-  computed: {
-    cPrefix() {
-      return `${this.compPrefix}-btn`
-    },
-
-    isLink() {
-      return !this.btnValueDisplay && this.link
-    },
-
-    isFloatBtn() {
-      return this.type === 'float'
-    },
-
-    btnClass() {
-      return this.xclass([
-        this.themeClass,
-        this.uiClass,
-        `kind-${this.kind}`,
-        `size-${this.size.toLowerCase()}`,
-        `radius-${this.radius.toLowerCase()}`,
-        `type-${this.type}`
-      ])
     }
   }
 }
