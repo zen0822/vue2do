@@ -21,6 +21,8 @@
  */
 
 import './Check.scss'
+import './Check.material.scss'
+import './Check.bootstrap.scss'
 
 import Vue from 'vue'
 import render from './Check.render'
@@ -37,7 +39,9 @@ import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 import apiMixin from './Check.api.js'
 
-import { isEmpty as isEmptyArray } from '../../util/data/array'
+import {
+  isEmpty as isEmptyArray
+} from '../../util/data/array'
 
 const TYPE_RADIO = 'radio'
 const TYPE_CHECKBOX = 'checkbox'
@@ -53,7 +57,7 @@ let checkCompConfig = {
     column: Col,
     row: Row,
     icon: Icon,
-    'rip-transition': MotionRip
+    'motion-rip': MotionRip
   },
 
   props: {
@@ -61,53 +65,41 @@ let checkCompConfig = {
       type: Array,
       default: () => []
     },
-
     inputName: {
       type: String,
       default: ''
     },
-
     multiple: {
       type: Boolean,
       default: false
     },
-
     readOnly: {
       type: Boolean,
       default: false
     },
-
     param: {
       type: String,
       default: ''
     },
-
     errorMessage: {
       type: String,
       default: ''
     },
-
     required: {
       type: Boolean,
       default: false
     },
-
     initVal: [Number, Array],
-
     beforeCheck: Function,
-
     success: Function,
-
     valName: {
       type: String,
       default: 'value'
     },
-
     txtName: {
       type: String,
       default: 'text'
     },
-
     checkAll: {
       type: Boolean,
       default: false
@@ -116,29 +108,22 @@ let checkCompConfig = {
 
   data() {
     return {
-      // 组件名字
-      compName: 'check',
-      // 当前选择框值的游标
-      currentIndex: 0,
-      // check 当前 value 值
-      value: {},
-      // check 当前 text 值
-      text: {},
-      // check 的选项值
-      option: [],
-      // check 的旧的 value 值
-      oldValue: [],
-      // 组件的验证状态
-      verified: true,
+      compName: 'check', // 组件名字
+      index: {}, // 当前已选的选择框的 index，多选是数组，单选是数字 TODO:有空实现以 index 来判断已选框
+      value: {}, // check 当前 value 值
+      text: {}, // check 当前 text 值
+      option: [], // check 的选项值
+      oldValue: [], // check 的旧的 value 值
+      verified: true, // 组件的验证状态
+      motion: [], // 启动选择框的沦漪效果
+      allowFocus: true, // 允许执行 focus 事件
       dangerTip: '',
       slotItems: [],
-      // 是否已经全选
-      checkedAll: false
+      checkedAll: false // 是否已经全选
     }
   },
 
   computed: {
-    // 组件类名的前缀
     cPrefix() {
       return `${this.compPrefix}-check`
     },
@@ -175,6 +160,9 @@ let checkCompConfig = {
       }
 
       this.option = Object.assign([], this.initOpt)
+      this.motion = this.initOpt.map(() => {
+        return false
+      })
     },
 
     /**
@@ -185,6 +173,7 @@ let checkCompConfig = {
     _initCheckbox() {
       if (this.isCheckbox) {
         if (!Array.isArray(this.value)) {
+          this.index = []
           this.text = []
           this.value = []
           this.oldValue = []
@@ -198,10 +187,11 @@ let checkCompConfig = {
         this.verified = !this.required || this.value.length !== 0
       } else {
         if (!this.value && this.value !== 0) {
+          this.index = undefined
           this.value = undefined
           this.oldValue = undefined
         } else {
-          this.setCurrentIndex()
+          this.setIndex()
           this.setText()
         }
 
@@ -323,6 +313,61 @@ let checkCompConfig = {
       }
 
       return this.value.push(val)
+    },
+
+    /**
+     * click 事件句柄
+     */
+    _handlerClick(event, index) {
+      this.check(event, index)
+      this.motion.splice(index - 1, 1, false)
+    },
+
+    /**
+     * Mousedown 事件句柄
+     */
+    _handlerMousedown(event, index) {
+      if (this.inTouch) {
+        return false
+      }
+
+      this.allowFocus = false
+    },
+
+    /**
+     * Mouseup 事件句柄
+     */
+    _handlerMouseup(event, index) {
+      if (this.inTouch) {
+        return false
+      }
+
+      this.allowFocus = true
+    },
+
+    /**
+     * Keyup 事件句柄
+     */
+    _handlerKeyup(event, index) {
+      if (event.keyCode === 13) {
+        return this.check(event, index)
+      }
+    },
+
+    /**
+     * focus 事件句柄
+     */
+    _handlerFocus(event, index) {
+      if (this.allowFocus) {
+        this.motion.splice(index - 1, 1, true)
+      }
+    },
+
+    /**
+     * blur 事件句柄
+     */
+    _handlerBlur(event, index) {
+      this.motion.splice(index - 1, 1, false)
     }
   },
 

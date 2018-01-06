@@ -21,14 +21,12 @@ export default {
      * 选择 checkbox
      */
     check(evt, index) {
-      let option = this.option[parseInt(index - 1, 10)]
+      let option = this.option[index - 1]
       let val = option.value
 
       if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
         return false
       }
-
-      this.$refs[`checkTransition${index}`].enter()
 
       if (this.isCheckbox) {
         this.oldValue = []
@@ -45,7 +43,8 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.success && this.success.call(null, this)
+        this.success && this.success(this)
+        this.UIMaterial && this.$refs[`checkTransition${index}`].enter()
       })
     },
 
@@ -56,7 +55,7 @@ export default {
      **/
     setText() {
       if (this.isRadio) {
-        this.text = this.option[this.currentIndex][this.txtName]
+        this.text = this.option[this.index][this.txtName]
 
         return this
       } else {
@@ -81,11 +80,11 @@ export default {
      *
      * @return {Function, Object}
      **/
-    setCurrentIndex() {
+    setIndex() {
       if (this.isRadio) {
         return this.option.forEach((item, index) => {
           if (item[this.valName] === this.value) {
-            this.currentIndex = index
+            this.index = index
           }
         })
       }

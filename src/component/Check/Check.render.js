@@ -33,18 +33,36 @@ export default function (h) {
     let checkEle = []
 
     this.option.forEach((item, index) => {
+      const currentIndex = index + 1
+
       checkEle.push(
         h('column', {
           class: [this.xclass('opt-col')]
         }, [
           h('div', {
-            class: [this.xclass('box')],
+            class: [
+              this.xclass('box'),
+              {
+                [this.xclass('checked')]: this.isCheckbox ?
+                  this.value.includes(item.value) : index === this.index
+              }
+            ],
             on: {
-              click: (event) => this.check(event, index + 1)
+              click: (event) => this._handlerClick(event, currentIndex),
+              mousedown: (event) => this._handlerMousedown(event, currentIndex),
+              mouseup: (event) => this._handlerMouseup(event, currentIndex)
             }
           }, [
             h('div', {
-              class: [this.xclass('icon')]
+              attrs: {
+                tabindex: 0
+              },
+              class: [this.xclass('icon')],
+              on: {
+                focus: (event) => this._handlerFocus(event, currentIndex),
+                blur: (event) => this._handlerBlur(event, currentIndex),
+                keyup: (event) => this._handlerKeyup(event, currentIndex)
+              }
             }, [
               h('icon', {
                 props: {
@@ -52,9 +70,16 @@ export default function (h) {
                   kind: this.iconName(item[this.valName])
                 }
               }),
-              h('rip-transition', {
+              h('motion-rip', {
                 class: [this.xclass('rip')],
-                ref: `checkTransition${index + 1}`
+                ref: `checkTransition${currentIndex}`
+              }),
+              h('div', {
+                class: [this.xclass('motion-rip')],
+                directives: [{
+                  name: 'show',
+                  value: this.motion[index]
+                }]
               })
             ]),
             (() => {
@@ -75,7 +100,7 @@ export default function (h) {
   return h('div', {
     class: [
       this.cPrefix,
-      this.xclass(['stage', this.themeClass])
+      this.xclass(['stage', this.themeClass, this.uiClass])
     ]
   }, [
     h('div', {

@@ -4,6 +4,8 @@
 
 @import "../../scss/config.scss";
 @import "../../scss/name.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
 
 $C_PREFIX: #{$COMP_BTN};
 
@@ -56,35 +58,7 @@ $C_PREFIX: #{$COMP_BTN};
   }
 }
 
-@mixin theme-style($type) {
-  $type-color: $primary-color;
-  $type-dark-color: $primary-dark-color;
-
-  @if $type=='primary' {
-    $type-color: $primary-color;
-    $type-dark-color: $primary-dark-color;
-  }
-  @else if $type=='danger' {
-    $type-color: $danger-color;
-    $type-dark-color: $danger-dark-color;
-  }
-  @else if $type=='success' {
-    $type-color: $success-color;
-    $type-dark-color: $success-dark-color;
-  }
-  @else if $type=='waring' {
-    $type-color: $warning-color;
-    $type-dark-color: $warning-dark-color;
-  }
-  @else if $type=='blue' {
-    $type-color: $blue-color;
-    $type-dark-color: $blue-dark-color;
-  }
-  @else {
-    $type-color: $orange-color;
-    $type-dark-color: $orange-dark-color;
-  }
-
+@mixin theme-content($type-color, $type-dark-color) {
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {
@@ -99,8 +73,8 @@ $C_PREFIX: #{$COMP_BTN};
   }
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap,
-.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-primary {
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   & > .#{$C_PREFIX}-ele {
     &:focus {
       outline: none;

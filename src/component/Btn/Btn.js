@@ -52,24 +52,19 @@ export default {
       type: Boolean,
       default: false
     },
-
     block: {
       type: Boolean,
       default: false
     },
-
     kind: {
       type: String,
       default: 'primary'
     },
-
     link: String,
-
     outline: {
       type: Boolean,
       default: false
     },
-
     radius: {
       type: String,
       default: 's',
@@ -79,7 +74,6 @@ export default {
         return ['none', 's', 'm', 'l'].includes(size)
       }
     },
-
     type: {
       type: String,
       default: BTN_TYPE_BUTTON,
@@ -87,12 +81,10 @@ export default {
         return ['button', 'float', 'flat', 'outline'].includes(val)
       }
     },
-
     value: {
       type: String,
       require: true
     },
-
     size: {
       type: String,
       default: SIZE_S,
@@ -102,12 +94,10 @@ export default {
         return ['s', 'm', 'l'].includes(size)
       }
     },
-
     submit: {
       type: Boolean,
       require: false
     },
-
     textDisplay: {
       type: Boolean,
       default: false
@@ -120,7 +110,7 @@ export default {
       btnValueDisplay: false, // 按钮值显示状态
       createdLoading: false, // 是否已经创建了按钮的 loading 组件
       focusing: false, // 正在 focus 中
-      motion: false, // 按钮的沦漪效果
+      motion: false, // 启动按钮的沦漪效果
       allowFocus: true, // 允许执行 focus 事件
       mousePoi: { // 点击按钮的鼠标位置
         top: 0,
@@ -140,15 +130,12 @@ export default {
     cPrefix() {
       return `${this.compPrefix}-btn`
     },
-
     isLink() {
       return !this.btnValueDisplay && this.link
     },
-
     isFloatBtn() {
       return this.type === 'float'
     },
-
     btnClass() {
       return this.xclass([
         this.themeClass,
@@ -157,10 +144,6 @@ export default {
         `radius-${this.radius.toLowerCase()}`,
         `type-${this.type}`
       ])
-    },
-
-    UIMaterial() {
-      return this.ui === 'material'
     }
   },
 

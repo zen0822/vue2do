@@ -6,7 +6,7 @@
 
 $C_PREFIX: #{$COMP_BTN};
 
-.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-primary {
   & > .#{$C_PREFIX}-ele {
     &:focus{
       outline: none;

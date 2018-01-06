@@ -5,12 +5,45 @@
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
-@import "./util.scss";
+@import "../../scss/mixin.scss";
 
 $C_PREFIX: #{$COMP_BTN};
 
-.#{$C_PREFIX},
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-primary {
+@mixin btn-button($color) {
+  background-color: $color;
+}
+
+@mixin btn-flat($color) {
+  color: $color;
+}
+
+@mixin btn-outline($color) {
+  border-color: $color;
+  color: $color;
+}
+
+@mixin theme-content($type-color, $type-dark-color) {
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-button($type-color);
+    }
+  }
+
+  &.#{$C_PREFIX}-type-flat {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-flat($type-color);
+    }
+  }
+
+  &.#{$C_PREFIX}-type-outline {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-outline($type-color);
+    }
+  }
+}
+
+.#{$C_PREFIX} {
   position: relative;
   display: inline-block;
   cursor: pointer;

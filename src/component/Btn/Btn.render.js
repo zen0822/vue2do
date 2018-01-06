@@ -18,16 +18,18 @@ export default function (h) {
       }, [this.$slots.default])
     )
   } else if (this.type === 'flat') {
-    btnEleChildren.push(
-      h(
-        `${this.link ? 'a' : 'div'}`, {
-          class: [
-            this.xclass('ele-border')
-          ]
-        }, [
-          this.$slots.default ? this.$slots.default : this.value
-        ]
-      )
+    const ele = this.$slots.default ? this.$slots.default : this.value
+
+    btnEleChildren.push(this.link ?
+      h('a', {
+        attrs: {
+          href: this.link
+        },
+        class: [this.xclass('ele-border')]
+      }, [ele]) :
+      h('div', {
+        class: [this.xclass('ele-border')]
+      }, [ele])
     )
   } else {
     let buttonChildren = []
@@ -106,7 +108,6 @@ export default function (h) {
           blur: this.blur
         },
         attrs: {
-          href: this.link,
           tabindex: 0
         }
       }, btnEleChildren)

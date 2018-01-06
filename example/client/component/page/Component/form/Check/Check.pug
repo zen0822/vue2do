@@ -6,6 +6,14 @@ div
       z-check(:init-opt='testOpt')
       z-code.
         #{'<z-check></z-check>'}
+    +section('multiple', '多选')
+      z-check(multiple theme='blue' :init-opt='testOpt')
+      z-code.
+        #{'<z-check></z-check>'}
+    +section('bootstrap', 'bootstrap UI')
+      z-check(ui='bootstrap', theme='blue' :init-opt='testOpt')
+      z-code.
+        #{'<z-check ui="bootstrap"></z-check>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'

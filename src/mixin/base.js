@@ -53,34 +53,32 @@ export default {
   },
 
   computed: {
-    // UI 的类名
-    uiClass() {
+    uiClass() { // UI 的类名
       return this.ui ? `ui-${this.ui}` : ''
     },
 
-    // 主题的类名
-    themeClass() {
+    themeClass() { // 主题的类名
       return this.theme ? `theme-${this.theme}` : ''
     },
 
-    // 组件比加 class
-    compClass() {
+    compClass() { // 组件比加 class
       return [this.uiClass, this.themeClass]
     },
 
-    // 组件的统一前缀
-    compPrefix() {
+    compPrefix() { // 组件的统一前缀
       return compConfig.prefix
     },
 
-    // 设备尺寸
-    deviceSize() {
+    deviceSize() { // 设备尺寸
       return this.$store.getters[commonStore.deviceSize]
     },
 
-    // 设备尺寸范围
-    deviceRange() {
+    deviceRange() { // 设备尺寸范围
       return this._deviceTypeRange()
+    },
+
+    UIMaterial() { // UI 是 material
+      return this.ui === 'material'
     }
   },
 
