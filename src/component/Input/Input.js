@@ -1,6 +1,7 @@
 /**
  * input 组件
  *
+ * @prop block - 将宽度设置为和父元素一样
  * @prop hidden - 设置为隐藏域
  * @prop initVal - 设置当前输入框的值
  * @prop number - 输入框的数字指定为 nmuber 类型
@@ -36,6 +37,8 @@
  */
 
 import './Input.scss'
+import './Input.material.scss'
+import './Input.bootstrap.scss'
 import render from './Input.render'
 
 import store from '../../vuex/store'
@@ -49,7 +52,9 @@ import apiMixin from './Input.api'
 import rowComp from '../Row/Row'
 import colComp from '../Col/Col'
 
-import { dataType } from '../../util/data/data'
+import {
+  dataType
+} from '../../util/data/data'
 import tip from '../Message/tip'
 
 const TYPE_TEXT_AREA = 'area'
@@ -72,90 +77,73 @@ export default {
   store,
 
   props: {
+    block: {
+      type: Boolean,
+      default: false
+    },
     hidden: {
       type: Boolean,
       default: false
     },
-
     initVal: {
       type: [String, Number],
       default: ''
     },
-
     number: {
       type: Boolean,
       default: false
     },
-
     placeholder: {
       type: String,
       default: ''
     },
-
     param: {
       type: String,
       default: ''
     },
-
     readOnly: {
       type: Boolean,
       default: false
     },
-
     row: {
       type: Number,
       default: 4
     },
-
     textLengthTip: {
       type: Boolean,
       default: false
     },
-
     type: {
       type: String,
       default: 'field'
     },
-
     required: {
       type: Boolean,
       default: true
     },
-
     errorMessage: {
       type: String,
       default: ''
     },
-
     errorTipType: {
       type: String,
       default: 'tip'
     },
-
     formatMessage: String,
-
     min: Number,
-
     max: Number,
-
     minNum: Number,
-
     maxNum: Number,
-
     regex: String,
-
     verifiedType: String,
-
     completion: {
       type: Boolean,
       default: false
     },
-
     headerSpan: {
       type: Number,
       default: 1
     },
-
     footerSpan: {
       type: Number,
       default: 1
@@ -163,38 +151,26 @@ export default {
   },
 
   data() {
-    // 组件名字
-    this.compName = 'input'
+    this.compName = 'input' // 组件名字
 
     return {
-      // 输入框的当前的值
-      value: this.number ? this._switchNum(this.initVal) : this.initVal,
-      // 输入框是否处于 focus 状态
-      focusing: false,
-      // 是否处于 keyup 状态
-      keyuping: false,
-      // 错误信息提示信息
-      dangerTip: '',
-      // 数据类型的名称
-      dataTypeName: '',
-      // 是否验证通过
-      verified: true,
-      // 冒泡的错误提示显示状态
-      bubbleDisplay: false,
-      // 当前输入框值的长度
-      inputTextLength: 0,
-      // 错误提示框的显示状态
-      errorBorderDisplay: false
+      value: this.number ? this._switchNum(this.initVal) : this.initVal, // 输入框的当前的值
+      focusing: false, // 输入框是否处于 focus 状态
+      keyuping: false, // 是否处于 keyup 状态
+      dangerTip: '', // 错误信息提示信息
+      dataTypeName: '', // 数据类型的名称
+      verified: true, // 是否验证通过
+      bubbleDisplay: false, // 冒泡的错误提示显示状态
+      inputTextLength: 0, // 当前输入框值的长度
+      errorBorderDisplay: false // 错误提示框的显示状态
     }
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-input`
     },
-    // 格式不对的报错信息
-    _formatMessage() {
+    _formatMessage() { // 格式不对的报错信息
       return this.errorMessage ? this.errorMessage + '格式不对' : this.dataTypeName + '格式不对'
     },
     dangerTipDisplay() {
@@ -209,8 +185,7 @@ export default {
     inputHub() {
       return this.$store.getters[hubStore.input.get]
     },
-    // 组件 stage 的 class 名字
-    stageClass() {
+    stageClass() { // 组件 stage 的 class 名字
       return [{
         [`${this.cPrefix}-textarea-stage`]: this.isTextarea
       }]
@@ -226,8 +201,7 @@ export default {
         }
       ]
     },
-    // input 的阑珊的格数
-    inputBoxCol() {
+    inputBoxCol() { // input 的阑珊的格数
       let slotHead = this.$slots.header
       let slotTail = this.$slots.footer
 

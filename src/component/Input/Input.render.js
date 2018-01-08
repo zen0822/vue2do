@@ -123,7 +123,7 @@ export default function (h) {
       }
     }, [
       h('div', {
-        class: [this.xclass('danger-tip')],
+        class: [this.xclass('tip-danger')],
         directives: [{
           name: 'show',
           value: this.dangerTipDisplay
