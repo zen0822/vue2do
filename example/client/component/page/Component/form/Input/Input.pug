@@ -8,6 +8,8 @@ div
         #{'<z-input></z-input>'}
     +section('textarea', '输入区域')
       z-input(
+        textLengthTip
+        :max='10'
         label='区域标签'
         type='area',
         :row='4',

@@ -253,14 +253,22 @@ export default {
       this.value = val
     },
     value(val, oldVal) {
-      // 限制长度显示
-      this.limitLen = String(val).length
+      const valueLength = String(val).length
+
+      if (this.textLengthTip) {
+        if (valueLength <= this.max) {
+          this._dispatchChange()
+          this.inputTextLength = valueLength
+        } else {
+          this.value = val.substr(0, this.max)
+        }
+      } else {
+        this._dispatchChange()
+      }
 
       if (this.completion && this.$slots.completion) {
         this.$slots.completion[0].componentInstance.search(val)
       }
-
-      this._dispatchChange()
     }
   },
 

@@ -35,7 +35,7 @@ $INPUT_BORDER_WIDTH: 1px;
   }
 
   &.#{$C_PREFIX}-type-area {
-    .#{$C_PREFIX}-wrap {
+    & > .#{$C_PREFIX}-wrap {
       .#{$C_PREFIX}-edit-box {
         $gutter-v: 13px;
         $gutter-v-triple: 26px;
@@ -65,7 +65,7 @@ $INPUT_BORDER_WIDTH: 1px;
     }
   }
 
-  .#{$C_PREFIX}-wrap {
+  & > .#{$C_PREFIX}-wrap {
     &::after {
       content: '';
       position: absolute;

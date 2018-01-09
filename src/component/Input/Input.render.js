@@ -157,10 +157,11 @@ export default function (h) {
     ]),
 
     (() => {
-      if (this.maxLength && this.textLengthTip) {
+      if (!this.number && this.max && this.textLengthTip) {
         return h('div', {
           class: [this.xclass('limit-txt')]
-        }, [h('span', this.limitLen), h('span', this.maxLength)])
+        }, [
+            h('span', this.inputTextLength), ' / ', h('span', this.max)])
       }
     })()
   ])

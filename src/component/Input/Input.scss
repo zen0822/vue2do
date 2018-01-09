@@ -22,7 +22,7 @@ $input-gap-v: 8px;
   font-size: $h3;
 
   &.#{$C_PREFIX}-type-area {
-    .#{$C_PREFIX}-wrap {
+    & > .#{$C_PREFIX}-wrap {
       border: $border-color $border-thin solid;
       border-radius: $border-radius;
 
@@ -33,12 +33,14 @@ $input-gap-v: 8px;
     }
   }
 
-  .#{$C_PREFIX}-limit-txt {
+  & > .#{$C_PREFIX}-limit-txt {
     padding: $gap-v 0;
     text-align: right;
+    font-size: $h5;
+    color: gery-light;
   }
 
-  .#{$C_PREFIX}-wrap {
+  & > .#{$C_PREFIX}-wrap {
     position: relative;
     border-bottom: $border-color $border-thin solid;
     background-color: #fff;
