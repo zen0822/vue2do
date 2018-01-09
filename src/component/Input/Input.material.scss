@@ -34,6 +34,37 @@ $INPUT_BORDER_WIDTH: 1px;
     }
   }
 
+  &.#{$C_PREFIX}-type-area {
+    .#{$C_PREFIX}-wrap {
+      .#{$C_PREFIX}-edit-box {
+        $gutter-v: 13px;
+        $gutter-v-triple: 26px;
+
+        padding-top: $gutter-v-triple;
+
+        & > .#{$C_PREFIX}-edit-box-input {
+          padding: 0 $gutter-v $gap-v;
+        }
+
+        &-placeholder {
+          padding-top: $gutter-v-triple;
+          padding-left: $gutter-v;
+          padding-right: $gutter-v;
+        }
+
+        &-label {
+          padding-top: 12px;
+          padding-left: $gutter-v;
+          padding-right: $gutter-v;
+
+          &-float {
+            top: -8px;
+          }
+        }
+      }
+    }
+  }
+
   .#{$C_PREFIX}-wrap {
     &::after {
       content: '';
@@ -50,7 +81,7 @@ $INPUT_BORDER_WIDTH: 1px;
       transition: all 300ms ease-out;
     }
 
-    &.#{$C_PREFIX}-error-border{
+    &.#{$C_PREFIX}-error-border {
       outline: none;
     }
 
@@ -60,6 +91,12 @@ $INPUT_BORDER_WIDTH: 1px;
         background-color: $primary-color;
         transform: scaleX(1);
       }
+
+      & > .#{$C_PREFIX}-wrap-border {
+        border-color: $primary-color !important;
+      }
+
+      border-color: $primary-color !important;
     }
 
     & > .#{$C_PREFIX}-wrap-border {
@@ -69,38 +106,35 @@ $INPUT_BORDER_WIDTH: 1px;
       transition: all 100ms ease-out;
     }
 
+    .#{$C_PREFIX}-edit-box {
+      & > .#{$C_PREFIX}-edit-box-input {
+        padding: $gap-v 0;
+      }
+
+      &-placeholder {
+        padding: $gap-v 0;
+      }
+
+      &-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: $gap-v 0;
+        transition: all 150ms ease-in-out;
+        color: $grey;
+
+        &-float {
+          color: $primary-color;
+          top: -22px;
+          font-size: $h5;
+        }
+      }
+    }
+
     .#{$C_PREFIX}-auto-completion {
       border-bottom-left-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
-    }
-  }
-
-  .#{$C_PREFIX}-tip-danger {
-    position: absolute;
-    top: $INPUT_HEIGHT + 5;
-    width: 100%;
-    background: #fff;
-    border: $danger-color $border-thin solid;
-    padding: $gap-v;
-    z-index: 1;
-
-    &::after,
-    &::before {
-      content: "◆";
-      position: absolute;
-      top: -11px;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: 22px;
-      height: 20px;
-      font-size: 33px;
-      line-height: 20px;
-    }
-
-    &::after {
-      top: -9px;
-      color: #fff;
     }
   }
 }

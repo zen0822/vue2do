@@ -17,7 +17,17 @@ $C_PREFIX: #{ $COMP_INPUT };
 
       &.#{$C_PREFIX}-editting {
         border-color: $blue-color;
-        box-shadow: 0 0 0 3px rgba($blue-color, .4);
+        box-shadow: 0 0 0 4px rgba($blue-color, .3);
+      }
+
+      .#{$C_PREFIX}-edit-box {
+        & > .#{$C_PREFIX}-edit-box-input {
+          padding: $gutter-v;
+        }
+
+        &-placeholder {
+          padding: $gutter-v;
+        }
       }
     }
   }

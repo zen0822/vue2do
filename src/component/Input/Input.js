@@ -4,6 +4,8 @@
  * @prop block - 将宽度设置为和父元素一样
  * @prop hidden - 设置为隐藏域
  * @prop initVal - 设置当前输入框的值
+ * @prop label - 输入框的标签
+ * @prop multiline - type 为 field 可以输入多行文本
  * @prop number - 输入框的数字指定为 nmuber 类型
  * @prop placeholder - 占位符
  * @prop param - 查询参数名
@@ -61,6 +63,7 @@ const TYPE_TEXT_AREA = 'area'
 const TYPE_TEXT = 'field'
 const ERROR_MESSAGE_TIP = 'tip'
 const ERROR_MESSAGE_BUBBLE = 'bubble'
+const KEYUP_INTERVAL_TIME = 100
 
 export default {
   name: 'Input',
@@ -88,6 +91,14 @@ export default {
     initVal: {
       type: [String, Number],
       default: ''
+    },
+    label: {
+      type: String,
+      default: ''
+    },
+    multiline: {
+      type: Boolean,
+      default: false
     },
     number: {
       type: Boolean,
@@ -172,6 +183,26 @@ export default {
     },
     _formatMessage() { // 格式不对的报错信息
       return this.errorMessage ? this.errorMessage + '格式不对' : this.dataTypeName + '格式不对'
+    },
+    placeholderDisplay() { // 输入框占位符的显示状态
+      const empty = this.value === '' || this.value === undefined
+
+      if (this.UIMaterial) {
+        if (this.label) {
+          return this.focusing && empty
+        } else {
+          return empty
+        }
+      } else {
+        return empty
+      }
+    },
+    labelFloatDisplay() { // 输入框标签浮动的状态
+      if (this.focusing) {
+        return true
+      } else {
+        return !(this.value === '' || this.value === undefined)
+      }
     },
     dangerTipDisplay() {
       return !!this.dangerTip && this.bubbleDisplay
@@ -344,6 +375,66 @@ export default {
       }
 
       return Number(strTemp)
+    },
+
+    /**
+     * 输入框 focus 状态触发的方法
+     * @return {Object} this - 组件
+     */
+    _handlerFocus(evt) {
+      this.errorBorderDisplay = false
+      this.verified = true
+      this.focusing = true
+
+      return this.$emit('focus', {
+        emitter: this,
+        valeu: this.value,
+        event: evt
+      })
+    },
+
+    /**
+     * 输入框 blur 状态触发的方法
+     * @return {Object} this - 组件
+     */
+    _handlerBlur(evt) {
+      this.focusing = false
+
+      if (this.number) {
+        this.value = this._switchNum(this.value)
+      }
+
+      return this.$emit('blur', {
+        emitter: this,
+        valeu: this.value,
+        event: evt
+      })
+    },
+
+    /**
+     * 输入框 keyup 状态触发的方法
+     * @return {Object}
+     */
+    _handlerKeyup() {
+      if (this.keyuping) {
+        return false
+      }
+
+      this.keyuping = true
+
+      setTimeout(() => {
+        this.keyuping = false
+      }, KEYUP_INTERVAL_TIME)
+    },
+
+    /**
+     * input 时间句柄
+     * @return {Object}
+     */
+    _handlerInput(event) {
+      this.value = this.multiline ?
+        event.currentTarget.innerText :
+        event.currentTarget.value
     }
   },
 

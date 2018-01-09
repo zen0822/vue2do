@@ -3,55 +3,82 @@
  */
 
 export default function (h) {
-  let editBoxEle = {}
+  let editBoxChild = []
 
-  if (this.isText) {
-    editBoxEle = h('input', {
-      domProps: {
-        value: this.value
-      },
-      attrs: {
-        value: this.value,
-        maxlength: this.number ? undefined : this.max,
-        readonly: this.readOnly,
-        placeholder: this.placeholder
-      },
+  if (this.UIMaterial) {
+    editBoxChild.push(
+      h('div', {
+        class: [
+          this.xclass('edit-box-label'),
+          {
+            [this.xclass('edit-box-label-float')]: this.labelFloatDisplay
+          }
+        ],
+        directives: [{
+          name: 'show',
+          value: !!this.label
+        }]
+      }, this.label)
+    )
+  }
+
+  editBoxChild.push(
+    h('div', {
+      class: [this.xclass('edit-box-placeholder')],
       directives: [{
-        name: 'focus',
-        value: this.focusing
-      }],
-      on: {
-        focus: this.focus,
-        blur: this.blur,
-        keyup: this.keyup,
-        input: (event) => {
-          this.value = event.target.value
+        name: 'show',
+        value: this.placeholderDisplay
+      }]
+    }, this.placeholder)
+  )
+
+  if (this.multiline) {
+    editBoxChild.push(
+      h('div', {
+        attrs: {
+          contenteditable: 'true'
+        },
+        class: [this.xclass('edit-box-multiline'), this.xclass('edit-box-input')],
+        directives: [{
+          name: 'focus',
+          value: this.focusing
+        }],
+        on: {
+          focus: this._handlerFocus,
+          blur: this._handlerBlur,
+          keyup: this._handlerKeyup,
+          input: this._handlerInput
+        },
+        ref: 'input',
+        style: {
+          height: this.isTextarea ? `${this.row * 24}px` : ''
         }
-      },
-      ref: 'input'
-    })
+      })
+    )
   } else {
-    editBoxEle = h('textarea', {
-      attrs: {
-        placeholder: this.placeholder,
-        maxlength: this.maxLength,
-        readonly: this.readOnly,
-        rows: this.row
-      },
-      directives: [{
-        name: 'focus',
-        value: this.focusing
-      }],
-      on: {
-        focus: this.focus,
-        blur: this.blur,
-        keyup: this.keyup,
-        input: (event) => {
-          this.value = event.target.value
-        }
-      },
-      ref: 'input'
-    }, this.value)
+    editBoxChild.push(
+      h(`${this.isText ? 'input' : 'textarea'}`, {
+        attrs: {
+          readonly: this.readOnly,
+          rows: this.row
+        },
+        class: [this.xclass('edit-box-input')],
+        domProps: {
+          value: this.value
+        },
+        directives: [{
+          name: 'focus',
+          value: this.focusing
+        }],
+        on: {
+          focus: this._handlerFocus,
+          blur: this._handlerBlur,
+          keyup: this._handlerKeyup,
+          input: this._handlerInput
+        },
+        ref: 'input'
+      })
+    )
   }
 
   return h('div', {
@@ -92,9 +119,7 @@ export default function (h) {
           }, [
             h('div', {
               class: this.xclass('edit-box')
-            }, [
-              editBoxEle
-            ])
+            }, editBoxChild)
           ]),
           h('column', {
             props: {

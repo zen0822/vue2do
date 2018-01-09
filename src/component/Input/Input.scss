@@ -19,6 +19,7 @@ $input-gap-v: 8px;
   vertical-align: middle;
   width: $INPUT_WIDTH;
   position: relative;
+  font-size: $h3;
 
   &.#{$C_PREFIX}-type-area {
     .#{$C_PREFIX}-wrap {
@@ -32,7 +33,7 @@ $input-gap-v: 8px;
     }
   }
 
-  .#{$C_PREFIX}-limit-txt{
+  .#{$C_PREFIX}-limit-txt {
     padding: $gap-v 0;
     text-align: right;
   }
@@ -44,7 +45,7 @@ $input-gap-v: 8px;
     box-sizing: border-box;
     transition: all 100ms ease-out;
 
-    &.#{$C_PREFIX}-error-border{
+    &.#{$C_PREFIX}-error-border {
       outline: $danger-color $border-thin solid;
     }
 
@@ -56,15 +57,15 @@ $input-gap-v: 8px;
     }
 
     .#{$C_PREFIX}-edit-box {
-      & > input,
-      & > textarea {
-        transform: rotate(0); // HACK: 触发 placeholder 回流
+      position: relative;
+      line-height: 1.5em;
+      color: $grey-dark;
 
+      & > .#{$C_PREFIX}-edit-box-input {
         border: none;
         width: 100%;
         font: inherit;
         color: inherit;
-        padding: 7.5px;
 
         &:focus {
           outline: none;
@@ -72,14 +73,31 @@ $input-gap-v: 8px;
         }
       }
 
-      & > input {
-        box-sizing: border-box;
+      & > input,
+      & > textarea {
+        transform: rotate(0); // HACK: 触发 placeholder 回流
         background-color: transparent;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       & > textarea {
-        box-sizing: border-box;
         resize: none;
+      }
+
+      & > .#{$C_PREFIX}-edit-box-multiline {
+        position: relative;
+      }
+
+      &-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        color: $grey-light;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
   }
@@ -90,7 +108,32 @@ $input-gap-v: 8px;
     color: $grey-light;
 
     &-danger {
-      color: $danger-color;
+      position: absolute;
+      top: $INPUT_HEIGHT + 5;
+      width: 100%;
+      background: #fff;
+      border: $danger-color $border-thin solid;
+      padding: $gap-v;
+      z-index: 1;
+
+      &::after,
+      &::before {
+        content: "◆";
+        position: absolute;
+        top: -11px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 22px;
+        height: 20px;
+        font-size: 33px;
+        line-height: 20px;
+      }
+
+      &::after {
+        top: -9px;
+        color: #fff;
+      }
     }
   }
 }

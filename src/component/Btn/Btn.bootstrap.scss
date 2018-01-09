@@ -10,7 +10,7 @@
 $C_PREFIX: #{$COMP_BTN};
 
 @mixin btn-box-shadow($color) {
-  box-shadow: 0 0 0 3px rgba($color, .4);
+  box-shadow: 0 0 0 4px rgba($color, .3);
 }
 
 @mixin btn-button($color, $dark-color) {

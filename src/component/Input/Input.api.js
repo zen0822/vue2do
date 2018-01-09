@@ -4,8 +4,6 @@
 
 import tip from '../Message/tip'
 
-const KEYUP_INTERVAL_TIME = 100
-
 export default {
   methods: {
     /**
@@ -125,56 +123,6 @@ export default {
       }
 
       return this
-    },
-
-    /**
-     * 输入框 focus 状态触发的方法
-     * @return {Object} this - 组件
-     */
-    focus(evt) {
-      this.errorBorderDisplay = false
-      this.verified = true
-      this.focusing = true
-
-      return this.$emit('focus', {
-        emitter: this,
-        valeu: this.value,
-        event: evt
-      })
-    },
-
-    /**
-     * 输入框 blur 状态触发的方法
-     * @return {Object} this - 组件
-     */
-    blur(evt) {
-      this.focusing = false
-
-      if (this.number) {
-        this.value = this._switchNum(this.value)
-      }
-
-      return this.$emit('blur', {
-        emitter: this,
-        valeu: this.value,
-        event: evt
-      })
-    },
-
-    /**
-     * 输入框 keyup 状态触发的方法
-     * @return {Object}
-     */
-    keyup() {
-      if (this.keyuping) {
-        return false
-      }
-
-      this.keyuping = true
-
-      setTimeout(() => {
-        this.keyuping = false
-      }, KEYUP_INTERVAL_TIME)
     }
   }
 }

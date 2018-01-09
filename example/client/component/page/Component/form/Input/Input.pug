@@ -3,19 +3,21 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-input(ref='startInput' ui='bootstrap')
+      z-input(placeholder='asd输入区域' ref='startInput' ui='bootstrap')
       z-code.
         #{'<z-input></z-input>'}
     +section('textarea', '输入区域')
       z-input(
+        label='区域标签'
         type='area',
         :row='4',
         placeholder='请输入...')
       z-code.
-        #{'<z-input type="row" :row="4" placeholder="请输入..."></z-input>'}
+        #{'<z-input label="区域标签" type="area" :row="4" placeholder="请输入..."></z-input>'}
     +section('completion', '补全功能')
       z-input(
           completion
+          label='补全功能'
           placeholder='请输入...会补全的...'
           ref='input')
         z-search(
@@ -26,6 +28,7 @@ div
       z-code.
         #{'<z-input'}
             #{'completion'}
+            label="补全功能"
             #{'placeholder="请输入...会补全的..."'}
             #{'ref="input">'}
           #{'<z-search'}
