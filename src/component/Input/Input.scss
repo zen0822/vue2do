@@ -63,11 +63,32 @@ $input-gap-v: 8px;
       line-height: 1.5em;
       color: $grey-dark;
 
+      &.#{$C_PREFIX}-edit-box-multiline {
+        & > textarea {
+          position: absolute;
+          height: 100%;
+          top: 0;
+          left: 0;
+          overflow: hidden;
+        }
+
+        & > pre {
+          font: inherit;
+          margin: 0;
+          display: block;
+          visibility: hidden;
+          white-space: pre-wrap;
+          word-break: break-all;
+        }
+      }
+
       & > .#{$C_PREFIX}-edit-box-input {
         border: none;
         width: 100%;
         font: inherit;
         color: inherit;
+        box-sizing: border-box;
+        display: block;
 
         &:focus {
           outline: none;
@@ -79,16 +100,10 @@ $input-gap-v: 8px;
       & > textarea {
         transform: rotate(0); // HACK: 触发 placeholder 回流
         background-color: transparent;
-        padding: 0;
-        box-sizing: border-box;
       }
 
       & > textarea {
         resize: none;
-      }
-
-      & > .#{$C_PREFIX}-edit-box-multiline {
-        position: relative;
       }
 
       &-placeholder {

@@ -19,8 +19,6 @@ import render from './Message.render'
 import baseMixin from '../../mixin/base'
 
 import Pop from '../Pop/Pop'
-import Btn from '../Btn/Btn'
-import Icon from '../Icon/Icon'
 
 import {
   handleEleDisplay
@@ -36,8 +34,6 @@ const messageComp = {
   mixins: [baseMixin],
 
   components: {
-    btn: Btn,
-    icon: Icon,
     pop: Pop
   },
 

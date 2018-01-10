@@ -20,7 +20,9 @@ export default function (h) {
         class: [this.xclass('pop')],
         props: {
           direction: this.direction,
-          position: this.position
+          position: this.position,
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'pop'
       },

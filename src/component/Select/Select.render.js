@@ -44,7 +44,9 @@ export default function (h) {
         }, [
           h('icon', {
             props: {
-              kind: 'close'
+              kind: 'close',
+              ui: this.ui,
+              theme: this.theme
             }
           })
         ])
@@ -56,7 +58,9 @@ export default function (h) {
         class: [this.xclass('scroller')],
         props: {
           height: 100,
-          width: '100%'
+          width: '100%',
+          ui: this.ui,
+          theme: this.theme
         },
         directives: [{
           name: 'show',
@@ -99,7 +103,9 @@ export default function (h) {
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
     props: {
-      kind: 'spread'
+      kind: 'spread',
+      ui: this.ui,
+      theme: this.theme
     }
   }))
 
@@ -117,12 +123,16 @@ export default function (h) {
     }, [
       h('input-box', {
         props: {
-          placeholder: '请输入搜索值'
+          placeholder: '请输入搜索值',
+          ui: this.ui,
+          theme: this.theme
         }
       }, [
         h('icon', {
           props: {
-            kind: 'search'
+            kind: 'search',
+            ui: this.ui,
+            theme: this.theme
           },
           slot: 'header'
         })
@@ -154,7 +164,9 @@ export default function (h) {
           valName: this.valName,
           txtName: this.txtName,
           option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
-          optRoot: this.me
+          optRoot: this.me,
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'option',
         scopedSlots
@@ -200,7 +212,9 @@ export default function (h) {
         noTrig: true,
         noCoverTrig: true,
         width: this.menuWidth,
-        trigHeight: this.selectedHeight
+        trigHeight: this.selectedHeight,
+        ui: this.ui,
+        theme: this.theme
       },
       ref: 'menu'
     }, [h('div', {

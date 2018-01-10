@@ -5,7 +5,9 @@ export default function (h) {
     footerChildren.push(h('btn', {
       props: {
         value: this.noBtn,
-        type: 'flat'
+        type: 'flat',
+        ui: this.ui,
+        theme: this.theme
       },
       on: {
         click: this.no
@@ -18,7 +20,9 @@ export default function (h) {
       h('btn', {
         props: {
           value: this.okBtn,
-          type: 'flat'
+          type: 'flat',
+          ui: this.ui,
+          theme: this.theme
         },
         on: {
           click: this.ok

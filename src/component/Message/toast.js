@@ -24,7 +24,6 @@ const createToast = () => {
     name: 'toast',
     mixins: [baseMixin],
     computed: {
-      // 组件类名的前缀
       cPrefix() {
         return `${this.compPrefix}-toast`
       }

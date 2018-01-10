@@ -19,7 +19,9 @@ export default function (h) {
     h('scroller', {
       props: {
         height: 200,
-        width: 'auto'
+        width: 'auto',
+        ui: this.ui,
+        theme: this.theme
       },
       ref: 'scroller'
     }, [

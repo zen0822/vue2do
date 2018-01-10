@@ -64,16 +64,14 @@ export default function (h) {
     })
   } else {
     tbodyRowChildren = [
-      h('tr',
-        [
-          h('td', {
-            attrs: {
-              colspan: headLength
-            },
-            class: [this.xclass('empty-data')]
-          }, this.emptyDataText)
-        ]
-      )
+      h('tr', [
+        h('td', {
+          attrs: {
+            colspan: headLength
+          },
+          class: [this.xclass('empty-data')]
+        }, this.emptyDataText)
+      ])
     ]
   }
 
@@ -95,48 +93,46 @@ export default function (h) {
     class: [this.xclass('wrap')]
   }, tableChildren)
 
-  return h('div',
-    {
-      class: [
-        this.cPrefix,
-        this.xclass([this.themeClass, 'border-' + this.border])
-      ]
-    },
-    [
-      h('scroller',
-        {
-          class: [this.xclass('scroller')],
-          props: {
-            autoHide: this.scrollerAutoHide,
-            height: 300,
-            width: '100%'
-          },
-          on: {
-            scrollY: this.scroll
-          },
-          ref: 'scroller'
-        }, [tableEle]
-      ),
-      h(
-        'page',
-        {
-          class: [this.xclass('page'), `${this.compPrefix}-m-t-double`],
-          directives: [{
-            name: 'show',
-            value: this.pagerDisplay
-          }],
-          props: {
-            data: this.pageData
-          },
-          on: {
-            'switch': this.switchPage
-          },
-          ref: 'pager'
-        }
-      ),
-      h('loading', {
-        ref: 'loading'
-      })
+  return h('div', {
+    class: [
+      this.cPrefix,
+      this.xclass([this.themeClass, 'border-' + this.border])
     ]
-  )
+  }, [
+    h('scroller', {
+      class: [this.xclass('scroller')],
+      props: {
+        autoHide: this.scrollerAutoHide,
+        height: 300,
+        width: '100%'
+      },
+      on: {
+        scrollY: this.scroll
+      },
+      ref: 'scroller'
+    }, [tableEle]),
+    h(
+      'page', {
+        class: [this.xclass('page'), `${this.compPrefix}-m-t-double`],
+        directives: [{
+          name: 'show',
+          value: this.pagerDisplay
+        }],
+        props: {
+          data: this.pageData
+        },
+        on: {
+          'switch': this.switchPage
+        },
+        ref: 'pager'
+      }
+    ),
+    h('loading', {
+      props: {
+        ui: this.ui,
+        theme: this.theme
+      },
+      ref: 'loading'
+    })
+  ])
 }

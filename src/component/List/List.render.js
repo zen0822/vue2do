@@ -40,7 +40,9 @@ export default function (h) {
     loadingOfNum.push(h('loading', {
       class: this.xclass(['loading', 'loading-num']),
       props: {
-        'bg-display': true
+        bgDisplay: true,
+        ui: this.ui,
+        theme: this.theme
       },
       ref: 'loading'
     }))
@@ -52,7 +54,9 @@ export default function (h) {
       props: {
         autoHide: this.autoHideScroller,
         height: this.scrollerHeight,
-        width: '100%'
+        width: '100%',
+        ui: this.ui,
+        theme: this.theme
       },
       on: {
         scrollY: this.scroll
@@ -65,65 +69,75 @@ export default function (h) {
     h('slide-transition', {
       props: {
         direction: 'north',
-        offset: this.pageDetail.bottom
+        offset: this.pageDetail.bottom,
+        ui: this.ui,
+        theme: this.theme
       },
       ref: 'pageSlideTransition'
     }, [
-      h(
-        'page', {
-          class: [this.xclass('page')],
-          props: {
-            data: this.pageData,
-            type: this.pageType,
-            loadMoreText: this.loadMoreText
-          },
-          on: {
-            'switch': this.switchPage
-          },
-          ref: 'page',
-          style: this.pagerStyle
-        }, (() => {
-          let ele = [
-            h('icon', {
-              class: [`${this.compPrefix}-m-r-half`],
-              props: {
-                kind: 'arrow'
-              }
-            }),
-            h('span', this.loadMoreText)
+      h('page', {
+        class: [this.xclass('page')],
+        props: {
+          data: this.pageData,
+          type: this.pageType,
+          loadMoreText: this.loadMoreText,
+          ui: this.ui,
+          theme: this.theme
+        },
+        on: {
+          'switch': this.switchPage
+        },
+        ref: 'page',
+        style: this.pagerStyle
+      }, (() => {
+        let ele = [
+          h('icon', {
+            class: [`${this.compPrefix}-m-r-half`],
+            props: {
+              kind: 'arrow',
+              ui: this.ui,
+              theme: this.theme
+            }
+          }),
+          h('span', this.loadMoreText)
+        ]
+
+        if (this.isPageTypeMore) {
+          return [
+            h(
+              'div', {
+                slot: 'loadMore'
+              }, [
+                h('loading', {
+                  class: [`${this.compPrefix}-m-r-half`].concat(
+                    this.xclass(['loading', 'loading-more'])
+                  ),
+                  props: {
+                    ui: this.ui,
+                    theme: this.theme
+                  },
+                  ref: 'loadingOfMore'
+                }),
+                h('icon', {
+                  class: [`${this.compPrefix}-m-r-half`],
+                  directives: [{
+                    name: 'show',
+                    value: this.arrowOfMoreDisplay
+                  }],
+                  props: {
+                    kind: 'arrow',
+                    ui: this.ui,
+                    theme: this.theme
+                  }
+                }),
+                h('span', this.loadMoreText)
+              ]
+            )
           ]
+        }
 
-          if (this.isPageTypeMore) {
-            return [
-              h(
-                'div', {
-                  slot: 'loadMore'
-                }, [
-                  h('loading', {
-                    class: [`${this.compPrefix}-m-r-half`].concat(
-                      this.xclass(['loading', 'loading-more'])
-                    ),
-                    ref: 'loadingOfMore'
-                  }),
-                  h('icon', {
-                    class: [`${this.compPrefix}-m-r-half`],
-                    directives: [{
-                      name: 'show',
-                      value: this.arrowOfMoreDisplay
-                    }],
-                    props: {
-                      kind: 'arrow'
-                    }
-                  }),
-                  h('span', this.loadMoreText)
-                ]
-              )
-            ]
-          }
-
-          return ele
-        })()
-      )
+        return ele
+      })())
     ])
   )
 

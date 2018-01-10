@@ -20,7 +20,9 @@ export default function (h) {
       }, [
         h('row', {
           props: {
-            justify: 'justify'
+            justify: 'justify',
+            ui: this.ui,
+            theme: this.theme
           }
         }, headerChildren)
       ])
@@ -33,7 +35,9 @@ export default function (h) {
         class: [this.xclass('scroller')],
         props: {
           height: this.modalHeight,
-          autoHide: true
+          autoHide: true,
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'scroller'
       }, (() => {
@@ -82,9 +86,11 @@ export default function (h) {
       mousemove: this.mouseMove
     }
   }, [
-    h('fade-transition', {
+    h('motion-fade', {
       props: {
-        speed: 'fast'
+        speed: 'fast',
+        ui: this.ui,
+        theme: this.theme
       },
       ref: 'fadeTransition'
     }, [
@@ -102,6 +108,10 @@ export default function (h) {
 
     h('pop', {
       class: [this.xclass('pop')],
+      props: {
+        ui: this.ui,
+        theme: this.theme
+      },
       ref: 'pop'
     }, [modalChildren])
   ])

@@ -11,7 +11,7 @@ export default function (h) {
         class: [
           this.xclass('edit-box-label'),
           {
-            [this.xclass('edit-box-label-float')]: this.labelFloatDisplay
+            [this.xclass('edit-box-label-float')]: this.labelDisplay && this.labelFloatDisplay
           }
         ],
         directives: [{
@@ -29,7 +29,9 @@ export default function (h) {
 
   editBoxChild.push(
     h('div', {
-      class: [this.xclass('edit-box-placeholder')],
+      class: [
+        this.xclass('edit-box-placeholder')
+      ],
       directives: [{
         name: 'show',
         value: this.placeholderDisplay
@@ -37,64 +39,42 @@ export default function (h) {
     }, this.placeholder)
   )
 
+  editBoxChild.push(
+    h(`${this.isTextarea || this.multiline ? 'textarea' : 'input'}`, {
+      attrs: {
+        readonly: this.readOnly,
+        rows: this.isText ? 1 : this.row
+      },
+      class: [
+        this.xclass('edit-box-input')
+      ],
+      domProps: {
+        value: this.value
+      },
+      directives: [{
+        name: 'focus',
+        value: this.focusing
+      }],
+      on: {
+        focus: this._handlerFocus,
+        blur: this._handlerBlur,
+        keyup: this._handlerKeyup,
+        input: this._handlerInput
+      },
+      ref: 'input'
+    })
+  )
+
   if (this.multiline) {
-    editBoxChild.push(
-      h('div', {
-        attrs: {
-          contenteditable: 'true'
-        },
-        class: [this.xclass('edit-box-multiline'), this.xclass('edit-box-input')],
-        directives: [{
-          name: 'focus',
-          value: this.focusing
-        }],
-        domProps: {
-          innerText: this.value
-        },
-        on: {
-          focus: this._handlerFocus,
-          blur: this._handlerBlur,
-          keyup: this._handlerKeyup,
-          input: this._handlerInput
-        },
-        ref: 'input',
-        style: {
-          height: this.isTextarea ? `${this.row * 24}px` : ''
-        }
-      })
-    )
-  } else {
-    editBoxChild.push(
-      h(`${this.isText ? 'input' : 'textarea'}`, {
-        attrs: {
-          readonly: this.readOnly,
-          rows: this.row
-        },
-        class: [this.xclass('edit-box-input')],
-        domProps: {
-          value: this.value
-        },
-        directives: [{
-          name: 'focus',
-          value: this.focusing
-        }],
-        on: {
-          focus: this._handlerFocus,
-          blur: this._handlerBlur,
-          keyup: this._handlerKeyup,
-          input: this._handlerInput
-        },
-        ref: 'input'
-      })
-    )
+    editBoxChild.push(h('pre', {
+      class: this.xclass('edit-box-pre')
+    }, [h('span', {
+      ref: 'pre'
+    }, this.value), h('br')]))
   }
 
   return h('div', {
-    class: this.stageClass.concat(
-      this.cPrefix,
-      this.xclass(`type-${this.type}`),
-      this.xclass([this.themeClass, this.uiClass])
-    ),
+    class: this.stageClass,
     directives: [{
       name: 'show',
       value: !this.hidden
@@ -108,12 +88,16 @@ export default function (h) {
       }, [
         h('row', {
           props: {
-            justify: 'justify'
+            justify: 'justify',
+            ui: this.ui,
+            theme: this.theme
           }
         }, [
           h('column', {
             props: {
-              span: this.$slots.header ? this.headerSpan : 0
+              span: this.$slots.header ? this.headerSpan : 0,
+              ui: this.ui,
+              theme: this.theme
             }
           }, [
             h('div', {
@@ -122,16 +106,25 @@ export default function (h) {
           ]),
           h('column', {
             props: {
-              span: this.inputBoxCol
+              span: this.inputBoxCol,
+              ui: this.ui,
+              theme: this.theme
             }
           }, [
             h('div', {
-              class: this.xclass('edit-box')
+              class: [
+                this.xclass('edit-box'),
+                {
+                  [this.xclass('edit-box-multiline')]: this.multiline
+                }
+              ]
             }, editBoxChild)
           ]),
           h('column', {
             props: {
-              span: this.$slots.footer ? this.footerSpan : 0
+              span: this.$slots.footer ? this.footerSpan : 0,
+              ui: this.ui,
+              theme: this.theme
             }
           }, [
             h('div', {
@@ -169,7 +162,8 @@ export default function (h) {
         return h('div', {
           class: [this.xclass('limit-txt')]
         }, [
-            h('span', this.inputTextLength), ' / ', h('span', this.max)])
+          h('span', this.inputTextLength), ' / ', h('span', this.max)
+        ])
       }
     })()
   ])

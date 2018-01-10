@@ -61,7 +61,9 @@ export default function (h) {
       h('shift', {
         class: [this.xclass('shift')],
         props: {
-          after: `${this.cPrefix}-active`
+          after: `${this.cPrefix}-active`,
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'shift'
       }, tabOption)

@@ -18,7 +18,9 @@ export default function (h) {
             class: [this.xclass('icon')],
             props: {
               kind: this.foldTitleIcon(contentIndex),
-              size: 'xs'
+              size: 'xs',
+              ui: this.ui,
+              theme: this.theme
             }
           })
         )

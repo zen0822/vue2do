@@ -57,6 +57,9 @@ import colComp from '../Col/Col'
 import {
   dataType
 } from '../../util/data/data'
+import {
+  hasScroller
+} from '../../util/dom'
 import tip from '../Message/tip'
 
 const TYPE_TEXT_AREA = 'area'
@@ -197,6 +200,9 @@ export default {
         return empty
       }
     },
+    labelDisplay() { // 输入框标签显示状态
+      return this.UIMaterial && !!this.label
+    },
     labelFloatDisplay() { // 输入框标签浮动的状态
       if (this.focusing) {
         return true
@@ -217,9 +223,15 @@ export default {
       return this.$store.getters[hubStore.input.get]
     },
     stageClass() { // 组件 stage 的 class 名字
-      return [{
-        [`${this.cPrefix}-textarea-stage`]: this.isTextarea
-      }]
+      return [
+        this.cPrefix,
+        this.xclass(`type-${this.type}`),
+        this.xclass([this.themeClass, this.uiClass]),
+        {
+          [`${this.cPrefix}-textarea-stage`]: this.isTextarea,
+          [this.xclass('label-cover')]: this.labelDisplay && !this.labelFloatDisplay
+        }
+      ]
     },
     wrapClass() {
       return [
@@ -390,8 +402,6 @@ export default {
      * @return {Object} this - 组件
      */
     _handlerFocus(evt) {
-      const refInput = this.$refs.input
-
       this.errorBorderDisplay = false
       this.verified = true
       this.focusing = true
@@ -442,9 +452,10 @@ export default {
      * @return {Object}
      */
     _handlerInput(event) {
-      this.value = this.multiline ?
-        event.currentTarget.innerText :
-        event.currentTarget.value
+      const refInput = this.$refs.input
+
+      this.value = event.currentTarget.value
+      this.multiline && (this.$refs.pre.innerText = this.value)
     }
   },
 

@@ -31,7 +31,6 @@ import tip from '../Message/tip'
 
 import Btn from '../Btn/Btn'
 import Icon from '../Icon/Icon'
-import Input from '../Input/Input'
 import Motion from './Motion'
 import Scroller from '../Scroller/Scroller'
 
@@ -60,7 +59,6 @@ export default {
   store,
 
   components: {
-    'input-box': Input,
     btn: Btn,
     motion: Motion,
     icon: Icon,

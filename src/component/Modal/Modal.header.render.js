@@ -8,7 +8,9 @@ export default function (h) {
           class: [this.xclass('header-nav')],
           props: {
             xs: 2,
-            l: 1
+            l: 1,
+            ui: this.ui,
+            theme: this.theme
           },
           nativeOn: {
             click: this.clickFullNav
@@ -28,7 +30,9 @@ export default function (h) {
       h('column', {
         props: {
           xs: this.commit ? 8 : 9,
-          l: this.commit ? 10 : 11
+          l: this.commit ? 10 : 11,
+          ui: this.ui,
+          theme: this.theme
         }
       }, [
         h('span', {
@@ -42,7 +46,9 @@ export default function (h) {
         h('column', {
           props: {
             xs: 2,
-            l: 1
+            l: 1,
+            ui: this.ui,
+            theme: this.theme
           }
         }, [h('span', this.okBtn)])
       )
@@ -51,7 +57,9 @@ export default function (h) {
     headerChildren.push(
       h('column', {
         props: {
-          span: 12
+          span: 12,
+          ui: this.ui,
+          theme: this.theme
         }
       }, [
         h('span', {

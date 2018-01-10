@@ -18,7 +18,9 @@ export default function (h) {
           h('icon', {
             props: {
               size: 'XS',
-              kind: this.checkedAll ? 'square-check-o' : 'square-o'
+              kind: this.checkedAll ? 'square-check-o' : 'square-o',
+              ui: this.ui,
+              theme: this.theme
             }
           }),
           h('span', {
@@ -67,7 +69,9 @@ export default function (h) {
               h('icon', {
                 props: {
                   size: 'xs',
-                  kind: this.iconName(item[this.valName])
+                  kind: this.iconName(item[this.valName]),
+                  ui: this.ui,
+                  theme: this.theme
                 }
               }),
               h('motion-rip', {
@@ -76,6 +80,10 @@ export default function (h) {
               }),
               h('div', {
                 class: [this.xclass('motion-rip')],
+                props: {
+                  ui: this.ui,
+                  theme: this.theme
+                },
                 directives: [{
                   name: 'show',
                   value: this.motion[index]

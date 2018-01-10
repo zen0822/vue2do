@@ -38,7 +38,9 @@ export default function (h) {
       buttonChildren.push(h('loading', {
         class: [this.xclass('loading')],
         props: {
-          'bg-display': false
+          bgDisplay: false,
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'loading'
       }))
@@ -65,7 +67,9 @@ export default function (h) {
         class: [this.xclass('rip')],
         props: {
           assign: !this.isFloatBtn,
-          mousePoi: this.mousePoi
+          mousePoi: this.mousePoi,
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'transition'
       }),

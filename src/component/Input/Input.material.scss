@@ -14,6 +14,8 @@ $INPUT_WIDTH: 170px;
 $INPUT_BORDER_WIDTH: 1px;
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  padding-top: $gutter-v;
+
   &:hover {
     .#{$C_PREFIX}-wrap {
       & > .#{$C_PREFIX}-wrap-border {
@@ -31,6 +33,12 @@ $INPUT_BORDER_WIDTH: 1px;
           border: $border-dark-color $border-thin solid;
         }
       }
+    }
+  }
+
+  &.#{$C_PREFIX}-label-cover {
+    & > .#{$C_PREFIX}-wrap .#{$C_PREFIX}-edit-box-input {
+      cursor: pointer;
     }
   }
 
@@ -107,6 +115,7 @@ $INPUT_BORDER_WIDTH: 1px;
     }
 
     .#{$C_PREFIX}-edit-box {
+      & > .#{$C_PREFIX}-edit-box-pre,
       & > .#{$C_PREFIX}-edit-box-input {
         padding: $gap-v 0;
       }
@@ -123,6 +132,8 @@ $INPUT_BORDER_WIDTH: 1px;
         padding: $gap-v 0;
         transition: all 150ms ease-in-out;
         color: $grey;
+        box-sizing: border-box;
+        cursor: pointer;
 
         &-float {
           color: $primary-color;

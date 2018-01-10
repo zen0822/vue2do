@@ -19,18 +19,30 @@ function foldContent(h, foldList) {
 
       foldChildren.push(
         h('fold-title', {
+          props: {
+            ui: this.ui,
+            theme: this.theme
+          },
           slot: 'title-' + flodNum
         }, item.name)
       )
 
       foldChildren.push(
         h('fold-content', {
+          props: {
+            ui: this.ui,
+            theme: this.theme
+          },
           slot: 'content-' + flodNum
         }, [contentChildren])
       )
     } else {
       foldChildren.push(
         h('fold-title', {
+          props: {
+            ui: this.ui,
+            theme: this.theme
+          },
           slot: 'title-' + flodNum
         }, [
           h('router-link', {
@@ -53,7 +65,9 @@ function foldContent(h, foldList) {
   return h('fold', {
     props: {
       only: this.isSmallDevice ? true : this.only,
-      spreadAll: this.isSmallDevice ? false : this.spreadAll
+      spreadAll: this.isSmallDevice ? false : this.spreadAll,
+      ui: this.ui,
+      theme: this.theme
     },
     class: [this.xclass('sub-fold')]
   }, foldChildren)
@@ -75,7 +89,9 @@ export default function (h) {
       }, [
         h('icon', {
           props: {
-            kind: 'close'
+            kind: 'close',
+            ui: this.ui,
+            theme: this.theme
           }
         })
       ]),
@@ -92,6 +108,10 @@ export default function (h) {
           name: 'show',
           value: this.isStageActive
         }],
+        props: {
+          ui: this.ui,
+          theme: this.theme
+        },
         ref: 'transition'
       }, [
         h('div', {
@@ -108,7 +128,9 @@ export default function (h) {
     navStage.push(
       h('slide-transition', {
         props: {
-          offset: 0
+          offset: 0,
+          ui: this.ui,
+          theme: this.theme
         },
         directives: [{
           name: 'show',
@@ -149,19 +171,25 @@ export default function (h) {
       h('row', [
         h('column', {
           props: {
-            span: 6
+            span: 6,
+            ui: this.ui,
+            theme: this.theme
           }
         }, this.title),
         h('column', {
           class: [this.xclass('arrow')],
           props: {
-            span: 6
+            span: 6,
+            ui: this.ui,
+            theme: this.theme
           }
         }, [
           h('icon', {
             props: {
               kind: this.isStageActive ? 'spread' : 'fold',
-              size: 's'
+              size: 's',
+              ui: this.ui,
+              theme: this.theme
             }
           })
         ])

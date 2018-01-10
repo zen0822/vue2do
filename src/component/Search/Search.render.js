@@ -9,6 +9,10 @@ export default function (h) {
     (() => {
       if (this.input) {
         return h('input-box', {
+          props: {
+            ui: this.ui,
+            theme: this.theme
+          },
           class: [this.xclass('input')]
         })
       } else {
@@ -29,8 +33,9 @@ export default function (h) {
           auto: true,
           pageType: 'more',
           pager: true,
-          theme: 'default',
-          scrollerHeight: 150
+          scrollerHeight: 150,
+          ui: this.ui,
+          theme: this.theme
         },
         scopedSlots: {
           default: (props) => {

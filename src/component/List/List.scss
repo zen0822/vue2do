@@ -38,7 +38,6 @@ $C_PREFIX: #{ $COMP_LIST };
       list-style-type: none;
 
       &>.#{$C_PREFIX}-li {
-        border-bottom: $border-color $border-thin solid;
         padding: $gap-v 0;
 
         &:last-child {

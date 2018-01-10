@@ -7,7 +7,9 @@ export default function (h) {
     props: {
       direction: this.popDirection,
       global: !this.part,
-      speed: this.speed
+      speed: this.speed,
+      ui: this.ui,
+      theme: this.theme
     },
     ref: 'transition'
   }, [

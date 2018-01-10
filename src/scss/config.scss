@@ -20,11 +20,11 @@ $success-light-color: #98ee99 !default;
 $warning-light-color: #ffff8b !default;
 $orange-light-color: #ffd95b !default;
 
-$blue-lighter-color: rgba($blue-color, 0.2);
-$danger-lighter-color: rgba($danger-color, 0.2);
-$success-lighter-color: rgba($success-color, 0.2);
-$warning-lighter-color: rgba($warning-color, 0.2);
-$orange-lighter-color: rgba($orange-color, 0.2);
+$blue-lighter-color: rgba($blue-color, 0.2) !default;
+$danger-lighter-color: rgba($danger-color, 0.2) !default;
+$success-lighter-color: rgba($success-color, 0.2) !default;
+$warning-lighter-color: rgba($warning-color, 0.2) !default;
+$orange-lighter-color: rgba($orange-color, 0.2) !default;
 
 $blue-dark-color: #0069c0 !default;
 $danger-dark-color: #b61827 !default;
@@ -38,11 +38,11 @@ $success-darker-color: #338a3e !default;
 $warning-darker-color: #c9bc1f !default;
 $orange-darker-color: #c77800 !default;
 
-$primary-color: $danger-color !default;
-$primary-light-color: $danger-light-color !default;
-$primary-lighter-color: $danger-lighter-color !default;
-$primary-dark-color: $danger-dark-color !default;
-$primary-darker-color: $danger-darker-color !default;
+$primary-color: $blue-color !default;
+$primary-light-color: $blue-light-color !default;
+$primary-lighter-color: $blue-lighter-color !default;
+$primary-dark-color: $blue-dark-color !default;
+$primary-darker-color: $blue-darker-color !default;
 
 $secondary-color: #999999 !default;
 
@@ -125,12 +125,12 @@ $z-index-message: 1001 !default;
 $shadow-lower:
     0 2px 2px 0 rgba(0,0,0,0.14),
     0 3px 1px -2px rgba(0,0,0,0.12),
-    0 1px 5px 0 rgba(0,0,0,0.2);
+    0 1px 5px 0 rgba(0,0,0,0.2) !default;
 $shadow:
     0 8px 10px 1px rgba(0,0,0,0.14),
     0 3px 14px 2px rgba(0,0,0,0.12),
-    0 5px 5px -3px rgba(0,0,0,0.2);
+    0 5px 5px -3px rgba(0,0,0,0.2) !default;
 $shadow-highter:
     0 8px 10px 1px rgba(0,0,0,0.14),
     0 3px 14px 2px rgba(0,0,0,0.12),
-    0 5px 5px -3px rgba(0,0,0,0.2);
+    0 5px 5px -3px rgba(0,0,0,0.2) !default;

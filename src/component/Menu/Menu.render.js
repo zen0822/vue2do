@@ -19,13 +19,17 @@ export default function (h) {
     const triggerBox = $slotTrigger ? this.$slots.trigger : [
       h('btn', {
         props: {
-          type: 'float'
+          type: 'float',
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'triggerBtn'
       }, [h('icon', {
         props: {
           kind: 'sort',
-          size: 'S'
+          size: 'S',
+          ui: this.ui,
+          theme: this.theme
         }
       })])
     ]
@@ -66,7 +70,9 @@ export default function (h) {
       }, [h('scroller', {
         props: {
           height: this.height,
-          width: '100%'
+          width: '100%',
+          ui: this.ui,
+          theme: this.theme
         },
         ref: 'scroller'
       }, [

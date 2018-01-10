@@ -21,6 +21,7 @@ $C_PREFIX: #{ $COMP_INPUT };
       }
 
       .#{$C_PREFIX}-edit-box {
+        & > .#{$C_PREFIX}-edit-box-pre,
         & > .#{$C_PREFIX}-edit-box-input {
           padding: $gutter-v;
         }

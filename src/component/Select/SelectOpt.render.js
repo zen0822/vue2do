@@ -17,7 +17,9 @@ export default function (h) {
           props: {
             multiple: true,
             initVal: this.$parent.selectAll ? [-1] : [],
-            initOpt: this.selectedAllCheckOpt
+            initOpt: this.selectedAllCheckOpt,
+            ui: this.ui,
+            theme: this.theme
           }
         }),
         h('span', this.$parent.selectAllTxt)
@@ -38,16 +40,19 @@ export default function (h) {
       rowEle.push(
         h('column', {
           props: {
-            span: 1
+            span: 1,
+            ui: this.ui,
+            theme: this.theme
           }
         }, [
           h('check', {
             class: [this.xclass('li-check')],
             props: {
-              theme: 'default',
               multiple: true,
               initVal: this.optRoot.checkboxVal(optVal),
-              initOpt: this.selectedAllCheckOpt
+              initOpt: this.selectedAllCheckOpt,
+              ui: this.ui,
+              theme: this.theme
             }
           })
         ])
@@ -58,7 +63,9 @@ export default function (h) {
       rowEle.push(
         h('column', {
           props: {
-            span: 11
+            span: 11,
+            ui: this.ui,
+            theme: this.theme
           }
         }, [
           this.$scopedSlots[index]({
@@ -70,7 +77,9 @@ export default function (h) {
       rowEle.push(
         h('column', {
           props: {
-            span: 11
+            span: 11,
+            ui: this.ui,
+            theme: this.theme
           }
         }, [
           h('span', {
@@ -89,7 +98,9 @@ export default function (h) {
     element.push(
       h('row', {
         props: {
-          justify: 'justify'
+          justify: 'justify',
+          ui: this.ui,
+          theme: this.theme
         }
       }, rowEle)
     )
@@ -98,7 +109,9 @@ export default function (h) {
       element.push(
         h('icon', {
           props: {
-            kind: 'caret-right'
+            kind: 'caret-right',
+            ui: this.ui,
+            theme: this.theme
           }
         }),
         h('menu-opt', {
@@ -119,7 +132,9 @@ export default function (h) {
     }, [
       element, h('motion-rip', {
         props: {
-          switch: this.pressing
+          switch: this.pressing,
+          ui: this.ui,
+          theme: this.theme
         },
         on: {
           'afterEnter': () => {
@@ -140,7 +155,8 @@ export default function (h) {
         pageType: 'more',
         pager: true,
         scrollerHeight: 200,
-        theme: 'default'
+        ui: this.ui,
+        theme: this.theme
       },
       scopedSlots: {
         default: scopedSlots

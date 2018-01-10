@@ -66,7 +66,7 @@ const modalComp = {
     scroller: Scroller,
     row: Row,
     column: Col,
-    'fade-transition': MotionFade
+    'motion-fade': MotionFade
   },
 
   props: {

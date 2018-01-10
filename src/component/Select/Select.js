@@ -45,12 +45,10 @@ import Check from '../Check/Check'
 import Scroller from '../Scroller/Scroller'
 
 import Menu from '../Menu/Menu'
-import MenuTrig from '../Menu/MenuTrig'
 
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 import apiMixin from './Select.api'
-import MotionFold from '../MotionFold/MotionFold'
 
 import {
   handleEleDisplay
@@ -78,10 +76,8 @@ export default {
 
   components: {
     'menu-comp': Menu,
-    'menu-trig': MenuTrig,
     'select-opt': SelectOpt,
     'input-box': Input,
-    'fold-transition': MotionFold,
     icon: Icon,
     check: Check,
     scroller: Scroller

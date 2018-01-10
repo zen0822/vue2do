@@ -6,7 +6,9 @@ export default function (h) {
   return h('zoom-transition', {
     props: {
       speed: 'fast',
-      origin: '50% 0'
+      origin: '50% 0',
+      ui: this.ui,
+      theme: this.theme
     },
     ref: 'transition'
   }, [
@@ -32,13 +34,17 @@ export default function (h) {
         h('icon', {
           class: [this.xclass('border')],
           props: {
-            kind: 'triangle-up'
+            kind: 'triangle-up',
+            ui: this.ui,
+            theme: this.theme
           }
         }),
         h('icon', {
           class: [this.xclass('body')],
           props: {
-            kind: 'triangle-up'
+            kind: 'triangle-up',
+            ui: this.ui,
+            theme: this.theme
           }
         })
       ]),
