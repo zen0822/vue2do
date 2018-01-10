@@ -17,7 +17,12 @@ export default function (h) {
         directives: [{
           name: 'show',
           value: !!this.label
-        }]
+        }],
+        on: {
+          click: () => {
+            this.$refs.input.focus()
+          }
+        }
       }, this.label)
     )
   }
@@ -43,6 +48,9 @@ export default function (h) {
           name: 'focus',
           value: this.focusing
         }],
+        domProps: {
+          innerText: this.value
+        },
         on: {
           focus: this._handlerFocus,
           blur: this._handlerBlur,

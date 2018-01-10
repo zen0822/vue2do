@@ -390,6 +390,8 @@ export default {
      * @return {Object} this - 组件
      */
     _handlerFocus(evt) {
+      const refInput = this.$refs.input
+
       this.errorBorderDisplay = false
       this.verified = true
       this.focusing = true
