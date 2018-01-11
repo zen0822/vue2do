@@ -5,6 +5,7 @@
 export default function (h) {
   let children = []
   let editBoxChild = []
+  let wrapChildren = []
 
   editBoxChild.push(
     h('motion-fade', {
@@ -80,61 +81,84 @@ export default function (h) {
     }, this.value), h('br')]))
   }
 
-  children.push(
-    h('div', {
-      class: this.wrapClass
-    }, [
+  if (this.UIMaterial) {
+    wrapChildren.push(
       h('div', {
-        class: [this.xclass('wrap-border')]
+        class: [
+          this.xclass(['wrap-border-motion', 'wrap-border-motion-edit']),
+          {
+            [this.xclass('wrap-border-motion-active')]: this.editBorderActive
+          }
+        ]
+      }),
+      h('div', {
+        class: [
+          this.xclass(['wrap-border-motion', 'wrap-border-motion-error']),
+          {
+            [this.xclass('wrap-border-motion-active')]: this.errorTextDisplay
+          }
+        ]
+      })
+    )
+  }
+
+  wrapChildren.push(
+    h('div', {
+      class: [this.xclass('wrap-border')]
+    }, [
+      h('row', {
+        props: {
+          justify: 'justify',
+          ui: this.ui,
+          theme: this.theme
+        }
       }, [
-        h('row', {
+        h('column', {
           props: {
-            justify: 'justify',
+            span: this.$slots.header ? this.headerSpan : 0,
             ui: this.ui,
             theme: this.theme
           }
         }, [
-          h('column', {
-            props: {
-              span: this.$slots.header ? this.headerSpan : 0,
-              ui: this.ui,
-              theme: this.theme
-            }
-          }, [
-            h('div', {
-              class: this.xclass('edit-box-header')
-            }, this.$slots.header)
-          ]),
-          h('column', {
-            props: {
-              span: this.inputBoxCol,
-              ui: this.ui,
-              theme: this.theme
-            }
-          }, [
-            h('div', {
-              class: [
-                this.xclass('edit-box'),
-                {
-                  [this.xclass('edit-box-multiline')]: this.multiline
-                }
-              ]
-            }, editBoxChild)
-          ]),
-          h('column', {
-            props: {
-              span: this.$slots.footer ? this.footerSpan : 0,
-              ui: this.ui,
-              theme: this.theme
-            }
-          }, [
-            h('div', {
-              class: this.xclass('edit-box-footer')
-            }, this.$slots.footer)
-          ])
+          h('div', {
+            class: this.xclass('edit-box-header')
+          }, this.$slots.header)
+        ]),
+        h('column', {
+          props: {
+            span: this.inputBoxCol,
+            ui: this.ui,
+            theme: this.theme
+          }
+        }, [
+          h('div', {
+            class: [
+              this.xclass('edit-box'),
+              {
+                [this.xclass('edit-box-multiline')]: this.multiline
+              }
+            ]
+          }, editBoxChild)
+        ]),
+        h('column', {
+          props: {
+            span: this.$slots.footer ? this.footerSpan : 0,
+            ui: this.ui,
+            theme: this.theme
+          }
+        }, [
+          h('div', {
+            class: this.xclass('edit-box-footer')
+          }, this.$slots.footer)
         ])
       ])
     ])
+  )
+
+  children.push(
+    h('div', {
+      class: this.wrapClass
+    }, wrapChildren)
   )
 
   if (this.completion) {
@@ -164,22 +188,27 @@ export default function (h) {
       h('div', {
         class: [this.xclass('tip')]
       }, [
-        h('div', {
-          class: [this.xclass('tip-helper')],
-          directives: [{
-            name: 'show',
-            value: this.helperTextDisplay
-          }]
-        }, this.helperText),
         h('motion-fade', {
+          props: {
+            speed: 'fast'
+          },
+          ref: 'helperTip'
+        }, [
+          h('div', {
+            class: [this.xclass('tip-helper')]
+          }, this.helperText)
+        ]),
+        h('motion-fade', {
+          props: {
+            speed: 'fast'
+          },
           ref: 'errorTip'
         }, [
           h('div', {
             class: [this.xclass('tip-error')]
           }, this.errorTip)
         ])
-      ])
-    )
+      ]))
   }
 
   return h('div', {

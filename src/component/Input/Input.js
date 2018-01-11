@@ -188,7 +188,8 @@ export default {
       dataTypeName: '', // 数据类型的名称
       verified: true, // 是否验证通过
       inputTextLength: 0, // 当前输入框值的长度
-      errorBorderDisplay: false // 错误提示框的显示状态
+      errorBorderDisplay: false, // 错误提示框的显示状态
+      editBorderActive: false // 在 material 下编辑的边框显示状态
     }
   },
 
@@ -231,13 +232,6 @@ export default {
     errorTextDisplay() { // 错误提示的显示状态
       return !!this.errorTip && this.errorTipType === 'bottom'
     },
-    helperTextDisplay() { // 错误提示的显示状态
-      return !this.errorTextDisplay
-    },
-    tipDisplay() { // 帮助的提示文本和错误提示文本的区域
-      return this.helperText || this.required || this.verifiedType || this.regex ||
-        this.max || this.min || this.maxNum || this.minNum
-    },
     isTextarea() {
       return this.type === TYPE_TEXT_AREA
     },
@@ -254,7 +248,8 @@ export default {
         this.xclass([this.themeClass, this.uiClass]),
         {
           [`${this.cPrefix}-textarea-stage`]: this.isTextarea,
-          [this.xclass('label-cover')]: this.labelDisplay && !this.labelFloatDisplay
+          [this.xclass('label-cover')]: this.labelDisplay && !this.labelFloatDisplay,
+          [this.xclass('block')]: this.block
         }
       ]
     },
@@ -263,6 +258,9 @@ export default {
         this.xclass('wrap'),
         {
           [`${this.cPrefix}-editting`]: this.focusing
+        },
+        {
+          [`${this.cPrefix}-error`]: this.errorTextDisplay
         },
         {
           [`${this.cPrefix}-error-border`]: this.errorBorderDisplay
@@ -308,13 +306,9 @@ export default {
       }
     },
     errorTextDisplay(val) {
-      const refErrorTip = this.$refs.errorTip
-
-      if (!refErrorTip) {
-        return false
+      if (this.tipDisplay) {
+        val ? this.$refs.helperTip.leave() : this.$refs.errorTip.leave()
       }
-
-      val ? refErrorTip.enter() : refErrorTip.leave()
     },
     placeholderDisplay(val) {
       const refPalceholder = this.$refs.palceholder
@@ -328,6 +322,18 @@ export default {
   },
 
   methods: {
+    _binder() {
+      if (this.tipDisplay) {
+        this.$refs.errorTip.$on('afterLeave', () => {
+          this.$refs.helperTip.enter()
+        })
+
+        this.$refs.helperTip.$on('afterLeave', () => {
+          this.$refs.errorTip.enter()
+        })
+      }
+    },
+
     /**
      * 初始化验证规则
      * @return {Object} this - 组件
@@ -422,8 +428,15 @@ export default {
      */
     _handlerFocus(evt) {
       this.errorBorderDisplay = false
+      this.editBorderActive = true
       this.verified = true
       this.focusing = true
+
+      if (this.activeVerify) {
+        this.editBorderActive = true
+      } else {
+        this.editBorderActive = !this.errorTextDisplay
+      }
 
       return this.$emit('focus', {
         emitter: this,
@@ -443,7 +456,13 @@ export default {
         this.value = this._switchNum(this.value)
       }
 
-      this.verify()
+      if (this.activeVerify) {
+        this.editBorderActive = false
+      } else {
+        this.verify()
+
+        this.editBorderActive = this.errorTextDisplay
+      }
 
       return this.$emit('blur', {
         emitter: this,
@@ -477,11 +496,19 @@ export default {
 
       this.value = event.currentTarget.value
       this.multiline && (this.$refs.pre.innerText = this.value)
+
+      if (!this.activeVerify && this.focusing && this.errorTextDisplay) {
+        this.verify()
+        this.editBorderActive = !this.errorTextDisplay
+      }
     }
   },
 
   created() {
     this.placeholderStartedDisplay = this.placeholderDisplay // 占位符一开始的显示状态
+    // 输入框提示处的显示状态
+    this.tipDisplay = this.helperText || this.required || this.verifiedType || this.regex ||
+      this.max || this.min || this.maxNum || this.minNum
   },
 
   mounted() {

@@ -32,6 +32,14 @@ $INPUT_BORDER_WIDTH: 1px;
         }
       }
 
+      &.#{$C_PREFIX}-editting {
+        & > .#{$C_PREFIX}-wrap-border {
+          border-color: $primary-color !important;
+        }
+
+        border-color: $primary-color !important;
+      }
+
       .#{$C_PREFIX}-edit-box {
         $gutter-v: 13px;
         $gutter-v-triple: 26px;
@@ -62,8 +70,7 @@ $INPUT_BORDER_WIDTH: 1px;
   }
 
   & > .#{$C_PREFIX}-wrap {
-    &::after {
-      content: '';
+    & > .#{$C_PREFIX}-wrap-border-motion {
       position: absolute;
       width: 0;
       height: $border-thick;
@@ -71,11 +78,22 @@ $INPUT_BORDER_WIDTH: 1px;
       right: 0;
       margin: 0 auto;
       bottom: -1px;
-      background-color: $primary-color;
       z-index: 1;
       transition-property: width;
       transition-duration: 300ms;
       transition-timing-function: ease-in-out;
+
+      &.#{$C_PREFIX}-wrap-border-motion-active {
+        width: 100%;
+      }
+    }
+
+    & > .#{$C_PREFIX}-wrap-border-motion-edit {
+      background-color: $primary-color;
+    }
+
+    & > .#{$C_PREFIX}-wrap-border-motion-error {
+      background-color: $danger-color;
     }
 
     &:hover {
@@ -86,13 +104,9 @@ $INPUT_BORDER_WIDTH: 1px;
       border-color: $border-dark-color;
     }
 
-    &.#{$C_PREFIX}-error-border {
-      outline: none;
-    }
-
-    &.#{$C_PREFIX}-editting {
-      &::after {
-        width: 100%;
+    &.#{$C_PREFIX}-error {
+      .#{$C_PREFIX}-edit-box-label {
+        color: $danger-color;
       }
     }
 

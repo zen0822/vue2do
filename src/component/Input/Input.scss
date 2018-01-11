@@ -21,6 +21,10 @@ $input-gap-v: 8px;
   position: relative;
   font-size: $h3;
 
+  &.#{$C_PREFIX}-block {
+    width: 100%;
+  }
+
   &.#{$C_PREFIX}-type-area {
     & > .#{$C_PREFIX}-wrap {
       border: $border-color $border-thin solid;
@@ -45,10 +49,6 @@ $input-gap-v: 8px;
     border-bottom: $border-color $border-thin solid;
     background-color: #fff;
     box-sizing: border-box;
-
-    &.#{$C_PREFIX}-error-border {
-      outline: $danger-color $border-thin solid;
-    }
 
     .#{$C_PREFIX}-edit-box-start {
       & > .#{$C_PREFIX}-icon-stage {
@@ -122,6 +122,20 @@ $input-gap-v: 8px;
     margin-top: $gap-v;
     font-size: $h5;
     color: $grey;
+    position: relative;
+
+    &::after {
+      content: 'd';
+      visibility: hidden;
+    }
+
+    &-error,
+    &-helper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
 
     &-error {
       color: $danger-color;
