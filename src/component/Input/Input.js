@@ -5,7 +5,7 @@
  * @prop hidden - 设置为隐藏域
  * @prop initVal - 设置当前输入框的值
  * @prop label - 输入框的标签
- * @prop multiline - type 为 field 可以输入多行文本
+ * @prop multiline - 可以输入多行文本（自适应文本高度）
  * @prop number - 输入框的数字指定为 nmuber 类型
  * @prop placeholder - 占位符
  * @prop param - 查询参数名
@@ -16,15 +16,16 @@
  * @prop type - 输入框类型( field | area )
  *
  * @prop completion - 是否启用自动搜索补全功能
- * @prop errorMessage - input 为空和格式不对的错误信息
- * @prop errorTipType - 弹出错误提示的类型（ bubble | tip ）
- * @prop formatMessage - 格式错误的提示信息
+ * @prop helperText - 输入框下的帮助信息
+ * @prop errorText - 当设置了 regex 时会显示格式错误的提示信息
+ * @prop errorTipType - 弹出错误提示的类型（ bottom | tip ）
  * @prop min - input，textarea 可输入最小长度（数字）
  * @prop max - input，textarea 可输入最大长度（数字）
  * @prop minNum - input，textarea 可输入最小数字
  * @prop maxNum - input，textarea 可输入最大数字
  * @prop regex - 验证值的正则
- * @prop verifiedType - 验证值的类型
+ * @prop activeVerify - 主动验证值（否则失去焦点的时候会自动验证值）
+ * @prop verifiedType - 预设的验证值的类型（错误信息将会加上 name 属性展示）
  *
  * @prop headerSpan - 输入框头附加项的横向阑珊格
  * @prop footerSpan - 输入框尾附加项的横向阑珊格
@@ -51,8 +52,9 @@ import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 import apiMixin from './Input.api'
 
-import rowComp from '../Row/Row'
-import colComp from '../Col/Col'
+import Row from '../Row/Row'
+import Col from '../Col/Col'
+import MotionFade from '../MotionFade/MotionFade'
 
 import {
   dataType
@@ -76,13 +78,18 @@ export default {
   mixins: [baseMixin, formMixin, apiMixin],
 
   components: {
-    row: rowComp,
-    column: colComp
+    row: Row,
+    column: Col,
+    'motion-fade': MotionFade
   },
 
   store,
 
   props: {
+    activeVerify: {
+      type: Boolean,
+      default: false
+    },
     block: {
       type: Boolean,
       default: false
@@ -90,6 +97,10 @@ export default {
     hidden: {
       type: Boolean,
       default: false
+    },
+    helperText: {
+      type: String,
+      default: ''
     },
     initVal: {
       type: [String, Number],
@@ -133,17 +144,19 @@ export default {
     },
     required: {
       type: Boolean,
-      default: true
+      default: false
     },
-    errorMessage: {
+    errorText: {
       type: String,
       default: ''
     },
     errorTipType: {
       type: String,
-      default: 'tip'
+      default: 'bottom',
+      validator(val) {
+        return ['bottom', 'pop'].includes(val)
+      }
     },
-    formatMessage: String,
     min: Number,
     max: Number,
     minNum: Number,
@@ -171,10 +184,9 @@ export default {
       value: this.number ? this._switchNum(this.initVal) : this.initVal, // 输入框的当前的值
       focusing: false, // 输入框是否处于 focus 状态
       keyuping: false, // 是否处于 keyup 状态
-      dangerTip: '', // 错误信息提示信息
+      errorTip: '', // 错误信息提示信息
       dataTypeName: '', // 数据类型的名称
       verified: true, // 是否验证通过
-      bubbleDisplay: false, // 冒泡的错误提示显示状态
       inputTextLength: 0, // 当前输入框值的长度
       errorBorderDisplay: false // 错误提示框的显示状态
     }
@@ -184,8 +196,14 @@ export default {
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-input`
     },
-    _formatMessage() { // 格式不对的报错信息
-      return this.errorMessage ? this.errorMessage + '格式不对' : this.dataTypeName + '格式不对'
+    formatMessage() { // 格式不对的报错信息
+      if (this.regex) {
+        return this.errorMsg
+      } else if (this.verifiedType) {
+        return `${this.dataTypeName}格式不对`
+      } else {
+        return `${this.name}格式不对`
+      }
     },
     placeholderDisplay() { // 输入框占位符的显示状态
       const empty = this.value === '' || this.value === undefined
@@ -210,8 +228,15 @@ export default {
         return !(this.value === '' || this.value === undefined)
       }
     },
-    dangerTipDisplay() {
-      return !!this.dangerTip && this.bubbleDisplay
+    errorTextDisplay() { // 错误提示的显示状态
+      return !!this.errorTip && this.errorTipType === 'bottom'
+    },
+    helperTextDisplay() { // 错误提示的显示状态
+      return !this.errorTextDisplay
+    },
+    tipDisplay() { // 帮助的提示文本和错误提示文本的区域
+      return this.helperText || this.required || this.verifiedType || this.regex ||
+        this.max || this.min || this.maxNum || this.minNum
     },
     isTextarea() {
       return this.type === TYPE_TEXT_AREA
@@ -281,6 +306,24 @@ export default {
       if (this.completion && this.$slots.completion) {
         this.$slots.completion[0].componentInstance.search(val)
       }
+    },
+    errorTextDisplay(val) {
+      const refErrorTip = this.$refs.errorTip
+
+      if (!refErrorTip) {
+        return false
+      }
+
+      val ? refErrorTip.enter() : refErrorTip.leave()
+    },
+    placeholderDisplay(val) {
+      const refPalceholder = this.$refs.palceholder
+
+      if (!refPalceholder) {
+        return false
+      }
+
+      val ? refPalceholder.enter() : refPalceholder.leave()
     }
   },
 
@@ -307,26 +350,6 @@ export default {
     },
 
     /**
-     * 初始化验证的提示信息
-     * @return {Object} this - 组件
-     */
-    _initVerfiedMessage() {
-      let errorMessage = this.errorMessage
-
-      if (errorMessage) {
-        this.emptyMessage = errorMessage
-        this.lengthMessage = errorMessage
-
-        return this
-      }
-
-      this.emptyMessage = this.errorMessage ? this.errorMessage : '不能为空'
-      this.lengthMessage = this.errorMessage ? this.errorMessage : '长度超过限制'
-
-      return this
-    },
-
-    /**
      * 派送 value 的 change 事件
      * @return {Object} this - 组件
      */
@@ -342,27 +365,23 @@ export default {
      *
      * @return {Object} -
      *                  verified - 验证情况
-     *                  dangerTip - 错误提示
+     *                  errorTip - 错误提示
      */
     _verifyEmpty(firstVerify) {
-      let dangerTip = ''
+      let errorTip = ''
 
       if (this.required) {
-        if (this.bubbleDisplay) {
-          dangerTip = firstVerify ? '' : `请输入${this.emptyMessage}!`
-        } else {
-          dangerTip = `请输入${this.emptyMessage}!`
-        }
+        errorTip = `${this.name}不能为空`
 
         return {
           verified: false,
-          dangerTip
+          errorTip
         }
       }
 
       return {
         verified: true,
-        dangerTip
+        errorTip
       }
     },
 
@@ -424,6 +443,8 @@ export default {
         this.value = this._switchNum(this.value)
       }
 
+      this.verify()
+
       return this.$emit('blur', {
         emitter: this,
         valeu: this.value,
@@ -460,12 +481,11 @@ export default {
   },
 
   created() {
-    this.bubbleDisplay = this.errorTipType !== ERROR_MESSAGE_TIP
+    this.placeholderStartedDisplay = this.placeholderDisplay // 占位符一开始的显示状态
   },
 
   mounted() {
     this._initVerfication()
-    this._initVerfiedMessage()
 
     this.$store.dispatch(hubStore.input.add, this)
   }

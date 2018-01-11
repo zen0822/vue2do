@@ -4,6 +4,8 @@ div
   article.example-article
     +section('start', '开始使用')
       z-input(
+        required
+        helper-text='输入文本'
         multiline placeholder='asd输入区域' ref='startInput' ui='bootstrap')
       z-code.
         #{'<z-input></z-input>'}
@@ -41,11 +43,12 @@ div
         #{'<z-input>'}
     +section('verify', '验证功能')
       z-input(
-          errorTipType='bubble'
+          label='手机'
           :min='2'
           :max='11'
-          error-message='手机'
-          placeholder='限制只能输入2-10位以内'
+          name='手机'
+          placeholder='例如: 13111111111'
+          helper-text='限制只能输入2-10位以内'
           verified-type='mobile'
           :header-span='4'
           ref='verifyInput')

@@ -14,7 +14,7 @@ export default {
      */
     verify(firstVerify) {
       let verified = true
-      let dangerTip = ''
+      let errorTip = ''
 
       const returnFun = () => {
         if (!verified) {
@@ -22,7 +22,7 @@ export default {
         }
 
         this.verified = verified
-        this.dangerTip = dangerTip
+        this.errorTip = errorTip
 
         return verified
       }
@@ -35,12 +35,12 @@ export default {
         let verifyEmpty = this._verifyEmpty()
 
         verified = verifyEmpty.verified
-        dangerTip = verifyEmpty.dangerTip
+        errorTip = verifyEmpty.errorTip
 
         return returnFun()
       } else {
         if (this.number && isNaN(this.value)) {
-          dangerTip = `${this.errorMessage}请输入数字类型`
+          errorTip = `${this.errorMsg}请输入数字类型`
           verified = false
 
           return returnFun()
@@ -49,10 +49,10 @@ export default {
         if (this.min) {
           if (this.number) {
             verified = this.min <= this.value
-            dangerTip = verified ? '' : `${this.lengthMessage}不能小于${this.min}!`
+            errorTip = verified ? '' : `${this.name}不能小于${this.min}!`
           } else {
             verified = this.min <= this.value.toString().length
-            dangerTip = verified ? '' : `${this.lengthMessage}长度不能小于${this.min}个字符!`
+            errorTip = verified ? '' : `${this.name}长度不能小于${this.min}个字符!`
           }
 
           if (!verified) {
@@ -62,7 +62,7 @@ export default {
 
         if (this.max) {
           verified = this.max >= this.value.toString().length
-          dangerTip = verified ? '' : `${this.lengthMessage}长度不能大于${this.max}个字符!`
+          errorTip = verified ? '' : `${this.name}长度不能大于${this.max}个字符!`
 
           if (!verified) {
             return returnFun()
@@ -73,7 +73,7 @@ export default {
           let value = Number(this.value)
 
           verified = this.minNum <= value
-          dangerTip = verified ? '' : `${this.lengthMessage}不能小于${this.minNum}!`
+          errorTip = verified ? '' : `${this.name}不能小于${this.minNum}!`
 
           if (!verified) {
             return returnFun()
@@ -84,7 +84,7 @@ export default {
           let value = Number(this.value)
 
           verified = this.maxNum >= value
-          dangerTip = verified ? '' : `${this.lengthMessage}不能大于${this.maxNum}!`
+          errorTip = verified ? '' : `${this.name}不能大于${this.maxNum}!`
 
           if (!verified) {
             return returnFun()
@@ -95,9 +95,9 @@ export default {
           verified = false
 
           if (firstVerify) {
-            dangerTip = ''
+            errorTip = ''
           } else {
-            dangerTip = this.formatMessage ? this.formatMessage : this._formatMessage
+            errorTip = this.formatText ? this.formatText : this._formatMessage
           }
 
           return returnFun()
@@ -117,7 +117,7 @@ export default {
 
       if (!this.verified) {
         this.errorBorderDisplay = true
-        tip(this.dangerTip)
+        tip(this.errorTip)
 
         return false
       }

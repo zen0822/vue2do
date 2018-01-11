@@ -1,9 +1,9 @@
 /**
  * base 混入
  *
- * @prop id - 实例的唯一标识符
- * @prop name - 实例的中文名字
- * @prop theme - 主题 (primary | success | warning | danger | default | orange | blue)
+ * @prop id - 用户定义的唯一标识符
+ * @prop name - 用户定义的实例名字
+ * @prop theme - 主题 (primary | success | warning | danger | orange | blue | light | dark)
  * @prop ui - ui 规范 (material | bootstrap | metro |apple)
  */
 
@@ -23,20 +23,20 @@ export default {
 
   props: {
     id: [String, Number],
-
-    name: String,
-
+    name: {
+      type: String,
+      default: ''
+    },
     theme: {
       type: String,
       default: compConfig.defaultTheme,
       validator(val) {
         return [
           'primary', 'default', 'success',
-          'danger', 'default', 'blue', 'orange'
+          'danger', 'blue', 'orange', 'light', 'dark'
         ].includes(val)
       }
     },
-
     ui: {
       type: String,
       default: compConfig.defaultUI,
@@ -56,27 +56,21 @@ export default {
     uiClass() { // UI 的类名
       return this.ui ? `ui-${this.ui}` : ''
     },
-
     themeClass() { // 主题的类名
       return this.theme ? `theme-${this.theme}` : ''
     },
-
     compClass() { // 组件比加 class
       return [this.uiClass, this.themeClass]
     },
-
     compPrefix() { // 组件的统一前缀
       return compConfig.prefix
     },
-
     deviceSize() { // 设备尺寸
       return this.$store.getters[commonStore.deviceSize]
     },
-
     deviceRange() { // 设备尺寸范围
       return this._deviceTypeRange()
     },
-
     UIMaterial() { // UI 是 material
       return this.ui === 'material'
     }

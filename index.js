@@ -1,5 +1,4 @@
 import './src/lib/directive/directive.js'
-import './src/scss/transition/transition.scss'
 import './src/scss/common/box.scss'
 import './src/scss/common/main.scss'
 import './src/scss/common/common.scss'

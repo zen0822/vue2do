@@ -45,7 +45,6 @@ $input-gap-v: 8px;
     border-bottom: $border-color $border-thin solid;
     background-color: #fff;
     box-sizing: border-box;
-    transition: all 100ms ease-out;
 
     &.#{$C_PREFIX}-error-border {
       outline: $danger-color $border-thin solid;
@@ -120,37 +119,14 @@ $input-gap-v: 8px;
   }
 
   .#{$C_PREFIX}-tip {
-    margin-top: $gap-v-half;
+    margin-top: $gap-v;
     font-size: $h5;
-    color: $grey-light;
+    color: $grey;
 
-    &-danger {
-      position: absolute;
-      top: $INPUT_HEIGHT + 5;
+    &-error {
+      color: $danger-color;
       width: 100%;
       background: #fff;
-      border: $danger-color $border-thin solid;
-      padding: $gap-v;
-      z-index: 1;
-
-      &::after,
-      &::before {
-        content: "◆";
-        position: absolute;
-        top: -11px;
-        left: 0;
-        right: 0;
-        margin: auto;
-        width: 22px;
-        height: 20px;
-        font-size: 33px;
-        line-height: 20px;
-      }
-
-      &::after {
-        top: -9px;
-        color: #fff;
-      }
     }
   }
 }

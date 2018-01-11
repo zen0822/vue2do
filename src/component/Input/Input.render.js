@@ -3,7 +3,26 @@
  */
 
 export default function (h) {
+  let children = []
   let editBoxChild = []
+
+  editBoxChild.push(
+    h('motion-fade', {
+      props: {
+        speed: 'fast'
+      },
+      ref: 'palceholder'
+    }, [
+      h('div', {
+        class: [
+          this.xclass('edit-box-placeholder')
+        ],
+        style: {
+          display: this.placeholderStartedDisplay ? '' : 'none'
+        }
+      }, this.placeholder)
+    ])
+  )
 
   if (this.UIMaterial) {
     editBoxChild.push(
@@ -26,18 +45,6 @@ export default function (h) {
       }, this.label)
     )
   }
-
-  editBoxChild.push(
-    h('div', {
-      class: [
-        this.xclass('edit-box-placeholder')
-      ],
-      directives: [{
-        name: 'show',
-        value: this.placeholderDisplay
-      }]
-    }, this.placeholder)
-  )
 
   editBoxChild.push(
     h(`${this.isTextarea || this.multiline ? 'textarea' : 'input'}`, {
@@ -73,13 +80,7 @@ export default function (h) {
     }, this.value), h('br')]))
   }
 
-  return h('div', {
-    class: this.stageClass,
-    directives: [{
-      name: 'show',
-      value: !this.hidden
-    }]
-  }, [
+  children.push(
     h('div', {
       class: this.wrapClass
     }, [
@@ -133,38 +134,59 @@ export default function (h) {
           ])
         ])
       ])
-    ]),
+    ])
+  )
 
-    h('div', {
-      class: [this.xclass('completion')],
-      directives: [{
-        name: 'show',
-        value: this.completion
-      }]
-    }, this.$slots.completion),
-
-    h('transition', {
-      props: {
-        name: 'fade'
-      }
-    }, [
+  if (this.completion) {
+    children.push(
       h('div', {
-        class: [this.xclass('tip-danger')],
+        class: [this.xclass('completion')],
         directives: [{
           name: 'show',
-          value: this.dangerTipDisplay
+          value: this.completion
         }]
-      }, this.dangerTip)
-    ]),
+      }, this.$slots.completion)
+    )
+  }
 
-    (() => {
-      if (!this.number && this.max && this.textLengthTip) {
-        return h('div', {
-          class: [this.xclass('limit-txt')]
+  if (!this.number && this.max && this.textLengthTip) {
+    children.push(
+      h('div', {
+        class: [this.xclass('limit-txt')]
+      }, [
+        h('span', `${this.inputTextLength} / ${this.max}`)
+      ])
+    )
+  }
+
+  if (this.tipDisplay) {
+    children.push(
+      h('div', {
+        class: [this.xclass('tip')]
+      }, [
+        h('div', {
+          class: [this.xclass('tip-helper')],
+          directives: [{
+            name: 'show',
+            value: this.helperTextDisplay
+          }]
+        }, this.helperText),
+        h('motion-fade', {
+          ref: 'errorTip'
         }, [
-          h('span', this.inputTextLength), ' / ', h('span', this.max)
+          h('div', {
+            class: [this.xclass('tip-error')]
+          }, this.errorTip)
         ])
-      }
-    })()
-  ])
+      ])
+    )
+  }
+
+  return h('div', {
+    class: this.stageClass,
+    directives: [{
+      name: 'show',
+      value: !this.hidden
+    }]
+  }, children)
 }

@@ -16,26 +16,6 @@ $INPUT_BORDER_WIDTH: 1px;
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
   padding-top: $gutter-v;
 
-  &:hover {
-    .#{$C_PREFIX}-wrap {
-      & > .#{$C_PREFIX}-wrap-border {
-        border-color: $border-dark-color;
-      }
-
-      border-color: $border-dark-color;
-    }
-
-    &.#{$C_PREFIX}-type-area {
-      .#{$C_PREFIX}-wrap {
-        border: $border-dark-color $border-thin solid;
-
-        & > .#{$C_PREFIX}-wrap-border {
-          border: $border-dark-color $border-thin solid;
-        }
-      }
-    }
-  }
-
   &.#{$C_PREFIX}-label-cover {
     & > .#{$C_PREFIX}-wrap .#{$C_PREFIX}-edit-box-input {
       cursor: pointer;
@@ -44,6 +24,14 @@ $INPUT_BORDER_WIDTH: 1px;
 
   &.#{$C_PREFIX}-type-area {
     & > .#{$C_PREFIX}-wrap {
+      &:hover {
+        border: $border-dark-color $border-thin solid;
+
+        & > .#{$C_PREFIX}-wrap-border {
+          border: $border-dark-color $border-thin solid;
+        }
+      }
+
       .#{$C_PREFIX}-edit-box {
         $gutter-v: 13px;
         $gutter-v-triple: 26px;
@@ -83,10 +71,19 @@ $INPUT_BORDER_WIDTH: 1px;
       right: 0;
       margin: 0 auto;
       bottom: -1px;
-      background-color: rgba(#000, 0);
+      background-color: $primary-color;
       z-index: 1;
-      transform: scaleX(0);
-      transition: all 300ms ease-out;
+      transition-property: width;
+      transition-duration: 300ms;
+      transition-timing-function: ease-in-out;
+    }
+
+    &:hover {
+      & > .#{$C_PREFIX}-wrap-border {
+        border-color: $border-dark-color;
+      }
+
+      border-color: $border-dark-color;
     }
 
     &.#{$C_PREFIX}-error-border {
@@ -96,22 +93,14 @@ $INPUT_BORDER_WIDTH: 1px;
     &.#{$C_PREFIX}-editting {
       &::after {
         width: 100%;
-        background-color: $primary-color;
-        transform: scaleX(1);
       }
-
-      & > .#{$C_PREFIX}-wrap-border {
-        border-color: $primary-color !important;
-      }
-
-      border-color: $primary-color !important;
     }
 
     & > .#{$C_PREFIX}-wrap-border {
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
       border-bottom: rgba(#000, 0) $border-thin solid;
-      transition: all 100ms ease-out;
+      transition: border 100ms ease-out;
     }
 
     .#{$C_PREFIX}-edit-box {

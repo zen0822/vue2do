@@ -14,6 +14,9 @@ $C_PREFIX: #{ $COMP_INPUT };
     & > .#{$C_PREFIX}-wrap {
       border: $border-color $border-thin solid;
       border-radius: $border-radius;
+      transition-property: border, box-shadow;
+      transition-duration: 300ms;
+      transition-timing-function: ease-in-out;
 
       &.#{$C_PREFIX}-editting {
         border-color: $blue-color;
