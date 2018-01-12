@@ -88,80 +88,62 @@ export default {
       type: Array,
       default: () => []
     },
-
     param: {
       type: String,
       default: ''
     },
-
     initVal: [Number, Array, String],
-
     multiple: {
       type: Boolean,
       default: false
     },
-
     store: Object,
-
     max: {
       type: Number,
       default: 0
     },
-
     min: {
       type: Number,
       default: 0
     },
-
     defaultVal: {
       type: [Number, String],
       default: -1
     },
-
     defaultTxt: {
       type: [Number, String],
       default: '请选择'
     },
-
     required: {
       type: Boolean,
       default: false
     },
-
     errorMessage: {
       type: String,
       default: ''
     },
-
     valName: {
       type: String,
       default: 'value'
     },
-
     txtName: {
       type: String,
       default: 'text'
     },
-
     search: {
       type: Boolean,
       default: false
     },
-
     classify: Array,
-
     readOnly: {
       type: Boolean,
       default: false
     },
-
     classifyOpt: Object,
-
     selectAll: {
       type: Boolean,
       default: false
     },
-
     selectAllTxt: {
       type: String,
       default: '全选'
@@ -202,11 +184,9 @@ export default {
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-select`
     },
-
     me() {
       return this
     },
-
     selectClass() { // 组件 stage 的 class 的名字
       let classArr = [
         this.cPrefix,
@@ -224,11 +204,9 @@ export default {
 
       return classArr
     },
-
     isCustomOption() { // 自定义下拉框的显示状态
       return this.initOpt.length > 0 && this.customOptionDisplay
     },
-
     initTxtDisplay() { // 多选框的默认值显示状态
       return this.multiple && this.value.length === 0
     }
@@ -236,8 +214,7 @@ export default {
 
   watch: {
     value(val) {
-      if (this.multiple && this.initTxtDisplay) {
-        // 没有值时
+      if (this.multiple && this.initTxtDisplay) { // 没有值时
         return this.$nextTick(() => this._adjustSelectedPoiStyle(''))
       }
 

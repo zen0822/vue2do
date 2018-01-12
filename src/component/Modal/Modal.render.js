@@ -35,6 +35,7 @@ export default function (h) {
         class: [this.xclass('scroller')],
         props: {
           height: this.modalHeight,
+          width: '100%',
           autoHide: true,
           ui: this.ui,
           theme: this.theme
