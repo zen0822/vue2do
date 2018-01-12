@@ -188,7 +188,6 @@ export default {
       dataTypeName: '', // 数据类型的名称
       verified: true, // 是否验证通过
       inputTextLength: 0, // 当前输入框值的长度
-      errorBorderDisplay: false, // 错误提示框的显示状态
       editBorderActive: false // 在 material 下编辑的边框显示状态
     }
   },
@@ -231,6 +230,9 @@ export default {
     },
     errorTextDisplay() { // 错误提示的显示状态
       return !!this.errorTip && this.errorTipType === 'bottom'
+    },
+    errorBorderDisplay() { // 错误提示框的显示状态
+      return this.ui === 'bootstrap' && !!this.errorTip
     },
     isTextarea() {
       return this.type === TYPE_TEXT_AREA
@@ -427,7 +429,6 @@ export default {
      * @return {Object} this - 组件
      */
     _handlerFocus(evt) {
-      this.errorBorderDisplay = false
       this.editBorderActive = true
       this.verified = true
       this.focusing = true
@@ -497,7 +498,7 @@ export default {
       this.value = event.currentTarget.value
       this.multiline && (this.$refs.pre.innerText = this.value)
 
-      if (!this.activeVerify && this.focusing && this.errorTextDisplay) {
+      if (this.focusing && this.errorTextDisplay) {
         this.verify()
         this.editBorderActive = !this.errorTextDisplay
       }

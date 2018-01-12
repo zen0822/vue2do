@@ -18,7 +18,7 @@ export default {
 
       const returnFun = () => {
         if (!verified) {
-          document.body.scrollTop = this.$el.offsetTop
+          this.$el.offsetParent.scrollTop = this.$el.offsetTop
         }
 
         this.verified = verified
@@ -116,7 +116,6 @@ export default {
       this.verify()
 
       if (!this.verified) {
-        this.errorBorderDisplay = true
         tip(this.errorTip)
 
         return false

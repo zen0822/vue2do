@@ -9,16 +9,48 @@
 $C_PREFIX: #{$COMP_CHECK};
 $C_ICON_PREFIX: #{$COMP_ICON};
 
+@mixin check-box-shadow($color) {
+  box-shadow: 0 0 0 3px rgba($color, .3);
+}
+
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
+  &.#{$C_PREFIX}-multiple{
+    & > .#{$C_PREFIX}-opt-row {
+      & > .#{$C_PREFIX}-opt-col {
+        & > .#{$C_PREFIX}-box {
+          &:focus,
+          &:active,
+          &:focus:active {
+            & > .#{$C_PREFIX}-icon {
+              border-radius: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   & > .#{$C_PREFIX}-opt-row {
     & > .#{$C_PREFIX}-opt-col {
       & > .#{$C_PREFIX}-box {
+        &:focus {
+          outline: none;
+        }
+
+        &:focus,
+        &:active,
+        &:focus:active {
+          & > .#{$C_PREFIX}-icon {
+            border-radius: 100%;
+
+            @include check-box-shadow($blue-color);
+          }
+        }
+
         & > .#{$C_PREFIX}-icon {
           & > .#{$C_ICON_PREFIX} {
-            .#{$C_ICON_PREFIX}-circle-check-o,
-            .#{$C_ICON_PREFIX}-square-check-o {
-              color: $grey;
-            }
+            color: $grey-lightest;
+            font-size: $h3;
           }
         }
       }
@@ -27,9 +59,8 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
   .#{$C_PREFIX}-opt-check-all {
     & > .#{$C_ICON_PREFIX} {
-      .#{$C_ICON_PREFIX}-square-check {
-        color: $grey;
-      }
+      color: $grey-lightest;
+      font-size: $h3;
     }
   }
 }

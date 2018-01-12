@@ -7,15 +7,14 @@ export default function (h) {
 
   if (this.isAli) {
     iconChildren.push(h('svg', {
-      class: [this.typeClass, this.sizeClass, this.xclass(this.kind)]
+      class: [this.xclass(this.kind), this.typeClass]
     }, [
-        h('use', {
-          attrs: {
-            'xlink:href': `#${this.nameClass}`
-          }
-        })
-      ]
-    ))
+      h('use', {
+        attrs: {
+          'xlink:href': `#${this.nameClass}`
+        }
+      })
+    ]))
   } else {
     iconChildren.push(h('i', {
       class: [this.typeClass, this.nameClass, this.sizeClass]
@@ -23,16 +22,14 @@ export default function (h) {
   }
 
   return h(
-    'div',
-    {
-      class: [this.cPrefix],
+    'div', {
+      class: [this.cPrefix, this.sizeClass, this.xclass(this.themeClass)],
       style: {
         color: this.color
       }
-    },
-    [
+    }, [
       h('div', {
-        class: this.xclass(['stage', this.themeClass])
+        class: this.xclass('stage')
       }, iconChildren)
     ]
   )

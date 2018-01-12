@@ -6,31 +6,6 @@ import Vue from 'vue'
 export default function (h) {
   let RowChildren = []
 
-  if (this.checkAll) {
-    RowChildren.push(
-      h('column', [
-        h('div', {
-          class: [this.xclass('opt-check-all')],
-          on: {
-            click: this.checkAllOption
-          }
-        }, [
-          h('icon', {
-            props: {
-              size: 'XS',
-              kind: this.checkedAll ? 'square-check-o' : 'square-o',
-              ui: this.ui,
-              theme: this.theme
-            }
-          }),
-          h('span', {
-            class: [this.xclass('lable')]
-          }, '全选')
-        ])
-      ])
-    )
-  }
-
   if (Array.isArray(this.option) && this.option.length > 0) {
     let checkEle = []
 
@@ -42,6 +17,9 @@ export default function (h) {
           class: [this.xclass('opt-col')]
         }, [
           h('div', {
+            attrs: {
+              tabindex: 0
+            },
             class: [
               this.xclass('box'),
               {
@@ -52,23 +30,17 @@ export default function (h) {
             on: {
               click: (event) => this._handlerClick(event, currentIndex),
               mousedown: (event) => this._handlerMousedown(event, currentIndex),
-              mouseup: (event) => this._handlerMouseup(event, currentIndex)
+              mouseup: (event) => this._handlerMouseup(event, currentIndex),
+              focus: (event) => this._handlerFocus(event, currentIndex),
+              blur: (event) => this._handlerBlur(event, currentIndex),
+              keyup: (event) => this._handlerKeyup(event, currentIndex)
             }
           }, [
             h('div', {
-              attrs: {
-                tabindex: 0
-              },
-              class: [this.xclass('icon')],
-              on: {
-                focus: (event) => this._handlerFocus(event, currentIndex),
-                blur: (event) => this._handlerBlur(event, currentIndex),
-                keyup: (event) => this._handlerKeyup(event, currentIndex)
-              }
+              class: [this.xclass('icon')]
             }, [
               h('icon', {
                 props: {
-                  size: 'xs',
                   kind: this.iconName(item[this.valName]),
                   ui: this.ui,
                   theme: this.theme
@@ -76,7 +48,7 @@ export default function (h) {
               }),
               h('motion-rip', {
                 class: [this.xclass('rip')],
-                ref: `checkTransition${currentIndex}`
+                ref: `motionCheck${currentIndex}`
               }),
               h('div', {
                 class: [this.xclass('motion-rip')],
@@ -108,16 +80,46 @@ export default function (h) {
   return h('div', {
     class: [
       this.cPrefix,
-      this.xclass(['stage', this.themeClass, this.uiClass])
+      this.xclass(['stage', this.themeClass, this.uiClass]),
+      {
+        [this.xclass('multiple')]: this.multiple
+      }
     ]
   }, [
     h('div', {
-      class: [this.xclass('read-only')],
+      class: [this.xclass('disabled')],
       directives: [{
         name: 'show',
-        value: this.readOnly
+        value: this.disabled
       }]
     }),
+    (() => {
+      if (this.checkAll && this.multiple) {
+        return h('div', {
+          class: [
+            this.xclass('opt-check-all'),
+            {
+              [this.xclass('checked')]: this.checkedAll
+            }
+          ],
+          on: {
+            click: this.checkAllOption
+          }
+        }, [
+          h('icon', {
+            props: {
+              size: 'XS',
+              kind: this._getIconName(this.checkedAll),
+              ui: this.ui,
+              theme: this.theme
+            }
+          }),
+          h('span', {
+            class: [this.xclass('lable')]
+          }, '全选')
+        ])
+      }
+    })(),
     h('row', {
         class: [
           this.xclass('opt-row')

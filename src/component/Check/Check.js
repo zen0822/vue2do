@@ -4,7 +4,7 @@
  * @prop initVal - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
  * @prop param - 参数名
  * @prop initOpt - 复选框数据
- * @prop readOnly - 只读
+ * @prop disabled - 不可选
  * @prop required - 是否必选
  * @prop theme - 主题
  * @prop multiple - 是否为多选
@@ -73,7 +73,7 @@ let checkCompConfig = {
       type: Boolean,
       default: false
     },
-    readOnly: {
+    disabled: {
       type: Boolean,
       default: false
     },
@@ -118,8 +118,7 @@ let checkCompConfig = {
       motion: [], // 启动选择框的沦漪效果
       allowFocus: true, // 允许执行 focus 事件
       dangerTip: '',
-      slotItems: [],
-      checkedAll: false // 是否已经全选
+      slotItems: []
     }
   },
 
@@ -132,6 +131,38 @@ let checkCompConfig = {
     },
     isRadio() {
       return !this.multiple
+    },
+    checkedAll() { // 是否已经全选
+      if (this.checkAll && this.multiple) {
+        return this.value.length === this.option.length
+      }
+    },
+    checkIconName() {
+      switch (this.ui) {
+        case 'bootstrap':
+          return {
+            radio: {
+              uncheck: 'circle',
+              checked: 'circle-check'
+            },
+            checkbox: {
+              uncheck: 'square-bs',
+              checked: 'square-check-bs'
+            }
+          }
+        case 'material':
+        default:
+          return {
+            radio: {
+              uncheck: 'circle-o',
+              checked: 'circle-check-o'
+            },
+            checkbox: {
+              uncheck: 'square-o',
+              checked: 'square-check'
+            }
+          }
+      }
     }
   },
 
@@ -166,6 +197,22 @@ let checkCompConfig = {
     },
 
     /**
+     * 获取选择框的图标名字
+     *
+     * @param {Boolean} check - 已选的图标
+     * @param {Boolean} multiple - 复选框
+     */
+    _getIconName(check = false, multiple = this.multiple) {
+      if (this.multiple) {
+        return check ? this.checkIconName.checkbox.checked :
+          this.checkIconName.checkbox.uncheck
+      } else {
+        return check ? this.checkIconName.radio.checked :
+          this.checkIconName.radio.uncheck
+      }
+    },
+
+    /**
      * 初始化checkbox
      *
      * @return {Function}
@@ -177,10 +224,6 @@ let checkCompConfig = {
           this.text = []
           this.value = []
           this.oldValue = []
-        }
-
-        if (this.checkAll) {
-          this.checkedAll = this.value.length === this.option.length
         }
 
         this.setText()

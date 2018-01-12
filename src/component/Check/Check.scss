@@ -1,6 +1,7 @@
 /*
 * check 组件样式
 */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
@@ -13,10 +14,9 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   & > .#{$C_PREFIX}-opt-row {
     & > .#{$C_PREFIX}-opt-col {
       & > .#{$C_PREFIX}-box {
-        & > .#{$C_PREFIX}-icon {
-          & > .#{$C_ICON_PREFIX} {
-            .#{$C_ICON_PREFIX}-circle-check-o,
-            .#{$C_ICON_PREFIX}-square-check-o {
+        &.#{$C_PREFIX}-checked {
+          & > .#{$C_PREFIX}-icon {
+            & > .#{$C_ICON_PREFIX} {
               color: $type-color;
             }
           }
@@ -25,11 +25,9 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     }
   }
 
-  .#{$C_PREFIX}-opt-check-all {
+  .#{$C_PREFIX}-opt-check-all.#{$C_PREFIX}-checked {
     & > .#{$C_ICON_PREFIX} {
-      .#{$C_ICON_PREFIX}-square-check {
-        color: $type-color
-      }
+      color: $type-color
     }
   }
 }
@@ -39,7 +37,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   vertical-align: middle;
   position: relative;
 
-  &-read-only {
+  &-disabled {
     position: absolute;
     top: 0;
     left: 0;
@@ -58,6 +56,14 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       & > .#{$C_PREFIX}-box {
         display: inline-block;
 
+        &.#{$C_PREFIX}-checked {
+          & > .#{$C_PREFIX}-icon {
+            & > .#{$C_ICON_PREFIX} {
+              color: $primary-color;
+            }
+          }
+        }
+
         & > .#{$C_PREFIX}-icon {
           position: relative;
           display: inline-block;
@@ -69,11 +75,6 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
             .#{$C_ICON_PREFIX}-ali {
               text-align: center;
-            }
-
-            .#{$C_ICON_PREFIX}-circle-check-o,
-            .#{$C_ICON_PREFIX}-square-check-o {
-              color: $primary-color;
             }
           }
         }
@@ -90,19 +91,15 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   }
 
   .#{$C_PREFIX}-opt-check-all {
-    margin-bottom: $gap-v;
-
-    & > .#{$C_ICON_PREFIX} {
-      width: 14px;
-      margin-right: 0;
-
-      .#{$C_ICON_PREFIX}-square-check {
+    .#{$C_PREFIX}-checked {
+      & > .#{$C_ICON_PREFIX} {
         color: $primary-color
       }
     }
 
     .#{$C_PREFIX}-lable {
       cursor: default;
+      margin-left: $gutter-h-half;
     }
   }
 }

@@ -23,6 +23,11 @@ $C_PREFIX: #{ $COMP_INPUT };
         box-shadow: 0 0 0 4px rgba($blue-color, .3);
       }
 
+      &.#{$C_PREFIX}-error-border {
+        border-color: $danger-color;
+        box-shadow: 0 0 0 4px rgba($danger-color, .3);
+      }
+
       .#{$C_PREFIX}-edit-box {
         & > .#{$C_PREFIX}-edit-box-pre,
         & > .#{$C_PREFIX}-edit-box-input {

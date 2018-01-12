@@ -14,6 +14,10 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     & > .#{$C_PREFIX}-opt-col {
       & > .#{$C_PREFIX}-box {
         &.#{$C_PREFIX}-checked {
+          .#{$C_ICON_PREFIX} {
+            color: $type-color;
+          }
+
           .#{$C_PREFIX}-motion-rip::after {
             background-color: rgba($type-color, .3);
           }
@@ -73,9 +77,13 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       line-height: 0;
 
       & > .#{$C_PREFIX}-box {
+        &:focus {
+          outline: none
+        }
+
         & > .#{$C_PREFIX}-icon {
-          &:focus {
-            outline: none
+          & > .#{$C_ICON_PREFIX} {
+            font-size: 18px;
           }
 
           & > .#{$C_PREFIX}-rip {
@@ -85,12 +93,18 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
             background-color: rgba($grey-light, .2);
 
             & > .#{$C_MOTION_RIP_PREFIX}-spot {
+              height: 150%;
+              width: 150%;
               background-color: rgba($grey-light, .8);
             }
           }
         }
 
         &.#{$C_PREFIX}-checked {
+          .#{$C_ICON_PREFIX} {
+            color: $primary-color;
+          }
+
           .#{$C_PREFIX}-motion-rip::after {
             background-color: rgba($primary-color, .3);
           }

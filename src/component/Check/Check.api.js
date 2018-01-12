@@ -10,11 +10,9 @@ export default {
      * @return { Function, Object }
      **/
     iconName(val) {
-      if (this.isRadio) {
-        return this.value === val ? 'circle-check-o' : 'circle-o'
-      } else if (this.isCheckbox && Array.isArray(this.value)) {
-        return this.value.indexOf(val) !== -1 ? 'square-check-o' : 'square-o'
-      }
+      return this.isRadio ?
+        this._getIconName(this.value === val) :
+        this._getIconName(this.value.includes(val))
     },
 
     /**
@@ -44,7 +42,7 @@ export default {
 
       this.$nextTick(() => {
         this.success && this.success(this)
-        this.UIMaterial && this.$refs[`checkTransition${index}`].enter()
+        this.UIMaterial && this.$refs[`motionCheck${index}`].enter()
       })
     },
 
@@ -126,24 +124,17 @@ export default {
      * @return {Object} - this - 组件
      */
     checkAllOption() {
-      if (!this.selectAllVal) {
-        let value = []
+      let value = []
 
-        this.option.forEach((item) => {
-          value.push(item[this.valName])
-        })
-
-        this.value = value
-        this.selectAllVal = value
-      }
+      this.option.forEach((item) => {
+        value.push(item[this.valName])
+      })
 
       if (this.checkedAll) {
         this.value = []
       } else {
-        this.value = this.selectAllVal
+        this.value = value
       }
-
-      this.checkedAll = !this.checkedAll
     }
   }
 }
