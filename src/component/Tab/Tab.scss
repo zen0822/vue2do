@@ -59,7 +59,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
         color: $grey-light;
 
         &:hover {
-          background-color: $bg-light-color;
+          background-color: $color-bg;
           color: $grey-light;
         }
       }
@@ -86,12 +86,12 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
       border: none;
 
       &:hover {
-        color: $primary-color;
+        color: $color-primary;
       }
 
       &.#{$C_PREFIX}-active {
-        border-bottom: $primary-color $border-thick solid;
-        color: $primary-color;
+        border-bottom: $color-primary $border-thick solid;
+        color: $color-primary;
       }
     }
   }

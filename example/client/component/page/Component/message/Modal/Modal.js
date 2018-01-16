@@ -1,7 +1,10 @@
 import './Modal.scss'
 import pugTpl from './Modal.pug'
 import mixin from '../../mixin'
-import { alert, confirm } from 'vue2do/index.js'
+import {
+  alert,
+  confirm
+} from 'vue2do/index.js'
 
 import homeBgImg from 'exAsset/home-bg.jpg'
 
@@ -31,7 +34,9 @@ export default {
     confirm() {
       confirm({
         message: '这是一个确认弹窗',
-        title: '测试确认弹出'
+        title: '测试确认弹出',
+        theme: 'danger',
+        ui: 'bootstrap'
       })
     },
 

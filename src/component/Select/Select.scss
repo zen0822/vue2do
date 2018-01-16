@@ -146,7 +146,7 @@ $MULTI_MENU_WIDTH: 170px + 80px;
 
       .#{$C_PREFIX}-multiple-selected-ul {
         & > li {
-          background-color: $default-color;
+          background-color: $color-bg;
           display: inline-block;
           margin: 4.5px 3px;
           padding: 3px;

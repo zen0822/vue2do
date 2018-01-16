@@ -1,39 +1,38 @@
 @import './mixin/animation';
 
 //---------------- layout ----------------
-
 $DEVICE-XS-RANGE: "0px ~ 575px";
 $DEVICE-S-RANGE: "576px ~ 767px";
 $DEVICE-M-RANGE: "768px ~ 991px";
 $DEVICE-L-RANGE: "992px ~ 1199px";
 $DEVICE-XL-RANGE: "1200px ~ --px";
 
-@mixin device-type($type){
-  @if $type == xs {
+@mixin device-type($type) {
+  @if $type==xs {
     @media only screen and (max-width: 575px) {
       @content;
     }
   }
 
-  @if $type == s {
+  @if $type==s {
     @media only screen and (max-width: 767px) {
       @content;
     }
   }
 
-  @if $type == m {
+  @if $type==m {
     @media only screen and (max-width: 991px) {
       @content;
     }
   }
 
-  @if $type == l {
+  @if $type==l {
     @media only screen and (max-width: 1911px) {
       @content;
     }
   }
 
-  @if $type == xl {
+  @if $type==xl {
     @media only screen and (min-width: 1200px) {
       @content;
     }
@@ -41,32 +40,48 @@ $DEVICE-XL-RANGE: "1200px ~ --px";
 }
 
 @mixin theme-style($type) {
-  $type-color: $primary-color;
-  $type-dark-color: $primary-dark-color;
+  $type-color: $color-primary;
+  $type-dark-color: $color-primary-dark;
 
   @if $type=='primary' {
-    $type-color: $primary-color;
-    $type-dark-color: $primary-dark-color;
+    $type-color: $color-primary;
+    $type-dark-color: $color-primary-dark;
   }
   @else if $type=='danger' {
-    $type-color: $danger-color;
-    $type-dark-color: $danger-dark-color;
+    $type-color: $color-danger;
+    $type-dark-color: $color-danger-dark;
   }
   @else if $type=='success' {
-    $type-color: $success-color;
-    $type-dark-color: $success-dark-color;
+    $type-color: $color-success;
+    $type-dark-color: $color-success-dark;
   }
   @else if $type=='waring' {
-    $type-color: $warning-color;
-    $type-dark-color: $warning-dark-color;
+    $type-color: $color-warning;
+    $type-dark-color: $color-warning-dark;
   }
   @else if $type=='blue' {
-    $type-color: $blue-color;
-    $type-dark-color: $blue-dark-color;
+    $type-color: $color-blue;
+    $type-dark-color: $color-blue-dark;
+  }
+  @else if $type=='light' {
+    $type-color: $color-light;
+    $type-dark-color: $color-light-dark;
+  }
+  @else if $type=='dark' {
+    $type-color: $color-dark;
+    $type-dark-color: $color-dark-dark;
+  }
+  @else if $type=='orange' {
+    $type-color: $color-orange;
+    $type-dark-color: $color-orange-dark;
+  }
+  @else if $type=='grey' {
+    $type-color: $color-grey;
+    $type-dark-color: $color-grey-dark;
   }
   @else {
-    $type-color: $orange-color;
-    $type-dark-color: $orange-dark-color;
+    $type-color: $color-grey;
+    $type-dark-color: $color-grey-dark;
   }
 
   @include theme-content($type-color, $type-dark-color)

@@ -148,7 +148,7 @@ $C_PREFIX: #{$COMP_BTN};
       & > .#{$C_PREFIX}-ele {
         border-radius: $border-radius;
 
-        @include btn-button($primary-color);
+        @include btn-button($color-primary);
       }
     }
 
@@ -181,7 +181,7 @@ $C_PREFIX: #{$COMP_BTN};
       & > .#{$C_PREFIX}-ele {
         background-color: #fff;
 
-        @include btn-flat($primary-color);
+        @include btn-flat($color-primary);
       }
     }
 
@@ -191,7 +191,7 @@ $C_PREFIX: #{$COMP_BTN};
         border-style: solid;
         border-width: $border-thin;
 
-        @include btn-outline($primary-color);
+        @include btn-outline($color-primary);
       }
     }
   }
@@ -219,4 +219,12 @@ $C_PREFIX: #{$COMP_BTN};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
   @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
 }

@@ -192,7 +192,9 @@ export default {
       showCb,
       hideCb,
       title = '',
-      message = ''
+      message = '',
+      ui = this.ui,
+      theme = this.theme
     } = {}) {
       this.okCbFun = okCb
       this.noCbFun = noCb
@@ -200,6 +202,9 @@ export default {
       this.hideCb = hideCb
       this.modalHeader = title
       this.modalMessage = message
+
+      this.state.ui = ui
+      this.state.theme = theme
 
       return this
     }

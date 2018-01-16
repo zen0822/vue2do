@@ -162,6 +162,10 @@ export default {
       }
 
       this.allowFocus = true
+
+      if (event.button === 0) {
+        return this.click()
+      }
     },
 
     mousedown(event) {
@@ -221,30 +225,27 @@ export default {
     },
 
     /**
-     * 点击按钮
-     * @return {Object} this - 组件
-     */
-    click(event) {
-      if (this.banState) {
-        return false
-      }
-
-      return this.$emit('click', {
-        event,
-        emitter: this
-      })
-    },
-
-    /**
      * keyup 句柄
      */
     keyup(event) {
       if (event.keyCode === 13) {
+        this.click()
+
         return this.$emit('keyEnter', {
           event,
           emitter: this
         })
       }
+    },
+
+    /**
+     * click event
+     */
+    click(event) {
+      return this.$emit('click', {
+        event,
+        emitter: this
+      })
     },
 
     /**

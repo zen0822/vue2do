@@ -12,7 +12,7 @@ $C_PREFIX: #{ $COMP_CODE };
 .#{$C_PREFIX} {
   font-size: $font-base;
   background-color: #fff;
-  border: $primary-light-color $border-thin solid;
+  border: $color-primary-light $border-thin solid;
   border-radius: $border-radius;
 
   .#{$C_PREFIX}-stage {
@@ -41,7 +41,7 @@ $C_PREFIX: #{ $COMP_CODE };
   }
 
   .#{$C_PREFIX}-line-num {
-    border-right: $border-thin * 2 $primary-color solid;
+    border-right: $border-thin * 2 $color-primary solid;
     font-family: 'Roboto Mono', Monaco, courier, monospace;
     line-height: 16px;
     text-align: right;

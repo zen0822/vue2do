@@ -5,6 +5,7 @@
  *                不用确认直接提交的模态框，默认为否
  * @prop header - 弹窗头部标题
  * @prop message - 模态框信息
+ * @prop size - 模态框宽度尺寸（S | M | L）
  *
  * @prop okCb - 确定的回调函数，布尔值为 false 则执行默认的回掉函数，否则如果是函数就执行，不是就不执行
  * @prop noCb - 同上的取消回调函数
@@ -28,6 +29,8 @@
 
 import './Modal.scss'
 import './Modal.m.scss'
+import './Modal.material.scss'
+import './Modal.bootstrap.scss'
 
 import render from './Modal.render'
 import baseMixin from '../../mixin/base'
@@ -78,6 +81,13 @@ const modalComp = {
       type: String,
       default: 'simple'
     },
+    size: {
+      type: String,
+      default: 'S',
+      validator(val) {
+        return ['s', 'm', 'l'].includes(val.toLowerCase())
+      }
+    },
     header: {
       type: String,
       default: ''
@@ -125,34 +135,59 @@ const modalComp = {
     height: [Number, String]
   },
 
+  data: () => {
+    return {
+      pointStart: {
+        x: 0,
+        y: 0
+      },
+      state: {
+        ui: '',
+        theme: ''
+      },
+      isMousedown: false,
+      modalDisplay: false,
+      modalMessage: '',
+      modalHeader: '',
+      showCb: null, // 模态框显示之后的回调函数
+      hideCb: null, // 模态框隐藏之后的回调函数
+      okCbFun: null,
+      noCbFun: null,
+      hasScroller: false // scroller 是否有滚动条
+    }
+  },
+
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-modal`
     },
-    // 组件的 header 的 class 名字
-    headerClass() {
+    uiClass() {
+      return `ui-${this.state.ui}`
+    },
+    themeClass() {
+      return `theme-${this.state.theme}`
+    },
+    UIMaterial() {
+      return this.state.ui === 'material'
+    },
+    headerClass() { // 组件的 header 的 class 名字
       return {
         [`${this.cPrefix}-no-header`]: !this.modalHeaderDisplay,
         [`${this.cPrefix}-no-header-title`]: !this.modalHeader
       }
     },
-    // 组件的 footer 的 class 名字
-    footerClass() {
+    footerClass() { // 组件的 footer 的 class 名字
       return {
         [`${this.cPrefix}-no-footer`]: !this.modalFooterDisplay
       }
     },
-    // 是否是 full modal
-    isFull() {
+    isFull() { // 是否是 full modal
       return this.type === 'full'
     },
-    // 是否是 simple modal
-    isSimple() {
+    isSimple() { // 是否是 simple modal
       return this.type === 'simple'
     },
-    // 判断是否在中大型设备并且是 full 模态框
-    isBiggerFull() {
+    isBiggerFull() { // 判断是否在中大型设备并且是 full 模态框
       return (this.isFull &&
         (
           this.deviceSize === 'm' ||
@@ -161,8 +196,7 @@ const modalComp = {
         )
       ) || !this.isFull
     },
-    // 模态框的头部显示状态
-    modalHeaderDisplay() {
+    modalHeaderDisplay() { // 模态框的头部显示状态
       if (this.headerDisplay !== undefined) {
         return this.headerDisplay
       }
@@ -176,8 +210,7 @@ const modalComp = {
           return !!this.modalHeader
       }
     },
-    // 模态框的尾部显示状态
-    modalFooterDisplay() {
+    modalFooterDisplay() { // 模态框的尾部显示状态
       if (this.footerDisplay !== undefined) {
         return this.footerDisplay
       }
@@ -194,8 +227,7 @@ const modalComp = {
           return true
       }
     },
-    // 模态框的内容的高度
-    modalHeight() {
+    modalHeight() { // 模态框的内容的高度
       if (this.height) {
         return this.height
       }
@@ -208,24 +240,6 @@ const modalComp = {
         default:
           return 120
       }
-    }
-  },
-
-  data: () => {
-    return {
-      pointStart: {
-        x: 0,
-        y: 0
-      },
-      isMousedown: false,
-      modalDisplay: false,
-      modalMessage: '',
-      modalHeader: '',
-      showCb: null, // 模态框显示之后的回调函数
-      hideCb: null, // 模态框隐藏之后的回调函数
-      okCbFun: null,
-      noCbFun: null,
-      hasScroller: false // scroller 是否有滚动条
     }
   },
 
@@ -289,13 +303,16 @@ const modalComp = {
 
       this.okCbFun = this.okCb
       this.noCbFun = this.noCb
+
+      this.state.ui = this.ui
+      this.state.theme = this.theme
     },
 
     /**
      * 点击模态框背景的句柄
      */
-    _clickBg() {
-      //
+    _handlerClickBg() {
+      return this.hide()
     }
   }
 }

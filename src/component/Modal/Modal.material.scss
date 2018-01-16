@@ -1,0 +1,69 @@
+/**
+ * pop 组件 material 样式
+ */
+
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+$C_PREFIX: #{ $COMP_MODAL };
+$ICON_PREFIX: #{ $COMP_ICON };
+$BTN_PREFIX: #{ $COMP_BTN };
+$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+
+$POP_CONTAINER_PADDING: $gap-v-triple;
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  &.#{$C_PREFIX}-no-header {
+    .#{$C_PREFIX}-pop > article {
+      & > .#{$C_PREFIX}-scroller
+          > .#{ $SCROLLER_PREFIX }-box {
+        padding-top: $gap-v-triple;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-pop {
+    > header {
+      padding: $gap-v-triple $gap-h-triple $gutter-v-double;
+
+      .#{$C_PREFIX}-header-title {
+        font-size: $h3;
+        line-height: 1;
+      }
+    }
+
+    > article {
+      & > .#{$C_PREFIX}-scroller
+          > .#{ $SCROLLER_PREFIX }-box {
+        padding: 0 $gap-h-triple $gap-v-triple;
+      }
+    }
+
+    > footer {
+      padding: $gap-v $gap-h $gap-v $gap-h-triple;
+
+      > .#{ $BTN_PREFIX } {
+        margin: 0 $gap-h-half;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-has-scroller {
+    .#{$C_PREFIX}-pop {
+      & > header {
+        border-bottom: $border-color $border-thin solid;
+      }
+
+      & > article {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+
+      & > footer {
+        border-top: $border-color $border-thin solid;
+      }
+    }
+  }
+}

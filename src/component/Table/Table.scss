@@ -56,7 +56,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   }
 
   .#{$C_PREFIX}-empty-data {
-    color: $danger-color;
+    color: $color-danger;
     text-align: center;
     padding: $gap-v 0;
   }
@@ -69,7 +69,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   }
 
   .#{$C_PREFIX}-header-group {
-    background: $bg-color;
+    background: $color-bg;
     display: table-header-group;
     padding: $gap-v;
   }
@@ -82,7 +82,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
     display: table-row;
 
     &:nth-child(2n) {
-      background: $bg-light-color;
+      background: $color-bg;
     }
   }
 

@@ -80,6 +80,8 @@ const alert = (opt = '') => {
     .$refs
     .alert
     .set({
+      theme: option.theme,
+      ui: option.ui,
       title: option.title,
       message: option.message,
       okCb: (vm) => {

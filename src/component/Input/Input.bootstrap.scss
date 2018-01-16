@@ -19,13 +19,13 @@ $C_PREFIX: #{ $COMP_INPUT };
       transition-timing-function: ease-in-out;
 
       &.#{$C_PREFIX}-editting {
-        border-color: $blue-color;
-        box-shadow: 0 0 0 4px rgba($blue-color, .3);
+        border-color: $color-blue;
+        box-shadow: 0 0 0 4px rgba($color-blue, .3);
       }
 
       &.#{$C_PREFIX}-error-border {
-        border-color: $danger-color;
-        box-shadow: 0 0 0 4px rgba($danger-color, .3);
+        border-color: $color-danger;
+        box-shadow: 0 0 0 4px rgba($color-danger, .3);
       }
 
       .#{$C_PREFIX}-edit-box {

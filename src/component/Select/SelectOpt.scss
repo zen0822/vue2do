@@ -47,7 +47,7 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
       padding: $gap-v $gap-h-double;
 
       &:hover {
-        background-color: $bg-color;
+        background-color: $color-bg;
       }
 
       &:hover.#{$C_PREFIX}-classify-title {

@@ -49,7 +49,7 @@ $C_PREFIX: #{ $COMP_PAGE };
         text-align: center;
 
         &.#{$C_PREFIX}-li-active {
-          background-color: $primary-color;
+          background-color: $color-primary;
           color: #fff;
         }
 

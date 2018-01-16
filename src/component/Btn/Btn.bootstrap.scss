@@ -23,7 +23,7 @@ $C_PREFIX: #{$COMP_BTN};
   }
 
   &:focus {
-    @include btn-box-shadow($color)
+    @include btn-box-shadow($color);
   }
 
   &:active {
@@ -31,7 +31,7 @@ $C_PREFIX: #{$COMP_BTN};
     border-color: $dark-color;
 
     &:focus {
-      @include btn-box-shadow($color)
+      @include btn-box-shadow($color);
     }
   }
 }
@@ -75,22 +75,20 @@ $C_PREFIX: #{$COMP_BTN};
 
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
-  & > .#{$C_PREFIX}-ele {
-    &:focus {
-      outline: none;
-    }
+  &:focus {
+    outline: none;
   }
 
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {
-      @include btn-button($primary-color, $primary-dark-color)
+      @include btn-button($color-primary, $color-primary-dark)
     }
   }
 
   &.#{$C_PREFIX}-type-outline {
     & > .#{$C_PREFIX}-ele {
-      @include btn-outline($primary-color)
+      @include btn-outline($color-primary)
     }
   }
 }
@@ -113,4 +111,16 @@ $C_PREFIX: #{$COMP_BTN};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-orange {
   @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
 }

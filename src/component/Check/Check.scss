@@ -59,7 +59,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
         &.#{$C_PREFIX}-checked {
           & > .#{$C_PREFIX}-icon {
             & > .#{$C_ICON_PREFIX} {
-              color: $primary-color;
+              color: $color-primary;
             }
           }
         }
@@ -93,7 +93,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   .#{$C_PREFIX}-opt-check-all {
     .#{$C_PREFIX}-checked {
       & > .#{$C_ICON_PREFIX} {
-        color: $primary-color
+        color: $color-primary
       }
     }
 

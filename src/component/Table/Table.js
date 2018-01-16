@@ -43,39 +43,36 @@ const Table = {
       type: Boolean,
       default: false
     },
-
+    scrollerAutoHide: {
+      type: Boolean,
+      default: false
+    },
     border: {
       type: String,
       default: 'none'
     },
-
     list: {
       type: Boolean,
       default: false
     },
-
     thead: {
       type: Array,
       default: () => []
     },
-
     tbody: {
       type: Array,
       default: () => []
     },
-
     page: {
       type: Object,
       default: () => {
         return {}
       }
     },
-
     pager: {
       type: Boolean,
       default: false
     },
-
     pageSize: {
       type: Number,
       default: 5
@@ -98,7 +95,6 @@ const Table = {
     cPrefix() {
       return `${this.compPrefix}-table`
     },
-
     pagerDisplay() {
       return this.list && this.pager &&
         this.tbody.length > 0 &&
@@ -119,11 +115,9 @@ const Table = {
         tableData: val.slice()
       })
     },
-
     thead(val) {
       this.theadItem = val.slice()
     },
-
     deviceSize() {
       this.tableWidth = this.$el.offsetWidth
     }

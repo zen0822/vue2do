@@ -34,10 +34,10 @@ $INPUT_BORDER_WIDTH: 1px;
 
       &.#{$C_PREFIX}-editting {
         & > .#{$C_PREFIX}-wrap-border {
-          border-color: $primary-color !important;
+          border-color: $color-primary !important;
         }
 
-        border-color: $primary-color !important;
+        border-color: $color-primary !important;
       }
 
       .#{$C_PREFIX}-edit-box {
@@ -89,11 +89,11 @@ $INPUT_BORDER_WIDTH: 1px;
     }
 
     & > .#{$C_PREFIX}-wrap-border-motion-edit {
-      background-color: $primary-color;
+      background-color: $color-primary;
     }
 
     & > .#{$C_PREFIX}-wrap-border-motion-error {
-      background-color: $danger-color;
+      background-color: $color-danger;
     }
 
     &:hover {
@@ -106,7 +106,7 @@ $INPUT_BORDER_WIDTH: 1px;
 
     &.#{$C_PREFIX}-error {
       .#{$C_PREFIX}-edit-box-label {
-        color: $danger-color;
+        color: $color-danger;
       }
     }
 
@@ -139,7 +139,7 @@ $INPUT_BORDER_WIDTH: 1px;
         cursor: pointer;
 
         &-float {
-          color: $primary-color;
+          color: $color-primary;
           top: -22px;
           font-size: $h5;
         }

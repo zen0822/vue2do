@@ -122,5 +122,11 @@ export default {
 
   render(h) {
     return h('transition', this.$slots.default)
+  },
+
+  mounted() {
+    if (!this.display) {
+      this.$el.style.display = 'none'
+    }
   }
 }

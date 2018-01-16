@@ -119,5 +119,11 @@ export default {
         class: [this.prefix('motion-rip-spot')]
       })])
     ])
+  },
+
+  mounted() {
+    if (!this.display) {
+      this.$el.style.display = 'none'
+    }
   }
 }

@@ -1,11 +1,11 @@
+/**
+ * pop 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
-
-/**
- * pop 组件样式
- */
 
 $C_PREFIX: #{ $COMP_MODAL };
 $ICON_PREFIX: #{ $COMP_ICON };
@@ -13,6 +13,20 @@ $BTN_PREFIX: #{ $COMP_BTN };
 $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
 $POP_CONTAINER_PADDING: 24px;
+
+@mixin theme-content($type-color, $type-dark-color) {
+  &.#{$C_PREFIX}-type-full {
+    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop > header {
+      border-color: $type-color;
+    }
+
+    .#{$C_PREFIX}-pop {
+      & > header {
+        background-color: $type-color;
+      }
+    }
+  }
+}
 
 .#{$C_PREFIX} {
   position: fixed;
@@ -24,14 +38,13 @@ $POP_CONTAINER_PADDING: 24px;
 
   &.#{$C_PREFIX}-no-header {
     .#{$C_PREFIX}-pop > article {
-      & > .#{$C_PREFIX}-scroller
-          > .#{ $SCROLLER_PREFIX }-box {
-        padding-top: $gap-v-triple;
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
+        padding-top: $gap-v-double;
       }
     }
   }
 
-  .#{$C_PREFIX}-bg {
+  & > .#{$C_PREFIX}-bg {
     background: rgba(0, 0, 0, .12);
     height: 100%;
     width: 100%;
@@ -40,7 +53,7 @@ $POP_CONTAINER_PADDING: 24px;
     top: 0;
   }
 
-  .#{$C_PREFIX}-pop {
+  & > .#{$C_PREFIX}-pop {
     position: absolute;
     background: #fff;
     border-radius: $border-radius;
@@ -48,9 +61,9 @@ $POP_CONTAINER_PADDING: 24px;
     transform: rotate(0);
     box-shadow: $shadow;
 
-    > header {
+    & > header {
       cursor: move;
-      padding: $gap-v-triple $gap-h-triple $gutter-v-double;
+      padding: $gap-v-double;
       box-sizing: border-box;
       width: 100%;
 
@@ -61,20 +74,19 @@ $POP_CONTAINER_PADDING: 24px;
       }
     }
 
-    > article {
+    & > article {
       box-sizing: border-box;
       max-width: 100%;
       min-width: 280px;
 
-      & > .#{$C_PREFIX}-scroller
-          > .#{ $SCROLLER_PREFIX }-box {
-        padding: 0 24px 24px;
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
+        padding: $gap-v-double;
         box-sizing: border-box;
       }
     }
 
-    > footer {
-      padding: 8px 8px 8px 24px;
+    & > footer {
+      padding: $gap-v-double;
       box-sizing: border-box;
       line-height: normal;
       text-align: right;
@@ -87,35 +99,9 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{$C_PREFIX}-has-scroller {
-    .#{$C_PREFIX}-pop {
-      & > header {
-        border-bottom: $border-color $border-thin solid;
-      }
-
-      & > article {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-
-      & > footer {
-        border-top: $border-color $border-thin solid;
-      }
-    }
-  }
-
-  &.#{$C_PREFIX}-type-alert {
-    .#{$C_PREFIX}-pop {
-      & > article {
-        min-height: auto;
-      }
-    }
-  }
-
   &.#{$C_PREFIX}-type-full {
-    &.#{$C_PREFIX}-has-scroller
-        .#{$C_PREFIX}-pop > header {
-      border-color: $primary-color;
+    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop > header {
+      border-color: $color-primary;
     }
 
     .#{$C_PREFIX}-pop {
@@ -126,7 +112,7 @@ $POP_CONTAINER_PADDING: 24px;
         color: #fff;
         padding-top: 12px;
         padding-bottom: 12px;
-        background-color: $primary-color;
+        background-color: $color-primary;
         box-shadow: $shadow-lower;
 
         & > div {
@@ -150,7 +136,39 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{$C_PREFIX}-theme-primary {
-
+  &.#{$C_PREFIX}-size-m {
+    & > .#{$C_PREFIX}-pop {
+      & > article {
+        min-width: 500px;
+      }
+    }
   }
+
+  &.#{$C_PREFIX}-size-l {
+    & > .#{$C_PREFIX}-pop {
+      & > article {
+        min-width: 800px;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
 }

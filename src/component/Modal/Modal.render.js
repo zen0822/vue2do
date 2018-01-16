@@ -7,6 +7,11 @@ import footerChildrenRender from './Modal.footer.render'
 
 export default function (h) {
   let modalChildren = []
+  let articleEle = this.$slots.default ? this.$slots.default : [
+    h('div', {
+      class: this.xclass('alert-message')
+    }, this.modalMessage)
+  ]
   let headerChildren = headerChildrenRender.call(this, h)
   let footerChildren = footerChildrenRender.call(this, h)
 
@@ -21,8 +26,8 @@ export default function (h) {
         h('row', {
           props: {
             justify: 'justify',
-            ui: this.ui,
-            theme: this.theme
+            ui: this.state.ui,
+            theme: this.state.theme
           }
         }, headerChildren)
       ])
@@ -30,6 +35,7 @@ export default function (h) {
   }
 
   modalChildren.push(
+    this.UIMaterial ?
     h('article', [
       h('scroller', {
         class: [this.xclass('scroller')],
@@ -37,22 +43,13 @@ export default function (h) {
           height: this.modalHeight,
           width: '100%',
           autoHide: true,
-          ui: this.ui,
-          theme: this.theme
+          ui: this.state.ui,
+          theme: this.state.theme
         },
         ref: 'scroller'
-      }, (() => {
-        if (this.$slots.default) {
-          return this.$slots.default
-        } else {
-          return [
-            h('div', {
-              class: this.xclass('alert-message')
-            }, this.modalMessage)
-          ]
-        }
-      })())
-    ])
+      }, articleEle)
+    ]) :
+    h('article', articleEle)
   )
 
   if (this.modalFooterDisplay) {
@@ -70,7 +67,9 @@ export default function (h) {
   return h('div', {
     class: [
       this.cPrefix,
+      this.xclass([this.uiClass]),
       this.xclass([this.themeClass]),
+      this.xclass(`size-${this.size}`),
       this.xclass(`type-${this.type}`),
       {
         [this.xclass('no-header')]: !this.modalHeaderDisplay
@@ -89,9 +88,7 @@ export default function (h) {
   }, [
     h('motion-fade', {
       props: {
-        speed: 'fast',
-        ui: this.ui,
-        theme: this.theme
+        speed: 'fast'
       },
       ref: 'fadeTransition'
     }, [
@@ -102,7 +99,7 @@ export default function (h) {
           value: this.modalDisplay
         }],
         on: {
-          click: this.no
+          click: this._handlerClickBg
         }
       })
     ]),
@@ -110,8 +107,8 @@ export default function (h) {
     h('pop', {
       class: [this.xclass('pop')],
       props: {
-        ui: this.ui,
-        theme: this.theme
+        ui: this.state.ui,
+        theme: this.state.theme
       },
       ref: 'pop'
     }, [modalChildren])

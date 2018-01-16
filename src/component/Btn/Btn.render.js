@@ -99,21 +99,18 @@ export default function (h) {
         }
       ],
       on: {
-        click: this.click,
         mousedown: this.mousedown,
         mouseup: this.mouseup,
-        keyup: this.keyup
+        keyup: this.keyup,
+        focus: this.focus,
+        blur: this.blur
+      },
+      attrs: {
+        tabindex: 0
       }
     }, [
       h('div', {
-        class: [this.xclass('ele')],
-        on: {
-          focus: this.focus,
-          blur: this.blur
-        },
-        attrs: {
-          tabindex: 0
-        }
+        class: [this.xclass('ele')]
       }, btnEleChildren)
     ]
   )

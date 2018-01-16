@@ -3,7 +3,7 @@
  *
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
- * @prop sync - 调用多次动画时，动画与动画之间是否时同步
+ * @prop sync - 调用多次动画时，动画与动画之间是否同步
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间

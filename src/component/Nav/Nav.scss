@@ -18,7 +18,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
 
   .#{$C_PREFIX}-trigger {
     display: none;
-    background-color: $bg-color;
+    background-color: $color-bg;
     padding: $gap-v;
     border-bottom: $border-color $border-thin solid;
     box-shadow: 0 2px 4px rgba(0,0,0,.12),0 0 6px rgba(0,0,0,.04);

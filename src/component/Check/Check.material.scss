@@ -102,19 +102,19 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
         &.#{$C_PREFIX}-checked {
           .#{$C_ICON_PREFIX} {
-            color: $primary-color;
+            color: $color-primary;
           }
 
           .#{$C_PREFIX}-motion-rip::after {
-            background-color: rgba($primary-color, .3);
+            background-color: rgba($color-primary, .3);
           }
 
           & > .#{$C_PREFIX}-icon {
             & > .#{$C_PREFIX}-rip {
-              background-color: rgba($primary-color, .2);
+              background-color: rgba($color-primary, .2);
 
               & > .#{$C_MOTION_RIP_PREFIX}-spot {
-                background-color: rgba($primary-color, .8);
+                background-color: rgba($color-primary, .8);
               }
             }
           }

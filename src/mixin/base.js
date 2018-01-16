@@ -32,7 +32,7 @@ export default {
       default: compConfig.defaultTheme,
       validator(val) {
         return [
-          'primary', 'default', 'success',
+          'primary', 'grey', 'warning', 'success',
           'danger', 'blue', 'orange', 'light', 'dark'
         ].includes(val)
       }
@@ -57,7 +57,7 @@ export default {
       return this.ui ? `ui-${this.ui}` : ''
     },
     themeClass() { // 主题的类名
-      return this.theme ? `theme-${this.theme}` : ''
+      return `theme-${this.theme}`
     },
     compClass() { // 组件比加 class
       return [this.uiClass, this.themeClass]

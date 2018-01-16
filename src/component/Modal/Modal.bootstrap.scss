@@ -1,0 +1,47 @@
+/**
+ * pop 组件 bootstrap 样式
+ */
+
+@import "../../scss/config.scss";
+@import "../../scss/extend.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+$C_PREFIX: #{ $COMP_MODAL };
+$ICON_PREFIX: #{ $COMP_ICON };
+$BTN_PREFIX: #{ $COMP_BTN };
+$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+
+$POP_CONTAINER_PADDING: $gap-v-triple;
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
+  &.#{$C_PREFIX}-no-header {
+    .#{$C_PREFIX}-pop > article {
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
+        padding-top: $gap-v-double;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-pop {
+    > header {
+      padding: $gap-v-double;
+
+      .#{$C_PREFIX}-header-title {
+        font-size: $h3;
+        line-height: $gap-v-triple;
+        font-weight: 500;
+      }
+    }
+
+    > article {
+      padding: $gap-v-double;
+      border-top: $border-color $border-thin solid;
+      border-bottom: $border-color $border-thin solid;
+    }
+
+    > footer {
+      padding: $gap-v-double;
+    }
+  }
+}

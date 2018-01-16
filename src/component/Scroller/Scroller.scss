@@ -21,8 +21,9 @@ $C_PREFIX: #{ $COMP_SCROLLER };
   .#{$C_PREFIX}-bar {
     position: absolute;
     border-radius: 4px;
-    background-color: $grey-light;
-    opacity: .4;
+    background-color: $color-grey;
+    opacity: .6;
+    transition: opacity 150ms ease-out;
 
     z-index: 1;
 

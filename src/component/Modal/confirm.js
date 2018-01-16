@@ -23,8 +23,7 @@ const createConfirm = () => {
     name: 'confirm',
     mixins: [baseMixin],
     computed: {
-      // 组件类名的前缀
-      cPrefix() {
+      cPrefix() { // 组件类名的前缀
         return `${this.compPrefix}-confirm`
       }
     },
@@ -32,11 +31,18 @@ const createConfirm = () => {
       modal: modalComp
     },
     store,
-    template: `
-      <div :class="[cPrefix]">
-        <modal type="confirm" ref="confirm"></modal>
-      </div>
-    `,
+    render(h) {
+      return h('div', {
+        class: this.cPrefix
+      }, [
+        h('modal', {
+          props: {
+            type: 'confirm'
+          },
+          ref: 'confirm'
+        })
+      ])
+    },
     mounted() {
       this.$store.dispatch(commonStore.confirm.add, this)
     }
@@ -77,6 +83,8 @@ const confirm = (opt = '') => {
     .$refs
     .confirm
     .set({
+      theme: option.theme,
+      ui: option.ui,
       title: option.title,
       message: option.message,
       okCb: (vm) => {

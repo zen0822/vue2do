@@ -43,7 +43,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
           & > .#{$C_PREFIX}-icon {
             border-radius: 100%;
 
-            @include check-box-shadow($blue-color);
+            @include check-box-shadow($color-blue);
           }
         }
 
