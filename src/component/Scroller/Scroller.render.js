@@ -3,8 +3,8 @@ export default function (h) {
     'div', {
       class: [this.cPrefix],
       on: {
-        mouseover: this.scrollerMouseover,
-        mouseout: this.scrollerMouseout,
+        mouseenter: this.scrollerMouseenter,
+        mouseleave: this.scrollerMouseleave,
         wheel: this.mouseWheel,
         touchstart: this.scrollerTouchStart,
         touchmove: this.scrollerTouchMove,
@@ -20,8 +20,10 @@ export default function (h) {
       h('motion-fade', {
         props: {
           opacity: true,
-          speed: 'fast'
-        }
+          speed: 'fast',
+          display: !this.autoHide
+        },
+        ref: 'bar'
       }, [
         h('div', {
           class: [this.xclass(['bar', 'y-bar'])],
@@ -29,12 +31,7 @@ export default function (h) {
             click: this.barClick,
             mousedown: this.yBarMouseDown
           },
-          style: this.yComputed.barStyle,
-          ref: 'bar',
-          directives: [{
-            name: 'show',
-            value: this.yComputed.barDisplay
-          }]
+          style: this.yComputed.barStyle
         })
       ]),
 

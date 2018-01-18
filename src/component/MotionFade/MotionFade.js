@@ -26,22 +26,24 @@ export default {
   },
 
   methods: {
-    beforeEnter() {
+    beforeEnter({
+      code
+    } = {}) {
       this.$emit('beforeEnter')
 
       let el = this.$el
 
       Object.assign(el.style, {
-        'transition': this.transition,
-        'opacity': 0
+        transition: this.transition,
+        opacity: 0
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = ''
+          code === this.code && (el.style.display = '')
 
           return resolve()
-        })
+        }, 78)
       })
     },
 
@@ -53,7 +55,7 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           Object.assign(el.style, {
-            'opacity': this.opacity ? '' : 1
+            opacity: this.opacity ? '' : 1
           })
 
           setTimeout(() => {
@@ -67,8 +69,8 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'transition': '',
-        'opacity': ''
+        transition: '',
+        opacity: ''
       })
 
       this.$emit('afterEnter')
@@ -80,7 +82,7 @@ export default {
       this.$emit('beforeLeave')
 
       Object.assign(el.style, {
-        'transition': this.transition
+        transition: this.transition
       })
 
       if (!this.opacity) {
@@ -90,18 +92,20 @@ export default {
       return this.leaveing()
     },
 
-    leaveing() {
+    leaveing({
+      code
+    } = {}) {
       let el = this.$el
 
       this.$emit('leaving')
 
       Object.assign(el.style, {
-        'opacity': 0
+        opacity: 0
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = 'none'
+          code === this.code && (el.style.display = 'none')
 
           return resolve()
         }, this.time)
@@ -112,8 +116,8 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'transition': '',
-        'opacity': ''
+        transition: '',
+        opacity: ''
       })
 
       return this.$emit('afterLeave')

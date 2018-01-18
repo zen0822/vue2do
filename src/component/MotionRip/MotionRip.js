@@ -34,7 +34,8 @@ export default {
 
   methods: {
     beforeEnter({
-      mousePoi
+      mousePoi,
+      code
     } = {}) {
       this.$emit('beforeEnter')
 
@@ -71,7 +72,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = ''
+          code === this.code && (el.style.display = '')
 
           return resolve()
         })
@@ -98,6 +99,7 @@ export default {
       let el = this.$el
 
       el.firstChild.style.transition = el.style.transition = ''
+      el.style.display = ''
 
       delClass(el, [
         this.prefix('motion-rip-comp'),

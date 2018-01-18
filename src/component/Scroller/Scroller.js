@@ -152,14 +152,12 @@ export default {
         left: this.boxLeft + 'px'
       }
     },
-
     scrollerStyle() {
       return {
         height: this.scrollerHeight + 'px',
         width: this.scrollerWidth + 'px'
       }
     },
-
     xComputed() { // x 方向的计算属性
       return {
         barDisplay: !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
@@ -171,7 +169,6 @@ export default {
         }
       }
     },
-
     yComputed() { // y 方向的计算属性
       return {
         // 是否显示滚动条
@@ -186,7 +183,6 @@ export default {
         }
       }
     },
-
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-scroller`
     }
@@ -196,9 +192,11 @@ export default {
     barTop(val) {
       this.triggerScroll('y')
     },
-
     barLeft(val) {
       this.triggerScroll('x')
+    },
+    'yComputed.barDisplay'(val) {
+      val ? this.$refs.bar.enter() : this.$refs.bar.leave()
     }
   },
 
@@ -215,6 +213,13 @@ export default {
     _binder() {
       document.addEventListener('mousemove', this.scrollerMouseMove)
       document.addEventListener('mouseup', this.scrollerMouseUp)
+    },
+
+    /**
+     * '1.435px' => 1.44
+     */
+    _getNumFromStr(str) {
+      return Math.round(parseFloat(str))
     },
 
     // 初始化滚动条
@@ -335,14 +340,14 @@ export default {
       let borderLength = 0
 
       if (type === 'y') {
-        paddingLength = paddingLength + Math.round(parseFloat(parentStyle.paddingTop)) + Math.round(parseFloat(parentStyle.paddingBottom))
-        borderLength = borderLength + Math.round(parseFloat(parentStyle.borderTopWidth)) + Math.round(parseFloat(parentStyle.borderBottomWidth))
+        paddingLength = this._getNumFromStr(parentStyle.paddingTop) + this._getNumFromStr(parentStyle.paddingBottom)
+        borderLength = this._getNumFromStr(parentStyle.borderTopWidth) + this._getNumFromStr(parentStyle.borderBottomWidth)
       } else {
-        paddingLength = paddingLength + Math.round(parseFloat(parentStyle.paddingLeft)) + Math.round(parseFloat(parentStyle.paddingRight))
-        borderLength = borderLength + Math.round(parseFloat(parentStyle.borderLeftWidth)) + Math.round(parseFloat(parentStyle.borderRightWidth))
+        paddingLength = this._getNumFromStr(parentStyle.paddingLeft) + this._getNumFromStr(parentStyle.paddingRight)
+        borderLength = this._getNumFromStr(parentStyle.borderLeftWidth) + this._getNumFromStr(parentStyle.borderRightWidth)
       }
 
-      parentLength = Math.round(parseFloat(parentStyle[lengthType])) - paddingLength - borderLength
+      parentLength = this._getNumFromStr(parentStyle[lengthType]) - paddingLength - borderLength
 
       if (length === '100%') {
         // 因为有些滚动内容的高度/宽度是 100%的，所以

@@ -29,8 +29,6 @@ export default {
   },
 
   data() {
-    this.moving = false // 是否正在执行过渡动画
-
     return {
       transitionHeight: 0
     }
@@ -152,7 +150,8 @@ export default {
       Object.assign(el.style, {
         overflow: '',
         opacity: '',
-        'transition': ''
+        'transition': '',
+        display: ''
       })
 
       this.$emit('afterEnter')
@@ -204,7 +203,8 @@ export default {
       Object.assign(el.style, {
         overflow: '',
         opacity: '',
-        'transition': ''
+        transition: '',
+        display: 'none'
       })
 
       return this.$emit('afterLeave')

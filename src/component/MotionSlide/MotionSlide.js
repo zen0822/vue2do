@@ -92,7 +92,9 @@ export default {
       return this
     },
 
-    beforeEnter() {
+    beforeEnter({
+      code
+    } = {}) {
       this.$emit('beforeEnter')
 
       let el = this.$el
@@ -105,14 +107,16 @@ export default {
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = ''
+          code === this.code && (el.style.display = '')
 
           return resolve()
-        }, 100)
+        }, 78)
       })
     },
 
-    entering() {
+    entering({
+      code
+    } = {}) {
       let el = this.$el
       // HACK: trigger browser reflow
       let height = el.offsetHeight
@@ -153,7 +157,9 @@ export default {
       })
     },
 
-    leaveing() {
+    leaveing({
+      code
+    } = {}) {
       let el = this.$el
 
       this.$emit('leaving')
@@ -164,7 +170,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = 'none'
+          code === this.code && (el.style.display = 'none')
 
           return resolve()
         }, this.time)

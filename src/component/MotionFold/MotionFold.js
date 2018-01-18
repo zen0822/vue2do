@@ -66,22 +66,24 @@ export default {
       this.transitionHeight = height
     },
 
-    beforeEnter() {
+    beforeEnter({
+      code
+    } = {}) {
       this.$emit('beforeEnter')
       let el = this.$el
 
       Object.assign(el.style, {
-        'height': 0,
-        'overflow': 'hidden',
+        height: 0,
+        overflow: 'hidden',
         'transition': this.transition
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = ''
+          code === this.code && (el.style.display = '')
 
           return resolve()
-        }, 10)
+        }, 218)
       })
     },
 
@@ -105,9 +107,9 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'height': '',
-        'overflow': '',
-        'transition': ''
+        height: '',
+        overflow: '',
+        transition: ''
       })
 
       this.$emit('afterEnter')
@@ -120,29 +122,28 @@ export default {
 
       Object.assign(el.style, {
         height: `${this.transitionHeight}px`,
-        'overflow': 'hidden'
-      })
-
-      Object.assign(el.style, {
-        'transition': this.transition
+        overflow: 'hidden',
+        transition: this.transition
       })
 
       return this.leaveing()
     },
 
-    leaveing() {
+    leaveing({
+      code
+    } = {}) {
       let el = this.$el
       let height = el.offsetHeight
 
       this.$emit('leaving')
 
       Object.assign(el.style, {
-        'height': 0
+        height: 0
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = 'none'
+          code === this.code && (el.style.display = 'none')
 
           return resolve()
         }, this.time)
@@ -153,8 +154,8 @@ export default {
       let el = this.$el
 
       Object.assign(el.style, {
-        'transition': '',
-        'height': '',
+        transition: '',
+        height: '',
         overflow: ''
       })
 

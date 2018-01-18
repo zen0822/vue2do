@@ -67,22 +67,18 @@ export default {
 
   props: {
     store: Object,
-
     ban: {
       type: Boolean,
       default: false
     },
-
     noTrig: {
       type: Boolean,
       default: false
     },
-
     noCoverTrig: {
       type: Boolean,
       default: false
     },
-
     height: {
       type: [Number, String],
       default: 'auto',
@@ -96,7 +92,6 @@ export default {
         }
       }
     },
-
     width: {
       type: [String, Number],
       default: 170,
@@ -110,7 +105,6 @@ export default {
         }
       }
     },
-
     trigHeight: {
       type: [String, Number],
       default: 'auto',
@@ -144,11 +138,9 @@ export default {
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-menu`
     },
-
     me() {
       return this
     },
-
     menuClass() { // 组件 class 的名字
       let classArr = [
         this.cPrefix,
@@ -163,7 +155,6 @@ export default {
     deviceSize(val) {
       this._changeByDeviceSize(val)
     },
-
     trigHeight(val) {
       this._adjustTriggerPoiStyle(val)
     }
@@ -276,15 +267,5 @@ export default {
         return this._adjustTriggerPoiStyle(transite(optVal, this))
       }
     }
-  },
-
-  created() {
-    this.uid = uid()
-
-    this.$store.dispatch(compStore.common.add, {
-      vm: this,
-      name: this.compName,
-      id: this.uid
-    })
   }
 }

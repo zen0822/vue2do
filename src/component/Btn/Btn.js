@@ -152,7 +152,7 @@ export default {
       this.banState = this.ban
     },
 
-    mouseup() {
+    mouseup(event) {
       if (this.inTouch) {
         return false
       }

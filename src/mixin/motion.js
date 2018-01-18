@@ -3,7 +3,8 @@
  *
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
- * @prop sync - 调用多次动画时，动画与动画之间是否同步
+ * @prop sync - 迅速切换动画，进来动画与离开动画之间是否同步进行
+ * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -12,6 +13,8 @@
  * @event leave - 离开过渡期间
  * @event afterLeave - 离开过渡之后
  */
+
+import uid from '../util/uid'
 
 export default {
   props: {
@@ -61,13 +64,19 @@ export default {
         return false
       }
 
+      this.code = uid()
+      const code = this.code
+      opt = { ...opt,
+        code
+      }
+
       return new Promise(async(resolve, reject) => {
         try {
           this.moving = this.isEntering = true
 
-          await this.beforeEnter(opt)
-          await this.entering(opt)
-          await this.afterEnter(opt)
+          code === this.code && await this.beforeEnter(opt)
+          code === this.code && await this.entering(opt)
+          code === this.code && await this.afterEnter(opt)
 
           this.moving = this.isEntering = false
 
@@ -88,13 +97,19 @@ export default {
         return false
       }
 
+      this.code = uid()
+      const code = this.code
+      opt = { ...opt,
+        code
+      }
+
       return new Promise(async(resolve, reject) => {
         try {
           this.moving = this.isLeaving = true
 
-          await this.beforeLeave(opt)
-          await this.leaveing(opt)
-          await this.afterLeave(opt)
+          code === this.code && await this.beforeLeave(opt)
+          code === this.code && await this.leaveing(opt)
+          code === this.code && await this.afterLeave(opt)
 
           this.moving = this.isLeaving = false
 
@@ -132,5 +147,12 @@ export default {
     afterLeave() {
       return this.$emit('afterLeave')
     }
+  },
+
+  created() {
+    this.moving = false // 当前正在执行动画
+    this.isEntering = false // 当前执行进来的动画的编号
+    this.isLeaving = false // 当前执行离开的动画的编号
+    this.code = 0 // 当前执行的动画的编号
   }
 }

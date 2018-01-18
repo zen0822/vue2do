@@ -49,8 +49,7 @@ export default function (h) {
     h('motion', {
       props: {
         height: this.menuHeight,
-        slideLength: this.noCoverTrig ? this.triggerHeight : 0,
-        sync: true
+        slideLength: this.noCoverTrig ? this.triggerHeight : 0
       },
       ref: 'motion'
     }, [

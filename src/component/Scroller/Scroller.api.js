@@ -65,11 +65,11 @@ export default {
       this.xData.isMousedown = false
     },
 
-    scrollerMouseover(evt) {
+    scrollerMouseenter(evt) {
       this.showBar = true
     },
 
-    scrollerMouseout(evt) {
+    scrollerMouseleave(evt) {
       this.showBar = false
     },
 

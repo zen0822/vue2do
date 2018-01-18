@@ -2,7 +2,7 @@
  * zoom motion component - 放大缩小效果
  *
  * @prop speed - 淡出速度
- * @prop origin - 放大缩小的起始位置 (同 css 里的属性 transform-origin)
+ * @prop origin - 放大缩小的起始位置 (同 css 里的属性 'transform-origin')
  * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
  */
 
@@ -24,12 +24,6 @@ export default {
     }
   },
 
-  data() {
-    this.moving = false // 是否正在执行过渡动画
-
-    return {}
-  },
-
   computed: {
     positionType() {
       return this.global ? 'fixed' : 'absolute'
@@ -40,33 +34,37 @@ export default {
   },
 
   methods: {
-    beforeEnter() {
+    beforeEnter({
+      code
+    } = {}) {
       this.$emit('beforeEnter')
       let el = this.$el
 
       Object.assign(el.style, {
-        'position': this.positionType,
+        position: this.positionType,
         'transform-origin': this.origin,
-        'transition': this.transition,
-        'transform': 'scale(0)'
+        transition: this.transition,
+        transform: 'scale(0)'
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = ''
+          code === this.code && (el.style.display = '')
 
           return resolve()
-        }, 10)
+        }, 78)
       })
     },
 
-    entering() {
+    entering({
+      code
+    } = {}) {
       let el = this.$el
       // HACK: trigger browser reflow
       let height = el.offsetHeight
 
       Object.assign(el.style, {
-        'transform': ''
+        transform: ''
       })
 
       this.$emit('entering')
@@ -78,59 +76,67 @@ export default {
       })
     },
 
-    afterEnter() {
+    afterEnter({
+      code
+    } = {}) {
       let el = this.$el
 
       Object.assign(el.style, {
-        'position': '',
+        position: '',
         'transform-origin': '',
-        'transition': ''
+        transition: ''
       })
 
       this.$emit('afterEnter')
     },
 
-    beforeLeave() {
+    beforeLeave({
+      code
+    } = {}) {
       let el = this.$el
 
       this.$emit('beforeLeave')
 
       Object.assign(el.style, {
-        'position': this.positionType,
-        'transform': '',
+        position: this.positionType,
+        transform: '',
         'transform-origin': this.origin,
-        'transition': this.transition
+        transition: this.transition
       })
 
       return this.leaveing()
     },
 
-    leaveing() {
+    leaveing({
+      code
+    } = {}) {
       let el = this.$el
 
       this.$emit('leaving')
 
       Object.assign(el.style, {
-        'transform': 'scale(0)'
+        transform: 'scale(0)'
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = 'none'
+          code === this.code && (el.style.display = 'none')
 
           return resolve()
         }, this.time)
       })
     },
 
-    afterLeave() {
+    afterLeave({
+      code
+    } = {}) {
       let el = this.$el
 
       Object.assign(el.style, {
-        'position': '',
-        'transform': '',
+        position: '',
+        transform: '',
         'transform-origin': '',
-        'transition': ''
+        transition: ''
       })
 
       return this.$emit('afterLeave')
