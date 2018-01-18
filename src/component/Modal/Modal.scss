@@ -14,7 +14,7 @@ $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
 $POP_CONTAINER_PADDING: 24px;
 
-@mixin theme-content($type-color, $type-dark-color) {
+@mixin theme-content($type-color, $type-dark-color, $type-light-color) {
   &.#{$C_PREFIX}-type-full {
     &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop > header {
       border-color: $type-color;

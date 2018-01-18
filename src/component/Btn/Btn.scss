@@ -22,7 +22,7 @@ $C_PREFIX: #{$COMP_BTN};
   color: $color;
 }
 
-@mixin theme-content($type-color, $type-dark-color) {
+@mixin theme-content($type-color, $type-dark-color, $type-light-color) {
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {
@@ -219,6 +219,10 @@ $C_PREFIX: #{$COMP_BTN};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
   @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-light {

@@ -321,6 +321,7 @@ export default {
       boxLength,
       length
     }) {
+      debugger
       let scrollerContainBox = false // 滚动区域是否大过滚动内容
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
@@ -339,12 +340,14 @@ export default {
       let paddingLength = 0
       let borderLength = 0
 
-      if (type === 'y') {
-        paddingLength = this._getNumFromStr(parentStyle.paddingTop) + this._getNumFromStr(parentStyle.paddingBottom)
-        borderLength = this._getNumFromStr(parentStyle.borderTopWidth) + this._getNumFromStr(parentStyle.borderBottomWidth)
-      } else {
-        paddingLength = this._getNumFromStr(parentStyle.paddingLeft) + this._getNumFromStr(parentStyle.paddingRight)
-        borderLength = this._getNumFromStr(parentStyle.borderLeftWidth) + this._getNumFromStr(parentStyle.borderRightWidth)
+      if (parentStyle['boxSizing'] === 'border-box') {
+        if (type === 'y') {
+          paddingLength = this._getNumFromStr(parentStyle.paddingTop) + this._getNumFromStr(parentStyle.paddingBottom)
+          borderLength = this._getNumFromStr(parentStyle.borderTopWidth) + this._getNumFromStr(parentStyle.borderBottomWidth)
+        } else {
+          paddingLength = this._getNumFromStr(parentStyle.paddingLeft) + this._getNumFromStr(parentStyle.paddingRight)
+          borderLength = this._getNumFromStr(parentStyle.borderLeftWidth) + this._getNumFromStr(parentStyle.borderRightWidth)
+        }
       }
 
       parentLength = this._getNumFromStr(parentStyle[lengthType]) - paddingLength - borderLength

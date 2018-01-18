@@ -42,47 +42,58 @@ $DEVICE-XL-RANGE: "1200px ~ --px";
 @mixin theme-style($type) {
   $type-color: $color-primary;
   $type-dark-color: $color-primary-dark;
+  $type-light-color: $color-primary-light;
 
   @if $type=='primary' {
     $type-color: $color-primary;
     $type-dark-color: $color-primary-dark;
+    $type-light-color: $color-primary-light;
   }
   @else if $type=='danger' {
     $type-color: $color-danger;
     $type-dark-color: $color-danger-dark;
+    $type-light-color: $color-danger-light;
   }
   @else if $type=='success' {
     $type-color: $color-success;
     $type-dark-color: $color-success-dark;
+    $type-light-color: $color-success-light;
   }
   @else if $type=='waring' {
     $type-color: $color-warning;
     $type-dark-color: $color-warning-dark;
+    $type-light-color: $color-warning-light;
   }
   @else if $type=='blue' {
     $type-color: $color-blue;
     $type-dark-color: $color-blue-dark;
+    $type-light-color: $color-blue-light;
   }
   @else if $type=='light' {
     $type-color: $color-light;
     $type-dark-color: $color-light-dark;
+    $type-light-color: $color-light-light;
   }
   @else if $type=='dark' {
     $type-color: $color-dark;
     $type-dark-color: $color-dark-dark;
+    $type-light-color: $color-dark-light;
   }
   @else if $type=='orange' {
     $type-color: $color-orange;
     $type-dark-color: $color-orange-dark;
+    $type-light-color: $color-orange-light;
   }
   @else if $type=='grey' {
     $type-color: $color-grey;
     $type-dark-color: $color-grey-dark;
+    $type-light-color: $color-grey-light;
   }
   @else {
     $type-color: $color-grey;
     $type-dark-color: $color-grey-dark;
+    $type-light-color: $color-grey-light;
   }
 
-  @include theme-content($type-color, $type-dark-color)
+  @include theme-content($type-color, $type-dark-color, $type-light-color)
 }

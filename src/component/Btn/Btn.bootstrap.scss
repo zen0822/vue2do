@@ -58,7 +58,7 @@ $C_PREFIX: #{$COMP_BTN};
   }
 }
 
-@mixin theme-content($type-color, $type-dark-color) {
+@mixin theme-content($type-color, $type-dark-color, $type-light-color) {
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {

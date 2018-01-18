@@ -16,31 +16,31 @@ export default function (h) {
   return h('div', {
     class: [this.cPrefix, this.xclass(this.themeClass)]
   }, [
-    h('scroller', {
-      props: {
-        height: 200,
-        width: 'auto',
-        ui: this.ui,
-        theme: this.theme
-      },
-      ref: 'scroller'
+    h('header', {
+      class: [
+        this.xclass('header')
+      ]
+    }, this.type),
+    h('article', {
+      class: [
+        this.xclass('article')
+      ],
+      ref: 'article'
     }, [
-      h('div', {
-        class: [this.xclass('stage')],
-        style: {
-          width: this.stageWidth + 'px'
+      h('scroller', {
+        props: {
+          height: 200,
+          width: 'auto',
+          ui: this.ui,
+          theme: this.theme
         },
-        ref: 'stage'
+        ref: 'scroller'
       }, [
-        h('header', {
-          class: [
-            this.xclass('header')
-          ]
-        }, this.type),
-        h('article', {
-          class: [
-            this.xclass('article')
-          ]
+        h('pre', {
+          class: [this.xclass('pre')],
+          style: {
+            width: this.preWidth + 'px'
+          }
         }, [
           h('scroller', {
             props: {
@@ -48,27 +48,23 @@ export default function (h) {
               width: '100%'
             },
             ref: 'scrollerArticle'
-          }, [
-            h('pre', {
-              class: [this.xclass('pre')]
-            }, $slots.default || this.code),
-            h('aside', {
-              class: [
-                this.xclass('line-num')
-              ]
-            }, [
-              h('ul', {
-                class: [this.prefix('css-ul')]
-              }, lineNumEle)
-            ])
-          ])
+          }, [$slots.default || this.code])
         ]),
-        h('footer', {
+        h('aside', {
           class: [
-            this.xclass('footer')
+            this.xclass('line-num')
           ]
-        }, $slots.footer || this.footer)
+        }, [
+          h('ul', {
+            class: [this.prefix('css-ul')]
+          }, lineNumEle)
+        ])
       ])
-    ])
+    ]),
+    h('footer', {
+      class: [
+        this.xclass('footer')
+      ]
+    }, $slots.footer || this.footer)
   ])
 }

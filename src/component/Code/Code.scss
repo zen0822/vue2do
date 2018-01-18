@@ -1,25 +1,31 @@
+/**
+ * code 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
 
-/**
- * code 组件样式
- */
-
 $C_PREFIX: #{ $COMP_CODE };
+
+@mixin theme-content($type-color, $type-dark-color, $color-primary-light) {
+  .#{$C_PREFIX} {
+    border: $color-primary-light $border-thin solid;
+
+    .#{$C_PREFIX}-line-num {
+      border-right: $border-thin * 2 $type-color solid;
+    }
+  }
+}
 
 .#{$C_PREFIX} {
   font-size: $font-base;
   background-color: #fff;
   border: $color-primary-light $border-thin solid;
   border-radius: $border-radius;
-
-  .#{$C_PREFIX}-stage {
-    box-sizing: border-box;
-    position: relative;
-    padding: $gap-v $gap-h-double;
-  }
+  position: relative;
+  padding: $gap-v $gap-h-double;
 
   .#{$C_PREFIX}-header {
     color: $border-color;
@@ -53,4 +59,36 @@ $C_PREFIX: #{ $COMP_CODE };
     padding-right: 5px;
     width: 24px;
   }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
 }

@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       lineNum: 3,
-      stageWidth: 0 // stage 的宽度
+      preWidth: 0 // pre 的宽度
     }
   },
 
@@ -49,12 +49,12 @@ export default {
 
   methods: {
     _initComp() {
-      this.stageWidth = this.$el.offsetWidth
+      this.preWidth = this.$refs.article.offsetWidth - 50
     },
 
     _binder() {
       this.$refs.scroller.$on('scrollerChange', () => {
-        this.stageWidth = this.$el.offsetWidth
+        this.preWidth = this.$refs.article.offsetWidth - 50
       })
     }
   }
