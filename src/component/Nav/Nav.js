@@ -19,15 +19,15 @@ import './Nav.m.scss'
 import render from './Nav.render.js'
 import baseMixin from '../../mixin/base'
 
-import foldComp from '../Fold/Fold'
-import foldTitleComp from '../Fold/FoldTitle'
-import foldContentComp from '../Fold/FoldContent'
+import Fold from '../Fold/Fold'
+import FoldTitle from '../Fold/FoldTitle'
+import FoldContent from '../Fold/FoldContent'
 
-import foldTransition from '../MotionFold/MotionFold'
-import slideTransition from '../MotionSlide/MotionSlide'
-import iconComp from '../Icon/Icon'
-import rowComp from '../Row/Row'
-import colComp from '../Col/Col'
+import MotionFold from '../MotionFold/MotionFold'
+import MotionSlide from '../MotionSlide/MotionSlide'
+import Icon from '../Icon/Icon'
+import Row from '../Row/Row'
+import Col from '../Col/Col'
 
 const layoutType = ['grid', 'flex', 'flow']
 
@@ -39,56 +39,47 @@ export default {
   render,
 
   components: {
-    'fold': foldComp,
-    'fold-title': foldTitleComp,
-    'fold-content': foldContentComp,
-    'fold-transition': foldTransition,
-    'slide-transition': slideTransition,
-    row: rowComp,
-    column: colComp,
-    icon: iconComp
+    fold: Fold,
+    'fold-title': FoldTitle,
+    'fold-content': FoldContent,
+    'motion-fold': MotionFold,
+    'motion-slide': MotionSlide,
+    row: Row,
+    column: Col,
+    icon: Icon
   },
 
   props: {
     animate: String,
-
     autoSwitch: {
       type: Boolean,
       default: true
     },
-
     initOpt: Array,
-
     gap: {
       type: Number,
       default: 0
     },
-
     kind: {
       type: String,
       default: 'center'
     },
-
     only: {
       type: Boolean,
       default: false
     },
-
     spreadAll: {
       type: Boolean,
       default: false
     },
-
     type: {
       type: String,
       default: 'horizontal'
     },
-
     trigger: {
       type: String,
       default: 'no'
     },
-
     title: {
       type: String,
       default: ''
@@ -106,15 +97,12 @@ export default {
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-nav`
     },
-
     isSmallDevice() { // 判断设备是否小于 s 尺寸
       return this.deviceSize === 's' || this.deviceSize === 'xs'
     },
-
     isVerticalType() {
       return this.type === 'vertical'
     },
-
     isFoldAnimate() {
       return this.navAnimate === 'fold'
     }
@@ -127,6 +115,9 @@ export default {
       }
 
       this.changeByDeviceSize(val)
+    },
+    isStageActive(val) {
+      val ? this.$refs.transition.enter() : this.$refs.transition.leave()
     }
   },
 

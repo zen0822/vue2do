@@ -3,7 +3,7 @@
  *
  * @prop initOpt - 折叠版的初始化数据
  * @prop initIndex - 当前展开的折叠板
- * @prop spread-all - 展开全部
+ * @prop spreadAll - 展开全部
  * @prop only - 开启一次只能展开一个面板功能
  * @prop type - 布局类型
  *
@@ -13,8 +13,8 @@ import Vue from 'vue'
 import './Fold.scss'
 import render from './Fold.render.js'
 import baseMixin from '../../mixin/base'
-import iconComp from '../Icon/Icon'
-import foldTransition from '../MotionFold/MotionFold'
+import Icon from '../Icon/Icon'
+import MotionFold from '../MotionFold/MotionFold'
 
 import {
   handleEleDisplay
@@ -28,28 +28,24 @@ const Fold = {
   render,
 
   components: {
-    icon: iconComp,
-    'fold-transition': foldTransition
+    icon: Icon,
+    'motion-fold': MotionFold
   },
 
   props: {
     initIndex: Number,
-
     initOpt: {
       type: Array,
       default: () => []
     },
-
     spreadAll: {
       type: Boolean,
       default: false
     },
-
     only: {
       type: Boolean,
       default: false
     },
-
     type: {
       type: String,
       default: 'horizontal'
@@ -58,16 +54,11 @@ const Fold = {
 
   data() {
     return {
-      // 折叠板的有效 slot 信息
-      foldChildren: [],
-      // 当前展开的面板
-      currentIndex: 1,
-      // 前一个打开的面板
-      preIndex: 1,
-      // 折叠版数据
-      foldData: [],
-      // 过渡动画的元素高度
-      transitionChildHeight: 0
+      foldChildren: [], // 折叠板的有效 slot 信息
+      currentIndex: 1, // 当前展开的面板
+      preIndex: 1, // 前一个打开的面板
+      foldData: [], // 折叠版数据
+      transitionChildHeight: 0 // 过渡动画的元素高度
     }
   },
 
@@ -82,11 +73,9 @@ const Fold = {
     initIndex(val) {
       this.currentIndex = val
     },
-
     spreadAll() {
       this._initFold()
     },
-
     only(val) {
       this._initFold()
     }
@@ -142,6 +131,8 @@ const Fold = {
             }
           }
         }
+
+        this.$nextTick(() => this.switch(index + 1, foldData[index].folding))
       })
 
       this.foldChildren = foldChildren
@@ -191,6 +182,8 @@ const Fold = {
         return false
       }
 
+      $transition.$el.style.height = 'auto'
+      $transition.$el.style.width = 'auto'
       let transitionHeight = this.elementProp($transition.$el).offsetHeight
       $transition.setHeight(transitionHeight)
 

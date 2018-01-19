@@ -53,7 +53,7 @@ export default function (h) {
         h('dd', {
           class: [this.foldContentActive(contentIndex)]
         }, [
-          h('fold-transition', {
+          h('motion-fold', {
             height: this.transitionChildHeight,
             ref: `transition${contentIndex}`
           }, [

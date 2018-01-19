@@ -103,15 +103,7 @@ export default function (h) {
 
   if (this.isVerticalType) {
     navStage.push(
-      h('fold-transition', {
-        directives: [{
-          name: 'show',
-          value: this.isStageActive
-        }],
-        props: {
-          ui: this.ui,
-          theme: this.theme
-        },
+      h('motion-fold', {
         ref: 'transition'
       }, [
         h('div', {
@@ -126,16 +118,10 @@ export default function (h) {
     )
   } else {
     navStage.push(
-      h('slide-transition', {
+      h('motion-slide', {
         props: {
-          offset: 0,
-          ui: this.ui,
-          theme: this.theme
+          offset: 0
         },
-        directives: [{
-          name: 'show',
-          value: this.isStageActive
-        }],
         ref: 'transition'
       }, [
         h('div', {
@@ -171,17 +157,13 @@ export default function (h) {
       h('row', [
         h('column', {
           props: {
-            span: 6,
-            ui: this.ui,
-            theme: this.theme
+            span: 6
           }
         }, this.title),
         h('column', {
           class: [this.xclass('arrow')],
           props: {
-            span: 6,
-            ui: this.ui,
-            theme: this.theme
+            span: 6
           }
         }, [
           h('icon', {
