@@ -37,6 +37,10 @@ import baseMixin from '../../mixin/base'
 import apiMixin from './Scroller.api'
 import render from './Scroller.render.js'
 
+import {
+  offset as propOffset
+} from '../../util/dom/prop'
+
 import MotionFade from '../MotionFade/MotionFade'
 
 // 滚动一次的滚动区域走的像素大小
@@ -195,7 +199,7 @@ export default {
     barLeft(val) {
       this.triggerScroll('x')
     },
-    'yComputed.barDisplay'(val) {
+    'yComputed.barDisplay' (val) {
       val ? this.$refs.bar.enter() : this.$refs.bar.leave()
     }
   },
@@ -321,26 +325,35 @@ export default {
       boxLength,
       length
     }) {
-      debugger
+      const $el = this.$el
       let scrollerContainBox = false // 滚动区域是否大过滚动内容
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
       let scrollerLength = 0 // 滚动区域的高度/宽度
-      let lengthType = type === 'y' ? 'height' : 'width'
-      let parentLength = 0 // 滚动区域的父元素
       let boxL = -1 // 需要重新赋值给 box 的 高度/宽度 像素
 
-      // 滚动区域的 宽度/高度 需要被滚动内容撑大，
-      // 并且需要检查父元素的 宽度/高度 之后，
-      // 才能正确断言滚动区域的 宽度/高度
-      this.$el.style[lengthType] = boxLength + 'px'
-      const $elParent = this.$el.parentElement
-      const parentStyle = getComputedStyle($elParent)
+      if (length === '100%') {
+        // TODO：优化计算次数
 
-      let paddingLength = 0
-      let borderLength = 0
+        let lengthType = type === 'y' ? 'height' : 'width'
+        let offsetLengthType = type === 'y' ? 'offsetHeight' : 'offsetWidth'
+        let parentLength = 0 // 滚动区域的父元素减去除自身的子元素的高度/宽度
 
-      if (parentStyle['boxSizing'] === 'border-box') {
+        // 滚动区域的 宽度/高度 需要被滚动内容撑大，
+        // 并且需要检查父元素的 宽度/高度 之后，
+        // 才能正确断言滚动区域的 宽度/高度
+        $el.style[lengthType] = boxLength + 'px'
+        const $elOffset = propOffset($el)
+        const $elParent = $el.parentElement
+        const $elParentChildren = Array.from($elParent.children)
+        const parentStyle = getComputedStyle($elParent)
+        const parentL = $elParent[offsetLengthType]
+
+        let otherChildrenLength = 0
+        let paddingLength = 0
+        let borderLength = 0
+
+        // 计算 border 和 padding 宽度/高度
         if (type === 'y') {
           paddingLength = this._getNumFromStr(parentStyle.paddingTop) + this._getNumFromStr(parentStyle.paddingBottom)
           borderLength = this._getNumFromStr(parentStyle.borderTopWidth) + this._getNumFromStr(parentStyle.borderBottomWidth)
@@ -348,19 +361,56 @@ export default {
           paddingLength = this._getNumFromStr(parentStyle.paddingLeft) + this._getNumFromStr(parentStyle.paddingRight)
           borderLength = this._getNumFromStr(parentStyle.borderLeftWidth) + this._getNumFromStr(parentStyle.borderRightWidth)
         }
-      }
 
-      parentLength = this._getNumFromStr(parentStyle[lengthType]) - paddingLength - borderLength
+        // 计算是否有子元素的高度/宽度是撑大了父元素
+        $elParentChildren.forEach((item) => {
+          const itemStyle = getComputedStyle(item)
+          const itemStyleDisplay = itemStyle.display
+          const itemStylePosition = itemStyle.position
+          const itemOffset = propOffset(item)
 
-      if (length === '100%') {
-        // 因为有些滚动内容的高度/宽度是 100%的，所以
-        // 需要判断之前的滚动区域的高度/宽度是否
+          // 脱离文档流的不计算(relative 例外)
+          // 脱离文本流的不计算
+          // 等于自身元素的不计算
+          // 隐藏的不计算
+          if (item === $el ||
+            itemStyle.float !== 'none' ||
+            itemStyleDisplay === 'none' ||
+            (itemStylePosition !== 'static' && itemStylePosition !== 'relative')) {
+            return false
+          }
+
+          // 当计算宽度的时候，子元素在组件的左右两边不计算
+          // 当计算高度的时候，子元素在组件的上下两边不计算
+          if (type === 'x') {
+            if (itemStyleDisplay !== 'inline-block') {
+              return false
+            }
+
+            if (itemOffset.top > $elOffset.top + boxLength || $elOffset.top > itemOffset.top + item.offsetHeight) {
+              return false
+            }
+          } else {
+            if (itemOffset.left > $elOffset.left + boxLength || $elOffset.left > itemOffset.left + item.offsetWidth) {
+              return false
+            }
+          }
+
+          otherChildrenLength += item[offsetLengthType]
+        })
+
+        // 减去 border、 padding 和其他子元素的宽度/高度
+        parentLength = parentL - paddingLength - borderLength - otherChildrenLength
+
+        // 父元素大于滚动内容
         if (parentLength >= boxLength) {
           boxL = parentLength
+          scrollerLength = parentLength
+        } else {
+          scrollerLength = parentLength
         }
 
         scrollerContainBox = parentLength >= boxLength
-        scrollerLength = parentLength
       } else if (length === 'auto') {
         scrollerContainBox = true
         scrollerLength = boxLength

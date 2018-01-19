@@ -1,46 +1,22 @@
 div.welcome
-  //- div.welcome-bg
-  //-   h3.z-css-text-center.z-css-m-t-double welcome to
-  //-   h2.z-css-text-center.z-css-m-t-double vue2do
-  z-code(v-pre).
-    #{'<z-table>'}
-      #{'<'}template slot="thead" v-for="item in ['名字', '类型', '可选值', '说明']"#{'>'}
-        #{'<z-table-col>{{ item }}</z-table-col>'}
-      #{'</template>'}
-      #{'<z-table-row slot="1">'}
-        #{'<z-table-col>display</z-table-col>'}
-        #{'<z-table-col>布尔值</z-table-col>'}
-        #{'<z-table-col>true</z-table-col>'}
-        #{'<z-table-col>分页的显示状态</z-table-col>'}
-      #{'</z-table-row>'}
-      #{'<z-table-row slot="2">'}
-        #{'<z-table-col>display2</z-table-col>'}
-        #{'<z-table-col>布尔值</z-table-col>'}
-        #{'<z-table-col>false</z-table-col>'}
-        #{'<z-table-col></z-table-col>'}
-      #{'</z-table-row>'}
-      #{'<z-table-row slot="3">'}
-        #{'<z-table-col>display3</z-table-col>'}
-        #{'<z-table-col>布尔值</z-table-col>'}
-        #{'<z-table-col>true</z-table-col>'}
-        #{'<z-table-col>显示</z-table-col>'}
-      #{'</z-table-row>'}
-    #{'</z-table>'}
-  //- div.welcome-container
-  //-   z-row(align='start', justify='justify')
-  //-     z-col(:l='4', :xs='12', :span='4').welcome-detail-col
-  //-       div.welcome-detail-col-title 响应
-  //-       p.welcome-detail-col-text
-  //-         | 适配任何设备，在移动端有更好的用户体验。
-  //-         | 支持五种尺寸的设备，让你不再担心适配不同设备的尺寸带来的烦恼。
-  //-     z-col(:l='4',:xs='12', :span='4').welcome-detail-col
-  //-       div.welcome-detail-col-title 灵活
-  //-       p.welcome-detail-col-text
-  //-         | 组件和组件之间可以灵活组合，能满足任何需求。
-  //-         | 组件的功能丰富，能随意搭配成需要的功能
-  //-     z-col(:l='4',:xs='12', :span='4').welcome-detail-col
-  //-       div.welcome-detail-col-title 样式
-  //-       p.welcome-detail-col-text
-  //-         | 内置多种 UI 规范和主题，让组件不再单调，为您提供更多的样式选择。
-  //-         | 支持 primary、danger、success、warning、orange、light、dark 7 种主题颜色，
-  //-         | 将会支持谷歌的 material UI、bootstrap UI、苹果的 OS UI 和微软的 metro UI。
+  div.welcome-bg
+    h3.z-css-text-center.z-css-m-t-double welcome to
+    h2.z-css-text-center.z-css-m-t-double vue2do
+  div.welcome-container
+    z-row(align='start', justify='justify')
+      z-col(:l='4', :xs='12', :span='4').welcome-detail-col
+        div.welcome-detail-col-title 响应
+        p.welcome-detail-col-text
+          | 适配任何设备，在移动端有更好的用户体验。
+          | 支持五种尺寸的设备，让你不再担心适配不同设备的尺寸带来的烦恼。
+      z-col(:l='4',:xs='12', :span='4').welcome-detail-col
+        div.welcome-detail-col-title 灵活
+        p.welcome-detail-col-text
+          | 组件和组件之间可以灵活组合，能满足任何需求。
+          | 组件的功能丰富，能随意搭配成需要的功能
+      z-col(:l='4',:xs='12', :span='4').welcome-detail-col
+        div.welcome-detail-col-title 样式
+        p.welcome-detail-col-text
+          | 内置多种 UI 规范和主题，让组件不再单调，为您提供更多的样式选择。
+          | 支持 primary、danger、success、warning、orange、light、dark 7 种主题颜色，
+          | 将会支持谷歌的 material UI、bootstrap UI、苹果的 OS UI 和微软的 metro UI。

@@ -2,4 +2,8 @@
 
 .app-container {
   position: relative;
+
+  & > .app-content {
+    overflow: auto;
+  }
 }

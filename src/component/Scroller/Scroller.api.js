@@ -74,6 +74,13 @@ export default {
     },
 
     mouseWheel(evt) {
+      this.triggerScroll('y')
+
+      if ((evt.deltaY < 0 && this.yComputed.isTop === 0) ||
+        (evt.deltaY > 0 && this.yComputed.isBottom === 0)) {
+        return false
+      }
+
       let barTop = 0
       let boxTop = 0
 
@@ -84,8 +91,6 @@ export default {
         boxDistance: evt.deltaY > 0 ? -SCROLL_PIXEL : SCROLL_PIXEL,
         barDistance: evt.deltaY > 0 ? this.yData.scrollBarPixel : -this.yData.scrollBarPixel
       })
-
-      this.triggerScroll('y')
 
       if (this.yComputed.isBottom || this.yComputed.isTop) {
         if (this.scrolling) {

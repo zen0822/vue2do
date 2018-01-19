@@ -21,6 +21,10 @@ import './Btn.scss'
 import './Btn.material.scss'
 import './Btn.bootstrap.scss'
 
+import {
+  offset as propOffset
+} from '../../util/dom/prop'
+
 import render from './Btn.render'
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
@@ -182,15 +186,16 @@ export default {
       this.allowFocus = false
 
       if (this.UIMaterial) {
+        const elOffset = propOffset(el)
+
         this.mousePoi = {
-          x: event.pageX - el.offsetLeft,
-          y: event.pageY - el.offsetTop
+          x: event.pageX - elOffset.left,
+          y: event.pageY - elOffset.top
         }
 
         this.$refs.transition && this.$refs.transition.enter({
           mousePoi: {
-            x: event.pageX - el.offsetLeft,
-            y: event.pageY - el.offsetTop
+            ...this.mousePoi
           }
         })
       }

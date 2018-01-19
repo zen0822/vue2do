@@ -97,7 +97,9 @@ const client = (el) => {
 }
 
 /**
- * 相对于网页（包括卷去的页面）的相关特性
+ * 相对于网页的相关特性
+ * TODO: 考虑 body 和 html 有 padding、margin 和 border 的情况
+ * TODO: 考虑包括卷去的页面
  *
  * @param {*} el - dom 节点
  *
