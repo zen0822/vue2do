@@ -27,7 +27,7 @@ $input-gap-v: 8px;
 
   &.#{$C_PREFIX}-type-area {
     & > .#{$C_PREFIX}-wrap {
-      border: $border-color $border-thin solid;
+      border: $color-border $border-thin solid;
       border-radius: $border-radius;
 
       & > .#{$C_PREFIX}-wrap-border {
@@ -46,7 +46,7 @@ $input-gap-v: 8px;
 
   & > .#{$C_PREFIX}-wrap {
     position: relative;
-    border-bottom: $border-color $border-thin solid;
+    border-bottom: $color-border $border-thin solid;
     background-color: #fff;
     box-sizing: border-box;
 
@@ -110,7 +110,7 @@ $input-gap-v: 8px;
         top: 0;
         left: 0;
         width: 100%;
-        color: $grey-light;
+        color: $color-grey;
         box-sizing: border-box;
         white-space: nowrap;
         overflow: hidden;

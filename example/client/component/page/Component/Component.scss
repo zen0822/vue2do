@@ -47,7 +47,7 @@
       cursor: pointer;
       padding-bottom: $gap-v-double;
       margin-bottom: $gap-v-double;
-      border-bottom: $border-dark-color $border-thin solid;
+      border-bottom: $color-border-dark $border-thin solid;
 
       &:hover::after {
         content: "#";

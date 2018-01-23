@@ -36,8 +36,8 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
 
     > article {
       padding: $gap-v-double;
-      border-top: $border-color $border-thin solid;
-      border-bottom: $border-color $border-thin solid;
+      border-top: $color-border $border-thin solid;
+      border-bottom: $color-border $border-thin solid;
     }
 
     > footer {

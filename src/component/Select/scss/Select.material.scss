@@ -53,7 +53,7 @@
       border: none;
 
       & > .#{ $C_OPT_PREFIX }-li:first-child {
-        border-top: $border-lightest-color $border-thin solid;
+        border-top: $color-border-light $border-thin solid;
       }
     }
   }

@@ -11,7 +11,7 @@ $C_ELE_PREFIX: #{ $COMP_TAB_ELE };
 $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
 
 .#{$C_PREFIX} {
-  border-right: $border-color $border-thin solid;
+  border-right: $color-border $border-thin solid;
   cursor: pointer;
 
   & > .#{$C_PREFIX}-shift
@@ -24,7 +24,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
       float: left;
 
       &.#{$C_PREFIX}-active {
-        border-bottom: $border-color $border-thin solid;
+        border-bottom: $color-border $border-thin solid;
       }
 
       &:last-child {
@@ -75,7 +75,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
   }
 
   &.#{$C_PREFIX}-theme-secondary {
-    border-bottom: $border-thin solid $border-color;
+    border-bottom: $border-thin solid $color-border;
 
     > .#{$C_PREFIX}-shift
     > .#{ $C_SHIFT_PREFIX }-ul

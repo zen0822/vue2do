@@ -17,7 +17,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     display: none;
     background: #fff;
     padding: $gap-v;
-    border-bottom: $border-color $border-thin solid;
+    border-bottom: $color-border $border-thin solid;
   }
 
   .#{$C_PREFIX}-sub-fold {

@@ -5,7 +5,7 @@
 
   .example-article {
     & > section {
-      border-bottom: $border-dark-color $border-thin solid;
+      border-bottom: $color-border-dark $border-thin solid;
       padding-bottom: $gap-v-double;
     }
 

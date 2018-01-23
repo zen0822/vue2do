@@ -117,7 +117,7 @@ export default function (h) {
         props: {
           direction: 'east',
           global: true,
-          offset: window.innerWidth
+          offset: 0
         },
         ref: 'motion'
       }, [

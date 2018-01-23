@@ -21,7 +21,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   &.#{$C_PREFIX}-border-all {
     .#{$C_PREFIX}-row-group {
       .#{$C_PREFIX}-row {
-        border-bottom: $border-color $border-thin solid;
+        border-bottom: $color-border $border-thin solid;
 
         &:last-child {
           border-bottom: none;
@@ -34,7 +34,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   &.#{$C_PREFIX}-border-all {
     .#{$C_PREFIX}-row {
       .#{$C_PREFIX}-col {
-        border-right: $border-color $border-thin solid;
+        border-right: $color-border $border-thin solid;
 
         &:last-child {
           border-right: none;
@@ -45,7 +45,7 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
 
   &.#{$C_PREFIX}-theme-primary {
     border-radius: $border-radius;
-    border: $border-color $border-thin solid;
+    border: $color-border $border-thin solid;
     overflow: hidden;
 
     .#{$C_PREFIX}-header-group {

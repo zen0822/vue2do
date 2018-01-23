@@ -25,10 +25,10 @@ $INPUT_BORDER_WIDTH: 1px;
   &.#{$C_PREFIX}-type-area {
     & > .#{$C_PREFIX}-wrap {
       &:hover {
-        border: $border-dark-color $border-thin solid;
+        border: $color-border-dark $border-thin solid;
 
         & > .#{$C_PREFIX}-wrap-border {
-          border: $border-dark-color $border-thin solid;
+          border: $color-border-dark $border-thin solid;
         }
       }
 
@@ -98,10 +98,10 @@ $INPUT_BORDER_WIDTH: 1px;
 
     &:hover {
       & > .#{$C_PREFIX}-wrap-border {
-        border-color: $border-dark-color;
+        border-color: $color-border-dark;
       }
 
-      border-color: $border-dark-color;
+      border-color: $color-border-dark;
     }
 
     &.#{$C_PREFIX}-error {

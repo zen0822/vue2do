@@ -28,7 +28,7 @@ $C_PREFIX: #{ $COMP_CODE };
   padding: $gap-v $gap-h-double;
 
   .#{$C_PREFIX}-header {
-    color: $border-color;
+    color: $color-border;
     font-weight: bold;
     text-align: right;
     margin-bottom: $gutter-v-half;

@@ -16,7 +16,7 @@ $C_PREFIX: #{ $COMP_LIST };
 
   .#{$C_PREFIX}-page {
     background-color: #fff;
-    border-top: $border-color $border-thin solid;
+    border-top: $color-border $border-thin solid;
     margin: 0 auto;
     position: absolute;
     left: 0;

@@ -21,7 +21,7 @@ $INPUT_BORDER_WIDTH: 1px;
     z-index: 1;
     width: $INPUT_WIDTH;
     background: #fff;
-    border: $border-dark-color $border-thin solid;
+    border: $color-border-dark $border-thin solid;
     box-sizing: border-box;
     border-bottom-left-radius: $border-radius;
     border-bottom-right-radius: $border-radius;

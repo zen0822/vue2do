@@ -22,7 +22,7 @@
 			cursor: default;
 			width: $upload-img-width;
 			height: $upload-img-width;
-			border: $border-color $border-thin solid;
+			border: $color-border $border-thin solid;
 			.select-file-input{
 				position: absolute;
 				cursor: default;
@@ -52,7 +52,7 @@
 				position: relative;
 				width: $upload-img-width;
 				height: $upload-img-width;
-				border: $border-color $border-thin solid;
+				border: $color-border $border-thin solid;
 				display: inline-block;
 				vertical-align: middle;
 				margin-right: 12px;
