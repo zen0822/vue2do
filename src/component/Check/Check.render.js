@@ -52,10 +52,6 @@ export default function (h) {
               }),
               h('div', {
                 class: [this.xclass('motion-rip')],
-                props: {
-                  ui: this.ui,
-                  theme: this.theme
-                },
                 directives: [{
                   name: 'show',
                   value: this.motion[index]

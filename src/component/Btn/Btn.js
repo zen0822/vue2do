@@ -172,6 +172,9 @@ export default {
       }
     },
 
+    /**
+     * TODO: 当 IE <= 11 时，html 设置了 margin pageX 没把 margin 值算进去
+     */
     mousedown(event) {
       if (this.inTouch) {
         return false
