@@ -75,63 +75,66 @@ function foldContent(h, foldList) {
 
 export default function (h) {
   let navStage = []
-  let stageChildren = [
+  let contentEle = h('div', {
+    class: [this.xclass('motion-content')],
+    ref: 'motionContent'
+  }, [
     h('div', {
-      class: [this.xclass('transition-container')]
+      class: [this.xclass('close-nav')],
+      on: {
+        click: this.hide
+      }
     }, [
-      h('div', {
-        class: [this.xclass('close-nav')],
-        on: {
-          click: () => {
-            this.hide()
-          }
+      h('icon', {
+        props: {
+          kind: 'close',
+          ui: this.ui,
+          theme: this.theme
         }
-      }, [
-        h('icon', {
-          props: {
-            kind: 'close',
-            ui: this.ui,
-            theme: this.theme
-          }
-        })
-      ]),
-      this.$slots.start,
-      foldContent.call(this, h, this.initOpt),
-      this.$slots.end
-    ])
-  ]
+      })
+    ]),
+    this.$slots.start,
+    foldContent.call(this, h, this.initOpt),
+    this.$slots.end
+  ])
 
   if (this.isVerticalType) {
     navStage.push(
       h('motion-fold', {
-        ref: 'transition'
+        ref: 'motion'
       }, [
         h('div', {
-            class: [
-              this.xclass('stage'),
-              this.xclass(`animate-${this.navAnimate}`)
-            ]
-          },
-          stageChildren
-        )
+          class: [
+            this.xclass('stage'),
+            this.xclass(`animate-${this.navAnimate}`)
+          ]
+        }, [contentEle])
       ])
     )
   } else {
     navStage.push(
       h('motion-slide', {
         props: {
-          offset: 0
+          direction: 'east',
+          global: true,
+          offset: window.innerWidth
         },
-        ref: 'transition'
+        ref: 'motion'
       }, [
         h('div', {
-            class: [
-              this.xclass('stage'),
-              this.xclass(`animate-${this.navAnimate}`)
-            ]
-          },
-          stageChildren
-        )
+          class: [
+            this.xclass('stage'),
+            this.xclass(`animate-${this.navAnimate}`)
+          ]
+        }, [
+          contentEle,
+          h('div', {
+            class: [this.xclass('motion-empty')],
+            on: {
+              click: this.hide
+            }
+          })
+        ])
       ])
     )
   }
@@ -143,7 +146,7 @@ export default function (h) {
       class: [
         this.xclass('trigger'),
         {
-          [this.xclass('active')]: this.isStageActive
+          [this.xclass('active')]: this.isActive
         }
       ],
       directives: [{
@@ -167,8 +170,11 @@ export default function (h) {
           }
         }, [
           h('icon', {
+            class: [this.xclass('arrow-fold'), {
+              [this.xclass('arrow-spread')]: this.isActive
+            }],
             props: {
-              kind: this.isStageActive ? 'spread' : 'fold',
+              kind: 'fold',
               size: 's',
               ui: this.ui,
               theme: this.theme

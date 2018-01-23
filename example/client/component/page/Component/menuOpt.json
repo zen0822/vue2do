@@ -23,34 +23,30 @@
     ]
   },
   {
-    "name": "消息提示",
+    "name": "弹窗",
     "sub": [{
-        "name": "弹窗",
-        "sub": [{
-            "name": "确认弹窗",
-            "route": "/component/modal#confirm"
-          },
-          {
-            "name": "消息弹窗",
-            "route": "/component/modal#alert"
-          }
-        ]
+        "name": "确认弹窗",
+        "route": "/component/modal#confirm"
       },
       {
-        "name": "提示",
-        "sub": [{
-            "name": "泡泡提示",
-            "route": "/component/tip#bubble"
-          },
-          {
-            "name": "弹窗提示",
-            "route": "/component/tip#alert"
-          },
-          {
-            "name": "底部提示",
-            "route": "/component/tip#toast"
-          }
-        ]
+        "name": "消息弹窗",
+        "route": "/component/modal#alert"
+      }
+    ]
+  },
+  {
+    "name": "提示",
+    "sub": [{
+        "name": "泡泡提示",
+        "route": "/component/tip#bubble"
+      },
+      {
+        "name": "弹窗提示",
+        "route": "/component/tip#alert"
+      },
+      {
+        "name": "底部提示",
+        "route": "/component/tip#toast"
       }
     ]
   },
@@ -63,18 +59,6 @@
       {
         "name": "列表数据",
         "route": "/component/list"
-      },
-      {
-        "name": "分页控件",
-        "sub": [{
-            "name": "加载更多",
-            "route": "/component/pager#more"
-          },
-          {
-            "name": "页码跳转",
-            "route": "/component/pager#page-num"
-          }
-        ]
       }
     ]
   },
@@ -87,6 +71,18 @@
       "name": "图标组件",
       "route": "/component/icon"
     }]
+  },
+  {
+    "name": "分页控件",
+    "sub": [{
+        "name": "加载更多",
+        "route": "/component/pager#more"
+      },
+      {
+        "name": "页码跳转",
+        "route": "/component/pager#page-num"
+      }
+    ]
   },
   {
     "name": "过渡动画",

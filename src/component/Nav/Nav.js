@@ -2,7 +2,7 @@
  * nav 组件
  *
  * @prop animate - 菜单显示动画()
- * @prop autoSwitch - 菜单是否根据设备响应式切换
+ * @prop noSwitch - 菜单不要根据设备响应式切换
  * @prop initOpt - 菜单的数据
  * @prop kind - 菜单的种类
  * @prop only - 手风琴模式，一次只能打开一个面板
@@ -51,9 +51,9 @@ export default {
 
   props: {
     animate: String,
-    autoSwitch: {
+    noSwitch: {
       type: Boolean,
-      default: true
+      default: false
     },
     initOpt: Array,
     gap: {
@@ -88,7 +88,7 @@ export default {
 
   data() {
     return {
-      isStageActive: false,
+      isActive: false,
       navAnimate: ''
     }
   },
@@ -115,9 +115,6 @@ export default {
       }
 
       this.changeByDeviceSize(val)
-    },
-    isStageActive(val) {
-      val ? this.$refs.transition.enter() : this.$refs.transition.leave()
     }
   },
 
@@ -131,13 +128,15 @@ export default {
     },
 
     show() {
-      let transitionRef = this.$refs.transition
+      let transitionRef = this.$refs.motion
 
-      this.isStageActive = true
+      this.isActive = true
 
       if (this.isFoldAnimate) {
+        // TODO: 离开时 height 还是等于零如果这时候取值就会是不正确的
+        // 所以要先置为空
+        transitionRef.$el.style.height = ''
         let transitionHeight = this.elementProp(transitionRef.$el).offsetHeight
-
         transitionRef.setHeight(transitionHeight)
       }
 
@@ -146,16 +145,16 @@ export default {
     },
 
     hide() {
-      this.$refs.transition.leave()
+      this.$refs.motion.leave()
 
-      this.isStageActive = false
+      this.isActive = false
       this.$emit('hide')
     },
 
     toggle() {
-      this.isStageActive = !this.isStageActive
+      this.isActive = !this.isActive
 
-      if (this.isStageActive) {
+      if (this.isActive) {
         return this.show()
       } else {
         return this.hide()
@@ -163,7 +162,7 @@ export default {
     },
 
     changeByDeviceSize() {
-      if (!this.autoSwitch) {
+      if (this.noSwitch) {
         return false
       }
 

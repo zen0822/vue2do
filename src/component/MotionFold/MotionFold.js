@@ -30,7 +30,7 @@ export default {
     this.moving = false // 是否正在执行过渡动画
 
     return {
-      transitionHeight: 0
+      motionHeight: 0
     }
   },
 
@@ -48,12 +48,12 @@ export default {
 
   methods: {
     _setDataOpt() {
-      this.transitionHeight = this.height
+      this.motionHeight = this.height
     },
 
     _initComp() {
       if (this.height === undefined) {
-        this.transitionHeight = elementProp(this.$el).offsetHeight
+        this.motionHeight = elementProp(this.$el).offsetHeight
       }
     },
 
@@ -63,7 +63,7 @@ export default {
      * @param { Number }
      */
     setHeight(height) {
-      this.transitionHeight = height
+      this.motionHeight = height
     },
 
     beforeEnter({
@@ -75,7 +75,7 @@ export default {
       Object.assign(el.style, {
         height: 0,
         overflow: 'hidden',
-        'transition': this.transition
+        transition: this.transition
       })
 
       return new Promise((resolve, reject) => {
@@ -92,7 +92,7 @@ export default {
       // HACK: trigger browser reflow
       let height = el.offsetHeight
 
-      el.style.height = `${this.transitionHeight}px`
+      el.style.height = `${this.motionHeight}px`
 
       this.$emit('entering')
 
@@ -121,7 +121,7 @@ export default {
       this.$emit('beforeLeave')
 
       Object.assign(el.style, {
-        height: `${this.transitionHeight}px`,
+        height: `${this.motionHeight}px`,
         overflow: 'hidden',
         transition: this.transition
       })

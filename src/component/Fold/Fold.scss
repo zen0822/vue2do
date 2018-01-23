@@ -1,11 +1,11 @@
+/**
+ * fold 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
-
-/**
- * fold 组件样式
- */
 
 $C_PREFIX: #{ $COMP_FOLD };
 $ICON_PREFIX: #{ $COMP_ICON };
@@ -26,6 +26,14 @@ $ICON_PREFIX: #{ $COMP_ICON };
         right: 0;
         top: 0;
         bottom: 0;
+
+        transform: rotate(0);
+        transform-origin: center center;
+        transition: transform 300ms ease-in-out;
+
+        &-fold {
+          transform: rotate(180deg);
+        }
       }
     }
 
@@ -39,23 +47,23 @@ $ICON_PREFIX: #{ $COMP_ICON };
       }
     }
   }
+}
 
-  &.#{$C_PREFIX}-theme-primary {
-    .#{$C_PREFIX}-dl {
-      & > dt {
-        padding: $gap-v-half $gap-v-double $gap-v-half 0;
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  .#{$C_PREFIX}-dl {
+    & > dt {
+      padding: $gap-v-half $gap-v-double $gap-v-half 0;
 
-        .#{$C_PREFIX}-icon {
-          position: absolute;
-          right: $gap-v-half;
-        }
+      .#{$C_PREFIX}-icon {
+        position: absolute;
+        right: $gap-v;
       }
+    }
 
-      & > dd {
-        & > .#{$C_PREFIX}-transition {
-          & > .#{$C_PREFIX}-content {
-            padding: $gap-v-half 0;
-          }
+    & > dd {
+      & > .#{$C_PREFIX}-transition {
+        & > .#{$C_PREFIX}-content {
+          padding: $gap-v 0;
         }
       }
     }

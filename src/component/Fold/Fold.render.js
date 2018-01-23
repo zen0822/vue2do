@@ -15,10 +15,11 @@ export default function (h) {
       if (slotEle) {
         foldTitle.push(
           h('icon', {
-            class: [this.xclass('icon')],
+            class: [this.xclass('icon'), {
+              [this.xclass('icon-fold')]: this.foldContentActive(contentIndex)
+            }],
             props: {
-              kind: this.foldTitleIcon(contentIndex),
-              size: 'xs',
+              kind: 'spread',
               ui: this.ui,
               theme: this.theme
             }
@@ -69,7 +70,7 @@ export default function (h) {
   }
 
   return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
+    class: [this.cPrefix, this.xclass(this.themeClass), this.xclass(this.uiClass)]
   }, [
     h('dl', {
       class: [this.xclass('dl')]

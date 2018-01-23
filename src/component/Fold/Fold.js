@@ -63,8 +63,7 @@ const Fold = {
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-fold`
     }
   },
@@ -182,8 +181,8 @@ const Fold = {
         return false
       }
 
-      $transition.$el.style.height = 'auto'
-      $transition.$el.style.width = 'auto'
+      $transition.$el.style.height = ''
+      $transition.$el.style.width = ''
       let transitionHeight = this.elementProp($transition.$el).offsetHeight
       $transition.setHeight(transitionHeight)
 

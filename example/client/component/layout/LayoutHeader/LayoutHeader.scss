@@ -66,19 +66,8 @@
     display: none;
 
     .menu-search {
-      border-bottom: #fff $border-thin solid;
-
       & > .z-input {
-        width: 100%;
-
         .z-input-wrap {
-          background-color: rgba(0, 0, 0, 0);
-          border: none;
-
-          .z-icon .z-icon-search {
-            font-size: $h1;
-          }
-
           input {
             font-size: $h2;
           }
