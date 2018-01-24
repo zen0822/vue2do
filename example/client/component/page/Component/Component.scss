@@ -76,6 +76,7 @@
 
   @include device-type("xs") {
     .#{$PAGE_PREFIX}-component-menu {
+      overflow: visible;
       padding: 0;
       width: 100%;
 
