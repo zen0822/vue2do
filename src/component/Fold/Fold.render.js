@@ -19,7 +19,7 @@ export default function (h) {
               [this.xclass('icon-fold')]: this.foldContentActive(contentIndex)
             }],
             props: {
-              kind: 'spread',
+              kind: 'arrow-south',
               ui: this.ui,
               theme: this.theme
             }
@@ -37,7 +37,7 @@ export default function (h) {
 
       foldChildren.push(
         h('dt', {
-          class: [this.foldContentActive(contentIndex)],
+          class: [this.xclass('dt'), this.foldContentActive(contentIndex)],
           on: {
             click: (event) => {
               if (slotEle) {
@@ -50,9 +50,9 @@ export default function (h) {
         }, foldTitle)
       )
 
-      foldChildren.push(
+      slotEle && foldChildren.push(
         h('dd', {
-          class: [this.foldContentActive(contentIndex)]
+          class: [this.xclass('dd'), this.foldContentActive(contentIndex)]
         }, [
           h('motion-fold', {
             height: this.transitionChildHeight,

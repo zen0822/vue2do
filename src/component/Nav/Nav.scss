@@ -52,18 +52,29 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
         margin-left: 0;
       }
 
-      & > .#{$FOLD_PREFIX} > .#{$FOLD_PREFIX}-dl > dt {
-        &:hover {
-          background-color: $color-grey-lighter;
+      & > .#{$FOLD_PREFIX} > .#{$FOLD_PREFIX}-dl {
+        cursor: pointer;
+
+        .#{$FOLD_PREFIX}-dt {
+          cursor: pointer;
         }
 
-        .#{$C_PREFIX}-icon {
-          right: $gap-v-double;
-        }
+        & > .#{$FOLD_PREFIX}-dt {
+          background-color: rgba($color-grey-lighter, 0);
+          transition: background-color 300ms;
 
-        padding: 12px $gap-v-double;
-        color: $color-text-dark-primary;
-        font-weight: bold;
+          &:hover {
+            background-color: rgba($color-grey-lighter, .8);
+          }
+
+          .#{$C_PREFIX}-icon {
+            right: $gap-v-double;
+          }
+
+          padding: 12px $gap-v-double;
+          color: $color-text-dark-primary;
+          font-weight: bold;
+        }
       }
     }
 

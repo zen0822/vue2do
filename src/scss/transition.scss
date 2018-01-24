@@ -1,0 +1,15 @@
+/**
+ * transition.scss
+ */
+
+@import './transition/slide.scss';
+
+.#{$C_PREFIX}-fade-enter-active,
+.#{$C_PREFIX}-fade-leave-active {
+  transition: opacity 500ms ease-out !important;
+}
+
+.#{$C_PREFIX}-fade-enter,
+.#{$C_PREFIX}-fade-leave-active {
+  opacity: 0 !important;
+}

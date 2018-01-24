@@ -12,7 +12,12 @@ export default function (h) {
     directives: [{
       name: 'show',
       value: this.pageDisplay
-    }]
+    }],
+    on: {
+      selectstart(event) {
+        event.preventDefault()
+      }
+    }
   }, [
     h('div', {
       class: [this.xclass('more')],
@@ -80,7 +85,7 @@ export default function (h) {
                   }, [
                     h('icon', {
                       props: {
-                        kind: 'backward-start'
+                        kind: 'arrow-west-fast'
                       }
                     })
                   ]
@@ -101,7 +106,7 @@ export default function (h) {
                   }, [
                     h('icon', {
                       props: {
-                        kind: 'backward'
+                        kind: 'arrow-west'
                       }
                     })
                   ]
@@ -142,7 +147,7 @@ export default function (h) {
                   }, [
                     h('icon', {
                       props: {
-                        kind: 'forward'
+                        kind: 'arrow-east'
                       }
                     })
                   ]
@@ -167,7 +172,7 @@ export default function (h) {
                   }, [
                     h('icon', {
                       props: {
-                        kind: 'forward-end'
+                        kind: 'arrow-east-fast'
                       }
                     })
                   ]
