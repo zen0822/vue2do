@@ -1,6 +1,7 @@
 mixin section(name, title)
   section
     router-link.anchor-title(
+      id=name
       tag='h1'
       ':to'='anchorLink("' + name + '")'
     )

@@ -1,3 +1,6 @@
+import store from '../../../vuex/store'
+import commonStore from '../../../vuex/module/common/type.json'
+
 let testOpt = []
 
 for (let i = 0, len = 33; i < len; i++) {
@@ -11,6 +14,8 @@ for (let i = 0, len = 33; i < len; i++) {
 }
 
 export default {
+  store,
+
   methods: {
     _initComp() {
 
@@ -22,13 +27,16 @@ export default {
 
     goAnchor(evt) {
       let anchor = evt.currentTarget
-      document.body.scrollTop = anchor.offsetTop
+      this.appContent.scrollTop = anchor.offsetTop
     }
   },
 
   computed: {
     testOpt() {
       return testOpt
+    },
+    appContent() {
+      return this.$store.getters[commonStore.appContent.get]
     }
   },
 

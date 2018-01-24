@@ -16,7 +16,7 @@ export default {
 
   data() {
     return {
-      bodyHeight: 0
+      contentHeight: 0
     }
   },
 
@@ -33,12 +33,12 @@ export default {
     },
 
     appStyle() {
-      if (this.bodyHeight === 0) {
+      if (this.contentHeight === 0) {
         return {}
       }
 
       return {
-        height: `${this.bodyHeight}px`
+        height: `${this.contentHeight}px`
       }
     }
   },
@@ -46,11 +46,8 @@ export default {
   watch: {
     'windowProps' (val) {
       let bodyHeight = document.body.offsetHeight
-      let deviceType = getComputedStyle(document.querySelector('.z-css-device-size'), ':after').getPropertyValue('content')
 
-      if (deviceType !== '"xs"' && bodyHeight < val.innerHeight) {
-        this.bodyHeight = val.innerHeight - this.$refs.header.$el.offsetHeight
-      }
+      this.contentHeight = val.innerHeight - this.$refs.header.$el.offsetHeight
     }
   },
 
@@ -59,5 +56,7 @@ export default {
       prop: 'innerHeight',
       value: window.innerHeight
     })
+
+    this.$store.dispatch(commonStore.appContent.add, this.$refs.appContent)
   }
 }

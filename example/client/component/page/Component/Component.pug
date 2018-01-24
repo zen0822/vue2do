@@ -10,5 +10,5 @@ div.p-component
           :init-opt='menuOpt'
       )
     z-col.p-component-stage(:xs='12', :s='12', :l='9', :span='9')
-      transition(name='z-fade')
+      transition(name='z-fade', v-on:after-enter='afterEnter')
         router-view

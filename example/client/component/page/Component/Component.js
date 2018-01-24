@@ -2,12 +2,18 @@ import './Component.scss'
 import template from './Component.pug'
 import menuOpt from './menuOpt.json'
 import mixin from './mixin'
-import { alert, confirm, tip } from 'vue2do/index.js'
+import {
+  alert,
+  confirm,
+  tip
+} from 'vue2do/index.js'
 
 export default {
   name: 'PageComponent',
 
   template: template(),
+
+  mixins: [mixin],
 
   data() {
     return {
@@ -45,8 +51,7 @@ export default {
       return option
     },
 
-    clickIcon() {
-    },
+    clickIcon() {},
 
     submit() {
       this.$refs.submit.openLoading()
@@ -56,6 +61,11 @@ export default {
 
     next() {
       this.$refs.shift.rotate()
+    },
+
+    afterEnter() {
+      let anchor = document.getElementById(this.$route.hash.replace('#', ''))
+      anchor && (this.appContent.scrollTop = anchor.offsetTop)
     }
   },
 

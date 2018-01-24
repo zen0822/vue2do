@@ -6,6 +6,7 @@
 
 .#{$C_PREFIX}-fade-enter-active,
 .#{$C_PREFIX}-fade-leave-active {
+  opacity: 1 !important;
   transition: opacity 500ms ease-out !important;
 }
 

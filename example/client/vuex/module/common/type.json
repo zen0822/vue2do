@@ -2,5 +2,9 @@
   "window": {
     "add": "common/window/add",
     "get": "common/window/get"
+  },
+  "appContent": {
+    "add": "common/appContent/add",
+    "get": "common/appContent/get"
   }
 }
