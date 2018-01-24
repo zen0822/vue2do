@@ -74,10 +74,10 @@
     }
   }
 
-  @include device-type("s") {
+  @include device-type("xs") {
     .#{$PAGE_PREFIX}-component-menu {
-      padding-top: 0;
-      padding-bottom: 0;
+      padding: 0;
+      width: 100%;
 
       a {
         color: #fff;
@@ -85,7 +85,7 @@
     }
 
     .#{$PAGE_PREFIX}-component-stage {
-      padding: 0 $gap-h $gap-v-triple;
+      padding: $gap-v-triple $gap-h;
     }
   }
 }

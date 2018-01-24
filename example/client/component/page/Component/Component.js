@@ -54,8 +54,9 @@ export default {
   computed: {
     componentStyle() {
       const appContent = this.appContent
+      const deviceType = getComputedStyle(document.querySelector('.z-css-device-size'), ':after').getPropertyValue('content')
 
-      if (!appContent) {
+      if (!appContent || deviceType === '"xs"') {
         return {}
       }
 
