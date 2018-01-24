@@ -47,7 +47,7 @@ export default {
     'windowProps' (val) {
       let bodyHeight = document.body.offsetHeight
 
-      this.contentHeight = val.innerHeight - this.$refs.header.$el.offsetHeight
+      this.contentHeight = val.innerHeight - this.$refs.header.$el.offsetHeight - this.$refs.footer.$el.offsetHeight
     }
   },
 

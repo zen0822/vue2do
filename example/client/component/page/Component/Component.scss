@@ -2,19 +2,16 @@
 @import "../../../scss/mixin.scss";
 
 .#{$PAGE_PREFIX}-component {
-  text-align: left;
-
-  max-width: 1024px;
-  margin: 0 auto;
-  padding-bottom: 6 * $gap-v;
-
   .#{$PAGE_PREFIX}-component-stage {
-    margin-top: $gap-v-double;
-    padding-bottom: $gap-v-triple;
+    flex-grow: 1;
+    overflow: auto;
+    padding: $gap-v-double $gap-h-double * 2;
   }
 
   .#{$PAGE_PREFIX}-component-menu {
-    margin-top: $gap-v-double;
+    width: 250px;
+    overflow: auto;
+    padding: $gap-v-double $gap-h-double;
 
     a {
       color: $grey;
@@ -79,7 +76,8 @@
 
   @include device-type("s") {
     .#{$PAGE_PREFIX}-component-menu {
-      margin-top: 0;
+      padding-top: 0;
+      padding-bottom: 0;
 
       a {
         color: #fff;

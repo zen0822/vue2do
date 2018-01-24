@@ -44,7 +44,8 @@ export default function (h) {
   return h(
     'div',
     {
-      class: classOpt
+      class: classOpt,
+      style: this.compStyle
     },
     this.$slots.default
   )

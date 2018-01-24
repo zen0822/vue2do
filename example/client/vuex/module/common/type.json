@@ -6,5 +6,9 @@
   "appContent": {
     "add": "common/appContent/add",
     "get": "common/appContent/get"
+  },
+  "compStage": {
+    "add": "common/compStage/add",
+    "get": "common/compStage/get"
   }
 }

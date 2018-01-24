@@ -2,6 +2,8 @@ import './Component.scss'
 import template from './Component.pug'
 import menuOpt from './menuOpt.json'
 import mixin from './mixin'
+import commonStore from '../../../vuex/module/common/type.json'
+
 import {
   alert,
   confirm,
@@ -14,6 +16,14 @@ export default {
   template: template(),
 
   mixins: [mixin],
+
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.$nextTick(() => {
+        vm.goAnchor(to.hash.replace('#', ''))
+      })
+    })
+  },
 
   data() {
     return {
@@ -41,6 +51,20 @@ export default {
     }
   },
 
+  computed: {
+    componentStyle() {
+      const appContent = this.appContent
+
+      if (!appContent) {
+        return {}
+      }
+
+      return {
+        height: appContent.offsetHeight + 'px'
+      }
+    }
+  },
+
   methods: {
     optProcessor(option) {
       option.unshift({
@@ -63,9 +87,14 @@ export default {
       this.$refs.shift.rotate()
     },
 
+    goAnchor(hash) {
+      let anchor = document.getElementById(hash)
+
+      anchor && (this.compStage.scrollTop = anchor.offsetTop)
+    },
+
     afterEnter() {
-      let anchor = document.getElementById(this.$route.hash.replace('#', ''))
-      anchor && (this.appContent.scrollTop = anchor.offsetTop)
+      return this.goAnchor(this.$route.hash.replace('#', ''))
     }
   },
 
@@ -96,5 +125,7 @@ export default {
 
       this.initVal = ['2', '4']
     }, 3000)
+
+    this.$store.dispatch(commonStore.compStage.add, this.$refs.compStage)
   }
 }

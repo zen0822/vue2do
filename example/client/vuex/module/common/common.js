@@ -3,7 +3,8 @@ import nameSpace from './type.json'
 export default {
   state: {
     window: null,
-    appContent: null
+    appContent: null,
+    compStage: null
   },
 
   getters: {
@@ -12,6 +13,9 @@ export default {
     },
     [nameSpace.appContent.get](state) {
       return state.appContent
+    },
+    [nameSpace.compStage.get](state) {
+      return state.compStage
     }
   },
 
@@ -29,6 +33,13 @@ export default {
       rootState
     }, item) {
       return commit(nameSpace.appContent.add, item)
+    },
+    [nameSpace.compStage.add]({
+      state,
+      commit,
+      rootState
+    }, item) {
+      return commit(nameSpace.compStage.add, item)
     }
   },
 
@@ -41,6 +52,9 @@ export default {
     },
     [nameSpace.appContent.add](state, vm) {
       state.appContent = vm
+    },
+    [nameSpace.compStage.add](state, vm) {
+      state.compStage = vm.$el
     }
   }
 }

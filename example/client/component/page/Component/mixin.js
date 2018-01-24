@@ -27,7 +27,7 @@ export default {
 
     goAnchor(evt) {
       let anchor = evt.currentTarget
-      this.appContent.scrollTop = anchor.offsetTop
+      this.compStage.scrollTop = anchor.offsetTop
     }
   },
 
@@ -37,6 +37,9 @@ export default {
     },
     appContent() {
       return this.$store.getters[commonStore.appContent.get]
+    },
+    compStage() {
+      return this.$store.getters[commonStore.compStage.get]
     }
   },
 

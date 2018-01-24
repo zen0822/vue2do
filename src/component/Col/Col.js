@@ -12,7 +12,8 @@
  * @prop l - 大型设备的水平跨度栅格数
  * @prop xl - 超大型设备的水平跨度栅格数
  * @prop grid - 集合所有设备水平跨度的栅格数
- *
+ * @prop grow - (draft)同 flex-grow属性，定义项目的放大比例
+ * @prop shrink - (draft)同 flex-shrink属性，定义了项目的缩小比例
  */
 
 import './Col.scss'
@@ -31,59 +32,70 @@ export default {
       type: Number,
       default: 0
     },
-
     pull: {
       type: Number,
       default: 0
     },
-
     push: {
       type: Number,
       default: 0
     },
-
     offset: {
       type: Number,
       default: 0
     },
-
     span: {
-      type: Number,
-      default: 0
+      type: [Number, String],
+      default: 0,
+      validator(val) {
+        if (typeof val === 'number') {
+          return true
+        } else if (val.includes('px')) {
+          return true
+        } else {
+          return false
+        }
+      }
     },
-
     xs: {
       type: Number,
       default: 0
     },
-
     s: {
       type: Number,
       default: 0
     },
-
     m: {
       type: Number,
       default: 0
     },
-
     l: {
       type: Number,
       default: 0
     },
-
     xl: {
       type: Number,
       default: 0
     },
-
-    grid: Object
+    grid: Object,
+    grow: {
+      type: Number,
+      default: 0
+    },
+    shrink: {
+      type: Number,
+      default: 0
+    }
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-col`
+    },
+    compStyle() {
+      return {
+
+      }
     }
   }
 }
