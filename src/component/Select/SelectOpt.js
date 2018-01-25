@@ -90,7 +90,7 @@ export default {
 
   methods: {
     _binder() {
-      this.$refs.list.$on('scrollerChange', () => {
+      this.$refs.list.$on('change', () => {
         this.$emit('changeScroller', {
           emitter: this
         })

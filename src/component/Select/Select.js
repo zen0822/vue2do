@@ -255,7 +255,7 @@ export default {
       }
 
       if (this.$refs.scroller) {
-        this.$refs.scroller.$on('scrollerChange', ({
+        this.$refs.scroller.$on('change', ({
           scrollerHeight
         }) => {
           // 有选择值时需要重新计算已选框的高度

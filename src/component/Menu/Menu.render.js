@@ -49,16 +49,13 @@ export default function (h) {
     h('motion', {
       props: {
         height: this.menuHeight,
-        slideLength: this.noCoverTrig ? this.triggerHeight : 0
+        slideLength: this.noCoverTrig ? this.triggerHeight : 0,
+        display: false
       },
       ref: 'motion'
     }, [
       h('div', {
         class: [this.xclass('panel')],
-        directives: [{
-          name: 'show',
-          value: false
-        }],
         on: {
           click: (event) => event.stopPropagation()
         },
@@ -89,7 +86,8 @@ export default function (h) {
       expression: this.clickParent
     }],
     on: {
-      keydown: this.keydown
+      keydown: this.keydown,
+      selectstart: (event) => event.preventDefault()
     }
   }, children)
 }

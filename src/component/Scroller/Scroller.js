@@ -28,7 +28,7 @@
  *                         isLeft - 滚动条是否到开始的地方
  *                         left - 滚动条到滚动区域的最左边的当前距离
  *                         offset - 滚动条离滚动区域的顶部的距离
- * @event scrollerChange - 滚动区域的高度/宽度变化
+ * @event change - 滚动区域的高度/宽度变化
  */
 
 import './Scroller.scss'
@@ -274,10 +274,6 @@ export default {
       const boxHeightChanged = boxHeight !== this.boxHeight
       const boxWidthChanged = boxWidth !== this.boxWidth
 
-      if (scrollerHeightChanged || scrollerWidthChanged) {
-        this._scrollerChange()
-      }
-
       if (scrollerHeightChanged || boxHeightChanged) {
         this._initScrollBar({
           type: 'y',
@@ -310,6 +306,10 @@ export default {
         height: `${this.boxHeight}px`,
         width: `${this.boxWidth}px`
       })
+
+      if (scrollerHeightChanged || scrollerWidthChanged) {
+        this._scrollerChange()
+      }
     },
 
     /**
@@ -520,7 +520,7 @@ export default {
      */
     _scrollerChange() {
       return this.$nextTick(() => {
-        this.$emit('scrollerChange', {
+        this.$emit('change', {
           emitter: this,
           scrollerWidth: this.scrollerWidth,
           scrollerHeight: this.scrollerHeight

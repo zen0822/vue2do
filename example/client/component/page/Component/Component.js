@@ -89,6 +89,10 @@ export default {
     },
 
     goAnchor(hash) {
+      if (!hash) {
+        return false
+      }
+
       let anchor = document.getElementById(hash)
 
       anchor && (this.compStage.scrollTop = anchor.offsetTop)

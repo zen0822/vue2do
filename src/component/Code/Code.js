@@ -53,7 +53,7 @@ export default {
     },
 
     _binder() {
-      this.$refs.scroller.$on('scrollerChange', () => {
+      this.$refs.scroller.$on('change', () => {
         this.preWidth = this.$refs.article.offsetWidth - 50
       })
     }

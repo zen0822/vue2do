@@ -166,9 +166,9 @@ export default {
     },
 
     _binder() {
-      this.$refs.scroller.$on('scrollerChange', (opt) => {
+      this.$refs.scroller.$on('change', (opt) => {
         if (this.panelDisplay) {
-          this.spread()
+          this.adjust()
         }
 
         return this.$emit('scrollerChange', {
@@ -229,22 +229,20 @@ export default {
      * @return {Object} - this组件
      */
     _togglePanelDisplay(optVal = !this.panelDisplay) {
-      let menuHub = this.$store.state.comp.menu
-
       const getMenuHeight = (vm) => {
-        handleEleDisplay({
-          element: vm.$refs.panel,
-          cb: (element) => {
-            if (vm.height === 'auto') {
-              let scrollerComp = vm.$refs.scroller
-              scrollerComp._initScroller()
+        const $panel = vm.$refs.panel
 
-              vm.menuHeight = scrollerComp.scrollerHeight
-            } else {
-              vm.menuHeight = vm.height
-            }
-          }
-        })
+        $panel.style.visibility = 'hidden'
+        $panel.style.display = ''
+
+        if (vm.height === 'auto') {
+          let scrollerComp = vm.$refs.scroller
+          scrollerComp._initScroller()
+
+          vm.menuHeight = scrollerComp.scrollerHeight
+        } else {
+          vm.menuHeight = vm.height
+        }
       }
 
       const transite = (state, vm) => {
@@ -254,8 +252,6 @@ export default {
           vm.panelDisplay = true
           vm.$refs.motion.enter()
         } else {
-          getMenuHeight(vm)
-
           vm.panelDisplay = false
           vm.$refs.motion.leave()
         }

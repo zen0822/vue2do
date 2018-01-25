@@ -276,7 +276,7 @@ const modalComp = {
         }
       })
 
-      this.$refs.scroller.$on('scrollerChange', ({
+      this.$refs.scroller.$on('change', ({
         scrollerHeight
       }) => {
         handleEleDisplay({

@@ -82,7 +82,7 @@ export default {
               Object.assign(el.style, {
                 overflow: '',
                 opacity: '',
-                'transition': ''
+                transition: ''
               })
             }, this.time)
           }, 10)
@@ -112,12 +112,12 @@ export default {
         top: 0,
         overflow: 'hidden',
         opacity: 0.5,
-        'transition': this.transition
+        transition: this.transition
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = ''
+          el.style.visibility = ''
 
           return resolve()
         }, 10)
@@ -150,7 +150,7 @@ export default {
       Object.assign(el.style, {
         overflow: '',
         opacity: '',
-        'transition': '',
+        transition: '',
         display: ''
       })
 
@@ -164,13 +164,12 @@ export default {
 
       Object.assign(el.style, {
         height: `${this.transitionHeight}px`,
-        top: `${this.slideLength}px`,
         opacity: 1,
         overflow: 'hidden'
       })
 
       Object.assign(el.style, {
-        'transition': this.transition
+        transition: this.transition
       })
 
       return this.leaveing()
@@ -184,14 +183,11 @@ export default {
 
       Object.assign(el.style, {
         height: 0,
-        top: `${this.slideLength}px`,
         opacity: 0
       })
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          el.style.display = 'none'
-
           return resolve()
         }, this.time)
       })
@@ -204,7 +200,8 @@ export default {
         overflow: '',
         opacity: '',
         transition: '',
-        display: 'none'
+        display: 'none',
+        top: ''
       })
 
       return this.$emit('afterLeave')
@@ -213,5 +210,11 @@ export default {
 
   render(h) {
     return h('transition', this.$slots.default)
+  },
+
+  mounted() {
+    if (!this.display) {
+      this.$el.style.display = 'none'
+    }
   }
 }

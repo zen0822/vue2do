@@ -176,7 +176,7 @@ export default {
     _binder() {
       const refScroller = this.$refs.scroller
 
-      refScroller.$on('scrollerChange', (opt) => {
+      refScroller.$on('change', (opt) => {
         this.initPagePosition(opt.scrollerHeight)
 
         return this.$emit('scrollerChange', {

@@ -103,7 +103,7 @@ export default function (h) {
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
     props: {
-      kind: 'spread',
+      kind: 'arrow-south',
       ui: this.ui,
       theme: this.theme
     }
@@ -187,7 +187,8 @@ export default function (h) {
       expression: this.clickParent
     }],
     on: {
-      keydown: this.keydown
+      keydown: this.keydown,
+      selectstart: (event) => event.preventDefault()
     }
   }, [
     h('div', {

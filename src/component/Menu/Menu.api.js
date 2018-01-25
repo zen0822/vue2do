@@ -48,19 +48,9 @@ export default {
      * @return {Object} this - 组件
      */
     click(event) {
-      if (this.clicking) {
-        return false
-      }
-
-      this.clicking = true
-
       event.stopPropagation()
 
-      setTimeout(() => {
-        this.clicking = false
-
-        return this._togglePanelDisplay()
-      }, 100)
+      return this._togglePanelDisplay()
     },
 
     /**
