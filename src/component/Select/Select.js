@@ -29,6 +29,8 @@
  */
 
 import './Select.scss'
+import './Select.bootstrap.scss'
+import './Select.material.scss'
 
 import Vue from 'vue'
 import SelectOpt from './SelectOpt'

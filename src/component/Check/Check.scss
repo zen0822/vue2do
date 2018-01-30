@@ -10,7 +10,7 @@
 $C_PREFIX: #{$COMP_CHECK};
 $C_ICON_PREFIX: #{$COMP_ICON};
 
-@mixin theme-content($type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
   & > .#{$C_PREFIX}-opt-row {
     & > .#{$C_PREFIX}-opt-col {
       & > .#{$C_PREFIX}-box {

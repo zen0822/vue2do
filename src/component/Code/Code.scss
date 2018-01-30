@@ -9,7 +9,7 @@
 
 $C_PREFIX: #{ $COMP_CODE };
 
-@mixin theme-content($type-color, $type-dark-color, $color-primary-light) {
+@mixin theme-content($type, $type-color, $type-dark-color, $color-primary-light) {
   .#{$C_PREFIX} {
     border: $color-primary-light $border-thin solid;
 

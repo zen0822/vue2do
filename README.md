@@ -40,7 +40,7 @@ Vue.component('yourPrefix' + input.compName, input)
 
 #### 因为从 vue2do/index.js 文件加载的时候会加载所有的组件，所以只加载指定组件就可以只打包这个组件的文件
 ```js
-import Input 'vue2do/component/Input'
+import Input from 'vue2do/component/Input'
 
 Vue.component('Input', Input)
 ```

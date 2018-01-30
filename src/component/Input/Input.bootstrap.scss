@@ -10,33 +10,31 @@
 $C_PREFIX: #{ $COMP_INPUT };
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
-  &.#{$C_PREFIX}-ui-bootstrap {
-    & > .#{$C_PREFIX}-wrap {
-      border: $color-border $border-thin solid;
-      border-radius: $border-radius;
-      transition-property: border, box-shadow;
-      transition-duration: 300ms;
-      transition-timing-function: ease-in-out;
+  & > .#{$C_PREFIX}-wrap {
+    border: $color-border $border-thin solid;
+    border-radius: $border-radius;
+    transition-property: border, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in-out;
 
-      &.#{$C_PREFIX}-editting {
-        border-color: $color-blue;
-        box-shadow: 0 0 0 4px rgba($color-blue, .3);
+    &.#{$C_PREFIX}-editting {
+      border-color: $color-blue;
+      box-shadow: 0 0 0 4px rgba($color-blue, .3);
+    }
+
+    &.#{$C_PREFIX}-error-border {
+      border-color: $color-danger;
+      box-shadow: 0 0 0 4px rgba($color-danger, .3);
+    }
+
+    .#{$C_PREFIX}-edit-box {
+      & > .#{$C_PREFIX}-edit-box-pre,
+      & > .#{$C_PREFIX}-edit-box-input {
+        padding: $gutter-v;
       }
 
-      &.#{$C_PREFIX}-error-border {
-        border-color: $color-danger;
-        box-shadow: 0 0 0 4px rgba($color-danger, .3);
-      }
-
-      .#{$C_PREFIX}-edit-box {
-        & > .#{$C_PREFIX}-edit-box-pre,
-        & > .#{$C_PREFIX}-edit-box-input {
-          padding: $gutter-v;
-        }
-
-        &-placeholder {
-          padding: $gutter-v;
-        }
+      &-placeholder {
+        padding: $gutter-v;
       }
     }
   }

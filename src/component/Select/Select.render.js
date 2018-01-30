@@ -9,21 +9,7 @@ export default function (h) {
     let liELe = []
 
     selectedBoxChildren.push(
-      h('input', {
-        class: [
-          this.xclass('init-text-input')
-        ],
-        on: {
-          blur: this.blur,
-          focus: this.focus
-        }
-      }),
-      h('input', {
-        attrs: {
-          placeholder: this.defaultTxt,
-          readonly: true,
-          tabindex: -1
-        },
+      h('div', {
         class: [
           this.defaultValClassName(this.value),
           this.xclass('init-text'),
@@ -31,7 +17,7 @@ export default function (h) {
             [this.xclass('opacity')]: !this.initTxtDisplay
           }
         ]
-      })
+      }, this.defaultTxt)
     )
 
     this.text.forEach((txt, index) => {
@@ -44,9 +30,7 @@ export default function (h) {
         }, [
           h('icon', {
             props: {
-              kind: 'close',
-              ui: this.ui,
-              theme: this.theme
+              kind: 'close'
             }
           })
         ])
@@ -78,34 +62,19 @@ export default function (h) {
     )
   } else {
     selectedBoxChildren.push(
-      h('input', {
-        class: [this.xclass('init-text-input')],
-        on: {
-          focus: this.focus,
-          blur: this.blur
-        }
-      }),
-      h('input', {
+      h('div', {
         class: [
           this.defaultValClassName(this.value),
           this.xclass('init-text')
-        ],
-        attrs: {
-          placeholder: '请选择',
-          tabindex: -1,
-          readOnly: true,
-          value: this.text
-        }
-      })
+        ]
+      }, this.text)
     )
   }
 
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
     props: {
-      kind: 'arrow-south',
-      ui: this.ui,
-      theme: this.theme
+      kind: 'arrow-south'
     }
   }))
 
@@ -130,9 +99,7 @@ export default function (h) {
       }, [
         h('icon', {
           props: {
-            kind: 'search',
-            ui: this.ui,
-            theme: this.theme
+            kind: 'search'
           },
           slot: 'header'
         })
@@ -181,6 +148,9 @@ export default function (h) {
   }
 
   return h('div', {
+    attrs: {
+      tabindex: 0
+    },
     class: this.selectClass,
     directives: [{
       name: 'clickParent',
@@ -188,7 +158,9 @@ export default function (h) {
     }],
     on: {
       keydown: this.keydown,
-      selectstart: (event) => event.preventDefault()
+      selectstart: (event) => event.preventDefault(),
+      blur: this.blur,
+      focus: this.focus
     }
   }, [
     h('div', {
@@ -212,8 +184,8 @@ export default function (h) {
       props: {
         noTrig: true,
         noCoverTrig: true,
-        width: this.menuWidth,
-        trigHeight: this.selectedHeight,
+        width: this.UIBootstrap ? this.menuWidth * 2 : this.menuWidth,
+        trigHeight: this.UIBootstrap ? this.selectedHeight + 4 : this.selectedHeight,
         ui: this.ui,
         theme: this.theme
       },

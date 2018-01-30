@@ -168,7 +168,7 @@ export default {
     _binder() {
       this.$refs.scroller.$on('change', (opt) => {
         if (this.panelDisplay) {
-          this.adjust()
+          this.UIMaterial && this.adjust()
         }
 
         return this.$emit('scrollerChange', {
@@ -177,19 +177,23 @@ export default {
         })
       })
 
-      this.$refs.motion.$on('afterEnter', () => {
-        this.$emit('afterSpread', {
-          emitter: this
-        })
-      })
+      if (this.UIMaterial) {
+        const $refMotion = this.$refs.motion
 
-      this.$refs.motion.$on('afterLeave', () => {
-        this.panelDisplay = false
-
-        this.$emit('afterFold', {
-          emitter: this
+        $refMotion.$on('afterEnter', () => {
+          this.$emit('afterSpread', {
+            emitter: this
+          })
         })
-      })
+
+        $refMotion.$on('afterLeave', () => {
+          this.panelDisplay = false
+
+          this.$emit('afterFold', {
+            emitter: this
+          })
+        })
+      }
 
       if (this.$refs.triggerBtn) {
         this.$refs.triggerBtn.$on('keyEnter', ({
@@ -250,10 +254,10 @@ export default {
           getMenuHeight(vm)
 
           vm.panelDisplay = true
-          vm.$refs.motion.enter()
+          this.UIMaterial && vm.$refs.motion.enter()
         } else {
           vm.panelDisplay = false
-          vm.$refs.motion.leave()
+          this.UIMaterial && vm.$refs.motion.leave()
         }
       }
 

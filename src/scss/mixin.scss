@@ -95,5 +95,5 @@ $DEVICE-XL-RANGE: "1200px ~ --px";
     $type-light-color: $color-grey-light;
   }
 
-  @include theme-content($type-color, $type-dark-color, $type-light-color)
+  @include theme-content($type, $type-color, $type-dark-color, $type-light-color)
 }

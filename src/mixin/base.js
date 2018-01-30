@@ -73,6 +73,9 @@ export default {
     },
     UIMaterial() { // UI 是 material
       return this.ui === 'material'
+    },
+    UIBootstrap() { // UI 是 bootstrap
+      return this.ui === 'bootstrap'
     }
   },
 

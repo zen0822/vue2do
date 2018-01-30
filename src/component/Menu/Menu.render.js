@@ -3,6 +3,21 @@
  */
 export default function (h) {
   let children = []
+  const panelChildren = [
+    h('scroller', {
+      props: {
+        height: this.height,
+        width: '100%',
+        ui: this.ui,
+        theme: this.theme
+      },
+      ref: 'scroller'
+    }, [
+      h('div', {
+        class: this.xclass('container')
+      }, [this.$slots.default])
+    ])
+  ]
 
   children.push(
     h('div', {
@@ -45,39 +60,46 @@ export default function (h) {
     )
   }
 
-  children.push(
-    h('motion', {
-      props: {
-        height: this.menuHeight,
-        slideLength: this.noCoverTrig ? this.triggerHeight : 0,
-        display: false
-      },
-      ref: 'motion'
-    }, [
+  if (this.UIMaterial) {
+    children.push(
+      h('motion', {
+        props: {
+          height: this.menuHeight,
+          slideLength: this.noCoverTrig ? this.triggerHeight : 0,
+          display: false,
+          ui: this.ui
+        },
+        ref: 'motion'
+      }, [
+        h('div', {
+          class: [this.xclass('panel')],
+          on: {
+            click: (event) => event.stopPropagation()
+          },
+          style: {
+            width: this.width !== 'auto' ? `${this.width}px` : 'auto'
+          },
+          ref: 'panel'
+        }, panelChildren)
+      ])
+    )
+  } else {
+    children.push(
       h('div', {
         class: [this.xclass('panel')],
         on: {
           click: (event) => event.stopPropagation()
         },
         style: {
-          width: this.width !== 'auto' ? `${this.width}px` : 'auto'
+          width: this.width !== 'auto' ? `${this.width}px` : 'auto',
+          top: this.trigHeight ? `${this.trigHeight}px` : '',
+          display: this.panelDisplay ? '' : 'none',
+          visibility: this.panelDisplay ? '' : 'hidden'
         },
         ref: 'panel'
-      }, [h('scroller', {
-        props: {
-          height: this.height,
-          width: '100%',
-          ui: this.ui,
-          theme: this.theme
-        },
-        ref: 'scroller'
-      }, [
-        h('div', {
-          class: this.xclass('container')
-        }, [this.$slots.default])
-      ])])
-    ])
-  )
+      }, panelChildren)
+    )
+  }
 
   return h('div', {
     class: this.menuClass,
