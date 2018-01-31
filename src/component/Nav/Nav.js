@@ -11,7 +11,7 @@
  * @prop spreadAll - 打开全部一级菜单
  * @prop title - 菜单标题
  *
- * @event hide - 隐藏 nav
+ * @event hide - 隐藏 nav - 点击导航链接
  */
 
 import './Nav.scss'

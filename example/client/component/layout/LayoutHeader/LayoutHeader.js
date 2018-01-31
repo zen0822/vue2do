@@ -1,6 +1,5 @@
 import './LayoutHeader.scss'
 import template from './LayoutHeader.pug'
-import compMenuOpt from '../../page/Component/menuOpt.json'
 
 export default {
   name: 'header-layout',
