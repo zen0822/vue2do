@@ -110,11 +110,13 @@ export default {
         case 'up':
           this.focusIndex = this.focusIndex === 0 ? 0 : this.focusIndex - 1
           this.$refs.list.scrollTop(this.optionEleH * (this.focusIndex))
+          this.selectOption(this.focusIndex + 1, false)
 
           break
         case 'down':
           this.focusIndex = this.focusIndex === this.optionLength - 1 ? this.optionLength - 1 : this.focusIndex + 1
           this.$refs.list.scrollTop(this.optionEleH * (this.focusIndex))
+          this.selectOption(this.focusIndex + 1, false)
 
           break
         case 'left':
@@ -146,24 +148,24 @@ export default {
     },
 
     /**
-     * @param {Object} 子下拉框值
+     * @param {Object} index - 子下拉框值的游标，从 1 开始
+     * @param {Boolean} hideMenu - 自动关闭下拉框
+     *
      * @return {Function}
      */
-    selectOption(evt, index) {
-      evt.stopPropagation()
-
-      let option = this.option[parseInt(index - 1, 10)]
+    selectOption(index, hideMenu = true) {
+      const option = this.option[parseInt(index - 1, 10)]
 
       if (option.classify) {
         return false
       }
 
-      this.$refs[`rip${index}`].enter()
       this.$emit('change', {
         emitter: this,
         value: option[this.valName],
         text: option[this.txtName],
-        index: index
+        index: index,
+        hideMenu
       })
     },
 
@@ -179,6 +181,30 @@ export default {
      */
     initPageDisplay() {
       return this.$refs.list.initPageDisplay()
+    },
+
+    _handlerMouseenter(event, index) {
+      this.focusIndex = index - 1
+    },
+
+    _handlerClidk(event, index) {
+      event && event.stopPropagation()
+
+      const option = this.option[parseInt(index - 1, 10)]
+
+      if (option.classify) {
+        return false
+      }
+
+      this.$refs[`rip${index}`].enter()
+
+      this.$emit('change', {
+        emitter: this,
+        value: option[this.valName],
+        text: option[this.txtName],
+        index: index,
+        hideMenu: true
+      })
     }
   },
 

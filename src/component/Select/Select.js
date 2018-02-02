@@ -276,7 +276,8 @@ export default {
       this.$refs.option.$on('change', ({
         value,
         text,
-        index
+        index,
+        hideMenu
       }) => {
         this.currentIndex = index
         let selectedItem = this._isExistedVal(value)
@@ -292,7 +293,7 @@ export default {
         } else {
           this.value = value
 
-          return this._menuMotion(false)
+          hideMenu && this._menuMotion(false)
         }
       })
     },

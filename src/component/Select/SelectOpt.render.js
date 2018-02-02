@@ -109,7 +109,8 @@ export default function (h) {
         }
       ],
       on: {
-        click: (event) => this.selectOption(event, index)
+        click: (event) => this._handlerClidk(event, index),
+        mouseenter: (event) => this._handlerMouseenter(event, index)
       },
       ref: `option${index}`
     }, [

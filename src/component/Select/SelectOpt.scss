@@ -21,6 +21,7 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
     width: 100%;
     text-align: left;
     cursor: default;
+    background-color: rgba($color-bg, 0);
 
     &:first-child {
       padding-top: $OPTION_UI_PADDING_WIDTH;
@@ -38,19 +39,7 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
     }
 
     &.#{$C_PREFIX}-li-focus {
-      background-color: $color-bg;
-    }
-
-    &:hover {
-      background-color: $color-bg;
-
-      & > .#{$C_PREFIX}-ul {
-        display: block;
-      }
-
-      &.#{$C_PREFIX}-classify-title {
-        background-color: transparent;
-      }
+      background-color: rgba($color-bg, 1);
     }
 
     .#{$C_PREFIX}-li-check {
