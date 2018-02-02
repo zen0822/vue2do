@@ -127,19 +127,6 @@ export default {
     },
 
     /**
-     * keydown
-     */
-    keydown(event) {
-      if (!this.focusing) {
-        return false
-      }
-
-      if (event.keyCode === keyCode.enter) {
-        this.toggle()
-      }
-    },
-
-    /**
      * 全选多选下拉框
      *
      * @return {Object} - this - 组件

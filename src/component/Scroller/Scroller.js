@@ -36,6 +36,7 @@ import './Scroller.scss'
 import baseMixin from '../../mixin/base'
 import apiMixin from './Scroller.api'
 import render from './Scroller.render.js'
+import keyCode from '../../config/keyCode.json'
 
 import {
   offset as propOffset
@@ -526,6 +527,25 @@ export default {
           scrollerHeight: this.scrollerHeight
         })
       })
+    },
+
+    _handlerKeydown(event) {
+      switch (event.keyCode) {
+        case keyCode.up:
+          this.up()
+          break
+        case keyCode.down:
+          this.down()
+          break
+        case keyCode.left:
+          this.left()
+          break
+        case keyCode.right:
+          this.right()
+          break
+        default:
+          break
+      }
     }
   },
 

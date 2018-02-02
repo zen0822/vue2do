@@ -119,25 +119,6 @@ export default {
     },
 
     /**
-     * scroller 滚动触发事件
-     */
-    scroll({
-      offset,
-      top,
-      isBottom
-    }) {
-      if (this.pageTrigger === 'scroll') {
-        if (offset - top < 5 && this.pageData.current + 1 <= this.pageData.total) {
-          return this.switchPage({
-            currentPage: this.pageData.current + 1
-          })
-        }
-
-        this.scrollerAlmostInBottom = offset - top < 30
-      }
-    },
-
-    /**
      * 显示 loading
      *
      * @return { Object }
@@ -182,12 +163,27 @@ export default {
       let ele = this.elementProp(this.$refs.page.$el)
       let height = ele.offsetHeight
       let top = parentHeight - height
-
-      this.pageDetail = Object.assign({}, this.pageDetail, {
+      this.pageDetail = {
         top,
         left: ele.offsetLeft,
         bottom: 0
-      })
+      }
+    },
+
+    /**
+     * 初始化分页组件的显示状态
+     */
+    initPageDisplay() {
+      this.scrollerAlmostInBottom = this.$refs.scroller.yComputed.isBottom
+    },
+
+    /**
+     * 列表滚动到指定高度
+     *
+     * @param {Number} top - 滚动内容的滚动距离
+     */
+    scrollTop(top) {
+      return this.$refs.scroller.scrollTop(top)
     }
   }
 }

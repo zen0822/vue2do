@@ -9,17 +9,17 @@ $C_ELE_PREFIX: #{ $COMP_SELECT_ELE };
 $INPUT_PREFIX: #{ $COMP_INPUT };
 $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
+$MENU_WIDTH: 170px;
+$MENU_HEIGHT: 36px;
+
 @mixin btn-box-shadow($color) {
   box-shadow: 0 0 0 4px rgba($color, .3);
 }
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  $font-color: #fff;
-
-  background-color: $type-color;
+  border-color: $type-color;
 
   &:hover {
-    background-color: rgba($type-dark-color, .8);
     border-color: rgba($type-dark-color, .9);
   }
 
@@ -28,30 +28,23 @@ $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
   }
 
   &.#{$C_PREFIX}-selecting {
-    background-color: rgba($type-dark-color, .9);
+    @include btn-box-shadow($color-primary);
     border-color: $type-dark-color;
-  }
-
-  & > .#{$C_PREFIX}-selected-box {
-    & > .#{$C_PREFIX}-init-text {
-      &.#{$C_PREFIX}-default-text {
-        color: $font-color;
-      }
-    }
-
-    & > .#{$C_PREFIX}-caret-down-icon {
-      color: $font-color;
-    }
   }
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
-  background-color: $color-primary;
+  width: $MENU_WIDTH;
+  height: $MENU_HEIGHT;
+
+  background-color: #fff;
+  border-width: $border-thin;
+  border-style: solid;
+  border-color: $color-primary;
   border-radius: $border-radius;
   transition: background-color 150ms ease-out;
 
   &:hover {
-    background-color: rgba($color-primary-dark, .8);
     border-color: rgba($color-primary-dark, .9);
   }
 
@@ -61,19 +54,19 @@ $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
   }
 
   &.#{$C_PREFIX}-selecting {
-    background-color: rgba($color-primary-dark, .9);
+    @include btn-box-shadow($color-primary);
     border-color: $color-primary-dark;
   }
 
   & > .#{$C_PREFIX}-selected-box {
     & > .#{$C_PREFIX}-init-text {
       &.#{$C_PREFIX}-default-text {
-        color: #fff;
+        color: $color-grey;
       }
     }
 
     & > .#{$C_PREFIX}-caret-down-icon {
-      color: #fff;
+      color: $color-grey;
     }
   }
 }

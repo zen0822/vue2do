@@ -176,8 +176,24 @@ export default {
     _binder() {
       const refScroller = this.$refs.scroller
 
+      refScroller.$on('scrollY', ({
+        offset,
+        top,
+        isBottom
+      }) => {
+        if (this.pageTrigger === 'scroll') {
+          if (offset - top < 5 && this.pageData.current + 1 <= this.pageData.total) {
+            return this.switchPage({
+              currentPage: this.pageData.current + 1
+            })
+          }
+
+          this.scrollerAlmostInBottom = offset - top < 30
+        }
+      })
+
       refScroller.$on('change', (opt) => {
-        this.initPagePosition(opt.scrollerHeight)
+        this.initPagePosition()
 
         return this.$emit('scrollerChange', {
           ...opt,
@@ -193,8 +209,10 @@ export default {
         }
 
         this.initPagePosition()
-
-        this.scrollerAlmostInBottom = isBottom
+        console.log(isBottom)
+        this.$nextTick(() => {
+          this.scrollerAlmostInBottom = isBottom
+        })
       })
     },
 
@@ -218,6 +236,12 @@ export default {
     this.initPage().initList({
       pageNum: this.pageData.current,
       listItem: this.item
+    })
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.initPagePosition()
     })
   }
 }

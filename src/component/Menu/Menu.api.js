@@ -93,8 +93,9 @@ export default {
     /**
      * 调整菜单动画
      */
-    adjust(cb) {
-      this.$refs.motion.adjustMotion()
+    adjust(opt = {}) {
+      this.menuHeight = opt.scrollerHeight
+      this.UIMaterial && this.$refs.motion.adjustMotion()
     }
   }
 }

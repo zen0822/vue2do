@@ -74,7 +74,7 @@ export default function (h) {
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
     props: {
-      kind: 'arrow-south'
+      kind: 'triangle-down'
     }
   }))
 
@@ -157,7 +157,7 @@ export default function (h) {
       expression: this.clickParent
     }],
     on: {
-      keydown: this.keydown,
+      keydown: this._handlerKeydown,
       selectstart: (event) => event.preventDefault(),
       blur: this.blur,
       focus: this.focus
@@ -184,7 +184,7 @@ export default function (h) {
       props: {
         noTrig: true,
         noCoverTrig: true,
-        width: this.UIBootstrap ? this.menuWidth * 2 : this.menuWidth,
+        width: this.menuWidth,
         trigHeight: this.UIBootstrap ? this.selectedHeight + 4 : this.selectedHeight,
         ui: this.ui,
         theme: this.theme

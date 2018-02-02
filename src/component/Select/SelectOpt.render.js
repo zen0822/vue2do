@@ -3,31 +3,8 @@
  */
 export default function (h) {
   let selectOptEle = []
-  let scopedSlots = {}
 
-  if (this.$parent.multiple && this.$parent.selectAll) {
-    selectOptEle.push(
-      h('div', {
-        class: [this.xclass('li')],
-        on: {
-          click: this.$parent.selectAllOption
-        }
-      }, [
-        h('check', {
-          props: {
-            multiple: true,
-            initVal: this.$parent.selectAll ? [-1] : [],
-            initOpt: this.selectedAllCheckOpt,
-            ui: this.ui,
-            theme: this.theme
-          }
-        }),
-        h('span', this.$parent.selectAllTxt)
-      ])
-    )
-  }
-
-  scopedSlots = ({
+  const scopedSlots = ({
     item,
     index
   }) => {
@@ -125,24 +102,44 @@ export default function (h) {
     }
 
     return h('div', {
-      class: [this.liClass(item.classify, optVal)],
+      class: [
+        this.liClass(item.classify, optVal),
+        {
+          [this.xclass('li-focus')]: index - 1 === this.focusIndex
+        }
+      ],
       on: {
         click: (event) => this.selectOption(event, index)
-      }
+      },
+      ref: `option${index}`
     }, [
-      element, h('motion-rip', {
-        props: {
-          switch: this.pressing,
-          ui: this.ui,
-          theme: this.theme
-        },
-        on: {
-          'afterEnter': () => {
-            this.pressing = false
-          }
-        }
+      element,
+      h('motion-rip', {
+        ref: `rip${index}`
       })
     ])
+  }
+
+  if (this.$parent.multiple && this.$parent.selectAll) {
+    selectOptEle.push(
+      h('div', {
+        class: [this.xclass('li')],
+        on: {
+          click: this.$parent.selectAllOption
+        }
+      }, [
+        h('check', {
+          props: {
+            multiple: true,
+            initVal: this.$parent.selectAll ? [-1] : [],
+            initOpt: this.selectedAllCheckOpt,
+            ui: this.ui,
+            theme: this.theme
+          }
+        }),
+        h('span', this.$parent.selectAllTxt)
+      ])
+    )
   }
 
   selectOptEle.push(

@@ -1,11 +1,11 @@
+/**
+ * select-opt 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
-
-/**
- * select-opt 组件样式
- */
 
 $C_PREFIX: #{ $COMP_SELECT_OPT };
 $OPTION_UI_PADDING_WIDTH: $gap-v;
@@ -16,6 +16,7 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
 
   .#{$C_PREFIX}-li {
     position: relative;
+    padding: $gap-v $gap-h-double;
     box-sizing: border-box;
     width: 100%;
     text-align: left;
@@ -28,45 +29,42 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
       padding-bottom: $OPTION_UI_PADDING_WIDTH;
     }
 
-    &:hover > .#{$C_PREFIX}-ul {
-      display: block;
-    }
-
-    &.default-txt {
+    &.#{$C_PREFIX}-default-txt {
       color: #999;
     }
 
-    &.classify-title {
+    &.#{$C_PREFIX}-classify-title {
       font-weight: bold;
     }
-  }
 
-  &.#{$C_PREFIX}-theme-primary,
-  &.#{$C_PREFIX}-theme-fill {
-    .#{$C_PREFIX}-li {
-      padding: $gap-v $gap-h-double;
+    &.#{$C_PREFIX}-li-focus {
+      background-color: $color-bg;
+    }
 
-      &:hover {
-        background-color: $color-bg;
+    &:hover {
+      background-color: $color-bg;
+
+      & > .#{$C_PREFIX}-ul {
+        display: block;
       }
 
-      &:hover.#{$C_PREFIX}-classify-title {
+      &.#{$C_PREFIX}-classify-title {
         background-color: transparent;
       }
+    }
 
-      .#{$C_PREFIX}-li-check {
-        line-height: 1;
-      }
+    .#{$C_PREFIX}-li-check {
+      line-height: 1;
+    }
 
-      .#{$C_PREFIX}-li-text {
-        @extend %text-omit;
+    .#{$C_PREFIX}-li-text {
+      @extend %text-omit;
 
-        display: inline-block;
-        vertical-align: middle;
-        width: 100%;
-        padding: 0 $gap-v;
-        box-sizing: border-box;
-      }
+      display: inline-block;
+      vertical-align: middle;
+      width: 100%;
+      padding: 0 $gap-v;
+      box-sizing: border-box;
     }
   }
 }
@@ -76,4 +74,3 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
     width: 100%;
   }
 }
-

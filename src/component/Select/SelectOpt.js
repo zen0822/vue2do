@@ -72,19 +72,22 @@ export default {
 
   data() {
     return {
-      // 多选的 check 的 option
-      selectedAllCheckOpt: [{
+      selectedAllCheckOpt: [{ // 多选的 check 的 option
         value: -1,
         text: ''
       }],
-      pressing: false
+      focusIndex: 0, // 方向键选择 option 值的当前游标
+      pressing: false,
+      optionEleH: 0 // 选项值的高度
     }
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-select-opt`
+    },
+    optionLength() {
+      return this.option.length
     }
   },
 
@@ -97,12 +100,40 @@ export default {
       })
     },
 
+    /**
+     * 父组件的 keydown 事件触发调用该函数
+     */
+    keydown(direction) {
+      this.optionEleH = this.$refs.option1.offsetHeight
+
+      switch (direction) {
+        case 'up':
+          this.focusIndex = this.focusIndex === 0 ? 0 : this.focusIndex - 1
+          this.$refs.list.scrollTop(this.optionEleH * (this.focusIndex))
+
+          break
+        case 'down':
+          this.focusIndex = this.focusIndex === this.optionLength - 1 ? this.optionLength - 1 : this.focusIndex + 1
+          this.$refs.list.scrollTop(this.optionEleH * (this.focusIndex))
+
+          break
+        case 'left':
+          break
+        case 'right':
+          break
+        default:
+          break
+      }
+    },
+
     // 组件的 li 的 class 名字
     liClass(classify, value) {
       return [
         `${this.cPrefix}-li`,
         this.optRoot.defaultValClassName(value),
-        { [`${this.cPrefix}-classify-title`]: classify }
+        {
+          [`${this.cPrefix}-classify-title`]: classify
+        }
       ]
     },
 
@@ -127,6 +158,7 @@ export default {
         return false
       }
 
+      this.$refs[`rip${index}`].enter()
       this.$emit('change', {
         emitter: this,
         value: option[this.valName],
@@ -140,6 +172,19 @@ export default {
      */
     initPagePosition() {
       return this.$refs.list.initPagePosition()
+    },
+
+    /**
+     * 初始化分页组件的显示状态
+     */
+    initPageDisplay() {
+      return this.$refs.list.initPageDisplay()
     }
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.optionEleH = this.$refs.option1.offsetHeight
+    })
   }
 }

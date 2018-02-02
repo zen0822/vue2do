@@ -8,7 +8,8 @@ export default function (h) {
         wheel: this.mouseWheel,
         touchstart: this.scrollerTouchStart,
         touchmove: this.scrollerTouchMove,
-        touchend: this.scrollerTouchEnd
+        touchend: this.scrollerTouchEnd,
+        keydown: this._handlerKeydown
       }
     }, [
       h('div', {

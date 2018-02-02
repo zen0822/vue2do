@@ -81,9 +81,6 @@ export default {
         return false
       }
 
-      let barTop = 0
-      let boxTop = 0
-
       this.yData.oldBarTop = this.yData.barTop
 
       this._boxAndBarScroll({
@@ -214,6 +211,10 @@ export default {
       })
     },
 
+    /**
+     * 触发滚动条的变化
+     * @param {*} type
+     */
     triggerChangeBar(type) {
       let data = {}
       let eventName = ''
@@ -239,6 +240,88 @@ export default {
       }
 
       return this.$emit(eventName, data)
+    },
+
+    /**
+     * 向上滚动
+     */
+    up(length = SCROLL_PIXEL) {
+      if (isNaN(length)) {
+        return false
+      }
+
+      length = Number(length)
+
+      this.triggerScroll('y')
+
+      this._boxAndBarScroll({
+        type: 'y',
+        boxDistance: length,
+        barDistance: -(length / this.yData.boxBarRate)
+      })
+    },
+
+    /**
+     * 向下滚动
+     */
+    down(length = SCROLL_PIXEL) {
+      if (isNaN(length)) {
+        return false
+      }
+
+      length = Number(length)
+
+      this.triggerScroll('y')
+
+      this._boxAndBarScroll({
+        type: 'y',
+        boxDistance: -length,
+        barDistance: length / this.yData.boxBarRate
+      })
+    },
+
+    /**
+     * 滚动区域滚到到指定位置
+     * @param {*} top 区域滚动到哪个位置
+     */
+    scrollTop(top) {
+      if (isNaN(top)) {
+        return false
+      }
+
+      top = Number(top)
+
+      let length = this.boxTop - (-top)
+
+      this.triggerScroll('y')
+
+      this._boxAndBarScroll({
+        type: 'y',
+        boxDistance: -length,
+        barDistance: length / this.yData.boxBarRate
+      })
+    },
+
+    /**
+     * 滚动区域滚到到指定位置
+     * @param {*} top 区域滚动到哪个位置
+     */
+    scrollLeft(left) {
+      if (isNaN(left)) {
+        return false
+      }
+
+      left = Number(left)
+
+      let length = this.boxLeft - (-left)
+
+      this.triggerScroll('x')
+
+      this._boxAndBarScroll({
+        type: 'x',
+        boxDistance: -length,
+        barDistance: length / this.xData.boxBarRate
+      })
     }
   }
 }

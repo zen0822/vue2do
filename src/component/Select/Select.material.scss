@@ -11,9 +11,11 @@ $SCROLLER_PREFIX: #{ $COMP_SCROLLER };
 
 $MENU_WIDTH: 170px;
 $MULTI_MENU_WIDTH: 170px + 80px;
+$MENU_HEIGHT: 36px;
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
   width: $MENU_WIDTH;
+  height: $MENU_HEIGHT;
   vertical-align: middle;
   border-radius: $border-radius;
 

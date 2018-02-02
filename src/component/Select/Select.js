@@ -34,6 +34,7 @@ import './Select.material.scss'
 
 import Vue from 'vue'
 import SelectOpt from './SelectOpt'
+import keyCode from '../../config/keyCode.json'
 
 import render from './Select.render'
 import store from '../../vuex/store'
@@ -267,10 +268,9 @@ export default {
         })
       }
 
-      this.$refs.menu.$on('afterSpread', ({
-        scrollerHeight
-      }) => {
-        this.$refs.option.$refs.list.initPagePosition(scrollerHeight)
+      this.$refs.menu.$on('afterSpread', () => {
+        this.$refs.option.initPagePosition()
+        this.$refs.option.initPageDisplay()
       })
 
       this.$refs.option.$on('change', ({
@@ -718,6 +718,41 @@ export default {
     _adjustMenuMotion() {
       if (this.menuDisplay) {
         return this.$refs.menu.adjust()
+      }
+    },
+
+    /**
+     * keydown
+     */
+    _handlerKeydown(event) {
+      const $refOption = this.$refs.option
+
+      if (!this.focusing) {
+        return false
+      }
+
+      switch (event.keyCode) {
+        case keyCode.enter:
+          this.toggle()
+          break
+        case keyCode.up:
+          $refOption.keydown('up')
+          event.preventDefault()
+          break
+        case keyCode.down:
+          $refOption.keydown('down')
+          event.preventDefault()
+          break
+        case keyCode.left:
+          $refOption.keydown('left')
+          event.preventDefault()
+          break
+        case keyCode.right:
+          $refOption.keydown('right')
+          event.preventDefault()
+          break
+        default:
+          break
       }
     }
   },

@@ -54,12 +54,7 @@ export default function (h) {
       props: {
         autoHide: this.autoHideScroller,
         height: this.scrollerHeight,
-        width: '100%',
-        ui: this.ui,
-        theme: this.theme
-      },
-      on: {
-        scrollY: this.scroll
+        width: '100%'
       },
       ref: 'scroller'
     }, scrollerChildren)
@@ -69,9 +64,7 @@ export default function (h) {
     h('slide-transition', {
       props: {
         direction: 'north',
-        offset: this.pageDetail.bottom,
-        ui: this.ui,
-        theme: this.theme
+        offset: this.pageDetail.bottom
       },
       ref: 'pageSlideTransition'
     }, [
@@ -94,9 +87,7 @@ export default function (h) {
           h('icon', {
             class: [`${this.compPrefix}-m-r-half`],
             props: {
-              kind: 'arrow',
-              ui: this.ui,
-              theme: this.theme
+              kind: 'arrow-down-thick-moving'
             }
           }),
           h('span', this.loadMoreText)
@@ -125,9 +116,7 @@ export default function (h) {
                     value: this.arrowOfMoreDisplay
                   }],
                   props: {
-                    kind: 'arrow',
-                    ui: this.ui,
-                    theme: this.theme
+                    kind: 'arrow-down-thick-moving'
                   }
                 }),
                 h('span', this.loadMoreText)

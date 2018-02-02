@@ -8,11 +8,11 @@ $C_PREFIX: $COMP_MOTION_RIP;
 .#{$C_PREFIX} {
   position: absolute;
   top: 0;
+  overflow: hidden;
 
   &.#{$C_PREFIX}-comp {
     position: absolute;
     background-color: rgba(0, 0, 0, .2);
-    border-radius: 100%;
     opacity: 1;
     width: 100%;
     height: 100%;
@@ -20,9 +20,6 @@ $C_PREFIX: $COMP_MOTION_RIP;
     left: 0;
 
     &.#{$C_PREFIX}-assign {
-      border-radius: 0;
-      overflow: hidden;
-
       & > .#{$C_PREFIX}-spot {
         top: auto;
         left: auto;
@@ -44,7 +41,7 @@ $C_PREFIX: $COMP_MOTION_RIP;
 
       & > .#{$C_PREFIX}-spot {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
+        transform: translate(-50%, -50%) scaleX(1);
       }
     }
 
@@ -52,8 +49,8 @@ $C_PREFIX: $COMP_MOTION_RIP;
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 100%;
-      height: 100%;
+      width: 200%;
+      height: 200%;
 
       background-color: rgba(0, 0, 0, .2);
       border-radius: 100%;
@@ -61,7 +58,7 @@ $C_PREFIX: $COMP_MOTION_RIP;
 
       will-change: transform;
       transform-origin: 50% 50%;
-      transform: translate(-50%, -50%) scale(.5);
+      transform: translate(-50%, -50%) scaleX(.2);
     }
   }
 }

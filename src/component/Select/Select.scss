@@ -1,5 +1,5 @@
 /**
- * menu 组件样式
+ * select 组件样式
  */
 
 @import "../../scss/config.scss";
@@ -37,23 +37,18 @@ $MENU_HEIGHT: 36px;
     padding: $gap-v $gutter-h-triple $gap-v $gap-h-double;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    min-height: $MENU_HEIGHT;
     width: 100%;
 
     box-sizing: border-box;
     vertical-align: middle;
 
     & > .#{$C_PREFIX}-init-text {
+      @extend %text-omit;
       width: 100%;
       outline: none;
       border: none;
       cursor: default;
-    }
-
-    & > .#{$C_PREFIX}-init-text {
-      @extend %text-omit;
       font-size: $h4;
-      background-color: transparent;
 
       &.#{$C_PREFIX}-default-text {
         color: #999;
@@ -108,24 +103,32 @@ $MENU_HEIGHT: 36px;
     height: auto;
     min-height: $MENU_HEIGHT;
 
-    & > .#{$C_PREFIX}-init-text {
-      &.#{$C_PREFIX}-opacity {
-        opacity: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 0;
-        padding: 0;
-      }
-    }
-
-    & > .#{$C_PREFIX}-selected-box > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box > .#{$C_PREFIX}-multiple {
-      margin-right: $gap-v-triple;
-    }
-
     & > .#{$C_PREFIX}-selected-box {
-      transition: height 300ms ease;
-      will-change: height;
+      box-sizing: border-box;
+      opacity: 1;
+
+      & > .#{$C_PREFIX}-init-text {
+        transition-property: opacity;
+        transition-duration: 150ms;
+
+        &.#{$C_PREFIX}-opacity {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 0;
+          padding: 0;
+        }
+      }
+
+      & > .#{$C_PREFIX}-scroller {
+        transition: height 300ms ease;
+        will-change: height;
+
+        & > .#{ $SCROLLER_PREFIX }-box > .#{$C_PREFIX}-multiple {
+          margin-right: $gap-v-triple;
+        }
+      }
 
       .#{$C_PREFIX}-multiple-selected-ul {
         & > li {
