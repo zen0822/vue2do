@@ -209,7 +209,6 @@ export default {
         }
 
         this.initPagePosition()
-        console.log(isBottom)
         this.$nextTick(() => {
           this.scrollerAlmostInBottom = isBottom
         })
