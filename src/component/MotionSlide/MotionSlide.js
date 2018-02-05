@@ -71,15 +71,15 @@ export default {
     _getTranslate() {
       switch (this.direction) {
         case 'south':
-          return `translateY(calc(-100% - ${this.slideOffset}px))`
+          return `translateY(-100%) translateY(-${this.slideOffset}px)`
         case 'north':
-          return `translateY(calc(100% + ${this.slideOffset}px))`
+          return `translateY(100%) translateY(${this.slideOffset}px)`
         case 'east':
-          return `translateX(calc(-100% - ${this.slideOffset}px))`
+          return `translateX(-100%) translateY(-${this.slideOffset}px)`
         case 'west':
-          return `translateX(calc(100% + ${this.slideOffset}px))`
+          return `translateX(100%) translateY(${this.slideOffset}px)`
         default:
-          return `translateY(calc(-100% - ${this.slideOffset}px))`
+          return `translateY(-100%) translateY(-${this.slideOffset}px)`
       }
     },
 
