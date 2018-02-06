@@ -363,7 +363,7 @@ let checkCompConfig = {
      */
     _handlerClick(event, index) {
       this.check(event, index)
-      this.motion.splice(index - 1, 1, false)
+      // this.motion.splice(index - 1, 1, false)
     },
 
     /**

@@ -24,7 +24,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
           & > .#{$C_PREFIX}-icon {
             & > .#{$C_PREFIX}-rip {
-              background-color: rgba($type-color, .2);
+              background-color: rgba($type-color, .4);
 
               & > .#{$C_MOTION_RIP_PREFIX}-spot {
                 background-color: rgba($type-color, .8);
@@ -90,11 +90,9 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
             position: absolute;
             top: 0;
             left: 0;
-            background-color: rgba($grey-light, .2);
+            background-color: rgba($grey-light, .4);
 
             & > .#{$C_MOTION_RIP_PREFIX}-spot {
-              height: 150%;
-              width: 150%;
               background-color: rgba($grey-light, .8);
             }
           }

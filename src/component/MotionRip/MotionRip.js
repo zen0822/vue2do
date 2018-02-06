@@ -2,6 +2,8 @@
  * rip(涟漪) motion component
  *
  * @prop assign - 指定涟漪在是什么位置开始
+ * @prop circle - 涟漪是圆形
+ * @prop overflow - 默认溢出不隐藏，true 为隐藏溢出的 spot
  */
 
 import {
@@ -23,13 +25,30 @@ export default {
     assign: {
       type: Boolean,
       default: false
+    },
+    circle: {
+      type: Boolean,
+      default: false
+    },
+    overflow: {
+      type: Boolean,
+      default: false
     }
   },
 
-  data() {
-    this.moving = false // 是否正在执行过渡动画
-
-    return {}
+  computed: {
+    time() {
+      switch (this.speed) {
+        case 'normal':
+          return 800
+        case 'fast':
+          return 600
+        case 'slow':
+          return 1000
+        default:
+          return 800
+      }
+    }
   },
 
   methods: {
@@ -40,6 +59,15 @@ export default {
       this.$emit('beforeEnter')
 
       let el = this.$el
+
+      Object.assign(el.style, {
+        'display': 'none'
+      })
+
+      delClass(el, [
+        this.prefix('motion-rip-assign'),
+        this.prefix('motion-rip-active')
+      ])
 
       addClass(el, this.prefix('motion-rip-comp'))
 
@@ -68,7 +96,7 @@ export default {
 
       // HACK: trigger browser reflow
       let height = el.offsetHeight
-      el.firstChild.style.transition = el.style.transition = 'all 800ms'
+      el.firstChild.style.transition = el.style.transition = `all ${this.time}ms`
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -116,7 +144,15 @@ export default {
   render(h, context) {
     return h('transition', [
       h('div', {
-        class: [this.prefix('motion-rip')]
+        class: [
+          this.prefix('motion-rip'),
+          {
+            [this.prefix('motion-rip-circle')]: this.circle
+          },
+          {
+            [this.prefix('motion-rip-overflow')]: this.overflow
+          }
+        ]
       }, [h('div', {
         class: [this.prefix('motion-rip-spot')]
       })])

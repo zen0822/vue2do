@@ -48,6 +48,9 @@ export default function (h) {
               }),
               h('motion-rip', {
                 class: [this.xclass('rip')],
+                props: {
+                  circle: true
+                },
                 ref: `motionCheck${currentIndex}`
               }),
               h('div', {
