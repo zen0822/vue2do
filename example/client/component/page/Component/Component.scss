@@ -3,7 +3,6 @@
 
 .#{$PAGE_PREFIX}-component {
   .#{$PAGE_PREFIX}-component-stage {
-    flex-grow: 1;
     overflow: auto;
     padding: $gap-v-double $gap-h-double * 2;
   }

@@ -25,6 +25,7 @@ $MENU_HEIGHT: 36px;
 
   &.#{$C_PREFIX}-multiple {
     width: $MULTI_MENU_WIDTH;
+    height: auto;
   }
 
   &.#{$C_PREFIX}-selecting {

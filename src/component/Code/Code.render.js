@@ -27,37 +27,33 @@ export default function (h) {
       ],
       ref: 'article'
     }, [
-      h('scroller', {
-        props: {
-          height: 200,
-          width: 'auto',
-          ui: this.ui,
-          theme: this.theme
-        },
-        ref: 'scroller'
+      h('pre', {
+        class: [this.xclass('pre')],
+        style: {
+          width: this.preWidth + 'px'
+        }
       }, [
-        h('pre', {
-          class: [this.xclass('pre')],
-          style: {
-            width: this.preWidth + 'px'
-          }
+        h('scroller', {
+          props: {
+            height: 200,
+            width: '100%'
+          },
+          ref: 'scroller'
         }, [
-          h('scroller', {
-            props: {
-              height: 'auto',
-              width: '100%'
-            },
-            ref: 'scrollerArticle'
-          }, [$slots.default || this.code])
-        ]),
-        h('aside', {
-          class: [
-            this.xclass('line-num')
-          ]
-        }, [
-          h('ul', {
-            class: [this.prefix('css-ul')]
-          }, lineNumEle)
+          h('div', {
+            class: [this.xclass('content')]
+          }, [
+            $slots.default || this.code,
+            h('aside', {
+              class: [
+                this.xclass('line-num')
+              ]
+            }, [
+              h('ul', {
+                class: [this.prefix('css-ul')]
+              }, lineNumEle)
+            ])
+          ])
         ])
       ])
     ]),

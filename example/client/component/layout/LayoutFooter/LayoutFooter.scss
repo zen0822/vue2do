@@ -10,7 +10,6 @@
   background-color: $grey-dark;
   box-sizing: border-box;
   font-size: 12px;
-  padding: $gap-v;
   text-align: center;
 
   @include device-type('s'){

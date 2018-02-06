@@ -40,9 +40,13 @@ $C_PREFIX: #{ $COMP_CODE };
       font-family: 'Roboto Mono', Monaco, courier, monospace;
       font-size: 1em;
       line-height: 16px;
-      margin: 0 0 0 50px;
       -webkit-font-smoothing: initial;
       -moz-osx-font-smoothing: initial;
+
+      .#{$C_PREFIX}-content {
+        position: relative;
+        padding: 0 0 0 50px;
+      }
     }
   }
 

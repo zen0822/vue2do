@@ -3,10 +3,10 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      p.section-description 直接传入 init-opt
-      z-select(:init-opt='selectOpt' ui='bootstrap')
+      p.section-description 直接传入 init-opt，10s 之后会更改 initOpt 数据
+      z-select(:init-opt='dropMenuOpt' ui='bootstrap')
       z-code.
-        #{'<z-select :init-opt="selectOpt"></z-select>'}
+        #{'<z-select :init-opt="dropMenuOpt"></z-select>'}
     +section('tag', '添加子标签')
       p.section-description 用直观的标签声明下拉框的数据
       z-select

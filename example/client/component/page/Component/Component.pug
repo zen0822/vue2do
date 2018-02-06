@@ -1,6 +1,6 @@
 div.p-component
   z-row(:gap='30', align='start')
-    z-col.p-component-menu(:style='componentStyle')
+    z-col.p-component-menu(:style='componentStyle', :span='3')
       z-nav(
           type='vertical'
           title='组件导航'
@@ -8,6 +8,6 @@ div.p-component
           spread-all
           :init-opt='menuOpt'
       )
-    z-col.p-component-stage(:style='componentStyle', ref='compStage')
+    z-col.p-component-stage(:style='componentStyle', ref='compStage', :span='9')
       transition(name='z-fade', v-on:after-enter='afterEnter')
         router-view

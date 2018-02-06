@@ -42,5 +42,25 @@ export default {
 
       return this.testOpt
     }
+  },
+
+  created() {
+    let testOpt = []
+
+    for (let i = 0, len = 13; i < len; i++) {
+      testOpt.push({
+        text: 'test-' + i,
+        name: 'name-' + i,
+        size: 'size-' + i,
+        en: 'en-' + i,
+        value: i
+      })
+    }
+
+    this.dropMenuOpt = testOpt
+
+    setTimeout(() => {
+      this.dropMenuOpt.push(...testOpt)
+    }, 10000)
   }
 }
