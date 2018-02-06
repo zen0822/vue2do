@@ -5,7 +5,7 @@
   position: relative;
   background-color: $grey-dark;
   height: 88px;
-  padding: 0 $gap-h;
+  padding: 0 $gap-h-double;
 
   & > .nav-box-mobile {
     display: none;
@@ -21,7 +21,6 @@
   }
 
   & > .nav-box {
-    max-width: 1024px;
     height: 100%;
     margin: 0 auto;
 
