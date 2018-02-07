@@ -26,7 +26,7 @@ module.exports = function (config) {
       ]
     },
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    files: ['./entry.js'], // 这是测试入口文件
+    files: ['./entry.js'],
     preprocessors: {
       './entry.js': ['webpack', 'sourcemap', 'coverage']
     },

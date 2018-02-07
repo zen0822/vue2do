@@ -34,7 +34,7 @@
   "scripts": {
     "start": "node bin/dev --app example",
     "prod": "node bin/prod --app example",
-    "release": "bash build/release.sh",
+    "rel": "bash build/release.sh",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
     "coveralls": "cat test/coverage/lcov/lcov.info | coveralls && rm -rf test/coverage"
