@@ -200,8 +200,14 @@ export default {
     barLeft(val) {
       this.triggerScroll('x')
     },
-    'yComputed.barDisplay' (val) {
-      val ? this.$refs.bar.enter() : this.$refs.bar.leave()
+    yComputed(val) {
+      const refBar = this.$refs.bar
+
+      if (val.barDisplay && !refBar.isEntering) {
+        refBar.enter()
+      } else if (!val.barDisplay && !refBar.isLeaving) {
+        refBar.leave()
+      }
     }
   },
 

@@ -22,7 +22,7 @@ export default function (h) {
         props: {
           opacity: true,
           speed: 'fast',
-          display: !this.autoHide
+          display: false
         },
         ref: 'bar'
       }, [

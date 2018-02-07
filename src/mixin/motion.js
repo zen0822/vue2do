@@ -3,7 +3,6 @@
  *
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
- * @prop sync - 迅速切换动画，进来动画与离开动画之间是否同步进行
  * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
  *
  * @event beforeEnter - 进来过渡之前
@@ -72,13 +71,14 @@ export default {
 
       return new Promise(async(resolve, reject) => {
         try {
+          this.isLeaving = false
           this.moving = this.isEntering = true
 
           code === this.code && await this.beforeEnter(opt)
           code === this.code && await this.entering(opt)
           code === this.code && await this.afterEnter(opt)
 
-          this.moving = this.isEntering = false
+          this.moving = false
 
           resolve()
         } catch (error) {
@@ -105,13 +105,14 @@ export default {
 
       return new Promise(async(resolve, reject) => {
         try {
+          this.isEntering = false
           this.moving = this.isLeaving = true
 
           code === this.code && await this.beforeLeave(opt)
           code === this.code && await this.leaveing(opt)
           code === this.code && await this.afterLeave(opt)
 
-          this.moving = this.isLeaving = false
+          this.moving = false
 
           resolve()
         } catch (error) {
@@ -151,8 +152,8 @@ export default {
 
   created() {
     this.moving = false // 当前正在执行动画
-    this.isEntering = false // 当前执行进来的动画的编号
-    this.isLeaving = false // 当前执行离开的动画的编号
+    this.isEntering = this.display // 当前执行进来的动画的编号
+    this.isLeaving = !this.display // 当前执行离开的动画的编号
     this.code = 0 // 当前执行的动画的编号
   }
 }
