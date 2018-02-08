@@ -2,6 +2,7 @@
  * menu 组件
  *
  * @prop classifyOpt - 分类下拉框的数据
+ * @prop coverTrig - 菜单展开是不遮挡触发器
  * @prop defaultVal - 默认的选项值
  * @prop defaultTxt - 默认的选项文本值
  * @prop initVal - 默认第一个显示的值
@@ -67,6 +68,7 @@ import {
 
 // 搜索功能的函数节流的间隔时间
 const SEARCH_KEY_UP_INTERVAL = 500
+const MENU_WIDTH = 170
 
 export default {
   name: 'Select',
@@ -87,6 +89,10 @@ export default {
   },
 
   props: {
+    coverTrig: {
+      type: Boolean,
+      default: false
+    },
     initOpt: {
       type: Array,
       default: () => []
@@ -178,6 +184,7 @@ export default {
       selectedAll: false, // 是否全选多选下拉框的标记
       selectedHeight: 0, // 当前选择值的样式高度值
       selectedStyleHeight: 0, // 当前选择值的样式高度值
+      stateCoverTrig: false, // 遮挡下拉选择框的触发器
       transitionFinish: false, // 下拉框显示过渡完成的标识符
       text: undefined // 当前下拉框的 text 值
     }
@@ -247,6 +254,10 @@ export default {
   methods: {
     _initComp() {
       this._adjustSelectedPoiStyle()
+    },
+
+    _initDataOpt() {
+      this.stateCoverTrig = this.coverTrig
     },
 
     /**
@@ -686,8 +697,9 @@ export default {
             let scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
             scrollerComp.initScroller()
 
+            const offsetWidth = vm.$el.offsetWidth
             vm.menuHeight = scrollerComp.scrollerHeight
-            vm.menuWidth = vm.$el.offsetWidth
+            vm.menuWidth = offsetWidth < MENU_WIDTH ? MENU_WIDTH : offsetWidth
           }
         })
       }

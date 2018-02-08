@@ -2,7 +2,7 @@
  * menu 组件
  *
  * @prop store - 储存实例化的信息
- * @prop noCoverTrig - 菜单展开是不遮挡触发器，TODO： pc 上默认是不遮挡的，mobile 是默认遮挡的
+ * @prop coverTrig - 菜单展开是不遮挡触发器，TODO： pc 上默认是不遮挡的，mobile 是默认遮挡的
  * @prop noTrig - 不使用组件自带的菜单触发器
  * @prop height - 菜单高度，默认是 auto
  *                1、auto：根据菜单内容的高度
@@ -75,7 +75,7 @@ export default {
       type: Boolean,
       default: false
     },
-    noCoverTrig: {
+    coverTrig: {
       type: Boolean,
       default: false
     },

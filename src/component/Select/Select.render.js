@@ -183,7 +183,7 @@ export default function (h) {
       class: [this.xclass('menu')],
       props: {
         noTrig: true,
-        noCoverTrig: true,
+        coverTrig: this.coverTrig,
         width: this.menuWidth,
         trigHeight: this.UIBootstrap ? this.selectedHeight + 4 : this.selectedHeight,
         ui: this.ui,
