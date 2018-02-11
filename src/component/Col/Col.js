@@ -16,7 +16,7 @@
  * @prop shrink - (draft)同 flex-shrink属性，定义了项目的缩小比例
  */
 
-import './Col.scss'
+// import './Col.scss'
 import render from './Col.render.js'
 import baseMixin from '../../mixin/base'
 

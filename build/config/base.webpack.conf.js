@@ -72,7 +72,8 @@ module.exports = function (opt) {
           'css-loader',
           'postcss-loader',
           'sass-loader'
-        ]
+        ],
+        exclude: [/grid\.scss$/]
       }, {
         test: /\.json$/,
         loader: 'json-loader'

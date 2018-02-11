@@ -1,8 +1,9 @@
 {
   "name": "vue2do",
   "version": "0.3.3",
-  "description": "base component on vue2",
-  "main": "index.js",
+  "description": "base component on vuejs2",
+  "main": "dist/vue2do.umd.js",
+  "module": "dist/vue2do.umd.js",
   "author": {
     "name": "zheng (Zen) Huang",
     "email": "zenhuangzheng@126.com"
@@ -32,8 +33,9 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
-    "start": "node bin/dev --app example",
-    "prod": "node bin/prod --app example",
+    "start": "node bin/dev",
+    "prod": "node bin/prod",
+    "doc": "node bin/doc",
     "rel": "bash build/release.sh",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
@@ -86,6 +88,7 @@
     "style-loader": "^0.19.1",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "^0.6.2",
     "vue": "^2.5.13",
     "vue-class-component": "^6.1.2",
@@ -99,7 +102,7 @@
     "vuex": "^3.0.1",
     "watchpack": "^1.4.0",
     "webpack": "^3.10.0",
-    "webpack-dashboard": "^1.0.2",
+    "webpack-bundle-analyzer": "^2.10.0",
     "webpack-dev-middleware": "^2.0.2",
     "webpack-dev-server": "^2.9.7",
     "webpack-hot-middleware": "^2.21.0",
@@ -124,6 +127,6 @@
     "sinon-chai": "^2.14.0"
   },
   "engines": {
-    "node": ">=7.0.0"
+    "node": ">=8.0.0"
   }
 }

@@ -3,6 +3,7 @@ import './src/scss/common/box.scss'
 import './src/scss/transition.scss'
 import './src/scss/common/main.scss'
 import './src/scss/common/common.scss'
+import './src/scss/grid.scss'
 
 import pluginInstall from './src'
 import cnLang from './src/language/zh-cn.json'

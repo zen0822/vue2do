@@ -8,6 +8,15 @@ module.exports = {
   },
   build: {
     env: require('./prod.env'),
+    assetsRoot: path.resolve(__dirname, '../../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: './',
+    productionSourceMap: false,
+    productionGzip: false,
+    productionGzipExtensions: ['js', 'css']
+  },
+  doc: {
+    env: require('./prod.env'),
     index: path.resolve(__dirname, '../../example/dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../../example/dist'),
     assetsSubDirectory: 'static',

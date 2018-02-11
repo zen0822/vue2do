@@ -11,7 +11,7 @@
  *
  */
 
-import './Row.scss'
+// import './Row.scss'
 import render from './Row.render.js'
 import baseMixin from '../../mixin/base'
 

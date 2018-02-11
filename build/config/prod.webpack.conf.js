@@ -1,78 +1,103 @@
-module.exports = function (opt) {
-  opt = opt || {};
+const path = require('path')
+const utils = require('./../utils')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+
+const version = process.env.VERSION || require('../../package.json').version
+const banner =
+  '/*!\n' +
+  ' * vue2do.js v' + version + '\n' +
+  ' * (c) 2017-' + new Date().getFullYear() + ' Zen Huang\n' +
+  ' * Released under the MIT License.\n' +
+  ' */'
+
+module.exports = function (opt = {}) {
   const appName = opt.appName
 
-  var path = require('path')
-  var utils = require('./../utils')
-  var webpack = require('webpack')
-  var merge = require('webpack-merge')
-
-  var ExtractTextPlugin = require('extract-text-webpack-plugin')
-  var HtmlWebpackPlugin = require('html-webpack-plugin')
-
-  var config = require('../config')
+  const config = require('../config')
   const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
-  var baseWebpackConfig = require('./base.webpack.conf')(opt)
+  const baseWebpackConfig = require('./base.webpack.conf')(opt)
+
+  const extractGridScss = new ExtractTextPlugin({
+    filename: `grid${opt.compress ? '.min' : ''}.css`
+  })
 
   var env = process.env.NODE_ENV === 'testing' ?
     require('../config/test.env') :
     config.build.env
   const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
 
+  delete baseWebpackConfig.entry
+
   var webpackConfig = merge(baseWebpackConfig, {
+    entry: path.resolve(__dirname, `${config.global.root}/index.js`),
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
       path: config.build.assetsRoot,
       publicPath: config.build.assetsPublicPath,
-      filename: utils.assetsPath('js/[name].[chunkhash].js'),
-      chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+      library: 'Vue2do',
+      libraryTarget: opt.library,
+      filename: opt.filename
+    },
+    module: {
+      rules: [{
+        test: /grid\.scss$/,
+        use: extractGridScss.extract({
+          fallback: 'style-loader',
+          use: [{
+              loader: 'css-loader',
+              options: {
+                minimize: opt.compress
+              }
+            },
+            'postcss-loader',
+            'sass-loader'
+          ]
+        })
+      }]
+    },
+    externals: {
+      vue: {
+        root: 'Vue',
+        commonjs2: 'vue',
+        amd: 'vue',
+        commonjs: 'vue'
+      },
+      'vue-router': {
+        commonjs2: 'vue-router',
+        amd: 'vue-router',
+        commonjs: 'vue-router'
+      },
+      'vuex': {
+        commonjs2: 'vuex',
+        amd: 'vuex',
+        commonjs: 'vuex'
+      },
+      'vue-i18n': {
+        commonjs2: 'vue-i18n',
+        amd: 'vue-i18n',
+        commonjs: 'vue-i18n'
+      }
     },
     plugins: [
+      extractGridScss,
       new webpack.DefinePlugin({
         'process.env': env
       }),
-
-      new ExtractTextPlugin({
-        filename: utils.assetsPath('css/[name].[contenthash].css')
-      }),
-
-      new HtmlWebpackPlugin({
-        filename: process.env.NODE_ENV === 'testing' ?
-          'index.html' :
-          config.build.index,
-        template,
-        inject: true,
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true
-        },
-        chunksSortMode: 'dependency'
-      }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: function (module, count) {
-          return (
-            module.resource &&
-            /\.js$/.test(module.resource) &&
-            module.resource.indexOf(
-              path.join(__dirname, '../node_modules')
-            ) === 0
-          )
-        }
-      }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest'],
-        chunks: ['vendor']
+      new webpack.BannerPlugin({
+        banner: banner,
+        raw: true,
+        entryOnly: true
       })
     ]
   })
 
   if (config.build.productionGzip) {
-    var CompressionWebpackPlugin = require('compression-webpack-plugin')
-
     webpackConfig.plugins.push(
       new CompressionWebpackPlugin({
         asset: '[path].gz[query]',
@@ -80,6 +105,22 @@ module.exports = function (opt) {
         test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
         threshold: 10240,
         minRatio: 0.8
+      })
+    )
+  }
+
+  if (opt.compress) {
+    webpackConfig.plugins.push(
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          ie8: false,
+          output: {
+            comments: false,
+            beautify: false
+          },
+          compress: true,
+          warnings: false
+        }
       })
     )
   }

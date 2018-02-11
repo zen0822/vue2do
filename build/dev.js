@@ -2,19 +2,22 @@
  * @param appName { string } - project name
  * @param opt { Object } - the options that start the development project
  */
-module.exports = function ({ appName }) {
-  const path = require('path')
-  const express = require('express')
-  const webpack = require('webpack')
-  const config = require('./config')
-  const proxyMiddleware = require('http-proxy-middleware')
-  const WebpackDevServer = require('webpack-dev-server')
 
-  const webpackConfig = process.env.NODE_ENV === 'testing'
-    ? require('./config/prod.webpack.conf')({
+const path = require('path')
+const express = require('express')
+const webpack = require('webpack')
+const config = require('./config')
+const proxyMiddleware = require('http-proxy-middleware')
+const WebpackDevServer = require('webpack-dev-server')
+
+module.exports = function ({
+  appName = 'example'
+} = {}) {
+  const webpackConfig = process.env.NODE_ENV === 'testing' ?
+    require('./config/prod.webpack.conf')({
       appName: appName
-    })
-    : require('./config/dev.webpack.conf')({
+    }) :
+    require('./config/dev.webpack.conf')({
       appName: appName
     })
 

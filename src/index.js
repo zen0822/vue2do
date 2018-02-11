@@ -90,19 +90,23 @@ const compHub = [
   TableCol
 ]
 
-export default {
-  install(Vue, {
-    prefix = 'z'
-  } = {}) {
-    compHub.forEach((item) => {
-      let compName = ''
+const install = (Vue, {
+  prefix = 'z'
+} = {}) => {
+  compHub.forEach((item) => {
+    let compName = ''
 
-      // FlodEle -> -fold-ele
-      if (item.name) {
-        compName = item.name.replace(/([A-Z])/g, '-$1').toLowerCase()
-      }
+    // FlodEle -> -fold-ele
+    if (item.name) {
+      compName = item.name.replace(/([A-Z])/g, '-$1').toLowerCase()
+    }
 
-      Vue.component(`${prefix}${compName}`, item)
-    })
-  }
+    Vue.component(`${prefix}${compName}`, item)
+  })
 }
+
+export {
+  install
+}
+
+export default install

@@ -3,15 +3,11 @@
  */
 
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-
 import messageComp from './Message'
 
 import store from '../../vuex/store'
 import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
-
-Vue.use(VueRouter)
 
 let toasting = false
 let toastHub = []
