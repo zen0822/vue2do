@@ -16,6 +16,33 @@ const banner =
   ' * Released under the MIT License.\n' +
   ' */'
 
+const umdExternals = {
+  vue: {
+    root: 'Vue',
+    commonjs2: 'vue',
+    amd: 'vue',
+    commonjs: 'vue'
+  },
+  'vuex': {
+    root: 'Vuex',
+    commonjs2: 'vuex',
+    amd: 'vuex',
+    commonjs: 'vuex'
+  },
+  'vue-i18n': {
+    root: 'VueI18n',
+    commonjs2: 'vue-i18n',
+    amd: 'vue-i18n',
+    commonjs: 'vue-i18n'
+  }
+}
+
+const externals = {
+  vue: 'Vue',
+  'vuex': 'Vuex',
+  'vue-i18n': 'VueI18n'
+}
+
 module.exports = function (opt = {}) {
   const appName = opt.appName
 
@@ -61,29 +88,7 @@ module.exports = function (opt = {}) {
         })
       }]
     },
-    externals: {
-      vue: {
-        root: 'Vue',
-        commonjs2: 'vue',
-        amd: 'vue',
-        commonjs: 'vue'
-      },
-      'vue-router': {
-        commonjs2: 'vue-router',
-        amd: 'vue-router',
-        commonjs: 'vue-router'
-      },
-      'vuex': {
-        commonjs2: 'vuex',
-        amd: 'vuex',
-        commonjs: 'vuex'
-      },
-      'vue-i18n': {
-        commonjs2: 'vue-i18n',
-        amd: 'vue-i18n',
-        commonjs: 'vue-i18n'
-      }
-    },
+    externals: opt.library === 'var' ? externals : umdExternals,
     plugins: [
       extractGridScss,
       new webpack.DefinePlugin({

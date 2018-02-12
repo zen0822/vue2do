@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.3.3
+ * vue2do.js v0.3.4
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -806,7 +806,7 @@ exports.default = {
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = undefined;
+module.exports = Vue;
 
 /***/ }),
 /* 4 */
@@ -1016,7 +1016,9 @@ var tip = function tip() {
   }).show();
 };
 
-createTip();
+window.addEventListener('load', function () {
+  createTip();
+});
 
 exports.default = tip;
 
@@ -10581,9 +10583,11 @@ Object.defineProperty(exports, "__esModule", {
 var nodeList = [];
 var storeName = '__VUE_2_DO_DIRECTIVE_CLICK_PARENT_STORE_NAME__';
 
-document.body.addEventListener('click', function () {
-  nodeList.forEach(function (el) {
-    el[storeName].expression();
+window.addEventListener('load', function () {
+  document.body.addEventListener('click', function () {
+    nodeList.forEach(function (el) {
+      el[storeName].expression();
+    });
   });
 });
 
@@ -11428,7 +11432,7 @@ module.exports = {"prefix":"z","defaultTheme":"primary","defaultUI":"material","
 /* 83 */
 /***/ (function(module, exports) {
 
-module.exports = undefined;
+module.exports = Vuex;
 
 /***/ }),
 /* 84 */
@@ -17784,7 +17788,7 @@ exports.set = set;
 /* 201 */
 /***/ (function(module, exports) {
 
-module.exports = undefined;
+module.exports = VueI18n;
 
 /***/ }),
 /* 202 */
@@ -17898,7 +17902,9 @@ var alert = function alert() {
   }).show();
 };
 
-createAlert();
+window.addEventListener('load', function () {
+  createAlert();
+});
 
 exports.default = alert;
 
@@ -18023,7 +18029,9 @@ var confirm = function confirm() {
   }).show(function () {});
 };
 
-createConfirm();
+window.addEventListener('load', function () {
+  createConfirm();
+});
 
 exports.default = confirm;
 
@@ -18143,7 +18151,9 @@ var toast = function toast() {
   }).show();
 };
 
-createToast();
+window.addEventListener('load', function () {
+  createToast();
+});
 
 exports.default = toast;
 

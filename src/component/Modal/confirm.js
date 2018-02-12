@@ -98,6 +98,8 @@ const confirm = (opt = '') => {
     .show(() => {})
 }
 
-createConfirm()
+window.addEventListener('load', () => {
+  createConfirm()
+})
 
 export default confirm

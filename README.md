@@ -12,6 +12,28 @@ npm i vue2do -S
 
 ## 开始使用
 
+### 通过 script 标签加载
+```html
+...
+  <body>
+    <div id='app'></div>
+    <script src="https://unpkg.com/babel-polyfill@^6.26.0/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/vue@^2.5.13/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/vuex@^3.0.1/dist/vuex.min.js"></script>
+    <script src="https://unpkg.com/vue-i18n@^7.3.3/dist/vue-i18n.min.js"></script>
+    <script src="https://unpkg.co/vue2do@^0.3.4/dist/vue2do.min.js"></script>
+    <script>
+      new Vue({
+        template: '<input-box></input-box>',
+        components: {
+          'input-box': Vue2do.Input
+        }
+      }).$mount('#app')
+    </script>
+  </body>
+...
+```
+
 ### 全部加载
 ``` js
 import Vue from 'vue'

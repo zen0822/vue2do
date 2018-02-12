@@ -1,9 +1,11 @@
 let nodeList = []
 const storeName = '__VUE_2_DO_DIRECTIVE_CLICK_PARENT_STORE_NAME__'
 
-document.body.addEventListener('click', function () {
-  nodeList.forEach((el) => {
-    el[storeName].expression()
+window.addEventListener('load', () => {
+  document.body.addEventListener('click', function () {
+    nodeList.forEach((el) => {
+      el[storeName].expression()
+    })
   })
 })
 

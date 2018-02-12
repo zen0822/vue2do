@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.3.3
+ * vue2do.js v0.3.4
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -11,7 +11,7 @@
 	else if(typeof exports === 'object')
 		exports["Vue2do"] = factory(require("vue"), require("vuex"), require("vue-i18n"));
 	else
-		root["Vue2do"] = factory(root["Vue"], root[undefined], root[undefined]);
+		root["Vue2do"] = factory(root["Vue"], root["Vuex"], root["VueI18n"]);
 })(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_83__, __WEBPACK_EXTERNAL_MODULE_201__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -1025,7 +1025,9 @@ var tip = function tip() {
   }).show();
 };
 
-createTip();
+window.addEventListener('load', function () {
+  createTip();
+});
 
 exports.default = tip;
 
@@ -10590,9 +10592,11 @@ Object.defineProperty(exports, "__esModule", {
 var nodeList = [];
 var storeName = '__VUE_2_DO_DIRECTIVE_CLICK_PARENT_STORE_NAME__';
 
-document.body.addEventListener('click', function () {
-  nodeList.forEach(function (el) {
-    el[storeName].expression();
+window.addEventListener('load', function () {
+  document.body.addEventListener('click', function () {
+    nodeList.forEach(function (el) {
+      el[storeName].expression();
+    });
   });
 });
 
@@ -17907,7 +17911,9 @@ var alert = function alert() {
   }).show();
 };
 
-createAlert();
+window.addEventListener('load', function () {
+  createAlert();
+});
 
 exports.default = alert;
 
@@ -18032,7 +18038,9 @@ var confirm = function confirm() {
   }).show(function () {});
 };
 
-createConfirm();
+window.addEventListener('load', function () {
+  createConfirm();
+});
 
 exports.default = confirm;
 
@@ -18152,7 +18160,9 @@ var toast = function toast() {
   }).show();
 };
 
-createToast();
+window.addEventListener('load', function () {
+  createToast();
+});
 
 exports.default = toast;
 
