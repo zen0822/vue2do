@@ -21,7 +21,7 @@ npm i vue2do -S
     <script src="https://unpkg.com/vue@^2.5.13/dist/vue.min.js"></script>
     <script src="https://unpkg.com/vuex@^3.0.1/dist/vuex.min.js"></script>
     <script src="https://unpkg.com/vue-i18n@^7.3.3/dist/vue-i18n.min.js"></script>
-    <script src="https://unpkg.com/vue2do@^0.3.4/dist/vue2do.min.js"></script>
+    <script src="https://unpkg.com/vue2do@^0.3.6/dist/vue2do.min.js"></script>
     <script>
       // 注册 vue2do 实现全局加载，就可以直接调用 z-input 之类的组件
       Vue.use(Vue2do)

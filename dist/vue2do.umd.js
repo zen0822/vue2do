@@ -12173,9 +12173,7 @@ exports.default = function (h) {
         }
       }, [h('icon', {
         props: {
-          size: 'XS',
           kind: _this._getIconName(_this.checkedAll),
-          ui: _this.ui,
           theme: _this.theme
         }
       }), h('span', {
