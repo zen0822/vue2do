@@ -1,6 +1,6 @@
 {
   "name": "vue2do",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "base component on vuejs2",
   "main": "dist/vue2do.umd.min.js",
   "module": "dist/vue2do.umd.min.js",
