@@ -107,9 +107,7 @@ export default function (h) {
         }, [
           h('icon', {
             props: {
-              size: 'XS',
               kind: this._getIconName(this.checkedAll),
-              ui: this.ui,
               theme: this.theme
             }
           }),

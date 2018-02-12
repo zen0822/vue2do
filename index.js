@@ -100,5 +100,6 @@ export {
   MotionSlide,
   MotionZoom,
 
-  setConfig as set
+  setConfig as set,
+  pluginInstall as install
 }

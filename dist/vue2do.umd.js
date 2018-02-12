@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.3.4
+ * vue2do.js v0.3.5
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -10201,7 +10201,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.set = exports.MotionZoom = exports.MotionSlide = exports.MotionRip = exports.MotionFold = exports.MotionFade = exports.TableRow = exports.TableCol = exports.Table = exports.TabEle = exports.Tab = exports.ShiftEle = exports.Shift = exports.SelectEle = exports.Select = exports.Search = exports.Scroller = exports.Row = exports.Fold = exports.Pop = exports.Page = exports.Omit = exports.Nav = exports.Modal = exports.MenuEle = exports.Menu = exports.Message = exports.List = exports.Loading = exports.Icon = exports.Input = exports.FoldContent = exports.FoldTitle = exports.Form = exports.Col = exports.Check = exports.Btn = exports.Bubble = exports.toast = exports.tip = exports.confirm = exports.alert = undefined;
+exports.install = exports.set = exports.MotionZoom = exports.MotionSlide = exports.MotionRip = exports.MotionFold = exports.MotionFade = exports.TableRow = exports.TableCol = exports.Table = exports.TabEle = exports.Tab = exports.ShiftEle = exports.Shift = exports.SelectEle = exports.Select = exports.Search = exports.Scroller = exports.Row = exports.Fold = exports.Pop = exports.Page = exports.Omit = exports.Nav = exports.Modal = exports.MenuEle = exports.Menu = exports.Message = exports.List = exports.Loading = exports.Icon = exports.Input = exports.FoldContent = exports.FoldTitle = exports.Form = exports.Col = exports.Check = exports.Btn = exports.Bubble = exports.toast = exports.tip = exports.confirm = exports.alert = undefined;
 
 __webpack_require__(59);
 
@@ -10434,6 +10434,7 @@ exports.MotionRip = _MotionRip2.default;
 exports.MotionSlide = _MotionSlide2.default;
 exports.MotionZoom = _MotionZoom2.default;
 exports.set = _config.set;
+exports.install = _src2.default;
 
 /***/ }),
 /* 59 */
