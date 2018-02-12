@@ -1,4 +1,3 @@
 src/asset/**/*.js
 src/lib/*/**/*.js
 .vscode
-dist

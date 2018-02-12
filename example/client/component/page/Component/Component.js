@@ -17,7 +17,7 @@ export default {
 
   mixins: [mixin],
 
-  beforeRouteEnter (to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$nextTick(() => {
         vm.goAnchor(to.hash.replace('#', ''))
@@ -54,7 +54,12 @@ export default {
   computed: {
     componentStyle() {
       const appContent = this.appContent
-      const deviceType = getComputedStyle(document.querySelector('.z-css-device-size'), ':after').getPropertyValue('content')
+      const deviceSizeEle = document.querySelector('.z-css-device-size')
+      let deviceType = ''
+
+      if (deviceSizeEle) {
+        let deviceType = getComputedStyle(deviceSizeEle).getPropertyValue('content')
+      }
 
       if (!appContent || deviceType === '"xs"') {
         return {}
@@ -131,6 +136,8 @@ export default {
       this.initVal = ['2', '4']
     }, 3000)
 
-    this.$store.dispatch(commonStore.compStage.add, this.$refs.compStage)
+    this.$nextTick(() => {
+      this.$store.dispatch(commonStore.compStage.add, this.$refs.compStage)
+    })
   }
 }
