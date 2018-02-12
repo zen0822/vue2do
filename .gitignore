@@ -6,3 +6,4 @@ node_modules/
 test/coverage/*
 example/dist/*
 /test.html
+/dist/webpack-bundle-report.html
