@@ -28,6 +28,17 @@ module.exports = function (opt) {
       filename: utils.assetsPath('js/[name].[chunkhash].js'),
       chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
+    module: {
+      rules: [{
+        test: /grid\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }]
+    },
     plugins: [
       new webpack.DefinePlugin({
         'process.env': env
