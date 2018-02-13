@@ -94,10 +94,6 @@ export default function (h) {
     }, [
       h('div', {
         class: this.xclass('bg'),
-        directives: [{
-          name: 'show',
-          value: this.modalDisplay
-        }],
         on: {
           click: this._handlerClickBg
         }

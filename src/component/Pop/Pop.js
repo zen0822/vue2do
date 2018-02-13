@@ -10,7 +10,9 @@
  * @slot - 弹出层的主体内容
  *
  * @event show - 显示之后的钩子函数
+ * @event showing - 正要开始显示的钩子函数
  * @event hide - 隐藏之后的钩子函数
+ * @event hiding - 正要开始隐藏的钩子函数
  */
 
 import './Pop.scss'
@@ -140,8 +142,30 @@ const popComp = {
       }
     },
 
-    _initComp() {
+    _binder() {
+      this.$refs.transition.$on('entering', () => {
+        return this.$emit('showing')
+      })
 
+      this.$refs.transition.$on('afterEnter', () => {
+        this.showCb && this.showCb()
+
+        this.popDisplay = true
+
+        return this.$emit('show')
+      })
+
+      this.$refs.transition.$on('leaving', () => {
+        return this.$emit('hiding')
+      })
+
+      this.$refs.transition.$on('afterLeave', () => {
+        this.hideCb && this.hideCb()
+
+        this.popDisplay = false
+
+        return this.$emit('hide')
+      })
     },
 
     /**
@@ -250,15 +274,7 @@ const popComp = {
         this.computePosition()
       }
 
-      this.$refs.transition.$off('afterEnter')
-      this.$refs.transition.$on('afterEnter', () => {
-        cb && cb()
-
-        this.popDisplay = true
-
-        return this.$emit('show')
-      })
-
+      this.showCb = cb
       this.$refs.transition.enter()
 
       return this
@@ -274,15 +290,7 @@ const popComp = {
     hide({
       cb
     } = {}) {
-      this.$refs.transition.$off('afterLeave')
-      this.$refs.transition.$on('afterLeave', () => {
-        cb && cb()
-
-        this.popDisplay = false
-
-        return this.$emit('hide')
-      })
-
+      this.hideCb = cb
       this.$refs.transition.leave()
 
       return this

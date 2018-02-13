@@ -4741,7 +4741,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    * @slot - 弹出层的主体内容
                                                                                                                                                                                                                    *
                                                                                                                                                                                                                    * @event show - 显示之后的钩子函数
+                                                                                                                                                                                                                   * @event showing - 正要开始显示的钩子函数
                                                                                                                                                                                                                    * @event hide - 隐藏之后的钩子函数
+                                                                                                                                                                                                                   * @event hiding - 正要开始隐藏的钩子函数
                                                                                                                                                                                                                    */
 
 var scrollBarWidth = 20;
@@ -4853,7 +4855,33 @@ var popComp = {
         }
       }
     },
-    _initComp: function _initComp() {},
+    _binder: function _binder() {
+      var _this = this;
+
+      this.$refs.transition.$on('entering', function () {
+        return _this.$emit('showing');
+      });
+
+      this.$refs.transition.$on('afterEnter', function () {
+        _this.showCb && _this.showCb();
+
+        _this.popDisplay = true;
+
+        return _this.$emit('show');
+      });
+
+      this.$refs.transition.$on('leaving', function () {
+        return _this.$emit('hiding');
+      });
+
+      this.$refs.transition.$on('afterLeave', function () {
+        _this.hideCb && _this.hideCb();
+
+        _this.popDisplay = false;
+
+        return _this.$emit('hide');
+      });
+    },
 
 
     /**
@@ -4954,8 +4982,6 @@ var popComp = {
      * @return {Object}
      */
     show: function show() {
-      var _this = this;
-
       var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           cb = _ref2.cb;
 
@@ -4963,15 +4989,7 @@ var popComp = {
         this.computePosition();
       }
 
-      this.$refs.transition.$off('afterEnter');
-      this.$refs.transition.$on('afterEnter', function () {
-        cb && cb();
-
-        _this.popDisplay = true;
-
-        return _this.$emit('show');
-      });
-
+      this.showCb = cb;
       this.$refs.transition.enter();
 
       return this;
@@ -4986,20 +5004,10 @@ var popComp = {
      * @return {Object}
      */
     hide: function hide() {
-      var _this2 = this;
-
       var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
           cb = _ref3.cb;
 
-      this.$refs.transition.$off('afterLeave');
-      this.$refs.transition.$on('afterLeave', function () {
-        cb && cb();
-
-        _this2.popDisplay = false;
-
-        return _this2.$emit('hide');
-      });
-
+      this.hideCb = cb;
       this.$refs.transition.leave();
 
       return this;
@@ -5306,6 +5314,11 @@ var modalComp = {
     _binder: function _binder() {
       var _this = this;
 
+      this.$refs.pop.$on('showing', function () {
+        _this.UIMaterial && _this.$refs.scroller.initScroller();
+        _this.$refs.pop.computePosition();
+      });
+
       this.$refs.pop.$on('show', function (opt) {
         _this.showCb && _this.showCb();
 
@@ -5325,26 +5338,8 @@ var modalComp = {
     _initModal: function _initModal() {
       var _this2 = this;
 
-      (0, _prop.handleEleDisplay)({
-        element: this.$el,
-        cb: function cb() {
-          _this2.$refs.pop.computePosition();
-        }
-      });
-
-      this.$refs.scroller.$on('change', function (_ref3) {
-        var scrollerHeight = _ref3.scrollerHeight;
-
-        (0, _prop.handleEleDisplay)({
-          element: _this2.$el,
-          cb: function cb() {
-            _this2.$refs.pop.computePosition();
-          }
-        });
-      });
-
-      this.$refs.scroller.$on('yBarChange', function (_ref4) {
-        var hasScroller = _ref4.hasScroller;
+      this.$refs.scroller.$on('yBarChange', function (_ref3) {
+        var hasScroller = _ref3.hasScroller;
 
         _this2.hasScroller = hasScroller;
       });
@@ -7868,7 +7863,7 @@ exports.default = {
       var bubbleHeight = this.$el.offsetWidth;
 
       Object.assign(this.$el.style, {
-        top: position.top + height + ARROW_HEIGHT / 2 + 'px',
+        top: position.top - height - ARROW_HEIGHT / 2 + 'px',
         left: position.left - bubbleWidth / 2 + width / 2 + 'px'
       });
 
@@ -13629,10 +13624,6 @@ exports.default = function (h) {
     ref: 'fadeTransition'
   }, [h('div', {
     class: this.xclass('bg'),
-    directives: [{
-      name: 'show',
-      value: this.modalDisplay
-    }],
     on: {
       click: this._handlerClickBg
     }

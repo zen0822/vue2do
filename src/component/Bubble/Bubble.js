@@ -121,7 +121,7 @@ export default {
       let bubbleHeight = this.$el.offsetWidth
 
       Object.assign(this.$el.style, {
-        top: position.top + height + ARROW_HEIGHT / 2 + 'px',
+        top: position.top - height - ARROW_HEIGHT / 2 + 'px',
         left: position.left - bubbleWidth / 2 + width / 2 + 'px'
       })
 

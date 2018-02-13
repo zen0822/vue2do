@@ -249,6 +249,11 @@ const modalComp = {
     },
 
     _binder() {
+      this.$refs.pop.$on('showing', () => {
+        this.UIMaterial && this.$refs.scroller.initScroller()
+        this.$refs.pop.computePosition()
+      })
+
       this.$refs.pop.$on('show', (opt) => {
         this.showCb && this.showCb()
 
@@ -269,24 +274,6 @@ const modalComp = {
     },
 
     _initModal() {
-      handleEleDisplay({
-        element: this.$el,
-        cb: () => {
-          this.$refs.pop.computePosition()
-        }
-      })
-
-      this.$refs.scroller.$on('change', ({
-        scrollerHeight
-      }) => {
-        handleEleDisplay({
-          element: this.$el,
-          cb: () => {
-            this.$refs.pop.computePosition()
-          }
-        })
-      })
-
       this.$refs.scroller.$on('yBarChange', ({
         hasScroller
       }) => {

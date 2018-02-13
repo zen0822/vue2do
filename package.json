@@ -2,8 +2,8 @@
   "name": "vue2do",
   "version": "0.3.6",
   "description": "base component on vuejs2",
-  "main": "dist/vue2do.umd.min.js",
-  "module": "dist/vue2do.umd.min.js",
+  "main": "index.js",
+  "module": "index.js",
   "author": {
     "name": "zheng (Zen) Huang",
     "email": "zenhuangzheng@126.com"
