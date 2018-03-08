@@ -1,0 +1,102 @@
+/**
+ * tab 组件的 material UI 样式
+ */
+
+@import "../../scss/name.scss";
+@import "../../scss/config.scss";
+@import "../../scss/mixin.scss";
+
+$C_PREFIX: #{$COMP_TAB};
+$C_ELE_PREFIX: #{ $COMP_TAB_ELE };
+$C_SHIFT_PREFIX: #{ $COMP_SHIFT };
+$C_BTN_PREFIX: #{ $COMP_BTN };
+
+@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+  .#{$C_PREFIX}-bar {
+    background-color: $type-color;
+  }
+
+  .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row > .#{ $C_SHIFT_PREFIX }-col {
+    &:hover {
+      color: $type-color;
+    }
+
+    &.#{$C_PREFIX}-active {
+      .#{$C_BTN_PREFIX}-ele {
+        color: $type-color;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  border-bottom: $border-thin solid $color-border;
+  position: relative;
+
+  .#{$C_PREFIX}-btn {
+    width: 100%;
+    height: 100%;
+
+    > .#{$C_BTN_PREFIX}-ele {
+      padding: 5px 0;
+    }
+  }
+
+  .#{$C_PREFIX}-bar {
+    background-color: $color-primary;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: left 300ms;
+  }
+
+  .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row > .#{ $C_SHIFT_PREFIX }-col {
+    min-width: 72px;
+    text-align: center;
+    border: none;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &.#{$C_PREFIX}-active {
+      .#{$C_BTN_PREFIX}-ele {
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
+

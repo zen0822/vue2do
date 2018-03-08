@@ -281,6 +281,44 @@ export default {
     },
 
     /**
+     * 向左滚动
+     */
+    left(length = SCROLL_PIXEL) {
+      if (isNaN(length)) {
+        return false
+      }
+
+      length = Number(length)
+
+      this.triggerScroll('x')
+
+      this._boxAndBarScroll({
+        type: 'x',
+        boxDistance: length,
+        barDistance: -(length / this.xData.boxBarRate)
+      })
+    },
+
+    /**
+     * 向右滚动
+     */
+    right(length = SCROLL_PIXEL) {
+      if (isNaN(length)) {
+        return false
+      }
+
+      length = Number(length)
+
+      this.triggerScroll('x')
+
+      this._boxAndBarScroll({
+        type: 'x',
+        boxDistance: -length,
+        barDistance: length / this.xData.boxBarRate
+      })
+    },
+
+    /**
      * 滚动区域滚到到指定位置
      * @param {*} top 区域滚动到哪个位置
      */

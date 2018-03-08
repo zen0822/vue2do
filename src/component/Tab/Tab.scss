@@ -1,97 +1,27 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-
-/**
- * select 组件样式
- */
+// Tab 组件样式
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import "../../scss/mixin.scss";
 
 $C_PREFIX: #{ $COMP_TAB };
 $C_ELE_PREFIX: #{ $COMP_TAB_ELE };
 $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
 
 .#{$C_PREFIX} {
-  border-right: $color-border $border-thin solid;
   cursor: pointer;
+  width: 100%;
 
-  & > .#{$C_PREFIX}-shift
-  > .#{ $C_SHIFT_PREFIX }-ul {
-    &::after {
-      @extend %clear-fix;
-    }
-
-    > .#{ $C_SHIFT_PREFIX }-li {
-      float: left;
+  .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row {
+    > .#{ $C_SHIFT_PREFIX }-col {
+      @include device-type('s') {
+        flex-grow: 1;
+      }
 
       &.#{$C_PREFIX}-active {
-        border-bottom: $color-border $border-thin solid;
-      }
-
-      &:last-child {
-        border-right: none;
-      }
-    }
-  }
-
-  &.#{$C_PREFIX}-theme-primary {
-    display: inline-block;
-    vertical-align: middle;
-    border: #d6d6d6 $border-thin solid;
-    border-radius: $border-radius;
-    box-shadow: 0 1px 1px 0 #d6d6d6;
-    overflow: hidden;
-
-    & > .#{$C_PREFIX}-shift
-    > .#{ $C_SHIFT_PREFIX }-ul
-    > .#{ $C_SHIFT_PREFIX }-li {
-      border: none;
-      border-right: #d6d6d6 $border-thin solid;
-
-      &:last-child {
-        border-right: none;
-      }
-
-      .z-tab-ele {
-        min-width: 100px;
-        padding: $gap-v $gap-h-double;
-        background-color: #fff;
-        text-align: center;
-        color: $grey-light;
-
-        &:hover {
-          background-color: $color-bg;
-          color: $grey-light;
+        .#{$C_PREFIX}-ele {
+          border-bottom: $color-border $border-thin solid;
         }
-      }
-
-
-      &.#{$C_PREFIX}-active {
-        .z-tab-ele {
-          background-color: #f3f3f3;
-          color: $grey-dark;
-        }
-      }
-    }
-  }
-
-  &.#{$C_PREFIX}-theme-secondary {
-    border-bottom: $border-thin solid $color-border;
-
-    > .#{$C_PREFIX}-shift
-    > .#{ $C_SHIFT_PREFIX }-ul
-    > .#{ $C_SHIFT_PREFIX }-li {
-      min-width: 100px;
-      padding: 12px $gap-h-double $gap-v;
-      text-align: center;
-      border: none;
-
-      &:hover {
-        color: $color-primary;
-      }
-
-      &.#{$C_PREFIX}-active {
-        border-bottom: $color-primary $border-thick solid;
-        color: $color-primary;
       }
     }
   }

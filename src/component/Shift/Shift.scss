@@ -1,10 +1,10 @@
+/**
+ * shift 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
-
-/**
- * scroller 组件样式
- */
 
 $C_PREFIX: #{ $COMP_SHIFT };
 
@@ -16,14 +16,10 @@ $C_PREFIX: #{ $COMP_SHIFT };
   .#{$C_PREFIX}-before-move {
     display: none;
   }
-  .#{$C_PREFIX}-after-move {
-
-  }
+  .#{$C_PREFIX}-after-move {}
 
   .#{$C_PREFIX}-before-opacity {
     display: none;
   }
-  .#{$C_PREFIX}-after-opacity {
-
-  }
+  .#{$C_PREFIX}-after-opacity {}
 }

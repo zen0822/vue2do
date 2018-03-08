@@ -7,6 +7,7 @@
  *                100%：根据父元素的高度
  * @prop width - 滚动区域的宽度(auto | {Number}px | 100%)，同上
  * @prop autoHide - 自动隐藏滚动条
+ * @prop hide - 隐藏滚动条
  *
  * @event scrollY - 滚动事件
  *                  return isBottom - 滚动条是否到低
@@ -72,7 +73,6 @@ export default {
         }
       }
     },
-
     width: {
       type: [Number, String],
       default: 'auto',
@@ -86,8 +86,11 @@ export default {
         }
       }
     },
-
     autoHide: {
+      type: Boolean,
+      default: false
+    },
+    hide: {
       type: Boolean,
       default: false
     }
@@ -165,7 +168,7 @@ export default {
     },
     xComputed() { // x 方向的计算属性
       return {
-        barDisplay: !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
+        barDisplay: !this.hide && !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
         isLeft: this.xData.barLeft === 0,
         isRight: this.xData.barLeft === this.xData.barAndScrollerOffset,
         barStyle: {
@@ -177,7 +180,7 @@ export default {
     yComputed() { // y 方向的计算属性
       return {
         // 是否显示滚动条
-        barDisplay: !this.yData.scrollerContainBox && (!this.autoHide || this.showBar),
+        barDisplay: !this.hide && !this.yData.scrollerContainBox && (!this.autoHide || this.showBar),
         // 滚动条是否在顶部
         isTop: this.yData.scrollerContainBox || this.yData.barTop === 0,
         // 滚动条是否在底部

@@ -4,16 +4,30 @@
 
 export default function (h) {
   let tabOption = []
+  let scrollerChildren = []
+  const tabBtnEle = (children, index) => {
+    return h('btn', {
+      class: [this.xclass('btn')],
+      on: {
+        click: (event) => this.tab(event, index + 1)
+      },
+      props: {
+        type: 'flat',
+        ui: this.ui,
+        theme: 'grey',
+        radius: 'none'
+      }
+    }, children)
+  }
 
   if (this.initOpt.length > 0) {
     tabOption = this.option.map((item, index) => {
       return h('div', {
         class: [this.xclass('ele')],
-        on: {
-          click: (event) => this.tab(event, index + 1)
-        },
         slot: index + 1
-      }, item.text)
+      }, [
+        tabBtnEle(item.text, index)
+      ])
     })
   } else {
     let optionTmp = []
@@ -43,30 +57,57 @@ export default function (h) {
 
       tabOption.push(
         h('div', {
-          on: {
-            click: (event) => this.tab(event, index + 1)
-          },
           slot: item
-        }, this.$slots[item])
+        }, [
+          tabBtnEle(this.$slots[item], index)
+        ])
       )
     })
 
     this.option = optionTmp
   }
 
+  scrollerChildren.push(
+    h('shift', {
+      class: [this.xclass('shift')],
+      props: {
+        after: `${this.cPrefix}-active`,
+        ui: this.ui,
+        theme: this.theme,
+        justify: this.shiftJustify
+      },
+      ref: 'shift'
+    }, tabOption)
+  )
+
+  if (this.UIMaterial) {
+    let currentIndex = this.currentIndex <= 1 ? 1 : this.currentIndex
+
+    scrollerChildren.push(
+      h('div', {
+        class: [this.xclass('bar')],
+        style: {
+          width: `${this.tabEleWidth}px`,
+          left: `${this.tabEleWidth * (currentIndex - 1)}px`
+        }
+      })
+    )
+  }
+
   return h(
     'div', {
-      class: [this.cPrefix, this.xclass(this.themeClass)]
+      class: [
+        this.cPrefix,
+        this.xclass([this.themeClass, this.uiClass])
+      ]
     }, [
-      h('shift', {
-        class: [this.xclass('shift')],
+      h('scroller', {
         props: {
-          after: `${this.cPrefix}-active`,
-          ui: this.ui,
-          theme: this.theme
+          width: '100%',
+          hide: true
         },
-        ref: 'shift'
-      }, tabOption)
+        ref: 'scroller'
+      }, scrollerChildren)
     ]
   )
 }

@@ -47,6 +47,7 @@ $C_PREFIX: #{$COMP_BTN};
   position: relative;
   display: inline-block;
   cursor: pointer;
+  vertical-align: middle;
 
   & > .#{$C_PREFIX}-ele {
     display: flex;

@@ -167,7 +167,8 @@ export default function (h) {
   )
 
   return h('div', {
-    class: [{
+    class: [
+      {
         [this.xclass('search-option-wrap')]: this.$parent.searchFilter
       },
       this.xclass('ul'),

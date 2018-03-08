@@ -13,6 +13,10 @@
  *
  * @event switchPage - 换页触发事件
  * @event scrollerChange - 滚动区域的高度/宽度变化
+ *
+ * @slot loadMore - 加载更多的内容
+ *
+ * @slotScope - 列表的内容
  */
 
 import './List.scss'

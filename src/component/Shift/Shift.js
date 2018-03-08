@@ -11,6 +11,8 @@
 import './Shift.scss'
 import render from './Shift.render.js'
 import baseMixin from '../../mixin/base'
+import Row from '../Row/Row'
+import Col from '../Col/Col'
 
 // 可供选择的切换模式
 const SHIFT_TYPE = ['display', 'move', 'opacity']
@@ -22,6 +24,11 @@ export default {
 
   mixins: [baseMixin],
 
+  components: {
+    row: Row,
+    column: Col
+  },
+
   props: {
     after: String,
     before: String,
@@ -29,9 +36,16 @@ export default {
       type: Number,
       default: 1
     },
+    justify: {
+      type: String,
+      default: 'justify'
+    },
     type: {
       type: String,
-      default: 'display'
+      default: 'display',
+      validator(val) {
+        return SHIFT_TYPE.includes(val)
+      }
     }
   },
 

@@ -36,20 +36,20 @@ export default function (h) {
 
   modalChildren.push(
     this.UIMaterial ?
-    h('article', [
-      h('scroller', {
-        class: [this.xclass('scroller')],
-        props: {
-          height: this.modalHeight,
-          width: '100%',
-          autoHide: true,
-          ui: this.state.ui,
-          theme: this.state.theme
-        },
-        ref: 'scroller'
-      }, articleEle)
-    ]) :
-    h('article', articleEle)
+      h('article', [
+        h('scroller', {
+          class: [this.xclass('scroller')],
+          props: {
+            height: this.modalHeight,
+            width: '100%',
+            autoHide: true,
+            ui: this.state.ui,
+            theme: this.state.theme
+          },
+          ref: 'scroller'
+        }, articleEle)
+      ]) :
+      h('article', articleEle)
   )
 
   if (this.modalFooterDisplay) {

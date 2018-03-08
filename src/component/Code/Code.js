@@ -49,12 +49,12 @@ export default {
 
   methods: {
     _initComp() {
-      this.preWidth = this.$refs.article.offsetWidth - 50
+      this.preWidth = this.$refs.article.offsetWidth
     },
 
     _binder() {
       this.$refs.scroller.$on('change', () => {
-        this.preWidth = this.$refs.article.offsetWidth - 50
+        this.preWidth = this.$refs.article.offsetWidth
       })
     }
   }

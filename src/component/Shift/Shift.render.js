@@ -11,12 +11,12 @@ export default function (h) {
     }
 
     shiftOption.push(
-      h('li', {
+      h('column', {
         class: [{
           [this.beforeClass]: this.currentIndex !== index + 1
         }, {
           [this.afterClass]: this.currentIndex === index + 1
-        }, this.xclass('li')]
+        }, this.xclass('col')]
       }, this.$slots[item])
     )
   })
@@ -24,8 +24,12 @@ export default function (h) {
   return h('div', {
     class: [this.cPrefix]
   }, [
-    h('ul', {
-      class: [`${this.compPrefix}-css-ul`, this.xclass('ul')]
+    h('row', {
+      class: [this.xclass('row')],
+      props: {
+        wrap: 'nowrap',
+        justify: this.justify
+      }
     }, shiftOption)
   ])
 }

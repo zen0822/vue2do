@@ -17,16 +17,14 @@ export default function (h) {
     }]
   }, [
     h('pop', {
-        class: [this.xclass('pop')],
-        props: {
-          direction: this.direction,
-          position: this.position,
-          ui: this.ui,
-          theme: this.theme
-        },
-        ref: 'pop'
+      class: [this.xclass('pop')],
+      props: {
+        direction: this.direction,
+        position: this.position,
+        ui: this.ui,
+        theme: this.theme
       },
-      this.$slots.default ? this.$slots.default : this.infoMessage
-    )
+      ref: 'pop'
+    }, this.$slots.default ? this.$slots.default : this.infoMessage)
   ])
 }

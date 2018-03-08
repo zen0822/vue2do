@@ -39,7 +39,6 @@ const tabPanelComp = {
   },
 
   methods: {
-
     _initPanel() {
       var optionContent = this.$options._content
       var switchinghtml = ''

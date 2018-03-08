@@ -58,7 +58,7 @@ export default {
       let deviceType = ''
 
       if (deviceSizeEle) {
-        let deviceType = getComputedStyle(deviceSizeEle).getPropertyValue('content')
+        deviceType = getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
       }
 
       if (!appContent || deviceType === '"xs"') {

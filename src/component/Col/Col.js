@@ -94,7 +94,7 @@ export default {
     },
     compStyle() {
       return {
-
+        'flex-grow': this.grow === 0 ? undefined : this.grow
       }
     }
   }

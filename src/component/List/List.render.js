@@ -11,7 +11,8 @@ export default function (h) {
     let listItems = []
 
     this.listItem.forEach((item, index) => {
-      let $slot = this.$scopedSlots ? [this.$scopedSlots.default({
+      let $slot = this.$scopedSlots ?
+        [this.$scopedSlots.default({
           index: index + 1,
           item
         })] :

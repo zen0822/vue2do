@@ -118,14 +118,12 @@ export default function (h) {
       }
     })(),
     h('row', {
-        class: [
-          this.xclass('opt-row')
-        ],
-        props: {
-          justify: 'start'
-        }
-      },
-      RowChildren
-    )
+      class: [
+        this.xclass('opt-row')
+      ],
+      props: {
+        justify: 'start'
+      }
+    }, RowChildren)
   ])
 }
