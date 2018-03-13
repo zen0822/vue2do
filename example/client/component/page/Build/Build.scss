@@ -1,0 +1,9 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
+
+.page-build {
+  max-width: 1200px;
+  box-sizing: border-box;
+  padding: 20px 50px;
+  margin: 0 auto;
+}

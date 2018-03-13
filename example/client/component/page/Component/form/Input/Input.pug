@@ -9,7 +9,12 @@ div
         helper-text='输入文本'
         multiline placeholder='asd输入区域' ref='startInput' ui='bootstrap')
       z-code.
-        #{'<z-input></z-input>'}
+        #{'<z-input'}
+          multiline
+          block
+          required
+          helper-text="输入文本"
+          #{'ui="bootstrap"></z-input>'}
     +section('textarea', '输入区域')
       z-input(
         textLengthTip
