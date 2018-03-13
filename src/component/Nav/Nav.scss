@@ -42,7 +42,7 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
     display: none;
     background-color: $color-bg;
     padding: $gap-v;
-    border-bottom: $color-border $border-thin solid;
+    border-bottom: $divider;
     box-shadow: $shadow;
   }
 

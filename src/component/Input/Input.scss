@@ -27,7 +27,7 @@ $input-gap-v: 8px;
 
   &.#{$C_PREFIX}-type-area {
     & > .#{$C_PREFIX}-wrap {
-      border: $color-border $border-thin solid;
+      border: $divider;
       border-radius: $border-radius;
 
       & > .#{$C_PREFIX}-wrap-border {
@@ -46,7 +46,7 @@ $input-gap-v: 8px;
 
   & > .#{$C_PREFIX}-wrap {
     position: relative;
-    border-bottom: $color-border $border-thin solid;
+    border-bottom: $divider;
     background-color: #fff;
     box-sizing: border-box;
 

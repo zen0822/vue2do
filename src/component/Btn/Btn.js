@@ -10,6 +10,7 @@
  * @prop type - 按钮类型 (button | flat | float | outline)
  * @prop textDisplay - 是否显示按钮文字
  * @prop value - 按钮名字
+ * @prop outline - 只有边框有颜色的按钮
  *
  * @event click - 点击btn事件
  * @event keyEnter - focus 时敲击 Enter 键

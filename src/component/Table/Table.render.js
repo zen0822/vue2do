@@ -97,10 +97,7 @@ export default function (h) {
   }, tableChildren)
 
   return h('div', {
-    class: [
-      this.cPrefix,
-      this.xclass([this.themeClass, 'border-' + this.border])
-    ]
+    class: this.compClass
   }, [
     h('scroller', {
       class: [this.xclass('scroller')],

@@ -3,7 +3,7 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-table
+      z-table(ui='bootstrap')
         template(slot='thead', v-for='item in ["名字", "类型", "可选值", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
@@ -22,7 +22,7 @@ div
           z-table-col true
           z-table-col 撒旦发
       z-code(v-pre).
-        #{'<z-table>'}
+        #{'<z-table ui="bootstrap">'}
           #{'<'}template slot="thead" v-for="item in ['名字', '类型', '可选值', '说明']"#{'>'}
             #{'<z-table-col>{{ item }}</z-table-col>'}
           #{'</template>'}

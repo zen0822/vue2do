@@ -53,7 +53,7 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
   &.#{$C_PREFIX}-has-scroller {
     .#{$C_PREFIX}-pop {
       & > header {
-        border-bottom: $color-border $border-thin solid;
+        border-bottom: $divider;
       }
 
       & > article {
@@ -62,7 +62,7 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
       }
 
       & > footer {
-        border-top: $color-border $border-thin solid;
+        border-top: $divider;
       }
     }
   }

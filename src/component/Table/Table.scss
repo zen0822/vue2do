@@ -1,17 +1,37 @@
+/**
+ * table 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
 
-/**
- * table 组件样式
- */
-
-$C_PREFIX: #{ $COMP_TABLE };
-$COL_PREFIX: #{ $COMP_TABLE_COL };
+$C_PREFIX: #{$COMP_TABLE};
+$COL_PREFIX: #{$COMP_TABLE_COL};
 
 .#{$C_PREFIX} {
   position: relative;
+
+  &-stripe {
+    .#{$C_PREFIX}-header-group {
+      background: $color-bg;
+    }
+
+    .#{$C_PREFIX}-row {
+      &:nth-child(2n) {
+        background: $color-bg;
+      }
+    }
+  }
+
+  &-page {
+    border-top: $divider;
+  }
+
+  .#{$C_PREFIX}-col {
+    text-align: left;
+  }
 
   .#{$COL_PREFIX} > div {
     display: inline-block;
@@ -19,9 +39,15 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
 
   &.#{$C_PREFIX}-border-row,
   &.#{$C_PREFIX}-border-all {
+    .#{$C_PREFIX}-header-group {
+      .#{$C_PREFIX}-row {
+        border-bottom: $divider;
+      }
+    }
+
     .#{$C_PREFIX}-row-group {
       .#{$C_PREFIX}-row {
-        border-bottom: $color-border $border-thin solid;
+        border-bottom: $divider;
 
         &:last-child {
           border-bottom: none;
@@ -34,23 +60,11 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   &.#{$C_PREFIX}-border-all {
     .#{$C_PREFIX}-row {
       .#{$C_PREFIX}-col {
-        border-right: $color-border $border-thin solid;
+        border-right: $divider;
 
         &:last-child {
           border-right: none;
         }
-      }
-    }
-  }
-
-  &.#{$C_PREFIX}-theme-primary {
-    border-radius: $border-radius;
-    border: $color-border $border-thin solid;
-    overflow: hidden;
-
-    .#{$C_PREFIX}-header-group {
-      .#{$COL_PREFIX} {
-        color: $grey-dark;
       }
     }
   }
@@ -64,35 +78,14 @@ $COL_PREFIX: #{ $COMP_TABLE_COL };
   .#{$C_PREFIX}-wrap {
     background: #fff;
     border-collapse: collapse;
-    display: table;
     width: 100%;
   }
 
-  .#{$C_PREFIX}-header-group {
-    background: $color-bg;
-    display: table-header-group;
-    padding: $gap-v;
-  }
-
-  .#{$C_PREFIX}-row-group {
-    display: table-row-group;
-  }
-
-  .#{$C_PREFIX}-row {
-    display: table-row;
-
-    &:nth-child(2n) {
-      background: $color-bg;
-    }
-  }
-
   .#{$C_PREFIX}-header {
-    display: table-header;
-    padding: $gap-v-double;
+    padding: $gap-v-double $gap-v-triple;
   }
 
   .#{$COL_PREFIX} {
-    display: table-cell;
-    padding: $gap-v $gap-v;
+    padding: $gap-v-double $gap-v-triple;
   }
 }

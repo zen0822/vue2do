@@ -20,7 +20,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
 
       &.#{$C_PREFIX}-active {
         .#{$C_PREFIX}-ele {
-          border-bottom: $color-border $border-thin solid;
+          border-bottom: $divider;
         }
       }
     }

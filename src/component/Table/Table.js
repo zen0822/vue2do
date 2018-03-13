@@ -2,8 +2,8 @@
  * table 组件
  *
  * @prop auto - 根据传入的列表数据生成分页数据
- * @prop border - 表格的边界线的类型
- *   （none：默认是不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
+ * @prop border - 表格的边界线的类型 (默认是 row)
+ *   （none：不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
  * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
  * @prop pager - 启动分页功能
  * @prop pageSize - 将列表数据（item）分为每页多少条数据
@@ -11,11 +11,14 @@
  * @prop thead - 表头标题数据
  * @prop tbody - 列表的数据
  * @prop scrollerAutoHide - 滚动条自动隐藏
+ * @prop stripe - 滚动条自动隐藏
  *
  * @event switchPage - 切换分页
  */
 
 import './Table.scss'
+import './Table.material.scss'
+import './Table.bootstrap.scss'
 import render from './Table.render'
 
 import loadingComp from '../Loading/Loading'
@@ -51,7 +54,7 @@ const Table = {
     },
     border: {
       type: String,
-      default: 'none'
+      default: 'row'
     },
     list: {
       type: Boolean,
@@ -101,6 +104,19 @@ const Table = {
       return this.list && this.pager &&
         this.tbody.length > 0 &&
         this.tbodyItem.length > 0
+    },
+    compClass() {
+      return [
+        this.cPrefix,
+        {
+          [this.xclass('stripe')]: this.stripe
+        },
+        this.xclass([
+          this.themeClass,
+          this.uiClass,
+          `border-${this.border}`
+        ])
+      ]
     }
   },
 

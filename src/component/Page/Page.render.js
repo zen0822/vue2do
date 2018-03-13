@@ -45,20 +45,31 @@ export default function (h) {
       }, [
         h('row', {
           props: {
-            gap: 10
+            gap: 10,
+            justify: 'justify'
           }
         }, [
           h('column', {
             props: {
               xs: 12,
               s: 12,
-              l: 1,
-              xl: 1
+              l: 5,
+              xl: 5
             }
           }, [
-            h('div', {
-              class: [this.xclass('length')]
-            }, `共 ${this.pageData.length} 条`)
+            h(
+              'div', {
+                class: [this.xclass('search')]
+              }, [
+                h('input-box', {
+                  class: [this.xclass('jump-box')],
+                  props: {
+                    box: true
+                  },
+                  ref: 'jumpInput'
+                })
+              ]
+            )
           ]),
           h('column', {
             props: {
@@ -97,7 +108,7 @@ export default function (h) {
                     class: [
                       this.xclass('ele'),
                       {
-                        [`${this.compPrefix}-invisible`]: this.preDisplay
+                        [`${this.compPrefix}-css-invisible`]: this.preDisplay
                       }
                     ],
                     on: {
@@ -138,7 +149,7 @@ export default function (h) {
                     class: [
                       this.xclass('ele'),
                       {
-                        [`${this.compPrefix}-invisible`]: this.nextDisplay
+                        [`${this.compPrefix}-css-invisible`]: this.nextDisplay
                       }
                     ],
                     on: {
@@ -159,7 +170,7 @@ export default function (h) {
                     class: [
                       this.xclass('ele'),
                       {
-                        [`${this.compPrefix}-invisible`]: this.nextDisplay
+                        [`${this.compPrefix}-css-invisible`]: this.nextDisplay
                       }
                     ],
                     directives: [{
@@ -179,40 +190,6 @@ export default function (h) {
                 )
               ])
             ])
-          ]),
-          h('column', {
-            props: {
-              xs: 12,
-              s: 12,
-              l: 5,
-              xl: 5
-            }
-          }, [
-            h(
-              'div', {
-                class: [this.xclass('search')]
-              }, [
-                h('span', {
-                  class: [this.xclass('total')]
-                }, `共 ${this.pageData.total} 页 `),
-                h('span', '第 '),
-                h('input-box', {
-                  class: [this.xclass('jump-box')],
-                  ref: 'jumpInput'
-                }),
-                h('span', ' 页 '),
-                h('btn', {
-                  class: [this.xclass('jump-btn')],
-                  props: {
-                    kind: 'default',
-                    value: 'GO'
-                  },
-                  on: {
-                    click: this.jump
-                  }
-                }, 'GO')
-              ]
-            )
           ])
         ])
       ]
