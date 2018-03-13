@@ -29,7 +29,10 @@ export default function (h) {
       attrs: {
         class: `${this.compPrefix}-ul`
       },
-      class: [this.xclass('ul')]
+      class: [this.xclass('ul')],
+      style: {
+        'min-width': `${this.scrollerWidth}px`
+      }
     }, listItems)]
   } else {
     scrollerChildren = [h('div', {

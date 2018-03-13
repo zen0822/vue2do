@@ -156,14 +156,13 @@ export default {
   computed: {
     boxStyle() {
       return {
-        top: this.boxTop + 'px',
-        left: this.boxLeft + 'px'
+        transform: `translateX(${this.boxLeft}px) translateY(${this.boxTop}px)`
       }
     },
     scrollerStyle() {
       return {
-        height: this.scrollerHeight + 'px',
-        width: this.scrollerWidth + 'px'
+        height: this.height === '100%' ? '100%' : undefined,
+        width: this.width === '100%' ? '100%' : undefined
       }
     },
     xComputed() { // x 方向的计算属性
@@ -172,8 +171,8 @@ export default {
         isLeft: this.xData.barLeft === 0,
         isRight: this.xData.barLeft === this.xData.barAndScrollerOffset,
         barStyle: {
-          'width': this.xData.barLength + 'px',
-          'left': this.xData.barLeft + 'px'
+          width: this.xData.barLength + 'px',
+          transform: `translateX(${this.xData.barLeft}px)`
         }
       }
     },
@@ -186,8 +185,8 @@ export default {
         // 滚动条是否在底部
         isBottom: this.yData.scrollerContainBox || this.yData.barTop === this.yData.barAndScrollerOffset,
         barStyle: {
-          'height': this.yData.barLength + 'px',
-          'top': this.yData.barTop + 'px'
+          height: this.yData.barLength + 'px',
+          transform: `translateY(${this.yData.barTop}px)`
         }
       }
     },
@@ -241,53 +240,44 @@ export default {
       const $elParent = this.$el.parentElement
       const parentStyle = getComputedStyle($elParent)
 
-      const parentH = parentStyle.height
-      const parentW = parentStyle.width
-
       // 根据父元素的高宽都等于 auto 可以断言出元素的祖父元素有可能是隐藏的
-      if (parentW === 'auto' && parentH === 'auto') {
+      if (parentStyle.width === 'auto' && parentStyle.height === 'auto') {
         return false
       }
 
-      // TODO: 如果 box 元素里面时绝对定位的元素则不能这样判断
-      // 之后会优化根据 scroller 的父元素来重新定义 box 的元素的高度和宽度
-      // 现在先让 box 的高度和宽度变成默认值来测量元素的宽度
-      Object.assign(this.$box.style, {
-        height: 'auto',
-        width: 'auto'
-      })
-
+      let scrollerHeight = this.$el.offsetHeight
+      let scrollerWidth = this.$el.offsetWidth
       let boxHeight = this.$box.offsetHeight
       let boxWidth = this.$box.offsetWidth
 
       const yData = this._initScrollerData({
         length: this.height,
         boxLength: boxHeight,
+        scrollerLength: scrollerHeight,
         type: 'y'
       })
 
       const xData = this._initScrollerData({
         length: this.width,
+        scrollerLength: scrollerWidth,
         boxLength: boxWidth,
         type: 'x'
       })
 
-      let scrollerHeight = yData.scrollerLength
-      let scrollerWidth = xData.scrollerLength
-
-      boxHeight = yData.boxLength !== -1 ? yData.boxLength : boxHeight
-      boxWidth = xData.boxLength !== -1 ? xData.boxLength : boxWidth
+      scrollerHeight = yData.scrollerLength
+      scrollerWidth = xData.scrollerLength
+      boxHeight = yData.boxLength
+      boxWidth = xData.boxLength
 
       const scrollerHeightChanged = scrollerHeight !== this.scrollerHeight
       const scrollerWidthChanged = scrollerWidth !== this.scrollerWidth
-
       const boxHeightChanged = boxHeight !== this.boxHeight
       const boxWidthChanged = boxWidth !== this.boxWidth
 
       if (scrollerHeightChanged || boxHeightChanged) {
         this._initScrollBar({
           type: 'y',
-          scrollerLength: yData.scrollerLength,
+          scrollerLength: scrollerHeight,
           scrollerContainBox: yData.scrollerContainBox,
           boxLength: boxHeight
         })
@@ -296,26 +286,27 @@ export default {
       if (scrollerWidthChanged || boxWidthChanged) {
         this._initScrollBar({
           type: 'x',
-          scrollerLength: xData.scrollerLength,
+          scrollerLength: scrollerWidth,
           scrollerContainBox: xData.scrollerContainBox,
           boxLength: boxWidth
         })
       }
 
-      this.scrollerHeight = yData.scrollerLength
-      this.scrollerWidth = xData.scrollerLength
+      this.scrollerHeight = scrollerHeight
+      this.scrollerWidth = scrollerWidth
+      this.boxHeight = boxHeight
+      this.boxWidth = boxWidth
 
-      this.boxHeight = yData.boxLength !== -1 ? yData.boxLength : boxHeight
-      this.boxWidth = xData.boxLength !== -1 ? xData.boxLength : boxWidth
+      if (this.height !== '100%' && scrollerHeightChanged) {
+        this.$el.style.height = `${this.scrollerHeight}px`
+      }
 
-      Object.assign(this.$el.style, {
-        height: `${this.scrollerHeight}px`,
-        width: `${this.scrollerWidth}px`
-      })
-      Object.assign(this.$box.style, {
-        height: `${this.boxHeight}px`,
-        width: `${this.boxWidth}px`
-      })
+      if (this.width !== '100%' && scrollerWidthChanged) {
+        this.$el.style.width = `${this.scrollerWidth}px`
+      }
+
+      // boxHeightChanged && (this.$box.style.height = `${boxHeight}px`)
+      // boxWidthChanged && (this.$box.style.width = `${boxWidth}px`)
 
       if (scrollerHeightChanged || scrollerWidthChanged) {
         this._scrollerChange()
@@ -326,101 +317,31 @@ export default {
      * 初始化滚动区域的数据
      * @param { Object } - 选项数据
      *                   type - 滚动条类型
-     *                   parentLength - 滚动的 高度/宽度
+     *                   scrollerLength - 滚动的 高度/宽度
      *                   boxLength - 滚动内容的 高度/宽度
      *                   length - 指定的滚动区域的 高度/宽度
      */
     _initScrollerData({
       type,
       boxLength,
+      scrollerLength,
       length
     }) {
       const $el = this.$el
       let scrollerContainBox = false // 滚动区域是否大过滚动内容
       let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
-      let scrollerLength = 0 // 滚动区域的高度/宽度
-      let boxL = -1 // 需要重新赋值给 box 的 高度/宽度 像素
 
       if (length === '100%') {
         // TODO：优化计算次数
 
-        let lengthType = type === 'y' ? 'height' : 'width'
-        let offsetLengthType = type === 'y' ? 'offsetHeight' : 'offsetWidth'
-        let parentLength = 0 // 滚动区域的父元素减去除自身的子元素的高度/宽度
-
-        // 滚动区域的 宽度/高度 需要被滚动内容撑大，
-        // 并且需要检查父元素的 宽度/高度 之后，
-        // 才能正确断言滚动区域的 宽度/高度
-        $el.style[lengthType] = boxLength + 'px'
-        const $elOffset = propOffset($el)
-        const $elParent = $el.parentElement
-        const $elParentChildren = Array.from($elParent.children)
-        const parentStyle = getComputedStyle($elParent)
-        const parentL = $elParent[offsetLengthType]
-
-        let otherChildrenLength = 0
-        let paddingLength = 0
-        let borderLength = 0
-
-        // 计算 border 和 padding 宽度/高度
-        if (type === 'y') {
-          paddingLength = this._getNumFromStr(parentStyle.paddingTop) + this._getNumFromStr(parentStyle.paddingBottom)
-          borderLength = this._getNumFromStr(parentStyle.borderTopWidth) + this._getNumFromStr(parentStyle.borderBottomWidth)
-        } else {
-          paddingLength = this._getNumFromStr(parentStyle.paddingLeft) + this._getNumFromStr(parentStyle.paddingRight)
-          borderLength = this._getNumFromStr(parentStyle.borderLeftWidth) + this._getNumFromStr(parentStyle.borderRightWidth)
-        }
-
-        // 计算是否有子元素的高度/宽度是撑大了父元素
-        $elParentChildren.forEach((item) => {
-          const itemStyle = getComputedStyle(item)
-          const itemStyleDisplay = itemStyle.display
-          const itemStylePosition = itemStyle.position
-          const itemOffset = propOffset(item)
-
-          // 脱离文档流的不计算(relative 例外)
-          // 脱离文本流的不计算
-          // 等于自身元素的不计算
-          // 隐藏的不计算
-          if (item === $el ||
-            itemStyle.float !== 'none' ||
-            itemStyleDisplay === 'none' ||
-            (itemStylePosition !== 'static' && itemStylePosition !== 'relative')) {
-            return false
-          }
-
-          // 当计算宽度的时候，子元素在组件的左右两边不计算
-          // 当计算高度的时候，子元素在组件的上下两边不计算
-          if (type === 'x') {
-            if (itemStyleDisplay !== 'inline-block') {
-              return false
-            }
-
-            if (itemOffset.top > $elOffset.top + boxLength || $elOffset.top > itemOffset.top + item.offsetHeight) {
-              return false
-            }
-          } else {
-            if (itemOffset.left > $elOffset.left + boxLength || $elOffset.left > itemOffset.left + item.offsetWidth) {
-              return false
-            }
-          }
-
-          otherChildrenLength += item[offsetLengthType]
-        })
-
-        // 减去 border、 padding 和其他子元素的宽度/高度
-        parentLength = parentL - paddingLength - borderLength - otherChildrenLength
 
         // 父元素大于滚动内容
-        if (parentLength >= boxLength) {
-          boxL = parentLength
-          scrollerLength = parentLength
-        } else {
-          scrollerLength = parentLength
+        if (scrollerLength >= boxLength) {
+          boxLength = scrollerLength
         }
 
-        scrollerContainBox = parentLength >= boxLength
+        scrollerContainBox = scrollerLength === boxLength
       } else if (length === 'auto') {
         scrollerContainBox = true
         scrollerLength = boxLength
@@ -437,7 +358,7 @@ export default {
       return {
         scrollerLength,
         scrollerContainBox,
-        boxLength: boxL
+        boxLength
       }
     },
 

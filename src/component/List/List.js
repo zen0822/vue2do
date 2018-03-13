@@ -60,24 +60,19 @@ export default {
       type: Boolean,
       default: false
     },
-
     item: {
       type: Array,
       default: () => []
     },
-
     page: Object,
-
     pager: {
       type: Boolean,
       default: false
     },
-
     pageSize: {
       type: Number,
       default: 5
     },
-
     pageType: {
       type: String,
       default: 'num',
@@ -85,7 +80,6 @@ export default {
         return ['num', 'more'].includes(val)
       }
     },
-
     pageTrigger: {
       type: String,
       default: 'scroll',
@@ -93,17 +87,14 @@ export default {
         return ['click', 'scroll'].includes(val)
       }
     },
-
     autoHideScroller: {
       type: Boolean,
       default: false
     },
-
     autoHidePage: {
       type: Boolean,
       default: false
     },
-
     scrollerHeight: {
       type: [String, Number],
       default: 'auto'
@@ -123,6 +114,7 @@ export default {
         left: 0,
         bottom: 0
       },
+      scrollerWidth: 0, // 滚动组件的宽度
       pagerDisplay: false, // 分页显示状态
       transitionQueue: [], // 分页动画队列
       transitedQueueInterval: {} // 轮询分页动画定时器
@@ -177,6 +169,10 @@ export default {
       }
     },
 
+    _initComp() {
+      this.scrollerWidth = this.$refs.scroller.$el.offsetWidth
+    },
+
     _binder() {
       const refScroller = this.$refs.scroller
 
@@ -197,6 +193,7 @@ export default {
       })
 
       refScroller.$on('change', (opt) => {
+        this.scrollerWidth = refScroller.$el.offsetWidth
         this.initPagePosition()
 
         return this.$emit('scrollerChange', {

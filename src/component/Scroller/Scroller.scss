@@ -16,6 +16,7 @@ $C_PREFIX: #{ $COMP_SCROLLER };
     position: absolute;
     top: 0;
     left: 0;
+    transform: translateX(0) translateY(0);
   }
 
   .#{$C_PREFIX}-bar {
@@ -33,11 +34,13 @@ $C_PREFIX: #{ $COMP_SCROLLER };
 
     &.#{$C_PREFIX}-x-bar {
       bottom: 0;
+      left: 0;
       height: 5px;
     }
 
     &.#{$C_PREFIX}-y-bar {
       right: 0;
+      top: 0;
       width: 5px;
     }
   }

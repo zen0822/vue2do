@@ -90,7 +90,10 @@ export default function (h) {
   )
 
   tableEle = h('table', {
-    class: [this.xclass('wrap')]
+    class: [this.xclass('wrap')],
+    style: {
+      'min-width': `${this.scrollerWidth}px`
+    }
   }, tableChildren)
 
   return h('div', {

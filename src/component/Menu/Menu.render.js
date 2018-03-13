@@ -7,14 +7,15 @@ export default function (h) {
     h('scroller', {
       props: {
         height: this.height,
-        width: '100%',
-        ui: this.ui,
-        theme: this.theme
+        width: '100%'
       },
       ref: 'scroller'
     }, [
       h('div', {
-        class: this.xclass('container')
+        class: this.xclass('container'),
+        style: {
+          width: this.width !== 'auto' ? `${this.width}px` : 'auto'
+        }
       }, [this.$slots.default])
     ])
   ]

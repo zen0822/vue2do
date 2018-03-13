@@ -23,7 +23,9 @@ import loadingComp from '../Loading/Loading'
 import baseMixin from '../../mixin/base'
 import listMixin from '../../mixin/list'
 import tip from '../Message/tip'
-import { findGrandpa } from '../../util/util'
+import {
+  findGrandpa
+} from '../../util/util'
 
 const COL_PADDING_BORDER_LENGTH = 22
 
@@ -87,7 +89,7 @@ const Table = {
       pageData: {},
       tbodyItem: this.tbody.slice(),
       theadItem: this.thead.slice(),
-      tableWidth: 0 // 组件自身的宽度
+      scrollerWidth: 0 // 组件自身的宽度
     }
   },
 
@@ -125,13 +127,22 @@ const Table = {
 
   methods: {
     _initComp() {
-      this.tableWidth = this.$el.offsetWidth
+      this.scrollerWidth = this.$refs.scroller.$el.offsetWidth
+    },
+
+    _binder() {
+      this.$refs.scroller.$on('change', () => {
+        this.scrollerWidth = this.$refs.scroller.$el.offsetWidth
+      })
     },
 
     /**
      * 初始化分页
      */
-    initPage({ tableData = {}, pageData = {} }) {
+    initPage({
+      tableData = {},
+      pageData = {}
+    }) {
       if (!this.auto) {
         this.pageData = Object.assign({}, pageData)
 
@@ -155,7 +166,10 @@ const Table = {
      *
      * @return { Object }
      */
-    initTable({ pageNum = 1, tableData }) {
+    initTable({
+      pageNum = 1,
+      tableData
+    }) {
       this.tbodyItem = this.getListItemByPage({
         listItem: tableData,
         pageNum,
@@ -207,7 +221,9 @@ const Table = {
   },
 
   created() {
-    this.initPage({ tableData: this.tbody.slice() }).initTable({
+    this.initPage({
+      tableData: this.tbody.slice()
+    }).initTable({
       pageNum: this.pageData.current,
       tableData: this.tbody.slice()
     })

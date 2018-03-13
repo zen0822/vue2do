@@ -54,13 +54,16 @@ $C_BTN_PREFIX: #{ $COMP_BTN };
   .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row > .#{ $C_SHIFT_PREFIX }-col {
     min-width: 72px;
     text-align: center;
-    border: none;
 
     &:hover {
       color: $color-primary;
     }
 
     &.#{$C_PREFIX}-active {
+      .#{$C_PREFIX}-ele {
+        border-bottom: none;
+      }
+
       .#{$C_BTN_PREFIX}-ele {
         color: $color-primary;
       }
