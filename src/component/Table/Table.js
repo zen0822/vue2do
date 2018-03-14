@@ -11,7 +11,7 @@
  * @prop thead - 表头标题数据
  * @prop tbody - 列表的数据
  * @prop scrollerAutoHide - 滚动条自动隐藏
- * @prop stripe - 滚动条自动隐藏
+ * @prop stripe - 条纹表格
  *
  * @event switchPage - 切换分页
  */
@@ -81,6 +81,10 @@ const Table = {
     pageSize: {
       type: Number,
       default: 5
+    },
+    stripe: {
+      type: Boolean,
+      default: false
     }
   },
 

@@ -12,7 +12,7 @@ div
       z-row(:gap='10')
         z-col(:l='4', :xs='12') test1:
         z-col(:l='8', :xs='12')
-          z-input(init-val='test2-input')
+          z-input(required, label='ex: 张三')
       z-code.
         #{'<z-row :gap="10">'}
           #{'<z-col :l="4" :xs="12">name: </z-col>'}
@@ -29,14 +29,13 @@ div
         #{'<z-row :gap="10">'}
           #{'<z-col :l="4" :xs="12">test1: </z-col>'}
           #{'<z-col :l="8" :xs="12">'}
-            #{'<z-input'}
-                #{'init-val="test2-input"'}
-            #{'</z-input>'}
+            #{'<z-input required label="ex: 张三"></z-input>'}
           #{'</z-col>'}
         #{'</z-row>'}
     +section('rowProps', 'row 的 props 数据类型')
       z-table(
           border='row'
+          stripe
           auto
           :pageSize='10')
         template(
@@ -74,6 +73,7 @@ div
     +section('colProps', 'col 的 props 数据类型')
       z-table(
           border='row'
+          stripe
           auto
           :pageSize='10')
         template(

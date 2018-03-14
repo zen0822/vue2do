@@ -13,12 +13,16 @@ $COL_PREFIX: #{$COMP_TABLE_COL};
 .#{$C_PREFIX} {
   position: relative;
 
-  &-stripe {
+  &.#{$C_PREFIX}-stripe {
     .#{$C_PREFIX}-header-group {
       background: $color-bg;
     }
 
     .#{$C_PREFIX}-row {
+      &:hover {
+        background-color: transparent;
+      }
+
       &:nth-child(2n) {
         background: $color-bg;
       }
@@ -27,6 +31,10 @@ $COL_PREFIX: #{$COMP_TABLE_COL};
 
   &-page {
     border-top: $divider;
+  }
+
+  .#{$C_PREFIX}-row:hover {
+    background-color: $color-bg;
   }
 
   .#{$C_PREFIX}-col {

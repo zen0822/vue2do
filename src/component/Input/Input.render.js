@@ -43,7 +43,7 @@ export default function (h) {
             this.$refs.input.focus()
           }
         }
-      }, this.label)
+      }, `${this.label}${this.required ? ' *' : ''}`)
     )
   }
 
@@ -183,33 +183,32 @@ export default function (h) {
     )
   }
 
-  if (this.tipDisplay) {
-    children.push(
-      h('div', {
-        class: [this.xclass('tip')]
+  children.push(
+    h('div', {
+      class: [this.xclass('tip')]
+    }, [
+      h('motion-fade', {
+        props: {
+          speed: 'fast'
+        },
+        ref: 'helperTip'
       }, [
-        h('motion-fade', {
-          props: {
-            speed: 'fast'
-          },
-          ref: 'helperTip'
-        }, [
-          h('div', {
-            class: [this.xclass('tip-helper')]
-          }, this.helperText)
-        ]),
-        h('motion-fade', {
-          props: {
-            speed: 'fast'
-          },
-          ref: 'errorTip'
-        }, [
-          h('div', {
-            class: [this.xclass('tip-error')]
-          }, this.errorTip)
-        ])
-      ]))
-  }
+        h('div', {
+          class: [this.xclass('tip-helper')]
+        }, this.helperText)
+      ]),
+      h('motion-fade', {
+        props: {
+          speed: 'fast'
+        },
+        ref: 'errorTip'
+      }, [
+        h('div', {
+          class: [this.xclass('tip-error')]
+        }, this.errorTip)
+      ])
+    ])
+  )
 
   return h('div', {
     class: this.stageClass,
