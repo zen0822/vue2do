@@ -169,7 +169,7 @@ export default {
       this.allowFocus = true
 
       if (event.button === 0) {
-        return this.click()
+        return this.click(event)
       }
     },
 
@@ -238,7 +238,7 @@ export default {
      */
     keyup(event) {
       if (event.keyCode === 13) {
-        this.click()
+        this.click(event)
 
         return this.$emit('keyEnter', {
           event,

@@ -20,12 +20,14 @@ div.component-pop
         #{'</z-btn>'}
     +section('bubble', '泡泡提示')
       z-btn(
-        @click.native='bubble'
-        v-bubble='bubbleTip'
+        @click='showTooltip'
+        @blur='clickParent'
+        ref='bubbleBtn'
       ) 泡泡提示
       z-bubble(
         ref='bubble'
-        v-click-parent='clickParent'
+        fixed,
+        :target='bubbleTarget'
       )
         p 泡泡提示
       z-code.

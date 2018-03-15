@@ -4,6 +4,7 @@
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop speed - 动画速度
  * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+ * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -29,6 +30,10 @@ export default {
       }
     },
     sync: {
+      type: Boolean,
+      default: false
+    },
+    once: {
       type: Boolean,
       default: false
     }
@@ -59,6 +64,13 @@ export default {
      * @param {Object} opt
      */
     enter(opt = {}) {
+      if (this.once && this.isEntering) {
+        return false
+      }
+
+      this.isEntering = true
+      this.isLeaving = false
+
       if (this.sync && this.moving) {
         return false
       }
@@ -69,10 +81,9 @@ export default {
         code
       }
 
-      return new Promise(async(resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         try {
-          this.isLeaving = false
-          this.moving = this.isEntering = true
+          this.moving = true
 
           code === this.code && await this.beforeEnter(opt)
           code === this.code && await this.entering(opt)
@@ -93,6 +104,13 @@ export default {
      * @param {Object} opt
      */
     leave(opt = {}) {
+      if (this.once && this.isLeaving) {
+        return false
+      }
+
+      this.isEntering = false
+      this.isLeaving = true
+
       if (this.sync && this.moving) {
         return false
       }
@@ -103,10 +121,9 @@ export default {
         code
       }
 
-      return new Promise(async(resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         try {
-          this.isEntering = false
-          this.moving = this.isLeaving = true
+          this.moving = true
 
           code === this.code && await this.beforeLeave(opt)
           code === this.code && await this.leaveing(opt)

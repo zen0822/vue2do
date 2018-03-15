@@ -13,6 +13,7 @@ import alert from './src/component/Modal/alert'
 import confirm from './src/component/Modal/confirm'
 import tip from './src/component/Message/tip'
 import toast from './src/component/Message/toast'
+import tooltip from './src/component/Bubble/tooltip'
 
 import Btn from './src/component/Btn/Btn'
 import Bubble from './src/component/Bubble/Bubble'
@@ -60,6 +61,7 @@ export {
   confirm,
   tip,
   toast,
+  tooltip,
 
   Bubble,
   Btn,

@@ -1,5 +1,5 @@
 /**
- * tip 组件样式
+ * bubble 组件样式
  */
 
 @import "../../scss/config.scss";
@@ -18,6 +18,10 @@ $ICON_PREFIX: #{ $COMP_ICON };
   box-shadow: $shadow;
   border-radius: $border-radius;
   padding: $gap-v;
+
+  &.#{$C_PREFIX}-fixed {
+    position: fixed;
+  }
 
   &-slot {
     max-width: 300px;

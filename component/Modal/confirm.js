@@ -1,3 +1,3 @@
-import Modal from '../../src/component/Modal/confirm'
+import confirm from '../../src/component/Modal/confirm'
 
-export default Modal
+export default confirm

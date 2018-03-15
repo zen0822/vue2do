@@ -3,7 +3,7 @@
  */
 
 import Vue from 'vue'
-import modalComp from './Modal'
+import Modal from './Modal'
 import store from '../../vuex/store'
 import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
@@ -25,7 +25,7 @@ const createAlert = () => {
       }
     },
     components: {
-      modal: modalComp
+      modal: Modal
     },
     store,
     template: `

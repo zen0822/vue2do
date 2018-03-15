@@ -3,6 +3,7 @@ import template from './Tip.pug'
 import mixin from '../../mixin'
 import tip from 'src/component/Message/tip'
 import toast from 'src/component/Message/toast'
+import tooltip from 'src/component/Bubble/tooltip'
 
 export default {
   name: 'PageCompTip',
@@ -12,9 +13,11 @@ export default {
   mixins: [mixin],
 
   data() {
+    this.tooltip = {}
+
     return {
       testName: 'test',
-      bubbleTip: {}
+      bubbleTarget: this.$refs.bubbleTarget
     }
   },
 
@@ -27,18 +30,30 @@ export default {
       toast('底部弹出提示信息！')
     },
 
-    async bubble(event) {
+    showTooltip({
+      event
+    }) {
+      event.stopPropagation()
+
+      this.tooltip = tooltip({
+        message: 'tooltip',
+        target: event.currentTarget
+      })
+    },
+
+    async bubble({
+      event
+    }) {
       let target = event.currentTarget
 
       event.stopPropagation()
-
-      await this.$refs.bubble.hide()
 
       this.$refs.bubble.show(target)
     },
 
     clickParent() {
       this.$refs.bubble.hide()
+      this.tooltip.hide && this.tooltip.hide()
     }
   }
 }

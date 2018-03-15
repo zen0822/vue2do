@@ -1,3 +1,3 @@
-import Message from '../../src/component/Message/toast'
+import toast from '../../src/component/Message/toast'
 
-export default Message
+export default toast

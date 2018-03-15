@@ -19,5 +19,10 @@
     "get": "common/toast/get"
   },
 
+  "tooltip": {
+    "add": "common/tooltip/add",
+    "get": "common/tooltip/get"
+  },
+
   "deviceSize": "common/deviceSize"
 }

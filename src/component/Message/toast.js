@@ -3,7 +3,7 @@
  */
 
 import Vue from 'vue'
-import messageComp from './Message'
+import Message from './Message'
 
 import store from '../../vuex/store'
 import commonStore from '../../vuex/module/common/type.json'
@@ -25,7 +25,7 @@ const createToast = () => {
       }
     },
     components: {
-      message: messageComp
+      message: Message
     },
     store,
     render(h) {

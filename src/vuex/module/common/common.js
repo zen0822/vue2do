@@ -6,6 +6,7 @@ export default {
     confirm: null,
     tip: null,
     toast: null,
+    tooltip: null,
     deviceSize: ''
   },
 
@@ -21,6 +22,9 @@ export default {
     },
     [nameSpace.toast.get](state) {
       return state.toast
+    },
+    [nameSpace.tooltip.get](state) {
+      return state.tooltip
     },
     [nameSpace.deviceSize](state) {
       return state.deviceSize.replace(/('|")/g, '')
@@ -40,6 +44,9 @@ export default {
     [nameSpace.toast.add]({ state, commit, rootState }, component) {
       return commit(nameSpace.toast.add, component)
     },
+    [nameSpace.tooltip.add]({ state, commit, rootState }, component) {
+      return commit(nameSpace.tooltip.add, component)
+    },
     [nameSpace.deviceSize]({ state, commit, rootState }, sizeName) {
       return commit(nameSpace.deviceSize, sizeName)
     }
@@ -57,6 +64,9 @@ export default {
     },
     [nameSpace.toast.add](state, component) {
       state.toast = component
+    },
+    [nameSpace.tooltip.add](state, component) {
+      state.tooltip = component
     },
     [nameSpace.deviceSize](state, sizeName) {
       state.deviceSize = sizeName

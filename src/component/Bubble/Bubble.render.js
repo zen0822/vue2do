@@ -7,23 +7,14 @@ export default function (h) {
     props: {
       speed: 'fast',
       origin: '50% 0',
-      ui: this.ui,
-      theme: this.theme
+      global: this.fixed,
+      once: true,
+      display: this.display
     },
     ref: 'transition'
   }, [
     h('div', {
-      class: [
-        this.cPrefix,
-        this.xclass(this.themeClass),
-        {
-          [this.xclass('custom')]: !this.message
-        }
-      ],
-      directives: [{
-        name: 'show',
-        value: this.bubbleDisplay
-      }],
+      class: this.compClass,
       on: {
         click: this.click
       }
@@ -58,7 +49,7 @@ export default function (h) {
           } else {
             return h('div', {
               class: [this.xclass('text')]
-            }, this.message)
+            }, this.stateMessage)
           }
         })()
       ])

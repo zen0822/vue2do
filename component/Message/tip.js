@@ -1,3 +1,3 @@
-import Message from '../../src/component/Message/tip'
+import tip from '../../src/component/Message/tip'
 
-export default Message
+export default tip
