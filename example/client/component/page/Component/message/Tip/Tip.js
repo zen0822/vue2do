@@ -33,8 +33,6 @@ export default {
     showTooltip({
       event
     }) {
-      event.stopPropagation()
-
       this.tooltip = tooltip({
         message: 'tooltip',
         target: event.currentTarget
@@ -51,7 +49,7 @@ export default {
       this.$refs.bubble.show(target)
     },
 
-    clickParent() {
+    hideTooltip() {
       this.$refs.bubble.hide()
       this.tooltip.hide && this.tooltip.hide()
     }

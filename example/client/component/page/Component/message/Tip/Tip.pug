@@ -21,7 +21,7 @@ div.component-pop
     +section('bubble', '泡泡提示')
       z-btn(
         @click='showTooltip'
-        @blur='clickParent'
+        @blur='hideTooltip'
         ref='bubbleBtn'
       ) 泡泡提示
       z-bubble(
@@ -30,10 +30,22 @@ div.component-pop
         :target='bubbleTarget'
       )
         p 泡泡提示
-      z-code.
-        #{'<z-btn @click="toast">'}
+      z-code(type='js').
+        ...
+          showTooltip({
+            event
+          }) {
+            this.tooltip = tooltip({
+              message: 'tooltip',
+              target: event.currentTarget
+            })
+          },
+
+          hideTooltip() {
+            this.tooltip.hide && this.tooltip.hide()
+          }
+        ...
+      z-code(type='html').
+        #{'<z-btn @click="showTooltip" @blur="hideTooltip">'}
           泡泡提示
-        #{'</z-btn>'}
-        #{'<z-btn @click="toast">'}
-          #{'<p>泡泡提示</p>'}
         #{'</z-btn>'}

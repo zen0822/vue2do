@@ -73,6 +73,7 @@ export default {
   data() {
     this.compName = 'bubble'
     this.bubbleDisplay = false
+    this.targetDetail = {} // 目标的信息
 
     return {
       stateMessage: this.message,
@@ -105,6 +106,10 @@ export default {
       if (this.hideRightNow) {
         this.displayInterval = 0
       }
+
+      this.initPoiInterval = setInterval(() => {
+        this.bubbleDisplay && this._initPosition()
+      }, 100)
     },
 
     _binder() {
@@ -114,10 +119,6 @@ export default {
 
       this.$refs.transition.$on('afterEnter', () => {
         this.bubbleDisplay = true
-      })
-
-      window.addEventListener('wheel', () => {
-        this._initPosition()
       })
     },
 
@@ -131,6 +132,10 @@ export default {
      * @return {Object} - 组件本身
      */
     _initPosition(target = this.stateTarget) {
+      if (!target) {
+        return false
+      }
+
       if (target.nodeType !== 1) {
         console.warn(`Vue2do: props target is not a dom element on bubble component.`)
 
@@ -151,6 +156,28 @@ export default {
 
       let width = target.offsetWidth
       let height = target.offsetHeight
+
+      if (this.targetDetail.top === position.top &&
+        this.targetDetail.left === position.left &&
+        this.targetDetail.width === width &&
+        this.targetDetail.height === height
+      ) {
+        if (hide) {
+          Object.assign($el.style, {
+            display: 'none',
+            visibility: ''
+          })
+        }
+
+        return false
+      }
+
+      this.targetDetail = {
+        top: position.top,
+        left: position.left,
+        width,
+        height
+      }
 
       let bubbleWidth = this.$el.offsetWidth
       let bubbleHeight = this.$el.offsetHeight
@@ -260,5 +287,9 @@ export default {
 
       return this
     }
+  },
+
+  destroyed() {
+    clearInterval(this.initPoiInterval)
   }
 }
