@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.3.6
+ * vue2do.js v0.4.0
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -12,7 +12,7 @@
 		exports["Vue2do"] = factory(require("vue"), require("vuex"), require("vue-i18n"));
 	else
 		root["Vue2do"] = factory(root["Vue"], root["Vuex"], root["VueI18n"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_83__, __WEBPACK_EXTERNAL_MODULE_201__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_83__, __WEBPACK_EXTERNAL_MODULE_209__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1215,7 +1215,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * col 组件
  *
- * @prop gap - 定义间隔的宽度（px），覆盖行设置的间隔 (5, 10, 20, 30, 40, 50)
+ * @prop gap - （已经废弃）定义间隔的宽度（px），覆盖行设置的间隔 (5, 10, 20, 30, 40, 50)
  * @prop pull - 定义了列在 x 反方向偏移的栅格数
  * @prop push - 定义了列在 x 正方向偏移的栅格数
  * @prop offset - 定义了列离开头的栅格数
@@ -1239,10 +1239,6 @@ exports.default = {
   render: _ColRender2.default,
 
   props: {
-    gap: {
-      type: Number,
-      default: 0
-    },
     pull: {
       type: Number,
       default: 0
@@ -1305,7 +1301,9 @@ exports.default = {
       return this.compPrefix + '-col';
     },
     compStyle: function compStyle() {
-      return {};
+      return {
+        'flex-grow': this.grow === 0 ? undefined : this.grow
+      };
     }
   }
 };
@@ -1441,6 +1439,7 @@ var SCROLL_PIXEL = 10; /**
                         *                100%：根据父元素的高度
                         * @prop width - 滚动区域的宽度(auto | {Number}px | 100%)，同上
                         * @prop autoHide - 自动隐藏滚动条
+                        * @prop hide - 隐藏滚动条
                         *
                         * @event scrollY - 滚动事件
                         *                  return isBottom - 滚动条是否到低
@@ -1490,7 +1489,6 @@ exports.default = {
         }
       }
     },
-
     width: {
       type: [Number, String],
       default: 'auto',
@@ -1504,8 +1502,11 @@ exports.default = {
         }
       }
     },
-
     autoHide: {
+      type: Boolean,
+      default: false
+    },
+    hide: {
       type: Boolean,
       default: false
     }
@@ -1572,25 +1573,24 @@ exports.default = {
   computed: {
     boxStyle: function boxStyle() {
       return {
-        top: this.boxTop + 'px',
-        left: this.boxLeft + 'px'
+        transform: 'translateX(' + this.boxLeft + 'px) translateY(' + this.boxTop + 'px)'
       };
     },
     scrollerStyle: function scrollerStyle() {
       return {
-        height: this.scrollerHeight + 'px',
-        width: this.scrollerWidth + 'px'
+        height: this.height === '100%' ? '100%' : undefined,
+        width: this.width === '100%' ? '100%' : undefined
       };
     },
     xComputed: function xComputed() {
       // x 方向的计算属性
       return {
-        barDisplay: !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
+        barDisplay: !this.hide && !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
         isLeft: this.xData.barLeft === 0,
         isRight: this.xData.barLeft === this.xData.barAndScrollerOffset,
         barStyle: {
-          'width': this.xData.barLength + 'px',
-          'left': this.xData.barLeft + 'px'
+          width: this.xData.barLength + 'px',
+          transform: 'translateX(' + this.xData.barLeft + 'px)'
         }
       };
     },
@@ -1598,14 +1598,14 @@ exports.default = {
       // y 方向的计算属性
       return {
         // 是否显示滚动条
-        barDisplay: !this.yData.scrollerContainBox && (!this.autoHide || this.showBar),
+        barDisplay: !this.hide && !this.yData.scrollerContainBox && (!this.autoHide || this.showBar),
         // 滚动条是否在顶部
         isTop: this.yData.scrollerContainBox || this.yData.barTop === 0,
         // 滚动条是否在底部
         isBottom: this.yData.scrollerContainBox || this.yData.barTop === this.yData.barAndScrollerOffset,
         barStyle: {
-          'height': this.yData.barLength + 'px',
-          'top': this.yData.barTop + 'px'
+          height: this.yData.barLength + 'px',
+          transform: 'translateY(' + this.yData.barTop + 'px)'
         }
       };
     },
@@ -1663,53 +1663,44 @@ exports.default = {
       var $elParent = this.$el.parentElement;
       var parentStyle = getComputedStyle($elParent);
 
-      var parentH = parentStyle.height;
-      var parentW = parentStyle.width;
-
       // 根据父元素的高宽都等于 auto 可以断言出元素的祖父元素有可能是隐藏的
-      if (parentW === 'auto' && parentH === 'auto') {
+      if (parentStyle.width === 'auto' && parentStyle.height === 'auto') {
         return false;
       }
 
-      // TODO: 如果 box 元素里面时绝对定位的元素则不能这样判断
-      // 之后会优化根据 scroller 的父元素来重新定义 box 的元素的高度和宽度
-      // 现在先让 box 的高度和宽度变成默认值来测量元素的宽度
-      Object.assign(this.$box.style, {
-        height: 'auto',
-        width: 'auto'
-      });
-
+      var scrollerHeight = this.$el.offsetHeight;
+      var scrollerWidth = this.$el.offsetWidth;
       var boxHeight = this.$box.offsetHeight;
       var boxWidth = this.$box.offsetWidth;
 
       var yData = this._initScrollerData({
         length: this.height,
         boxLength: boxHeight,
+        scrollerLength: scrollerHeight,
         type: 'y'
       });
 
       var xData = this._initScrollerData({
         length: this.width,
+        scrollerLength: scrollerWidth,
         boxLength: boxWidth,
         type: 'x'
       });
 
-      var scrollerHeight = yData.scrollerLength;
-      var scrollerWidth = xData.scrollerLength;
-
-      boxHeight = yData.boxLength !== -1 ? yData.boxLength : boxHeight;
-      boxWidth = xData.boxLength !== -1 ? xData.boxLength : boxWidth;
+      scrollerHeight = yData.scrollerLength;
+      scrollerWidth = xData.scrollerLength;
+      boxHeight = yData.boxLength;
+      boxWidth = xData.boxLength;
 
       var scrollerHeightChanged = scrollerHeight !== this.scrollerHeight;
       var scrollerWidthChanged = scrollerWidth !== this.scrollerWidth;
-
       var boxHeightChanged = boxHeight !== this.boxHeight;
       var boxWidthChanged = boxWidth !== this.boxWidth;
 
       if (scrollerHeightChanged || boxHeightChanged) {
         this._initScrollBar({
           type: 'y',
-          scrollerLength: yData.scrollerLength,
+          scrollerLength: scrollerHeight,
           scrollerContainBox: yData.scrollerContainBox,
           boxLength: boxHeight
         });
@@ -1718,26 +1709,27 @@ exports.default = {
       if (scrollerWidthChanged || boxWidthChanged) {
         this._initScrollBar({
           type: 'x',
-          scrollerLength: xData.scrollerLength,
+          scrollerLength: scrollerWidth,
           scrollerContainBox: xData.scrollerContainBox,
           boxLength: boxWidth
         });
       }
 
-      this.scrollerHeight = yData.scrollerLength;
-      this.scrollerWidth = xData.scrollerLength;
+      this.scrollerHeight = scrollerHeight;
+      this.scrollerWidth = scrollerWidth;
+      this.boxHeight = boxHeight;
+      this.boxWidth = boxWidth;
 
-      this.boxHeight = yData.boxLength !== -1 ? yData.boxLength : boxHeight;
-      this.boxWidth = xData.boxLength !== -1 ? xData.boxLength : boxWidth;
+      if (this.height !== '100%' && scrollerHeightChanged) {
+        this.$el.style.height = this.scrollerHeight + 'px';
+      }
 
-      Object.assign(this.$el.style, {
-        height: this.scrollerHeight + 'px',
-        width: this.scrollerWidth + 'px'
-      });
-      Object.assign(this.$box.style, {
-        height: this.boxHeight + 'px',
-        width: this.boxWidth + 'px'
-      });
+      if (this.width !== '100%' && scrollerWidthChanged) {
+        this.$el.style.width = this.scrollerWidth + 'px';
+      }
+
+      // boxHeightChanged && (this.$box.style.height = `${boxHeight}px`)
+      // boxWidthChanged && (this.$box.style.width = `${boxWidth}px`)
 
       if (scrollerHeightChanged || scrollerWidthChanged) {
         this._scrollerChange();
@@ -1749,98 +1741,31 @@ exports.default = {
      * 初始化滚动区域的数据
      * @param { Object } - 选项数据
      *                   type - 滚动条类型
-     *                   parentLength - 滚动的 高度/宽度
+     *                   scrollerLength - 滚动的 高度/宽度
      *                   boxLength - 滚动内容的 高度/宽度
      *                   length - 指定的滚动区域的 高度/宽度
      */
     _initScrollerData: function _initScrollerData(_ref) {
       var type = _ref.type,
           boxLength = _ref.boxLength,
+          scrollerLength = _ref.scrollerLength,
           length = _ref.length;
 
       var $el = this.$el;
       var scrollerContainBox = false; // 滚动区域是否大过滚动内容
       var barPositionName = 'bar' + (type === 'y' ? 'Top' : 'Left'); // 滚动条位置名字
       var boxPositionName = 'box' + (type === 'y' ? 'Top' : 'Left'); // 滚动内容位置名字
-      var scrollerLength = 0; // 滚动区域的高度/宽度
-      var boxL = -1; // 需要重新赋值给 box 的 高度/宽度 像素
 
       if (length === '100%') {
         // TODO：优化计算次数
 
-        var lengthType = type === 'y' ? 'height' : 'width';
-        var offsetLengthType = type === 'y' ? 'offsetHeight' : 'offsetWidth';
-        var parentLength = 0; // 滚动区域的父元素减去除自身的子元素的高度/宽度
-
-        // 滚动区域的 宽度/高度 需要被滚动内容撑大，
-        // 并且需要检查父元素的 宽度/高度 之后，
-        // 才能正确断言滚动区域的 宽度/高度
-        $el.style[lengthType] = boxLength + 'px';
-        var $elOffset = (0, _prop.offset)($el);
-        var $elParent = $el.parentElement;
-        var $elParentChildren = Array.from($elParent.children);
-        var parentStyle = getComputedStyle($elParent);
-        var parentL = $elParent[offsetLengthType];
-
-        var otherChildrenLength = 0;
-        var paddingLength = 0;
-        var borderLength = 0;
-
-        // 计算 border 和 padding 宽度/高度
-        if (type === 'y') {
-          paddingLength = this._getNumFromStr(parentStyle.paddingTop) + this._getNumFromStr(parentStyle.paddingBottom);
-          borderLength = this._getNumFromStr(parentStyle.borderTopWidth) + this._getNumFromStr(parentStyle.borderBottomWidth);
-        } else {
-          paddingLength = this._getNumFromStr(parentStyle.paddingLeft) + this._getNumFromStr(parentStyle.paddingRight);
-          borderLength = this._getNumFromStr(parentStyle.borderLeftWidth) + this._getNumFromStr(parentStyle.borderRightWidth);
-        }
-
-        // 计算是否有子元素的高度/宽度是撑大了父元素
-        $elParentChildren.forEach(function (item) {
-          var itemStyle = getComputedStyle(item);
-          var itemStyleDisplay = itemStyle.display;
-          var itemStylePosition = itemStyle.position;
-          var itemOffset = (0, _prop.offset)(item);
-
-          // 脱离文档流的不计算(relative 例外)
-          // 脱离文本流的不计算
-          // 等于自身元素的不计算
-          // 隐藏的不计算
-          if (item === $el || itemStyle.float !== 'none' || itemStyleDisplay === 'none' || itemStylePosition !== 'static' && itemStylePosition !== 'relative') {
-            return false;
-          }
-
-          // 当计算宽度的时候，子元素在组件的左右两边不计算
-          // 当计算高度的时候，子元素在组件的上下两边不计算
-          if (type === 'x') {
-            if (itemStyleDisplay !== 'inline-block') {
-              return false;
-            }
-
-            if (itemOffset.top > $elOffset.top + boxLength || $elOffset.top > itemOffset.top + item.offsetHeight) {
-              return false;
-            }
-          } else {
-            if (itemOffset.left > $elOffset.left + boxLength || $elOffset.left > itemOffset.left + item.offsetWidth) {
-              return false;
-            }
-          }
-
-          otherChildrenLength += item[offsetLengthType];
-        });
-
-        // 减去 border、 padding 和其他子元素的宽度/高度
-        parentLength = parentL - paddingLength - borderLength - otherChildrenLength;
 
         // 父元素大于滚动内容
-        if (parentLength >= boxLength) {
-          boxL = parentLength;
-          scrollerLength = parentLength;
-        } else {
-          scrollerLength = parentLength;
+        if (scrollerLength >= boxLength) {
+          boxLength = scrollerLength;
         }
 
-        scrollerContainBox = parentLength >= boxLength;
+        scrollerContainBox = scrollerLength === boxLength;
       } else if (length === 'auto') {
         scrollerContainBox = true;
         scrollerLength = boxLength;
@@ -1857,7 +1782,7 @@ exports.default = {
       return {
         scrollerLength: scrollerLength,
         scrollerContainBox: scrollerContainBox,
-        boxLength: boxL
+        boxLength: boxLength
       };
     },
 
@@ -2006,430 +1931,10 @@ exports.default = {
 /* 11 */
 /***/ (function(module, exports) {
 
-module.exports = {"alert":{"add":"common/alert/add","get":"common/alert/get"},"confirm":{"add":"common/confirm/add","get":"common/confirm/get"},"tip":{"add":"common/tip/add","get":"common/tip/get"},"toast":{"add":"common/toast/add","get":"common/toast/get"},"deviceSize":"common/deviceSize"}
+module.exports = {"alert":{"add":"common/alert/add","get":"common/alert/get"},"confirm":{"add":"common/confirm/add","get":"common/confirm/get"},"tip":{"add":"common/tip/add","get":"common/tip/get"},"toast":{"add":"common/toast/add","get":"common/toast/get"},"tooltip":{"add":"common/tooltip/add","get":"common/tooltip/get"},"deviceSize":"common/deviceSize"}
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-__webpack_require__(87);
-
-var _Icon = __webpack_require__(4);
-
-var _Icon2 = _interopRequireDefault(_Icon);
-
-var _base = __webpack_require__(2);
-
-var _base2 = _interopRequireDefault(_base);
-
-var _Loading = __webpack_require__(93);
-
-var _Loading2 = _interopRequireDefault(_Loading);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * loading 组件
- * 使用自定义的loading 需要将父元素设置成 position: relative
- *
- * @prop bgDisplay - 是否显示 loading 的背景
- * @prop text - 等待文字
- * @prop theme - 主题
- * @prop type - 类型
- *
- */
-
-var TYPE_ROTATE = 'rotate';
-var TYPE_ROTATE_2 = 'rotate2';
-var TYPE_SPOT = 'spot';
-
-exports.default = {
-  name: 'Loading',
-
-  mixins: [_base2.default],
-
-  render: _Loading2.default,
-
-  components: {
-    icon: _Icon2.default
-  },
-
-  props: {
-    type: {
-      type: String,
-      default: TYPE_ROTATE
-    },
-
-    bgDisplay: {
-      type: Boolean,
-      default: false
-    },
-
-    text: {
-      type: String,
-      default: ''
-    }
-  },
-
-  data: function data() {
-    return {
-      display: false
-    };
-  },
-
-
-  computed: {
-    // 组件类名的前缀
-    cPrefix: function cPrefix() {
-      return this.compPrefix + '-loading';
-    },
-    isRotate: function isRotate() {
-      return this.type === TYPE_ROTATE;
-    },
-    isRotate2: function isRotate2() {
-      return this.type === TYPE_ROTATE_2;
-    },
-    isSpot: function isSpot() {
-      return this.type === TYPE_SPOT;
-    }
-  },
-
-  methods: {
-    /**
-     * 显示
-     * @return {Object} this - 组件
-     */
-    show: function show(cb) {
-      this.display = true;
-
-      return this;
-    },
-
-
-    /**
-     * 隐藏
-     * @return {Object} this - 组件
-     */
-    hide: function hide() {
-      this.display = false;
-
-      return this;
-    },
-    createTimeout: function createTimeout(cb) {
-      var _this = this;
-
-      this.clearTimeout();
-
-      this.timeout = setTimeout(function () {
-        _this.timeout = null;
-        _this.hide();
-
-        return cb && cb();
-      }, this.time);
-    },
-    clearTimeout: function clearTimeout() {
-      var timeout = this.timeout;
-      if (timeout) {
-        window.clearTimeout(timeout);
-        this.timeout = null;
-      }
-    }
-  }
-};
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _uid = __webpack_require__(31);
-
-var _uid2 = _interopRequireDefault(_uid);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * motion 组件的 mixin
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop display - 默认一开始是隐藏（进来之前的状态）
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop speed - 动画速度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event beforeEnter - 进来过渡之前
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event enter - 进来过渡期间
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event afterEnter - 进来过渡完成
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event beforeLeave - 离开过渡之前
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event leave - 离开过渡期间
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event afterLeave - 离开过渡之后
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
-
-exports.default = {
-  props: {
-    display: {
-      type: Boolean,
-      default: false
-    },
-    speed: {
-      type: [Number, String],
-      default: 'normal',
-      validator: function validator(val) {
-        return ['normal', 'fast', 'slow'].includes(val);
-      }
-    },
-    sync: {
-      type: Boolean,
-      default: false
-    }
-  },
-
-  computed: {
-    time: function time() {
-      switch (this.speed) {
-        case 'normal':
-          return 300;
-        case 'fast':
-          return 150;
-        case 'slow':
-          return 450;
-        default:
-          return 300;
-      }
-    },
-    transitionTime: function transitionTime() {
-      return this.time + 'ms';
-    }
-  },
-
-  methods: {
-    /**
-     * 启动进来时的过渡动画
-     *
-     * @param {Object} opt
-     */
-    enter: function enter() {
-      var _this = this;
-
-      var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      if (this.sync && this.moving) {
-        return false;
-      }
-
-      this.code = (0, _uid2.default)();
-      var code = this.code;
-      opt = Object.assign({}, opt, {
-        code: code
-      });
-
-      return new Promise(function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(resolve, reject) {
-          return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  _context.prev = 0;
-
-                  _this.isLeaving = false;
-                  _this.moving = _this.isEntering = true;
-
-                  _context.t0 = code === _this.code;
-
-                  if (!_context.t0) {
-                    _context.next = 7;
-                    break;
-                  }
-
-                  _context.next = 7;
-                  return _this.beforeEnter(opt);
-
-                case 7:
-                  _context.t1 = code === _this.code;
-
-                  if (!_context.t1) {
-                    _context.next = 11;
-                    break;
-                  }
-
-                  _context.next = 11;
-                  return _this.entering(opt);
-
-                case 11:
-                  _context.t2 = code === _this.code;
-
-                  if (!_context.t2) {
-                    _context.next = 15;
-                    break;
-                  }
-
-                  _context.next = 15;
-                  return _this.afterEnter(opt);
-
-                case 15:
-
-                  _this.moving = false;
-
-                  resolve();
-                  _context.next = 22;
-                  break;
-
-                case 19:
-                  _context.prev = 19;
-                  _context.t3 = _context['catch'](0);
-
-                  reject(_context.t3);
-
-                case 22:
-                case 'end':
-                  return _context.stop();
-              }
-            }
-          }, _callee, _this, [[0, 19]]);
-        }));
-
-        return function (_x2, _x3) {
-          return _ref.apply(this, arguments);
-        };
-      }());
-    },
-
-
-    /**
-     * 启动离开时的过渡动画
-     *
-     * @param {Object} opt
-     */
-    leave: function leave() {
-      var _this2 = this;
-
-      var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-      if (this.sync && this.moving) {
-        return false;
-      }
-
-      this.code = (0, _uid2.default)();
-      var code = this.code;
-      opt = Object.assign({}, opt, {
-        code: code
-      });
-
-      return new Promise(function () {
-        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve, reject) {
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  _context2.prev = 0;
-
-                  _this2.isEntering = false;
-                  _this2.moving = _this2.isLeaving = true;
-
-                  _context2.t0 = code === _this2.code;
-
-                  if (!_context2.t0) {
-                    _context2.next = 7;
-                    break;
-                  }
-
-                  _context2.next = 7;
-                  return _this2.beforeLeave(opt);
-
-                case 7:
-                  _context2.t1 = code === _this2.code;
-
-                  if (!_context2.t1) {
-                    _context2.next = 11;
-                    break;
-                  }
-
-                  _context2.next = 11;
-                  return _this2.leaveing(opt);
-
-                case 11:
-                  _context2.t2 = code === _this2.code;
-
-                  if (!_context2.t2) {
-                    _context2.next = 15;
-                    break;
-                  }
-
-                  _context2.next = 15;
-                  return _this2.afterLeave(opt);
-
-                case 15:
-
-                  _this2.moving = false;
-
-                  resolve();
-                  _context2.next = 22;
-                  break;
-
-                case 19:
-                  _context2.prev = 19;
-                  _context2.t3 = _context2['catch'](0);
-
-                  reject(_context2.t3);
-
-                case 22:
-                case 'end':
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, _this2, [[0, 19]]);
-        }));
-
-        return function (_x5, _x6) {
-          return _ref2.apply(this, arguments);
-        };
-      }());
-    },
-    beforeEnter: function beforeEnter() {
-      this.$el.style.display = '';
-
-      return this.$emit('beforeEnter');
-    },
-    entering: function entering() {
-      return this.$emit('entering');
-    },
-    afterEnter: function afterEnter() {
-      return this.$emit('afterEnter');
-    },
-    beforeLeave: function beforeLeave() {
-      this.$el.style.display = 'none';
-
-      return this.$emit('beforeLeave');
-    },
-    leaveing: function leaveing() {
-      return this.$emit('leaveing');
-    },
-    afterLeave: function afterLeave() {
-      return this.$emit('afterLeave');
-    }
-  },
-
-  created: function created() {
-    this.moving = false; // 当前正在执行动画
-    this.isEntering = this.display; // 当前执行进来的动画的编号
-    this.isLeaving = !this.display; // 当前执行离开的动画的编号
-    this.code = 0; // 当前执行的动画的编号
-  }
-};
-
-/***/ }),
-/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2459,7 +1964,7 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Loading = __webpack_require__(12);
+var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -2481,6 +1986,7 @@ var BTN_TYPE_LINK = 'link'; /**
                              * @prop type - 按钮类型 (button | flat | float | outline)
                              * @prop textDisplay - 是否显示按钮文字
                              * @prop value - 按钮名字
+                             * @prop outline - 只有边框有颜色的按钮
                              *
                              * @event click - 点击btn事件
                              * @event keyEnter - focus 时敲击 Enter 键
@@ -2617,7 +2123,7 @@ exports.default = {
       this.allowFocus = true;
 
       if (event.button === 0) {
-        return this.click();
+        return this.click(event);
       }
     },
 
@@ -2684,7 +2190,7 @@ exports.default = {
      */
     keyup: function keyup(event) {
       if (event.keyCode === 13) {
-        this.click();
+        this.click(event);
 
         return this.$emit('keyEnter', {
           event: event,
@@ -2745,6 +2251,443 @@ exports.default = {
       this.allowBtn();
       this.$refs.loading.hide();
     }
+  }
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+__webpack_require__(87);
+
+var _Icon = __webpack_require__(4);
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+var _base = __webpack_require__(2);
+
+var _base2 = _interopRequireDefault(_base);
+
+var _Loading = __webpack_require__(93);
+
+var _Loading2 = _interopRequireDefault(_Loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * loading 组件
+ * 使用自定义的loading 需要将父元素设置成 position: relative
+ *
+ * @prop bgDisplay - 是否显示 loading 的背景
+ * @prop text - 等待文字
+ * @prop theme - 主题
+ * @prop type - 类型
+ *
+ */
+
+var TYPE_ROTATE = 'rotate';
+var TYPE_ROTATE_2 = 'rotate2';
+var TYPE_SPOT = 'spot';
+
+exports.default = {
+  name: 'Loading',
+
+  mixins: [_base2.default],
+
+  render: _Loading2.default,
+
+  components: {
+    icon: _Icon2.default
+  },
+
+  props: {
+    type: {
+      type: String,
+      default: TYPE_ROTATE
+    },
+
+    bgDisplay: {
+      type: Boolean,
+      default: false
+    },
+
+    text: {
+      type: String,
+      default: ''
+    }
+  },
+
+  data: function data() {
+    return {
+      display: false
+    };
+  },
+
+
+  computed: {
+    // 组件类名的前缀
+    cPrefix: function cPrefix() {
+      return this.compPrefix + '-loading';
+    },
+    isRotate: function isRotate() {
+      return this.type === TYPE_ROTATE;
+    },
+    isRotate2: function isRotate2() {
+      return this.type === TYPE_ROTATE_2;
+    },
+    isSpot: function isSpot() {
+      return this.type === TYPE_SPOT;
+    }
+  },
+
+  methods: {
+    /**
+     * 显示
+     * @return {Object} this - 组件
+     */
+    show: function show(cb) {
+      this.display = true;
+
+      return this;
+    },
+
+
+    /**
+     * 隐藏
+     * @return {Object} this - 组件
+     */
+    hide: function hide() {
+      this.display = false;
+
+      return this;
+    },
+    createTimeout: function createTimeout(cb) {
+      var _this = this;
+
+      this.clearTimeout();
+
+      this.timeout = setTimeout(function () {
+        _this.timeout = null;
+        _this.hide();
+
+        return cb && cb();
+      }, this.time);
+    },
+    clearTimeout: function clearTimeout() {
+      var timeout = this.timeout;
+      if (timeout) {
+        window.clearTimeout(timeout);
+        this.timeout = null;
+      }
+    }
+  }
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _uid = __webpack_require__(31);
+
+var _uid2 = _interopRequireDefault(_uid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * motion 组件的 mixin
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop display - 默认一开始是隐藏（进来之前的状态）
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop speed - 动画速度
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event beforeEnter - 进来过渡之前
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event enter - 进来过渡期间
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event afterEnter - 进来过渡完成
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event beforeLeave - 离开过渡之前
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event leave - 离开过渡期间
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @event afterLeave - 离开过渡之后
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
+
+exports.default = {
+  props: {
+    display: {
+      type: Boolean,
+      default: false
+    },
+    speed: {
+      type: [Number, String],
+      default: 'normal',
+      validator: function validator(val) {
+        return ['normal', 'fast', 'slow'].includes(val);
+      }
+    },
+    sync: {
+      type: Boolean,
+      default: false
+    },
+    once: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    time: function time() {
+      switch (this.speed) {
+        case 'normal':
+          return 300;
+        case 'fast':
+          return 150;
+        case 'slow':
+          return 450;
+        default:
+          return 300;
+      }
+    },
+    transitionTime: function transitionTime() {
+      return this.time + 'ms';
+    }
+  },
+
+  methods: {
+    /**
+     * 启动进来时的过渡动画
+     *
+     * @param {Object} opt
+     */
+    enter: function enter() {
+      var _this = this;
+
+      var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      if (this.once && this.isEntering) {
+        return false;
+      }
+
+      this.isEntering = true;
+      this.isLeaving = false;
+
+      if (this.sync && this.moving) {
+        return false;
+      }
+
+      this.code = (0, _uid2.default)();
+      var code = this.code;
+      opt = Object.assign({}, opt, {
+        code: code
+      });
+
+      return new Promise(function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(resolve, reject) {
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.prev = 0;
+
+                  _this.moving = true;
+
+                  _context.t0 = code === _this.code;
+
+                  if (!_context.t0) {
+                    _context.next = 6;
+                    break;
+                  }
+
+                  _context.next = 6;
+                  return _this.beforeEnter(opt);
+
+                case 6:
+                  _context.t1 = code === _this.code;
+
+                  if (!_context.t1) {
+                    _context.next = 10;
+                    break;
+                  }
+
+                  _context.next = 10;
+                  return _this.entering(opt);
+
+                case 10:
+                  _context.t2 = code === _this.code;
+
+                  if (!_context.t2) {
+                    _context.next = 14;
+                    break;
+                  }
+
+                  _context.next = 14;
+                  return _this.afterEnter(opt);
+
+                case 14:
+
+                  _this.moving = false;
+
+                  resolve();
+                  _context.next = 21;
+                  break;
+
+                case 18:
+                  _context.prev = 18;
+                  _context.t3 = _context['catch'](0);
+
+                  reject(_context.t3);
+
+                case 21:
+                case 'end':
+                  return _context.stop();
+              }
+            }
+          }, _callee, _this, [[0, 18]]);
+        }));
+
+        return function (_x2, _x3) {
+          return _ref.apply(this, arguments);
+        };
+      }());
+    },
+
+
+    /**
+     * 启动离开时的过渡动画
+     *
+     * @param {Object} opt
+     */
+    leave: function leave() {
+      var _this2 = this;
+
+      var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      if (this.once && this.isLeaving) {
+        return false;
+      }
+
+      this.isEntering = false;
+      this.isLeaving = true;
+
+      if (this.sync && this.moving) {
+        return false;
+      }
+
+      this.code = (0, _uid2.default)();
+      var code = this.code;
+      opt = Object.assign({}, opt, {
+        code: code
+      });
+
+      return new Promise(function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(resolve, reject) {
+          return regeneratorRuntime.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _context2.prev = 0;
+
+                  _this2.moving = true;
+
+                  _context2.t0 = code === _this2.code;
+
+                  if (!_context2.t0) {
+                    _context2.next = 6;
+                    break;
+                  }
+
+                  _context2.next = 6;
+                  return _this2.beforeLeave(opt);
+
+                case 6:
+                  _context2.t1 = code === _this2.code;
+
+                  if (!_context2.t1) {
+                    _context2.next = 10;
+                    break;
+                  }
+
+                  _context2.next = 10;
+                  return _this2.leaveing(opt);
+
+                case 10:
+                  _context2.t2 = code === _this2.code;
+
+                  if (!_context2.t2) {
+                    _context2.next = 14;
+                    break;
+                  }
+
+                  _context2.next = 14;
+                  return _this2.afterLeave(opt);
+
+                case 14:
+
+                  _this2.moving = false;
+
+                  resolve();
+                  _context2.next = 21;
+                  break;
+
+                case 18:
+                  _context2.prev = 18;
+                  _context2.t3 = _context2['catch'](0);
+
+                  reject(_context2.t3);
+
+                case 21:
+                case 'end':
+                  return _context2.stop();
+              }
+            }
+          }, _callee2, _this2, [[0, 18]]);
+        }));
+
+        return function (_x5, _x6) {
+          return _ref2.apply(this, arguments);
+        };
+      }());
+    },
+    beforeEnter: function beforeEnter() {
+      this.$el.style.display = '';
+
+      return this.$emit('beforeEnter');
+    },
+    entering: function entering() {
+      return this.$emit('entering');
+    },
+    afterEnter: function afterEnter() {
+      return this.$emit('afterEnter');
+    },
+    beforeLeave: function beforeLeave() {
+      this.$el.style.display = 'none';
+
+      return this.$emit('beforeLeave');
+    },
+    leaveing: function leaveing() {
+      return this.$emit('leaveing');
+    },
+    afterLeave: function afterLeave() {
+      return this.$emit('afterLeave');
+    }
+  },
+
+  created: function created() {
+    this.moving = false; // 当前正在执行动画
+    this.isEntering = this.display; // 当前执行进来的动画的编号
+    this.isLeaving = !this.display; // 当前执行离开的动画的编号
+    this.code = 0; // 当前执行的动画的编号
   }
 };
 
@@ -2810,7 +2753,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _motion = __webpack_require__(13);
+var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -2976,7 +2919,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _motion = __webpack_require__(13);
+var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -3247,7 +3190,7 @@ var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
 var _data = __webpack_require__(33);
 
-var _dom = __webpack_require__(42);
+var _dom = __webpack_require__(43);
 
 var _tip = __webpack_require__(5);
 
@@ -3764,7 +3707,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _motion = __webpack_require__(13);
+var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -4024,7 +3967,7 @@ var _Check = __webpack_require__(102);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _event = __webpack_require__(41);
+var _event = __webpack_require__(42);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -4725,7 +4668,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _dom = __webpack_require__(42);
+var _dom = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5056,7 +4999,7 @@ var _Pop = __webpack_require__(24);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
-var _Btn = __webpack_require__(14);
+var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -5397,7 +5340,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _motion = __webpack_require__(13);
+var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -5582,7 +5525,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(162);
 
-var _Btn = __webpack_require__(14);
+var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -5912,7 +5855,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Loading = __webpack_require__(12);
+var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -5940,7 +5883,7 @@ var _list = __webpack_require__(48);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _util = __webpack_require__(38);
+var _util = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5959,6 +5902,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * @event switchPage - 换页触发事件
  * @event scrollerChange - 滚动区域的高度/宽度变化
+ *
+ * @slot loadMore - 加载更多的内容
+ *
+ * @slotScope - 列表的内容
  */
 
 var PAGE_TYPE_NUM = 'num';
@@ -5984,26 +5931,21 @@ exports.default = {
       type: Boolean,
       default: false
     },
-
     item: {
       type: Array,
       default: function _default() {
         return [];
       }
     },
-
     page: Object,
-
     pager: {
       type: Boolean,
       default: false
     },
-
     pageSize: {
       type: Number,
       default: 5
     },
-
     pageType: {
       type: String,
       default: 'num',
@@ -6011,7 +5953,6 @@ exports.default = {
         return ['num', 'more'].includes(val);
       }
     },
-
     pageTrigger: {
       type: String,
       default: 'scroll',
@@ -6019,17 +5960,14 @@ exports.default = {
         return ['click', 'scroll'].includes(val);
       }
     },
-
     autoHideScroller: {
       type: Boolean,
       default: false
     },
-
     autoHidePage: {
       type: Boolean,
       default: false
     },
-
     scrollerHeight: {
       type: [String, Number],
       default: 'auto'
@@ -6049,6 +5987,7 @@ exports.default = {
         left: 0,
         bottom: 0
       },
+      scrollerWidth: 0, // 滚动组件的宽度
       pagerDisplay: false, // 分页显示状态
       transitionQueue: [], // 分页动画队列
       transitedQueueInterval: {} // 轮询分页动画定时器
@@ -6104,6 +6043,9 @@ exports.default = {
     _setDataOpt: function _setDataOpt() {
       this.pageData = Object.assign({}, this.page);
     },
+    _initComp: function _initComp() {
+      this.scrollerWidth = this.$refs.scroller.$el.offsetWidth;
+    },
     _binder: function _binder() {
       var _this = this;
 
@@ -6126,6 +6068,7 @@ exports.default = {
       });
 
       refScroller.$on('change', function (opt) {
+        _this.scrollerWidth = refScroller.$el.offsetWidth;
         _this.initPagePosition();
 
         return _this.$emit('scrollerChange', Object.assign({}, opt, {
@@ -6289,7 +6232,389 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _motion = __webpack_require__(13);
+var _vue = __webpack_require__(3);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+__webpack_require__(128);
+
+var _Icon = __webpack_require__(4);
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+var _Bubble = __webpack_require__(130);
+
+var _Bubble2 = _interopRequireDefault(_Bubble);
+
+var _base = __webpack_require__(2);
+
+var _base2 = _interopRequireDefault(_base);
+
+var _MotionZoom = __webpack_require__(35);
+
+var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
+
+var _prop = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
+                                                                                                                                                                                                                   * bubble 组件
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * 注意要用自定义的 bubble 的时候，bubble的所有祖父元素都不能为相对定位
+                                                                                                                                                                                                                   * 如果bubble有祖父元素有相对定位的，请启用 props 的 fix
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @prop width - bubble最大宽度
+                                                                                                                                                                                                                   * @prop target - 目标的 dom 元素
+                                                                                                                                                                                                                   * @prop message - bubble 信息
+                                                                                                                                                                                                                   * @prop display - 是否立即显示bubble
+                                                                                                                                                                                                                   * @prop fixed - 是否启用基于 window 的相对位置的 bubble
+                                                                                                                                                                                                                   * @prop hideRightNow - 马上显示和隐藏 bubble，就是纯显示的 bubble 要启用
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @slot - 主体内容
+                                                                                                                                                                                                                   */
+
+
+var ARROW_HEIGHT = 20;
+
+exports.default = {
+  name: 'Bubble',
+
+  render: _Bubble2.default,
+
+  mixins: [_base2.default],
+
+  components: {
+    icon: _Icon2.default,
+    'zoom-transition': _MotionZoom2.default
+  },
+
+  props: {
+    theme: {
+      type: String,
+      default: 'primary'
+    },
+    message: {
+      type: String,
+      default: ''
+    },
+    display: {
+      type: Boolean,
+      default: false
+    },
+    fixed: {
+      type: Boolean,
+      default: false
+    },
+    hideRightNow: {
+      type: Boolean,
+      default: false
+    },
+    width: {
+      type: Number,
+      default: 0
+    },
+    target: {
+      type: Object,
+      default: null
+    }
+  },
+
+  data: function data() {
+    this.compName = 'bubble';
+    this.bubbleDisplay = false;
+    this.targetDetail = {}; // 目标的信息
+
+    return {
+      stateMessage: this.message,
+      stateTarget: this.target,
+      mouseOnBubble: false,
+      bubbleDisplayCounter: {},
+      displayInterval: 800
+    };
+  },
+
+
+  computed: {
+    // 组件类名的前缀
+    cPrefix: function cPrefix() {
+      return this.compPrefix + '-bubble';
+    },
+    compClass: function compClass() {
+      var _ref;
+
+      return [this.cPrefix, this.xclass(this.themeClass), (_ref = {}, _defineProperty(_ref, this.xclass('custom'), !this.stateMessage), _defineProperty(_ref, this.xclass('fixed'), this.fixed), _ref)];
+    }
+  },
+
+  methods: {
+    _initComp: function _initComp() {
+      var _this = this;
+
+      if (this.hideRightNow) {
+        this.displayInterval = 0;
+      }
+
+      this.initPoiInterval = setInterval(function () {
+        _this.bubbleDisplay && _this._initPosition();
+      }, 100);
+    },
+    _binder: function _binder() {
+      var _this2 = this;
+
+      this.$refs.transition.$on('afterLeave', function () {
+        _this2.bubbleDisplay = false;
+      });
+
+      this.$refs.transition.$on('afterEnter', function () {
+        _this2.bubbleDisplay = true;
+      });
+    },
+    _setDataOpt: function _setDataOpt() {
+      this.bubbleDisplay = this.display;
+    },
+
+
+    /**
+     * 初始化bubble位置
+     *
+     * @return {Object} - 组件本身
+     */
+    _initPosition: function _initPosition() {
+      var target = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.stateTarget;
+
+      if (!target) {
+        return false;
+      }
+
+      if (target.nodeType !== 1) {
+        console.warn('Vue2do: props target is not a dom element on bubble component.');
+
+        return false;
+      }
+
+      var $el = this.$el;
+      var hide = getComputedStyle($el).display === 'none';
+
+      if (hide) {
+        Object.assign($el.style, {
+          visibility: 'hidden',
+          display: ''
+        });
+      }
+
+      var position = (0, _prop.offset)(target);
+
+      var width = target.offsetWidth;
+      var height = target.offsetHeight;
+
+      if (this.targetDetail.top === position.top && this.targetDetail.left === position.left && this.targetDetail.width === width && this.targetDetail.height === height) {
+        if (hide) {
+          Object.assign($el.style, {
+            display: 'none',
+            visibility: ''
+          });
+        }
+
+        return false;
+      }
+
+      this.targetDetail = {
+        top: position.top,
+        left: position.left,
+        width: width,
+        height: height
+      };
+
+      var bubbleWidth = this.$el.offsetWidth;
+      var bubbleHeight = this.$el.offsetHeight;
+
+      Object.assign(this.$el.style, {
+        top: position.top + height + ARROW_HEIGHT / 2 + 'px',
+        left: position.left - bubbleWidth / 2 + width / 2 + 'px'
+      });
+
+      if (hide) {
+        Object.assign($el.style, {
+          display: 'none',
+          visibility: ''
+        });
+      }
+    },
+
+
+    /**
+     * 显示bubble
+     * @return {Functio} - 初始化bubble位置
+     */
+    show: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _this3 = this;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.bubbleDisplay) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt('return', this);
+
+              case 2:
+
+                clearTimeout(this.bubbleDisplayCounter);
+
+                _context.next = 5;
+                return this.$nextTick(function () {
+                  _this3._initPosition();
+
+                  _this3.$refs.transition.enter();
+                });
+
+              case 5:
+                return _context.abrupt('return', this);
+
+              case 6:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function show() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return show;
+    }(),
+
+
+    /**
+     * 隐藏bubble
+     * @return {Object} - 组件本身
+     */
+    hide: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                clearTimeout(this.bubbleDisplayCounter);
+
+                _context2.next = 3;
+                return this.$refs.transition.leave();
+
+              case 3:
+                return _context2.abrupt('return', new Promise(function (resolve, reject) {
+                  return resolve();
+                }));
+
+              case 4:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function hide() {
+        return _ref3.apply(this, arguments);
+      }
+
+      return hide;
+    }(),
+
+
+    /**
+     * 获取bubble的信息
+     * @return {Object, String}
+     **/
+    info: function info(text) {
+      if (text !== undefined) {
+        this.message = text;
+
+        return this;
+      }
+
+      return this.message;
+    },
+
+
+    /**
+     * 鼠标在bubble上面触发的函数
+     **/
+    mouseOver: function mouseOver() {
+      this.mouseOnBubble = true;
+      clearTimeout(this.bubbleDisplayCounter);
+    },
+
+
+    /**
+     * 鼠标离开bubble触发的函数
+     **/
+    mouseLeave: function mouseLeave() {
+      this.mouseOnBubble = false;
+      this.setTimeoutBubbleDisplay();
+    },
+
+
+    /**
+     * 点击
+     */
+    click: function click(event) {
+      return event.stopPropagation();
+    },
+
+
+    /**
+     * 延迟隐藏
+     **/
+    delayHide: function delayHide() {
+      var _this4 = this;
+
+      this.bubbleDisplayCounter = setTimeout(function () {
+        _this4.hide();
+      }, this.displayInterval);
+    },
+
+
+    /**
+     * 设置相关的属性
+     */
+    set: function set() {
+      var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          message = _ref4.message,
+          target = _ref4.target;
+
+      this.stateMessage = message;
+      this.stateTarget = target;
+
+      return this;
+    }
+  },
+
+  destroyed: function destroyed() {
+    clearInterval(this.initPoiInterval);
+  }
+};
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -6454,7 +6779,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6696,7 +7021,7 @@ var Fold = {
 exports.default = Fold;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6729,7 +7054,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6762,7 +7087,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6796,7 +7121,7 @@ var findGrandpa = function findGrandpa(parent, grandpaName) {
 exports.findGrandpa = findGrandpa;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6806,13 +7131,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(175);
+__webpack_require__(179);
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Menu = __webpack_require__(177);
+var _Menu = __webpack_require__(181);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -6832,7 +7157,7 @@ var _tip = __webpack_require__(5);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _Btn = __webpack_require__(14);
+var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -6840,7 +7165,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Motion = __webpack_require__(178);
+var _Motion = __webpack_require__(182);
 
 var _Motion2 = _interopRequireDefault(_Motion);
 
@@ -6856,7 +7181,7 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Menu3 = __webpack_require__(179);
+var _Menu3 = __webpack_require__(183);
 
 var _Menu4 = _interopRequireDefault(_Menu3);
 
@@ -7142,7 +7467,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7152,15 +7477,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(180);
+__webpack_require__(184);
 
-var _ShiftRender = __webpack_require__(182);
+var _ShiftRender = __webpack_require__(186);
 
 var _ShiftRender2 = _interopRequireDefault(_ShiftRender);
 
 var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
+
+var _Row = __webpack_require__(9);
+
+var _Row2 = _interopRequireDefault(_Row);
+
+var _Col = __webpack_require__(8);
+
+var _Col2 = _interopRequireDefault(_Col);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7182,6 +7515,11 @@ exports.default = {
 
   mixins: [_base2.default],
 
+  components: {
+    row: _Row2.default,
+    column: _Col2.default
+  },
+
   props: {
     after: String,
     before: String,
@@ -7189,9 +7527,16 @@ exports.default = {
       type: Number,
       default: 1
     },
+    justify: {
+      type: String,
+      default: 'justify'
+    },
     type: {
       type: String,
-      default: 'display'
+      default: 'display',
+      validator: function validator(val) {
+        return SHIFT_TYPE.includes(val);
+      }
     }
   },
 
@@ -7308,13 +7653,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 module.exports = {"select":{"option":{"change":"selectOptChange"}},"input":{"focus":"focusInput","blur":"blurInput","keyup":"keyupInput","change":"changeInput","completion":{"click":"clickCompletion"}},"tab":{"change":"tabChange"},"checkbox":{"change":"checkboxChange"},"btn":{"click":"clickBtn"},"scroller":{"change":{"height":"changeHeight","bar":{"y":"changeYBar","x":"changeXBar"}},"scroll":{"y":"scrollY","x":"scrollX"}},"common":{"searchTool":{"change":"searchQueryChange"}}}
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7357,7 +7702,7 @@ var hasScroller = function hasScroller() {
 exports.hasScroller = hasScroller;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7710,296 +8055,6 @@ var formComp = {
 exports.default = formComp;
 
 /***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _vue = __webpack_require__(3);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-__webpack_require__(128);
-
-var _Icon = __webpack_require__(4);
-
-var _Icon2 = _interopRequireDefault(_Icon);
-
-var _Bubble = __webpack_require__(130);
-
-var _Bubble2 = _interopRequireDefault(_Bubble);
-
-var _base = __webpack_require__(2);
-
-var _base2 = _interopRequireDefault(_base);
-
-var _MotionZoom = __webpack_require__(34);
-
-var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
-
-var _prop = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * bubble 组件
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * 注意要用自定义的 bubble 的时候，bubble的所有祖父元素都不能为相对定位
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * 如果bubble有祖父元素有相对定位的，请启用 props 的 relative
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop theme - 主题
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop width - bubble最大宽度
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop message - bubble 信息
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop display - 是否立即显示bubble
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop relative - 是否启用相对位置的 bubble
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @prop hideRightNow - 马上显示和隐藏 bubble，就是纯显示的 bubble 要启用
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            * @slot - 主体内容
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            */
-
-
-var ARROW_HEIGHT = 20;
-
-exports.default = {
-  name: 'Bubble',
-
-  render: _Bubble2.default,
-
-  mixins: [_base2.default],
-
-  components: {
-    icon: _Icon2.default,
-    'zoom-transition': _MotionZoom2.default
-  },
-
-  props: {
-    theme: {
-      type: String,
-      default: 'primary'
-    },
-
-    message: {
-      type: String,
-      default: ''
-    },
-
-    display: {
-      type: Boolean,
-      default: false
-    },
-
-    relative: {
-      type: Boolean,
-      default: false
-    },
-
-    hideRightNow: {
-      type: Boolean,
-      default: false
-    },
-
-    width: {
-      type: Number,
-      default: 0
-    }
-  },
-
-  data: function data() {
-    this.compName = 'bubble';
-    this.bubbleDisplay = false;
-
-    return {
-      mouseOnBubble: false,
-      bubbleDisplayCounter: {},
-      displayInterval: 800
-    };
-  },
-
-
-  computed: {
-    // 组件类名的前缀
-    cPrefix: function cPrefix() {
-      return this.compPrefix + '-bubble';
-    }
-  },
-
-  methods: {
-    _initComp: function _initComp() {
-      if (this.hideRightNow) {
-        this.displayInterval = 0;
-      }
-    },
-    _setDataOpt: function _setDataOpt() {
-      this.bubbleDisplay = this.display;
-    },
-
-    /**
-     * 初始化bubble位置
-     * @return {Object} - 组件本身
-     */
-    _initPosition: function _initPosition(target) {
-      var $el = this.$el;
-      var hide = getComputedStyle($el).display === 'none';
-
-      if (hide) {
-        Object.assign($el.style, {
-          visibility: 'hidden',
-          display: ''
-        });
-      }
-
-      var position = (0, _prop.offset)(target);
-
-      var width = target.offsetWidth;
-      var height = target.offsetHeight;
-
-      var bubbleWidth = this.$el.offsetWidth;
-      var bubbleHeight = this.$el.offsetWidth;
-
-      Object.assign(this.$el.style, {
-        top: position.top - height - ARROW_HEIGHT / 2 + 'px',
-        left: position.left - bubbleWidth / 2 + width / 2 + 'px'
-      });
-
-      if (hide) {
-        Object.assign($el.style, {
-          display: 'none',
-          visibility: ''
-        });
-      }
-    },
-
-
-    /**
-     * 显示bubble
-     * @return {Functio} - 初始化bubble位置
-     */
-    show: function show(target) {
-      var _this = this;
-
-      if (this.bubbleDisplay) {
-        return this;
-      }
-
-      clearTimeout(this.bubbleDisplayCounter);
-
-      this._initPosition(target);
-
-      this.$refs.transition.$off('afterEnter');
-      this.$refs.transition.$on('afterEnter', function () {
-        _this.bubbleDisplay = true;
-      });
-
-      this.$refs.transition.enter();
-
-      return this;
-    },
-
-
-    /**
-     * 隐藏bubble
-     * @return {Object} - 组件本身
-     */
-    hide: function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var _this2 = this;
-
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                clearTimeout(this.bubbleDisplayCounter);
-
-                this.$refs.transition.$off('afterLeave');
-                this.$refs.transition.$on('afterLeave', function () {
-                  _this2.bubbleDisplay = false;
-                });
-
-                _context.next = 5;
-                return this.$refs.transition.leave();
-
-              case 5:
-                return _context.abrupt('return', new Promise(function (resolve, reject) {
-                  return resolve();
-                }));
-
-              case 6:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function hide() {
-        return _ref.apply(this, arguments);
-      }
-
-      return hide;
-    }(),
-
-
-    /**
-     * 获取bubble的信息
-     * @return {Object, String}
-     **/
-    info: function info(text) {
-      if (text !== undefined) {
-        this.message = text;
-
-        return this;
-      }
-
-      return this.message;
-    },
-
-
-    /**
-     * 鼠标在bubble上面触发的函数
-     **/
-    mouseOver: function mouseOver() {
-      this.mouseOnBubble = true;
-      clearTimeout(this.bubbleDisplayCounter);
-    },
-
-
-    /**
-     * 鼠标离开bubble触发的函数
-     **/
-    mouseLeave: function mouseLeave() {
-      this.mouseOnBubble = false;
-      this.setTimeoutBubbleDisplay();
-    },
-
-
-    /**
-     * 点击
-     */
-    click: function click(event) {
-      return event.stopPropagation();
-    },
-
-
-    /**
-     * 延迟隐藏
-     **/
-    delayHide: function delayHide() {
-      var _this3 = this;
-
-      this.bubbleDisplayCounter = setTimeout(function () {
-        _this3.hide();
-      }, this.displayInterval);
-    }
-  }
-};
-
-/***/ }),
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8022,15 +8077,15 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Fold = __webpack_require__(35);
+var _Fold = __webpack_require__(36);
 
 var _Fold2 = _interopRequireDefault(_Fold);
 
-var _FoldTitle = __webpack_require__(36);
+var _FoldTitle = __webpack_require__(37);
 
 var _FoldTitle2 = _interopRequireDefault(_FoldTitle);
 
-var _FoldContent = __webpack_require__(37);
+var _FoldContent = __webpack_require__(38);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
@@ -8521,7 +8576,7 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Loading = __webpack_require__(12);
+var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -8598,11 +8653,15 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(172);
 
-var _Table = __webpack_require__(174);
+__webpack_require__(174);
+
+__webpack_require__(176);
+
+var _Table = __webpack_require__(178);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _Loading = __webpack_require__(12);
+var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -8618,26 +8677,29 @@ var _tip = __webpack_require__(5);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _util = __webpack_require__(38);
+var _util = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var COL_PADDING_BORDER_LENGTH = 22; /**
-                                     * table 组件
-                                     *
-                                     * @prop auto - 根据传入的列表数据生成分页数据
-                                     * @prop border - 表格的边界线的类型
-                                     *   （none：默认是不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
-                                     * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
-                                     * @prop pager - 启动分页功能
-                                     * @prop pageSize - 将列表数据（item）分为每页多少条数据
-                                     * @prop list - 默认是不以列表化的表格数据
-                                     * @prop thead - 表头标题数据
-                                     * @prop tbody - 列表的数据
-                                     * @prop scrollerAutoHide - 滚动条自动隐藏
-                                     *
-                                     * @event switchPage - 切换分页
-                                     */
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
+                                                                                                                                                                                                                   * table 组件
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @prop auto - 根据传入的列表数据生成分页数据
+                                                                                                                                                                                                                   * @prop border - 表格的边界线的类型 (默认是 row)
+                                                                                                                                                                                                                   *   （none：不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
+                                                                                                                                                                                                                   * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+                                                                                                                                                                                                                   * @prop pager - 启动分页功能
+                                                                                                                                                                                                                   * @prop pageSize - 将列表数据（item）分为每页多少条数据
+                                                                                                                                                                                                                   * @prop list - 默认是不以列表化的表格数据
+                                                                                                                                                                                                                   * @prop thead - 表头标题数据
+                                                                                                                                                                                                                   * @prop tbody - 列表的数据
+                                                                                                                                                                                                                   * @prop scrollerAutoHide - 滚动条自动隐藏
+                                                                                                                                                                                                                   * @prop stripe - 条纹表格
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @event switchPage - 切换分页
+                                                                                                                                                                                                                   */
+
+var COL_PADDING_BORDER_LENGTH = 22;
 
 var Table = {
   name: 'Table',
@@ -8661,7 +8723,7 @@ var Table = {
     },
     border: {
       type: String,
-      default: 'none'
+      default: 'row'
     },
     list: {
       type: Boolean,
@@ -8692,6 +8754,10 @@ var Table = {
     pageSize: {
       type: Number,
       default: 5
+    },
+    stripe: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -8703,7 +8769,7 @@ var Table = {
       pageData: {},
       tbodyItem: this.tbody.slice(),
       theadItem: this.thead.slice(),
-      tableWidth: 0 // 组件自身的宽度
+      scrollerWidth: 0 // 组件自身的宽度
     };
   },
 
@@ -8714,6 +8780,9 @@ var Table = {
     },
     pagerDisplay: function pagerDisplay() {
       return this.list && this.pager && this.tbody.length > 0 && this.tbodyItem.length > 0;
+    },
+    compClass: function compClass() {
+      return [this.cPrefix, _defineProperty({}, this.xclass('stripe'), this.stripe), this.xclass([this.themeClass, this.uiClass, 'border-' + this.border])];
     }
   },
 
@@ -8740,18 +8809,25 @@ var Table = {
 
   methods: {
     _initComp: function _initComp() {
-      this.tableWidth = this.$el.offsetWidth;
+      this.scrollerWidth = this.$refs.scroller.$el.offsetWidth;
+    },
+    _binder: function _binder() {
+      var _this = this;
+
+      this.$refs.scroller.$on('change', function () {
+        _this.scrollerWidth = _this.$refs.scroller.$el.offsetWidth;
+      });
     },
 
 
     /**
      * 初始化分页
      */
-    initPage: function initPage(_ref) {
-      var _ref$tableData = _ref.tableData,
-          tableData = _ref$tableData === undefined ? {} : _ref$tableData,
-          _ref$pageData = _ref.pageData,
-          pageData = _ref$pageData === undefined ? {} : _ref$pageData;
+    initPage: function initPage(_ref2) {
+      var _ref2$tableData = _ref2.tableData,
+          tableData = _ref2$tableData === undefined ? {} : _ref2$tableData,
+          _ref2$pageData = _ref2.pageData,
+          pageData = _ref2$pageData === undefined ? {} : _ref2$pageData;
 
       if (!this.auto) {
         this.pageData = Object.assign({}, pageData);
@@ -8777,10 +8853,10 @@ var Table = {
      *
      * @return { Object }
      */
-    initTable: function initTable(_ref2) {
-      var _ref2$pageNum = _ref2.pageNum,
-          pageNum = _ref2$pageNum === undefined ? 1 : _ref2$pageNum,
-          tableData = _ref2.tableData;
+    initTable: function initTable(_ref3) {
+      var _ref3$pageNum = _ref3.pageNum,
+          pageNum = _ref3$pageNum === undefined ? 1 : _ref3$pageNum,
+          tableData = _ref3.tableData;
 
       this.tbodyItem = this.getListItemByPage({
         listItem: tableData,
@@ -8833,7 +8909,9 @@ var Table = {
   },
 
   created: function created() {
-    this.initPage({ tableData: this.tbody.slice() }).initTable({
+    this.initPage({
+      tableData: this.tbody.slice()
+    }).initTable({
       pageNum: this.pageData.current,
       tableData: this.tbody.slice()
     });
@@ -8893,7 +8971,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _util = __webpack_require__(38);
+var _util = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9092,17 +9170,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-__webpack_require__(183);
-
-__webpack_require__(185);
-
 __webpack_require__(187);
+
+__webpack_require__(189);
+
+__webpack_require__(191);
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _SelectOpt = __webpack_require__(189);
+var _SelectOpt = __webpack_require__(193);
 
 var _SelectOpt2 = _interopRequireDefault(_SelectOpt);
 
@@ -9110,7 +9188,7 @@ var _keyCode = __webpack_require__(26);
 
 var _keyCode2 = _interopRequireDefault(_keyCode);
 
-var _Select = __webpack_require__(193);
+var _Select = __webpack_require__(197);
 
 var _Select2 = _interopRequireDefault(_Select);
 
@@ -9146,7 +9224,7 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Menu = __webpack_require__(39);
+var _Menu = __webpack_require__(40);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -9158,7 +9236,7 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Select3 = __webpack_require__(194);
+var _Select3 = __webpack_require__(198);
 
 var _Select4 = _interopRequireDefault(_Select3);
 
@@ -10006,21 +10084,33 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(195);
+__webpack_require__(199);
+
+__webpack_require__(201);
+
+__webpack_require__(203);
+
+var _Shift = __webpack_require__(41);
+
+var _Shift2 = _interopRequireDefault(_Shift);
+
+var _Scroller = __webpack_require__(10);
+
+var _Scroller2 = _interopRequireDefault(_Scroller);
+
+var _Btn = __webpack_require__(12);
+
+var _Btn2 = _interopRequireDefault(_Btn);
 
 var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _TabRender = __webpack_require__(197);
+var _TabRender = __webpack_require__(205);
 
 var _TabRender2 = _interopRequireDefault(_TabRender);
 
-var _Shift = __webpack_require__(40);
-
-var _Shift2 = _interopRequireDefault(_Shift);
-
-var _url = __webpack_require__(198);
+var _url = __webpack_require__(206);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10032,7 +10122,9 @@ exports.default = {
   render: _TabRender2.default,
 
   components: {
-    shift: _Shift2.default
+    shift: _Shift2.default,
+    scroller: _Scroller2.default,
+    btn: _Btn2.default
   },
 
   props: {
@@ -10051,16 +10143,22 @@ exports.default = {
 
   data: function data() {
     return {
+      tabEleWidth: 0, // 选项卡下的棍棒的宽度
       value: {},
       option: [],
-      currentIndex: 0
+      currentIndex: 0,
+      refTabEle: null // 选项卡的元素
     };
   },
 
   computed: {
-    // 组件类名的前缀
     cPrefix: function cPrefix() {
+      // 组件类名的前缀
       return this.compPrefix + '-tab';
+    },
+    shiftJustify: function shiftJustify() {
+      // shift 组件的 justify 属性
+      return this.deviceSize === 's' || this.deviceSize === 'xs' ? 'justify' : 'start';
     }
   },
 
@@ -10073,10 +10171,24 @@ exports.default = {
     },
     currentIndex: function currentIndex(val) {
       return this.$refs.shift.switch(val);
+    },
+    option: function option() {
+      var _this = this;
+
+      this.$nextTick(function () {
+        _this.tabEleWidth = _this.refTabEle.offsetWidth;
+      });
     }
   },
 
   methods: {
+    _binder: function _binder() {
+      var _this2 = this;
+
+      this.$refs.scroller.$on('change', function () {
+        _this2.tabEleWidth = _this2.refTabEle.offsetWidth;
+      });
+    },
     _setDataOpt: function _setDataOpt() {
       this.value = this.initVal;
       this.option = this.initOpt;
@@ -10139,6 +10251,15 @@ exports.default = {
         text: this.initOpt[index - 1].text
       });
     }
+  },
+
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.$nextTick(function () {
+      _this3.refTabEle = _this3.$refs.shift.$el.getElementsByClassName('z-tab-active')[0];
+      _this3.tabEleWidth = _this3.refTabEle.offsetWidth;
+    });
   }
 }; /**
     * tab 组件
@@ -10148,6 +10269,8 @@ exports.default = {
     * @prop query - 开启根据网址的 search 参数来选择选项卡
     *
     * @event click - 点击 tab
+    *
+    * @slotScope - tab 内容
     */
 
 /***/ }),
@@ -10196,7 +10319,7 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.install = exports.set = exports.MotionZoom = exports.MotionSlide = exports.MotionRip = exports.MotionFold = exports.MotionFade = exports.TableRow = exports.TableCol = exports.Table = exports.TabEle = exports.Tab = exports.ShiftEle = exports.Shift = exports.SelectEle = exports.Select = exports.Search = exports.Scroller = exports.Row = exports.Fold = exports.Pop = exports.Page = exports.Omit = exports.Nav = exports.Modal = exports.MenuEle = exports.Menu = exports.Message = exports.List = exports.Loading = exports.Icon = exports.Input = exports.FoldContent = exports.FoldTitle = exports.Form = exports.Col = exports.Check = exports.Btn = exports.Bubble = exports.toast = exports.tip = exports.confirm = exports.alert = undefined;
+exports.install = exports.set = exports.MotionZoom = exports.MotionSlide = exports.MotionRip = exports.MotionFold = exports.MotionFade = exports.TableRow = exports.TableCol = exports.Table = exports.TabEle = exports.Tab = exports.ShiftEle = exports.Shift = exports.SelectEle = exports.Select = exports.Search = exports.Scroller = exports.Row = exports.Fold = exports.Pop = exports.Page = exports.Omit = exports.Nav = exports.Modal = exports.MenuEle = exports.Menu = exports.Message = exports.List = exports.Loading = exports.Icon = exports.Input = exports.FoldContent = exports.FoldTitle = exports.Form = exports.Col = exports.Check = exports.Btn = exports.Bubble = exports.tooltip = exports.toast = exports.tip = exports.confirm = exports.alert = undefined;
 
 __webpack_require__(59);
 
@@ -10214,17 +10337,17 @@ var _src = __webpack_require__(73);
 
 var _src2 = _interopRequireDefault(_src);
 
-var _zhCn = __webpack_require__(199);
+var _zhCn = __webpack_require__(207);
 
 var _zhCn2 = _interopRequireDefault(_zhCn);
 
-var _config = __webpack_require__(200);
+var _config = __webpack_require__(208);
 
-var _alert = __webpack_require__(202);
+var _alert = __webpack_require__(210);
 
 var _alert2 = _interopRequireDefault(_alert);
 
-var _confirm = __webpack_require__(203);
+var _confirm = __webpack_require__(211);
 
 var _confirm2 = _interopRequireDefault(_confirm);
 
@@ -10232,15 +10355,19 @@ var _tip = __webpack_require__(5);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _toast = __webpack_require__(204);
+var _toast = __webpack_require__(212);
 
 var _toast2 = _interopRequireDefault(_toast);
 
-var _Btn = __webpack_require__(14);
+var _tooltip = __webpack_require__(213);
+
+var _tooltip2 = _interopRequireDefault(_tooltip);
+
+var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
-var _Bubble = __webpack_require__(44);
+var _Bubble = __webpack_require__(34);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
@@ -10252,19 +10379,19 @@ var _Check = __webpack_require__(22);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Form = __webpack_require__(43);
+var _Form = __webpack_require__(44);
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _Fold = __webpack_require__(35);
+var _Fold = __webpack_require__(36);
 
 var _Fold2 = _interopRequireDefault(_Fold);
 
-var _FoldTitle = __webpack_require__(36);
+var _FoldTitle = __webpack_require__(37);
 
 var _FoldTitle2 = _interopRequireDefault(_FoldTitle);
 
-var _FoldContent = __webpack_require__(37);
+var _FoldContent = __webpack_require__(38);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
@@ -10280,7 +10407,7 @@ var _List = __webpack_require__(29);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Loading = __webpack_require__(12);
+var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -10288,7 +10415,7 @@ var _Message = __webpack_require__(23);
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _Menu = __webpack_require__(39);
+var _Menu = __webpack_require__(40);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -10336,7 +10463,7 @@ var _SelectEle = __webpack_require__(55);
 
 var _SelectEle2 = _interopRequireDefault(_SelectEle);
 
-var _Shift = __webpack_require__(40);
+var _Shift = __webpack_require__(41);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
@@ -10380,7 +10507,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _MotionZoom = __webpack_require__(34);
+var _MotionZoom = __webpack_require__(35);
 
 var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
 
@@ -10391,6 +10518,7 @@ exports.alert = _alert2.default;
 exports.confirm = _confirm2.default;
 exports.tip = _tip2.default;
 exports.toast = _toast2.default;
+exports.tooltip = _tooltip2.default;
 exports.Bubble = _Bubble2.default;
 exports.Btn = _Btn2.default;
 exports.Check = _Check2.default;
@@ -10931,7 +11059,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.install = undefined;
 
-var _Btn = __webpack_require__(14);
+var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -10939,7 +11067,7 @@ var _Check = __webpack_require__(22);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Form = __webpack_require__(43);
+var _Form = __webpack_require__(44);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -10951,7 +11079,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Bubble = __webpack_require__(44);
+var _Bubble = __webpack_require__(34);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
@@ -10971,7 +11099,7 @@ var _Code = __webpack_require__(147);
 
 var _Code2 = _interopRequireDefault(_Code);
 
-var _Loading = __webpack_require__(12);
+var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -10995,15 +11123,15 @@ var _Search = __webpack_require__(47);
 
 var _Search2 = _interopRequireDefault(_Search);
 
-var _Fold = __webpack_require__(35);
+var _Fold = __webpack_require__(36);
 
 var _Fold2 = _interopRequireDefault(_Fold);
 
-var _FoldTitle = __webpack_require__(36);
+var _FoldTitle = __webpack_require__(37);
 
 var _FoldTitle2 = _interopRequireDefault(_FoldTitle);
 
-var _FoldContent = __webpack_require__(37);
+var _FoldContent = __webpack_require__(38);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
@@ -11023,7 +11151,7 @@ var _TableCol = __webpack_require__(51);
 
 var _TableCol2 = _interopRequireDefault(_TableCol);
 
-var _Menu = __webpack_require__(39);
+var _Menu = __webpack_require__(40);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -11031,7 +11159,7 @@ var _MenuEle = __webpack_require__(52);
 
 var _MenuEle2 = _interopRequireDefault(_MenuEle);
 
-var _Shift = __webpack_require__(40);
+var _Shift = __webpack_require__(41);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
@@ -11079,7 +11207,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _MotionZoom = __webpack_require__(34);
+var _MotionZoom = __webpack_require__(35);
 
 var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
 
@@ -11147,7 +11275,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件样式\r\n */\n.z-btn.z-btn-ban .z-btn-read-only-shadow {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n.z-btn {\n  position: relative;\n  display: inline-block;\n  cursor: pointer; }\n  .z-btn > .z-btn-ele {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position: relative;\n    min-width: 64px;\n    box-sizing: border-box;\n    border-radius: 3px;\n    color: #fff;\n    text-align: center;\n    font-size: 14px;\n    overflow: hidden;\n    line-height: 1;\n    white-space: nowrap;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    transition-duration: 150ms;\n    transition-property: background-color, border-color, box-shadow, color;\n    transition-timing-function: ease-in-out; }\n    .z-btn > .z-btn-ele > .z-btn-ele-border {\n      border: transparent 1px solid;\n      padding: 10px 8px; }\n    .z-btn > .z-btn-ele .z-btn-loading {\n      position: absolute;\n      left: 8px;\n      z-index: 2; }\n  .z-btn > a.z-btn-ele {\n    width: 100%; }\n  .z-btn.z-btn-block {\n    display: block;\n    width: 100%; }\n  .z-btn.z-btn-size-m > .z-btn-ele {\n    min-width: 108px; }\n  .z-btn.z-btn-size-l > .z-btn-ele {\n    min-width: 128px; }\n  .z-btn.z-btn-size.z-btn-type-float-m > .z-btn-ele {\n    width: 56px;\n    height: 56px; }\n  .z-btn.z-btn-size.z-btn-type-float-l > .z-btn-ele {\n    width: 72px;\n    height: 72px; }\n  .z-btn.z-btn-radius-none > .z-btn-ele {\n    border-radius: 0; }\n  .z-btn.z-btn-radius-m > .z-btn-ele {\n    border-radius: 10px; }\n  .z-btn.z-btn-radius-l > .z-btn-ele {\n    border-radius: 30px; }\n  .z-btn.z-btn-ban .z-btn-ele {\n    color: rgba(0, 0, 0, 0.4);\n    background-color: rgba(0, 0, 0, 0.12) !important; }\n  .z-btn.z-btn-ban .z-btn-read-only-shadow {\n    background-color: rgba(255, 255, 255, 0.5);\n    border-radius: 3px;\n    cursor: not-allowed;\n    z-index: 1; }\n  .z-btn.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 3px;\n    background-color: #2196f3; }\n  .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 100%;\n    width: 40px;\n    height: 40px;\n    box-sizing: border-box;\n    padding: 0;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n    min-width: auto; }\n    .z-btn.z-btn-type-float > .z-btn-ele::after {\n      content: \" \";\n      display: inline-block;\n      vertical-align: middle;\n      height: 100%;\n      width: 0; }\n    .z-btn.z-btn-type-float > .z-btn-ele .z-btn-ele-border {\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-btn.z-btn-type-flat > .z-btn-ele {\n    background-color: #fff;\n    color: #2196f3; }\n  .z-btn.z-btn-type-outline > .z-btn-ele {\n    background-color: #fff;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #2196f3;\n    color: #2196f3; }\n  .z-btn .z-btn-value-show {\n    display: inline-block; }\n\n.z-btn.z-btn-theme-success.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-success.z-btn-type-float > .z-btn-ele {\n  background-color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-flat > .z-btn-ele {\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-outline > .z-btn-ele {\n  border-color: #4caf50;\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-danger.z-btn-type-float > .z-btn-ele {\n  background-color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-flat > .z-btn-ele {\n  color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele {\n  border-color: #f44336;\n  color: #f44336; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-blue.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-flat > .z-btn-ele {\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3;\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-warning.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-flat > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-orange.z-btn-type-float > .z-btn-ele {\n  background-color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-flat > .z-btn-ele {\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele {\n  border-color: #ff5722;\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-grey.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-flat > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-light.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-light.z-btn-type-float > .z-btn-ele {\n  background-color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-flat > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-outline > .z-btn-ele {\n  border-color: #f5f5f5;\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-dark.z-btn-type-float > .z-btn-ele {\n  background-color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-flat > .z-btn-ele {\n  color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele {\n  border-color: #424242;\n  color: #424242; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件样式\r\n */\n.z-btn.z-btn-ban .z-btn-read-only-shadow {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n.z-btn {\n  position: relative;\n  display: inline-block;\n  cursor: pointer;\n  vertical-align: middle; }\n  .z-btn > .z-btn-ele {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position: relative;\n    min-width: 64px;\n    box-sizing: border-box;\n    border-radius: 3px;\n    color: #fff;\n    text-align: center;\n    font-size: 14px;\n    overflow: hidden;\n    line-height: 1;\n    white-space: nowrap;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    transition-duration: 150ms;\n    transition-property: background-color, border-color, box-shadow, color;\n    transition-timing-function: ease-in-out; }\n    .z-btn > .z-btn-ele > .z-btn-ele-border {\n      border: transparent 1px solid;\n      padding: 10px 8px; }\n    .z-btn > .z-btn-ele .z-btn-loading {\n      position: absolute;\n      left: 8px;\n      z-index: 2; }\n  .z-btn > a.z-btn-ele {\n    width: 100%; }\n  .z-btn.z-btn-block {\n    display: block;\n    width: 100%; }\n  .z-btn.z-btn-size-m > .z-btn-ele {\n    min-width: 108px; }\n  .z-btn.z-btn-size-l > .z-btn-ele {\n    min-width: 128px; }\n  .z-btn.z-btn-size.z-btn-type-float-m > .z-btn-ele {\n    width: 56px;\n    height: 56px; }\n  .z-btn.z-btn-size.z-btn-type-float-l > .z-btn-ele {\n    width: 72px;\n    height: 72px; }\n  .z-btn.z-btn-radius-none > .z-btn-ele {\n    border-radius: 0; }\n  .z-btn.z-btn-radius-m > .z-btn-ele {\n    border-radius: 10px; }\n  .z-btn.z-btn-radius-l > .z-btn-ele {\n    border-radius: 30px; }\n  .z-btn.z-btn-ban .z-btn-ele {\n    color: rgba(0, 0, 0, 0.4);\n    background-color: rgba(0, 0, 0, 0.12) !important; }\n  .z-btn.z-btn-ban .z-btn-read-only-shadow {\n    background-color: rgba(255, 255, 255, 0.5);\n    border-radius: 3px;\n    cursor: not-allowed;\n    z-index: 1; }\n  .z-btn.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 3px;\n    background-color: #2196f3; }\n  .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 100%;\n    width: 40px;\n    height: 40px;\n    box-sizing: border-box;\n    padding: 0;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n    min-width: auto; }\n    .z-btn.z-btn-type-float > .z-btn-ele::after {\n      content: \" \";\n      display: inline-block;\n      vertical-align: middle;\n      height: 100%;\n      width: 0; }\n    .z-btn.z-btn-type-float > .z-btn-ele .z-btn-ele-border {\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-btn.z-btn-type-flat > .z-btn-ele {\n    background-color: #fff;\n    color: #2196f3; }\n  .z-btn.z-btn-type-outline > .z-btn-ele {\n    background-color: #fff;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #2196f3;\n    color: #2196f3; }\n  .z-btn .z-btn-value-show {\n    display: inline-block; }\n\n.z-btn.z-btn-theme-success.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-success.z-btn-type-float > .z-btn-ele {\n  background-color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-flat > .z-btn-ele {\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-outline > .z-btn-ele {\n  border-color: #4caf50;\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-danger.z-btn-type-float > .z-btn-ele {\n  background-color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-flat > .z-btn-ele {\n  color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele {\n  border-color: #f44336;\n  color: #f44336; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-blue.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-flat > .z-btn-ele {\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3;\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-warning.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-flat > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-orange.z-btn-type-float > .z-btn-ele {\n  background-color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-flat > .z-btn-ele {\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele {\n  border-color: #ff5722;\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-grey.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-flat > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-light.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-light.z-btn-type-float > .z-btn-ele {\n  background-color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-flat > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-outline > .z-btn-ele {\n  border-color: #f5f5f5;\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-dark.z-btn-type-float > .z-btn-ele {\n  background-color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-flat > .z-btn-ele {\n  color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele {\n  border-color: #424242;\n  color: #424242; }\n", ""]);
 
 // exports
 
@@ -11466,6 +11594,7 @@ exports.default = {
     confirm: null,
     tip: null,
     toast: null,
+    tooltip: null,
     deviceSize: ''
   },
 
@@ -11477,6 +11606,8 @@ exports.default = {
     return state.tip;
   }), _defineProperty(_getters, _type2.default.toast.get, function (state) {
     return state.toast;
+  }), _defineProperty(_getters, _type2.default.tooltip.get, function (state) {
+    return state.tooltip;
   }), _defineProperty(_getters, _type2.default.deviceSize, function (state) {
     return state.deviceSize.replace(/('|")/g, '');
   }), _getters),
@@ -11505,10 +11636,16 @@ exports.default = {
         rootState = _ref4.rootState;
 
     return commit(_type2.default.toast.add, component);
-  }), _defineProperty(_actions, _type2.default.deviceSize, function (_ref5, sizeName) {
+  }), _defineProperty(_actions, _type2.default.tooltip.add, function (_ref5, component) {
     var state = _ref5.state,
         commit = _ref5.commit,
         rootState = _ref5.rootState;
+
+    return commit(_type2.default.tooltip.add, component);
+  }), _defineProperty(_actions, _type2.default.deviceSize, function (_ref6, sizeName) {
+    var state = _ref6.state,
+        commit = _ref6.commit,
+        rootState = _ref6.rootState;
 
     return commit(_type2.default.deviceSize, sizeName);
   }), _actions),
@@ -11521,6 +11658,8 @@ exports.default = {
     state.confirm = component;
   }), _defineProperty(_mutations, _type2.default.toast.add, function (state, component) {
     state.toast = component;
+  }), _defineProperty(_mutations, _type2.default.tooltip.add, function (state, component) {
+    state.tooltip = component;
   }), _defineProperty(_mutations, _type2.default.deviceSize, function (state, sizeName) {
     state.deviceSize = sizeName;
   }), _mutations)
@@ -12020,7 +12159,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 material UI 样式\r\n */\n.z-check.z-check-ui-material .z-check-motion-rip {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0; }\n  .z-check.z-check-ui-material .z-check-motion-rip:after {\n    content: \"\";\n    position: absolute;\n    background-color: rgba(112, 112, 112, 0.3);\n    top: 50%;\n    left: 50%;\n    width: 200%;\n    height: 200%;\n    border-radius: 100%;\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n        -ms-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1);\n    -webkit-animation: z-check-motion-rip 2s infinite ease-in-out;\n            animation: z-check-motion-rip 2s infinite ease-in-out; }\n\n@-webkit-keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); } }\n\n@keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); } }\n\n.z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col {\n  display: inline-block;\n  line-height: 0; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus {\n    outline: none; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n    font-size: 18px; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-check-rip {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-color: rgba(112, 112, 112, 0.4); }\n    .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n      background-color: rgba(112, 112, 112, 0.8); }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n    color: #2196f3; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n    background-color: rgba(33, 150, 243, 0.3); }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n    background-color: rgba(33, 150, 243, 0.2); }\n    .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n      background-color: rgba(33, 150, 243, 0.8); }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(76, 175, 80, 0.3); }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(76, 175, 80, 0.4); }\n  .z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(76, 175, 80, 0.8); }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(244, 67, 54, 0.3); }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(244, 67, 54, 0.4); }\n  .z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(244, 67, 54, 0.8); }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(158, 158, 158, 0.3); }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(158, 158, 158, 0.4); }\n  .z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(158, 158, 158, 0.8); }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(255, 87, 34, 0.3); }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(255, 87, 34, 0.4); }\n  .z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(255, 87, 34, 0.8); }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(33, 150, 243, 0.4); }\n  .z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(33, 150, 243, 0.8); }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 material UI 样式\r\n */\n.z-check.z-check-ui-material .z-check-motion-rip {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0; }\n  .z-check.z-check-ui-material .z-check-motion-rip:after {\n    content: \"\";\n    position: absolute;\n    background-color: rgba(204, 204, 204, 0.3);\n    top: 50%;\n    left: 50%;\n    width: 200%;\n    height: 200%;\n    border-radius: 100%;\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n        -ms-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1);\n    -webkit-animation: z-check-motion-rip 2s infinite ease-in-out;\n            animation: z-check-motion-rip 2s infinite ease-in-out; }\n\n@-webkit-keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); } }\n\n@keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); } }\n\n.z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col {\n  display: inline-block;\n  line-height: 0; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus {\n    outline: none; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n    font-size: 18px; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-check-rip {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-color: rgba(204, 204, 204, 0.4); }\n    .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n      background-color: rgba(204, 204, 204, 0.8); }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n    color: #2196f3; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n    background-color: rgba(33, 150, 243, 0.3); }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n    background-color: rgba(33, 150, 243, 0.2); }\n    .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n      background-color: rgba(33, 150, 243, 0.8); }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(76, 175, 80, 0.3); }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(76, 175, 80, 0.4); }\n  .z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(76, 175, 80, 0.8); }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(244, 67, 54, 0.3); }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(244, 67, 54, 0.4); }\n  .z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(244, 67, 54, 0.8); }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(158, 158, 158, 0.3); }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(158, 158, 158, 0.4); }\n  .z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(158, 158, 158, 0.8); }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(255, 87, 34, 0.3); }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(255, 87, 34, 0.4); }\n  .z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(255, 87, 34, 0.8); }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(33, 150, 243, 0.4); }\n  .z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(33, 150, 243, 0.8); }\n", ""]);
 
 // exports
 
@@ -12065,7 +12204,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 bootstrap UI 样式\r\n */\n.z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus > .z-check-icon, .z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:active > .z-check-icon, .z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus:active > .z-check-icon {\n  border-radius: 4px; }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus {\n  outline: none; }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus > .z-check-icon, .z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:active > .z-check-icon, .z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus:active > .z-check-icon {\n  border-radius: 100%;\n  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n  color: #cccccc;\n  font-size: 16px; }\n\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all > .z-icon {\n  color: #cccccc;\n  font-size: 16px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 bootstrap UI 样式\r\n */\n.z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus > .z-check-icon, .z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:active > .z-check-icon, .z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus:active > .z-check-icon {\n  border-radius: 4px; }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus {\n  outline: none; }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus > .z-check-icon, .z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:active > .z-check-icon, .z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus:active > .z-check-icon {\n  border-radius: 100%;\n  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n  color: #f5f5f5;\n  font-size: 16px; }\n\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all > .z-icon {\n  color: #f5f5f5;\n  font-size: 16px; }\n", ""]);
 
 // exports
 
@@ -12209,11 +12348,6 @@ exports.default = function (h) {
 
   var classOpt = [];
   var deviceType = ['xs', 's', 'm', 'l', 'xl', 'span'];
-  var columnGap = this.$parent.gap;
-
-  if (columnGap > 0) {
-    classOpt.push(this.cPrefix + '-gap-' + columnGap);
-  }
 
   if (this.pull > 0) {
     classOpt.push(this.cPrefix + '-pull-' + this.pull);
@@ -12915,7 +13049,7 @@ exports.default = function (h) {
           _this.$refs.input.focus();
         }
       }
-    }, this.label));
+    }, '' + this.label + (this.required ? ' *' : '')));
   }
 
   editBoxChild.push(h('' + (this.isTextarea || this.multiline ? 'textarea' : 'input'), {
@@ -13010,25 +13144,23 @@ exports.default = function (h) {
     }, [h('span', this.inputTextLength + ' / ' + this.max)]));
   }
 
-  if (this.tipDisplay) {
-    children.push(h('div', {
-      class: [this.xclass('tip')]
-    }, [h('motion-fade', {
-      props: {
-        speed: 'fast'
-      },
-      ref: 'helperTip'
-    }, [h('div', {
-      class: [this.xclass('tip-helper')]
-    }, this.helperText)]), h('motion-fade', {
-      props: {
-        speed: 'fast'
-      },
-      ref: 'errorTip'
-    }, [h('div', {
-      class: [this.xclass('tip-error')]
-    }, this.errorTip)])]));
-  }
+  children.push(h('div', {
+    class: [this.xclass('tip')]
+  }, [h('motion-fade', {
+    props: {
+      speed: 'fast'
+    },
+    ref: 'helperTip'
+  }, [h('div', {
+    class: [this.xclass('tip-helper')]
+  }, this.helperText)]), h('motion-fade', {
+    props: {
+      speed: 'fast'
+    },
+    ref: 'errorTip'
+  }, [h('div', {
+    class: [this.xclass('tip-error')]
+  }, this.errorTip)])]));
 
   return h('div', {
     class: this.stageClass,
@@ -13303,7 +13435,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tip 组件样式\r\n */\n.z-bubble-slot .z-bubble-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-bubble {\n  position: absolute;\n  left: 0;\n  top: 0;\n  z-index: 999;\n  background: #fff;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  border-radius: 3px;\n  padding: 8px; }\n  .z-bubble-slot {\n    max-width: 300px; }\n    .z-bubble-slot .z-bubble-text {\n      width: 100%;\n      display: inline-block; }\n  .z-bubble.z-bubble-custom .z-bubble-slot {\n    max-width: none; }\n  .z-bubble .z-bubble-arrow {\n    position: absolute;\n    top: -10px;\n    left: 0;\n    right: 0;\n    height: 15px;\n    width: 16px;\n    margin: auto;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0); }\n    .z-bubble .z-bubble-arrow .z-icon {\n      position: absolute;\n      top: 0;\n      left: 0; }\n      .z-bubble .z-bubble-arrow .z-icon .z-icon-triangle-up {\n        font-size: 16px; }\n    .z-bubble .z-bubble-arrow .z-bubble-border {\n      top: -1px;\n      color: #d6d6d6; }\n    .z-bubble .z-bubble-arrow .z-bubble-body {\n      color: #fff; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * bubble 组件样式\r\n */\n.z-bubble-slot .z-bubble-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-bubble {\n  position: absolute;\n  left: 0;\n  top: 0;\n  z-index: 999;\n  background: #fff;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  border-radius: 3px;\n  padding: 8px; }\n  .z-bubble.z-bubble-fixed {\n    position: fixed; }\n  .z-bubble-slot {\n    max-width: 300px; }\n    .z-bubble-slot .z-bubble-text {\n      width: 100%;\n      display: inline-block; }\n  .z-bubble.z-bubble-custom .z-bubble-slot {\n    max-width: none; }\n  .z-bubble .z-bubble-arrow {\n    position: absolute;\n    top: -10px;\n    left: 0;\n    right: 0;\n    height: 15px;\n    width: 16px;\n    margin: auto;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0); }\n    .z-bubble .z-bubble-arrow .z-icon {\n      position: absolute;\n      top: 0;\n      left: 0; }\n      .z-bubble .z-bubble-arrow .z-icon .z-icon-triangle-up {\n        font-size: 16px; }\n    .z-bubble .z-bubble-arrow .z-bubble-border {\n      top: -1px;\n      color: #d6d6d6; }\n    .z-bubble .z-bubble-arrow .z-bubble-body {\n      color: #fff; }\n", ""]);
 
 // exports
 
@@ -13326,16 +13458,13 @@ exports.default = function (h) {
     props: {
       speed: 'fast',
       origin: '50% 0',
-      ui: this.ui,
-      theme: this.theme
+      global: this.fixed,
+      once: true,
+      display: this.display
     },
     ref: 'transition'
   }, [h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass), _defineProperty({}, this.xclass('custom'), !this.message)],
-    directives: [{
-      name: 'show',
-      value: this.bubbleDisplay
-    }],
+    class: this.compClass,
     on: {
       click: this.click
     }
@@ -13363,14 +13492,10 @@ exports.default = function (h) {
     } else {
       return h('div', {
         class: [_this.xclass('text')]
-      }, _this.message);
+      }, _this.stateMessage);
     }
   }()])])]);
 };
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
-                                                                                                                                                                                                                   * bubble.render.js
-                                                                                                                                                                                                                   */
 
 /***/ }),
 /* 131 */
@@ -14041,7 +14166,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * scroller 组件样式\r\n */\n.z-scroller {\n  overflow: hidden;\n  position: relative; }\n  .z-scroller .z-scroller-box {\n    position: absolute;\n    top: 0;\n    left: 0; }\n  .z-scroller .z-scroller-bar {\n    position: absolute;\n    border-radius: 4px;\n    background-color: #9e9e9e;\n    opacity: .6;\n    transition: opacity 150ms ease-out;\n    z-index: 1; }\n    .z-scroller .z-scroller-bar:hover {\n      opacity: .8; }\n    .z-scroller .z-scroller-bar.z-scroller-x-bar {\n      bottom: 0;\n      height: 5px; }\n    .z-scroller .z-scroller-bar.z-scroller-y-bar {\n      right: 0;\n      width: 5px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * scroller 组件样式\r\n */\n.z-scroller {\n  overflow: hidden;\n  position: relative; }\n  .z-scroller .z-scroller-box {\n    position: absolute;\n    top: 0;\n    left: 0;\n    -webkit-transform: translateX(0) translateY(0);\n        -ms-transform: translateX(0) translateY(0);\n            transform: translateX(0) translateY(0); }\n  .z-scroller .z-scroller-bar {\n    position: absolute;\n    border-radius: 4px;\n    background-color: #9e9e9e;\n    opacity: .6;\n    transition: opacity 150ms ease-out;\n    z-index: 1; }\n    .z-scroller .z-scroller-bar:hover {\n      opacity: .8; }\n    .z-scroller .z-scroller-bar.z-scroller-x-bar {\n      bottom: 0;\n      left: 0;\n      height: 5px; }\n    .z-scroller .z-scroller-bar.z-scroller-y-bar {\n      right: 0;\n      top: 0;\n      width: 5px; }\n", ""]);
 
 // exports
 
@@ -14338,6 +14463,50 @@ exports.default = {
 
 
     /**
+     * 向左滚动
+     */
+    left: function left() {
+      var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : SCROLL_PIXEL;
+
+      if (isNaN(length)) {
+        return false;
+      }
+
+      length = Number(length);
+
+      this.triggerScroll('x');
+
+      this._boxAndBarScroll({
+        type: 'x',
+        boxDistance: length,
+        barDistance: -(length / this.xData.boxBarRate)
+      });
+    },
+
+
+    /**
+     * 向右滚动
+     */
+    right: function right() {
+      var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : SCROLL_PIXEL;
+
+      if (isNaN(length)) {
+        return false;
+      }
+
+      length = Number(length);
+
+      this.triggerScroll('x');
+
+      this._boxAndBarScroll({
+        type: 'x',
+        boxDistance: -length,
+        barDistance: length / this.xData.boxBarRate
+      });
+    },
+
+
+    /**
      * 滚动区域滚到到指定位置
      * @param {*} top 区域滚动到哪个位置
      */
@@ -14514,13 +14683,13 @@ exports.default = {
 
   methods: {
     _initComp: function _initComp() {
-      this.preWidth = this.$refs.article.offsetWidth - 50;
+      this.preWidth = this.$refs.article.offsetWidth;
     },
     _binder: function _binder() {
       var _this = this;
 
       this.$refs.scroller.$on('change', function () {
-        _this.preWidth = _this.$refs.article.offsetWidth - 50;
+        _this.preWidth = _this.$refs.article.offsetWidth;
       });
     }
   }
@@ -15112,7 +15281,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * page 组件样式\r\n */\n.z-page {\n  color: #707070; }\n  .z-page.z-page-type-more {\n    display: inline-block; }\n  .z-page .z-page-more {\n    padding: 8px 0;\n    color: #9e9e9e; }\n    .z-page .z-page-more .z-page-load {\n      cursor: pointer; }\n  .z-page .z-page-num .z-page-length {\n    color: #707070; }\n  .z-page .z-page-num .z-page-ele {\n    cursor: pointer;\n    min-width: 20px; }\n  .z-page .z-page-num .z-page-ul {\n    margin: 0 8px;\n    display: inline-block;\n    vertical-align: middle; }\n    .z-page .z-page-num .z-page-ul > .z-page-li {\n      display: inline-block;\n      color: #707070;\n      padding: 4px 0;\n      border-radius: 6px;\n      min-width: 30px;\n      text-align: center; }\n      .z-page .z-page-num .z-page-ul > .z-page-li.z-page-li-active {\n        background-color: #2196f3;\n        color: #fff; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:first-child {\n        margin-left: 0; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:last-child {\n        margin-right: 0; }\n  .z-page .z-page-num .z-page-total {\n    color: #707070;\n    margin: 0 16px; }\n  .z-page .z-page-num .z-page-search {\n    display: inline-block; }\n    .z-page .z-page-num .z-page-search .z-page-jump-box {\n      width: 50px; }\n    .z-page .z-page-num .z-page-search .z-page-jump-btn {\n      margin-left: 8px; }\n      .z-page .z-page-num .z-page-search .z-page-jump-btn .btn-default {\n        color: #9e9e9e; }\n  .z-page.z-page-theme-primary {\n    text-align: center; }\n  @media only screen and (max-width: 767px) {\n    .z-page.z-page-type-more {\n      width: 100%; }\n    .z-page .z-page-num .z-page-search,\n    .z-page .z-page-num .z-page-length {\n      display: none; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * page 组件样式\r\n */\n.z-page {\n  color: #707070; }\n  .z-page.z-page-type-more {\n    display: inline-block; }\n  .z-page .z-page-more {\n    padding: 8px 0;\n    color: #9e9e9e; }\n    .z-page .z-page-more .z-page-load {\n      cursor: pointer; }\n  .z-page .z-page-num .z-page-length {\n    color: #ccc; }\n  .z-page .z-page-num .z-page-ele {\n    cursor: pointer;\n    min-width: 20px; }\n  .z-page .z-page-num .z-page-ul {\n    margin: 0 8px;\n    display: inline-block;\n    vertical-align: middle; }\n    .z-page .z-page-num .z-page-ul > .z-page-li {\n      display: inline-block;\n      color: #ccc;\n      padding: 4px 0;\n      border-radius: 6px;\n      min-width: 30px;\n      text-align: center; }\n      .z-page .z-page-num .z-page-ul > .z-page-li.z-page-li-active {\n        background-color: #2196f3;\n        color: #fff; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:first-child {\n        margin-left: 0; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:last-child {\n        margin-right: 0; }\n  .z-page .z-page-num .z-page-total {\n    color: #ccc;\n    margin: 0 16px; }\n  .z-page .z-page-num .z-page-search {\n    display: inline-block; }\n    .z-page .z-page-num .z-page-search .z-page-jump-box {\n      width: 50px; }\n    .z-page .z-page-num .z-page-search .z-page-jump-btn {\n      margin-left: 8px; }\n      .z-page .z-page-num .z-page-search .z-page-jump-btn .btn-default {\n        color: #9e9e9e; }\n  .z-page.z-page-theme-primary {\n    text-align: center; }\n  @media only screen and (max-width: 767px) {\n    .z-page.z-page-type-more {\n      width: 100%; }\n    .z-page .z-page-num .z-page-search,\n    .z-page .z-page-num .z-page-length {\n      display: none; } }\n", ""]);
 
 // exports
 
@@ -15163,18 +15332,25 @@ exports.default = function (h) {
     }]
   }, [h('row', {
     props: {
-      gap: 10
+      gap: 10,
+      justify: 'justify'
     }
   }, [h('column', {
     props: {
       xs: 12,
       s: 12,
-      l: 1,
-      xl: 1
+      l: 5,
+      xl: 5
     }
   }, [h('div', {
-    class: [this.xclass('length')]
-  }, '\u5171 ' + this.pageData.length + ' \u6761')]), h('column', {
+    class: [this.xclass('search')]
+  }, [h('input-box', {
+    class: [this.xclass('jump-box')],
+    props: {
+      box: true
+    },
+    ref: 'jumpInput'
+  })])]), h('column', {
     props: {
       xs: 12,
       s: 12,
@@ -15195,7 +15371,7 @@ exports.default = function (h) {
       kind: 'arrow-west-fast'
     }
   })])]), h('column', [h('div', {
-    class: [this.xclass('ele'), _defineProperty({}, this.compPrefix + '-invisible', this.preDisplay)],
+    class: [this.xclass('ele'), _defineProperty({}, this.compPrefix + '-css-invisible', this.preDisplay)],
     on: {
       click: this.pre
     }
@@ -15217,7 +15393,7 @@ exports.default = function (h) {
       }
     }, pageNum);
   }))]), h('column', [h('div', {
-    class: [this.xclass('ele'), _defineProperty({}, this.compPrefix + '-invisible', this.nextDisplay)],
+    class: [this.xclass('ele'), _defineProperty({}, this.compPrefix + '-css-invisible', this.nextDisplay)],
     on: {
       click: this.next
     }
@@ -15226,7 +15402,7 @@ exports.default = function (h) {
       kind: 'arrow-east'
     }
   })])]), h('column', [h('div', {
-    class: [this.xclass('ele'), _defineProperty({}, this.compPrefix + '-invisible', this.nextDisplay)],
+    class: [this.xclass('ele'), _defineProperty({}, this.compPrefix + '-css-invisible', this.nextDisplay)],
     directives: [{
       name: 'show',
       value: this.pageData.length !== this.pageData.current
@@ -15238,30 +15414,7 @@ exports.default = function (h) {
     props: {
       kind: 'arrow-east-fast'
     }
-  })])])])]), h('column', {
-    props: {
-      xs: 12,
-      s: 12,
-      l: 5,
-      xl: 5
-    }
-  }, [h('div', {
-    class: [this.xclass('search')]
-  }, [h('span', {
-    class: [this.xclass('total')]
-  }, '\u5171 ' + this.pageData.total + ' \u9875 '), h('span', '第 '), h('input-box', {
-    class: [this.xclass('jump-box')],
-    ref: 'jumpInput'
-  }), h('span', ' 页 '), h('btn', {
-    class: [this.xclass('jump-btn')],
-    props: {
-      kind: 'default',
-      value: 'GO'
-    },
-    on: {
-      click: this.jump
-    }
-  }, 'GO')])])])])]);
+  })])])])])])])]);
 };
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
@@ -15454,7 +15607,10 @@ exports.default = function (h) {
       attrs: {
         class: this.compPrefix + '-ul'
       },
-      class: [this.xclass('ul')]
+      class: [this.xclass('ul')],
+      style: {
+        'min-width': this.scrollerWidth + 'px'
+      }
     }, listItems)];
   } else {
     scrollerChildren = [h('div', {
@@ -15802,13 +15958,103 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件样式\r\n */\n.z-table {\n  position: relative; }\n  .z-table .z-table-col > div {\n    display: inline-block; }\n  .z-table.z-table-border-row .z-table-row-group .z-table-row, .z-table.z-table-border-all .z-table-row-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n    .z-table.z-table-border-row .z-table-row-group .z-table-row:last-child, .z-table.z-table-border-all .z-table-row-group .z-table-row:last-child {\n      border-bottom: none; }\n  .z-table.z-table-border-col .z-table-row .z-table-col, .z-table.z-table-border-all .z-table-row .z-table-col {\n    border-right: #d6d6d6 1px solid; }\n    .z-table.z-table-border-col .z-table-row .z-table-col:last-child, .z-table.z-table-border-all .z-table-row .z-table-col:last-child {\n      border-right: none; }\n  .z-table.z-table-theme-primary {\n    border-radius: 3px;\n    border: #d6d6d6 1px solid;\n    overflow: hidden; }\n    .z-table.z-table-theme-primary .z-table-header-group .z-table-col {\n      color: #707070; }\n  .z-table .z-table-empty-data {\n    color: #f44336;\n    text-align: center;\n    padding: 8px 0; }\n  .z-table .z-table-wrap {\n    background: #fff;\n    border-collapse: collapse;\n    display: table;\n    width: 100%; }\n  .z-table .z-table-header-group {\n    background: #f5f5f5;\n    display: table-header-group;\n    padding: 8px; }\n  .z-table .z-table-row-group {\n    display: table-row-group; }\n  .z-table .z-table-row {\n    display: table-row; }\n    .z-table .z-table-row:nth-child(2n) {\n      background: #f5f5f5; }\n  .z-table .z-table-header {\n    display: table-header;\n    padding: 16px; }\n  .z-table .z-table-col {\n    display: table-cell;\n    padding: 8px 8px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件样式\r\n */\n.z-table {\n  position: relative; }\n  .z-table.z-table-stripe .z-table-header-group {\n    background: #f5f5f5; }\n  .z-table.z-table-stripe .z-table-row:hover {\n    background-color: transparent; }\n  .z-table.z-table-stripe .z-table-row:nth-child(2n) {\n    background: #f5f5f5; }\n  .z-table-page {\n    border-top: #d6d6d6 1px solid; }\n  .z-table .z-table-row:hover {\n    background-color: #f5f5f5; }\n  .z-table .z-table-col {\n    text-align: left; }\n  .z-table .z-table-col > div {\n    display: inline-block; }\n  .z-table.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-border-all .z-table-header-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n  .z-table.z-table-border-row .z-table-row-group .z-table-row, .z-table.z-table-border-all .z-table-row-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n    .z-table.z-table-border-row .z-table-row-group .z-table-row:last-child, .z-table.z-table-border-all .z-table-row-group .z-table-row:last-child {\n      border-bottom: none; }\n  .z-table.z-table-border-col .z-table-row .z-table-col, .z-table.z-table-border-all .z-table-row .z-table-col {\n    border-right: #d6d6d6 1px solid; }\n    .z-table.z-table-border-col .z-table-row .z-table-col:last-child, .z-table.z-table-border-all .z-table-row .z-table-col:last-child {\n      border-right: none; }\n  .z-table .z-table-empty-data {\n    color: #f44336;\n    text-align: center;\n    padding: 8px 0; }\n  .z-table .z-table-wrap {\n    background: #fff;\n    border-collapse: collapse;\n    width: 100%; }\n  .z-table .z-table-header {\n    padding: 16px 24px; }\n  .z-table .z-table-col {\n    padding: 16px 24px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 174 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(175);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.material.scss", function() {
+			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 material UI 样式\r\n */\n.z-table.z-table-ui-material {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(177);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 bootstrap UI 样式\r\n */\n.z-table.z-table-ui-bootstrap.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-ui-bootstrap.z-table-border-all .z-table-header-group .z-table-row {\n  border-top: #d6d6d6 1px solid;\n  border-bottom: #d6d6d6 2px solid; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15900,11 +16146,14 @@ exports.default = function (h) {
   }, tbodyRowChildren));
 
   tableEle = h('table', {
-    class: [this.xclass('wrap')]
+    class: [this.xclass('wrap')],
+    style: {
+      'min-width': this.scrollerWidth + 'px'
+    }
   }, tableChildren);
 
   return h('div', {
-    class: [this.cPrefix, this.xclass([this.themeClass, 'border-' + this.border])]
+    class: this.compClass
   }, [h('scroller', {
     class: [this.xclass('scroller')],
     props: {
@@ -15939,13 +16188,13 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 175 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(176);
+var content = __webpack_require__(180);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15970,7 +16219,7 @@ if(false) {
 }
 
 /***/ }),
-/* 176 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -15984,7 +16233,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * menu 组件样式\r\n */
 
 
 /***/ }),
-/* 177 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15999,13 +16248,14 @@ exports.default = function (h) {
   var panelChildren = [h('scroller', {
     props: {
       height: this.height,
-      width: '100%',
-      ui: this.ui,
-      theme: this.theme
+      width: '100%'
     },
     ref: 'scroller'
   }, [h('div', {
-    class: this.xclass('container')
+    class: this.xclass('container'),
+    style: {
+      width: this.width !== 'auto' ? this.width + 'px' : 'auto'
+    }
   }, [this.$slots.default])])];
 
   children.push(h('div', {
@@ -16098,7 +16348,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 178 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16116,7 +16366,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _motion = __webpack_require__(13);
+var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -16352,7 +16602,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 179 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16483,13 +16733,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 180 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(181);
+var content = __webpack_require__(185);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16514,7 +16764,7 @@ if(false) {
 }
 
 /***/ }),
-/* 181 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -16522,13 +16772,13 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * scroller 组件样式\r\n */\n.z-shift .z-shift-before-display {\n  display: none; }\n\n.z-shift .z-shift-before-move {\n  display: none; }\n\n.z-shift .z-shift-before-opacity {\n  display: none; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * shift 组件样式\r\n */\n.z-shift .z-shift-before-display {\n  display: none; }\n\n.z-shift .z-shift-before-move {\n  display: none; }\n\n.z-shift .z-shift-before-opacity {\n  display: none; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 182 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16548,15 +16798,19 @@ exports.default = function (h) {
       return false;
     }
 
-    shiftOption.push(h('li', {
-      class: [_defineProperty({}, _this.beforeClass, _this.currentIndex !== index + 1), _defineProperty({}, _this.afterClass, _this.currentIndex === index + 1), _this.xclass('li')]
+    shiftOption.push(h('column', {
+      class: [_defineProperty({}, _this.beforeClass, _this.currentIndex !== index + 1), _defineProperty({}, _this.afterClass, _this.currentIndex === index + 1), _this.xclass('col')]
     }, _this.$slots[item]));
   });
 
   return h('div', {
     class: [this.cPrefix]
-  }, [h('ul', {
-    class: [this.compPrefix + '-css-ul', this.xclass('ul')]
+  }, [h('row', {
+    class: [this.xclass('row')],
+    props: {
+      wrap: 'nowrap',
+      justify: this.justify
+    }
   }, shiftOption)]);
 };
 
@@ -16565,13 +16819,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 183 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(184);
+var content = __webpack_require__(188);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16596,7 +16850,7 @@ if(false) {
 }
 
 /***/ }),
-/* 184 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -16610,13 +16864,13 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select 组件样式\r\n 
 
 
 /***/ }),
-/* 185 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(186);
+var content = __webpack_require__(190);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16641,7 +16895,7 @@ if(false) {
 }
 
 /***/ }),
-/* 186 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -16655,13 +16909,13 @@ exports.push([module.i, ".z-select.z-select-ui-bootstrap {\n  width: 170px;\n  h
 
 
 /***/ }),
-/* 187 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(188);
+var content = __webpack_require__(192);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16686,7 +16940,7 @@ if(false) {
 }
 
 /***/ }),
-/* 188 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -16700,7 +16954,7 @@ exports.push([module.i, ".z-select.z-select-ui-material {\n  height: 36px;\n  ve
 
 
 /***/ }),
-/* 189 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16710,17 +16964,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(190);
+__webpack_require__(194);
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _SelectOpt = __webpack_require__(192);
+var _SelectOpt = __webpack_require__(196);
 
 var _SelectOpt2 = _interopRequireDefault(_SelectOpt);
 
-var _event = __webpack_require__(41);
+var _event = __webpack_require__(42);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -16966,13 +17220,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 190 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(191);
+var content = __webpack_require__(195);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16997,7 +17251,7 @@ if(false) {
 }
 
 /***/ }),
-/* 191 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -17011,7 +17265,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select-opt 组件样式\
 
 
 /***/ }),
-/* 192 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17170,7 +17424,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 193 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17345,7 +17599,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 194 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17563,13 +17817,13 @@ exports.default = {
     */
 
 /***/ }),
-/* 195 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(196);
+var content = __webpack_require__(200);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -17594,7 +17848,7 @@ if(false) {
 }
 
 /***/ }),
-/* 196 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -17602,13 +17856,103 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.z-tab > .z-tab-shift > .z-shift-ul::after {\n  content: \"\\200B\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden; }\n\n/**\r\n * select 组件样式\r\n */\n.z-tab {\n  border-right: #d6d6d6 1px solid;\n  cursor: pointer; }\n  .z-tab > .z-tab-shift > .z-shift-ul > .z-shift-li {\n    float: left; }\n    .z-tab > .z-tab-shift > .z-shift-ul > .z-shift-li.z-tab-active {\n      border-bottom: #d6d6d6 1px solid; }\n    .z-tab > .z-tab-shift > .z-shift-ul > .z-shift-li:last-child {\n      border-right: none; }\n  .z-tab.z-tab-theme-primary {\n    display: inline-block;\n    vertical-align: middle;\n    border: #d6d6d6 1px solid;\n    border-radius: 3px;\n    box-shadow: 0 1px 1px 0 #d6d6d6;\n    overflow: hidden; }\n    .z-tab.z-tab-theme-primary > .z-tab-shift > .z-shift-ul > .z-shift-li {\n      border: none;\n      border-right: #d6d6d6 1px solid; }\n      .z-tab.z-tab-theme-primary > .z-tab-shift > .z-shift-ul > .z-shift-li:last-child {\n        border-right: none; }\n      .z-tab.z-tab-theme-primary > .z-tab-shift > .z-shift-ul > .z-shift-li .z-tab-ele {\n        min-width: 100px;\n        padding: 8px 16px;\n        background-color: #fff;\n        text-align: center;\n        color: #707070; }\n        .z-tab.z-tab-theme-primary > .z-tab-shift > .z-shift-ul > .z-shift-li .z-tab-ele:hover {\n          background-color: #f5f5f5;\n          color: #707070; }\n      .z-tab.z-tab-theme-primary > .z-tab-shift > .z-shift-ul > .z-shift-li.z-tab-active .z-tab-ele {\n        background-color: #f3f3f3;\n        color: #707070; }\n  .z-tab.z-tab-theme-secondary {\n    border-bottom: 1px solid #d6d6d6; }\n    .z-tab.z-tab-theme-secondary > .z-tab-shift > .z-shift-ul > .z-shift-li {\n      min-width: 100px;\n      padding: 12px 16px 8px;\n      text-align: center;\n      border: none; }\n      .z-tab.z-tab-theme-secondary > .z-tab-shift > .z-shift-ul > .z-shift-li:hover {\n        color: #2196f3; }\n      .z-tab.z-tab-theme-secondary > .z-tab-shift > .z-shift-ul > .z-shift-li.z-tab-active {\n        border-bottom: #2196f3 2px solid;\n        color: #2196f3; }\n", ""]);
+exports.push([module.i, ".z-tab {\n  cursor: pointer;\n  width: 100%; }\n  @media only screen and (max-width: 767px) {\n    .z-tab .z-tab-shift > .z-shift-row > .z-shift-col {\n      -webkit-flex-grow: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1; } }\n  .z-tab .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-bottom: #d6d6d6 1px solid; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 197 */
+/* 201 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(202);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.material.scss", function() {
+			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 material UI 样式\r\n */\n.z-tab.z-tab-ui-material {\n  border-bottom: 1px solid #d6d6d6;\n  position: relative; }\n  .z-tab.z-tab-ui-material .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-material .z-tab-btn > .z-btn-ele {\n      padding: 5px 0; }\n  .z-tab.z-tab-ui-material .z-tab-bar {\n    background-color: #2196f3;\n    height: 2px;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    transition: left 300ms; }\n  .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col {\n    min-width: 72px;\n    text-align: center; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n      color: #2196f3; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-bottom: none; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n      color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-bar {\n  background-color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-bar {\n  background-color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-bar {\n  background-color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-bar {\n  background-color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-bar {\n  background-color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-bar {\n  background-color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(204);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 204 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 bootstrap UI 样式\r\n */\n.z-tab.z-tab-ui-bootstrap {\n  border-bottom: 1px solid #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col {\n    border-top-left-radius: 6px;\n    border-top-right-radius: 6px; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn {\n      width: 100%;\n      height: 100%; }\n      .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n        color: #2196f3;\n        padding: 5px 0;\n        border-top-left-radius: 6px;\n        border-top-right-radius: 6px; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-ele {\n      min-width: 100px;\n      background-color: #fff;\n      text-align: center;\n      border: transparent 1px solid;\n      border-bottom: none;\n      border-top-left-radius: 6px;\n      border-top-right-radius: 6px; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-color: #d6d6d6; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n      color: #0069c0; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n      color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #087f23; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #ba000d; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #0069c0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c41c00; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #1b1b1b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17622,18 +17966,30 @@ exports.default = function (h) {
   var _this = this;
 
   var tabOption = [];
+  var scrollerChildren = [];
+  var tabBtnEle = function tabBtnEle(children, index) {
+    return h('btn', {
+      class: [_this.xclass('btn')],
+      on: {
+        click: function click(event) {
+          return _this.tab(event, index + 1);
+        }
+      },
+      props: {
+        type: 'flat',
+        ui: _this.ui,
+        theme: 'grey',
+        radius: 'none'
+      }
+    }, children);
+  };
 
   if (this.initOpt.length > 0) {
     tabOption = this.option.map(function (item, index) {
       return h('div', {
         class: [_this.xclass('ele')],
-        on: {
-          click: function click(event) {
-            return _this.tab(event, index + 1);
-          }
-        },
         slot: index + 1
-      }, item.text);
+      }, [tabBtnEle(item.text, index)]);
     });
   } else {
     var optionTmp = [];
@@ -17662,33 +18018,49 @@ exports.default = function (h) {
       optionTmp.push(optionItem);
 
       tabOption.push(h('div', {
-        on: {
-          click: function click(event) {
-            return _this.tab(event, index + 1);
-          }
-        },
         slot: item
-      }, _this.$slots[item]));
+      }, [tabBtnEle(_this.$slots[item], index)]));
     });
 
     this.option = optionTmp;
   }
 
-  return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
-  }, [h('shift', {
+  scrollerChildren.push(h('shift', {
     class: [this.xclass('shift')],
     props: {
       after: this.cPrefix + '-active',
       ui: this.ui,
-      theme: this.theme
+      theme: this.theme,
+      justify: this.shiftJustify
     },
     ref: 'shift'
-  }, tabOption)]);
+  }, tabOption));
+
+  if (this.UIMaterial) {
+    var currentIndex = this.currentIndex <= 1 ? 1 : this.currentIndex;
+
+    scrollerChildren.push(h('div', {
+      class: [this.xclass('bar')],
+      style: {
+        width: this.tabEleWidth + 'px',
+        left: this.tabEleWidth * (currentIndex - 1) + 'px'
+      }
+    }));
+  }
+
+  return h('div', {
+    class: [this.cPrefix, this.xclass([this.themeClass, this.uiClass])]
+  }, [h('scroller', {
+    props: {
+      width: '100%',
+      hide: true
+    },
+    ref: 'scroller'
+  }, scrollerChildren)]);
 };
 
 /***/ }),
-/* 198 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17730,13 +18102,13 @@ var search = function search(urlSearch) {
 exports.search = search;
 
 /***/ }),
-/* 199 */
+/* 207 */
 /***/ (function(module, exports) {
 
 module.exports = {"btn":{},"column":{},"check":{},"form":{},"input":{},"icon":{},"loading":{},"page":{},"pop":{},"list":{},"scroller":{},"select":{},"selectEle":{},"shift":{},"shiftEle":{},"tab":{},"tabEle":{},"row":{},"table":{"emptyData":"暂无数据"}}
 
 /***/ }),
-/* 200 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17751,7 +18123,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vueI18n = __webpack_require__(201);
+var _vueI18n = __webpack_require__(209);
 
 var _vueI18n2 = _interopRequireDefault(_vueI18n);
 
@@ -17784,13 +18156,13 @@ var set = {
 exports.set = set;
 
 /***/ }),
-/* 201 */
+/* 209 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_201__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_209__;
 
 /***/ }),
-/* 202 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17908,7 +18280,7 @@ window.addEventListener('load', function () {
 exports.default = alert;
 
 /***/ }),
-/* 203 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18035,7 +18407,7 @@ window.addEventListener('load', function () {
 exports.default = confirm;
 
 /***/ }),
-/* 204 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18155,6 +18527,109 @@ window.addEventListener('load', function () {
 });
 
 exports.default = toast;
+
+/***/ }),
+/* 213 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _vue = __webpack_require__(3);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _Bubble = __webpack_require__(34);
+
+var _Bubble2 = _interopRequireDefault(_Bubble);
+
+var _store = __webpack_require__(7);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _type = __webpack_require__(11);
+
+var _type2 = _interopRequireDefault(_type);
+
+var _base = __webpack_require__(2);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * 创建 tooltip 组件的实例
+ **/
+var createTooltip = function createTooltip() {
+  var tooltipCompVm = new _vue2.default({
+    name: 'tooltip',
+    mixins: [_base2.default],
+    computed: {
+      cPrefix: function cPrefix() {
+        // 组件类名的前缀
+        return this.compPrefix + '-tooltip';
+      }
+    },
+    components: {
+      bubble: _Bubble2.default
+    },
+    store: _store2.default,
+    render: function render(h) {
+      return h('div', {
+        class: [this.cPrefix]
+      }, [h('bubble', {
+        ref: 'tooltip'
+      })]);
+    },
+    mounted: function mounted() {
+      this.$store.dispatch(_type2.default.tooltip.add, this);
+    }
+  }).$mount();
+
+  document.body.appendChild(tooltipCompVm.$el);
+}; /**
+    * 冒泡样式的 tooltip 组件
+    */
+
+var commonVuex = new _vue2.default({
+  store: _store2.default
+});
+
+/**
+ * 调用 tooltip
+ **/
+var tooltip = function tooltip() {
+  var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+  var option = {};
+
+  if (typeof opt === 'string') {
+    option = {
+      message: opt
+    };
+  } else {
+    option = opt;
+  }
+
+  var tooltipVm = commonVuex.$store.getters[_type2.default.tooltip.get].$refs.tooltip;
+
+  tooltipVm.set({
+    message: option.message,
+    target: opt.target
+  }).show();
+
+  return tooltipVm;
+};
+
+window.addEventListener('load', function () {
+  createTooltip();
+});
+
+exports.default = tooltip;
 
 /***/ })
 /******/ ]);

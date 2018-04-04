@@ -1,7 +1,7 @@
 /**
  * col 组件
  *
- * @prop gap - 定义间隔的宽度（px），覆盖行设置的间隔 (5, 10, 20, 30, 40, 50)
+ * @prop gap - （已经废弃）定义间隔的宽度（px），覆盖行设置的间隔 (5, 10, 20, 30, 40, 50)
  * @prop pull - 定义了列在 x 反方向偏移的栅格数
  * @prop push - 定义了列在 x 正方向偏移的栅格数
  * @prop offset - 定义了列离开头的栅格数
@@ -28,10 +28,6 @@ export default {
   render,
 
   props: {
-    gap: {
-      type: Number,
-      default: 0
-    },
     pull: {
       type: Number,
       default: 0

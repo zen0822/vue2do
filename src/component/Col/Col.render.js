@@ -5,11 +5,6 @@
 export default function (h) {
   let classOpt = []
   let deviceType = ['xs', 's', 'm', 'l', 'xl', 'span']
-  let columnGap = this.$parent.gap
-
-  if (columnGap > 0) {
-    classOpt.push(`${this.cPrefix}-gap-${columnGap}`)
-  }
 
   if (this.pull > 0) {
     classOpt.push(`${this.cPrefix}-pull-${this.pull}`)

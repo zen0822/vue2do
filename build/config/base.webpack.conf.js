@@ -1,20 +1,24 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-module.exports = function (opt) {
-  var path = require('path')
-  var config = require(path.resolve(__dirname, `./index`))
-  var utils = require(path.resolve(__dirname, `./../utils`))
-  var webpack = require('webpack')
+module.exports = function ({
+  appName,
+  extractScss = false
+} = {}) {
+  const path = require('path')
+  const config = require(path.resolve(__dirname, `./index`))
+  const utils = require(path.resolve(__dirname, `./../utils`))
+  const webpack = require('webpack')
+  let extractTextScss = null
 
-  const extractScss = new ExtractTextPlugin({
-    filename: utils.assetsPath('css/[name].[hash].css'),
-    allChunks: true,
-    disable: process.env.NODE_ENV === 'development'
-  })
+  if (extractScss) {
+    extractTextScss = new ExtractTextPlugin({
+      filename: utils.assetsPath('css/[name].[hash].css'),
+      allChunks: true,
+      disable: false
+    })
+  }
 
-  var appName = opt.appName
-
-  var baseConf = {
+  const baseConf = {
     entry: {
       app: [
         'babel-polyfill',
@@ -72,17 +76,6 @@ module.exports = function (opt) {
         test: /\.(html|tpl)$/,
         loader: 'html-loader'
       }, {
-        test: /\.(css|scss)$/,
-        use: extractScss.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'postcss-loader',
-            'sass-loader'
-          ]
-        }),
-        exclude: [/grid\.scss$/]
-      }, {
         test: /\.json$/,
         loader: 'json-loader'
       }, {
@@ -117,9 +110,29 @@ module.exports = function (opt) {
       maxAssetSize: 10485760
     },
 
-    plugins: [
-      extractScss
-    ]
+    plugins: []
+  }
+
+  if (extractScss) {
+    baseConf.plugins.push(extractTextScss)
+    baseConf.module.rules.push({
+      test: /\.(css|scss)$/,
+      use: extractTextScss.extract({
+        fallback: 'style-loader',
+        use: [
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }),
+      exclude: [/grid\.scss$/]
+    })
+  } else {
+    baseConf.module.rules.push({
+      test: /\.(css|scss)$/,
+      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      exclude: [/grid\.scss$/]
+    })
   }
 
   return baseConf

@@ -14,7 +14,8 @@ module.exports = function (opt = {}) {
   const port = process.env.PORT || config.dev.port
 
   const baseWebpackConfig = require('./base.webpack.conf')({
-    appName: appName
+    appName,
+    disableExtractScss: true
   })
   const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
 
@@ -45,14 +46,14 @@ module.exports = function (opt = {}) {
         debug: true
       }),
       new BundleAnalyzerPlugin({
-          analyzerMode: 'static',
-          reportFilename: 'webpack-bundle-report.html',
-          defaultSizes: 'parsed',
-          openAnalyzer: false,
-          generateStatsFile: false,
-          statsFilename: 'stats.json',
-          statsOptions: null,
-          logLevel: 'info'
+        analyzerMode: 'static',
+        reportFilename: 'webpack-bundle-report.html',
+        defaultSizes: 'parsed',
+        openAnalyzer: false,
+        generateStatsFile: false,
+        statsFilename: 'stats.json',
+        statsOptions: null,
+        logLevel: 'info'
       }),
       new webpack.DefinePlugin({
         'process.env': config.dev.env

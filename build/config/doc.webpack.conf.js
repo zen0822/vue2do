@@ -16,7 +16,10 @@ module.exports = function (opt) {
 
   const config = require('../config')
   const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
-  const baseWebpackConfig = require('./base.webpack.conf')(opt)
+  const baseWebpackConfig = require('./base.webpack.conf')({
+    appName,
+    extractScss: true
+  })
 
   var env = process.env.NODE_ENV === 'testing' ?
     require('../config/test.env') :
