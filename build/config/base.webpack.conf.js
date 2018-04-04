@@ -51,6 +51,12 @@ module.exports = function ({
     module: {
       rules: [{
         test: /\.vue$/,
+        loader: 'vue',
+        query: {
+          loaders: utils.cssLoaders()
+        }
+      }, {
+        test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           esModule: true

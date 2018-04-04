@@ -1,36 +1,30 @@
-import ZoomMotion from '../component/page/Component/Motion/Zoom/Zoom'
-import SlideMotion from '../component/page/Component/Motion/Slide/Slide'
-import FadeMotion from '../component/page/Component/Motion/Fade/Fade'
-import RipMotion from '../component/page/Component/Motion/Rip/Rip'
-import FoldMotion from '../component/page/Component/Motion/Fold/Fold'
-
 export default [{
   path: 'zoom',
-  component: ZoomMotion,
+  component: () => import('../component/page/Component/Motion/Zoom/Zoom'),
   meta: {
     title: '缩放过渡组件'
   }
 }, {
   path: 'slide',
-  component: SlideMotion,
+  component: () => import('../component/page/Component/Motion/Slide/Slide'),
   meta: {
     title: '滑动过渡组件'
   }
 }, {
   path: 'fade',
-  component: FadeMotion,
+  component: () => import('../component/page/Component/Motion/Fade/Fade'),
   meta: {
     title: '淡淡过渡组件'
   }
 }, {
   path: 'fold',
-  component: FoldMotion,
+  component: () => import('../component/page/Component/Motion/Fold/Fold'),
   meta: {
     title: '折叠过渡组件'
   }
 }, {
   path: 'rip',
-  component: RipMotion,
+  component: () => import('../component/page/Component/Motion/Rip/Rip'),
   meta: {
     title: '涟漪过渡组件'
   }
