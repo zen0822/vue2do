@@ -76,7 +76,8 @@ module.exports = function (opt = {}) {
         test: /grid\.scss$/,
         use: extractGridScss.extract({
           fallback: 'style-loader',
-          use: [{
+          use: [
+            {
               loader: 'css-loader',
               options: {
                 minimize: opt.compress

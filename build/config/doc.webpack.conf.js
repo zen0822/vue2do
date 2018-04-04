@@ -7,6 +7,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const PrerenderSpaPlugin = require('prerender-spa-plugin')
+const Renderer = PrerenderSpaPlugin.PuppeteerRenderer
+
 module.exports = function (opt) {
   opt = opt || {}
   const appName = opt.appName
@@ -85,6 +88,21 @@ module.exports = function (opt) {
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest'],
         chunks: ['vendor']
+      }),
+
+      new PrerenderSpaPlugin({
+        staticDir: config.doc.assetsRoot,
+        routes: ['/'],
+        minify: {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          decodeEntities: true,
+          keepClosingSlash: true,
+          sortAttributes: true
+        },
+        renderer: new Renderer({
+          renderAfterTime: 500
+        })
       })
     ]
   })

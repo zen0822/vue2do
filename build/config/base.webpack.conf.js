@@ -6,6 +6,12 @@ module.exports = function (opt) {
   var utils = require(path.resolve(__dirname, `./../utils`))
   var webpack = require('webpack')
 
+  const extractScss = new ExtractTextPlugin({
+    filename: utils.assetsPath('css/[name].[hash].css'),
+    allChunks: true,
+    disable: process.env.NODE_ENV === 'development'
+  })
+
   var appName = opt.appName
 
   var baseConf = {
@@ -41,9 +47,9 @@ module.exports = function (opt) {
     module: {
       rules: [{
         test: /\.vue$/,
-        loader: 'vue',
-        query: {
-          loaders: utils.cssLoaders()
+        loader: 'vue-loader',
+        options: {
+          esModule: true
         }
       }, {
         enforce: 'pre',
@@ -67,12 +73,14 @@ module.exports = function (opt) {
         loader: 'html-loader'
       }, {
         test: /\.(css|scss)$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
-        ],
+        use: extractScss.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'postcss-loader',
+            'sass-loader'
+          ]
+        }),
         exclude: [/grid\.scss$/]
       }, {
         test: /\.json$/,
@@ -101,19 +109,17 @@ module.exports = function (opt) {
         options: {
           appendTsSuffixTo: [/\.vue$/]
         }
-      }, {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          esModule: true
-        }
       }]
     },
 
     performance: {
       maxEntrypointSize: 104857600,
       maxAssetSize: 10485760
-    }
+    },
+
+    plugins: [
+      extractScss
+    ]
   }
 
   return baseConf

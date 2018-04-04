@@ -23,7 +23,7 @@ export default {
 
   methods: {
     tip() {
-      tip('验证码校验啊速度放缓i吧 435345')
+      tip('验证码校验啊速度放缓i吧 345')
     },
 
     toast() {

@@ -17,7 +17,8 @@ module.exports = {
   globals: {
     'document': true,
     'window': true,
-    '$': true
+    '$': true,
+    'exit': true
   },
   'rules': {
     'quotes': ["error", "single", { "allowTemplateLiterals": true }],
