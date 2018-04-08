@@ -5,7 +5,7 @@ const websiteProject = './zen0822.github.io'
 
 module.exports = function ({
   appName = 'example',
-  push = false
+  release = false
 } = {}) {
   const path = require('path')
   const config = require('./config')
@@ -13,7 +13,8 @@ module.exports = function ({
   const webpack = require('webpack')
 
   const webpackConfig = require('./config/doc.webpack.conf')({
-    appName: appName
+    appName: appName,
+    release
   })
 
   var spinner = ora('building for documention website...')
@@ -34,7 +35,7 @@ module.exports = function ({
       chunkModules: false
     }) + '\n')
 
-    if (push) {
+    if (release) {
       shelljs.rm('-rf', websiteProject)
       if (shelljs.exec('git clone https://github.com/zen0822/zen0822.github.io.git').code === 0) {
         shelljs.echo('Git clone zen0822.github.io Success')

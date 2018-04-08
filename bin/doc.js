@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const argv = require('yargs')
-  .usage('Usage: $0 --app [string] --push [boolean]')
+  .usage('Usage: $0 --app [string] --release [boolean]')
   .example('$0 --app example', 'Build document website')
   .options({
     'app': {
@@ -9,9 +9,9 @@ const argv = require('yargs')
       describe: 'App name',
       type: 'string'
     },
-    'push': {
-      alias: 'p',
-      describe: 'Push to online website',
+    'release': {
+      alias: 'r',
+      describe: 'Release to online website',
       type: 'boolean',
       default: false
     }
@@ -20,5 +20,5 @@ const argv = require('yargs')
 
 require('../build/doc')({
   appName: 'example',
-  push: argv.push
+  release: argv.release
 })

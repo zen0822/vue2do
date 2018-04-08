@@ -10,10 +10,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const PrerenderSpaPlugin = require('prerender-spa-plugin')
 const Renderer = PrerenderSpaPlugin.PuppeteerRenderer
 
-module.exports = function (opt) {
-  opt = opt || {}
-  const appName = opt.appName
-
+module.exports = function ({
+  appName,
+  release
+}) {
   const config = require('../config')
   const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
   const baseWebpackConfig = require('./base.webpack.conf')({
@@ -30,7 +30,7 @@ module.exports = function (opt) {
     devtool: config.doc.productionSourceMap ? '#source-map' : false,
     output: {
       path: config.doc.assetsRoot,
-      publicPath: config.doc.assetsPublicPath,
+      publicPath: release ? '/' : config.doc.assetsPublicPath,
       filename: utils.assetsPath('js/[name].[chunkhash].js'),
       chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
@@ -91,22 +91,22 @@ module.exports = function (opt) {
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest'],
         chunks: ['vendor']
-      }),
-
-      new PrerenderSpaPlugin({
-        staticDir: config.doc.assetsRoot,
-        routes: ['/'],
-        minify: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          decodeEntities: true,
-          keepClosingSlash: true,
-          sortAttributes: true
-        },
-        renderer: new Renderer({
-          renderAfterTime: 500
-        })
       })
+
+      // new PrerenderSpaPlugin({
+      //   staticDir: config.doc.assetsRoot,
+      //   routes: ['/'],
+      //   minify: {
+      //     collapseBooleanAttributes: true,
+      //     collapseWhitespace: true,
+      //     decodeEntities: true,
+      //     keepClosingSlash: true,
+      //     sortAttributes: true
+      //   },
+      //   renderer: new Renderer({
+      //     renderAfterTime: 500
+      //   })
+      // })
     ]
   })
 
