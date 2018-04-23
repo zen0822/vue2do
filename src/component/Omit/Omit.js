@@ -112,7 +112,12 @@ export default {
           char = char + contentArray[j]
         }
 
-        lineFont.push(i === lineLength - 1 ? (char + char) : char)
+        if (this.props.line === 1) {
+          lineFont.push(char)
+        } else {
+          lineFont.push(i === lineLength - 1 ? (char + char) : char)
+        }
+
         index = j
       }
 
