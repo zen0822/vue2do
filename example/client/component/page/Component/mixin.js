@@ -32,6 +32,9 @@ export default {
   },
 
   computed: {
+    varPrefix() {
+      return 'VUE2DO'
+    },
     testOpt() {
       return testOpt
     },
@@ -40,6 +43,12 @@ export default {
     },
     compStage() {
       return this.$store.getters[commonStore.compStage.get]
+    },
+    typeUI() {
+      return this.$store.getters[commonStore.typeUI.get]
+    },
+    typeTheme() {
+      return this.$store.getters[commonStore.typeTheme.get]
     }
   },
 

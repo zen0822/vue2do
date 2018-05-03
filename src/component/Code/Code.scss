@@ -9,13 +9,11 @@
 
 $C_PREFIX: #{ $COMP_CODE };
 
-@mixin theme-content($type, $type-color, $type-dark-color, $color-primary-light) {
-  .#{$C_PREFIX} {
-    border: $color-primary-light $border-thin solid;
+@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+  border: $type-light-color $border-thin solid;
 
-    .#{$C_PREFIX}-line-num {
-      border-right: $border-thin * 2 $type-color solid;
-    }
+  .#{$C_PREFIX}-line-num {
+    border-right: $border-thin * 2 $type-color solid;
   }
 }
 

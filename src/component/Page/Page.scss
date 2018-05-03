@@ -1,16 +1,17 @@
+/**
+ * page 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
 
-/**
- * page 组件样式
- */
-
 $C_PREFIX: #{ $COMP_PAGE };
 
 .#{$C_PREFIX} {
   color: $grey-dark;
+  text-align: center;
 
   &.#{$C_PREFIX}-type-more {
     display: inline-block;
@@ -83,10 +84,6 @@ $C_PREFIX: #{ $COMP_PAGE };
         }
       }
     }
-  }
-
-  &.#{$C_PREFIX}-theme-primary {
-    text-align: center;
   }
 
   @include device-type("s") {

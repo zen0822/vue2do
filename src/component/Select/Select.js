@@ -27,6 +27,7 @@
  * @prop selectAll - 启动全选的功能
  * @prop selectAllTxt - 全选选项的名字
  *
+ * @event change - 选择值的改变
  */
 
 import './Select.scss'
@@ -306,6 +307,12 @@ export default {
 
           hideMenu && this._menuMotion(false)
         }
+
+        this.$emit('change', {
+          value,
+          text,
+          index
+        })
       })
     },
 

@@ -7,9 +7,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const PrerenderSpaPlugin = require('prerender-spa-plugin')
-const Renderer = PrerenderSpaPlugin.PuppeteerRenderer
-
 module.exports = function ({
   appName,
   release
@@ -92,21 +89,6 @@ module.exports = function ({
         names: ['vendor', 'manifest'],
         chunks: ['vendor']
       })
-
-      // new PrerenderSpaPlugin({
-      //   staticDir: config.doc.assetsRoot,
-      //   routes: ['/'],
-      //   minify: {
-      //     collapseBooleanAttributes: true,
-      //     collapseWhitespace: true,
-      //     decodeEntities: true,
-      //     keepClosingSlash: true,
-      //     sortAttributes: true
-      //   },
-      //   renderer: new Renderer({
-      //     renderAfterTime: 500
-      //   })
-      // })
     ]
   })
 

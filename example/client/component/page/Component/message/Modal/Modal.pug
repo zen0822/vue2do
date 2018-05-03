@@ -3,11 +3,19 @@ include ../../mixin.pug
 div.component-modal
   article.example-article
     +section('start', '弹窗')
-      z-btn(@click='simple') 确认
-      z-modal(ref='simple')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='simple'
+      ) 确认
+      z-modal(
+        :ui='typeUI'
+        :theme='typeTheme'
+        ref='simple'
+      )
         p 这是一个简单
         p 的小弹窗
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-btn @click="simple">'}
           确认
         #{'</z-btn>'}
@@ -16,21 +24,34 @@ div.component-modal
           #{'<p> 的小弹窗</p>'}
         #{'</z-modal>'}
     +section('alert', '警告弹窗')
-      z-btn(@click='alert') 警告弹窗
-      z-code.
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='alert'
+      ) 警告弹窗
+      z-code(:theme='typeTheme').
         #{'<z-btn @click="alert">'}
           警告弹窗
         #{'</z-btn>'}
     +section('confirm', '确认弹窗')
-      z-btn(@click='confirm') 确认弹窗
-      z-code.
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='confirm'
+      ) 确认弹窗
+      z-code(:theme='typeTheme').
         #{'<z-btn @click="confirm">'}
           这是一个确认弹窗
         #{'</z-btn>'}
     +section('full', '全屏弹窗 (移动端) ')
-      z-btn(@click='showFullPop') 全屏弹窗
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='showFullPop'
+      ) 全屏弹窗
       z-modal(
-          theme='success'
+          :ui='typeUI'
+          :theme='typeTheme'
           commit
           header='dasfdfasdf'
           ok-btn='发布'
@@ -39,7 +60,7 @@ div.component-modal
         - var n = 0
         while n < 8
           p full-#{n++}
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-modal header-name="custom" ref="modal">'}
           #{'<p>custom</p>'}
         #{'</z-modal>'}

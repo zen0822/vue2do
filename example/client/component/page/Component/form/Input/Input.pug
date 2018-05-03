@@ -8,7 +8,7 @@ div
         required
         helper-text='输入文本'
         multiline placeholder='asd输入区域' ref='startInput' ui='bootstrap')
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-input'}
           multiline
           block
@@ -23,7 +23,7 @@ div
         type='area',
         :row='4',
         placeholder='请输入...')
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-input label="区域标签" type="area" :row="4" placeholder="请输入..."></z-input>'}
     +section('completion', '补全功能')
       z-input(
@@ -36,7 +36,7 @@ div
           :input='false'
           ref='completion'
           slot='completion')
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-input'}
             #{'completion'}
             label="补全功能"
@@ -60,7 +60,7 @@ div
           :header-span='4'
           ref='verifyInput')
       z-btn(class='z-css-m-l' @click.native='clickVerifyInput') 点击验证是否为手机
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-input'}
             :min="2"
             :max="10"
@@ -79,7 +79,7 @@ div
         div(slot='header')
           z-menu(:init-opt='testOpt', style={width: '40px'})
       z-btn(class='z-css-m-l') 点击验证是否为邮箱
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-input'}
             :min="2"
             :max="10"

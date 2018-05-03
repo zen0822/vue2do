@@ -1,12 +1,30 @@
 div.p-component
   z-row(:gap='30', align='start')
     z-col.p-component-menu(:style='componentStyle', :xs='12' :span='3', :xl='2')
+      z-row.z-css-m-b-double(justify='justify')
+        z-col(:span='2') UI:
+        z-col
+          z-select(:init-val='typeUI', ref='ui')
+            z-select-ele(value='bootstrap') Bootstrap4
+            z-select-ele(value='material') Material
+      z-row.z-css-m-b-double(justify='justify')
+        z-col(:span='2') Theme:
+        z-col
+          z-select(:init-val='typeTheme', ref='theme')
+            z-select-ele(value='primary') Primary
+            z-select-ele(value='danger') Danger
+            z-select-ele(value='success') Success
+            z-select-ele(value='warning') Warning
+            z-select-ele(value='orange') Orange
+            z-select-ele(value='grey') Grey
+            z-select-ele(value='light') Light
+            z-select-ele(value='dark') Dark
       z-nav(
-          type='vertical'
-          title='组件导航'
-          trigger='show'
-          spread-all
-          :init-opt='menuOpt'
+        type='vertical'
+        title='组件导航'
+        trigger='show'
+        spread-all
+        :init-opt='menuOpt'
       )
     z-col.p-component-stage(:style='componentStyle', ref='compStage', :xs='12', :span='9', :xl='10')
       transition(name='z-fade', v-on:after-enter='afterEnter')

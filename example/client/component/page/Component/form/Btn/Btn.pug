@@ -3,45 +3,57 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-btn 提交
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+      ) 提交
 
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-btn>'}
           提交
         #{'</z-btn>'}
-    +section('bootstrap', 'bootstrap UI 规范')
-      z-btn(block) 提交
-
-      z-code.
-        #{'<z-btn block>'}
-          提交
-        #{'</z-btn>'}
     +section('theme', '按钮主题')
-      z-btn.z-css-m-t-double(ui='bootstrap' theme='success', type='outline', radius='none') 只有轮廓
-      z-code.
-        #{'<z-btn theme="success" type="outline" radius="none">'}
+      z-btn.z-css-m-t-double(
+        :ui='typeUI'
+        :theme='typeTheme'
+        type='outline'
+        radius='none'
+      ) 只有轮廓
+      z-code(:theme='typeTheme').
+        #{'<z-btn type="outline" radius="none">'}
           #{'只有轮廓'}
         #{'</z-btn>'}
     +section('custom', '自定义按钮内容')
-      z-btn(radius='l')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
         p custom content
 
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-btn>'}
           #{'<p>custom content</p>'}
         #{'</z-btn>'}
     +section('ban', '禁止访问')
-      z-btn(ban) 禁止访问
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        ban
+      ) 禁止访问
 
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-btn ban>'}
           禁止访问
         #{'</z-btn>'}
     +section('float', '浮动按钮')
-      z-btn(type='float')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        type='float'
+      )
         z-icon(kind='search')
 
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-btn ban>'}
           禁止访问
         #{'</z-btn>'}

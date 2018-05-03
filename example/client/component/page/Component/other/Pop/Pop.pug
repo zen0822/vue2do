@@ -3,19 +3,28 @@ include ../../mixin.pug
 div.component-pop
   article.example-article
     +section('start', '弹窗')
-      z-btn(@click='showPop') 显示弹出层
-      z-btn(@click='hidePop' class='z-css-m-l') 隐藏弹出层
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='showPop'
+      ) 显示弹出层
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='hidePop'
+        class='z-css-m-l'
+      ) 隐藏弹出层
       z-pop(ref='pop' direction='north' position='left')
         p 这是一个简单
         p {{testName}}
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-btn @click="simple">'}
           确认
         #{'</z-btn>'}
-        #{'<z-modal ref="simple">'}
+        #{'<z-pop ref="pop" direction="north" position="left">'}
           #{'<p> 这是一个简单</p>'}
           #{'<p> 的小弹窗</p>'}
-        #{'</z-modal>'}
+        #{'</z-pop>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'

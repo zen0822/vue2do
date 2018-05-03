@@ -274,7 +274,7 @@ const modalComp = {
     },
 
     _initModal() {
-      this.$refs.scroller.$on('yBarChange', ({
+      this.$refs.scroller && this.$refs.scroller.$on('yBarChange', ({
         hasScroller
       }) => {
         this.hasScroller = hasScroller

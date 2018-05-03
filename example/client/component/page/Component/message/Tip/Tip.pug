@@ -3,16 +3,24 @@ include ../../mixin.pug
 div.component-pop
   article.example-article
     +section('start', '弹窗')
-      z-btn(@click='tip') 提示
-      z-code.
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='tip'
+      ) 提示
+      z-code(:theme='typeTheme').
         #{'import { tip } from "vue2do"'}
 
         #{'<z-btn @click="tip">'}
           提示
         #{'</z-btn>'}
     +section('start', '底部弹出提示（toast）')
-      z-btn(@click='toast') toast
-      z-code.
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='toast'
+      ) toast
+      z-code(:theme='typeTheme').
         #{'import { toast } from "vue2do"'}
 
         #{'<z-btn @click="toast">'}
@@ -20,17 +28,21 @@ div.component-pop
         #{'</z-btn>'}
     +section('bubble', '泡泡提示')
       z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
         @click='showTooltip'
         @blur='hideTooltip'
         ref='bubbleBtn'
       ) 泡泡提示
       z-bubble(
+        :ui='typeUI'
+        :theme='typeTheme'
         ref='bubble'
         fixed,
         :target='bubbleTarget'
       )
         p 泡泡提示
-      z-code(type='js').
+      z-code(type='js', :theme='typeTheme').
         ...
           showTooltip({
             event
@@ -45,7 +57,7 @@ div.component-pop
             this.tooltip.hide && this.tooltip.hide()
           }
         ...
-      z-code(type='html').
+      z-code(type='html', :theme='typeTheme').
         #{'<z-btn @click="showTooltip" @blur="hideTooltip">'}
           泡泡提示
         #{'</z-btn>'}

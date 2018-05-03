@@ -3,14 +3,17 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-menu
+      z-menu(
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
         z-menu-ele(value='1') {{ testName }}
         z-menu-ele(value='2')
           z-btn 按钮
         z-menu-ele(value='3') 测试3
         z-menu-ele(value='4') 测试4
         z-menu-ele(value='5') 测试5
-      z-code(v-pre).
+      z-code(:theme='typeTheme').
         #{'<z-menu>'}
           #{'<z-menu-ele value="1">{{ testName }}</z-menu-ele>'}
           #{'<z-menu-ele value="2">'}
@@ -22,7 +25,11 @@ div
         #{'</z-menu>'}
     +section('start', '开始使用')
       p.section-description 使用自定义的触发器，并且不遮盖触发器
-      z-menu(noCoverTrig)
+      z-menu(
+        :ui='typeUI'
+        :theme='typeTheme'
+        noCoverTrig
+      )
         z-btn(slot='trigger' type='flat') 菜单
         z-menu-ele(value='1') {{ testName }}
         z-menu-ele(value='2')
@@ -30,9 +37,9 @@ div
         z-menu-ele(value='3') 测试3
         z-menu-ele(value='4') 测试4
         z-menu-ele(value='5') 测试5
-      z-code(v-pre).
+      z-code(:theme='typeTheme').
         #{'<z-menu noCoverTrig>'}
-          #{'<z-menu-trig slot="trigger"><z-btn type="flat" /></z-menu-trig>'}
+          #{'<z-menu-trig slot="trigger"><z-btn type="flat" />菜单</z-btn></z-menu-trig>'}
           #{'<z-menu-ele value="1">{{ testName }}</z-menu-ele>'}
           #{'<z-menu-ele value="2">'}
             #{'<z-btn>按钮</z-btn>'}

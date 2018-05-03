@@ -4,18 +4,25 @@ div
   article.example-article
     +section('start', '开始使用')
       p.section-description 直接传入 init-opt，10s 之后会更改 initOpt 数据
-      z-select(:init-opt='dropMenuOpt' ui='bootstrap')
-      z-code.
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        :init-opt='dropMenuOpt'
+      )
+      z-code(:theme='typeTheme').
         #{'<z-select :init-opt="dropMenuOpt"></z-select>'}
     +section('tag', '添加子标签')
       p.section-description 用直观的标签声明下拉框的数据
-      z-select
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
         z-select-ele(value='1') {{ testName }}
         z-select-ele(value='2') 按钮
         z-select-ele(value='3') 测试3
         z-select-ele(value='4') 测试4
         z-select-ele(value='5') 测试5
-      z-code(v-pre).
+      z-code(:theme='typeTheme').
         #{'<z-select>'}
           #{'<z-select-ele value="1">{{ testName }}</z-select-ele>'}
           #{'<z-select-ele value="2">按钮</z-select-ele>'}
@@ -25,10 +32,12 @@ div
         #{'</z-select>'}
     +section('classify', '分类下拉选择')
       z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
         select-all
         :classify='[{key: "recent",text: "最近"}, {key: "hot",text: "热门"}]'
         :classify-opt='classifyOpt')
-      z-code.
+      z-code(:theme='typeTheme').
         #{'<z-select'}
           :select-all="true"
           :classify="[{
@@ -41,19 +50,31 @@ div
         #{'  :classify-opt="classifyOpt"></z-select>'}
     +section('multiple', '多选下拉框')
       z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
         multiple
         :init-opt="selectOpt")
-      z-code.
+      z-code(:theme='typeTheme').
         #{ '<z-select' }
           multiple
           #{ ':init-opt="selectOpt"></z-select>'}
     +section('search', '搜索功能')
-      z-select(search, :init-opt='selectOpt')
-      z-code.
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        search
+        :init-opt='selectOpt'
+      )
+      z-code(:theme='typeTheme').
         #{'<z-select search :init-opt="selectOpt"></z-select>'}
     +section('init', '指定选定下拉选项')
-      z-select(:init-val='2', :init-opt='selectOpt')
-      z-code.
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        :init-val='2'
+        :init-opt='selectOpt'
+      )
+      z-code(:theme='typeTheme').
         #{'<z-select :init-val="2" :init-opt="selectOpt"></z-select>'}
     +section('props', 'props 数据类型')
       z-table(

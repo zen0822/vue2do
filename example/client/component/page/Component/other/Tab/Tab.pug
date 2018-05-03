@@ -4,36 +4,14 @@ div
   article.example-article
     +section('start', '开始使用')
       z-tab(
-        theme='success'
+        :ui='typeUI'
+        :theme='typeTheme'
         query
         :init-opt='testOpt.slice(0, 8)'
       )
-      z-code(type='html').
+      z-code(type='html', :theme='typeTheme').
         #{'<z-tab query :init-opt="testOpt"></z-tab>'}
-      z-code(type='js').
-        ...
-          data() {
-            return {
-              testOpt: [{
-                value: 0,
-                text: 'test-0'
-              }, {
-                value: 1,
-                text: 'test-1'
-              }]
-            }
-          },
-        ...
-    +section('start', 'bootstrap 主题')
-      z-tab(
-        ui='bootstrap'
-        theme='orange'
-        query
-        :init-opt='testOpt.slice(0, 2)'
-      )
-      z-code(type='html').
-        #{'<z-tab query :init-opt="testOpt"></z-tab>'}
-      z-code(type='js').
+      z-code(type='js', :theme='typeTheme').
         ...
           data() {
             return {

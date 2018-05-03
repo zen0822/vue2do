@@ -3,17 +3,22 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-check(:init-opt='testOpt')
-      z-code.
+      z-check(
+        :ui='typeUI',
+        :theme='typeTheme',
+        :init-opt='testOpt'
+      )
+      z-code(:theme='typeTheme').
         #{'<z-check></z-check>'}
     +section('multiple', '多选')
-      z-check(multiple theme='blue' :init-opt='testOpt')
-      z-code.
+      z-check(
+        :ui='typeUI',
+        :theme='typeTheme',
+        multiple,
+        :init-opt='testOpt'
+      )
+      z-code(:theme='typeTheme').
         #{'<z-check></z-check>'}
-    +section('bootstrap', 'bootstrap UI')
-      z-check(ui='bootstrap', check-all, multiple, theme='success' :init-opt='testOpt')
-      z-code.
-        #{'<z-check ui="bootstrap"></z-check>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'

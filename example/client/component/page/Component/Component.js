@@ -120,7 +120,27 @@ export default {
     }
   },
 
+  beforeMount() {
+    // this.$store.dispatch(commonStore.typeTheme.add, window.localStorage.getItem(`${this.varPrefix}_THEME`))
+    this.$store.dispatch(commonStore.typeUI.add, window.localStorage.getItem(`${this.varPrefix}_UI`))
+  },
+
   mounted() {
+    this.$refs.theme.$on('change', ({
+      value
+    }) => {
+      this.$store.dispatch(commonStore.typeTheme.add, value)
+
+      window.localStorage.setItem(`${this.varPrefix}_THEME`, value)
+    })
+    this.$refs.ui.$on('change', ({
+      value
+    }) => {
+      this.$store.dispatch(commonStore.typeUI.add, value)
+
+      window.localStorage.setItem(`${this.varPrefix}_UI`, value)
+    })
+
     setTimeout(() => {
       this.dropMenuOpt = this.dropMenuOpt.concat([{
         value: 4,

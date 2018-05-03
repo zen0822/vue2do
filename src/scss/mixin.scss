@@ -59,7 +59,7 @@ $DEVICE-XL-RANGE: "1200px ~ --px";
     $type-dark-color: $color-success-dark;
     $type-light-color: $color-success-light;
   }
-  @else if $type=='waring' {
+  @else if $type=='warning' {
     $type-color: $color-warning;
     $type-dark-color: $color-warning-dark;
     $type-light-color: $color-warning-light;

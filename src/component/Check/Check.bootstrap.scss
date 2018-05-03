@@ -13,6 +13,24 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   box-shadow: 0 0 0 3px rgba($color, .3);
 }
 
+@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+  & > .#{$C_PREFIX}-opt-row {
+    & > .#{$C_PREFIX}-opt-col {
+      & > .#{$C_PREFIX}-box {
+        &:focus,
+        &:active,
+        &:focus:active {
+          & > .#{$C_PREFIX}-icon {
+            border-radius: 100%;
+
+            @include check-box-shadow($type-color);
+          }
+        }
+      }
+    }
+  }
+}
+
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   &.#{$C_PREFIX}-multiple{
     & > .#{$C_PREFIX}-opt-row {
@@ -63,4 +81,24 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       font-size: $h3;
     }
   }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
 }

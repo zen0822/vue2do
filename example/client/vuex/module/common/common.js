@@ -4,7 +4,9 @@ export default {
   state: {
     window: null,
     appContent: null,
-    compStage: null
+    compStage: null,
+    typeUI: 'bootstrap',
+    typeTheme: 'primary'
   },
 
   getters: {
@@ -16,6 +18,12 @@ export default {
     },
     [nameSpace.compStage.get](state) {
       return state.compStage
+    },
+    [nameSpace.typeUI.get](state) {
+      return state.typeUI
+    },
+    [nameSpace.typeTheme.get](state) {
+      return state.typeTheme
     }
   },
 
@@ -40,6 +48,20 @@ export default {
       rootState
     }, item) {
       return commit(nameSpace.compStage.add, item)
+    },
+    [nameSpace.typeTheme.add]({
+      state,
+      commit,
+      rootState
+    }, value) {
+      return commit(nameSpace.typeTheme.add, value)
+    },
+    [nameSpace.typeUI.add]({
+      state,
+      commit,
+      rootState
+    }, value) {
+      return commit(nameSpace.typeUI.add, value)
     }
   },
 
@@ -55,6 +77,12 @@ export default {
     },
     [nameSpace.compStage.add](state, vm) {
       state.compStage = vm.$el
+    },
+    [nameSpace.typeUI.add](state, value) {
+      state.typeUI = value
+    },
+    [nameSpace.typeTheme.add](state, value) {
+      state.typeTheme = value
     }
   }
 }

@@ -4,6 +4,8 @@ div.component-pop
   article.example-article
     +section('start', '开始使用')
       z-list(
+          :ui='typeUI'
+          :theme='typeTheme'
           auto
           class='z-css-m-t'
           :page-size='7'
@@ -14,7 +16,7 @@ div.component-pop
           :item='testOpt')
         template(slot-scope='props')
           div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf
-      z-code(v-pre).
+      z-code(:theme='typeTheme').
         #{'<z-list'}
             auto
             class="z-css-m-t"

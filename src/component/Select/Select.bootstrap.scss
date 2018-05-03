@@ -28,7 +28,7 @@ $MENU_HEIGHT: 36px;
   }
 
   &.#{$C_PREFIX}-selecting {
-    @include btn-box-shadow($color-primary);
+    @include btn-box-shadow($type-color);
     border-color: $type-dark-color;
   }
 }

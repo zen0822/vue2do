@@ -1,3 +1,7 @@
+/**
+ * loading 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
@@ -5,10 +9,6 @@
 $C_PREFIX: #{ $COMP_LOADING };
 
 @import './Loading.type.scss';
-
-/**
- * loading 组件样式
- */
 
 .#{$C_PREFIX} {
   display: inline-block;
@@ -43,68 +43,33 @@ $C_PREFIX: #{ $COMP_LOADING };
       width: 100%;
       height: 100%;
     }
-  }
 
-  &.#{$C_PREFIX}-theme-primary {
-    &.#{$C_PREFIX}-mark {
-      .#{$C_PREFIX}-spot {
-        z-index: 2;
-        position: absolute;
+    .#{$C_PREFIX}-spot {
+      z-index: 2;
+      position: absolute;
 
-        top: 50%;
-        left: 50%;
+      top: 50%;
+      left: 50%;
 
-        transform: translate(-50%, -50%)
-      }
-
-      .#{$C_PREFIX}-rotate {
-        position: absolute;
-        z-index: 2;
-
-        top: 50%;
-        left: 50%;
-
-        transform: translate(-50%, -50%)
-      }
-    }
-
-    .#{$C_PREFIX}-spot{
-      @extend %loading-type-spot;
+      transform: translate(-50%, -50%)
     }
 
     .#{$C_PREFIX}-rotate {
-      @extend %loading-type-rotate;
+      position: absolute;
+      z-index: 2;
+
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
     }
   }
 
-  &.#{$C_PREFIX}-theme-secondary {
-    &.#{$C_PREFIX}-mark {
-      .#{$C_PREFIX}-bg {
-        @extend %center-position;
+  .#{$C_PREFIX}-spot{
+    @extend %loading-type-spot;
+  }
 
-        background: $grey;
-        opacity: .6;
-      }
-
-      .#{$C_PREFIX}-rotate {
-        position: absolute;
-        z-index: 2;
-
-        top: 50%;
-        left: 50%;
-      }
-    }
-
-    .#{$C_PREFIX}-rotate {
-      @extend %loading-type-rotate;
-
-      background-color: #fff;
-      border-radius: $border-radius;
-      padding: $gap-v-half;
-
-      .#{$C_PREFIX}-icon i {
-        color: $grey;
-      }
-    }
+  .#{$C_PREFIX}-rotate {
+    @extend %loading-type-rotate;
   }
 }
