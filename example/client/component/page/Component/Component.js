@@ -121,7 +121,7 @@ export default {
   },
 
   beforeMount() {
-    // this.$store.dispatch(commonStore.typeTheme.add, window.localStorage.getItem(`${this.varPrefix}_THEME`))
+    this.$store.dispatch(commonStore.typeTheme.add, window.localStorage.getItem(`${this.varPrefix}_THEME`))
     this.$store.dispatch(commonStore.typeUI.add, window.localStorage.getItem(`${this.varPrefix}_UI`))
   },
 

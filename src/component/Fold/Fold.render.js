@@ -20,6 +20,7 @@ export default function (h) {
             }],
             props: {
               kind: 'arrow-south',
+              size: 'xs',
               ui: this.ui,
               theme: this.theme
             }

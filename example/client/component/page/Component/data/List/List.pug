@@ -1,6 +1,6 @@
 include ../../mixin.pug
 
-div.component-pop
+div.component-list
   article.example-article
     +section('start', '开始使用')
       z-list(
@@ -15,8 +15,8 @@ div.component-pop
           ref='list'
           :item='testOpt')
         template(slot-scope='props')
-          div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf
-      z-code(:theme='typeTheme').
+          div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi
+      z-code(:theme='typeTheme', v-pre).
         #{'<z-list'}
             auto
             class="z-css-m-t"
@@ -28,7 +28,7 @@ div.component-pop
             :item="testOpt"#{'>'}
           #{'<template slot-scope="props">'}
             #{'<div>'}
-              {{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf
+              #{'{{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf'}
             #{'</div>'}
           #{'</template>'}
         #{'</z-list>'}

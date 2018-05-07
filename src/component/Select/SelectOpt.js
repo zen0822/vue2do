@@ -169,20 +169,6 @@ export default {
       })
     },
 
-    /**
-     * 初始化列表的分页组件位置
-     */
-    initPagePosition() {
-      return this.$refs.list.initPagePosition()
-    },
-
-    /**
-     * 初始化分页组件的显示状态
-     */
-    initPageDisplay() {
-      return this.$refs.list.initPageDisplay()
-    },
-
     _handlerMouseenter(event, index) {
       this.focusIndex = index - 1
     },

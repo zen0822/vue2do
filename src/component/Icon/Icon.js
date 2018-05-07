@@ -2,7 +2,7 @@
  * icon 组件
  *
  * @prop theme - 主题
- * @prop size - 大小
+ * @prop size - 大小(xs, s, m, l, xl), 默认 s
  * @prop color - 颜色 16 进制
  * @prop type - 字符图标类型 (字符图标的 class 名的前缀，用户自己引入的字符图标的前缀)
  * @prop kind - 图标的种类（ex：fa-circle -> kind='circle'，ali-fold -> kind='fold')
@@ -34,7 +34,7 @@ export default {
 
     size: {
       type: String,
-      default: 'xs',
+      default: 's',
       validator(val) {
         return ['xs', 's', 'm', 'l', 'xl'].includes(val.toLowerCase())
       }

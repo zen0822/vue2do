@@ -19,7 +19,7 @@ export default {
 
       this.initList({
         pageNum: this.pageData.current,
-        listItem: listItem
+        stateItem: listItem
       })
     },
 
@@ -52,7 +52,7 @@ export default {
       listItem = []
     } = {}) {
       if (!this.auto) {
-        this.listItem = listItem.slice()
+        this.stateItem = listItem.slice()
 
         this.initPage(Object.assign(pageData, {
           current: pageNum
@@ -71,7 +71,7 @@ export default {
         endSlice = startSlice + this.pageSize
       }
 
-      this.listItem = this.getListItemByPage({
+      this.stateItem = this.getListItemByPage({
         listItem: this.item.slice(),
         pageNum,
         pageSize: this.auto ? this.pageSize : false,
@@ -150,31 +150,6 @@ export default {
       this.arrowOfMoreDisplay = true
 
       return this
-    },
-
-    /**
-     * 初始化分页组件的位置
-     */
-    initPagePosition(parentHeight = this.$el.offsetHeight) {
-      if (!this.$refs.page) {
-        return false
-      }
-
-      let ele = this.elementProp(this.$refs.page.$el)
-      let height = ele.offsetHeight
-      let top = parentHeight - height
-      this.pageDetail = {
-        top,
-        left: ele.offsetLeft,
-        bottom: 0
-      }
-    },
-
-    /**
-     * 初始化分页组件的显示状态
-     */
-    initPageDisplay() {
-      this.scrollerAlmostInBottom = this.$refs.scroller.yComputed.isBottom
     },
 
     /**

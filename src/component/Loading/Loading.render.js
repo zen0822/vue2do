@@ -11,6 +11,7 @@ export default function (h) {
     rotateChildren.push(h('icon', {
       class: [this.xclass('icon')],
       props: {
+        size: this.size,
         kind: 'spinner',
         ui: this.ui,
         theme: this.theme
@@ -69,7 +70,7 @@ export default function (h) {
       ],
       directives: [{
         name: 'show',
-        value: this.display
+        value: this.stateDisplay
       }]
     }, [
       h('div', {

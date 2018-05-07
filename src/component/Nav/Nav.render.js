@@ -88,6 +88,7 @@ export default function (h) {
       h('icon', {
         props: {
           kind: 'close',
+          size: 'xs',
           ui: this.ui,
           theme: this.theme
         }

@@ -305,9 +305,6 @@ export default {
         this.$el.style.width = `${this.scrollerWidth}px`
       }
 
-      // boxHeightChanged && (this.$box.style.height = `${boxHeight}px`)
-      // boxWidthChanged && (this.$box.style.width = `${boxWidth}px`)
-
       if (scrollerHeightChanged || scrollerWidthChanged) {
         this._scrollerChange()
       }

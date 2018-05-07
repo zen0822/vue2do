@@ -280,11 +280,6 @@ export default {
         })
       }
 
-      this.$refs.menu.$on('afterSpread', () => {
-        this.$refs.option.initPagePosition()
-        this.$refs.option.initPageDisplay()
-      })
-
       this.$refs.option.$on('change', ({
         value,
         text,
@@ -308,7 +303,7 @@ export default {
           hideMenu && this._menuMotion(false)
         }
 
-        this.$emit('change', {
+        return this.$emit('change', {
           value,
           text,
           index

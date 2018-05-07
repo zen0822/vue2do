@@ -1,11 +1,11 @@
+/**
+ * list 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
-
-/**
- * list 组件样式
- */
 
 $C_PREFIX: #{ $COMP_LIST };
 
@@ -16,32 +16,22 @@ $C_PREFIX: #{ $COMP_LIST };
 
   .#{$C_PREFIX}-page {
     background-color: #fff;
-    border-top: $divider;
     margin: 0 auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    transition: top 150ms ease-out;
+    width: 100%;
   }
 
   .#{$C_PREFIX}-ul {
     list-style-type: none;
+
+    & > .#{$C_PREFIX}-li {
+      &:last-child {
+        border: none;
+      }
+    }
   }
 
   .#{$C_PREFIX}-empty-data {
     padding: $gap-v 0;
     text-align: center;
-  }
-
-  &.#{$C_PREFIX}-theme-primary {
-    .#{$C_PREFIX}-ul {
-      list-style-type: none;
-
-      &>.#{$C_PREFIX}-li {
-        &:last-child {
-          border: none;
-        }
-      }
-    }
   }
 }

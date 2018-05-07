@@ -51,8 +51,7 @@ export default {
     icon: Icon,
     loading: Loading,
     page: Pager,
-    scroller: Scroller,
-    'slide-transition': MotionSlide
+    scroller: Scroller
   },
 
   props: {
@@ -102,12 +101,14 @@ export default {
   },
 
   data() {
+    this.scrollerWidth = 0
+    this.pageHeight = 0
+
     return {
-      listItem: [],
+      stateItem: [],
       pageData: {},
       arrowOfMoreDisplay: true, // 滚动加载更多时的图标显示状态
       moreDisplay: false, // 加载更多的显示状态
-      scrollerAlmostInBottom: false, // 滚动条是否在底部
       loadingListData: false, // 是否正在加载列表数据
       pageDetail: { // 分页的相关信息
         top: 0,
@@ -125,24 +126,12 @@ export default {
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-list`
     },
-    loadMoreText() { // 加载更多的显示文字
-      if (this.pageType === PAGE_TYPE_MORE) {
-        return `${this.pageTrigger === 'click' ? '点击' : '滚动'}加载更多`
-      }
-    },
     pagerDisplayStatus() { // 分页的显示状态
       return this.pageData.total !== 0 &&
-        this.pageData.current !== this.pageData.total &&
-        this.scrollerAlmostInBottom
+        this.pageData.current !== this.pageData.total
     },
     isPageTypeMore() { // 是否是加载更多的触发方式
       return this.pageType === PAGE_TYPE_MORE
-    },
-    pagerStyle() { // 分页组件的样式
-      return {
-        top: this.pageDetail.top + 'px',
-        left: this.pageDetail.left + 'px'
-      }
     }
   },
 
@@ -156,9 +145,6 @@ export default {
         pageNum: this.pageData.current,
         listItem: val
       })
-    },
-    pagerDisplayStatus(val) {
-      this._transitePage(val)
     }
   },
 
@@ -177,24 +163,20 @@ export default {
       const refScroller = this.$refs.scroller
 
       refScroller.$on('scrollY', ({
-        offset,
-        top,
-        isBottom
+        box
       }) => {
         if (this.pageTrigger === 'scroll') {
-          if (offset - top < 5 && this.pageData.current + 1 <= this.pageData.total) {
+          if (box.position.top - box.offset.top < this.pageHeight && this.pageData.current + 1 <= this.pageData.total) {
             return this.switchPage({
               currentPage: this.pageData.current + 1
             })
           }
-
-          this.scrollerAlmostInBottom = offset - top < 30
         }
       })
 
       refScroller.$on('change', (opt) => {
         this.scrollerWidth = refScroller.$el.offsetWidth
-        this.initPagePosition()
+        this.pageHeight = this.$refs.page.$el.offsetHeight
 
         return this.$emit('scrollerChange', {
           ...opt,
@@ -208,26 +190,6 @@ export default {
         if (!this.$el.offsetHeight) {
           return false
         }
-
-        this.initPagePosition()
-        this.$nextTick(() => {
-          this.scrollerAlmostInBottom = isBottom
-        })
-      })
-    },
-
-    /**
-     * 执行分页过渡动画
-     */
-    _transitePage(show = true) {
-      this.$nextTick(() => {
-        const refPageTransition = this.$refs.pageSlideTransition
-
-        if (show) {
-          return refPageTransition.enter()
-        } else {
-          return refPageTransition.leave()
-        }
       })
     }
   },
@@ -236,12 +198,6 @@ export default {
     this.initPage().initList({
       pageNum: this.pageData.current,
       listItem: this.item
-    })
-  },
-
-  mounted() {
-    this.$nextTick(() => {
-      this.initPagePosition()
     })
   }
 }

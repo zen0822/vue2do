@@ -30,7 +30,8 @@ export default function (h) {
         }, [
           h('icon', {
             props: {
-              kind: 'close'
+              kind: 'close',
+              size: 'xs'
             }
           })
         ])
@@ -74,7 +75,8 @@ export default function (h) {
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
     props: {
-      kind: 'triangle-down'
+      kind: 'triangle-down',
+      size: 'xs'
     }
   }))
 
@@ -99,7 +101,8 @@ export default function (h) {
       }, [
         h('icon', {
           props: {
-            kind: 'search'
+            kind: 'search',
+            size: 'xs'
           },
           slot: 'header'
         })

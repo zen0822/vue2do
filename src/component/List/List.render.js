@@ -7,16 +7,15 @@ export default function (h) {
   let scrollerChildren = []
   let loadingOfNum = []
 
-  if (this.listItem.length > 0) {
+  if (this.stateItem.length > 0) {
     let listItems = []
 
-    this.listItem.forEach((item, index) => {
-      let $slot = this.$scopedSlots ?
-        [this.$scopedSlots.default({
-          index: index + 1,
-          item
-        })] :
-        this.$slots.default
+    this.stateItem.forEach((item, index) => {
+      let $scopedSlots = [this.$scopedSlots.default({
+        index: index + 1,
+        item
+      })]
+      let $slot = this.$scopedSlots ? $scopedSlots : this.$slots.default
 
       listItems.push(
         h('li', {
@@ -40,6 +39,51 @@ export default function (h) {
     }, '暂无数据')]
   }
 
+  scrollerChildren.push(
+    h('page', {
+      class: [this.xclass('page')],
+      directives: [{
+        name: 'show',
+        value: this.pagerDisplayStatus
+      }],
+      props: {
+        data: this.pageData,
+        type: this.pageType,
+        loadMoreText: this.loadMoreText,
+        ui: this.ui,
+        theme: this.theme
+      },
+      on: {
+        'switch': this.switchPage
+      },
+      ref: 'page'
+    }, (() => {
+      if (this.isPageTypeMore) {
+        return [
+          h(
+            'div', {
+              slot: 'loadMore'
+            }, [
+              h('loading', {
+                class: [`${this.compPrefix}-m-r-half`].concat(
+                  this.xclass(['loading', 'loading-more'])
+                ),
+                props: {
+                  display: this.isPageTypeMore,
+                  ui: this.ui,
+                  theme: this.theme
+                },
+                ref: 'loadingOfMore'
+              })
+            ]
+          )
+        ]
+      }
+
+      return null
+    })())
+  )
+
   if (!this.isPageTypeMore) {
     loadingOfNum.push(h('loading', {
       class: this.xclass(['loading', 'loading-num']),
@@ -62,76 +106,6 @@ export default function (h) {
       },
       ref: 'scroller'
     }, scrollerChildren)
-  )
-
-  listChildren.push(
-    h('slide-transition', {
-      props: {
-        direction: 'north',
-        offset: this.pageDetail.bottom
-      },
-      ref: 'pageSlideTransition'
-    }, [
-      h('page', {
-        class: [this.xclass('page')],
-        props: {
-          data: this.pageData,
-          type: this.pageType,
-          loadMoreText: this.loadMoreText,
-          ui: this.ui,
-          theme: this.theme
-        },
-        on: {
-          'switch': this.switchPage
-        },
-        ref: 'page',
-        style: this.pagerStyle
-      }, (() => {
-        let ele = [
-          h('icon', {
-            class: [`${this.compPrefix}-m-r-half`],
-            props: {
-              kind: 'arrow-down-thick-moving'
-            }
-          }),
-          h('span', this.loadMoreText)
-        ]
-
-        if (this.isPageTypeMore) {
-          return [
-            h(
-              'div', {
-                slot: 'loadMore'
-              }, [
-                h('loading', {
-                  class: [`${this.compPrefix}-m-r-half`].concat(
-                    this.xclass(['loading', 'loading-more'])
-                  ),
-                  props: {
-                    ui: this.ui,
-                    theme: this.theme
-                  },
-                  ref: 'loadingOfMore'
-                }),
-                h('icon', {
-                  class: [`${this.compPrefix}-m-r-half`],
-                  directives: [{
-                    name: 'show',
-                    value: this.arrowOfMoreDisplay
-                  }],
-                  props: {
-                    kind: 'arrow-down-thick-moving'
-                  }
-                }),
-                h('span', this.loadMoreText)
-              ]
-            )
-          ]
-        }
-
-        return ele
-      })())
-    ])
   )
 
   listChildren.push(loadingOfNum)

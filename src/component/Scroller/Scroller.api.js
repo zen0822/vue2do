@@ -183,31 +183,36 @@ export default {
      * 触发滚动条滚动事件
      */
     triggerScroll(type) {
-      let data = {}
-      let eventName = ''
-
-      if (type === 'y') {
-        eventName = 'scrollY'
-        data = {
-          emitter: this,
-          top: this.yData.barTop,
-          offset: this.yData.barAndScrollerOffset,
-          isBottom: this.yComputed.isBottom,
-          isTop: this.yComputed.isTop
-        }
-      } else {
-        eventName = 'scrollX'
-        data = {
-          emitter: this,
-          left: this.xData.barLeft,
-          offset: this.xData.barAndScrollerOffset,
-          isRight: this.xComputed.isRight,
-          isLeft: this.xComputed.isLeft
-        }
-      }
+      let eventName = type === 'y' ? 'scrollY' : 'scrollX'
 
       return this.$nextTick(() => {
-        this.$emit(eventName, data)
+        this.$emit(eventName, {
+          emitter: this,
+          bar: {
+            position: {
+              top: this.yData.barTop,
+              left: this.xData.barLeft
+            },
+            offset: {
+              top: this.yData.barAndScrollerOffset,
+              left: this.xData.barAndScrollerOffset
+            },
+            isBottom: this.yComputed.isBottom,
+            isTop: this.yComputed.isTop,
+            isRight: this.xComputed.isRight,
+            isLeft: this.xComputed.isLeft
+          },
+          box: {
+            position: {
+              top: -this.yData.barTop * this.yData.boxBarRate,
+              left: -this.xData.barLeft * this.xData.boxBarRate
+            },
+            offset: {
+              top: -this.yData.barAndScrollerOffset * this.yData.boxBarRate,
+              left: -this.xData.barAndScrollerOffset * this.xData.boxBarRate
+            }
+          }
+        })
       })
     },
 
