@@ -24,6 +24,7 @@ export default function (h) {
       liELe.push(h('li', [
         h('span', txt),
         h('span', {
+          class: [this.prefix('css-m-l-half')],
           on: {
             click: (event) => this.clickMultiSelected(event, index + 1)
           }
@@ -31,6 +32,7 @@ export default function (h) {
           h('icon', {
             props: {
               kind: 'close',
+              theme: 'grey',
               size: 'xs'
             }
           })
@@ -76,6 +78,7 @@ export default function (h) {
     class: [this.xclass('caret-down-icon')],
     props: {
       kind: 'triangle-down',
+      theme: 'dark',
       size: 'xs'
     }
   }))
@@ -102,6 +105,7 @@ export default function (h) {
         h('icon', {
           props: {
             kind: 'search',
+            theme: 'grey',
             size: 'xs'
           },
           slot: 'header'

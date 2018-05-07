@@ -720,7 +720,10 @@ export default {
           getMenuData(vm)
 
           vm.menuDisplay = false
-          vm.$refs.menu.fold()
+
+          setTimeout(() => {
+            vm.$refs.menu.fold()
+          }, 300)
         }
       }
 

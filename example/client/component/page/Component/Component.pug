@@ -25,6 +25,8 @@ div.p-component
         trigger='show'
         spread-all
         :init-opt='menuOpt'
+        :ui='typeUI'
+        :theme='typeTheme'
       )
     z-col.p-component-stage(:style='componentStyle', ref='compStage', :xs='12', :span='9', :xl='10')
       transition(name='z-fade', v-on:after-enter='afterEnter')
