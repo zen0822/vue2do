@@ -21,4 +21,16 @@ $C_PREFIX: #{$COMP_BTN};
       }
     }
   }
+
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      & > .#{$comp-prefix}-css-motion-rip {
+        &::after {
+          height: 100%;
+          width: 100%;
+          border-radius: 100%;
+        }
+      }
+    }
+  }
 }
