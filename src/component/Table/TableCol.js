@@ -11,7 +11,9 @@
  */
 
 import baseMixin from '../../mixin/base'
-import { findGrandpa } from '../../util/util'
+import {
+  findGrandpa
+} from '../../util/util'
 
 const COL_PADDING_BORDER_LENGTH = 22
 
@@ -67,14 +69,12 @@ const tableColComp = {
   },
   render(h) {
     return h(
-      this.th ? 'th' : 'td',
-      {
+      this.th ? 'th' : 'td', {
         class: [
           this.cPrefix,
           this.prefix('text-' + this.align)
         ]
-      },
-      [
+      }, [
         h('div', {
           class: [{
             [`${this.prefix('text-omit')}`]: this.omit

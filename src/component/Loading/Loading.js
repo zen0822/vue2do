@@ -5,13 +5,13 @@
  * @prop bgDisplay - 是否显示 loading 的背景
  * @prop display - 马上显示，默认否
  * @prop size - 大小(xs, s, m, l, xl), 默认 s
- * @prop text - 等待文字
  * @prop theme - 主题
- * @prop type - 类型
- *
+ * @prop type - 类型 (rotate, spot)
  */
 
 import './Loading.scss'
+import './Loading.bootstrap.scss'
+import './Loading.material.scss'
 
 import iconComp from '../Icon/Icon'
 import baseMixin from '../../mixin/base'
@@ -35,30 +35,25 @@ export default {
   props: {
     type: {
       type: String,
-      default: TYPE_ROTATE
+      default: TYPE_ROTATE,
+      validator(val) {
+        return ['rotate', 'spot'].includes(val)
+      }
     },
-
     bgDisplay: {
       type: Boolean,
       default: false
     },
-
     display: {
       type: Boolean,
       default: false
     },
-
     size: {
       type: String,
       default: 's',
       validator(val) {
         return ['xs', 's', 'm', 'l', 'xl'].includes(val.toLowerCase())
       }
-    },
-
-    text: {
-      type: String,
-      default: ''
     }
   },
 
@@ -73,15 +68,20 @@ export default {
     cPrefix() {
       return `${this.compPrefix}-loading`
     },
-
+    compClass() {
+      return [
+        this.cPrefix,
+        `${this.cPrefix}-${this.uiClass}`,
+        `${this.cPrefix}-${this.themeClass}`,
+        `${this.cPrefix}-size-${this.size.toLowerCase()}`,
+        {
+          [`${this.cPrefix}-mark`]: this.bgDisplay
+        }
+      ]
+    },
     isRotate() {
       return this.type === TYPE_ROTATE
     },
-
-    isRotate2() {
-      return this.type === TYPE_ROTATE_2
-    },
-
     isSpot() {
       return this.type === TYPE_SPOT
     }

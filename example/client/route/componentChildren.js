@@ -104,9 +104,15 @@ export default [{
   }
 }, {
   path: 'menu',
-  component: () => import('../component/page/Component/Other/Menu/Menu'),
+  component: () => import('../component/page/Component/other/Menu/Menu'),
   meta: {
     title: '菜单组件'
+  }
+}, {
+  path: 'loading',
+  component: () => import('../component/page/Component/activity/Loading/Loading'),
+  meta: {
+    title: '加载组件'
   }
 }, {
   path: 'motion',

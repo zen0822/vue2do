@@ -6,37 +6,57 @@ export default function (h) {
   let loadingChildren = []
 
   if (this.isRotate) {
-    let rotateChildren = []
+    let rotateEle = null
 
-    rotateChildren.push(h('icon', {
-      class: [this.xclass('icon')],
-      props: {
-        size: this.size,
-        kind: 'spinner',
-        ui: this.ui,
-        theme: this.theme
-      }
-    }))
-
-    if (this.text) {
-      rotateChildren.push(h('span', {
-        class: [`${this.compPrefix}-m-l-half`]
-      }, this.text))
+    if (this.UIBootstrap) {
+      rotateEle = (
+        h(
+          'div', {
+            class: [this.xclass('rotate')]
+          }, [h('icon', {
+            class: [this.xclass('icon')],
+            props: {
+              size: this.size,
+              kind: 'spinner',
+              ui: this.ui,
+              theme: this.theme
+            }
+          })]
+        )
+      )
+    } else {
+      rotateEle = (
+        h('div', {
+          class: [this.xclass('rotate')]
+        }, [
+          h(
+            'div', {
+              class: [this.xclass('rotate-stage')]
+            }, [
+              h('div', {
+                class: [this.xclass('rotate-left')]
+              }, [h('div', {
+                class: [this.xclass('rotate-spin')]
+              })]),
+              h('div', {
+                class: [this.xclass('rotate-center')]
+              }, [h('div', {
+                class: [this.xclass('rotate-spin')]
+              })]),
+              h('div', {
+                class: [this.xclass('rotate-right')]
+              }, [h('div', {
+                class: [this.xclass('rotate-spin')]
+              })])
+            ]
+          )
+        ])
+      )
     }
 
-    loadingChildren.push(
-      h(
-        'div', {
-          class: [this.xclass('rotate')]
-        }, rotateChildren
-      )
-    )
+    loadingChildren.push(rotateEle)
   } else if (this.isSpot) {
     let spotChildren = []
-
-    spotChildren.push(h('span', {
-      class: [this.xclass('spot')]
-    }, this.text))
 
     for (let i = 1; i <= 3; i++) {
       spotChildren.push(h('span', {
@@ -61,13 +81,7 @@ export default function (h) {
 
   return h(
     'div', {
-      class: [
-        this.cPrefix,
-        `${this.cPrefix}-${this.themeClass}`,
-        {
-          [`${this.cPrefix}-mark`]: this.bgDisplay
-        }
-      ],
+      class: this.compClass,
       directives: [{
         name: 'show',
         value: this.stateDisplay

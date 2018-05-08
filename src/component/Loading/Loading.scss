@@ -19,6 +19,7 @@ $C_PREFIX: #{ $COMP_LOADING };
 
     .#{$C_PREFIX}-rotate {
       display: inline-block;
+      vertical-align: middle;
     }
   }
 
@@ -65,11 +66,33 @@ $C_PREFIX: #{ $COMP_LOADING };
     }
   }
 
-  .#{$C_PREFIX}-spot{
+  .#{$C_PREFIX}-spot {
     @extend %loading-type-spot;
   }
 
-  .#{$C_PREFIX}-rotate {
-    @extend %loading-type-rotate;
+  &.#{$C_PREFIX}-size {
+    &-xs {
+      .#{$C_PREFIX}-spot {
+        font-size: 12px;
+      }
+    }
+
+    &-m {
+      .#{$C_PREFIX}-spot {
+        font-size: 16px;
+      }
+    }
+
+    &-l {
+      .#{$C_PREFIX}-spot {
+        font-size: 20px;
+      }
+    }
+
+    &-xl {
+      .#{$C_PREFIX}-spot {
+        font-size: 24px;
+      }
+    }
   }
 }

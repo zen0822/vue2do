@@ -31,10 +31,10 @@
       0% {
         opacity: 0;
       }
-      25%{
+      25% {
         opacity: 0;
       }
-      26%{
+      26% {
         opacity: 1;
       }
       100% {
@@ -49,10 +49,10 @@
       0% {
         opacity: 0;
       }
-      50%{
+      50% {
         opacity: 0;
       }
-      51%{
+      51% {
         opacity: 1;
       }
       100% {
@@ -67,10 +67,10 @@
       0% {
         opacity: 0;
       }
-      75%{
+      75% {
         opacity: 0;
       }
-      76%{
+      76% {
         opacity: 1;
       }
       100% {
@@ -78,5 +78,143 @@
       }
     }
     animation: #{$C_PREFIX}-spot-fade-3 2s infinite;
+  }
+}
+
+%loading-type-rotate2 {
+  @keyframes #{$C_PREFIX}-rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  border-color: $color-primary;
+  animation: #{$C_PREFIX}-rotate 2s infinite;
+  width: 28px;
+  height: 28px;
+  position: relative;
+
+  .#{$C_PREFIX}-rotate-stage {
+    @keyframes #{$C_PREFIX}-rotate-fill-unfill-rotate {
+      12.5% {
+        transform: rotate(135deg);
+      }
+      25% {
+        transform: rotate(270deg);
+      }
+      37.5% {
+        transform: rotate(405deg);
+      }
+      50% {
+        transform: rotate(540deg);
+      }
+      62.5% {
+        transform: rotate(675deg);
+      }
+      75% {
+        transform: rotate(810deg);
+      }
+      87.5% {
+        transform: rotate(945deg);
+      }
+      100% {
+        transform: rotate(1080deg);
+      }
+    }
+
+    animation: #{$C_PREFIX}-rotate-fill-unfill-rotate 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both, #{$C_PREFIX}-rotate-fade-in-out 5332ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+    border-color: inherit;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .#{$C_PREFIX}-rotate-spin {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      box-sizing: border-box;
+      height: 100%;
+      border-width: 3px;
+      border-style: solid;
+      border-color: inherit;
+      border-bottom-color: #0000;
+      border-radius: 50%;
+      animation: none;
+    }
+
+    .#{$C_PREFIX}-rotate-left {
+      display: inline-block;
+      position: relative;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      border-color: inherit;
+
+      @keyframes #{$C_PREFIX}-rotate-spin-left {
+        0% {
+          transform: rotate(130deg);
+        }
+        50% {
+          transform: rotate(-5deg);
+        }
+        100% {
+          transform: rotate(130deg);
+        }
+      }
+
+      .#{$C_PREFIX}-rotate-spin {
+        animation: #{$C_PREFIX}-rotate-spin-left 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+        width: 200%;
+        transform: rotate(129deg);
+        border-right-color: #0000;
+      }
+    }
+
+    .#{$C_PREFIX}-rotate-center {
+      position: absolute;
+      box-sizing: border-box;
+      top: 0;
+      left: 45%;
+      width: 10%;
+      height: 100%;
+      overflow: hidden;
+      border-color: inherit;
+
+      .#{$C_PREFIX}-rotate-spin {
+        width: 1000%;
+        left: -450%;
+      }
+    }
+
+    .#{$C_PREFIX}-rotate-right {
+      display: inline-block;
+      position: relative;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      border-color: inherit;
+
+      @keyframes #{$C_PREFIX}-rotate-spin-right {
+        0% {
+          transform: rotate(-130deg);
+        }
+        50% {
+          transform: rotate(5deg);
+        }
+        100% {
+          transform: rotate(-130deg);
+        }
+      }
+
+      .#{$C_PREFIX}-rotate-spin {
+        animation: #{$C_PREFIX}-rotate-spin-right 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both;
+        width: 200%;
+        left: -100%;
+        border-left-color: #0000;
+        transform: rotate(-129deg);
+      }
+    }
   }
 }

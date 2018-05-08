@@ -85,6 +85,14 @@
     ]
   },
   {
+    "name": "进度与加载",
+    "sub": [{
+        "name": "加载组件",
+        "route": "/component/loading"
+      }
+    ]
+  },
+  {
     "name": "过渡动画",
     "sub": [{
         "name": "放大缩小",

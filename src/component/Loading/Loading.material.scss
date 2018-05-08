@@ -1,0 +1,55 @@
+/**
+ * loading 组件的 material UI 样式
+ */
+
+@import "../../scss/config.scss";
+@import "../../scss/name.scss";
+@import "../../scss/mixin.scss";
+
+$C_PREFIX: #{$COMP_LOADING};
+
+@import './Loading.type.scss';
+
+@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+  .#{$C_PREFIX}-rotate {
+    border-color: $type-color;
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  .#{$C_PREFIX}-rotate {
+    @extend %loading-type-rotate2;
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
