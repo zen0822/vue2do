@@ -11,20 +11,6 @@ $C_PREFIX: #{$COMP_CHECK};
 $C_ICON_PREFIX: #{$COMP_ICON};
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  & > .#{$C_PREFIX}-opt-row {
-    & > .#{$C_PREFIX}-opt-col {
-      & > .#{$C_PREFIX}-box {
-        &.#{$C_PREFIX}-checked {
-          & > .#{$C_PREFIX}-icon {
-            & > .#{$C_ICON_PREFIX} {
-              color: $type-color;
-            }
-          }
-        }
-      }
-    }
-  }
-
   .#{$C_PREFIX}-opt-check-all.#{$C_PREFIX}-checked {
     & > .#{$C_ICON_PREFIX} {
       color: $type-color
@@ -122,4 +108,16 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
   @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
 }
