@@ -1,6 +1,9 @@
 div.p-component
   z-row(:gap='30', align='start')
-    z-col.p-component-menu(:style='componentStyle', :xs='12' :span='3', :xl='2')
+    z-col.p-component-menu(
+      :style='componentStyle'
+      width='250px'
+    )
       z-row.z-css-m-b-double(justify='justify')
         z-col(:span='2') UI:
         z-col
@@ -28,6 +31,10 @@ div.p-component
         :ui='typeUI'
         :theme='typeTheme'
       )
-    z-col.p-component-stage(:style='componentStyle', ref='compStage', :xs='12', :span='9', :xl='10')
+    z-col.p-component-stage(
+      :style='componentStyle'
+      ref='compStage'
+      width='calc(100% - 250px)'
+    )
       transition(name='z-fade', v-on:after-enter='afterEnter')
         router-view

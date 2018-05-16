@@ -8,9 +8,9 @@
   }
 
   .#{$PAGE_PREFIX}-component-menu {
-    width: 250px;
     overflow: auto;
     padding: $gap-v-double $gap-h-double;
+    box-sizing: border-box;
 
     a {
       color: $grey;

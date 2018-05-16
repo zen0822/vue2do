@@ -4,15 +4,49 @@
 
 [![vue2do](https://nodei.co/npm/vue2do.png)](https://npmjs.org/package/vue2do)
 
+vue2do 的 [文档网站](https://zen0822.github.io)。
 
-## 安装
+## 开始使用
+
+### 安装
 ```sh
 npm i vue2do -S
 ```
 
-## 开始使用
+### 全部加载
+``` js
+import Vue from 'vue'
+import vue2do from 'vue2do'
 
-### 通过 script 标签加载
+Vue.use(vue2do)
+```
+在项目中使用
+``` html
+<z-input></z-input>
+```
+
+### 局部加载
+```js
+import {
+  select,
+  input
+  // ...
+} from 'vue2do'
+
+Vue.component('select', select)
+Vue.component('yourPrefix' + input.compName, input)
+```
+
+### 加载指定组件
+
+#### 因为从 vue2do/index.js 文件加载的时候会加载所有的组件，所以只加载指定组件就可以只打包这个组件的文件
+```js
+import Input from 'vue2do/component/Input'
+
+Vue.component('Input', Input)
+```
+
+## 通过 script 标签加载使用
 ```html
 ...
   <body>
@@ -49,40 +83,7 @@ npm i vue2do -S
 ...
 ```
 
-[预览](https://codepen.io/zen0822/project/editor/DYympR)
-
-### 全部加载
-``` js
-import Vue from 'vue'
-import vue2do from 'vue2do'
-
-Vue.use(vue2do)
-```
-在项目中使用
-``` html
-<z-input></z-input>
-```
-
-### 局部加载
-```js
-import {
-  select,
-  input
-  // ...
-} from 'vue2do'
-
-Vue.component('select', select)
-Vue.component('yourPrefix' + input.compName, input)
-```
-
-### 加载指定组件
-
-#### 因为从 vue2do/index.js 文件加载的时候会加载所有的组件，所以只加载指定组件就可以只打包这个组件的文件
-```js
-import Input from 'vue2do/component/Input'
-
-Vue.component('Input', Input)
-```
+[从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
 
 ## 构建单页应用（spa）和多页应用（mpa）
 

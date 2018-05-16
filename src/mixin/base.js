@@ -17,6 +17,9 @@ import {
 import {
   addClass
 } from '../util/dom/attr'
+import {
+  throttle
+} from '../util'
 
 export default {
   store,
@@ -230,9 +233,7 @@ export default {
           this.$store.dispatch(commonStore.deviceSize, content)
         }
 
-        window.addEventListener('resize', () => {
-          updateDeviceSize()
-        })
+        window.addEventListener('resize', throttle(updateDeviceSize))
 
         updateDeviceSize()
       }

@@ -1,11 +1,11 @@
+/**
+ * col 组件样式
+ */
+
 @import "../../scss/config.scss";
 @import "../../scss/extend.scss";
 @import "../../scss/name.scss";
 @import "../../scss/mixin.scss";
-
-/**
- * col 组件样式
- */
 
 $gap-hub: (5, 10, 20, 30, 40, 50);
 $device-type: span, xl, l, m, s, xs;

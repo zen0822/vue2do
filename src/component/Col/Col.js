@@ -6,6 +6,7 @@
  * @prop push - 定义了列在 x 正方向偏移的栅格数
  * @prop offset - 定义了列离开头的栅格数
  * @prop span - 定义了列在行上的水平跨度（采用 12 栏栅格）
+ * @prop width - 可以使用 % 和 px 定义栏栅宽度（比 span 优先）
  * @prop xs - 加小设备的水平跨度栅格数
  * @prop s - 小设备的水平跨度栅格数
  * @prop m - 中设备的水平跨度栅格数
@@ -16,7 +17,7 @@
  * @prop shrink - (draft)同 flex-shrink属性，定义了项目的缩小比例
  */
 
-// import './Col.scss'
+// import './Col.scss' // Col.scss 已经改成从外部加载进来
 import render from './Col.render.js'
 import baseMixin from '../../mixin/base'
 
@@ -51,6 +52,12 @@ export default {
         } else {
           return false
         }
+      }
+    },
+    width: {
+      type: String,
+      validator(val) {
+        return val.includes('px') || val.includes('%')
       }
     },
     xs: {
@@ -90,6 +97,7 @@ export default {
     },
     compStyle() {
       return {
+        width: this.width,
         'flex-grow': this.grow === 0 ? undefined : this.grow
       }
     }

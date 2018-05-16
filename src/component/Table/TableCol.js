@@ -13,7 +13,7 @@
 import baseMixin from '../../mixin/base'
 import {
   findGrandpa
-} from '../../util/util'
+} from '../../util/dom'
 
 const COL_PADDING_BORDER_LENGTH = 22
 

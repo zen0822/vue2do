@@ -33,10 +33,6 @@ import baseMixin from '../../mixin/base'
 import apiMixin from './List.api'
 import listMixin from '../../mixin/list'
 
-import {
-  findGrandpa
-} from '../../util/util'
-
 const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
 
