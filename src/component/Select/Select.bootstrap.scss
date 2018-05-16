@@ -71,34 +71,34 @@ $MENU_HEIGHT: 36px;
   }
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-success {
   @include theme-style('success');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-danger {
   @include theme-style('danger');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-blue {
   @include theme-style('blue');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-warning {
   @include theme-style('warning');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-orange {
   @include theme-style('orange');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-grey {
   @include theme-style('grey');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-light {
   @include theme-style('light');
 }
 
-.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-dark {
   @include theme-style('dark');
 }

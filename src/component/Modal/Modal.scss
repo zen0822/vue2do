@@ -172,3 +172,15 @@ $POP_CONTAINER_PADDING: 24px;
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
   @include theme-style('blue');
 }
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}

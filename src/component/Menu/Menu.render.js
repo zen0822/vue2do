@@ -44,8 +44,7 @@ export default function (h) {
         props: {
           kind: 'sort',
           size: 'S',
-          ui: this.ui,
-          theme: this.theme
+          theme: 'light'
         }
       })])
     ]

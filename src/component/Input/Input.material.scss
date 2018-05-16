@@ -13,6 +13,34 @@ $INPUT_HEIGHT: 36px;
 $INPUT_WIDTH: 170px;
 $INPUT_BORDER_WIDTH: 1px;
 
+@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+  &.#{$C_PREFIX}-type-area {
+    & > .#{$C_PREFIX}-wrap {
+      &.#{$C_PREFIX}-editting {
+        & > .#{$C_PREFIX}-wrap-border {
+          border-color: $type-color !important;
+        }
+
+        border-color: $type-color !important;
+      }
+    }
+  }
+
+  & > .#{$C_PREFIX}-wrap {
+    & > .#{$C_PREFIX}-wrap-border-motion-edit {
+      background-color: $type-color;
+    }
+
+    .#{$C_PREFIX}-edit-box {
+      &-label {
+        &-float {
+          color: $type-color;
+        }
+      }
+    }
+  }
+}
+
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
   padding-top: $gutter-v;
 
@@ -151,4 +179,36 @@ $INPUT_BORDER_WIDTH: 1px;
       border-bottom-right-radius: $border-radius;
     }
   }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
 }

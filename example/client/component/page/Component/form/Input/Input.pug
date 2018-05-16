@@ -4,10 +4,15 @@ div
   article.example-article
     +section('start', '开始使用')
       z-input(
+        :ui='typeUI'
+        :theme='typeTheme'
         block
         required
         helper-text='输入文本'
-        multiline placeholder='asd输入区域' ref='startInput' ui='bootstrap')
+        multiline
+        placeholder='asd输入区域'
+        ref='startInput'
+      )
       z-code(:theme='typeTheme').
         #{'<z-input'}
           multiline
@@ -17,25 +22,34 @@ div
           #{'ui="bootstrap"></z-input>'}
     +section('textarea', '输入区域')
       z-input(
+        :ui='typeUI'
+        :theme='typeTheme'
         textLengthTip
         :max='10'
         label='区域标签'
         type='area',
         :row='4',
-        placeholder='请输入...')
+        placeholder='请输入...'
+      )
       z-code(:theme='typeTheme').
         #{'<z-input label="区域标签" type="area" :row="4" placeholder="请输入..."></z-input>'}
     +section('completion', '补全功能')
       z-input(
+          :ui='typeUI'
+          :theme='typeTheme'
           completion
           label='补全功能'
           placeholder='请输入...会补全的...'
-          ref='input')
+          ref='input'
+        )
         z-search(
+          :ui='typeUI'
+          :theme='typeTheme'
           :option='testOpt'
           :input='false'
           ref='completion'
-          slot='completion')
+          slot='completion'
+        )
       z-code(:theme='typeTheme').
         #{'<z-input'}
             #{'completion'}
@@ -49,17 +63,25 @@ div
         #{'<z-input>'}
     +section('verify', '验证功能')
       z-input(
-          active-verify
-          label='手机'
-          :min='2'
-          :max='11'
-          name='手机'
-          placeholder='例如: 13111111111'
-          helper-text='限制只能输入2-10位以内'
-          verified-type='mobile'
-          :header-span='4'
-          ref='verifyInput')
-      z-btn(class='z-css-m-l' @click.native='clickVerifyInput') 点击验证是否为手机
+        :ui='typeUI'
+        :theme='typeTheme'
+        active-verify
+        label='手机'
+        :min='2'
+        :max='11'
+        name='手机'
+        placeholder='例如: 13111111111'
+        helper-text='限制只能输入2-10位以内'
+        verified-type='mobile'
+        :header-span='4'
+        ref='verifyInput'
+      )
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        class='z-css-m-l'
+        @click.native='clickVerifyInput'
+      ) 点击验证是否为手机
       z-code(:theme='typeTheme').
         #{'<z-input'}
             :min="2"
@@ -70,15 +92,27 @@ div
             #{'ref="verifyInput"></z-input>'}
     +section('append', '添加附加项')
       z-input(
-          :min='2'
-          :max='10'
-          error-message='邮箱'
-          placeholder='限制只能输入2-10位以内'
-          verified-type='email'
-          :header-span='4')
+        :ui='typeUI'
+        :theme='typeTheme'
+        :min='2'
+        :max='10'
+        error-message='邮箱'
+        placeholder='限制只能输入2-10位以内'
+        verified-type='email'
+        :header-span='4'
+      )
         div(slot='header')
-          z-menu(:init-opt='testOpt', style={width: '40px'})
-      z-btn(class='z-css-m-l') 点击验证是否为邮箱
+          z-menu(
+            :ui='typeUI'
+            :theme='typeTheme'
+            :init-opt='testOpt',
+            style={width: '40px'}
+          )
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        class='z-css-m-l'
+      ) 点击验证是否为邮箱
       z-code(:theme='typeTheme').
         #{'<z-input'}
             :min="2"
