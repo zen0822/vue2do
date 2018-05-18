@@ -8,6 +8,7 @@
  * @prop initVal - 默认第一个显示的值
  * @prop initOpt - 下拉框的 option 数据
  * @prop param - 搜索参数名
+ * @prop menuWidth - 菜单宽度
  * @prop store - 储存实例化的信息
  * @prop theme - 主题
  *
@@ -90,31 +91,11 @@ export default {
   },
 
   props: {
+    classify: Array,
+    classifyOpt: Object,
     coverTrig: {
       type: Boolean,
       default: false
-    },
-    initOpt: {
-      type: Array,
-      default: () => []
-    },
-    param: {
-      type: String,
-      default: ''
-    },
-    initVal: [Number, Array, String],
-    multiple: {
-      type: Boolean,
-      default: false
-    },
-    store: Object,
-    max: {
-      type: Number,
-      default: 0
-    },
-    min: {
-      type: Number,
-      default: 0
     },
     defaultVal: {
       type: [Number, String],
@@ -124,13 +105,47 @@ export default {
       type: [Number, String],
       default: '请选择'
     },
-    required: {
-      type: Boolean,
-      default: false
-    },
     errorMessage: {
       type: String,
       default: ''
+    },
+    initVal: [Number, Array, String],
+    initOpt: {
+      type: Array,
+      default: () => []
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    max: {
+      type: Number,
+      default: 0
+    },
+    min: {
+      type: Number,
+      default: 0
+    },
+    menuWidth: {
+      type: [String, Number],
+      default: 170,
+      validator(val) {
+        if (typeof val === 'number') {
+          return true
+        } else if (val === 'auto' || val === '100%') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
+    param: {
+      type: String,
+      default: ''
+    },
+    required: {
+      type: Boolean,
+      default: false
     },
     valName: {
       type: String,
@@ -140,20 +155,19 @@ export default {
       type: String,
       default: 'text'
     },
-    search: {
-      type: Boolean,
-      default: false
-    },
-    classify: Array,
     readOnly: {
       type: Boolean,
       default: false
     },
-    classifyOpt: Object,
     selectAll: {
       type: Boolean,
       default: false
     },
+    search: {
+      type: Boolean,
+      default: false
+    },
+    store: Object,
     selectAllTxt: {
       type: String,
       default: '全选'
@@ -171,8 +185,8 @@ export default {
       customOptionDisplay: false, // 自定义下拉框的显示状态
       focusing: false, // 正在处于 focus 状态
       hasSlotOption: false, // 是否是 slot 定义的 option
-      menuHeight: 0, // 下拉菜单的高度
-      menuWidth: 0, // 下拉菜单的高度
+      stateMenuHeight: 0, // 下拉菜单的高度
+      stateMenuWidth: this._getMenuWidth(this.menuWidth), // 下拉菜单的高度
       menuDisplay: false, // 下拉菜单的显示状态
       optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
       option: [], // props 里面 optionItem 的 data 替换值
@@ -249,6 +263,9 @@ export default {
     },
     selectedHeight(val) {
       this._adjustMenuMotion()
+    },
+    menuWidth(val) {
+      this.stateMenuWidth = this._getMenuWidth(val)
     }
   },
 
@@ -259,6 +276,19 @@ export default {
 
     _initDataOpt() {
       this.stateCoverTrig = this.coverTrig
+    },
+
+    // 获取下拉菜单宽度
+    _getMenuWidth(width) {
+      const triggerWidth = this.$el ? this.$el.offsetWidth : 0
+
+      if (typeof width === 'number') {
+        return triggerWidth > width ? triggerWidth : width
+      } else if (width === '100%') {
+        return triggerWidth
+      } else {
+        return width
+      }
     },
 
     /**
@@ -699,9 +729,8 @@ export default {
             let scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
             scrollerComp.initScroller()
 
-            const offsetWidth = vm.$el.offsetWidth
-            vm.menuHeight = scrollerComp.scrollerHeight
-            vm.menuWidth = offsetWidth < MENU_WIDTH ? MENU_WIDTH : offsetWidth
+            vm.stateMenuHeight = scrollerComp.scrollerHeight
+            // vm.stateMenuWidth = this._getMenuWidth(this.state)
           }
         })
       }
@@ -799,5 +828,9 @@ export default {
     if (this.$scopedSlots.custom) {
       this.customOptionDisplay = true
     }
+
+    this.$nextTick(() => {
+      this.stateMenuWidth = this._getMenuWidth(this.menuWidth)
+    })
   }
 }

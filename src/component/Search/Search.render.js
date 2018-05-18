@@ -33,7 +33,7 @@ export default function (h) {
           auto: true,
           pageType: 'more',
           pager: true,
-          scrollerHeight: 150,
+          height: 150,
           ui: this.ui,
           theme: this.theme
         },

@@ -28,10 +28,7 @@ export default function (h) {
       attrs: {
         class: `${this.compPrefix}-ul`
       },
-      class: [this.xclass('ul')],
-      style: {
-        'min-width': `${this.scrollerWidth}px`
-      }
+      class: [this.xclass('ul')]
     }, listItems)]
   } else {
     scrollerChildren = [h('div', {
@@ -44,7 +41,7 @@ export default function (h) {
       class: [this.xclass('page')],
       directives: [{
         name: 'show',
-        value: this.pagerDisplayStatus
+        value: this.pagerDisplay
       }],
       props: {
         data: this.pageData,
@@ -69,7 +66,7 @@ export default function (h) {
                   this.xclass(['loading', 'loading-more'])
                 ),
                 props: {
-                  display: this.isPageTypeMore,
+                  display: true,
                   ui: this.ui,
                   theme: this.theme
                 },
@@ -101,7 +98,7 @@ export default function (h) {
       class: [this.xclass('scroller')],
       props: {
         autoHide: this.autoHideScroller,
-        height: this.scrollerHeight,
+        height: this.height,
         width: '100%'
       },
       ref: 'scroller'

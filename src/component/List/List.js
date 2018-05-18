@@ -10,6 +10,7 @@
  * @prop pageSize - 将列表数据（item）分为每页多少条数据
  * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
  * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
+ * @prop height - 滚动条高度
  *
  * @event switchPage - 换页触发事件
  * @event scrollerChange - 滚动区域的高度/宽度变化
@@ -90,31 +91,30 @@ export default {
       type: Boolean,
       default: false
     },
-    scrollerHeight: {
+    height: {
       type: [String, Number],
       default: 'auto'
     }
   },
 
   data() {
-    this.scrollerWidth = 0
-    this.pageHeight = 0
+    this.pageHeight = 44 // TODO: 动态计算分页高度
 
     return {
       stateItem: [],
-      pageData: {},
+      pageData: {
+        size: 0,
+        length: 0,
+        current: 1,
+        total: 0
+      },
       arrowOfMoreDisplay: true, // 滚动加载更多时的图标显示状态
-      moreDisplay: false, // 加载更多的显示状态
       loadingListData: false, // 是否正在加载列表数据
       pageDetail: { // 分页的相关信息
         top: 0,
         left: 0,
         bottom: 0
-      },
-      scrollerWidth: 0, // 滚动组件的宽度
-      pagerDisplay: false, // 分页显示状态
-      transitionQueue: [], // 分页动画队列
-      transitedQueueInterval: {} // 轮询分页动画定时器
+      }
     }
   },
 
@@ -122,7 +122,7 @@ export default {
     cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-list`
     },
-    pagerDisplayStatus() { // 分页的显示状态
+    pagerDisplay() { // 分页的显示状态
       return this.pageData.total !== 0 &&
         this.pageData.current !== this.pageData.total
     },
@@ -134,12 +134,15 @@ export default {
   watch: {
     item(val) {
       if (this.auto) {
-        this.initPage()
+        this.setPageData({
+          current: this.pageData.current
+        })
       }
 
-      this.initList({
+      this.setListItem({
         pageNum: this.pageData.current,
-        listItem: val
+        pageSize: this.pageData.size,
+        listItem: this.item
       })
     }
   },
@@ -149,10 +152,6 @@ export default {
       this.pageData = {
         ...this.page
       }
-    },
-
-    _initComp() {
-      this.scrollerWidth = this.$refs.scroller.$el.offsetWidth
     },
 
     _binder() {
@@ -171,9 +170,6 @@ export default {
       })
 
       refScroller.$on('change', (opt) => {
-        this.scrollerWidth = refScroller.$el.offsetWidth
-        this.pageHeight = this.$refs.page.$el.offsetHeight
-
         return this.$emit('scrollerChange', {
           ...opt,
           emitter: this
@@ -191,8 +187,11 @@ export default {
   },
 
   created() {
-    this.initPage().initList({
+    this.initPageData()
+
+    this.setListItem({
       pageNum: this.pageData.current,
+      pageSize: this.pageData.size,
       listItem: this.item
     })
   }

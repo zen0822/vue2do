@@ -29,14 +29,14 @@ export default {
     getListItemByPage({
       listItem,
       pageNum = 1,
-      pageSize,
+      pageSize = 0,
       pageType = PAGE_TYPE_NUM
     }) {
       if (listItem === undefined) {
         return false
       }
 
-      if (!pageSize) {
+      if (pageSize === 0) {
         return listItem.slice()
       }
 

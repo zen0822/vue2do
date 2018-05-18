@@ -3,11 +3,13 @@
 
 .#{$PAGE_PREFIX}-component {
   .#{$PAGE_PREFIX}-component-stage {
+    width: calc(100% - 250px);
     overflow: auto;
     padding: $gap-v-double $gap-h-double * 2;
   }
 
   .#{$PAGE_PREFIX}-component-menu {
+    width: 250px;
     overflow: auto;
     padding: $gap-v-double $gap-h-double;
     box-sizing: border-box;
@@ -22,6 +24,10 @@
       &:hover {
         text-decoration: none;
       }
+    }
+
+    &-select {
+      width: 105px;
     }
   }
 
@@ -86,6 +92,7 @@
 
     .#{$PAGE_PREFIX}-component-stage {
       padding: $gap-v-triple $gap-h;
+      width: 100%;
     }
   }
 }

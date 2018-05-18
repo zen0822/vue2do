@@ -2,18 +2,29 @@ div.p-component
   z-row(:gap='30', align='start')
     z-col.p-component-menu(
       :style='componentStyle'
-      width='250px'
     )
       z-row.z-css-m-b-double(justify='justify')
-        z-col(:span='2') UI:
-        z-col
-          z-select(:init-val='typeUI', ref='ui')
+        z-col(width='50px') UI:
+        z-col.z-css-text-right(width='calc(100% - 50px)')
+          z-select.p-component-menu-select(
+            :init-val='typeUI'
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='ui'
+            menuWidth='100%'
+          )
             z-select-ele(value='bootstrap') Bootstrap4
             z-select-ele(value='material') Material
       z-row.z-css-m-b-double(justify='justify')
-        z-col(:span='2') Theme:
-        z-col
-          z-select(:init-val='typeTheme', ref='theme')
+        z-col(width='50px') Theme:
+        z-col.z-css-text-right(width='calc(100% - 50px)')
+          z-select.p-component-menu-select(
+            :init-val='typeTheme'
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='theme'
+            menuWidth='100%'
+          )
             z-select-ele(value='primary') Primary
             z-select-ele(value='danger') Danger
             z-select-ele(value='success') Success
@@ -34,7 +45,6 @@ div.p-component
     z-col.p-component-stage(
       :style='componentStyle'
       ref='compStage'
-      width='calc(100% - 250px)'
     )
       transition(name='z-fade', v-on:after-enter='afterEnter')
         router-view

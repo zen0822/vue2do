@@ -135,6 +135,7 @@ export default function (h) {
         class: [this.xclass('opt-comp')],
         props: {
           multiple: this.multiple,
+          menuWidth: this.stateMenuWidth,
           valName: this.valName,
           txtName: this.txtName,
           option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
@@ -191,7 +192,7 @@ export default function (h) {
       props: {
         noTrig: true,
         coverTrig: this.coverTrig,
-        width: this.menuWidth,
+        width: this.stateMenuWidth,
         trigHeight: this.UIBootstrap ? this.selectedHeight + 4 : this.selectedHeight,
         ui: this.ui,
         theme: this.theme

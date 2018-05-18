@@ -6,6 +6,7 @@
  * @prop optRoot - 递归调用的父元素
  * @prop valName - 下拉框 options 的 value 值的 key name
  * @prop txtName - 下拉框 options 的 text 值的 key name
+ * @prop menuWidth - 菜单宽度
  *
  * @event change - checkbox的option值改变
  * @event changeScroller - 滚动区域的高度/宽度变化
@@ -46,27 +47,26 @@ export default {
       type: Array,
       default: () => []
     },
-
     multiple: {
       type: Boolean,
       default: false
     },
-
     optRoot: {
       type: Object,
       default: () => {
         return {}
       }
     },
-
     valName: {
       type: String,
       default: 'value'
     },
-
     txtName: {
       type: String,
       default: 'text'
+    },
+    menuWidth: {
+      type: Number
     }
   },
 

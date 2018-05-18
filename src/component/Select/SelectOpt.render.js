@@ -40,9 +40,7 @@ export default function (h) {
       rowEle.push(
         h('column', {
           props: {
-            span: 11,
-            ui: this.ui,
-            theme: this.theme
+            span: this.multiple ? 11 : 12
           }
         }, [
           this.$scopedSlots[index]({
@@ -51,20 +49,28 @@ export default function (h) {
         ])
       )
     } else {
+      let attrs = {}
+      const omitTxt = false // TODO: 计算字符是否被省略了
+
+      if (omitTxt) {
+        Object.assign(attrs, {
+          title: optTxt
+        })
+      }
+
       rowEle.push(
         h('column', {
           props: {
-            span: 11,
-            ui: this.ui,
-            theme: this.theme
+            span: this.multiple ? 11 : 12
           }
         }, [
           h('span', {
+            attrs,
             class: [this.xclass('li-text')],
             directives: [{
               name: 'bubble',
               value: {
-                text: optTxt && optTxt.length > 9 ? optTxt : ''
+                text: optTxt === undefined ? '' : optTxt
               }
             }]
           }, optTxt)
@@ -112,7 +118,10 @@ export default function (h) {
         click: (event) => this._handlerClidk(event, index),
         mouseenter: (event) => this._handlerMouseenter(event, index)
       },
-      ref: `option${index}`
+      ref: `option${index}`,
+      style: {
+        minWidth: `${this.menuWidth}px`
+      }
     }, [
       element,
       h('motion-rip', {
@@ -155,7 +164,7 @@ export default function (h) {
         pageSize: 6,
         pageType: 'more',
         pager: true,
-        scrollerHeight: 200,
+        height: 200,
         ui: this.ui,
         theme: this.theme
       },

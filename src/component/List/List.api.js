@@ -14,71 +14,80 @@ export default {
      */
     update(listItem) {
       if (this.auto) {
-        this.initPage()
+        this.pageData = this.getPageData()
       }
 
-      this.initList({
+      this.stateItem = this.getListData({
         pageNum: this.pageData.current,
         stateItem: listItem
       })
     },
 
     /**
-     * 初始化分页
+     * 设置分页数据
      */
-    initPage(pageData = {}) {
-      if (!this.auto) {
-        this.pageData = Object.assign({}, this.pageData, pageData)
-
-        return this
+    setPageData(pageData) {
+      this.pageData = {
+        ...this.pageData,
+        ...pageData
       }
-
-      this.pageData = Object.assign(pageData, {
-        length: this.item.length,
-        size: this.pageSize,
-        current: 1,
-        total: Math.ceil(this.item.length / this.pageSize)
-      })
-
-      return this
     },
 
     /**
-     * 初始化列表数据
+     * 初始化分页数据
      */
-    initList({
-      pageNum = 1,
-      pageData = {},
+    initPageData(data) {
+      let pageData = null
+
+      if (this.auto) {
+        pageData = {
+          size: this.pageSize,
+          length: this.item.length,
+          total: Math.ceil(this.item.length / this.pageSize),
+          current: 1,
+          ...data
+        }
+      } else {
+        pageData = this.page
+      }
+
+      this.pageData = {
+        ...pageData
+      }
+    },
+
+    /**
+     * 获取列表数据
+     */
+    setListItem({
+      pageNum,
+      pageSize,
       listItem = []
     } = {}) {
-      if (!this.auto) {
-        this.stateItem = listItem.slice()
+      let listItemTemp = null
 
-        this.initPage(Object.assign(pageData, {
-          current: pageNum
-        }))
+      if (this.auto) {
+        let startSlice = 0
+        let endSlice = 0
 
-        return this
-      }
+        if (this.isPageTypeMore) {
+          endSlice = pageNum * this.pageSize
+        } else {
+          startSlice = (pageNum - 1) * this.pageSize
+          endSlice = startSlice + this.pageSize
+        }
 
-      let startSlice = 0
-      let endSlice = 0
-
-      if (this.isPageTypeMore) {
-        endSlice = pageNum * this.pageSize
+        listItemTemp = this.getListItemByPage({
+          listItem: this.item,
+          pageNum,
+          pageSize,
+          pageType: this.pageType
+        })
       } else {
-        startSlice = (pageNum - 1) * this.pageSize
-        endSlice = startSlice + this.pageSize
+        listItemTemp = listItem
       }
 
-      this.stateItem = this.getListItemByPage({
-        listItem: this.item.slice(),
-        pageNum,
-        pageSize: this.auto ? this.pageSize : false,
-        pageType: this.pageType
-      })
-
-      return this
+      this.stateItem = listItemTemp
     },
 
     /**
@@ -103,18 +112,26 @@ export default {
       if (this.auto) {
         this.showLoading()
         this.loadingListData = true
-        this.pageData.current = currentPage
 
         setTimeout(() => {
           this.loadingListData = false
 
-          this.initList({
+          this.setListItem({
+            pageSize: this.pageData.size,
             pageNum: currentPage,
             listItem: this.item
           })
 
+          this.setPageData({
+            current: currentPage
+          })
+
           this.hideLoading()
-        }, 1000)
+        }, 500)
+      } else {
+        this.initPage({
+          current: currentPage
+        })
       }
     },
 
