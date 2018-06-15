@@ -6,40 +6,43 @@ function formatParam(data) {
   let arr = []
 
   for (let name in data) {
-      arr.push(
-          `${encodeURIComponent(name)}=${encodeURIComponent(data[name])}`
-      )
+    arr.push(
+      `${encodeURIComponent(name)}=${encodeURIComponent(data[name])}`
+    )
   }
 
-  arr.push(('v=' + Math.random()).replace('.', ''))
+  // arr.push(('v=' + Math.random()).replace('.', ''))
 
   return arr.join('&')
 }
 
 /**
-* 转换 responseType 用于 xhr 的 overrideMimeType 方法
-*/
+ * 转换 responseType 用于 xhr 的 overrideMimeType 方法
+ */
 function getResponseType(type) {
   switch (type) {
-      case 'json':
-          return 'application/json; charset = utf-8'
-      case 'text':
-          return 'text/plain; charset=utf-8'
-      default:
-          return 'text/plain; charset=utf-8'
+    case 'json':
+      return 'application/json; charset = utf-8'
+    case 'text':
+      return 'text/plain; charset=utf-8'
+    default:
+      return 'text/plain; charset=utf-8'
   }
 }
 
 /**
-*
-* @param {Object} opt - 选项参数（同 jquery）
-*                     dataType - 支持 XMLHttpRequest level 2 浏览器的 responseType 属性，不支持则只能选择（json | text）
-*/
+ *
+ * @param {Object} opt - 选项参数（同 jquery）
+ *                     dataType - 支持 XMLHttpRequest level 2 浏览器的 responseType 属性，不支持则只能选择（json | text）
+ *                     contentType - 可选 false 和 各种浏览器的 contentType 类型
+ */
 const ajax = ({
   type = 'GET',
   dataType = '',
+  contentType = 'application/x-www-form-urlencoded',
   url = '',
   data = {},
+  withCredentials = true,
   async = true
 } = {}) => {
   type = type.toUpperCase()
@@ -47,84 +50,101 @@ const ajax = ({
   const xhr = new XMLHttpRequest()
   let param = formatParam(data)
 
+  if (contentType) {
+    if (contentType.includes('text/plain') || contentType.includes('application/json')) {
+      param = JSON.stringify(data)
+    }
+  } else {
+    param = data
+  }
+
   return new Promise((resolve, reject) => {
-      xhr.withCredentials = true
+    xhr.withCredentials = withCredentials
+    xhr.timeout = 10000
+    // IE not support this state
+    if (xhr.responseType !== undefined) {
+      // IE 10/11 not support 'json', so change to string and JSON.parse
+      if ('ActiveXObject' in window && dataType === 'json') {
+        dataType = 'text'
 
-      // IE not support this state
-      if (xhr.responseType !== undefined) {
-          // IE 10/11 not support 'json', so change to string and JSON.parse
-          if ('ActiveXObject' in window && dataType === 'json') {
-              dataType = 'text'
-
-              xhr.overrideMimeType && xhr.overrideMimeType(getResponseType(dataType))
-          } else {
-              xhr.responseType = dataType
-          }
+        xhr.overrideMimeType && xhr.overrideMimeType(getResponseType(dataType))
       } else {
-          dataType = 'text'
-
-          xhr.overrideMimeType && xhr.overrideMimeType(getResponseType(dataType))
+        try {
+          xhr.responseType = dataType
+        } catch (error) {
+          console.warn(error)
+        }
       }
+    } else {
+      dataType = 'text'
 
-      xhr.onreadystatechange = () => {
-          if (xhr.readyState === 4) {
-              const status = xhr.status
+      xhr.overrideMimeType && xhr.overrideMimeType(getResponseType(dataType))
+    }
 
-              if (status >= 200 && status < 300) {
-                  let responseData = null
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        const status = xhr.status
 
-                  if (dataType === 'json') {
-                      responseData = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : xhr.response
-                  } else if (dataType === 'text' || dataType === '') {
-                      responseData = JSON.parse(xhr.responseText)
-                  } else {
-                      responseData = xhr.response
-                  }
+        if (status >= 200 && status < 300) {
+          let responseData = null
 
-                  resolve(responseData)
-              } else {
-                  reject(new Error(xhr.status ? xhr.statusText : 'offline'))
-              }
+          if (dataType === 'json') {
+            responseData = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : xhr.response
+          } else if (dataType === 'text' || dataType === '') {
+            responseData = JSON.parse(xhr.responseText)
+          } else {
+            responseData = xhr.response
           }
-      }
 
-      xhr.onerror = () => {
+          resolve(responseData)
+        } else {
           reject(new Error(xhr.status ? xhr.statusText : 'offline'))
+        }
+      }
+    }
+
+    xhr.onerror = () => {
+      reject(new Error(xhr.status ? xhr.statusText : 'offline'))
+    }
+
+    if (type === 'GET') {
+      xhr.open('GET', `${url}?${param}`, async)
+      xhr.send(null)
+    } else if (type === 'POST') {
+      xhr.open('POST', url, async)
+
+      if (contentType) {
+        xhr.setRequestHeader('Content-Type', contentType)
       }
 
-      if (type === 'GET') {
-          xhr.open('GET', `${url}?${param}`, async)
-          xhr.send(null)
-      } else if (type === 'POST') {
-          xhr.open('POST', url, async)
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-          xhr.send(param)
-      }
+      xhr.send(param)
+    }
   })
 }
 
 /**
-*
-* @param {String} url
-* @param {Object} data
-*/
+ *
+ * @param {String} url
+ * @param {Object} data
+ */
 const get = (url, data) => {
   return ajax({
-      url,
-      data
+    url,
+    data
   })
 }
 
 /**
-*
-* @param {String} url
-* @param {Object} data
-*/
-const post = (url, data) => {
+ *
+ * @param {String} url
+ * @param {Object} data
+ */
+const post = (url, data, opt) => {
   return ajax({
-      url,
-      type: 'post',
-      data
+    url,
+    type: 'post',
+    data,
+    ...opt
   })
 }
 

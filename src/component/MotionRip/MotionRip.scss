@@ -17,6 +17,10 @@ $C_PREFIX: $COMP_MOTION_RIP;
 
     &.#{$C_PREFIX}-circle {
       border-radius: 100%;
+
+      & > .#{$C_PREFIX}-spot {
+        padding: 80%;
+      }
     }
 
     &.#{$C_PREFIX}-overflow {

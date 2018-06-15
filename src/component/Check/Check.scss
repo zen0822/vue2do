@@ -41,6 +41,8 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
       & > .#{$C_PREFIX}-box {
         display: inline-block;
+        padding: $gap-h-half;
+        margin: $gutter-h-half 0;
 
         &.#{$C_PREFIX}-checked {
           & > .#{$C_PREFIX}-icon {

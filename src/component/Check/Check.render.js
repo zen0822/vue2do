@@ -11,6 +11,61 @@ export default function (h) {
 
     this.option.forEach((item, index) => {
       const currentIndex = index + 1
+      let iconTypeEle = null
+
+      if (this.UIBootstrap) {
+        iconTypeEle = h('div', {
+          class: [this.xclass('icon')]
+        }, [
+          h('icon', {
+            props: {
+              kind: this.iconName(item[this.valName]),
+              ui: this.ui,
+              theme: this.theme
+            }
+          }),
+          h('motion-rip', {
+            class: [this.xclass('rip')],
+            props: {
+              circle: true
+            },
+            ref: `motionCheck${currentIndex}`
+          }),
+          h('div', {
+            class: [this.xclass('motion-rip')],
+            directives: [{
+              name: 'show',
+              value: this.motion[index]
+            }]
+          })
+        ])
+      } else {
+        iconTypeEle = h('div', {
+          class: [this.xclass('icon')]
+        }, [
+          h('icon', {
+            props: {
+              kind: this.iconName(item[this.valName]),
+              ui: this.ui,
+              theme: this.theme
+            }
+          }),
+          h('motion-rip', {
+            class: [this.xclass('rip')],
+            props: {
+              circle: true
+            },
+            ref: `motionCheck${currentIndex}`
+          }),
+          h('div', {
+            class: [this.xclass('motion-rip')],
+            directives: [{
+              name: 'show',
+              value: this.motion[index]
+            }]
+          })
+        ])
+      }
 
       checkEle.push(
         h('column', {
@@ -36,31 +91,7 @@ export default function (h) {
               keyup: (event) => this._handlerKeyup(event, currentIndex)
             }
           }, [
-            h('div', {
-              class: [this.xclass('icon')]
-            }, [
-              h('icon', {
-                props: {
-                  kind: this.iconName(item[this.valName]),
-                  ui: this.ui,
-                  theme: this.theme
-                }
-              }),
-              h('motion-rip', {
-                class: [this.xclass('rip')],
-                props: {
-                  circle: true
-                },
-                ref: `motionCheck${currentIndex}`
-              }),
-              h('div', {
-                class: [this.xclass('motion-rip')],
-                directives: [{
-                  name: 'show',
-                  value: this.motion[index]
-                }]
-              })
-            ]),
+            iconTypeEle,
             (() => {
               if (item[this.txtName]) {
                 return h('span', {

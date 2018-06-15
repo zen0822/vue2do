@@ -17,13 +17,26 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   & > .#{$C_PREFIX}-opt-row {
     & > .#{$C_PREFIX}-opt-col {
       & > .#{$C_PREFIX}-box {
+
+        &.#{$C_PREFIX}-checked {
+          & > .#{$C_PREFIX}-icon {
+            & > .#{$C_ICON_PREFIX} {
+              color: $type-color;
+            }
+          }
+        }
+
         &:focus,
         &:active,
         &:focus:active {
           & > .#{$C_PREFIX}-icon {
-            border-radius: 100%;
-
             @include check-box-shadow($type-color);
+          }
+        }
+
+        & > .#{$C_PREFIX}-icon {
+          & > .#{$C_ICON_PREFIX} {
+            color: $type-light-color;
           }
         }
       }
@@ -32,7 +45,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
-  &.#{$C_PREFIX}-multiple{
+  &.#{$C_PREFIX}-multiple {
     & > .#{$C_PREFIX}-opt-row {
       & > .#{$C_PREFIX}-opt-col {
         & > .#{$C_PREFIX}-box {
@@ -55,6 +68,14 @@ $C_ICON_PREFIX: #{$COMP_ICON};
           outline: none;
         }
 
+        &.#{$C_PREFIX}-checked {
+          & > .#{$C_PREFIX}-icon {
+            & > .#{$C_ICON_PREFIX} {
+              color: $color-primary;
+            }
+          }
+        }
+
         &:focus,
         &:active,
         &:focus:active {
@@ -67,7 +88,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
         & > .#{$C_PREFIX}-icon {
           & > .#{$C_ICON_PREFIX} {
-            color: $grey-lightest;
+            color: $color-grey-light;
             font-size: $h3;
           }
         }

@@ -133,6 +133,7 @@ export default {
 
       window.localStorage.setItem(`${this.varPrefix}_THEME`, value)
     })
+
     this.$refs.ui.$on('change', ({
       value
     }) => {

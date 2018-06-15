@@ -51,8 +51,8 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       background-color: rgba($grey-light, .3);
       top: 50%;
       left: 50%;
-      width: 200%;
-      height: 200%;
+      width: 160%;
+      height: 160%;
       border-radius: 100%;
       transform: translate(-50%, -50%) scaleX(1);
       animation: #{$C_PREFIX}-motion-rip 2s infinite ease-in-out;
@@ -83,6 +83,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
         & > .#{$C_PREFIX}-icon {
           & > .#{$C_ICON_PREFIX} {
+            color: $color-text-dark-secondary;
             font-size: 18px;
           }
 
