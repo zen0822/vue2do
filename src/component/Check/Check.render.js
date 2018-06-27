@@ -1,8 +1,6 @@
 /**
  * check.render.js
  */
-import Vue from 'vue'
-
 export default function (h) {
   let RowChildren = []
 
@@ -35,34 +33,48 @@ export default function (h) {
             class: [this.xclass('motion-rip')],
             directives: [{
               name: 'show',
-              value: this.motion[index]
+              value: this.itemFocus[index]
             }]
           })
         ])
       } else {
         iconTypeEle = h('div', {
-          class: [this.xclass('icon')]
+          class: [this.xclass(['icon', `icon-${this.isCheckbox ? 'checkbox' : 'radio'}`])]
         }, [
-          h('icon', {
-            props: {
-              kind: this.iconName(item[this.valName]),
-              ui: this.ui,
-              theme: this.theme
-            }
+          h('div', {
+            class: [this.xclass(['icon-box'])]
+          }, [
+            h('div', {
+              class: [this.xclass('icon-box-circle')]
+            }),
+            (this.isCheckbox ?
+              h('div', {
+                class: [this.xclass('icon-box-checked')]
+              }, [
+                h('icon', {
+                  props: {
+                    kind: 'square-check',
+                    ui: this.ui,
+                    theme: this.theme
+                  }
+                })
+              ]) :
+              h('div', {
+                class: [this.xclass('icon-box-dot')]
+              })
+            )
+          ]),
+          h('div', {
+            class: [this.xclass('motion-rip')]
           }),
           h('motion-rip', {
             class: [this.xclass('rip')],
             props: {
-              circle: true
+              circle: true,
+              speed: 400,
+              radius: 'M'
             },
             ref: `motionCheck${currentIndex}`
-          }),
-          h('div', {
-            class: [this.xclass('motion-rip')],
-            directives: [{
-              name: 'show',
-              value: this.motion[index]
-            }]
           })
         ])
       }
@@ -80,6 +92,9 @@ export default function (h) {
               {
                 [this.xclass('checked')]: this.isCheckbox ?
                   this.value.includes(item.value) : index === this.index
+              },
+              {
+                [this.xclass('focused')]: this.itemFocus[index]
               }
             ],
             on: {

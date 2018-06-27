@@ -33,8 +33,8 @@ function getResponseType(type) {
 /**
  *
  * @param {Object} opt - 选项参数（同 jquery）
- *                     dataType - 支持 XMLHttpRequest level 2 浏览器的 responseType 属性，不支持则只能选择（json | text）
  *                     contentType - 可选 false 和 各种浏览器的 contentType 类型
+ *                     dataType - 支持 XMLHttpRequest level 2 浏览器的 responseType 属性，不支持则只能选择（json | text）
  */
 const ajax = ({
   type = 'GET',
@@ -43,12 +43,14 @@ const ajax = ({
   url = '',
   data = {},
   withCredentials = true,
+  cache = false,
   async = true
 } = {}) => {
   type = type.toUpperCase()
 
   const xhr = new XMLHttpRequest()
   let param = formatParam(data)
+  const timeStamp = cache ? '' : `t=${new Date().getTime()}&`
 
   if (contentType) {
     if (contentType.includes('text/plain') || contentType.includes('application/json')) {
@@ -60,7 +62,7 @@ const ajax = ({
 
   return new Promise((resolve, reject) => {
     xhr.withCredentials = withCredentials
-    xhr.timeout = 10000
+
     // IE not support this state
     if (xhr.responseType !== undefined) {
       // IE 10/11 not support 'json', so change to string and JSON.parse
@@ -108,10 +110,12 @@ const ajax = ({
     }
 
     if (type === 'GET') {
-      xhr.open('GET', `${url}?${param}`, async)
+      xhr.open('GET', `${url}?${timeStamp}${param}`, async)
+      xhr.timeout = 10000
       xhr.send(null)
     } else if (type === 'POST') {
-      xhr.open('POST', url, async)
+      xhr.open('POST', `${url}?${timeStamp}`, async)
+      xhr.timeout = 10000
 
       if (contentType) {
         xhr.setRequestHeader('Content-Type', contentType)

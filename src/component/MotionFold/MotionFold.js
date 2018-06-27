@@ -2,6 +2,17 @@
  * fold(折叠) motion component
  *
  * @prop height - 被过渡的元素高度
+ * @prop display - 默认一开始是隐藏（进来之前的状态）
+ * @prop speed - 动画速度
+ * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+ * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+ *
+ * @event beforeEnter - 进来过渡之前
+ * @event enter - 进来过渡期间
+ * @event afterEnter - 进来过渡完成
+ * @event beforeLeave - 离开过渡之前
+ * @event leave - 离开过渡期间
+ * @event afterLeave - 离开过渡之后
  *
  */
 

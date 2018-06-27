@@ -14,31 +14,26 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 }
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  & > .#{$C_PREFIX}-opt-row {
-    & > .#{$C_PREFIX}-opt-col {
-      & > .#{$C_PREFIX}-box {
-
-        &.#{$C_PREFIX}-checked {
-          & > .#{$C_PREFIX}-icon {
-            & > .#{$C_ICON_PREFIX} {
-              color: $type-color;
-            }
-          }
+  .#{$C_PREFIX}-box {
+    &.#{$C_PREFIX}-checked {
+      & > .#{$C_PREFIX}-icon {
+        & > .#{$C_ICON_PREFIX} {
+          color: $type-color;
         }
+      }
+    }
 
-        &:focus,
-        &:active,
-        &:focus:active {
-          & > .#{$C_PREFIX}-icon {
-            @include check-box-shadow($type-color);
-          }
-        }
+    &:focus,
+    &:active,
+    &:focus:active {
+      & > .#{$C_PREFIX}-icon {
+        @include check-box-shadow($type-color);
+      }
+    }
 
-        & > .#{$C_PREFIX}-icon {
-          & > .#{$C_ICON_PREFIX} {
-            color: $type-light-color;
-          }
-        }
+    & > .#{$C_PREFIX}-icon {
+      & > .#{$C_ICON_PREFIX} {
+        color: $type-light-color;
       }
     }
   }
@@ -46,52 +41,44 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   &.#{$C_PREFIX}-multiple {
-    & > .#{$C_PREFIX}-opt-row {
-      & > .#{$C_PREFIX}-opt-col {
-        & > .#{$C_PREFIX}-box {
-          &:focus,
-          &:active,
-          &:focus:active {
-            & > .#{$C_PREFIX}-icon {
-              border-radius: 4px;
-            }
-          }
+    .#{$C_PREFIX}-box {
+      &:focus,
+      &:active,
+      &:focus:active {
+        & > .#{$C_PREFIX}-icon {
+          border-radius: 4px;
         }
       }
     }
   }
 
-  & > .#{$C_PREFIX}-opt-row {
-    & > .#{$C_PREFIX}-opt-col {
-      & > .#{$C_PREFIX}-box {
-        &:focus {
-          outline: none;
-        }
+  .#{$C_PREFIX}-box {
+    &:focus {
+      outline: none;
+    }
 
-        &.#{$C_PREFIX}-checked {
-          & > .#{$C_PREFIX}-icon {
-            & > .#{$C_ICON_PREFIX} {
-              color: $color-primary;
-            }
-          }
+    &.#{$C_PREFIX}-checked {
+      & > .#{$C_PREFIX}-icon {
+        & > .#{$C_ICON_PREFIX} {
+          color: $color-primary;
         }
+      }
+    }
 
-        &:focus,
-        &:active,
-        &:focus:active {
-          & > .#{$C_PREFIX}-icon {
-            border-radius: 100%;
+    &:focus,
+    &:active,
+    &:focus:active {
+      & > .#{$C_PREFIX}-icon {
+        border-radius: 100%;
 
-            @include check-box-shadow($color-blue);
-          }
-        }
+        @include check-box-shadow($color-blue);
+      }
+    }
 
-        & > .#{$C_PREFIX}-icon {
-          & > .#{$C_ICON_PREFIX} {
-            color: $color-grey-light;
-            font-size: $h3;
-          }
-        }
+    & > .#{$C_PREFIX}-icon {
+      & > .#{$C_ICON_PREFIX} {
+        color: $color-grey-light;
+        font-size: $h3;
       }
     }
   }

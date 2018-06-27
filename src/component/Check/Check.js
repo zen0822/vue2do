@@ -115,7 +115,7 @@ let checkCompConfig = {
       option: [], // check 的选项值
       oldValue: [], // check 的旧的 value 值
       verified: true, // 组件的验证状态
-      motion: [], // 启动选择框的沦漪效果
+      itemFocus: [], // 选择框组的 focus 状态
       allowFocus: true, // 允许执行 focus 事件
       dangerTip: '',
       slotItems: []
@@ -191,7 +191,7 @@ let checkCompConfig = {
       }
 
       this.option = Object.assign([], this.initOpt)
-      this.motion = this.initOpt.map(() => {
+      this.itemFocus = this.initOpt.map(() => {
         return false
       })
     },
@@ -363,7 +363,6 @@ let checkCompConfig = {
      */
     _handlerClick(event, index) {
       this.check(event, index)
-      // this.motion.splice(index - 1, 1, false)
     },
 
     /**
@@ -402,7 +401,7 @@ let checkCompConfig = {
      */
     _handlerFocus(event, index) {
       if (this.allowFocus) {
-        this.motion.splice(index - 1, 1, true)
+        this.itemFocus.splice(index - 1, 1, true)
       }
     },
 
@@ -410,7 +409,7 @@ let checkCompConfig = {
      * blur 事件句柄
      */
     _handlerBlur(event, index) {
-      this.motion.splice(index - 1, 1, false)
+      this.itemFocus.splice(index - 1, 1, false)
     }
   },
 

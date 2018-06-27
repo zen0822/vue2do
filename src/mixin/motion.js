@@ -26,7 +26,7 @@ export default {
       type: [Number, String],
       default: 'normal',
       validator(val) {
-        return ['normal', 'fast', 'slow'].includes(val)
+        return ['normal', 'fast', 'slow'].includes(val) || typeof val === 'number'
       }
     },
     sync: {
@@ -49,7 +49,7 @@ export default {
         case 'slow':
           return 450
         default:
-          return 300
+          return this.speed
       }
     },
     transitionTime() {

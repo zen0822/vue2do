@@ -3,7 +3,19 @@
  *
  * @prop assign - 指定涟漪在是什么位置开始
  * @prop circle - 涟漪是圆形
+ * @prop radius - 涟漪半径大小 (S | M | L)
  * @prop overflow - 默认溢出不隐藏，true 为隐藏溢出的 spot
+ * @prop display - 默认一开始是隐藏（进来之前的状态）
+ * @prop speed - 动画速度
+ * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+ * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+ *
+ * @event beforeEnter - 进来过渡之前
+ * @event enter - 进来过渡期间
+ * @event afterEnter - 进来过渡完成
+ * @event beforeLeave - 离开过渡之前
+ * @event leave - 离开过渡期间
+ * @event afterLeave - 离开过渡之后
  */
 
 import {
@@ -30,6 +42,13 @@ export default {
       type: Boolean,
       default: false
     },
+    radius: {
+      type: [String],
+      default: 'S',
+      validator(val) {
+        return ['s', 'm', 'l'].includes(val.toLowerCase()) || /(%|px)$/.test(val)
+      }
+    },
     overflow: {
       type: Boolean,
       default: false
@@ -46,7 +65,19 @@ export default {
         case 'slow':
           return 1000
         default:
-          return 800
+          return this.speed
+      }
+    },
+    ripPadding() {
+      switch (this.radius.toLowerCase()) {
+        case 's':
+          return '80%'
+        case 'm':
+          return '100%'
+        case 'l':
+          return '120%'
+        default:
+          return this.radius
       }
     }
   },
@@ -154,7 +185,10 @@ export default {
           }
         ]
       }, [h('div', {
-        class: [this.prefix('motion-rip-spot')]
+        class: [this.prefix('motion-rip-spot')],
+        style: {
+          padding: this.ripPadding
+        }
       })])
     ])
   },

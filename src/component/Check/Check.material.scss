@@ -10,34 +10,150 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  & > .#{$C_PREFIX}-opt-row {
-    & > .#{$C_PREFIX}-opt-col {
-      & > .#{$C_PREFIX}-box {
-        &.#{$C_PREFIX}-checked {
-          .#{$C_ICON_PREFIX} {
-            color: $type-color;
-          }
+  .#{$C_PREFIX}-box {
 
-          .#{$C_PREFIX}-motion-rip::after {
-            background-color: rgba($type-color, .3);
-          }
-
-          & > .#{$C_PREFIX}-icon {
-            & > .#{$C_PREFIX}-rip {
-              background-color: rgba($type-color, .4);
-
-              & > .#{$C_MOTION_RIP_PREFIX}-spot {
-                background-color: rgba($type-color, .8);
-              }
-            }
-          }
+    &.#{$C_PREFIX}-checked {
+      .#{$C_PREFIX}-rip {
+        & > .#{$C_MOTION_RIP_PREFIX}-spot {
+          background-color: rgba($type-color, .8);
         }
+      }
+
+      .#{$C_PREFIX}-motion-rip::after {
+        background-color: rgba($type-color, .3);
+      }
+
+      .#{$C_PREFIX}-icon-box {
+        &-circle {
+          border-color: $type-color;
+        }
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-icon {
+    &-box {
+      &-dot {
+        background-color: $type-color;
       }
     }
   }
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  .#{$C_PREFIX}-motion-rip {
+    opacity: 0;
+    transition: opacity 150ms;
+  }
+
+  .#{$C_PREFIX}-box {
+    &:focus {
+      outline: none;
+    }
+
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($grey, .8);
+      }
+    }
+
+    &.#{$C_PREFIX}-focused {
+      .#{$C_PREFIX}-motion-rip {
+        opacity: 1;
+      }
+    }
+
+    &.#{$C_PREFIX}-checked {
+      .#{$C_PREFIX}-rip {
+        & > .#{$C_MOTION_RIP_PREFIX}-spot {
+          background-color: rgba($color-primary, .8);
+        }
+      }
+
+      .#{$C_PREFIX}-motion-rip::after {
+        background-color: rgba($color-primary, .3);
+      }
+
+      .#{$C_PREFIX}-icon-box {
+        &-circle {
+          border-color: $color-primary;
+        }
+
+        &-checked,
+        &-dot {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-icon {
+    $icon-radius: 20px;
+
+    &-box {
+      box-sizing: border-box;
+      position: relative;
+      height: $icon-radius;
+      width: $icon-radius;
+
+      &-circle {
+        border: $color-text-dark-secondary 2px solid;
+        box-sizing: border-box;
+        border-radius: 100%;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      &-dot {
+        background-color: $color-primary;
+        box-sizing: border-box;
+        border-radius: 100%;
+        height: 50%;
+        width: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 150ms;
+      }
+
+      &-checked {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100%;
+        width: 100%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 150ms;
+      }
+    }
+
+    &.#{$C_PREFIX}-icon-checkbox {
+      .#{$C_PREFIX}-icon-box {
+        height: $icon-radius;
+        width: $icon-radius;
+        border-radius: 2px;
+        overflow: hidden;
+
+        .#{$C_ICON_PREFIX} {
+          font-size: $icon-radius - 4;
+        }
+
+        &-circle {
+          border-radius: 0;
+        }
+
+        &-checked {
+          width: $icon-radius - 4;
+          height: $icon-radius - 4;
+        }
+      }
+    }
+  }
+
   .#{$C_PREFIX}-motion-rip {
     position: absolute;
     width: 100%;
@@ -48,14 +164,14 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     &:after {
       content: "";
       position: absolute;
-      background-color: rgba($grey-light, .3);
+      background-color: rgba($grey, .3);
       top: 50%;
       left: 50%;
-      width: 160%;
-      height: 160%;
+      width: 200%;
+      height: 200%;
       border-radius: 100%;
       transform: translate(-50%, -50%) scaleX(1);
-      animation: #{$C_PREFIX}-motion-rip 2s infinite ease-in-out;
+      animation: #{$C_PREFIX}-motion-rip 1.5s infinite ease-in-out;
     }
 
     @keyframes #{$C_PREFIX}-motion-rip {
@@ -75,50 +191,6 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     & > .#{$C_PREFIX}-opt-col {
       display: inline-block;
       line-height: 0;
-
-      & > .#{$C_PREFIX}-box {
-        &:focus {
-          outline: none
-        }
-
-        & > .#{$C_PREFIX}-icon {
-          & > .#{$C_ICON_PREFIX} {
-            color: $color-text-dark-secondary;
-            font-size: 18px;
-          }
-
-          & > .#{$C_PREFIX}-rip {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: rgba($grey-light, .4);
-
-            & > .#{$C_MOTION_RIP_PREFIX}-spot {
-              background-color: rgba($grey-light, .8);
-            }
-          }
-        }
-
-        &.#{$C_PREFIX}-checked {
-          .#{$C_ICON_PREFIX} {
-            color: $color-primary;
-          }
-
-          .#{$C_PREFIX}-motion-rip::after {
-            background-color: rgba($color-primary, .3);
-          }
-
-          & > .#{$C_PREFIX}-icon {
-            & > .#{$C_PREFIX}-rip {
-              background-color: rgba($color-primary, .2);
-
-              & > .#{$C_MOTION_RIP_PREFIX}-spot {
-                background-color: rgba($color-primary, .8);
-              }
-            }
-          }
-        }
-      }
     }
   }
 }
