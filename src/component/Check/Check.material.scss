@@ -10,23 +10,20 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  .#{$C_PREFIX}-box {
-
-    &.#{$C_PREFIX}-checked {
-      .#{$C_PREFIX}-rip {
-        & > .#{$C_MOTION_RIP_PREFIX}-spot {
-          background-color: rgba($type-color, .8);
-        }
+  .#{$C_PREFIX}-checked {
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($type-color, .8);
       }
+    }
 
-      .#{$C_PREFIX}-motion-rip::after {
-        background-color: rgba($type-color, .3);
-      }
+    .#{$C_PREFIX}-motion-rip::after {
+      background-color: rgba($type-color, .3);
+    }
 
-      .#{$C_PREFIX}-icon-box {
-        &-circle {
-          border-color: $type-color;
-        }
+    .#{$C_PREFIX}-icon-box {
+      &-circle {
+        border-color: $type-color;
       }
     }
   }
@@ -41,6 +38,13 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  & > .#{$C_PREFIX}-opt-row {
+    & > .#{$C_PREFIX}-opt-col {
+      display: inline-block;
+      line-height: 0;
+    }
+  }
+
   .#{$C_PREFIX}-motion-rip {
     opacity: 0;
     transition: opacity 150ms;
@@ -62,27 +66,27 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
         opacity: 1;
       }
     }
+  }
 
-    &.#{$C_PREFIX}-checked {
-      .#{$C_PREFIX}-rip {
-        & > .#{$C_MOTION_RIP_PREFIX}-spot {
-          background-color: rgba($color-primary, .8);
-        }
+  .#{$C_PREFIX}-checked {
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($color-primary, .8);
+      }
+    }
+
+    .#{$C_PREFIX}-motion-rip::after {
+      background-color: rgba($color-primary, .3);
+    }
+
+    .#{$C_PREFIX}-icon-box {
+      &-circle {
+        border-color: $color-primary;
       }
 
-      .#{$C_PREFIX}-motion-rip::after {
-        background-color: rgba($color-primary, .3);
-      }
-
-      .#{$C_PREFIX}-icon-box {
-        &-circle {
-          border-color: $color-primary;
-        }
-
-        &-checked,
-        &-dot {
-          transform: translate(-50%, -50%) scale(1);
-        }
+      &-checked,
+      &-dot {
+        transform: translate(-50%, -50%) scale(1);
       }
     }
   }
@@ -184,13 +188,6 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       100% {
         transform: translate(-50%, -50%) scale(1);
       }
-    }
-  }
-
-  & > .#{$C_PREFIX}-opt-row {
-    & > .#{$C_PREFIX}-opt-col {
-      display: inline-block;
-      line-height: 0;
     }
   }
 }

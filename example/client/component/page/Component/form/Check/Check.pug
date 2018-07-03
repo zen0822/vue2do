@@ -6,7 +6,8 @@ div
       z-check(
         :ui='typeUI',
         :theme='typeTheme',
-        :init-opt='testOpt'
+        :item='testOpt'
+        :value='1'
       )
       z-code(:theme='typeTheme').
         #{'<z-check></z-check>'}
@@ -14,11 +15,20 @@ div
       z-check(
         :ui='typeUI',
         :theme='typeTheme',
+        check-all
         multiple,
-        :init-opt='testOpt'
+        vertical
+        :item='testOpt.slice(0, 8)'
+        :value='[1,2]'
       )
       z-code(:theme='typeTheme').
-        #{'<z-check></z-check>'}
+        #{'<z-check'}
+          vertical
+          multiple
+          check-all
+          :item="testOpt.slice(0, 8)"
+          :value="[1, 2]"
+        #{'></z-check>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'
@@ -29,100 +39,65 @@ div
             v-for='item in ["名字", "类型", "可选值", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
-          z-table-col hidden
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 设置为隐藏域
+          z-table-col checkAll
+          z-table-col String
+          z-table-col (*input | textarea)
+          z-table-col 全选 checkbox 的选项
         z-table-row(slot='2')
-          z-table-col initVal
-          z-table-col All
-          z-table-col ——
-          z-table-col 设置当前输入框的值
+          z-table-col checkAllLabel
+          z-table-col String
+          z-table-col 全选
+          z-table-col 全选 checkbox 的选项的 label 标签
         z-table-row(slot='3')
-          z-table-col number
+          z-table-col disabled
           z-table-col Boolean
-          z-table-col ——
-          z-table-col 输入框的数字指定为 nmuber 类型
+          z-table-col false
+          z-table-col 不可选
         z-table-row(slot='4')
-          z-table-col placeholder
+          z-table-col errorText
           z-table-col String
           z-table-col ——
-          z-table-col 占位符
+          z-table-col checkbox 没选的时候显示的错误文本
         z-table-row(slot='5')
+          z-table-col item
+          z-table-col Array
+          z-table-col ——
+          z-table-col 选择框数据
+        z-table-row(slot='6')
+          z-table-col multiple
+          z-table-col Boolean
+          z-table-col false
+          z-table-col 是否为多选
+        z-table-row(slot='7')
           z-table-col param
           z-table-col String
           z-table-col ——
-          z-table-col 查询参数名
-        z-table-row(slot='6')
-          z-table-col readOnly
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 是否为只读状态
-        z-table-row(slot='7')
-          z-table-col required
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 是否为必填，默认否
+          z-table-col 表单控件的参数名
         z-table-row(slot='8')
-          z-table-col row
-          z-table-col Number
-          z-table-col ——
-          z-table-col textarea 的行数, 默认为 4
+          z-table-col required
+          z-table-col String
+          z-table-col false
+          z-table-col 是否必选
         z-table-row(slot='9')
-          z-table-col textLengthTip
-          z-table-col Boolean
-          z-table-col ( *false | true )
-          z-table-col 显示当前输入的长度的提示
+          z-table-col textName
+          z-table-col String
+          z-table-col ——
+          z-table-col 指定读取 checkboxItems 的 text 值的 key 的名字
         z-table-row(slot='10')
-          z-table-col type
-          z-table-col String
-          z-table-col (*input | textarea)
-          z-table-col 输入类型( text | textarea )
+          z-table-col value
+          z-table-col Number, Array
+          z-table-col ——
+          z-table-col 初始化时选中的值，默认为第一项， 是checkbox 則為數組
         z-table-row(slot='11')
-          z-table-col theme
+          z-table-col valueName
           z-table-col String
-          z-table-col (default | *primary)
-          z-table-col 主题
+          z-table-col ——
+          z-table-col 指定读取 checkboxItems 的 value 值的 key 的名字
         z-table-row(slot='12')
-          z-table-col errorMessage
-          z-table-col String
-          z-table-col ——
-          z-table-col input 为空和格式不对的错误信息
-        z-table-row(slot='13')
-          z-table-col errorTipType
-          z-table-col String
-          z-table-col ( bubble | *tip )
-          z-table-col 弹出错误提示的类型（ bubble | tip ）
-        z-table-row(slot='14')
-          z-table-col formatMessage
-          z-table-col String
-          z-table-col ——
-          z-table-col 格式错误的提示信息
-        z-table-row(slot='15')
-          z-table-col min
-          z-table-col Number
-          z-table-col ——
-          z-table-col input，textarea 可输入最小长度（数字）
-        z-table-row(slot='16')
-          z-table-col max
-          z-table-col Number
-          z-table-col ——
-          z-table-col input，textarea 可输入最大长度（数字）
-        z-table-row(slot='17')
-          z-table-col regex
-          z-table-col String
-          z-table-col ——
-          z-table-col 验证值的正则
-        z-table-row(slot='18')
-          z-table-col verifedType
-          z-table-col String
-          z-table-col (email | phone | password | url | tel)
-          z-table-col 验证值的类型
-        z-table-row(slot='19')
-          z-table-col completion
+          z-table-col vertical
           z-table-col Boolean
-          z-table-col ——
-          z-table-col 是否启用自动搜索补全功能
+          z-table-col false
+          z-table-col 选择框是否垂直分布（默认 false，是水平分布）
     +section('events', 'events 组件事件')
       z-table(
           border='row'
@@ -133,31 +108,10 @@ div
             v-for='item in ["名字", "返回值类型", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
-          z-table-col change
+          z-table-col check
           z-table-col Object
           z-table-col
             p 以下的为返回值说明
             ul
-             li emitter - 派送事件的宿主
-             li value - 输入框的值
-        z-table-row(slot='2')
-          z-table-col focus
-          z-table-col Object
-          z-table-col
-            p 以下的为返回值说明
-            ul
-             li emitter - 派送事件的宿主
-        z-table-row(slot='3')
-          z-table-col blur
-          z-table-col Object
-          z-table-col
-            p 以下的为返回值说明
-            ul
-             li emitter - 派送事件的宿主
-        z-table-row(slot='4')
-          z-table-col keyup
-          z-table-col Object
-          z-table-col
-            p 以下的为返回值说明
-            ul
-             li emitter - 派送事件的宿主
+             li value - 选择框的值
+             li currentIndex - 当前选择框的索引值（从 1 开始）

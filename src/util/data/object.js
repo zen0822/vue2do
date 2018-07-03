@@ -1,4 +1,6 @@
-const { dataType } = require('./data');
+import {
+  dataType
+} from './data'
 
 /**
  * to judge whether variable is Object
@@ -7,7 +9,7 @@ const { dataType } = require('./data');
  * @return {Boolean} - whether variable is Object .
  */
 const isObject = (obj) => {
-  return dataType(obj) === 'object';
+  return dataType(obj) === 'object'
 }
 
 /**
@@ -17,7 +19,7 @@ const isObject = (obj) => {
  * @return {Boolean} - whether Object is empty .
  */
 const isEmpty = (obj) => {
-  return Object.keys(obj).length === 0;
+  return Object.keys(obj).length === 0
 }
 
 /**
@@ -27,44 +29,45 @@ const isEmpty = (obj) => {
  * @return {Array}
  */
 const deepReplaceVal = (opt = {}) => {
-  var obj = opt.obj;
-  var cb = opt.cb;
-  var replacedObj = {};
-  var valArr = Object.values(obj);
-  var keyArr = Object.keys(obj);
+  var obj = opt.obj
+  var cb = opt.cb
+  var replacedObj = {}
+  var valArr = Object.values(obj)
+  var keyArr = Object.keys(obj)
 
   valArr.forEach((val, index) => {
     if (isObject(val)) {
       replacedObj[keyArr[index]] = deepReplaceVal({
         obj: val,
         cb
-      });
+      })
     } else {
-      replacedObj[keyArr[index]] = cb.call(null, val);
+      replacedObj[keyArr[index]] = cb(val)
     }
-  });
+  })
 
-  return replacedObj;
+  return replacedObj
 }
 
 const deepClone = (obj = {}) => {
-  let str, newobj = obj.constructor === Array ? [] : {};
+  let str = ''
+  let newobj = obj.constructor === Array ? [] : {}
 
-  if(typeof obj !== 'object'){
-      return;
-  } else if(window.JSON){
-      str = JSON.stringify(obj), //系列化对象
-      newobj = JSON.parse(str); //还原
+  if (typeof obj !== 'object') {
+    return
+  } else if (window.JSON) {
+    str = JSON.stringify(obj) // 系列化对象
+    newobj = JSON.parse(str) // 还原
   } else {
-      for(let i in obj){
-          newobj[i] = typeof obj[i] === 'object' ? 
-          cloneObj(obj[i]) : obj[i]; 
-      }
+    for (let i in obj) {
+      newobj[i] = typeof obj[i] === 'object' ?
+        Object.assign({}, obj[i]) : obj[i]
+    }
   }
-  return newobj;
+  return newobj
 }
 
-module.exports = {
+export {
   isObject,
   deepReplaceVal,
   isEmpty,

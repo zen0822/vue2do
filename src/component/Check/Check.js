@@ -1,39 +1,32 @@
 /*
  * check - 多选框组件
  *
- * @prop initVal - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
- * @prop param - 参数名
- * @prop initOpt - 复选框数据
- * @prop disabled - 不可选
- * @prop required - 是否必选
- * @prop theme - 主题
- * @prop multiple - 是否为多选
- *
- * @prop errorMessage - checkbox 没选的时候显示的错误信息
- * @prop valName - 指定读取 checkboxItems 的 value 值的 key 的名字
- * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
- *
- * @prop beforeCheck - 选择之前的钩子函数
- * @prop success - 选择成功的回调函数
- *
  * @prop checkAll - 全选 checkbox 的选项
+ * @prop checkAllLabel - 全选 checkbox 的选项的 label
+ * @prop disabled - 不可选
+ * @prop errorText - checkbox 没选的时候显示的错误文本
+ * @prop item - 选择框数据
+ * @prop multiple - 是否为多选
+ * @prop required - 是否必选
+ * @prop param - 参数名
+ * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
+ * @prop value - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
+ * @prop valueName - 指定读取 checkboxItems 的 value 值的 key 的名字
+ * @prop vertical - 选择框是否垂直分布（默认 false，是水平分布）
  *
+ * @event check - 点击选择事件
  */
 
 import './Check.scss'
 import './Check.material.scss'
 import './Check.bootstrap.scss'
 
-import Vue from 'vue'
 import render from './Check.render'
-import compEvent from '../../config/event.json'
 
 import Col from '../Col/Col'
 import Row from '../Row/Row'
 import Icon from '../Icon/Icon'
 import MotionRip from '../MotionRip/MotionRip'
-
-import tip from '../Message/tip'
 
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
@@ -61,7 +54,23 @@ let checkCompConfig = {
   },
 
   props: {
-    initOpt: {
+    checkAll: {
+      type: Boolean,
+      default: false
+    },
+    checkAllLabel: {
+      type: String,
+      default: '全选'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    errorText: {
+      type: String,
+      default: ''
+    },
+    item: {
       type: Array,
       default: () => []
     },
@@ -73,15 +82,7 @@ let checkCompConfig = {
       type: Boolean,
       default: false
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     param: {
-      type: String,
-      default: ''
-    },
-    errorMessage: {
       type: String,
       default: ''
     },
@@ -89,18 +90,16 @@ let checkCompConfig = {
       type: Boolean,
       default: false
     },
-    initVal: [Number, Array],
-    beforeCheck: Function,
-    success: Function,
-    valName: {
-      type: String,
-      default: 'value'
-    },
     txtName: {
       type: String,
       default: 'text'
     },
-    checkAll: {
+    value: [Number, Array],
+    valueName: {
+      type: String,
+      default: 'value'
+    },
+    vertical: {
       type: Boolean,
       default: false
     }
@@ -109,9 +108,10 @@ let checkCompConfig = {
   data() {
     return {
       compName: 'check', // 组件名字
-      index: {}, // 当前已选的选择框的 index，多选是数组，单选是数字 TODO:有空实现以 index 来判断已选框
-      value: {}, // check 当前 value 值
-      text: {}, // check 当前 text 值
+      index: {}, // 当前已选的选择框的 index，多选是数组(默认：[])，单选是数字(默认：-1) TODO:有空实现以 index 来判断已选框
+      oldIndex: {},
+      stateValue: {}, // check 当前 value 值
+      text: {}, // check 当前 text 值, 多选默认是 [], 单选是 'undefined'
       option: [], // check 的选项值
       oldValue: [], // check 的旧的 value 值
       verified: true, // 组件的验证状态
@@ -134,7 +134,7 @@ let checkCompConfig = {
     },
     checkedAll() { // 是否已经全选
       if (this.checkAll && this.multiple) {
-        return this.value.length === this.option.length
+        return this.stateValue.length === this.option.length
       }
     },
     checkIconName() {
@@ -168,12 +168,10 @@ let checkCompConfig = {
 
   watch: {
     value(val) {
+      this.stateValue = val
       this._initCheckbox()
     },
-    initVal(val) {
-      this.value = val
-    },
-    initOpt(val) {
+    item(val) {
       this.option = val
       this._initCheckbox()
     }
@@ -184,14 +182,14 @@ let checkCompConfig = {
      * 设置 data 选项的默认值
      */
     _setDataOpt() {
-      if (typeof this.initVal === 'object') {
-        this.value = Object.assign([], this.initVal)
+      if (this.value === undefined) {
+        this.stateValue = this.isCheckbox ? [] : -1
       } else {
-        this.value = this.initVal
+        this.stateValue = this.isCheckbox ? this.value.slice() : this.value
       }
 
-      this.option = Object.assign([], this.initOpt)
-      this.itemFocus = this.initOpt.map(() => {
+      this.option = Object.assign([], this.item)
+      this.itemFocus = this.item.map(() => {
         return false
       })
     },
@@ -199,49 +197,30 @@ let checkCompConfig = {
     /**
      * 获取选择框的图标名字
      *
-     * @param {Boolean} check - 已选的图标
+     * @param {Boolean} checked - 选择状态
      * @param {Boolean} multiple - 复选框
      */
-    _getIconName(check = false, multiple = this.multiple) {
-      if (this.multiple) {
-        return check ? this.checkIconName.checkbox.checked :
+    _getIconName(checked = false, multiple = this.multiple) {
+      if (multiple) {
+        return checked ? this.checkIconName.checkbox.checked :
           this.checkIconName.checkbox.uncheck
       } else {
-        return check ? this.checkIconName.radio.checked :
+        return checked ? this.checkIconName.radio.checked :
           this.checkIconName.radio.uncheck
       }
     },
 
     /**
      * 初始化checkbox
+     * @param {Boolean} force - 强力初始化 所有数据置为空
      *
      * @return {Function}
      **/
     _initCheckbox() {
-      if (this.isCheckbox) {
-        if (!Array.isArray(this.value)) {
-          this.index = []
-          this.text = []
-          this.value = []
-          this.oldValue = []
-        }
+      this.setIndex()
+      this.setText()
 
-        this.setText()
-        this.verified = !this.required || this.value.length !== 0
-      } else {
-        if (!this.value && this.value !== 0) {
-          this.index = undefined
-          this.value = undefined
-          this.oldValue = undefined
-        } else {
-          this.setIndex()
-          this.setText()
-        }
-
-        if (this.required) {
-          this.verified = this.value !== 'undefined'
-        }
-      }
+      this.verified = !this.required || (this.isCheckbox ? this.stateValue.length !== 0 : this.stateValue !== 'undefined')
     },
 
     /**
@@ -322,7 +301,6 @@ let checkCompConfig = {
 
       $(this.$el).find(`.${this.cPrefix}-opt-slot .item`).each((index, el) => {
         if (this.slotItems[index]) {
-          let $el = $(el)
           let dom = document.createElement('div')
 
           dom.innerHTML = this.slotItems[index]
@@ -336,14 +314,17 @@ let checkCompConfig = {
      * 删除或者增加复选 checkbox 的 value 值
      *
      * @param {String, Number} - checkbox 的值
+     * @param {Number} - checkbox 选项的索引值
      */
-    _changeCheckbox(val) {
+    _changeCheckbox(index, val) {
       let hasDelflag = false
 
-      this.value.every((item, index) => {
+      this.stateValue.every((item, index) => {
         if (val === item) {
           hasDelflag = true
-          this.value.splice(index, 1)
+
+          this.stateValue.splice(index, 1)
+          this.index.splice(index, 1)
 
           return false
         }
@@ -355,7 +336,8 @@ let checkCompConfig = {
         return this
       }
 
-      return this.value.push(val)
+      this.stateValue.push(val)
+      this.index.push(index)
     },
 
     /**
@@ -415,7 +397,6 @@ let checkCompConfig = {
 
   created() {
     this._initCheckboxItems()
-
     this._initCheckbox()
   }
 }

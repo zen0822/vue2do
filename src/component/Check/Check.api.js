@@ -4,46 +4,42 @@ import tip from '../Message/tip'
 export default {
   methods: {
     /**
-     * checkbox的icon的样式
-     *
-     * @param { String } - checkbox当前值
-     * @return { Function, Object }
-     **/
-    iconName(val) {
-      return this.isRadio ?
-        this._getIconName(this.value === val) :
-        this._getIconName(this.value.includes(val))
-    },
-
-    /**
      * 选择 checkbox
+     * @param {Number} index - 第几个选择框
      */
-    check(evt, index) {
+    async check(evt, index) {
       let option = this.option[index - 1]
       let val = option.value
 
-      if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
-        return false
-      }
-
       if (this.isCheckbox) {
         this.oldValue = []
+        this.oldIndex = []
 
-        this.value.forEach((item) => {
+        this.stateValue.forEach((item) => {
           this.oldValue.push(item)
         })
 
-        this._changeCheckbox(val)
-      } else {
-        this.oldValue = this.value
+        this.index.forEach((item) => {
+          this.oldIndex.push(item)
+        })
 
-        this.value = val
+        this._changeCheckbox(index - 1, val)
+      } else {
+        this.oldValue = this.stateValue
+        this.oldIndex = this.index
+
+        this.stateValue = val
+        this.index = index - 1
       }
 
-      this.$nextTick(() => {
-        this.success && this.success(this)
-        this.UIMaterial && this.$refs[`motionCheck${index}`].enter()
+      await this.$nextTick()
+
+      this.$emit('check', {
+        currentIndex: index,
+        value: this.value
       })
+
+      this.UIMaterial && this.$refs[`motionCheck${index}`].enter()
     },
 
     /**
@@ -53,22 +49,16 @@ export default {
      **/
     setText() {
       if (this.isRadio) {
-        this.text = this.option[this.index][this.txtName]
+        this.text = this.index === -1 ?
+          'undefined' :
+          this.option[this.index][this.txtName]
 
         return this
       } else {
-        if (!Array.isArray(this.value)) {
-          return false
-        }
-
         this.text = []
 
-        return this.value.forEach((item) => {
-          this.option.forEach((ele) => {
-            if (item === ele[this.valName]) {
-              this.text.push(item)
-            }
-          })
+        return this.index.forEach((item) => {
+          this.text.push(this.option[item][this.txtName])
         })
       }
     },
@@ -80,14 +70,24 @@ export default {
      **/
     setIndex() {
       if (this.isRadio) {
+        this.index = -1
+
         return this.option.forEach((item, index) => {
-          if (item[this.valName] === this.value) {
+          if (item[this.valueName] === this.stateValue) {
             this.index = index
           }
         })
-      }
+      } else {
+        this.index = []
 
-      return this
+        return this.stateValue.forEach((item) => {
+          this.option.forEach((ele, index) => {
+            if (item === ele[this.valueName]) {
+              this.index.push(index)
+            }
+          })
+        })
+      }
     },
 
     /**
@@ -96,7 +96,7 @@ export default {
      * @return {Object} - this - 组件
      */
     verify() {
-      this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}${this.isRadio ? '单选框' : '复选框'}!`
+      this.dangerTip = `请选择${this.errorText}${this.errorText ? '的' : ''}${this.isRadio ? '单选框' : '复选框'}!`
 
       return this.verified
     },
@@ -123,18 +123,24 @@ export default {
      *
      * @return {Object} - this - 组件
      */
-    checkAllOption() {
+    async checkAllOption() {
       let value = []
 
-      this.option.forEach((item) => {
-        value.push(item[this.valName])
+      this.item.forEach((item) => {
+        value.push(item[this.valueName])
       })
 
       if (this.checkedAll) {
-        this.value = []
+        this.stateValue = []
       } else {
-        this.value = value
+        this.stateValue = value
       }
+
+      this._initCheckbox()
+
+      await this.$nextTick()
+
+      this.UIMaterial && this.$refs.motionCheckAll.enter()
     }
   }
 }

@@ -1,4 +1,6 @@
-const { dataType } = require('./data');
+import {
+  dataType
+} from './data'
 
 /**
  * to judge whether variable is string
@@ -7,7 +9,7 @@ const { dataType } = require('./data');
  * @return {Boolean} - whether variable is Obarrayject .
  */
 const isString = (str) => {
-  return dataType(str) === 'string';
+  return dataType(str) === 'string'
 }
 
 /**
@@ -18,10 +20,10 @@ const isString = (str) => {
  *
  */
 const trimEnter = (str) => {
-  return str.replace(/(^\n*)|(\n*$)/g,'');
+  return str.replace(/(^\n*)|(\n*$)/g, '')
 }
 
-module.exports = {
+export {
   isString,
   trimEnter
 }

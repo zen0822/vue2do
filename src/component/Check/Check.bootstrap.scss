@@ -37,11 +37,22 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       }
     }
   }
+
+  .#{$C_PREFIX}-opt-check-all {
+    &.#{$C_PREFIX}-checked > .#{$C_PREFIX}-icon > .#{$C_ICON_PREFIX} {
+      color: $type-color;
+    }
+
+    & > .#{$C_PREFIX}-icon > .#{$C_ICON_PREFIX} {
+      color: $type-light-color;
+    }
+  }
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   &.#{$C_PREFIX}-multiple {
-    .#{$C_PREFIX}-box {
+    .#{$C_PREFIX}-box,
+    .#{$C_PREFIX}-opt-check-all {
       &:focus,
       &:active,
       &:focus:active {
@@ -52,7 +63,8 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     }
   }
 
-  .#{$C_PREFIX}-box {
+  .#{$C_PREFIX}-box,
+  .#{$C_PREFIX}-opt-check-all {
     &:focus {
       outline: none;
     }
@@ -80,13 +92,6 @@ $C_ICON_PREFIX: #{$COMP_ICON};
         color: $color-grey-light;
         font-size: $h3;
       }
-    }
-  }
-
-  .#{$C_PREFIX}-opt-check-all {
-    & > .#{$C_ICON_PREFIX} {
-      color: $grey-lightest;
-      font-size: $h3;
     }
   }
 }

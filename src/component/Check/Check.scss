@@ -34,51 +34,62 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     opacity: 0;
   }
 
+  &-vertical {
+    .#{$C_PREFIX}-opt-row {
+      margin-left: $gutter-h-double;
+    }
+  }
+
   & > .#{$C_PREFIX}-opt-row {
     & > .#{$C_PREFIX}-opt-col {
       display: inline-block;
       line-height: 0;
+    }
+  }
 
-      & > .#{$C_PREFIX}-box {
-        display: inline-block;
-        padding: $gap-h-half;
-        margin: $gutter-h-half 0;
+  .#{$C_PREFIX}-box {
+    display: inline-block;
+    margin: 0 $gutter-h-double $gutter-h-double 0;
 
-        &.#{$C_PREFIX}-checked {
-          & > .#{$C_PREFIX}-icon {
-            & > .#{$C_ICON_PREFIX} {
-              color: $color-primary;
-            }
-          }
+    &.#{$C_PREFIX}-checked {
+      & > .#{$C_PREFIX}-icon {
+        & > .#{$C_ICON_PREFIX} {
+          color: $color-primary;
         }
+      }
+    }
 
-        & > .#{$C_PREFIX}-icon {
-          position: relative;
-          display: inline-block;
-          vertical-align: middle;
-          line-height: 0;
+    & > .#{$C_PREFIX}-lable {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+      margin-left: $gap-h;
+      cursor: default;
+    }
+  }
 
-          & > .#{$C_ICON_PREFIX} {
-            vertical-align: middle;
+  .#{$C_PREFIX}-icon {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 0;
 
-            .#{$C_ICON_PREFIX}-ali {
-              text-align: center;
-            }
-          }
-        }
+    & > .#{$C_ICON_PREFIX} {
+      vertical-align: middle;
 
-        & > .#{$C_PREFIX}-lable {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: 1;
-          margin-left: $gap-h-half;
-          cursor: default;
-        }
+      .#{$C_ICON_PREFIX}-ali {
+        text-align: center;
       }
     }
   }
 
   .#{$C_PREFIX}-opt-check-all {
+    margin: 0 0 $gutter-h-double;
+
+    &:focus {
+      outline: none;
+    }
+
     .#{$C_PREFIX}-checked {
       & > .#{$C_ICON_PREFIX} {
         color: $color-primary
@@ -87,7 +98,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
     .#{$C_PREFIX}-lable {
       cursor: default;
-      margin-left: $gutter-h-half;
+      margin-left: $gutter-h;
     }
   }
 }
