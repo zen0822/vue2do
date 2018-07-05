@@ -3,12 +3,12 @@
  *
  * @prop assign - 指定涟漪在是什么位置开始
  * @prop circle - 涟漪是圆形
- * @prop radius - 涟漪半径大小 (S | M | L)
- * @prop overflow - 默认溢出不隐藏，true 为隐藏溢出的 spot
  * @prop display - 默认一开始是隐藏（进来之前的状态）
+ * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+ * @prop overflow - 默认溢出不隐藏，true 为隐藏溢出的 spot
+ * @prop radius - 涟漪半径大小 (S | M | L)
  * @prop speed - 动画速度
  * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
- * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -42,16 +42,16 @@ export default {
       type: Boolean,
       default: false
     },
+    overflow: {
+      type: Boolean,
+      default: false
+    },
     radius: {
       type: [String],
       default: 'S',
       validator(val) {
         return ['s', 'm', 'l'].includes(val.toLowerCase()) || /(%|px)$/.test(val)
       }
-    },
-    overflow: {
-      type: Boolean,
-      default: false
     }
   },
 
@@ -59,11 +59,11 @@ export default {
     time() {
       switch (this.speed) {
         case 'normal':
-          return 800
+          return 500
         case 'fast':
-          return 600
+          return 300
         case 'slow':
-          return 1000
+          return 700
         default:
           return this.speed
       }
@@ -96,6 +96,7 @@ export default {
       })
 
       delClass(el, [
+        this.prefix('motion-rip-after'),
         this.prefix('motion-rip-assign'),
         this.prefix('motion-rip-active')
       ])
@@ -127,7 +128,6 @@ export default {
 
       // HACK: trigger browser reflow
       let height = el.offsetHeight
-      el.firstChild.style.transition = el.style.transition = `all ${this.time}ms`
 
       return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -157,18 +157,19 @@ export default {
     afterEnter(opt = {}) {
       let el = this.$el
 
-      el.firstChild.style.transition = el.style.transition = ''
-      el.style.display = ''
+      addClass(el, this.prefix('motion-rip-after'))
 
       delClass(el, [
-        this.prefix('motion-rip-comp'),
-        this.prefix('motion-rip-assign'),
         this.prefix('motion-rip-active')
       ])
 
-      this.$emit('afterEnter')
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          el.style.display = 'none'
 
-      return this.leave()
+          return this.$emit('afterEnter')
+        }, this.time)
+      })
     }
   },
 
@@ -183,11 +184,16 @@ export default {
           {
             [this.prefix('motion-rip-overflow')]: this.overflow
           }
-        ]
+        ],
+        style: {
+          'transition-duration': `${this.time}ms`
+        }
       }, [h('div', {
         class: [this.prefix('motion-rip-spot')],
+        ref: 'spot',
         style: {
-          padding: this.ripPadding
+          padding: this.ripPadding,
+          'transition-duration': `${this.time}ms`
         }
       })])
     ])

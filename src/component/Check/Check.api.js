@@ -8,30 +8,24 @@ export default {
      * @param {Number} index - 第几个选择框
      */
     async check(evt, index) {
-      let option = this.option[index - 1]
-      let val = option.value
+      let option = this.stateOption[index - 1]
+      let val = option[this.valueName]
 
       if (this.isCheckbox) {
         this.oldValue = []
-        this.oldIndex = []
 
         this.stateValue.forEach((item) => {
           this.oldValue.push(item)
         })
 
-        this.index.forEach((item) => {
-          this.oldIndex.push(item)
-        })
-
         this._changeCheckbox(index - 1, val)
       } else {
         this.oldValue = this.stateValue
-        this.oldIndex = this.index
 
         this.stateValue = val
-        this.index = index - 1
       }
 
+      this._initCheckbox()
       await this.$nextTick()
 
       this.$emit('check', {
@@ -49,17 +43,22 @@ export default {
      **/
     setText() {
       if (this.isRadio) {
+        this.oldText = this.text
+
         this.text = this.index === -1 ?
           'undefined' :
-          this.option[this.index][this.txtName]
+          this.stateOption[this.index][this.txtName]
 
         return this
       } else {
-        this.text = []
+        this.oldText = this.text.slice()
+        let checkboxText = []
 
-        return this.index.forEach((item) => {
-          this.text.push(this.option[item][this.txtName])
+        this.index.forEach((item) => {
+          checkboxText.push(this.stateOption[item][this.txtName])
         })
+
+        this.text = checkboxText
       }
     },
 
@@ -70,23 +69,30 @@ export default {
      **/
     setIndex() {
       if (this.isRadio) {
-        this.index = -1
+        this.oldIndex = this.index
 
-        return this.option.forEach((item, index) => {
+        return this.stateOption.every((item, index) => {
           if (item[this.valueName] === this.stateValue) {
             this.index = index
+
+            return false
           }
+
+          return true
         })
       } else {
-        this.index = []
+        this.oldIndex = this.index.slice()
+        let checkboxIndex = []
 
-        return this.stateValue.forEach((item) => {
-          this.option.forEach((ele, index) => {
+        this.stateValue.forEach((item) => {
+          this.stateOption.forEach((ele, index) => {
             if (item === ele[this.valueName]) {
-              this.index.push(index)
+              checkboxIndex.push(index)
             }
           })
         })
+
+        this.index = checkboxIndex
       }
     },
 
@@ -126,7 +132,7 @@ export default {
     async checkAllOption() {
       let value = []
 
-      this.item.forEach((item) => {
+      this.option.forEach((item) => {
         value.push(item[this.valueName])
       })
 

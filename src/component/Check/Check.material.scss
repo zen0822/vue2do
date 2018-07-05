@@ -13,7 +13,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
   .#{$C_PREFIX}-checked {
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($type-color, .8);
+        background-color: rgba($type-color, .2);
       }
     }
 
@@ -50,15 +50,10 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     transition: opacity 150ms;
   }
 
-  .#{$C_PREFIX}-box {
+  .#{$C_PREFIX}-box,
+  .#{$C_PREFIX}-opt-check-all {
     &:focus {
       outline: none;
-    }
-
-    .#{$C_PREFIX}-rip {
-      & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($grey, .8);
-      }
     }
 
     &.#{$C_PREFIX}-focused {
@@ -66,12 +61,18 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
         opacity: 1;
       }
     }
+
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($grey, .2);
+      }
+    }
   }
 
   .#{$C_PREFIX}-checked {
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($color-primary, .8);
+        background-color: rgba($color-primary, .2);
       }
     }
 
@@ -181,12 +182,15 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     @keyframes #{$C_PREFIX}-motion-rip {
       0% {
         transform: translate(-50%, -50%) scale(1);
+        opacity: .6;
       }
       50% {
         transform: translate(-50%, -50%) scale(.8);
+        opacity: 1;
       }
       100% {
         transform: translate(-50%, -50%) scale(1);
+        opacity: .6;
       }
     }
   }

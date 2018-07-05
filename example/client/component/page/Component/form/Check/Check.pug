@@ -6,7 +6,7 @@ div
       z-check(
         :ui='typeUI',
         :theme='typeTheme',
-        :item='testOpt'
+        :option='testOpt'
         :value='1'
       )
       z-code(:theme='typeTheme').
@@ -16,9 +16,10 @@ div
         :ui='typeUI',
         :theme='typeTheme',
         check-all
-        multiple,
+        multiple
+        disabled
         vertical
-        :item='testOpt.slice(0, 8)'
+        :option='testOpt.slice(0, 8)'
         :value='[1,2]'
       )
       z-code(:theme='typeTheme').
@@ -26,7 +27,7 @@ div
           vertical
           multiple
           check-all
-          :item="testOpt.slice(0, 8)"
+          :option="testOpt.slice(0, 8)"
           :value="[1, 2]"
         #{'></z-check>'}
     +section('props', 'props 数据类型')
@@ -49,7 +50,7 @@ div
           z-table-col 全选
           z-table-col 全选 checkbox 的选项的 label 标签
         z-table-row(slot='3')
-          z-table-col disabled
+          z-table-col disabled （废除），转移到 option 属性里面
           z-table-col Boolean
           z-table-col false
           z-table-col 不可选
@@ -59,15 +60,15 @@ div
           z-table-col ——
           z-table-col checkbox 没选的时候显示的错误文本
         z-table-row(slot='5')
-          z-table-col item
-          z-table-col Array
-          z-table-col ——
-          z-table-col 选择框数据
-        z-table-row(slot='6')
           z-table-col multiple
           z-table-col Boolean
           z-table-col false
           z-table-col 是否为多选
+        z-table-row(slot='6')
+          z-table-col option
+          z-table-col Array
+          z-table-col ——
+          z-table-col 选择框数据
         z-table-row(slot='7')
           z-table-col param
           z-table-col String

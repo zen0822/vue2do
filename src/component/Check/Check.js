@@ -3,9 +3,13 @@
  *
  * @prop checkAll - 全选 checkbox 的选项
  * @prop checkAllLabel - 全选 checkbox 的选项的 label
- * @prop disabled - 不可选
  * @prop errorText - checkbox 没选的时候显示的错误文本
- * @prop item - 选择框数据
+ * @prop option - 选择框数据
+ *              ex: [{
+ *                    value: 1,
+ *                    text: 'a',
+ *                    disabled: true // 不传默认是 false
+ *                  }]
  * @prop multiple - 是否为多选
  * @prop required - 是否必选
  * @prop param - 参数名
@@ -36,9 +40,6 @@ import {
   isEmpty as isEmptyArray
 } from '../../util/data/array'
 
-const TYPE_RADIO = 'radio'
-const TYPE_CHECKBOX = 'checkbox'
-
 let checkCompConfig = {
   name: 'Check',
 
@@ -62,25 +63,20 @@ let checkCompConfig = {
       type: String,
       default: '全选'
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     errorText: {
-      type: String,
-      default: ''
-    },
-    item: {
-      type: Array,
-      default: () => []
-    },
-    inputName: {
       type: String,
       default: ''
     },
     multiple: {
       type: Boolean,
       default: false
+    },
+    option: {
+      type: Array,
+      default: () => [],
+      validator(val) {
+        return Array.isArray(val)
+      }
     },
     param: {
       type: String,
@@ -112,10 +108,11 @@ let checkCompConfig = {
       oldIndex: {},
       stateValue: {}, // check 当前 value 值
       text: {}, // check 当前 text 值, 多选默认是 [], 单选是 'undefined'
-      option: [], // check 的选项值
+      stateOption: [], // check 的选项值
       oldValue: [], // check 的旧的 value 值
       verified: true, // 组件的验证状态
-      itemFocus: [], // 选择框组的 focus 状态
+      optionFocus: [], // 选择框组的 focus 状态
+      focusedCheckAll: false, // 全选选择框的 focus 状态
       allowFocus: true, // 允许执行 focus 事件
       dangerTip: '',
       slotItems: []
@@ -134,7 +131,7 @@ let checkCompConfig = {
     },
     checkedAll() { // 是否已经全选
       if (this.checkAll && this.multiple) {
-        return this.stateValue.length === this.option.length
+        return this.stateValue.length === this.stateOption.length
       }
     },
     checkIconName() {
@@ -171,8 +168,8 @@ let checkCompConfig = {
       this.stateValue = val
       this._initCheckbox()
     },
-    item(val) {
-      this.option = val
+    option(val) {
+      this.stateOption = val
       this._initCheckbox()
     }
   },
@@ -188,8 +185,11 @@ let checkCompConfig = {
         this.stateValue = this.isCheckbox ? this.value.slice() : this.value
       }
 
-      this.option = Object.assign([], this.item)
-      this.itemFocus = this.item.map(() => {
+      this.index = this.isCheckbox ? [] : undefined
+      this.text = this.isCheckbox ? [] : undefined
+
+      this.stateOption = Object.assign([], this.option)
+      this.optionFocus = this.option.map(() => {
         return false
       })
     },
@@ -212,9 +212,6 @@ let checkCompConfig = {
 
     /**
      * 初始化checkbox
-     * @param {Boolean} force - 强力初始化 所有数据置为空
-     *
-     * @return {Function}
      **/
     _initCheckbox() {
       this.setIndex()
@@ -251,7 +248,7 @@ let checkCompConfig = {
       }
 
       let items = []
-      let checkboxItemsEmpty = isEmptyArray(this.option)
+      let checkboxItemsEmpty = isEmptyArray(this.stateOption)
 
       $checkEles.each((index, el) => {
         let $el = $(el)
@@ -383,7 +380,7 @@ let checkCompConfig = {
      */
     _handlerFocus(event, index) {
       if (this.allowFocus) {
-        this.itemFocus.splice(index - 1, 1, true)
+        this.optionFocus.splice(index - 1, 1, true)
       }
     },
 
@@ -391,7 +388,45 @@ let checkCompConfig = {
      * blur 事件句柄
      */
     _handlerBlur(event, index) {
-      this.itemFocus.splice(index - 1, 1, false)
+      this.optionFocus.splice(index - 1, 1, false)
+    },
+
+    /**
+     * 全选 Mousedown 事件句柄
+     */
+    _handlerMousedownCheckAll(event) {
+      if (this.inTouch) {
+        return false
+      }
+
+      this.allowFocus = false
+    },
+
+    /**
+     * 全选 Mouseup 事件句柄
+     */
+    _handlerMouseupCheckAll(event) {
+      if (this.inTouch) {
+        return false
+      }
+
+      this.allowFocus = true
+    },
+
+    /**
+     * 全选 focus 事件句柄
+     */
+    _handlerFocusCheckAll(event) {
+      if (this.allowFocus) {
+        this.focusedCheckAll = true
+      }
+    },
+
+    /**
+     * 全选 blur 事件句柄
+     */
+    _handlerBlurCheckAll(event) {
+      this.focusedCheckAll = false
     }
   },
 

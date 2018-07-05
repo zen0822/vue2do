@@ -58,7 +58,7 @@ const materialCheck = function (h, {
       class: [this.xclass('rip')],
       props: {
         circle: true,
-        speed: 400,
+        speed: 180,
         radius: 'M'
       },
       ref: ripRefName
@@ -68,13 +68,13 @@ const materialCheck = function (h, {
 export default function (h) {
   let RowChildren = []
 
-  if (!Array.isArray(this.option) || this.option.length === 0) {
+  if (!Array.isArray(this.stateOption) || this.stateOption.length === 0) {
     return false
   }
 
   let checkEle = []
 
-  this.option.forEach((item, index) => {
+  this.stateOption.forEach((item, index) => {
     const currentIndex = index + 1
     let iconTypeEle = null
 
@@ -82,7 +82,7 @@ export default function (h) {
       iconTypeEle = bootstrapCheck.call(this, h, {
         checked: this.isRadio ? this.index === index : this.index.includes(index),
         ripRefName: `motionCheck${currentIndex}`,
-        motionRipFocused: this.itemFocus[index]
+        motionRipFocused: this.optionFocus[index]
       })
     } else {
       iconTypeEle = materialCheck.call(this, h, {
@@ -109,7 +109,7 @@ export default function (h) {
                 this.index.includes(index) : index === this.index
             },
             {
-              [this.xclass('focused')]: this.itemFocus[index]
+              [this.xclass('focused')]: this.optionFocus[index]
             }
           ],
           on: {
@@ -148,13 +148,6 @@ export default function (h) {
       }
     ]
   }, [
-    h('div', {
-      class: [this.xclass('disabled')],
-      directives: [{
-        name: 'show',
-        value: this.disabled
-      }]
-    }),
     (() => {
       if (this.checkAll && this.multiple) {
         return h('div', {
@@ -167,11 +160,15 @@ export default function (h) {
               [this.xclass('checked')]: this.checkedAll
             },
             {
-              [this.xclass('focused')]: false
+              [this.xclass('focused')]: this.focusedCheckAll
             }
           ],
           on: {
-            click: this.checkAllOption
+            click: this.checkAllOption,
+            mousedown: (event) => this._handlerMousedownCheckAll(event),
+            mouseup: (event) => this._handlerMouseupCheckAll(event),
+            focus: (event) => this._handlerFocusCheckAll(event),
+            blur: (event) => this._handlerBlurCheckAll(event)
           }
         }, [
           this.UIBootstrap ? bootstrapCheck.call(this, h, {

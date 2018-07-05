@@ -65,7 +65,7 @@ const ajax = ({
 
     // IE not support this state
     if (xhr.responseType !== undefined) {
-      // IE 10/11 not support 'json', so change to string and JSON.parse
+      // IE 10/11 not support 'json', so transform to string and JSON.parse
       if ('ActiveXObject' in window && dataType === 'json') {
         dataType = 'text'
 
