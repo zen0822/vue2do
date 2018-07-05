@@ -69,7 +69,8 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       outline: none;
     }
 
-    &.#{$C_PREFIX}-checked {
+    &.#{$C_PREFIX}-checked,
+    &.#{$C_PREFIX}-indeterminate {
       & > .#{$C_PREFIX}-icon {
         & > .#{$C_ICON_PREFIX} {
           color: $color-primary;

@@ -5,6 +5,7 @@
 const bootstrapCheck = function (h, {
   className = '',
   checked = false,
+  indeterminate = false,
   multiple = false
 } = {}) {
   return h('div', {
@@ -12,7 +13,7 @@ const bootstrapCheck = function (h, {
   }, [
     h('icon', {
       props: {
-        kind: this._getIconName(checked),
+        kind: this._getIconName(checked, indeterminate),
         ui: this.ui,
         theme: this.theme
       }
@@ -25,32 +26,41 @@ const materialCheck = function (h, {
   multiple = false,
   ripRefName = ''
 } = {}) {
+  let iconBoxEle = [
+    h('div', {
+      class: [this.xclass('icon-box-rail')]
+    })
+  ]
+
+  if (multiple) {
+    iconBoxEle.push(
+      h('div', {
+        class: [this.xclass('icon-box-checked')]
+      }, [
+        h('icon', {
+          props: {
+            kind: 'checked'
+          }
+        })
+      ]),
+      h('div', {
+        class: [this.xclass('icon-box-indeterminate')]
+      })
+    )
+  } else {
+    iconBoxEle.push(
+      h('div', {
+        class: [this.xclass('icon-box-dot')]
+      })
+    )
+  }
+
   return h('div', {
     class: [this.xclass(['icon', `icon-${multiple ? 'checkbox' : 'radio'}`])]
   }, [
     h('div', {
       class: [this.xclass(['icon-box'])]
-    }, [
-      h('div', {
-        class: [this.xclass('icon-box-circle')]
-      }),
-      (multiple ?
-        h('div', {
-          class: [this.xclass('icon-box-checked')]
-        }, [
-          h('icon', {
-            props: {
-              kind: 'square-check',
-              ui: this.ui,
-              theme: this.theme
-            }
-          })
-        ]) :
-        h('div', {
-          class: [this.xclass('icon-box-dot')]
-        })
-      )
-    ]),
+    }, iconBoxEle),
     h('div', {
       class: [this.xclass('motion-rip')]
     }),
@@ -65,6 +75,7 @@ const materialCheck = function (h, {
     })
   ])
 }
+
 export default function (h) {
   let RowChildren = []
 
@@ -160,6 +171,9 @@ export default function (h) {
               [this.xclass('checked')]: this.checkedAll
             },
             {
+              [this.xclass('indeterminate')]: this.checkedSome
+            },
+            {
               [this.xclass('focused')]: this.focusedCheckAll
             }
           ],
@@ -174,6 +188,7 @@ export default function (h) {
           this.UIBootstrap ? bootstrapCheck.call(this, h, {
             checked: this.checkedAll,
             ripRefName: 'motionCheckAll',
+            indeterminate: this.checkedSome,
             className: [this.xclass('icon')],
             motionRipFocused: false
           }) : materialCheck.call(this, h, {

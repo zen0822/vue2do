@@ -22,7 +22,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     }
 
     .#{$C_PREFIX}-icon-box {
-      &-circle {
+      &-rail {
         border-color: $type-color;
       }
     }
@@ -30,8 +30,10 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
   .#{$C_PREFIX}-icon {
     &-box {
-      &-dot {
-        background-color: $type-color;
+      &-dot,
+      &-checked,
+      &-indeterminate {
+        background-color: $color-primary;
       }
     }
   }
@@ -69,7 +71,8 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     }
   }
 
-  .#{$C_PREFIX}-checked {
+  .#{$C_PREFIX}-checked,
+  .#{$C_PREFIX}-indeterminate {
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
         background-color: rgba($color-primary, .2);
@@ -81,12 +84,24 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     }
 
     .#{$C_PREFIX}-icon-box {
-      &-circle {
+      &-rail {
         border-color: $color-primary;
       }
+    }
+  }
 
+  .#{$C_PREFIX}-checked {
+    .#{$C_PREFIX}-icon-box {
       &-checked,
       &-dot {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-indeterminate {
+    .#{$C_PREFIX}-icon-box {
+      &-indeterminate {
         transform: translate(-50%, -50%) scale(1);
       }
     }
@@ -101,7 +116,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       height: $icon-radius;
       width: $icon-radius;
 
-      &-circle {
+      &-rail {
         border: $color-text-dark-secondary 2px solid;
         box-sizing: border-box;
         border-radius: 100%;
@@ -112,20 +127,11 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
         left: 0;
       }
 
-      &-dot {
+      &-checked,
+      &-dot,
+      &-indeterminate {
         background-color: $color-primary;
         box-sizing: border-box;
-        border-radius: 100%;
-        height: 50%;
-        width: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        transition: transform 150ms;
-      }
-
-      &-checked {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -133,6 +139,25 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
         width: 100%;
         transform: translate(-50%, -50%) scale(0);
         transition: transform 150ms;
+      }
+
+      &-dot {
+        border-radius: 100%;
+        height: 50%;
+        width: 50%;
+      }
+
+      &-indeterminate {
+        &::after {
+          content: '';
+          background-color: #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          height: 2px;
+          width: 60%;
+          transform: translate(-50%, -50%);
+        }
       }
     }
 
@@ -143,15 +168,16 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
         border-radius: 2px;
         overflow: hidden;
 
-        .#{$C_ICON_PREFIX} {
-          font-size: $icon-radius - 4;
-        }
-
-        &-circle {
+        &-rail {
           border-radius: 0;
         }
 
         &-checked {
+          .#{$C_ICON_PREFIX} {
+            font-size: $icon-radius - 4;
+            color: #fff;
+          }
+
           width: $icon-radius - 4;
           height: $icon-radius - 4;
         }

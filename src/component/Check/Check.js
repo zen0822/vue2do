@@ -131,7 +131,12 @@ let checkCompConfig = {
     },
     checkedAll() { // 是否已经全选
       if (this.checkAll && this.multiple) {
-        return this.stateValue.length === this.stateOption.length
+        return this.index.length === this.stateOption.length
+      }
+    },
+    checkedSome() { // 是否只选择了一部分的子选择框
+      if (this.checkAll && this.multiple) {
+        return this.index.length < this.stateOption.length && this.index.length > 0
       }
     },
     checkIconName() {
@@ -144,7 +149,8 @@ let checkCompConfig = {
             },
             checkbox: {
               uncheck: 'square-bs',
-              checked: 'square-check-bs'
+              checked: 'square-check-bs',
+              indeterminate: 'square-indeterminate-bs'
             }
           }
         case 'material':
@@ -200,8 +206,12 @@ let checkCompConfig = {
      * @param {Boolean} checked - 选择状态
      * @param {Boolean} multiple - 复选框
      */
-    _getIconName(checked = false, multiple = this.multiple) {
+    _getIconName(checked = false, indeterminate = false, multiple = this.multiple) {
       if (multiple) {
+        if (indeterminate) {
+          return this.checkIconName.checkbox.indeterminate
+        }
+
         return checked ? this.checkIconName.checkbox.checked :
           this.checkIconName.checkbox.uncheck
       } else {
