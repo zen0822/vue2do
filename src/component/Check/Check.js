@@ -4,15 +4,15 @@
  * @prop checkAll - 全选 checkbox 的选项
  * @prop checkAllLabel - 全选 checkbox 的选项的 label
  * @prop errorText - checkbox 没选的时候显示的错误文本
+ * @prop multiple - 是否为多选
  * @prop option - 选择框数据
  *              ex: [{
  *                    value: 1,
  *                    text: 'a',
  *                    disabled: true // 不传默认是 false
  *                  }]
- * @prop multiple - 是否为多选
- * @prop required - 是否必选
  * @prop param - 参数名
+ * @prop required - 是否必选
  * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
  * @prop value - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
  * @prop valueName - 指定读取 checkboxItems 的 value 值的 key 的名字
