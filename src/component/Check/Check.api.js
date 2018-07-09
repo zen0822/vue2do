@@ -47,7 +47,7 @@ export default {
 
         this.text = this.index === -1 ?
           'undefined' :
-          this.stateOption[this.index][this.txtName]
+          this.stateOption[this.index][this.textName]
 
         return this
       } else {
@@ -55,7 +55,7 @@ export default {
         let checkboxText = []
 
         this.index.forEach((item) => {
-          checkboxText.push(this.stateOption[item][this.txtName])
+          checkboxText.push(this.stateOption[item][this.textName])
         })
 
         this.text = checkboxText

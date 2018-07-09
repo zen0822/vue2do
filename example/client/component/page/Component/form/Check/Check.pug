@@ -17,9 +17,27 @@ div
         :theme='typeTheme',
         check-all
         multiple
-        disabled
         vertical
-        :option='testOpt.slice(0, 8)'
+        :option='testOpt'
+        :value='[1,2]'
+      )
+      z-code(:theme='typeTheme').
+        #{'<z-check'}
+          vertical
+          multiple
+          check-all
+          :option="testOpt.slice(0, 8)"
+          :value="[1, 2]"
+        #{'></z-check>'}
+    +section('checkAllDisabled', '禁用多选')
+      z-check(
+        :ui='typeUI',
+        :theme='typeTheme',
+        check-all
+        multiple
+        check-all-disabled
+        vertical
+        :option='testOpt2'
         :value='[1,2]'
       )
       z-code(:theme='typeTheme').
@@ -41,8 +59,8 @@ div
           z-table-col {{ item }}
         z-table-row(slot='1')
           z-table-col checkAll
-          z-table-col String
-          z-table-col (*input | textarea)
+          z-table-col Boolean
+          z-table-col false
           z-table-col 全选 checkbox 的选项
         z-table-row(slot='2')
           z-table-col checkAllLabel
@@ -50,51 +68,56 @@ div
           z-table-col 全选
           z-table-col 全选 checkbox 的选项的 label 标签
         z-table-row(slot='3')
+          z-table-col checkAllDisabled
+          z-table-col Boolean
+          z-table-col false
+          z-table-col 全选 checkbox 的选项禁用
+        z-table-row(slot='4')
           z-table-col disabled （废除），转移到 option 属性里面
           z-table-col Boolean
           z-table-col false
           z-table-col 不可选
-        z-table-row(slot='4')
+        z-table-row(slot='5')
           z-table-col errorText
           z-table-col String
           z-table-col ——
           z-table-col checkbox 没选的时候显示的错误文本
-        z-table-row(slot='5')
+        z-table-row(slot='6')
           z-table-col multiple
           z-table-col Boolean
           z-table-col false
           z-table-col 是否为多选
-        z-table-row(slot='6')
+        z-table-row(slot='7')
           z-table-col option
           z-table-col Array
           z-table-col ——
-          z-table-col 选择框数据
-        z-table-row(slot='7')
+          z-table-col 选择框数据, ex: [{ value: 1, text: 'a', disabled: true // 默认是 false }]
+        z-table-row(slot='8')
           z-table-col param
           z-table-col String
           z-table-col ——
           z-table-col 表单控件的参数名
-        z-table-row(slot='8')
+        z-table-row(slot='9')
           z-table-col required
           z-table-col String
           z-table-col false
           z-table-col 是否必选
-        z-table-row(slot='9')
+        z-table-row(slot='10')
           z-table-col textName
           z-table-col String
           z-table-col ——
           z-table-col 指定读取 checkboxItems 的 text 值的 key 的名字
-        z-table-row(slot='10')
+        z-table-row(slot='11')
           z-table-col value
           z-table-col Number, Array
           z-table-col ——
           z-table-col 初始化时选中的值，默认为第一项， 是checkbox 則為數組
-        z-table-row(slot='11')
+        z-table-row(slot='12')
           z-table-col valueName
           z-table-col String
           z-table-col ——
           z-table-col 指定读取 checkboxItems 的 value 值的 key 的名字
-        z-table-row(slot='12')
+        z-table-row(slot='13')
           z-table-col vertical
           z-table-col Boolean
           z-table-col false

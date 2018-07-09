@@ -36,8 +36,19 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     }
   }
 
+  .#{$C_PREFIX}-overlay {
+    background-color: rgba(#fff, 0);
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+
   .#{$C_PREFIX}-box,
   .#{$C_PREFIX}-opt-check-all {
+    position: relative;
     display: inline-block;
     margin: 0 $gutter-h-double $gutter-h-double 0;
 
@@ -46,6 +57,12 @@ $C_ICON_PREFIX: #{$COMP_ICON};
         & > .#{$C_ICON_PREFIX} {
           color: $color-primary;
         }
+      }
+    }
+
+    &.#{$C_PREFIX}-disabled {
+      & > .#{$C_PREFIX}-lable {
+        color: $color-text-dark-hint;
       }
     }
 

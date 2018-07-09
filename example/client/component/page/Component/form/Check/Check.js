@@ -13,8 +13,31 @@ export default {
     testOpt() {
       return [{
         value: 1,
-        text: 'a',
-        disable: true
+        text: 'a'
+      }, {
+        value: 2,
+        text: 'b',
+        disabled: true
+      }, {
+        value: 3,
+        text: 'c'
+      }, {
+        value: 4,
+        text: 'd',
+        disabled: true
+      }, {
+        value: 5,
+        text: 'e',
+        disabled: true
+      }, {
+        value: 6,
+        text: 'g'
+      }]
+    },
+    testOpt2() {
+      return [{
+        value: 1,
+        text: 'a'
       }, {
         value: 2,
         text: 'b'
@@ -23,12 +46,10 @@ export default {
         text: 'c'
       }, {
         value: 4,
-        text: 'd',
-        disable: true
+        text: 'd'
       }, {
         value: 5,
-        text: 'e',
-        disable: true
+        text: 'e'
       }, {
         value: 6,
         text: 'g'

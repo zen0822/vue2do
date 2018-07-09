@@ -3,17 +3,18 @@
  *
  * @prop checkAll - 全选 checkbox 的选项
  * @prop checkAllLabel - 全选 checkbox 的选项的 label
+ * @prop checkAllDisabled - 全选 checkbox 的选项禁用
  * @prop errorText - checkbox 没选的时候显示的错误文本
  * @prop multiple - 是否为多选
  * @prop option - 选择框数据
  *              ex: [{
  *                    value: 1,
  *                    text: 'a',
- *                    disabled: true // 不传默认是 false
+ *                    disabled: true // 默认是 false
  *                  }]
  * @prop param - 参数名
  * @prop required - 是否必选
- * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
+ * @prop textName - 指定读取 checkboxItems 的 text 值的 key 的名字
  * @prop value - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
  * @prop valueName - 指定读取 checkboxItems 的 value 值的 key 的名字
  * @prop vertical - 选择框是否垂直分布（默认 false，是水平分布）
@@ -63,6 +64,10 @@ let checkCompConfig = {
       type: String,
       default: '全选'
     },
+    checkAllDisabled: {
+      type: Boolean,
+      default: false
+    },
     errorText: {
       type: String,
       default: ''
@@ -86,7 +91,7 @@ let checkCompConfig = {
       type: Boolean,
       default: false
     },
-    txtName: {
+    textName: {
       type: String,
       default: 'text'
     },

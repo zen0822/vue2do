@@ -10,7 +10,8 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  .#{$C_PREFIX}-checked {
+  .#{$C_PREFIX}-checked,
+  .#{$C_PREFIX}-indeterminate {
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
         background-color: rgba($type-color, .2);
@@ -33,8 +34,33 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       &-dot,
       &-checked,
       &-indeterminate {
-        background-color: $color-primary;
+        background-color: $type-color;
       }
+    }
+  }
+
+  .#{$C_PREFIX}-disabled {
+    .#{$C_PREFIX}-icon {
+      &-box {
+        &-dot,
+        &-checked {
+          background-color: rgba($grey, .38);
+        }
+
+        &-rail {
+          border-color: rgba($grey, .38);
+        }
+      }
+    }
+
+    &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
+    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
+      background-color: rgba($type-color, .38);
+    }
+
+    &.#{$C_PREFIX}-checked .#{$C_PREFIX}-icon-box-rail,
+    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-rail {
+      border-color: rgba($type-color, .38);
     }
   }
 }
@@ -67,42 +93,6 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
         background-color: rgba($grey, .2);
-      }
-    }
-  }
-
-  .#{$C_PREFIX}-checked,
-  .#{$C_PREFIX}-indeterminate {
-    .#{$C_PREFIX}-rip {
-      & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($color-primary, .2);
-      }
-    }
-
-    .#{$C_PREFIX}-motion-rip::after {
-      background-color: rgba($color-primary, .3);
-    }
-
-    .#{$C_PREFIX}-icon-box {
-      &-rail {
-        border-color: $color-primary;
-      }
-    }
-  }
-
-  .#{$C_PREFIX}-checked {
-    .#{$C_PREFIX}-icon-box {
-      &-checked,
-      &-dot {
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-  }
-
-  .#{$C_PREFIX}-indeterminate {
-    .#{$C_PREFIX}-icon-box {
-      &-indeterminate {
-        transform: translate(-50%, -50%) scale(1);
       }
     }
   }
@@ -172,6 +162,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
           border-radius: 0;
         }
 
+        &-indeterminate,
         &-checked {
           .#{$C_ICON_PREFIX} {
             font-size: $icon-radius - 4;
@@ -182,6 +173,67 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
           height: $icon-radius - 4;
         }
       }
+    }
+  }
+
+  .#{$C_PREFIX}-checked,
+  .#{$C_PREFIX}-indeterminate {
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($color-primary, .2);
+      }
+    }
+
+    .#{$C_PREFIX}-motion-rip::after {
+      background-color: rgba($color-primary, .3);
+    }
+
+    .#{$C_PREFIX}-icon-box {
+      &-rail {
+        border-color: $color-primary;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-checked {
+    .#{$C_PREFIX}-icon-box {
+      &-checked,
+      &-dot {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-indeterminate {
+    .#{$C_PREFIX}-icon-box {
+      &-indeterminate {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-disabled {
+    .#{$C_PREFIX}-icon {
+      &-box {
+        &-dot,
+        &-checked {
+          background-color: rgba($grey, .38);
+        }
+
+        &-rail {
+          border-color: rgba($grey, .38);
+        }
+      }
+    }
+
+    &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
+    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
+      background-color: rgba($color-primary, .38);
+    }
+
+    &.#{$C_PREFIX}-checked .#{$C_PREFIX}-icon-box-rail,
+    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-rail {
+      border-color: rgba($color-primary, .38);
     }
   }
 

@@ -76,6 +76,62 @@ const materialCheck = function (h, {
   ])
 }
 
+const checkAllEle = function (h) {
+  return h('div', {
+    attrs: {
+      tabindex: this.checkAllDisabled ? undefined : 0
+    },
+    class: [
+      this.xclass('opt-check-all'),
+      {
+        [this.xclass('checked')]: this.checkedAll
+      },
+      {
+        [this.xclass('indeterminate')]: this.checkedSome
+      },
+      {
+        [this.xclass('focused')]: !this.checkAllDisabled && this.focusedCheckAll
+      },
+      {
+        [this.xclass('disabled')]: this.checkAllDisabled
+      }
+    ],
+    on: this.checkAllDisabled ? {} : {
+      click: this.checkAllOption,
+      mousedown: (event) => this._handlerMousedownCheckAll(event),
+      mouseup: (event) => this._handlerMouseupCheckAll(event),
+      focus: (event) => this._handlerFocusCheckAll(event),
+      blur: (event) => this._handlerBlurCheckAll(event)
+    }
+  }, [
+    this.UIBootstrap ? bootstrapCheck.call(this, h, {
+      checked: this.checkedAll,
+      ripRefName: 'motionCheckAll',
+      indeterminate: this.checkedSome,
+      className: [this.xclass('icon')],
+      motionRipFocused: false
+    }) : materialCheck.call(this, h, {
+      multiple: true,
+      className: [this.xclass('icon')],
+      ripRefName: 'motionCheckAll'
+    }),
+    (() => {
+      if (this.checkAllLabel) {
+        return h('span', {
+          class: [this.xclass('lable')]
+        }, this.checkAllLabel)
+      }
+    })(),
+    (() => {
+      if (this.checkAllDisabled) {
+        return h('div', {
+          class: [this.xclass('overlay')]
+        })
+      }
+    })()
+  ])
+}
+
 export default function (h) {
   let RowChildren = []
 
@@ -111,19 +167,23 @@ export default function (h) {
       }, [
         h('div', {
           attrs: {
-            tabindex: 0
+            tabindex: item.disabled ? undefined : 0
           },
           class: [
             this.xclass('box'),
             {
               [this.xclass('checked')]: this.isCheckbox ?
-                this.index.includes(index) : index === this.index
+                this.index.includes(index) :
+                index === this.index
             },
             {
-              [this.xclass('focused')]: this.optionFocus[index]
+              [this.xclass('focused')]: !item.disabled && this.optionFocus[index]
+            },
+            {
+              [this.xclass('disabled')]: item.disabled
             }
           ],
-          on: {
+          on: item.disabled ? {} : {
             click: (event) => this._handlerClick(event, currentIndex),
             mousedown: (event) => this._handlerMousedown(event, currentIndex),
             mouseup: (event) => this._handlerMouseup(event, currentIndex),
@@ -134,10 +194,17 @@ export default function (h) {
         }, [
           iconTypeEle,
           (() => {
-            if (item[this.txtName]) {
+            if (item[this.textName]) {
               return h('span', {
                 class: [this.xclass('lable')]
-              }, item[this.txtName])
+              }, item[this.textName])
+            }
+          })(),
+          (() => {
+            if (item.disabled) {
+              return h('div', {
+                class: [this.xclass('overlay')]
+              })
             }
           })()
         ])
@@ -161,49 +228,7 @@ export default function (h) {
   }, [
     (() => {
       if (this.checkAll && this.multiple) {
-        return h('div', {
-          attrs: {
-            tabindex: 0
-          },
-          class: [
-            this.xclass('opt-check-all'),
-            {
-              [this.xclass('checked')]: this.checkedAll
-            },
-            {
-              [this.xclass('indeterminate')]: this.checkedSome
-            },
-            {
-              [this.xclass('focused')]: this.focusedCheckAll
-            }
-          ],
-          on: {
-            click: this.checkAllOption,
-            mousedown: (event) => this._handlerMousedownCheckAll(event),
-            mouseup: (event) => this._handlerMouseupCheckAll(event),
-            focus: (event) => this._handlerFocusCheckAll(event),
-            blur: (event) => this._handlerBlurCheckAll(event)
-          }
-        }, [
-          this.UIBootstrap ? bootstrapCheck.call(this, h, {
-            checked: this.checkedAll,
-            ripRefName: 'motionCheckAll',
-            indeterminate: this.checkedSome,
-            className: [this.xclass('icon')],
-            motionRipFocused: false
-          }) : materialCheck.call(this, h, {
-            multiple: true,
-            className: [this.xclass('icon')],
-            ripRefName: 'motionCheckAll'
-          }),
-          (() => {
-            if (this.checkAllLabel) {
-              return h('span', {
-                class: [this.xclass('lable')]
-              }, this.checkAllLabel)
-            }
-          })()
-        ])
+        return checkAllEle.call(this, h)
       }
     })(),
     h('row', {
