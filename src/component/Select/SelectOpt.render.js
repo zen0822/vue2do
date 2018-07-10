@@ -126,7 +126,8 @@ export default function (h) {
       element,
       h('motion-rip', {
         props: {
-          overflow: true
+          overflow: true,
+          speed: 'fast'
         },
         ref: `rip${index}`
       })

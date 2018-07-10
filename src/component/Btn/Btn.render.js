@@ -67,7 +67,9 @@ export default function (h) {
         class: [this.xclass('rip')],
         props: {
           assign: !this.isFloatBtn,
-          mousePoi: this.mousePoi
+          mousePoi: this.mousePoi,
+          speed: 300,
+          radius: 'L'
         },
         ref: 'transition'
       }),

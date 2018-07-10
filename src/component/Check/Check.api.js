@@ -4,46 +4,36 @@ import tip from '../Message/tip'
 export default {
   methods: {
     /**
-     * checkbox的icon的样式
-     *
-     * @param { String } - checkbox当前值
-     * @return { Function, Object }
-     **/
-    iconName(val) {
-      return this.isRadio ?
-        this._getIconName(this.value === val) :
-        this._getIconName(this.value.includes(val))
-    },
-
-    /**
      * 选择 checkbox
+     * @param {Number} index - 第几个选择框
      */
-    check(evt, index) {
-      let option = this.option[index - 1]
-      let val = option.value
-
-      if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
-        return false
-      }
+    async check(evt, index) {
+      let option = this.stateOption[index - 1]
+      let val = option[this.valueName]
 
       if (this.isCheckbox) {
         this.oldValue = []
 
-        this.value.forEach((item) => {
+        this.stateValue.forEach((item) => {
           this.oldValue.push(item)
         })
 
-        this._changeCheckbox(val)
+        this._changeCheckbox(index - 1, val)
       } else {
-        this.oldValue = this.value
+        this.oldValue = this.stateValue
 
-        this.value = val
+        this.stateValue = val
       }
 
-      this.$nextTick(() => {
-        this.success && this.success(this)
-        this.UIMaterial && this.$refs[`motionCheck${index}`].enter()
+      this._initCheckbox()
+      await this.$nextTick()
+
+      this.$emit('check', {
+        currentIndex: index,
+        value: this.value
       })
+
+      this.UIMaterial && this.$refs[`motionCheck${index}`].enter()
     },
 
     /**
@@ -53,23 +43,22 @@ export default {
      **/
     setText() {
       if (this.isRadio) {
-        this.text = this.option[this.index][this.txtName]
+        this.oldText = this.text
+
+        this.text = this.index === -1 ?
+          'undefined' :
+          this.stateOption[this.index][this.textName]
 
         return this
       } else {
-        if (!Array.isArray(this.value)) {
-          return false
-        }
+        this.oldText = this.text.slice()
+        let checkboxText = []
 
-        this.text = []
-
-        return this.value.forEach((item) => {
-          this.option.forEach((ele) => {
-            if (item === ele[this.valName]) {
-              this.text.push(item)
-            }
-          })
+        this.index.forEach((item) => {
+          checkboxText.push(this.stateOption[item][this.textName])
         })
+
+        this.text = checkboxText
       }
     },
 
@@ -80,14 +69,31 @@ export default {
      **/
     setIndex() {
       if (this.isRadio) {
-        return this.option.forEach((item, index) => {
-          if (item[this.valName] === this.value) {
-            this.index = index
-          }
-        })
-      }
+        this.oldIndex = this.index
 
-      return this
+        return this.stateOption.every((item, index) => {
+          if (item[this.valueName] === this.stateValue) {
+            this.index = index
+
+            return false
+          }
+
+          return true
+        })
+      } else {
+        this.oldIndex = this.index.slice()
+        let checkboxIndex = []
+
+        this.stateValue.forEach((item) => {
+          this.stateOption.forEach((ele, index) => {
+            if (item === ele[this.valueName]) {
+              checkboxIndex.push(index)
+            }
+          })
+        })
+
+        this.index = checkboxIndex
+      }
     },
 
     /**
@@ -96,7 +102,7 @@ export default {
      * @return {Object} - this - 组件
      */
     verify() {
-      this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}${this.isRadio ? '单选框' : '复选框'}!`
+      this.dangerTip = `请选择${this.errorText}${this.errorText ? '的' : ''}${this.isRadio ? '单选框' : '复选框'}!`
 
       return this.verified
     },
@@ -123,18 +129,24 @@ export default {
      *
      * @return {Object} - this - 组件
      */
-    checkAllOption() {
+    async checkAllOption() {
       let value = []
 
       this.option.forEach((item) => {
-        value.push(item[this.valName])
+        value.push(item[this.valueName])
       })
 
       if (this.checkedAll) {
-        this.value = []
+        this.stateValue = []
       } else {
-        this.value = value
+        this.stateValue = value
       }
+
+      this._initCheckbox()
+
+      await this.$nextTick()
+
+      this.UIMaterial && this.$refs.motionCheckAll.enter()
     }
   }
 }

@@ -4,15 +4,15 @@
  */
 const format = (value, format = 'yyyy-MM-dd') => {
   if (!value) {
-      return '--'
+    return '--'
   }
 
   if (!isNaN(value)) {
-      value = parseInt(value)
+    value = parseInt(value)
 
-      if (value.toString().length === 10) {
-          value = value * 1000
-      }
+    if (value.toString().length === 10) {
+      value = value * 1000
+    }
   }
 
   let time = new Date(value)

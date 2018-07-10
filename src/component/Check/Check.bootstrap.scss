@@ -14,8 +14,10 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 }
 
 @mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  .#{$C_PREFIX}-box {
-    &.#{$C_PREFIX}-checked {
+  .#{$C_PREFIX}-box,
+  .#{$C_PREFIX}-opt-check-all {
+    &.#{$C_PREFIX}-checked,
+    &.#{$C_PREFIX}-indeterminate {
       & > .#{$C_PREFIX}-icon {
         & > .#{$C_ICON_PREFIX} {
           color: $type-color;
@@ -23,9 +25,15 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       }
     }
 
-    &:focus,
-    &:active,
-    &:focus:active {
+    &.#{$C_PREFIX}-disabled {
+      & > .#{$C_PREFIX}-icon {
+        & > .#{$C_ICON_PREFIX} {
+          color: rgba($type-color, .38);
+        }
+      }
+    }
+
+    &:focus {
       & > .#{$C_PREFIX}-icon {
         @include check-box-shadow($type-color);
       }
@@ -37,14 +45,23 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       }
     }
   }
+
+  .#{$C_PREFIX}-opt-check-all {
+    &.#{$C_PREFIX}-checked > .#{$C_PREFIX}-icon > .#{$C_ICON_PREFIX} {
+      color: $type-color;
+    }
+
+    & > .#{$C_PREFIX}-icon > .#{$C_ICON_PREFIX} {
+      color: $type-light-color;
+    }
+  }
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   &.#{$C_PREFIX}-multiple {
-    .#{$C_PREFIX}-box {
-      &:focus,
-      &:active,
-      &:focus:active {
+    .#{$C_PREFIX}-box,
+    .#{$C_PREFIX}-opt-check-all {
+      &:focus {
         & > .#{$C_PREFIX}-icon {
           border-radius: 4px;
         }
@@ -52,12 +69,14 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     }
   }
 
-  .#{$C_PREFIX}-box {
+  .#{$C_PREFIX}-box,
+  .#{$C_PREFIX}-opt-check-all {
     &:focus {
       outline: none;
     }
 
-    &.#{$C_PREFIX}-checked {
+    &.#{$C_PREFIX}-checked,
+    &.#{$C_PREFIX}-indeterminate {
       & > .#{$C_PREFIX}-icon {
         & > .#{$C_ICON_PREFIX} {
           color: $color-primary;
@@ -65,9 +84,24 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       }
     }
 
-    &:focus,
-    &:active,
-    &:focus:active {
+    &.#{$C_PREFIX}-disabled {
+      & > .#{$C_PREFIX}-icon {
+        & > .#{$C_ICON_PREFIX} {
+          color: rgba($color-grey-light, .38);
+        }
+      }
+
+      &.#{$C_PREFIX}-checked,
+      &.#{$C_PREFIX}-indeterminate {
+        & > .#{$C_PREFIX}-icon {
+          & > .#{$C_ICON_PREFIX} {
+            color: rgba($color-primary, .38);
+          }
+        }
+      }
+    }
+
+    &:focus {
       & > .#{$C_PREFIX}-icon {
         border-radius: 100%;
 
@@ -78,15 +112,8 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     & > .#{$C_PREFIX}-icon {
       & > .#{$C_ICON_PREFIX} {
         color: $color-grey-light;
-        font-size: $h3;
+        font-size: $h2;
       }
-    }
-  }
-
-  .#{$C_PREFIX}-opt-check-all {
-    & > .#{$C_ICON_PREFIX} {
-      color: $grey-lightest;
-      font-size: $h3;
     }
   }
 }
