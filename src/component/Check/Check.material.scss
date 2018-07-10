@@ -58,9 +58,13 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       background-color: rgba($type-color, .38);
     }
 
-    &.#{$C_PREFIX}-checked .#{$C_PREFIX}-icon-box-rail,
-    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-rail {
-      border-color: rgba($type-color, .38);
+    &.#{$C_PREFIX}-opt-check-all {
+      &.#{$C_PREFIX}-checked,
+      &.#{$C_PREFIX}-indeterminate {
+        .#{$C_PREFIX}-icon-box-rail {
+          border-color: rgba($type-color, .38);
+        }
+      }
     }
   }
 }
@@ -231,9 +235,13 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       background-color: rgba($color-primary, .38);
     }
 
-    &.#{$C_PREFIX}-checked .#{$C_PREFIX}-icon-box-rail,
-    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-rail {
-      border-color: rgba($color-primary, .38);
+    &.#{$C_PREFIX}-opt-check-all {
+      &.#{$C_PREFIX}-checked,
+      &.#{$C_PREFIX}-indeterminate {
+        .#{$C_PREFIX}-icon-box-rail {
+          border-color: rgba($color-primary, .38);
+        }
+      }
     }
   }
 
