@@ -57,6 +57,7 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
 
         .#{$FOLD_PREFIX}-dt {
           cursor: pointer;
+          padding: $gap-v 0;
         }
 
         & > .#{$FOLD_PREFIX}-dt {
@@ -71,7 +72,7 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
             right: $gap-v-double;
           }
 
-          padding: 12px $gap-v-double;
+          padding: 12px $gap-v-double * 2 12px $gap-v-double;
           color: $color-text-dark-primary;
           font-weight: bold;
         }

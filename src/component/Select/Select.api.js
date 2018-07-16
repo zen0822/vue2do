@@ -34,7 +34,7 @@ export default {
      * 默认值的 css 的 class 名字
      */
     defaultValClassName(value) {
-      return this.defaultVal === value ? `${this.cPrefix}-default-text` : ''
+      return this.defaultValue === value ? `${this.cPrefix}-default-text` : ''
     },
 
     /**
@@ -47,11 +47,11 @@ export default {
       this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}下拉框!`
 
       if (this.multiple) {
-        this.verified = this.value.length >= this.min
+        this.verified = this.stateValue.length >= this.min
 
         return this.verified
       } else if (this.required) {
-        this.verified = this.value !== -1
+        this.verified = this.stateValue !== -1
 
         return this.verified
       }
@@ -65,17 +65,17 @@ export default {
      * @param {String, Number} - 多选下拉框的值
      */
     removeMultiSelected(index) {
-      if (this.min !== 0 && this.value.length === this.min) {
+      if (this.min !== 0 && this.stateValue.length === this.min) {
         tip(`至少需选择 ${this.min} 项！`)
 
-        const valTmp = this.value
-        this.value = []
-        this.value = valTmp
+        const valTmp = this.stateValue
+        this.stateValue = []
+        this.stateValue = valTmp
 
-        return this.value
+        return this.stateValue
       }
 
-      this.value.splice(index - 1, 1)
+      this.stateValue.splice(index - 1, 1)
     },
 
     /**
@@ -133,9 +133,9 @@ export default {
      */
     selectAllOption() {
       if (this.selectedAll) {
-        this.value = []
+        this.stateValue = []
       } else {
-        this.value = this.allOptionVal.slice()
+        this.stateValue = this.allOptionVal.slice()
       }
 
       this.selectedAll = !this.selectedAll

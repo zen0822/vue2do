@@ -22,7 +22,7 @@ export default [{
   path: 'check',
   component: () => import('../component/page/Component/form/Check/Check'),
   meta: {
-    title: '按钮组件'
+    title: '选择组件'
   }
 }, {
   path: 'select',

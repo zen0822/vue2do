@@ -4,8 +4,8 @@
  * @prop multiple - 是否为多选
  * @prop option - 下拉框option数据
  * @prop optRoot - 递归调用的父元素
- * @prop valName - 下拉框 options 的 value 值的 key name
- * @prop txtName - 下拉框 options 的 text 值的 key name
+ * @prop valueName - 下拉框 options 的 value 值的 key name
+ * @prop textName - 下拉框 options 的 text 值的 key name
  * @prop menuWidth - 菜单宽度
  *
  * @event change - checkbox的option值改变
@@ -57,11 +57,11 @@ export default {
         return {}
       }
     },
-    valName: {
+    valueName: {
       type: String,
       default: 'value'
     },
-    txtName: {
+    textName: {
       type: String,
       default: 'text'
     },
@@ -153,17 +153,19 @@ export default {
      *
      * @return {Function}
      */
-    selectOption(index, hideMenu = true) {
+    selectOption(index, hideMenu = true, cb) {
       const option = this.option[parseInt(index - 1, 10)]
 
       if (option.classify) {
         return false
       }
 
+      cb && cb()
+
       this.$emit('change', {
         emitter: this,
-        value: option[this.valName],
-        text: option[this.txtName],
+        value: option[this.valueName],
+        text: option[this.textName],
         index: index,
         hideMenu
       })
@@ -173,24 +175,10 @@ export default {
       this.focusIndex = index - 1
     },
 
-    _handlerClidk(event, index) {
+    _handlerClick(event, index) {
       event && event.stopPropagation()
 
-      const option = this.option[parseInt(index - 1, 10)]
-
-      if (option.classify) {
-        return false
-      }
-
-      this.$refs[`rip${index}`].enter()
-
-      this.$emit('change', {
-        emitter: this,
-        value: option[this.valName],
-        text: option[this.txtName],
-        index: index,
-        hideMenu: true
-      })
+      this.selectOption(index, true, () => this.$refs[`rip${index}`].enter())
     }
   },
 

@@ -9,25 +9,26 @@ export default function (h) {
     index
   }) => {
     let element = []
-    let optTxt = item[this.txtName]
-    let optVal = item[this.valName]
+    let optTxt = item[this.textName]
+    let optVal = item[this.valueName]
     let rowEle = []
 
     if (this.multiple && !item.classify) {
       rowEle.push(
         h('column', {
           props: {
-            span: 1,
-            ui: this.ui,
-            theme: this.theme
+            span: 1
+          },
+          style: {
+            width: '20px'
           }
         }, [
           h('check', {
             class: [this.xclass('li-check')],
             props: {
               multiple: true,
-              initVal: this.optRoot.checkboxVal(optVal),
-              initOpt: this.selectedAllCheckOpt,
+              value: this.optRoot.checkboxVal(optVal),
+              option: this.selectedAllCheckOpt,
               ui: this.ui,
               theme: this.theme
             }
@@ -41,6 +42,9 @@ export default function (h) {
         h('column', {
           props: {
             span: this.multiple ? 11 : 12
+          },
+          style: {
+            width: this.multiple ? 'calc(100% - 20px)' : undefined
           }
         }, [
           this.$scopedSlots[index]({
@@ -62,6 +66,9 @@ export default function (h) {
         h('column', {
           props: {
             span: this.multiple ? 11 : 12
+          },
+          style: {
+            width: this.multiple ? 'calc(100% - 20px)' : undefined
           }
         }, [
           h('span', {
@@ -81,9 +88,7 @@ export default function (h) {
     element.push(
       h('row', {
         props: {
-          justify: 'justify',
-          ui: this.ui,
-          theme: this.theme
+          justify: 'justify'
         }
       }, rowEle)
     )
@@ -115,7 +120,7 @@ export default function (h) {
         }
       ],
       on: {
-        click: (event) => this._handlerClidk(event, index),
+        click: (event) => this._handlerClick(event, index),
         mouseenter: (event) => this._handlerMouseenter(event, index)
       },
       ref: `option${index}`,
@@ -145,8 +150,8 @@ export default function (h) {
         h('check', {
           props: {
             multiple: true,
-            initVal: this.$parent.selectAll ? [-1] : [],
-            initOpt: this.selectedAllCheckOpt,
+            value: this.$parent.selectAll ? [-1] : [],
+            option: this.selectedAllCheckOpt,
             ui: this.ui,
             theme: this.theme
           }
