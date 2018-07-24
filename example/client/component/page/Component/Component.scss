@@ -8,10 +8,23 @@
     padding: $gap-v-double $gap-h-double * 2;
   }
 
+  .#{$PAGE_PREFIX}-component-menu-container {
+    width: 300px;
+
+    @include device-type('xs') {
+      width: 100%;
+    }
+
+    .#{$PAGE_PREFIX}-component-menu-select {
+      width: 105px;
+      margin-left: 10px;
+    }
+  }
+
   .#{$PAGE_PREFIX}-component-menu {
     width: 250px;
     overflow: auto;
-    padding: $gap-v-double $gap-h-double;
+    padding: $gap-v-double 0;
     box-sizing: border-box;
 
     a {
@@ -24,10 +37,6 @@
       &:hover {
         text-decoration: none;
       }
-    }
-
-    &-select {
-      width: 105px;
     }
   }
 
