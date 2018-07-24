@@ -291,11 +291,15 @@ export default {
       this.boxHeight = boxHeight
       this.boxWidth = boxWidth
 
-      if (this.height !== '100%' && scrollerHeightChanged) {
+      if (this.height === '100%') {
+        this.$el.style.height = '100%'
+      } else if (this.height !== '100%' && scrollerHeightChanged) {
         this.$el.style.height = `${this.scrollerHeight}px`
       }
 
-      if (this.width !== '100%' && scrollerWidthChanged) {
+      if (this.width === '100%') {
+        this.$el.style.width = '100%'
+      } else if (this.width !== '100%' && scrollerWidthChanged) {
         this.$el.style.width = `${this.scrollerWidth}px`
       }
 
