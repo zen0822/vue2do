@@ -52,10 +52,6 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
 
   &.#{$C_PREFIX}-has-scroller {
     .#{$C_PREFIX}-pop {
-      & > header {
-        border-bottom: $divider;
-      }
-
       & > article {
         padding-top: 0;
         padding-bottom: 0;

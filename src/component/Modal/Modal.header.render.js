@@ -17,7 +17,8 @@ export default function (h) {
           h('icon', {
             props: {
               kind: this.commit ? 'close' : 'arrow-left',
-              size: 'S'
+              size: 'S',
+              theme: 'white'
             }
           })
         ])

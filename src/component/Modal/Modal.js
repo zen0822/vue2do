@@ -301,6 +301,10 @@ const modalComp = {
     _handlerClickBg() {
       return this.hide()
     }
+  },
+
+  updated() {
+    this._setDataOpt()
   }
 }
 

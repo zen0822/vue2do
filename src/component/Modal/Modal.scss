@@ -101,6 +101,7 @@ $POP_CONTAINER_PADDING: 24px;
 
   &.#{$C_PREFIX}-type-full {
     &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop > header {
+      border-bottom: $divider;
       border-color: $color-primary;
     }
 
@@ -183,4 +184,12 @@ $POP_CONTAINER_PADDING: 24px;
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
   @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
 }

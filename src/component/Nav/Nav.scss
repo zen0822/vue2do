@@ -124,3 +124,11 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
   @include theme-style('dark');
 }
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

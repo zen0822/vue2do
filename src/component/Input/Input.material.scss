@@ -209,6 +209,14 @@ $INPUT_BORDER_WIDTH: 1px;
   @include theme-style('dark');
 }
 
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}
+
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-grey {
   @include theme-style('grey');
 }

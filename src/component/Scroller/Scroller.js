@@ -159,12 +159,6 @@ export default {
         transform: `translateX(${this.boxLeft}px) translateY(${this.boxTop}px)`
       }
     },
-    scrollerStyle() {
-      return {
-        height: this.height === '100%' ? '100%' : undefined,
-        width: this.width === '100%' ? '100%' : undefined
-      }
-    },
     xComputed() { // x 方向的计算属性
       return {
         barDisplay: !this.hide && !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
@@ -330,9 +324,6 @@ export default {
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
 
       if (length === '100%') {
-        // TODO：优化计算次数
-
-
         // 父元素大于滚动内容
         if (scrollerLength >= boxLength) {
           boxLength = scrollerLength

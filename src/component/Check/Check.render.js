@@ -142,6 +142,7 @@ export default function (h) {
   let checkEle = []
 
   this.stateOption.forEach((item, index) => {
+    const addBoxStyle = this.stateOption.length > 1
     const currentIndex = index + 1
     let iconTypeEle = null
 
@@ -172,9 +173,11 @@ export default function (h) {
           class: [
             this.xclass('box'),
             {
+              [this.xclass('box-style')]: addBoxStyle
+            },
+            {
               [this.xclass('checked')]: this.isCheckbox ?
-                this.index.includes(index) :
-                index === this.index
+                this.index.includes(index) : index === this.index
             },
             {
               [this.xclass('focused')]: !item.disabled && this.optionFocus[index]

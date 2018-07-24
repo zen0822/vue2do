@@ -36,7 +36,7 @@ export default {
       validator(val) {
         return [
           'primary', 'grey', 'warning', 'success',
-          'danger', 'blue', 'orange', 'light', 'dark'
+          'danger', 'blue', 'orange', 'light', 'dark', 'white', 'black'
         ].includes(val)
       }
     },
