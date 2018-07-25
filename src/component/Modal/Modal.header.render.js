@@ -34,7 +34,7 @@ export default function (h) {
       }, [
         h('span', {
           class: this.xclass('header-title')
-        }, this.modalHeader)
+        }, this.stateHeader)
       ])
     )
 
@@ -57,7 +57,7 @@ export default function (h) {
       }, [
         h('span', {
           class: this.xclass('header-title')
-        }, this.modalHeader)
+        }, this.stateHeader)
       ])
     )
   }

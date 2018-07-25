@@ -28,7 +28,11 @@ export default {
     },
 
     alert() {
-      alert('这是一个警告弹窗')
+      alert({
+        message: '这是一个警告弹窗',
+        theme: this.typeTheme,
+        ui: this.typeUI
+      })
     },
 
     confirm() {

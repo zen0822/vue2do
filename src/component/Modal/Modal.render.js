@@ -10,7 +10,7 @@ export default function (h) {
   let articleEle = this.$slots.default ? this.$slots.default : [
     h('div', {
       class: this.xclass('alert-message')
-    }, this.modalMessage)
+    }, this.stateMessage)
   ]
   let headerChildren = headerChildrenRender.call(this, h)
   let footerChildren = footerChildrenRender.call(this, h)
@@ -26,8 +26,8 @@ export default function (h) {
         h('row', {
           props: {
             justify: 'justify',
-            ui: this.state.ui,
-            theme: this.state.theme
+            ui: this.stateUI,
+            theme: this.stateTheme
           }
         }, headerChildren)
       ])
@@ -43,8 +43,8 @@ export default function (h) {
             height: this.modalHeight,
             width: '100%',
             autoHide: true,
-            ui: this.state.ui,
-            theme: this.state.theme
+            ui: this.stateUI,
+            theme: this.stateTheme
           },
           ref: 'scroller'
         }, articleEle)
@@ -103,8 +103,8 @@ export default function (h) {
     h('pop', {
       class: [this.xclass('pop')],
       props: {
-        ui: this.state.ui,
-        theme: this.state.theme
+        ui: this.stateUI,
+        theme: this.stateTheme
       },
       ref: 'pop'
     }, [modalChildren])

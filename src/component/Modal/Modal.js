@@ -141,14 +141,12 @@ const modalComp = {
         x: 0,
         y: 0
       },
-      state: {
-        ui: '',
-        theme: ''
-      },
+      stateUI: '',
+      stateTheme: '',
       isMousedown: false,
       modalDisplay: false,
-      modalMessage: '',
-      modalHeader: '',
+      stateMessage: '',
+      stateHeader: '',
       showCb: null, // 模态框显示之后的回调函数
       hideCb: null, // 模态框隐藏之后的回调函数
       okCbFun: null,
@@ -162,18 +160,18 @@ const modalComp = {
       return `${this.compPrefix}-modal`
     },
     uiClass() {
-      return `ui-${this.state.ui}`
+      return `ui-${this.stateUI}`
     },
     themeClass() {
-      return `theme-${this.state.theme}`
+      return `theme-${this.stateTheme}`
     },
     UIMaterial() {
-      return this.state.ui === 'material'
+      return this.stateUI === 'material'
     },
     headerClass() { // 组件的 header 的 class 名字
       return {
         [`${this.cPrefix}-no-header`]: !this.modalHeaderDisplay,
-        [`${this.cPrefix}-no-header-title`]: !this.modalHeader
+        [`${this.cPrefix}-no-header-title`]: !this.stateHeader
       }
     },
     footerClass() { // 组件的 footer 的 class 名字
@@ -207,7 +205,7 @@ const modalComp = {
         case 'simple':
           return false
         default:
-          return !!this.modalHeader
+          return !!this.stateHeader
       }
     },
     modalFooterDisplay() { // 模态框的尾部显示状态
@@ -285,14 +283,14 @@ const modalComp = {
      * 设置数据
      */
     _setDataOpt() {
-      this.modalMessage = this.message
-      this.modalHeader = this.header
+      this.stateMessage = this.message
+      this.stateHeader = this.header
 
       this.okCbFun = this.okCb
       this.noCbFun = this.noCb
 
-      this.state.ui = this.ui
-      this.state.theme = this.theme
+      this.stateUI = this.ui
+      this.stateTheme = this.theme
     },
 
     /**
@@ -301,10 +299,6 @@ const modalComp = {
     _handlerClickBg() {
       return this.hide()
     }
-  },
-
-  updated() {
-    this._setDataOpt()
   }
 }
 

@@ -155,7 +155,7 @@ export default {
      */
     title(text) {
       if (text === '' || text) {
-        this.modalHeader = text
+        this.stateHeader = text
       }
 
       return this
@@ -169,7 +169,7 @@ export default {
      */
     info(text) {
       if (text === '' || text) {
-        this.modalMessage = text
+        this.stateMessage = text
       }
 
       return this
@@ -200,11 +200,11 @@ export default {
       this.noCbFun = noCb
       this.showCb = showCb
       this.hideCb = hideCb
-      this.modalHeader = title
-      this.modalMessage = message
+      this.stateHeader = title
+      this.stateMessage = message
 
-      this.state.ui = ui
-      this.state.theme = theme
+      this.stateUI = ui
+      this.stateTheme = theme
 
       return this
     }

@@ -111,7 +111,7 @@ export default {
 
   data() {
     return {
-      banState: false, // 按钮的禁用状态
+      stateBan: false, // 按钮的禁用状态
       btnValueDisplay: false, // 按钮值显示状态
       createdLoading: false, // 是否已经创建了按钮的 loading 组件
       focusing: false, // 正在 focus 中
@@ -127,7 +127,7 @@ export default {
 
   watch: {
     ban(val) {
-      this.banState = val
+      this.stateBan = val
     }
   },
 
@@ -154,7 +154,7 @@ export default {
 
   methods: {
     _setDataOpt() {
-      this.banState = this.ban
+      this.stateBan = this.ban
     },
 
     mouseup(event) {
@@ -162,7 +162,7 @@ export default {
         return false
       }
 
-      if (this.banState) {
+      if (this.stateBan) {
         return false
       }
 
@@ -181,7 +181,7 @@ export default {
         return false
       }
 
-      if (this.banState) {
+      if (this.stateBan) {
         return false
       }
 
@@ -261,14 +261,14 @@ export default {
      * 将按钮变为只读操作
      */
     banBtn() {
-      this.banState = true
+      this.stateBan = true
     },
 
     /**
      * 取消按钮只读状态
      */
     allowBtn() {
-      this.banState = false
+      this.stateBan = false
     },
 
     /**
