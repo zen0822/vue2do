@@ -50,7 +50,6 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   .#{$C_PREFIX}-opt-check-all {
     position: relative;
     display: inline-block;
-    margin: 0 $gutter-h-double $gutter-h-double 0;
 
     &.#{$C_PREFIX}-checked {
       & > .#{$C_PREFIX}-icon {
@@ -73,6 +72,11 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       margin-left: $gap-h;
       cursor: default;
     }
+  }
+
+  .#{$C_PREFIX}-box-style,
+  .#{$C_PREFIX}-opt-check-all {
+    margin: 0 $gutter-h-double $gutter-h-double 0;
   }
 
   .#{$C_PREFIX}-icon {
@@ -117,6 +121,14 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
   @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {

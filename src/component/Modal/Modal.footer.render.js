@@ -6,8 +6,8 @@ export default function (h) {
       props: {
         value: this.noBtn,
         type: this.UIMaterial ? 'flat' : 'button',
-        ui: this.state.ui,
-        theme: 'grey'
+        ui: this.stateUI,
+        theme: 'white'
       },
       on: {
         click: this.no
@@ -21,8 +21,8 @@ export default function (h) {
         props: {
           value: this.okBtn,
           type: this.UIMaterial ? 'flat' : 'button',
-          ui: this.state.ui,
-          theme: this.state.theme
+          ui: this.stateUI,
+          theme: this.stateTheme
         },
         on: {
           click: this.ok

@@ -121,8 +121,22 @@ export default {
   },
 
   beforeMount() {
-    this.$store.dispatch(commonStore.typeTheme.add, window.localStorage.getItem(`${this.varPrefix}_THEME`))
-    this.$store.dispatch(commonStore.typeUI.add, window.localStorage.getItem(`${this.varPrefix}_UI`))
+    let localStorageTheme = window.localStorage.getItem(`${this.varPrefix}_THEME`)
+    let localStorageUI = window.localStorage.getItem(`${this.varPrefix}_UI`)
+
+    if (localStorageTheme) {
+      this.$store.dispatch(commonStore.typeTheme.add, localStorageTheme)
+    } else {
+      this.$store.dispatch(commonStore.typeTheme.add, 'primary')
+      window.localStorage.setItem(`${this.varPrefix}_THEME`, 'primary')
+    }
+
+    if (localStorageUI) {
+      this.$store.dispatch(commonStore.typeUI.add, localStorageUI)
+    } else {
+      this.$store.dispatch(commonStore.typeUI.add, 'material')
+      window.localStorage.setItem(`${this.varPrefix}_UI`, 'material')
+    }
   },
 
   mounted() {

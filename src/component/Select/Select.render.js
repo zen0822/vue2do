@@ -11,13 +11,13 @@ export default function (h) {
     selectedBoxChildren.push(
       h('div', {
         class: [
-          this.defaultValClassName(this.value),
+          this.defaultValClassName(this.stateValue),
           this.xclass('init-text'),
           {
             [this.xclass('opacity')]: !this.initTxtDisplay
           }
         ]
-      }, this.defaultTxt)
+      }, this.defaultText)
     )
 
     this.text.forEach((txt, index) => {
@@ -45,9 +45,7 @@ export default function (h) {
         class: [this.xclass('scroller')],
         props: {
           height: 100,
-          width: '100%',
-          ui: this.ui,
-          theme: this.theme
+          width: '100%'
         },
         directives: [{
           name: 'show',
@@ -67,7 +65,7 @@ export default function (h) {
     selectedBoxChildren.push(
       h('div', {
         class: [
-          this.defaultValClassName(this.value),
+          this.defaultValClassName(this.stateValue),
           this.xclass('init-text')
         ]
       }, this.text)
@@ -114,11 +112,11 @@ export default function (h) {
     ]))
   }
 
-  if (Array.isArray(this.option)) {
+  if (Array.isArray(this.stateOption)) {
     let scopedSlots = []
 
     if (this.$scopedSlots && this.$scopedSlots['custom']) {
-      this.option.forEach((item, index) => {
+      this.stateOption.forEach((item, index) => {
         Object.assign(scopedSlots, {
           [`${index}`]: (props) => {
             return this.$scopedSlots['custom']({
@@ -136,9 +134,9 @@ export default function (h) {
         props: {
           multiple: this.multiple,
           menuWidth: this.stateMenuWidth,
-          valName: this.valName,
-          txtName: this.txtName,
-          option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
+          valueName: this.valueName,
+          textName: this.textName,
+          option: this.searchOptionDisplay ? this.searchOptionItem : this.stateOption,
           optRoot: this.me,
           ui: this.ui,
           theme: this.theme

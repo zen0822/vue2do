@@ -159,12 +159,6 @@ export default {
         transform: `translateX(${this.boxLeft}px) translateY(${this.boxTop}px)`
       }
     },
-    scrollerStyle() {
-      return {
-        height: this.height === '100%' ? '100%' : undefined,
-        width: this.width === '100%' ? '100%' : undefined
-      }
-    },
     xComputed() { // x 方向的计算属性
       return {
         barDisplay: !this.hide && !this.xData.scrollerContainBox && (!this.autoHide || this.showBar),
@@ -297,11 +291,15 @@ export default {
       this.boxHeight = boxHeight
       this.boxWidth = boxWidth
 
-      if (this.height !== '100%' && scrollerHeightChanged) {
+      if (this.height === '100%') {
+        this.$el.style.height = '100%'
+      } else if (this.height !== '100%' && scrollerHeightChanged) {
         this.$el.style.height = `${this.scrollerHeight}px`
       }
 
-      if (this.width !== '100%' && scrollerWidthChanged) {
+      if (this.width === '100%') {
+        this.$el.style.width = '100%'
+      } else if (this.width !== '100%' && scrollerWidthChanged) {
         this.$el.style.width = `${this.scrollerWidth}px`
       }
 
@@ -330,9 +328,6 @@ export default {
       let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
 
       if (length === '100%') {
-        // TODO：优化计算次数
-
-
         // 父元素大于滚动内容
         if (scrollerLength >= boxLength) {
           boxLength = scrollerLength

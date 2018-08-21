@@ -79,6 +79,16 @@ $DEVICE-XL-RANGE: "1200px ~ --px";
     $type-dark-color: $color-dark-dark;
     $type-light-color: $color-dark-light;
   }
+  @else if $type=='white' {
+    $type-color: $color-white;
+    $type-dark-color: $color-white-dark;
+    $type-light-color: $color-white-light;
+  }
+  @else if $type=='black' {
+    $type-color: $color-black;
+    $type-dark-color: $color-black-dark;
+    $type-light-color: $color-black-light;
+  }
   @else if $type=='orange' {
     $type-color: $color-orange;
     $type-dark-color: $color-orange-dark;

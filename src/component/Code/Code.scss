@@ -94,3 +94,11 @@ $C_PREFIX: #{ $COMP_CODE };
 .#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
   @include theme-style('dark');
 }
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

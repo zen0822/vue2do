@@ -102,3 +102,11 @@ $MENU_HEIGHT: 36px;
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-dark {
   @include theme-style('dark');
 }
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

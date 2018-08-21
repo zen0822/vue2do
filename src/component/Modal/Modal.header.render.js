@@ -17,7 +17,8 @@ export default function (h) {
           h('icon', {
             props: {
               kind: this.commit ? 'close' : 'arrow-left',
-              size: 'S'
+              size: 'S',
+              theme: 'white'
             }
           })
         ])
@@ -33,7 +34,7 @@ export default function (h) {
       }, [
         h('span', {
           class: this.xclass('header-title')
-        }, this.modalHeader)
+        }, this.stateHeader)
       ])
     )
 
@@ -56,7 +57,7 @@ export default function (h) {
       }, [
         h('span', {
           class: this.xclass('header-title')
-        }, this.modalHeader)
+        }, this.stateHeader)
       ])
     )
   }

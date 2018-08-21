@@ -5,7 +5,7 @@
 export default function (h) {
   let btnEleChildren = []
 
-  if (this.banState) {
+  if (this.stateBan) {
     btnEleChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
     }))
@@ -89,7 +89,7 @@ export default function (h) {
         this.cPrefix,
         this.btnClass,
         {
-          [this.xclass('ban')]: this.banState
+          [this.xclass('ban')]: this.stateBan
         },
         {
           [this.xclass('block')]: this.block

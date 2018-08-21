@@ -17,8 +17,7 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
   &.#{$C_PREFIX}-no-header {
     .#{$C_PREFIX}-pop > article {
-      & > .#{$C_PREFIX}-scroller
-          > .#{ $SCROLLER_PREFIX }-box {
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
         padding-top: $gap-v-triple;
       }
     }
@@ -35,8 +34,7 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
     }
 
     > article {
-      & > .#{$C_PREFIX}-scroller
-          > .#{ $SCROLLER_PREFIX }-box {
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
         padding: 0 $gap-h-triple $gap-v-triple;
       }
     }
@@ -52,10 +50,6 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
 
   &.#{$C_PREFIX}-has-scroller {
     .#{$C_PREFIX}-pop {
-      & > header {
-        border-bottom: $divider;
-      }
-
       & > article {
         padding-top: 0;
         padding-bottom: 0;
@@ -63,6 +57,16 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
 
       & > footer {
         border-top: $divider;
+      }
+    }
+  }
+
+  @include device-type('s') {
+    &.#{$C_PREFIX}-type-full {
+      .#{$C_PREFIX}-pop {
+        & > article {
+          padding-top: 80px;
+        }
       }
     }
   }

@@ -171,6 +171,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
           .#{$C_ICON_PREFIX} {
             font-size: $icon-radius - 4;
             color: #fff;
+            vertical-align: middle;
           }
 
           width: $icon-radius - 4;
@@ -312,4 +313,12 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-grey {
   @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
 }

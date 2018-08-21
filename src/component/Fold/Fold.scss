@@ -23,7 +23,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
         position: absolute;
         height: 14px;
         margin: auto;
-        right: 0;
+        right: 12px;
         top: 0;
         bottom: 0;
 
@@ -57,14 +57,6 @@ $ICON_PREFIX: #{ $COMP_ICON };
       .#{$C_PREFIX}-icon {
         position: absolute;
         right: $gap-v;
-      }
-    }
-
-    & > .#{$C_PREFIX}-dd {
-      & > .#{$C_PREFIX}-transition {
-        & > .#{$C_PREFIX}-content {
-          padding: $gap-v 0;
-        }
       }
     }
   }

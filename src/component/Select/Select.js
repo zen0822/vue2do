@@ -1,32 +1,27 @@
 /**
  * menu 组件
  *
+ * @prop classify - 有值（数组类型）就开启标题下拉框 option 分类模式
  * @prop classifyOpt - 分类下拉框的数据
- * @prop coverTrig - 菜单展开是不遮挡触发器
- * @prop defaultVal - 默认的选项值
- * @prop defaultTxt - 默认的选项文本值
- * @prop initVal - 默认第一个显示的值
- * @prop initOpt - 下拉框的 option 数据
- * @prop param - 搜索参数名
- * @prop menuWidth - 菜单宽度
- * @prop store - 储存实例化的信息
- * @prop theme - 主题
- *
+ * @prop coverTrig - 菜单展开时遮挡触发器，默认不开启
+ * @prop defaultValue - 默认的选项值
+ * @prop defaultText - 默认的选项文本值
  * @prop errorMessage - 没选的时候显示的错误信息
  * @prop max - 多选下拉框最多选择几个
  * @prop min - 多选下拉框至少选择几个
+ * @prop menuWidth - 菜单宽度
+ * @prop multiple - 是为多选
+ * @prop option - 下拉框的 option 数据
+ * @prop param - 搜索参数名
  * @prop required - 必须选择下拉框的值
  * @prop readOnly - 只读
- *
- * @prop txtName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
- * @prop valName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
- *
- * @prop classify - 有值（数组类型）就开启标题下拉框 option 分类模式
- * @prop multiple - 是为多选
  * @prop search - 开启搜索过滤
- *
  * @prop selectAll - 启动全选的功能
  * @prop selectAllTxt - 全选选项的名字
+ * @prop store - 储存实例化的信息
+ * @prop textName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
+ * @prop value - 默认第一个显示的值
+ * @prop valueName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
  *
  * @event change - 选择值的改变
  */
@@ -97,22 +92,17 @@ export default {
       type: Boolean,
       default: false
     },
-    defaultVal: {
+    defaultValue: {
       type: [Number, String],
       default: -1
     },
-    defaultTxt: {
+    defaultText: {
       type: [Number, String],
       default: '请选择'
     },
     errorMessage: {
       type: String,
       default: ''
-    },
-    initVal: [Number, Array, String],
-    initOpt: {
-      type: Array,
-      default: () => []
     },
     multiple: {
       type: Boolean,
@@ -139,6 +129,10 @@ export default {
         }
       }
     },
+    option: {
+      type: Array,
+      default: () => []
+    },
     param: {
       type: String,
       default: ''
@@ -147,11 +141,12 @@ export default {
       type: Boolean,
       default: false
     },
-    valName: {
+    value: [Number, Array, String],
+    valueName: {
       type: String,
       default: 'value'
     },
-    txtName: {
+    textName: {
       type: String,
       default: 'text'
     },
@@ -185,14 +180,8 @@ export default {
       customOptionDisplay: false, // 自定义下拉框的显示状态
       focusing: false, // 正在处于 focus 状态
       hasSlotOption: false, // 是否是 slot 定义的 option
-      stateMenuHeight: 0, // 下拉菜单的高度
-      stateMenuWidth: this._getMenuWidth(this.menuWidth), // 下拉菜单的高度
       menuDisplay: false, // 下拉菜单的显示状态
       optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
-      option: [], // props 里面 optionItem 的 data 替换值
-      unwatchOption: {}, // 取消观察 option
-      value: undefined, // 当前下拉框的 value 值
-      verified: true, // 是否以验证通过
       searchKeyuped: false, // 搜索按键的状态
       searchOptionDisplay: false, // 是否显示搜索 optionItem
       searchOptionItem: {}, // 搜索出来的 option
@@ -200,8 +189,14 @@ export default {
       selectedHeight: 0, // 当前选择值的样式高度值
       selectedStyleHeight: 0, // 当前选择值的样式高度值
       stateCoverTrig: false, // 遮挡下拉选择框的触发器
+      stateMenuHeight: 0, // 下拉菜单的高度
+      stateMenuWidth: this._getMenuWidth(this.menuWidth), // 下拉菜单的高度
+      stateOption: [], // props 里面 optionItem 的 data 替换值
+      stateValue: undefined, // 当前下拉框的 value 值
       transitionFinish: false, // 下拉框显示过渡完成的标识符
-      text: undefined // 当前下拉框的 text 值
+      text: undefined, // 当前下拉框的 text 值
+      unwatchOption: {}, // 取消观察 option
+      verified: true // 是否以验证通过
     }
   },
 
@@ -230,15 +225,15 @@ export default {
       return classArr
     },
     isCustomOption() { // 自定义下拉框的显示状态
-      return this.initOpt.length > 0 && this.customOptionDisplay
+      return this.option.length > 0 && this.customOptionDisplay
     },
     initTxtDisplay() { // 多选框的默认值显示状态
-      return this.multiple && this.value.length === 0
+      return this.multiple && this.stateValue.length === 0
     }
   },
 
   watch: {
-    value(val) {
+    stateValue(val) {
       if (this.multiple && this.initTxtDisplay) { // 没有值时
         return this.$nextTick(() => this._adjustSelectedPoiStyle(''))
       }
@@ -249,10 +244,10 @@ export default {
 
       return this._initSelectTxt()
     },
-    initVal(val) {
-      this.value = this.multiple ? val.slice() : val
+    value(val) {
+      this.stateValue = this.multiple ? val.slice() : val
     },
-    initOpt(val) {
+    option(val) {
       return this._processOption(val.slice())
     },
     classifyOpt(val) {
@@ -295,11 +290,8 @@ export default {
      * 绑定事件
      */
     _binder() {
-      if (!Array.isArray(this.option)) {
-        return false
-      }
-
       if (this.$refs.scroller) {
+        this.$refs.scroller.$off('change')
         this.$refs.scroller.$on('change', ({
           scrollerHeight
         }) => {
@@ -310,6 +302,7 @@ export default {
         })
       }
 
+      this.$refs.option.$off('change')
       this.$refs.option.$on('change', ({
         value,
         text,
@@ -321,14 +314,14 @@ export default {
 
         if (this.multiple) {
           if (!selectedItem) {
-            if (this.max === 0 || this.value.length !== this.max) {
-              this.value.push(value)
+            if (this.max === 0 || this.stateValue.length !== this.max) {
+              this.stateValue.push(value)
             }
           } else {
             this.removeMultiSelected(selectedItem.index + 1)
           }
         } else {
-          this.value = value
+          this.stateValue = value
 
           hideMenu && this._menuMotion(false)
         }
@@ -367,11 +360,11 @@ export default {
      * 设置 data 选项的默认值
      */
     _setDataOpt() {
-      if (this.initVal) {
-        this.value = this.multiple ? this.initVal.slice() : this.initVal
+      if (this.value) {
+        this.stateValue = this.multiple ? this.value.slice() : this.value
       }
 
-      this.option = this.initOpt.slice()
+      this.stateOption = this.option.slice()
     },
 
     /**
@@ -379,10 +372,10 @@ export default {
      */
     _initAllOptionVal() {
       let value = []
-      let optionTemp = this.classify ? this.optionItemCopy : this.option
+      let optionTemp = this.classify ? this.stateOptionItemCopy : this.stateOption
 
       optionTemp.forEach((item) => {
-        value.push(item[this.valName])
+        value.push(item[this.valueName])
       })
 
       this.allOptionVal = value
@@ -393,17 +386,17 @@ export default {
     /**
      * 初始化下拉 option
      */
-    _initOption() {
+    _optionion() {
       if (this.classifyOpt) {
         return this._processOption(this.classifyOpt)._initAllOptionVal()._initSelectTxt()
       } else {
         let slotOption = this._initSelectSlot()
 
         if (slotOption) {
-          this.option = slotOption
+          this.stateOption = slotOption
         }
 
-        return this._processOption(this.option.slice())._initAllOptionVal()._initSelectTxt()
+        return this._processOption(this.stateOption.slice())._initAllOptionVal()._initSelectTxt()
       }
     },
 
@@ -465,25 +458,25 @@ export default {
      *  初始化多选下拉菜单
      */
     _initMultipleSelectTxt() {
-      if (!Array.isArray(this.option)) {
+      if (!Array.isArray(this.stateOption)) {
         return this
       }
 
-      if (!Array.isArray(this.value)) {
-        console.error(`多选下拉框的 "this.value" 必须为数组!!`)
-        this.value = []
+      if (!Array.isArray(this.stateValue)) {
+        console.error(`多选下拉框的 "this.stateValue" 必须为数组!!`)
+        this.stateValue = []
 
         return false
       }
 
-      let valueTemp = this.value
-      let optionTemp = this.option
+      let valueTemp = this.stateValue
+      let optionTemp = this.stateOption
       let toBeText = []
 
       valueTemp.forEach((ele, index) => {
         optionTemp.every((item, itemIndex) => {
-          if (item[this.valName] === ele) {
-            toBeText.push(item[this.txtName])
+          if (item[this.valueName] === ele) {
+            toBeText.push(item[this.textName])
 
             return false
           }
@@ -502,16 +495,16 @@ export default {
      * 初始化单选下拉菜单
      */
     _initSingleSelectTxt(val, txt) {
-      if (!Array.isArray(this.option)) {
+      if (!Array.isArray(this.stateOption)) {
         return this
       }
 
-      if (this.value || this.value === 0 || this.value === '0') {
-        this.option.every((ele, index) => {
-          if (ele[this.valName] === this.value) {
+      if (this.stateValue || this.stateValue === 0 || this.stateValue === '0') {
+        this.stateOption.every((ele, index) => {
+          if (ele[this.valueName] === this.stateValue) {
             this._setTxtVal({
-              value: ele[this.valName],
-              text: ele[this.txtName]
+              value: ele[this.valueName],
+              text: ele[this.textName]
             })
 
             return false
@@ -523,10 +516,10 @@ export default {
         return this
       }
 
-      if (typeof this.option[0] === 'object') {
+      if (typeof this.stateOption[0] === 'object') {
         this._setTxtVal({
-          value: this.option[0][this.valName],
-          text: this.option[0][this.txtName]
+          value: this.stateOption[0][this.valueName],
+          text: this.stateOption[0][this.textName]
         })
       }
 
@@ -546,7 +539,7 @@ export default {
       var isExisted = false
       var existItem = {}
 
-      this.value.every((selectedVal, index) => {
+      this.stateValue.every((selectedVal, index) => {
         if (val === selectedVal) {
           isExisted = true
           existItem = {
@@ -577,7 +570,7 @@ export default {
     }) {
       if (!this.multiple || replace) {
         if (value !== undefined) {
-          this.value = value
+          this.stateValue = value
         }
 
         if (text !== undefined) {
@@ -588,15 +581,15 @@ export default {
       }
 
       if (Array.isArray(value)) {
-        value.length > 0 && this.value.concat(value)
+        value.length > 0 && this.stateValue.concat(value)
       } else {
         text !== undefined && this.text.push(text)
       }
 
       if (Array.isArray(text)) {
-        value.length > 0 && this.value.concat(value)
+        value.length > 0 && this.stateValue.concat(value)
       } else {
-        value !== undefined && this.value.push(value)
+        value !== undefined && this.stateValue.push(value)
       }
 
       return this
@@ -621,20 +614,20 @@ export default {
       }, SEARCH_KEY_UP_INTERVAL)
 
       this.searchOptionDisplay = true
-      let realOptionItem = this.option
+      let realOptionItem = this.stateOption
 
       if (this.classify || this.classifyOpt) {
-        realOptionItem = this.optionItemCopy
+        realOptionItem = this.stateOptionItemCopy
       }
 
       this.searchOptionItem = realOptionItem.filter(item => {
-        return item[this.txtName].indexOf(keyWord) > -1
+        return item[this.textName].indexOf(keyWord) > -1
       })
 
       if (this.searchOptionItem.length === 0) {
         this.searchOptionItem.push({
-          [this.valName]: `${this.compPrefix}-menu: search not found`,
-          [this.txtName]: '查无此数据',
+          [this.valueName]: `${this.compPrefix}-menu: search not found`,
+          [this.textName]: '查无此数据',
           classify: true
         })
       }
@@ -665,7 +658,7 @@ export default {
         toBeOption = optionItem
       }
 
-      this.option = toBeOption
+      this.stateOption = toBeOption
 
       return this
     },
@@ -682,8 +675,8 @@ export default {
 
       this.classify.forEach((item) => {
         optionTemp = optionTemp.concat([{
-          [this.valName]: item.key,
-          [this.txtName]: item.text,
+          [this.valueName]: item.key,
+          [this.textName]: item.text,
           classify: true
         }], optionItem[item.key])
 
@@ -703,12 +696,12 @@ export default {
       allOption = allOptionTemp
 
       optionTemp = optionTemp.concat([{
-        [this.valName]: 'all',
-        [this.txtName]: '全部',
+        [this.valueName]: 'all',
+        [this.textName]: '全部',
         classify: true
       }], allOption)
 
-      this.optionItemCopy = allOption
+      this.stateOptionItemCopy = allOption
 
       return optionTemp
     },
@@ -815,13 +808,13 @@ export default {
 
     if (this.multiple) {
       this._setTxtVal({
-        value: this.value || [],
+        value: this.stateValue || [],
         text: [],
         replace: true
       })
     }
 
-    this._initOption()
+    this._optionion()
   },
 
   mounted() {
@@ -832,5 +825,10 @@ export default {
     this.$nextTick(() => {
       this.stateMenuWidth = this._getMenuWidth(this.menuWidth)
     })
+  },
+
+  updated() {
+    // TODO：不知道为啥切换 UI 属性 option 组件的事件就监听不了了
+    this._binder()
   }
 }

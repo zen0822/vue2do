@@ -123,3 +123,11 @@ $C_BTN_PREFIX: #{ $COMP_BTN };
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-grey {
   @include theme-style('grey');
 }
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

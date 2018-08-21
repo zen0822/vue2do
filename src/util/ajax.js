@@ -50,7 +50,7 @@ const ajax = ({
 
   const xhr = new XMLHttpRequest()
   let param = formatParam(data)
-  const timeStamp = cache ? '' : `t=${new Date().getTime()}&`
+  const timeStamp = cache ? '' : `t=${new Date().getTime()}`
 
   if (contentType) {
     if (contentType.includes('text/plain') || contentType.includes('application/json')) {
@@ -110,7 +110,7 @@ const ajax = ({
     }
 
     if (type === 'GET') {
-      xhr.open('GET', `${url}?${timeStamp}${param}`, async)
+      xhr.open('GET', `${url}?${timeStamp}&${param}`, async)
       xhr.timeout = 10000
       xhr.send(null)
     } else if (type === 'POST') {
