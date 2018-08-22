@@ -169,13 +169,13 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
         &-indeterminate,
         &-checked {
           .#{$C_ICON_PREFIX} {
-            font-size: $icon-radius - 4;
+            font-size: $icon-radius - 2;
             color: #fff;
             vertical-align: middle;
           }
 
-          width: $icon-radius - 4;
-          height: $icon-radius - 4;
+          width: $icon-radius - 2;
+          height: $icon-radius - 2;
         }
       }
     }
@@ -222,25 +222,25 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       &-box {
         &-dot,
         &-checked {
-          background-color: rgba($grey, .38);
+          background-color: rgb(218, 218, 218);
         }
 
         &-rail {
-          border-color: rgba($grey, .38);
+          border-color: rgb(218, 218, 218);
         }
       }
     }
 
     &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
     &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
-      background-color: rgba($color-primary, .38);
+      background-color: rgb(173, 215, 250);
     }
 
     &.#{$C_PREFIX}-opt-check-all {
       &.#{$C_PREFIX}-checked,
       &.#{$C_PREFIX}-indeterminate {
         .#{$C_PREFIX}-icon-box-rail {
-          border-color: rgba($color-primary, .38);
+          border-color: rgb(173, 215, 250);
         }
       }
     }
