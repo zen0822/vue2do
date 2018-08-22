@@ -1,6 +1,6 @@
 {
   "name": "vue2do",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "base component on vuejs2",
   "main": "index.js",
   "module": "index.js",
