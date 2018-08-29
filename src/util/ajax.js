@@ -31,7 +31,7 @@ function getResponseType(type) {
 }
 
 /**
- * 打开 xhr 之后做的操作
+ * 打开 xhr之后做的操作
  */
 function afterOpenXHR({
   timeout,

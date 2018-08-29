@@ -24,12 +24,13 @@ script:
 after_script:
 - npm run coveralls
 deploy:
-  skip_cleanup: true
   - provider: script
     script: npm run doc:push
+    skip_cleanup: true
     on:
       branch: master
   - provider: script
+    skip_cleanup: true
     script: npm run doc
     on:
       branch: dev
