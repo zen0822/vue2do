@@ -24,6 +24,7 @@ script:
 after_script:
 - npm run coveralls
 deploy:
+  skip_cleanup: true
   provider: script
   script: npm run doc:push
   on:
