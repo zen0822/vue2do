@@ -8,18 +8,28 @@ cache:
 addons:
   chrome: stable
 before_install:
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+- export CHROME_BIN=/usr/bin/google-chrome
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 install:
 |
   npm install npm@latest -g
   npm --version
   npm install --registry http://registry.npmjs.org
 before_script:
-  - sudo chown root /opt/google/chrome/chrome-sandbox
-  - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+- sudo chown root /opt/google/chrome/chrome-sandbox
+- sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 script:
-  - npm run test:ci
+- npm run test:ci
 after_script:
-  - npm run coveralls
+- npm run coveralls
+deploy:
+  provider: script
+  script: npm run doc:push
+  on:
+    branch: master
+deploy:
+  provider: script
+  script: npm run doc
+  on:
+    branch: dev

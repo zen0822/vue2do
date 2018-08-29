@@ -1,10 +1,13 @@
 import './LayoutHeader.scss'
 import template from './LayoutHeader.pug'
+import mixin from '../mixin'
 
 export default {
   name: 'header-layout',
 
   template: template(),
+
+  mixins: [mixin],
 
   data() {
     return {

@@ -30,7 +30,8 @@ div.header-layout-stage
     ref='mobileMenu'
     @hide='hideMenu'
     :init-opt='menuOpt'
-    theme='danger'
+    :ui='typeUI'
+    :theme='typeTheme'
   )
     div.menu-search(slot='end')
       z-input(placeholder='search in vue2do' block)
