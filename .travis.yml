@@ -25,12 +25,11 @@ after_script:
 - npm run coveralls
 deploy:
   skip_cleanup: true
-  provider: script
-  script: npm run doc:push
-  on:
+  - provider: script
+    script: npm run doc:push
+    on:
     branch: master
-deploy:
-  provider: script
-  script: npm run doc
-  on:
-    branch: dev
+  - provider: script
+    script: npm run doc
+    on:
+      branch: dev
