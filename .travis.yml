@@ -28,7 +28,7 @@ deploy:
   - provider: script
     script: npm run doc:push
     on:
-    branch: master
+      branch: master
   - provider: script
     script: npm run doc
     on:
