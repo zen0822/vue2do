@@ -1,5 +1,5 @@
 /**
- *
+ * 编码成 urlencode
  * @param {Object} data - 传输的数据
  */
 function formatParam(data) {
@@ -31,10 +31,31 @@ function getResponseType(type) {
 }
 
 /**
+ * 打开 xhr之后做的操作
+ */
+function afterOpenXHR({
+  timeout,
+  header,
+  xhr
+}) {
+  const headerDataHub = Object.keys(header)
+
+  if (headerDataHub.length > 0) {
+    headerDataHub.forEach((item) => {
+      xhr.setRequestHeader(item, header[item])
+    })
+  }
+
+  xhr.timeout = timeout
+}
+
+/**
  *
  * @param {Object} opt - 选项参数（同 jquery）
  *                     contentType - 可选 false 和 各种浏览器的 contentType 类型
  *                     dataType - 支持 XMLHttpRequest level 2 浏览器的 responseType 属性，不支持则只能选择（json | text）
+ *                     gettenData - GET 请求的请求数据
+ *                     header - 头部 header 的数据
  */
 const ajax = ({
   type = 'GET',
@@ -42,15 +63,20 @@ const ajax = ({
   contentType = 'application/x-www-form-urlencoded',
   url = '',
   data = {},
+  gettenData = {},
+  header = {},
   withCredentials = true,
   cache = false,
-  async = true
+  async = true,
+  timeout = 10000
 } = {}) => {
   type = type.toUpperCase()
 
   const xhr = new XMLHttpRequest()
   let param = formatParam(data)
-  const timeStamp = cache ? '' : `t=${new Date().getTime()}`
+
+  let urlGettenParam = formatParam(gettenData)
+  const timeStamp = cache ? '' : `t=${new Date().getTime()}&${urlGettenParam}`
 
   if (contentType) {
     if (contentType.includes('text/plain') || contentType.includes('application/json')) {
@@ -65,7 +91,7 @@ const ajax = ({
 
     // IE not support this state
     if (xhr.responseType !== undefined) {
-      // IE 10/11 not support 'json', so transform to string and JSON.parse
+      // IE 10/11 not support 'json', so change to string and JSON.parse
       if ('ActiveXObject' in window && dataType === 'json') {
         dataType = 'text'
 
@@ -84,38 +110,65 @@ const ajax = ({
     }
 
     xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        const status = xhr.status
+      //
+    }
 
-        if (status >= 200 && status < 300) {
-          let responseData = null
+    xhr.onload = () => {
+      const status = xhr.status
 
-          if (dataType === 'json') {
-            responseData = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : xhr.response
-          } else if (dataType === 'text' || dataType === '') {
-            responseData = JSON.parse(xhr.responseText)
-          } else {
-            responseData = xhr.response
-          }
+      if ((status >= 200 && status < 300) || xhr.status === 304) {
+        let responseData = null
 
-          resolve(responseData)
+        if (dataType === 'json') {
+          responseData = typeof xhr.response === 'string' ? JSON.parse(xhr.response) : xhr.response
+        } else if (dataType === 'text' || dataType === '') {
+          responseData = JSON.parse(xhr.responseText)
         } else {
-          reject(new Error(xhr.status ? xhr.statusText : 'offline'))
+          responseData = xhr.response
         }
+
+        resolve({
+          response: responseData,
+          status
+        })
+      } else {
+        resolve({
+          statusText: xhr.statusText,
+          status: xhr.status
+        })
       }
     }
 
+    xhr.onabort = () => {
+      reject(new Error('abort'))
+    }
+
+    xhr.ontimeout = () => {
+      reject(new Error('timeout'))
+    }
+
     xhr.onerror = () => {
-      reject(new Error(xhr.status ? xhr.statusText : 'offline'))
+      reject(new Error('offline'))
     }
 
     if (type === 'GET') {
       xhr.open('GET', `${url}?${timeStamp}&${param}`, async)
-      xhr.timeout = 10000
+
+      afterOpenXHR({
+        header,
+        timeout,
+        xhr
+      })
+
       xhr.send(null)
     } else if (type === 'POST') {
       xhr.open('POST', `${url}?${timeStamp}`, async)
-      xhr.timeout = 10000
+
+      afterOpenXHR({
+        header,
+        timeout,
+        xhr
+      })
 
       if (contentType) {
         xhr.setRequestHeader('Content-Type', contentType)

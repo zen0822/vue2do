@@ -17,6 +17,7 @@ $C_PREFIX: #{ $COMP_ICON };
   display: inline-block;
   line-height: 0;
   color: $color-primary;
+  user-select: none;
 
   &-stage {
     display: inline-block;

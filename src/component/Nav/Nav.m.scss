@@ -27,8 +27,9 @@ $ICON_PREFIX: #{ $COMP_ICON };
       &.#{$C_PREFIX}-animate-slide {
         position: fixed;
         margin: auto;
-        top: 0;
         bottom: 0;
+        top: 0;
+        left: 0;
 
         & > .#{$C_PREFIX}-motion-content {
           background-color: #fff;
