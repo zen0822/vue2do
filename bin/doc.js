@@ -14,11 +14,18 @@ const argv = require('yargs')
       describe: 'Release to online website',
       type: 'boolean',
       default: false
+    },
+    'ci': {
+      alias: 'c',
+      describe: 'Release to online website in CI',
+      type: 'boolean',
+      default: false
     }
   })
   .argv
 
 require('../build/doc')({
   appName: 'example',
-  release: argv.release
+  release: argv.release,
+  ci: argv.ci
 })
