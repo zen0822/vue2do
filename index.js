@@ -6,7 +6,6 @@ import './src/scss/common/common.scss'
 import './src/scss/grid.scss'
 
 import pluginInstall from './src'
-import cnLang from './src/language/zh-cn.json'
 import { set as setConfig } from './src/config'
 
 import alert from './src/component/Modal/alert'
