@@ -35,8 +35,9 @@ deploy:
     keep-history: true
     local-dir: zen0822.github.io
     repo: zen0822.github.io
-    target-branch: master
+    target-branch: dev
     verbose: true
+    name: Zen Travi
     on:
       branch: master
   - provider: script
