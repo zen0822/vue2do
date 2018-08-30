@@ -50,16 +50,16 @@ module.exports = function ({
         // TODO: 准备解析 log 到网站分支
         // let log = shelljs.exec('git log')
 
-        shelljs.cd('./zen0822.github.io')
+        // shelljs.cd('./zen0822.github.io')
 
-        shelljs.exec('git add -A')
-        shelljs.exec('git commit -m "更新文档网站"')
+        // shelljs.exec('git add -A')
+        // shelljs.exec('git commit -m "更新文档网站"')
 
-        shelljs.exec('git push origin master', function (code) {
-          code === 0 && console.log('Success: push to zen0822.github.io')
-          shelljs.cd('../')
-          shelljs.rm('-rf', './zen0822.github.io')
-        })
+        // shelljs.exec('git push origin master', function (code) {
+        //   code === 0 && console.log('Success: push to zen0822.github.io')
+        //   shelljs.cd('../')
+        //   shelljs.rm('-rf', './zen0822.github.io')
+        // })
       } else {
         shelljs.echo('Git clone zen0822.github.io failed')
         exit(1)

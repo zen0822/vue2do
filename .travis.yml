@@ -36,6 +36,7 @@ deploy:
     local-dir: zen0822.github.io
     repo: zen0822.github.io
     target-branch: master
+    verbose: true
     on:
       branch: master
   - provider: script
