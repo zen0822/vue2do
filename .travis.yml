@@ -29,6 +29,15 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep-history: true
+    local-dir: zen0822.github.io
+    repo: zen0822.github.io
+    target-branch: master
+    on:
+      branch: master
   - provider: script
     skip_cleanup: true
     script: npm run doc

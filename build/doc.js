@@ -26,7 +26,9 @@ module.exports = function ({
 
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
+
     if (err) throw err
+
     process.stdout.write(stats.toString({
       colors: true,
       modules: false,
@@ -37,8 +39,9 @@ module.exports = function ({
 
     if (release) {
       shelljs.rm('-rf', websiteProject)
+
       if (shelljs.exec('git clone https://github.com/zen0822/zen0822.github.io.git').code === 0) {
-        shelljs.echo('Git clone zen0822.github.io Success')
+        shelljs.echo('Git clone zen0822.github.io success')
 
         shelljs.rm('-rf', `${websiteProject}/static`)
         shelljs.cp('-r', `${config.doc.assetsRoot}/*`, `${websiteProject}`)
@@ -50,7 +53,7 @@ module.exports = function ({
         shelljs.cd('./zen0822.github.io')
 
         shelljs.exec('git add -A')
-        shelljs.exec('git commit -m "更新网站"')
+        shelljs.exec('git commit -m "更新文档网站"')
 
         shelljs.exec('git push origin master', function (code) {
           code === 0 && console.log('Success: push to zen0822.github.io')
@@ -58,7 +61,7 @@ module.exports = function ({
           shelljs.rm('-rf', './zen0822.github.io')
         })
       } else {
-        shelljs.echo('Error: Git clone zen0822.github.io failed')
+        shelljs.echo('Git clone zen0822.github.io failed')
         exit(1)
       }
     }
