@@ -37,7 +37,7 @@ deploy:
     repo: zen0822/zen0822.github.io
     target-branch: master
     verbose: true
-    name: Zen Travi
+    committer-from-gh: true
     on:
       branch: master
   - provider: script
