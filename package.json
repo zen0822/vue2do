@@ -37,6 +37,7 @@
     "prod": "node bin/prod",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
+    "doc:rel:ci": "node bin/doc --release --ci",
     "rel": "bash build/release.sh",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
