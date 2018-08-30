@@ -33,9 +33,9 @@ deploy:
     skip-cleanup: true
     github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
     keep-history: true
-    local-dir: zen0822.github.io
+    local-dir: zen0822/zen0822.github.io
     repo: zen0822.github.io
-    target-branch: dev
+    target-branch: master
     verbose: true
     name: Zen Travi
     on:
