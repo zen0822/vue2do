@@ -5,7 +5,7 @@
 export default function (h) {
   let btnEleChildren = []
 
-  if (this.stateBan) {
+  if (this.stateDisabled) {
     btnEleChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
     }))
@@ -89,16 +89,16 @@ export default function (h) {
         this.cPrefix,
         this.btnClass,
         {
-          [this.xclass('ban')]: this.stateBan
+          [this.xclass('disabled')]: this.stateDisabled
         },
         {
           [this.xclass('block')]: this.block
         },
         {
-          [this.xclass('rip')]: !this.ban && this.motion
+          [this.xclass('rip')]: !this.stateDisabled && this.motion
         },
         {
-          [this.xclass('focus')]: !this.ban && this.focusing
+          [this.xclass('focus')]: !this.stateDisabled && this.focusing
         }
       ],
       on: {
@@ -109,7 +109,7 @@ export default function (h) {
         blur: this.blur
       },
       attrs: {
-        tabindex: 0
+        tabindex: this.stateDisabled ? undefined : 0
       }
     }, [
       h('div', {

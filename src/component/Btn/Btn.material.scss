@@ -33,4 +33,15 @@ $C_PREFIX: #{$COMP_BTN};
       }
     }
   }
+
+  &.#{$C_PREFIX}-disabled {
+    &.#{$C_PREFIX}-type-button,
+    &.#{$C_PREFIX}-type-float {
+      & > .#{$C_PREFIX}-ele {
+        &:hover {
+          box-shadow: $shadow-lower;
+        }
+      }
+    }
+  }
 }

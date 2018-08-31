@@ -61,12 +61,12 @@ $C_PREFIX: #{$COMP_BTN};
   @include btn-box-shadow($color)
 }
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
 
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {
-      @include btn-button($type-color, $type-dark-color)
+      @include btn-button($type-color, $type-color-dark)
     }
   }
 
@@ -81,7 +81,7 @@ $C_PREFIX: #{$COMP_BTN};
     &.#{$C_PREFIX}-type-button,
     &.#{$C_PREFIX}-type-float {
       & > .#{$C_PREFIX}-ele {
-        @include btn-button-focus($type-color, $type-dark-color)
+        @include btn-button-focus($type-color, $type-color-dark)
       }
     }
 

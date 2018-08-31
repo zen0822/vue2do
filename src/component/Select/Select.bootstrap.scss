@@ -16,11 +16,11 @@ $MENU_HEIGHT: 36px;
   box-shadow: 0 0 0 4px rgba($color, .3);
 }
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   border-color: $type-color;
 
   &:hover {
-    border-color: rgba($type-dark-color, .9);
+    border-color: rgba($type-color-dark, .9);
   }
 
   &:focus {
@@ -29,7 +29,7 @@ $MENU_HEIGHT: 36px;
 
   &.#{$C_PREFIX}-selecting {
     @include btn-box-shadow($type-color);
-    border-color: $type-dark-color;
+    border-color: $type-color-dark;
   }
 }
 

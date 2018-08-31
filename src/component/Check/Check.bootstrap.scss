@@ -13,7 +13,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   box-shadow: 0 0 0 3px rgba($color, .3);
 }
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-box,
   .#{$C_PREFIX}-opt-check-all {
     &.#{$C_PREFIX}-checked,
@@ -28,7 +28,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     &.#{$C_PREFIX}-disabled {
       & > .#{$C_PREFIX}-icon {
         & > .#{$C_ICON_PREFIX} {
-          color: rgba($type-color, .38);
+          color: $type-color-lighter;
         }
       }
     }
@@ -41,7 +41,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
 
     & > .#{$C_PREFIX}-icon {
       & > .#{$C_ICON_PREFIX} {
-        color: $type-light-color;
+        color: $type-color-light;
       }
     }
   }
@@ -52,7 +52,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
     }
 
     & > .#{$C_PREFIX}-icon > .#{$C_ICON_PREFIX} {
-      color: $type-light-color;
+      color: $type-color-light;
     }
   }
 }
@@ -95,7 +95,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
       &.#{$C_PREFIX}-indeterminate {
         & > .#{$C_PREFIX}-icon {
           & > .#{$C_ICON_PREFIX} {
-            color: rgba($color-primary, .38);
+            color: $color-primary-lighter;
           }
         }
       }

@@ -1,7 +1,7 @@
 /**
  * btn 组件
  *
- * @prop ban - 禁止点击
+ * @prop disabled - 禁止点击
  * @prop block - 按钮的宽度是父元素的宽度, width: 100%
  * @prop link - 链接地址
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
@@ -51,11 +51,11 @@ export default {
   },
 
   props: {
-    ban: {
+    block: {
       type: Boolean,
       default: false
     },
-    block: {
+    disabled: {
       type: Boolean,
       default: false
     },
@@ -97,7 +97,7 @@ export default {
 
   data() {
     return {
-      stateBan: false, // 按钮的禁用状态
+      stateDisabled: false, // 按钮的禁用状态
       btnValueDisplay: false, // 按钮值显示状态
       createdLoading: false, // 是否已经创建了按钮的 loading 组件
       focusing: false, // 正在 focus 中
@@ -112,8 +112,8 @@ export default {
   },
 
   watch: {
-    ban(val) {
-      this.stateBan = val
+    disabled(val) {
+      this.stateDisabled = val
     }
   },
 
@@ -140,7 +140,7 @@ export default {
 
   methods: {
     _setDataOpt() {
-      this.stateBan = this.ban
+      this.stateDisabled = this.disabled
     },
 
     mouseup(event) {
@@ -148,7 +148,7 @@ export default {
         return false
       }
 
-      if (this.stateBan) {
+      if (this.stateDisabled) {
         return false
       }
 
@@ -167,7 +167,7 @@ export default {
         return false
       }
 
-      if (this.stateBan) {
+      if (this.stateDisabled) {
         return false
       }
 
@@ -192,6 +192,10 @@ export default {
     },
 
     focus(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       this.focusing = true
 
       this.$emit('focus', {
@@ -209,6 +213,10 @@ export default {
     },
 
     blur(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       this.focusing = false
 
       this.$emit('blur', {
@@ -223,6 +231,10 @@ export default {
      * keyup 句柄
      */
     keyup(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       if (event.keyCode === 13) {
         this.click(event)
 
@@ -237,6 +249,10 @@ export default {
      * click event
      */
     click(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       return this.$emit('click', {
         event,
         emitter: this
@@ -247,14 +263,14 @@ export default {
      * 将按钮变为只读操作
      */
     banBtn() {
-      this.stateBan = true
+      this.stateDisabled = true
     },
 
     /**
      * 取消按钮只读状态
      */
     allowBtn() {
-      this.stateBan = false
+      this.stateDisabled = false
     },
 
     /**

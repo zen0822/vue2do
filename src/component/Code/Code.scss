@@ -9,8 +9,8 @@
 
 $C_PREFIX: #{ $COMP_CODE };
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
-  border: $type-light-color $border-thin solid;
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
+  border: $type-color-light $border-thin solid;
 
   .#{$C_PREFIX}-line-num {
     border-right: $border-thin * 2 $type-color solid;
