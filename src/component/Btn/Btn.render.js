@@ -95,7 +95,10 @@ export default function (h) {
           [this.xclass('block')]: this.block
         },
         {
-          [this.xclass('rip')]: this.motion
+          [this.xclass('rip')]: !this.ban && this.motion
+        },
+        {
+          [this.xclass('focus')]: !this.ban && this.focusing
         }
       ],
       on: {

@@ -75,45 +75,40 @@ div
           z-table-col ( *false | true )
           z-table-col 禁止点击
         z-table-row(slot='2')
-          z-table-col kind
-          z-table-col String
-          z-table-col ( *primary | danger | success | warning | default )
-          z-table-col 按钮种类
+          z-table-col block
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 按钮的宽度是父元素的宽度, width: 100%
         z-table-row(slot='3')
           z-table-col link
           z-table-col String
           z-table-col ——
           z-table-col 链接地址
         z-table-row(slot='4')
-          z-table-col size
-          z-table-col String
-          z-table-col ( *S | M | L)
-          z-table-col 按钮大小
-        z-table-row(slot='5')
-          z-table-col submit
-          z-table-col Boolean
-          z-table-col ——
-          z-table-col 作为提交按钮
-        z-table-row(slot='6')
-          z-table-col type
-          z-table-col Boolean
-          z-table-col ( *button | flat | float | outline )
-          z-table-col 按钮类型
-        z-table-row(slot='7')
-          z-table-col value
-          z-table-col String
-          z-table-col ——
-          z-table-col 按钮名字
-        z-table-row(slot='8')
-          z-table-col textDisplay
-          z-table-col Boolean
-          z-table-col ( *false | true )
-          z-table-col 是否显示按钮文字
-        z-table-row(slot='9')
           z-table-col radius
           z-table-col String
           z-table-col ( none | *S | M | L)
           z-table-col 按钮边角得半径尺寸
+        z-table-row(slot='5')
+          z-table-col size
+          z-table-col String
+          z-table-col ( *S | M | L)
+          z-table-col 按钮大小
+        z-table-row(slot='6')
+          z-table-col submit
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 作为提交按钮
+        z-table-row(slot='7')
+          z-table-col type
+          z-table-col Boolean
+          z-table-col ( *button | flat | float | outline )
+          z-table-col 按钮类型
+        z-table-row(slot='8')
+          z-table-col value
+          z-table-col String
+          z-table-col ——
+          z-table-col 按钮名字
     +section('props', 'events 组件事件')
       z-table(
           border='row'
@@ -123,7 +118,19 @@ div
             slot='thead'
             v-for='item in ["名字", "返回值类型", "说明"]')
           z-table-col {{ item }}
-        z-table-row(slot='7')
+        z-table-row(slot='1')
           z-table-col click
           z-table-col ——
           z-table-col 点击btn事件
+        z-table-row(slot='2')
+          z-table-col keyEnter
+          z-table-col ——
+          z-table-col focus 时敲击 Enter 键
+        z-table-row(slot='3')
+          z-table-col focus
+          z-table-col ——
+          z-table-col 按钮获得焦点事件
+        z-table-row(slot='4')
+          z-table-col blur
+          z-table-col ——
+          z-table-col 按钮失去焦点事件
