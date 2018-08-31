@@ -75,6 +75,22 @@ $C_PREFIX: #{$COMP_BTN};
       @include btn-outline($type-color)
     }
   }
+
+  &.#{$C_PREFIX}-focus {
+
+    &.#{$C_PREFIX}-type-button,
+    &.#{$C_PREFIX}-type-float {
+      & > .#{$C_PREFIX}-ele {
+        @include btn-button-focus($type-color, $type-dark-color)
+      }
+    }
+
+    &.#{$C_PREFIX}-type-outline {
+      & > .#{$C_PREFIX}-ele {
+        @include btn-outline-focus($type-color)
+      }
+    }
+  }
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
@@ -107,17 +123,6 @@ $C_PREFIX: #{$COMP_BTN};
     &.#{$C_PREFIX}-type-outline {
       & > .#{$C_PREFIX}-ele {
         @include btn-outline-focus($color-primary)
-      }
-    }
-
-    &.#{$C_PREFIX}-ban {
-
-      &.#{$C_PREFIX}-type-button,
-      &.#{$C_PREFIX}-type-float,
-      &.#{$C_PREFIX}-type-outline {
-        & > .#{$C_PREFIX}-ele {
-
-        }
       }
     }
   }
