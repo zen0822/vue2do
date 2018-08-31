@@ -10,7 +10,7 @@ $C_PREFIX: #{$COMP_LOADING};
 
 @import './Loading.type.scss';
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-rotate {
     border-color: $type-color;
   }

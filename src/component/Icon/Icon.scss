@@ -9,7 +9,7 @@
 
 $C_PREFIX: #{ $COMP_ICON };
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   color: $type-color;
 }
 

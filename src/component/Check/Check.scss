@@ -10,7 +10,7 @@
 $C_PREFIX: #{$COMP_CHECK};
 $C_ICON_PREFIX: #{$COMP_ICON};
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-opt-check-all.#{$C_PREFIX}-checked {
     & > .#{$C_ICON_PREFIX} {
       color: $type-color

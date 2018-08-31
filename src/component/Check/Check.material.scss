@@ -9,7 +9,7 @@ $C_PREFIX: #{$COMP_CHECK};
 $C_ICON_PREFIX: #{$COMP_ICON};
 $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-checked,
   .#{$C_PREFIX}-indeterminate {
     .#{$C_PREFIX}-rip {
@@ -44,25 +44,25 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
       &-box {
         &-dot,
         &-checked {
-          background-color: rgba($grey, .38);
+          background-color: rgb(218, 218, 218);
         }
 
         &-rail {
-          border-color: rgba($grey, .38);
+          border-color: rgb(218, 218, 218);
         }
       }
     }
 
     &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
     &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
-      background-color: rgba($type-color, .38);
+      background-color: $type-color-lighter;
     }
 
     &.#{$C_PREFIX}-opt-check-all {
       &.#{$C_PREFIX}-checked,
       &.#{$C_PREFIX}-indeterminate {
         .#{$C_PREFIX}-icon-box-rail {
-          border-color: rgba($type-color, .38);
+          border-color: $type-color-lighter;
         }
       }
     }
@@ -233,14 +233,14 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
     &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
     &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
-      background-color: rgb(173, 215, 250);
+      background-color: $color-primary-lighter;
     }
 
     &.#{$C_PREFIX}-opt-check-all {
       &.#{$C_PREFIX}-checked,
       &.#{$C_PREFIX}-indeterminate {
         .#{$C_PREFIX}-icon-box-rail {
-          border-color: rgb(173, 215, 250);
+          border-color: $color-primary-lighter;
         }
       }
     }

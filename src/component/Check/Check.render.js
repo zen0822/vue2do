@@ -101,7 +101,8 @@ const checkAllEle = function (h) {
       mousedown: (event) => this._handlerMousedownCheckAll(event),
       mouseup: (event) => this._handlerMouseupCheckAll(event),
       focus: (event) => this._handlerFocusCheckAll(event),
-      blur: (event) => this._handlerBlurCheckAll(event)
+      blur: (event) => this._handlerBlurCheckAll(event),
+      keyup: (event) => this._handlerKeyupCheckAll(event)
     }
   }, [
     this.UIBootstrap ? bootstrapCheck.call(this, h, {

@@ -442,6 +442,15 @@ let checkCompConfig = {
      */
     _handlerBlurCheckAll(event) {
       this.focusedCheckAll = false
+    },
+
+    /**
+     * 全选 keyup 事件句柄
+     */
+    _handlerKeyupCheckAll(event) {
+      if (event.keyCode === 13) {
+        return this.checkAllOption()
+      }
     }
   },
 

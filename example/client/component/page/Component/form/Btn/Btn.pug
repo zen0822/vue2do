@@ -34,15 +34,15 @@ div
         #{'<z-btn>'}
           #{'<p>custom content</p>'}
         #{'</z-btn>'}
-    +section('ban', '禁止访问')
+    +section('disabled', '禁止访问')
       z-btn(
         :ui='typeUI'
         :theme='typeTheme'
-        ban
+        disabled
       ) 禁止访问
 
       z-code(:theme='typeTheme').
-        #{'<z-btn ban>'}
+        #{'<z-btn disabled>'}
           禁止访问
         #{'</z-btn>'}
     +section('float', '浮动按钮')
@@ -70,15 +70,15 @@ div
             v-for='item in ["名字", "类型", "可选值", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
-          z-table-col ban
-          z-table-col Boolean
-          z-table-col ( *false | true )
-          z-table-col 禁止点击
-        z-table-row(slot='2')
           z-table-col block
           z-table-col Boolean
           z-table-col ( *false | true )
           z-table-col 按钮的宽度是父元素的宽度, width: 100%
+        z-table-row(slot='2')
+          z-table-col disabled
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 禁止点击
         z-table-row(slot='3')
           z-table-col link
           z-table-col String

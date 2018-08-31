@@ -13,7 +13,7 @@ $INPUT_HEIGHT: 36px;
 $INPUT_WIDTH: 170px;
 $INPUT_BORDER_WIDTH: 1px;
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   &.#{$C_PREFIX}-type-area {
     & > .#{$C_PREFIX}-wrap {
       &.#{$C_PREFIX}-editting {

@@ -11,7 +11,7 @@ $C_ELE_PREFIX: #{ $COMP_TAB_ELE };
 $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
 $C_BTN_PREFIX: #{ $COMP_BTN };
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-bar {
     background-color: $type-color;
   }
