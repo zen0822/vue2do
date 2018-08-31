@@ -2,15 +2,13 @@
  * btn 组件
  *
  * @prop ban - 禁止点击
- * @prop block - 按钮的宽度是父元素的宽度
+ * @prop block - 按钮的宽度是父元素的宽度, width: 100%
  * @prop link - 链接地址
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
  * @prop size - 按钮大小
  * @prop submit - 提交按钮
  * @prop type - 按钮类型 (button | flat | float | outline)
- * @prop textDisplay - 是否显示按钮文字
  * @prop value - 按钮名字
- * @prop outline - 只有边框有颜色的按钮
  *
  * @event click - 点击btn事件
  * @event keyEnter - focus 时敲击 Enter 键
@@ -61,15 +59,7 @@ export default {
       type: Boolean,
       default: false
     },
-    kind: {
-      type: String,
-      default: 'primary'
-    },
     link: String,
-    outline: {
-      type: Boolean,
-      default: false
-    },
     radius: {
       type: String,
       default: 's',
@@ -78,17 +68,6 @@ export default {
 
         return ['none', 's', 'm', 'l'].includes(size)
       }
-    },
-    type: {
-      type: String,
-      default: BTN_TYPE_BUTTON,
-      validator(val) {
-        return ['button', 'float', 'flat', 'outline'].includes(val)
-      }
-    },
-    value: {
-      type: String,
-      require: true
     },
     size: {
       type: String,
@@ -103,9 +82,16 @@ export default {
       type: Boolean,
       require: false
     },
-    textDisplay: {
-      type: Boolean,
-      default: false
+    type: {
+      type: String,
+      default: BTN_TYPE_BUTTON,
+      validator(val) {
+        return ['button', 'float', 'flat', 'outline'].includes(val)
+      }
+    },
+    value: {
+      type: String,
+      require: true
     }
   },
 
