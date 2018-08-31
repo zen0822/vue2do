@@ -130,7 +130,7 @@ $C_PREFIX: #{$COMP_BTN};
   &.#{$C_PREFIX}-disabled {
     .#{$C_PREFIX}-ele {
       color: rgba(0, 0, 0, .4);
-      background-color: rgba(0, 0, 0, .12) !important;
+      background-color: rgba(0, 0, 0, .12);
     }
 
     .#{$C_PREFIX}-read-only-shadow {

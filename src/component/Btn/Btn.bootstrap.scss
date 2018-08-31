@@ -91,6 +91,18 @@ $C_PREFIX: #{$COMP_BTN};
       }
     }
   }
+
+  &.#{$C_PREFIX}-disabled {
+    & > .#{$C_PREFIX}-ele {
+      background-color: $type-color-light;
+      border-color: $type-color-light;
+
+      &:hover {
+        background-color: $type-color-light;
+        border-color: $type-color-light;
+      }
+    }
+  }
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
@@ -123,6 +135,19 @@ $C_PREFIX: #{$COMP_BTN};
     &.#{$C_PREFIX}-type-outline {
       & > .#{$C_PREFIX}-ele {
         @include btn-outline-focus($color-primary)
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-disabled {
+    & > .#{$C_PREFIX}-ele {
+      background-color: $color-primary-light;
+      border-color: $color-primary-light;
+      color: #fff;
+
+      &:hover {
+        background-color: $color-primary-light;
+        border-color: $color-primary-light;
       }
     }
   }
