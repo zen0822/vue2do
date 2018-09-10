@@ -32,8 +32,12 @@ export default {
       return this.$store.getters[commonStore.window.get]
     },
 
+    deviceSize() {
+      return this.$store.getters[commonStore.deviceSize]
+    },
+
     appStyle() {
-      if (this.contentHeight === 0) {
+      if (this.contentHeight === 0 || this.deviceSize === 'xs') {
         return {}
       }
 
@@ -45,8 +49,6 @@ export default {
 
   watch: {
     'windowProps' (val) {
-      let bodyHeight = document.body.offsetHeight
-
       this.contentHeight = val.innerHeight - this.$refs.header.$el.offsetHeight - this.$refs.footer.$el.offsetHeight
     }
   },

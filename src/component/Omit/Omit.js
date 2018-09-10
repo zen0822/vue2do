@@ -99,12 +99,15 @@ export default {
         let lineWidth = 0 // 这一行的宽度
         let j = index
         let char = ''
-        let singleChar = 0
+        let lastFontWidthOver = false // 最后一行的文字宽度是否小于容器宽度
 
         for (; j < contentArrayLength; j++) {
           let fontWidth = this.textWidth(contentArray[j])
 
           if (contentArray[j] === undefined || (fontWidth + lineWidth) >= this.boxWidth) {
+            // 最后一行并且文字总宽度大于容器宽度时
+            lastFontWidthOver = i === lineLength - 1 && (fontWidth + lineWidth) >= this.boxWidth
+
             break
           }
 
@@ -112,11 +115,7 @@ export default {
           char = char + contentArray[j]
         }
 
-        if (this.props.line === 1) {
-          lineFont.push(char)
-        } else {
-          lineFont.push(i === lineLength - 1 ? (char + char) : char)
-        }
+        lineFont.push((lastFontWidthOver && i === lineLength - 1) ? (char + '....') : char)
 
         index = j
       }

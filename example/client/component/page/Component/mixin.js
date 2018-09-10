@@ -1,5 +1,8 @@
 import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
+import {
+  throttle
+} from 'vue2do/src/util'
 
 let testOpt = []
 
@@ -49,10 +52,28 @@ export default {
     },
     typeTheme() {
       return this.$store.getters[commonStore.typeTheme.get]
+    },
+    deviceSize() {
+      return this.$store.getters[commonStore.deviceSize]
     }
   },
 
   mounted() {
     this._initComp()
+
+    const updateDeviceSize = () => {
+      const deviceSizeEle = document.querySelector('.z-css-device-size')
+      let deviceType = ''
+
+      if (deviceSizeEle) {
+        deviceType = getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+
+        this.$store.dispatch(commonStore.deviceSize, deviceType)
+      }
+    }
+
+    window.addEventListener('resize', throttle(updateDeviceSize))
+
+    updateDeviceSize()
   }
 }

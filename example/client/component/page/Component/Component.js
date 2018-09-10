@@ -5,9 +5,7 @@ import mixin from './mixin'
 import commonStore from '../../../vuex/module/common/type.json'
 
 import {
-  alert,
-  confirm,
-  tip
+  alert
 } from 'vue2do/index.js'
 
 export default {
@@ -53,20 +51,12 @@ export default {
 
   computed: {
     componentStyle() {
-      const appContent = this.appContent
-      const deviceSizeEle = document.querySelector('.z-css-device-size')
-      let deviceType = ''
-
-      if (deviceSizeEle) {
-        deviceType = getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
-      }
-
-      if (!appContent || deviceType === '"xs"') {
+      if (!this.appContent || this.deviceSize === 'xs') {
         return {}
       }
 
       return {
-        height: appContent.offsetHeight + 'px'
+        height: this.appContent.offsetHeight + 'px'
       }
     }
   },
@@ -86,7 +76,7 @@ export default {
     submit() {
       this.$refs.submit.openLoading()
       this.$refs.formArea.verify()
-      console.log(this.$refs.formArea.queryOpt)
+      alert(`提交的数据：${this.$refs.formArea.queryOpt}`)
     },
 
     next() {

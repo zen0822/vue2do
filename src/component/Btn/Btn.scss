@@ -13,7 +13,7 @@ $C_PREFIX: #{$COMP_BTN};
   background-color: $color;
 }
 
-@mixin btn-flat($color) {
+@mixin btn-text($color) {
   color: $color;
 }
 
@@ -30,9 +30,9 @@ $C_PREFIX: #{$COMP_BTN};
     }
   }
 
-  &.#{$C_PREFIX}-type-flat {
+  &.#{$C_PREFIX}-type-text {
     & > .#{$C_PREFIX}-ele {
-      @include btn-flat($type-color);
+      @include btn-text($type-color);
     }
   }
 
@@ -178,11 +178,11 @@ $C_PREFIX: #{$COMP_BTN};
       }
     }
 
-    &-flat {
+    &-text {
       & > .#{$C_PREFIX}-ele {
         background-color: #fff;
 
-        @include btn-flat($color-primary);
+        @include btn-text($color-primary);
       }
     }
 

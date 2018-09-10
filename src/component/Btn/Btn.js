@@ -7,7 +7,7 @@
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
  * @prop size - 按钮大小
  * @prop submit - 提交按钮
- * @prop type - 按钮类型 (button | flat | float | outline)
+ * @prop type - 按钮类型 (button | text | float | outline)
  * @prop value - 按钮名字
  *
  * @event click - 点击btn事件
@@ -86,7 +86,7 @@ export default {
       type: String,
       default: BTN_TYPE_BUTTON,
       validator(val) {
-        return ['button', 'float', 'flat', 'outline'].includes(val)
+        return ['button', 'float', 'text', 'outline'].includes(val)
       }
     },
     value: {

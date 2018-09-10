@@ -17,7 +17,7 @@ export default function (h) {
         class: [this.xclass('value-show')]
       }, [this.$slots.default])
     )
-  } else if (this.type === 'flat') {
+  } else if (this.type === 'text') {
     const ele = this.$slots.default ? this.$slots.default : this.value
 
     btnEleChildren.push(this.link ?
