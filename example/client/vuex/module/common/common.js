@@ -6,7 +6,8 @@ export default {
     appContent: null,
     compStage: null,
     typeUI: 'bootstrap',
-    typeTheme: 'primary'
+    typeTheme: 'primary',
+    deviceSize: ''
   },
 
   getters: {
@@ -24,6 +25,9 @@ export default {
     },
     [nameSpace.typeTheme.get](state) {
       return state.typeTheme
+    },
+    [nameSpace.deviceSize](state) {
+      return state.deviceSize.replace(/('|")/g, '')
     }
   },
 
@@ -62,6 +66,9 @@ export default {
       rootState
     }, value) {
       return commit(nameSpace.typeUI.add, value)
+    },
+    [nameSpace.deviceSize]({ state, commit, rootState }, sizeName) {
+      return commit(nameSpace.deviceSize, sizeName)
     }
   },
 
@@ -83,6 +90,9 @@ export default {
     },
     [nameSpace.typeTheme.add](state, value) {
       state.typeTheme = value
+    },
+    [nameSpace.deviceSize](state, sizeName) {
+      state.deviceSize = sizeName
     }
   }
 }

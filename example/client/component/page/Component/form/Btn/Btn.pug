@@ -60,6 +60,16 @@ div
         #{'<z-btn type="float">'}
           #{'<z-icon kind="search" theme="white"></z-icon>'}
         #{'</z-btn>'}
+    +section('text', '文字按钮')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        value='文字'
+        type='text'
+      )
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn type="text" value="文字"></z-btn>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'
@@ -102,7 +112,7 @@ div
         z-table-row(slot='7')
           z-table-col type
           z-table-col Boolean
-          z-table-col ( *button | flat | float | outline )
+          z-table-col ( *button | text | float | outline )
           z-table-col 按钮类型
         z-table-row(slot='8')
           z-table-col value
