@@ -30,7 +30,7 @@ div
         :theme='typeTheme'
         noCoverTrig
       )
-        z-btn(slot='trigger' type='flat') 菜单
+        z-btn(slot='trigger' type='text') 菜单
         z-menu-ele(value='1') {{ testName }}
         z-menu-ele(value='2')
           z-btn 按钮
@@ -39,7 +39,7 @@ div
         z-menu-ele(value='5') 测试5
       z-code(:theme='typeTheme').
         #{'<z-menu noCoverTrig>'}
-          #{'<z-menu-trig slot="trigger"><z-btn type="flat" />菜单</z-btn></z-menu-trig>'}
+          #{'<z-menu-trig slot="trigger"><z-btn type="text" />菜单</z-btn></z-menu-trig>'}
           #{'<z-menu-ele value="1">{{ testName }}</z-menu-ele>'}
           #{'<z-menu-ele value="2">'}
             #{'<z-btn>按钮</z-btn>'}
