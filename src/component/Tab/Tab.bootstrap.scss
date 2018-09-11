@@ -38,11 +38,10 @@ $C_BTN_PREFIX: #{ $COMP_BTN };
 }
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
-  border-bottom: $border-thin solid $color-border;
-
   .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row > .#{ $C_SHIFT_PREFIX }-col {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
+    border-bottom: $border-thin solid $color-border;
 
     .#{$C_PREFIX}-btn {
       width: 100%;
@@ -83,6 +82,8 @@ $C_BTN_PREFIX: #{ $COMP_BTN };
 
     &.#{$C_PREFIX}-active:hover,
     &.#{$C_PREFIX}-active {
+      border-bottom-color: transparent;
+
       .#{$C_PREFIX}-btn {
         > .#{$C_BTN_PREFIX}-ele {
           color: $color-text-dark-primary;
