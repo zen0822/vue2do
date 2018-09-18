@@ -11,6 +11,15 @@ $C_PREFIX: #{$COMP_BTN};
     outline: none;
   }
 
+  .#{$C_PREFIX}-layout {
+    background-color: rgba(0, 0, 0, .12);
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {

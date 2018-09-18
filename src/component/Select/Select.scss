@@ -21,6 +21,7 @@ $MENU_HEIGHT: 36px;
   box-sizing: border-box;
   background-color: #fff;
   cursor: default;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   & > .#{$C_PREFIX}-read-only {
     position: absolute;

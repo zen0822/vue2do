@@ -48,6 +48,7 @@ $C_PREFIX: #{$COMP_BTN};
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   & > .#{$C_PREFIX}-ele {
     display: flex;
