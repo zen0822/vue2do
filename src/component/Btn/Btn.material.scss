@@ -11,7 +11,7 @@ $C_PREFIX: #{$COMP_BTN};
     outline: none;
   }
 
-  .#{$C_PREFIX}-layout {
+  .#{$C_PREFIX}-overlay {
     background-color: rgba(0, 0, 0, .12);
     position: absolute;
     top: 0;
