@@ -11,9 +11,9 @@ vue2do 的 [文档网站](https://zen0822.github.io)。
 
 ### 安装
 
-#### （真心推荐 yarn，npm 经常丢包，要不就用 cnpm）
+#### （真心推荐 [yarn](https://yarnpkg.com/zh-Hans/)，npm 经常丢包，要不就用 cnpm）
 
-```bash
+```shell
 npm i vue2do -S
 ```
 
@@ -99,7 +99,7 @@ Vue.component('Input', Input)
 
 ### 全局安装 vue2do
 
-```bash
+```shell
 npm i vue2do -g
 ```
 
@@ -109,7 +109,7 @@ npm i vue2do -g
 
 * projectName: 项目名字
 
-```bash
+```shell
 vue2do init project [projectName]
 ```
 
@@ -118,7 +118,7 @@ vue2do init project [projectName]
 * appType: 应用类型，可选 spa 和 mpa
 * appName: 应用名字
 
-```bash
+```shell
 cd [projectName] // 初始化的项目应用目录下
 vue2do build <appType> [appName]
 ```
@@ -127,13 +127,13 @@ vue2do build <appType> [appName]
 
 #### 在当前目录构建名字为 zenProject 的应用项目
 
-```bash
+```shell
 vue2do init project zenProject
 ```
 
 #### 在当前应用项目构建 名字为 zenMpa 的多页应用
 
-```bash
+```shell
 cd zenProject
 vue2do build mpa zenMpa
 ```
