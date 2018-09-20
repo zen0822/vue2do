@@ -1,4 +1,5 @@
 # vue2do - 基于 vue2 的响应式基础组件
+
 [![Coverage Status](https://coveralls.io/repos/github/zen0822/vue2do/badge.svg)](https://coveralls.io/github/zen0822/vue2do)
 [![Build Status](https://travis-ci.org/zen0822/vue2do.svg?branch=master)](https://travis-ci.org/zen0822/vue2do)
 
@@ -9,23 +10,30 @@ vue2do 的 [文档网站](https://zen0822.github.io)。
 ## 开始使用
 
 ### 安装
-```sh
+
+#### （真心推荐 yarn，npm 经常丢包，要不就用 cnpm）
+
+```bash
 npm i vue2do -S
 ```
 
 ### 全部加载
+
 ``` js
 import Vue from 'vue'
 import vue2do from 'vue2do'
 
 Vue.use(vue2do)
 ```
-在项目中使用
-``` html
+
+#### 在项目中使用
+
+```html
 <z-input></z-input>
 ```
 
 ### 局部加载
+
 ```js
 import {
   select,
@@ -40,6 +48,7 @@ Vue.component('yourPrefix' + input.compName, input)
 ### 加载指定组件
 
 #### 因为从 vue2do/index.js 文件加载的时候会加载所有的组件，所以只加载指定组件就可以只打包这个组件的文件
+
 ```js
 import Input from 'vue2do/component/Input'
 
@@ -47,6 +56,7 @@ Vue.component('Input', Input)
 ```
 
 ## 通过 script 标签加载使用
+
 ```html
 ...
   <body>
@@ -89,7 +99,7 @@ Vue.component('Input', Input)
 
 ### 全局安装 vue2do
 
-```
+```bash
 npm i vue2do -g
 ```
 
@@ -99,7 +109,7 @@ npm i vue2do -g
 
 * projectName: 项目名字
 
-```
+```bash
 vue2do init project [projectName]
 ```
 
@@ -108,7 +118,7 @@ vue2do init project [projectName]
 * appType: 应用类型，可选 spa 和 mpa
 * appName: 应用名字
 
-```
+```bash
 cd [projectName] // 初始化的项目应用目录下
 vue2do build <appType> [appName]
 ```
@@ -117,13 +127,13 @@ vue2do build <appType> [appName]
 
 #### 在当前目录构建名字为 zenProject 的应用项目
 
-```
+```bash
 vue2do init project zenProject
 ```
 
 #### 在当前应用项目构建 名字为 zenMpa 的多页应用
 
-```
+```bash
 cd zenProject
 vue2do build mpa zenMpa
 ```
