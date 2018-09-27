@@ -74,7 +74,7 @@ export default function (h) {
         ref: 'transition'
       }),
       h('div', {
-        class: [this.prefix('css-motion-rip')],
+        class: [this.xclass('overlay')],
         directives: [{
           name: 'show',
           value: this.motion

@@ -20,6 +20,7 @@ $input-gap-v: 8px;
   width: $INPUT_WIDTH;
   position: relative;
   font-size: $h3;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   &.#{$C_PREFIX}-block {
     width: 100%;
