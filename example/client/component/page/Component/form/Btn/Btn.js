@@ -9,6 +9,12 @@ export default {
 
   mixins: [mixin],
 
+  computed: {
+    btnRadius() {
+      return this.$refs.btnRadius.val()
+    }
+  },
+
   data() {
     return {
       testName: 'test'

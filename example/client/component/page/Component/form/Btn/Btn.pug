@@ -3,25 +3,24 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
+      z-select.p-component-menu-select(
+        :value='typeTheme'
+        ref='btnRadius'
+        menuWidth='100%'
+      )
+        z-select-ele(value='primary') Primary
+        z-select-ele(value='danger') Danger
+        z-select-ele(value='success') Success
+
       z-btn(
         :ui='typeUI'
         :theme='typeTheme'
+        :radius='$refs.btnRadius.val()'
       ) 提交
 
       z-code(:theme='typeTheme').
         #{'<z-btn>'}
           提交
-        #{'</z-btn>'}
-    +section('theme', '按钮主题')
-      z-btn.z-css-m-t-double(
-        :ui='typeUI'
-        :theme='typeTheme'
-        type='outline'
-        radius='none'
-      ) 只有轮廓
-      z-code(:theme='typeTheme').
-        #{'<z-btn type="outline" radius="none">'}
-          #{'只有轮廓'}
         #{'</z-btn>'}
     +section('custom', '自定义按钮内容')
       z-btn(

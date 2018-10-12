@@ -102,11 +102,11 @@ export default function (h) {
         }
       ],
       on: {
-        mousedown: this.mousedown,
-        mouseup: this.mouseup,
-        keyup: this.keyup,
-        focus: this.focus,
-        blur: this.blur
+        mousedown: this._handlerMousedown,
+        mouseup: this._handlerMouseup,
+        keyup: this._handlerKeyup,
+        focus: this._handlerFocus,
+        blur: this._handlerBlur
       },
       attrs: {
         tabindex: this.stateDisabled ? undefined : 0
