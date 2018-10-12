@@ -4,10 +4,7 @@
   "description": "base component on vuejs2",
   "main": "index.js",
   "module": "index.js",
-  "author": {
-    "name": "zheng (Zen) Huang",
-    "email": "zenhuangzheng@126.com"
-  },
+  "author": "zheng (Zen) Huang <zenhuangzheng@126.com>",
   "private": false,
   "files": [
     "bin",
@@ -17,10 +14,7 @@
     "lib",
     "src"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zen0822/vue2do"
-  },
+  "repository": "https://github.com/zen0822/vue2do",
   "homepage": "https://zen0822.github.io",
   "license": "MIT",
   "keywords": [
@@ -37,6 +31,7 @@
     "prod": "node bin/prod",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
+    "doc:rel:ci": "node bin/doc --release --ci",
     "rel": "bash build/release.sh",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
@@ -77,6 +72,8 @@
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.4",
     "inquirer": "^4.0.1",
+    "jsdoc": "^3.5.5",
+    "jsdoc-to-markdown": "^4.0.1",
     "json-loader": "^0.5.7",
     "latest": "^0.2.0",
     "node-sass": "^4.7.2",

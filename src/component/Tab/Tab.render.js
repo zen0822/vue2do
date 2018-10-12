@@ -12,7 +12,7 @@ export default function (h) {
         click: (event) => this.tab(event, index + 1)
       },
       props: {
-        type: 'flat',
+        type: 'text',
         ui: this.ui,
         theme: 'grey',
         radius: 'none'

@@ -1,16 +1,14 @@
 /**
  * btn 组件
  *
- * @prop ban - 禁止点击
- * @prop block - 按钮的宽度是父元素的宽度
+ * @prop disabled - 禁止点击
+ * @prop block - 按钮的宽度是父元素的宽度, width: 100%
  * @prop link - 链接地址
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
  * @prop size - 按钮大小
  * @prop submit - 提交按钮
- * @prop type - 按钮类型 (button | flat | float | outline)
- * @prop textDisplay - 是否显示按钮文字
+ * @prop type - 按钮类型 (button | text | float | outline)
  * @prop value - 按钮名字
- * @prop outline - 只有边框有颜色的按钮
  *
  * @event click - 点击btn事件
  * @event keyEnter - focus 时敲击 Enter 键
@@ -53,23 +51,15 @@ export default {
   },
 
   props: {
-    ban: {
-      type: Boolean,
-      default: false
-    },
     block: {
       type: Boolean,
       default: false
     },
-    kind: {
-      type: String,
-      default: 'primary'
-    },
-    link: String,
-    outline: {
+    disabled: {
       type: Boolean,
       default: false
     },
+    link: String,
     radius: {
       type: String,
       default: 's',
@@ -78,17 +68,6 @@ export default {
 
         return ['none', 's', 'm', 'l'].includes(size)
       }
-    },
-    type: {
-      type: String,
-      default: BTN_TYPE_BUTTON,
-      validator(val) {
-        return ['button', 'float', 'flat', 'outline'].includes(val)
-      }
-    },
-    value: {
-      type: String,
-      require: true
     },
     size: {
       type: String,
@@ -103,15 +82,22 @@ export default {
       type: Boolean,
       require: false
     },
-    textDisplay: {
-      type: Boolean,
-      default: false
+    type: {
+      type: String,
+      default: BTN_TYPE_BUTTON,
+      validator(val) {
+        return ['button', 'float', 'text', 'outline'].includes(val)
+      }
+    },
+    value: {
+      type: String,
+      require: true
     }
   },
 
   data() {
     return {
-      stateBan: false, // 按钮的禁用状态
+      stateDisabled: false, // 按钮的禁用状态
       btnValueDisplay: false, // 按钮值显示状态
       createdLoading: false, // 是否已经创建了按钮的 loading 组件
       focusing: false, // 正在 focus 中
@@ -126,8 +112,8 @@ export default {
   },
 
   watch: {
-    ban(val) {
-      this.stateBan = val
+    disabled(val) {
+      this.stateDisabled = val
     }
   },
 
@@ -154,7 +140,7 @@ export default {
 
   methods: {
     _setDataOpt() {
-      this.stateBan = this.ban
+      this.stateDisabled = this.disabled
     },
 
     mouseup(event) {
@@ -162,7 +148,7 @@ export default {
         return false
       }
 
-      if (this.stateBan) {
+      if (this.stateDisabled) {
         return false
       }
 
@@ -181,7 +167,7 @@ export default {
         return false
       }
 
-      if (this.stateBan) {
+      if (this.stateDisabled) {
         return false
       }
 
@@ -206,6 +192,10 @@ export default {
     },
 
     focus(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       this.focusing = true
 
       this.$emit('focus', {
@@ -223,6 +213,10 @@ export default {
     },
 
     blur(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       this.focusing = false
 
       this.$emit('blur', {
@@ -237,6 +231,10 @@ export default {
      * keyup 句柄
      */
     keyup(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       if (event.keyCode === 13) {
         this.click(event)
 
@@ -251,6 +249,10 @@ export default {
      * click event
      */
     click(event) {
+      if (this.stateDisabled) {
+        return false
+      }
+
       return this.$emit('click', {
         event,
         emitter: this
@@ -261,14 +263,14 @@ export default {
      * 将按钮变为只读操作
      */
     banBtn() {
-      this.stateBan = true
+      this.stateDisabled = true
     },
 
     /**
      * 取消按钮只读状态
      */
     allowBtn() {
-      this.stateBan = false
+      this.stateDisabled = false
     },
 
     /**

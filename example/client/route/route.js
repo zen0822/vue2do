@@ -7,6 +7,12 @@ export default [{
     title: '主页'
   }
 }, {
+  path: '/hello',
+  component: () => import('../component/page/Hello/Hello'),
+  meta: {
+    title: 'soulemate'
+  }
+}, {
   path: '/build',
   component: () => import('../component/page/Build/Build'),
   meta: {

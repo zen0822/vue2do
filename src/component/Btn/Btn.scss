@@ -13,7 +13,7 @@ $C_PREFIX: #{$COMP_BTN};
   background-color: $color;
 }
 
-@mixin btn-flat($color) {
+@mixin btn-text($color) {
   color: $color;
 }
 
@@ -22,7 +22,7 @@ $C_PREFIX: #{$COMP_BTN};
   color: $color;
 }
 
-@mixin theme-content($type, $type-color, $type-dark-color, $type-light-color) {
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   &.#{$C_PREFIX}-type-button,
   &.#{$C_PREFIX}-type-float {
     & > .#{$C_PREFIX}-ele {
@@ -30,9 +30,9 @@ $C_PREFIX: #{$COMP_BTN};
     }
   }
 
-  &.#{$C_PREFIX}-type-flat {
+  &.#{$C_PREFIX}-type-text {
     & > .#{$C_PREFIX}-ele {
-      @include btn-flat($type-color);
+      @include btn-text($type-color);
     }
   }
 
@@ -48,6 +48,7 @@ $C_PREFIX: #{$COMP_BTN};
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   & > .#{$C_PREFIX}-ele {
     display: flex;
@@ -127,10 +128,10 @@ $C_PREFIX: #{$COMP_BTN};
     }
   }
 
-  &.#{$C_PREFIX}-ban {
+  &.#{$C_PREFIX}-disabled {
     .#{$C_PREFIX}-ele {
       color: rgba(0, 0, 0, .4);
-      background-color: rgba(0, 0, 0, .12) !important;
+      background-color: rgba(0, 0, 0, .12);
     }
 
     .#{$C_PREFIX}-read-only-shadow {
@@ -138,7 +139,7 @@ $C_PREFIX: #{$COMP_BTN};
 
       background-color: rgba(255, 255, 255, .5);
       border-radius: $border-radius;
-      cursor: not-allowed;
+      cursor: default;
       z-index: 1;
     }
   }
@@ -178,11 +179,11 @@ $C_PREFIX: #{$COMP_BTN};
       }
     }
 
-    &-flat {
+    &-text {
       & > .#{$C_PREFIX}-ele {
         background-color: #fff;
 
-        @include btn-flat($color-primary);
+        @include btn-text($color-primary);
       }
     }
 

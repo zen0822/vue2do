@@ -18,5 +18,6 @@
   "typeTheme": {
     "add": "common/typeTheme/add",
     "get": "common/typeTheme/get"
-  }
+  },
+  "deviceSize": "common/deviceSize"
 }

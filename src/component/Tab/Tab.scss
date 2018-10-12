@@ -11,6 +11,7 @@ $C_SHIFT_PREFIX: #{ $COMP_SHIFT };
 .#{$C_PREFIX} {
   cursor: pointer;
   width: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row {
     > .#{ $C_SHIFT_PREFIX }-col {

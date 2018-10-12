@@ -5,7 +5,7 @@
 export default function (h) {
   let btnEleChildren = []
 
-  if (this.stateBan) {
+  if (this.stateDisabled) {
     btnEleChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
     }))
@@ -17,7 +17,7 @@ export default function (h) {
         class: [this.xclass('value-show')]
       }, [this.$slots.default])
     )
-  } else if (this.type === 'flat') {
+  } else if (this.type === 'text') {
     const ele = this.$slots.default ? this.$slots.default : this.value
 
     btnEleChildren.push(this.link ?
@@ -74,7 +74,7 @@ export default function (h) {
         ref: 'transition'
       }),
       h('div', {
-        class: [this.prefix('css-motion-rip')],
+        class: [this.xclass('overlay')],
         directives: [{
           name: 'show',
           value: this.motion
@@ -89,13 +89,16 @@ export default function (h) {
         this.cPrefix,
         this.btnClass,
         {
-          [this.xclass('ban')]: this.stateBan
+          [this.xclass('disabled')]: this.stateDisabled
         },
         {
           [this.xclass('block')]: this.block
         },
         {
-          [this.xclass('rip')]: this.motion
+          [this.xclass('rip')]: !this.stateDisabled && this.motion
+        },
+        {
+          [this.xclass('focus')]: !this.stateDisabled && this.focusing
         }
       ],
       on: {
@@ -106,7 +109,7 @@ export default function (h) {
         blur: this.blur
       },
       attrs: {
-        tabindex: 0
+        tabindex: this.stateDisabled ? undefined : 0
       }
     }, [
       h('div', {
