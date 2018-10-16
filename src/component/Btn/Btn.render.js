@@ -49,15 +49,13 @@ export default function (h) {
     buttonChildren.push(this.$slots.default ? this.$slots.default : this.value)
 
     btnEleChildren.push(
-      h(
-        `${this.link ? 'a' : 'div'}`, {
-          class: [
-            this.xclass('ele-border')
-          ]
-        }, [
-          buttonChildren
+      h('div', {
+        class: [
+          this.xclass('ele-border')
         ]
-      )
+      }, [
+        buttonChildren
+      ])
     )
   }
 

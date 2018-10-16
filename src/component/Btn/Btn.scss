@@ -114,20 +114,6 @@ $C_PREFIX: #{$COMP_BTN};
     }
   }
 
-  &.#{$C_PREFIX}-radius {
-    &-none > .#{$C_PREFIX}-ele {
-      border-radius: 0;
-    }
-
-    &-m > .#{$C_PREFIX}-ele {
-      border-radius: 10px;
-    }
-
-    &-l > .#{$C_PREFIX}-ele {
-      border-radius: 30px;
-    }
-  }
-
   &.#{$C_PREFIX}-disabled {
     .#{$C_PREFIX}-ele {
       color: rgba(0, 0, 0, .4);
@@ -195,6 +181,20 @@ $C_PREFIX: #{$COMP_BTN};
 
         @include btn-outline($color-primary);
       }
+    }
+  }
+
+  &.#{$C_PREFIX}-radius {
+    &-none > .#{$C_PREFIX}-ele {
+      border-radius: 0;
+    }
+
+    &-m > .#{$C_PREFIX}-ele {
+      border-radius: 10px;
+    }
+
+    &-l > .#{$C_PREFIX}-ele {
+      border-radius: 30px;
     }
   }
 

@@ -3,19 +3,54 @@ include ../../mixin.pug
 div
   article.example-article
     +section('start', '开始使用')
-      z-select.p-component-menu-select(
-        :value='typeTheme'
-        ref='btnRadius'
-        menuWidth='100%'
-      )
-        z-select-ele(value='primary') Primary
-        z-select-ele(value='danger') Danger
-        z-select-ele(value='success') Success
-
+      z-row.z-css-m-b(justify='start')
+        z-col.z-css-p-r(:xs='12')
+          span 按钮类型：
+          z-select.p-component-btn-select(
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='btnType'
+            value='button'
+            menuWidth='100%'
+            style='width: 100px;'
+          )
+            z-select-ele(value='button') button
+            z-select-ele(value='text') text
+            z-select-ele(value='float') float
+            z-select-ele(value='outline') outline
+        z-col.z-css-p-r(:xs='12')
+          span 边框圆角：
+          z-select.p-component-btn-select(
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='btnRadius'
+            value='S'
+            menuWidth='100%'
+            style='width: 100px;'
+          )
+            z-select-ele(value='none') none
+            z-select-ele(value='S') S
+            z-select-ele(value='M') M
+            z-select-ele(value='L') L
+        z-col.z-css-p-r(:xs='12')
+          span 按钮大小：
+          z-select.p-component-btn-select(
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='btnSize'
+            value='S'
+            menuWidth='100%'
+            style='width: 100px;'
+          )
+            z-select-ele(value='S') S
+            z-select-ele(value='M') M
+            z-select-ele(value='L') L
       z-btn(
         :ui='typeUI'
         :theme='typeTheme'
-        :radius='$refs.btnRadius.val()'
+        :radius='btnRadius'
+        :size='btnSize'
+        :type='btnType'
       ) 提交
 
       z-code(:theme='typeTheme').
@@ -40,35 +75,26 @@ div
         disabled
       ) 禁止访问
 
+      p *focus、click 等其他交互都没有动画
+
       z-code(:theme='typeTheme').
         #{'<z-btn disabled>'}
           禁止访问
         #{'</z-btn>'}
-    +section('float', '浮动按钮')
+    +section('link', '链接按钮')
       z-btn(
         :ui='typeUI'
         :theme='typeTheme'
-        type='float'
-      )
-        z-icon(
-          kind='search'
-          theme='white'
-        )
-
-      z-code(:theme='typeTheme').
-        #{'<z-btn type="float">'}
-          #{'<z-icon kind="search" theme="white"></z-icon>'}
-        #{'</z-btn>'}
-    +section('text', '文字按钮')
-      z-btn(
-        :ui='typeUI'
-        :theme='typeTheme'
-        value='文字'
+        link='//zen0822.github.io/#/component/btn'
         type='text'
-      )
+      ) 链接按钮
+
+      p type 为 text 才生效
 
       z-code(:theme='typeTheme').
-        #{'<z-btn type="text" value="文字"></z-btn>'}
+        #{'<z-btn type="text" link="//zen0822.github.io/#/component/btn">'}
+          链接按钮
+        #{'</z-btn>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'
@@ -129,17 +155,33 @@ div
           z-table-col {{ item }}
         z-table-row(slot='1')
           z-table-col click
-          z-table-col ——
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
           z-table-col 点击btn事件
         z-table-row(slot='2')
           z-table-col keyEnter
-          z-table-col ——
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
           z-table-col focus 时敲击 Enter 键
         z-table-row(slot='3')
           z-table-col focus
-          z-table-col ——
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
           z-table-col 按钮获得焦点事件
         z-table-row(slot='4')
           z-table-col blur
-          z-table-col ——
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
           z-table-col 按钮失去焦点事件

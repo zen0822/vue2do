@@ -3,9 +3,9 @@
  *
  * @prop disabled - 禁止点击
  * @prop block - 按钮的宽度是父元素的宽度, width: 100%
- * @prop link - 链接地址
+ * @prop link - 链接地址（type = text 的时候才生效链接）
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
- * @prop size - 按钮大小
+ * @prop size - 按钮大小（S | M | L）
  * @prop submit - 提交按钮
  * @prop type - 按钮类型 (button | text | float | outline)
  * @prop value - 按钮名字

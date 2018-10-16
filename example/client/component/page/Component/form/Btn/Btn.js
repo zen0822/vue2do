@@ -9,15 +9,26 @@ export default {
 
   mixins: [mixin],
 
-  computed: {
-    btnRadius() {
-      return this.$refs.btnRadius.val()
+  data() {
+    return {
+      testName: 'test',
+      btnRadius: 'S',
+      btnType: 'button',
+      btnSize: 'S'
     }
   },
 
-  data() {
-    return {
-      testName: 'test'
-    }
+  mounted() {
+    this.$refs.btnRadius.$on('change', ({
+      value
+    }) => (this.btnRadius = value))
+
+    this.$refs.btnSize.$on('change', ({
+      value
+    }) => (this.btnSize = value))
+
+    this.$refs.btnType.$on('change', ({
+      value
+    }) => (this.btnType = value))
   }
 }
