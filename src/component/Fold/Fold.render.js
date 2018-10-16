@@ -19,7 +19,7 @@ export default function (h) {
               [this.xclass('icon-fold')]: this.foldContentActive(contentIndex)
             }],
             props: {
-              kind: 'arrow-south',
+              kind: 'arrow-north',
               size: 'xs',
               ui: this.ui,
               theme: this.theme

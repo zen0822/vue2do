@@ -28,8 +28,16 @@ $MENU_HEIGHT: 36px;
   }
 
   &.#{$C_PREFIX}-selecting {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
     .#{$C_PREFIX}-selected-box {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+
       &::after {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
         opacity: 1;
       }
     }
@@ -44,8 +52,11 @@ $MENU_HEIGHT: 36px;
   }
 
   & > .#{$C_PREFIX}-selected-box {
+    border-radius: $border-radius;
+
     &::after {
       box-shadow: $shadow-lower;
+      border-radius: $border-radius;
       content: '';
 
       opacity: 0;
@@ -57,7 +68,7 @@ $MENU_HEIGHT: 36px;
       position: absolute;
       left: 0;
       top: 0;
-      z-index: -1;
+      z-index: 1;
     }
   }
 

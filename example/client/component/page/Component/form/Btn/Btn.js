@@ -11,7 +11,24 @@ export default {
 
   data() {
     return {
-      testName: 'test'
+      testName: 'test',
+      btnRadius: 'S',
+      btnType: 'button',
+      btnSize: 'S'
     }
+  },
+
+  mounted() {
+    this.$refs.btnRadius.$on('change', ({
+      value
+    }) => (this.btnRadius = value))
+
+    this.$refs.btnSize.$on('change', ({
+      value
+    }) => (this.btnSize = value))
+
+    this.$refs.btnType.$on('change', ({
+      value
+    }) => (this.btnType = value))
   }
 }
