@@ -16,10 +16,6 @@ import baseMixin from '../../mixin/base'
 import Icon from '../Icon/Icon'
 import MotionFold from '../MotionFold/MotionFold'
 
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
-
 const Fold = {
   name: 'Fold',
 

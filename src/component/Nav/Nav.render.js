@@ -175,7 +175,7 @@ export default function (h) {
               [this.xclass('arrow-spread')]: this.isActive
             }],
             props: {
-              kind: 'arrow-north',
+              kind: 'arrow-south',
               size: 's',
               ui: this.ui,
               theme: this.theme

@@ -22,7 +22,7 @@ $C_ICON_PREFIX: #{$COMP_ICON};
   display: inline-block;
   vertical-align: middle;
   position: relative;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 
   &-vertical {
     .#{$C_PREFIX}-opt-row {

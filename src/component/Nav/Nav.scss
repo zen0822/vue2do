@@ -23,6 +23,7 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
 
 .#{$C_PREFIX} {
   position: relative;
+  -webkit-tap-highlight-color: transparent;
 
   &-arrow {
     text-align: right;

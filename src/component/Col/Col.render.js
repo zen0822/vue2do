@@ -3,7 +3,7 @@
  */
 
 export default function (h) {
-  let classOpt = []
+  let classOpt = [this.cPrefix]
   let deviceType = ['xs', 's', 'm', 'l', 'xl', 'span']
 
   if (this.pull > 0) {
@@ -33,8 +33,6 @@ export default function (h) {
       }
     })
   }
-
-  classOpt.push(this.cPrefix)
 
   return h(
     'div',
