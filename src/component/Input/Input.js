@@ -56,14 +56,6 @@ import Row from '../Row/Row'
 import Col from '../Col/Col'
 import MotionFade from '../MotionFade/MotionFade'
 
-import {
-  dataType
-} from '../../util/data/data'
-import {
-  hasScroller
-} from '../../util/dom'
-import tip from '../Message/tip'
-
 const TYPE_TEXT_AREA = 'area'
 const TYPE_TEXT = 'field'
 const ERROR_MESSAGE_TIP = 'tip'
