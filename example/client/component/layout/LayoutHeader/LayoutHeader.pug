@@ -1,9 +1,9 @@
 div.header-layout-stage
   z-row.nav-box(justify='justify')
-    z-col(:span='7', :xl='9')
+    z-col(width='calc(100% - 400px)')
       router-link(to='/')
         img.logo-box(:src='logoUrl')
-    z-col(:span='5', :xl='3')
+    z-col(width='calc(400px)')
       z-row.nav-menu-box(justify='justify')
         z-col(:span='3')
           router-link(to='/component/start') 组件

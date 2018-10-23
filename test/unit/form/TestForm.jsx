@@ -2,7 +2,6 @@
  * 测试 form 组件
  */
 
-import Vue from 'vue'
 import FormComp from '../../../src/component/Form/Form'
 import InputComp from '../../../src/component/Input/Input'
 
