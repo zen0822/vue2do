@@ -2,11 +2,7 @@
  * menu.api
  */
 
-import keyCode from '../../config/keyCode.json'
 import tip from '../Message/tip'
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
 
 export default {
   methods: {
@@ -182,6 +178,14 @@ export default {
      */
     fold() {
       return this.toggle(false)
+    },
+
+    /**
+     * 折叠下拉框
+     * @return {String, Number} - 下拉组件的当前值
+     */
+    val() {
+      return this.value
     }
   }
 }

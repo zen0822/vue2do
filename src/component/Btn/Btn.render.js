@@ -49,15 +49,13 @@ export default function (h) {
     buttonChildren.push(this.$slots.default ? this.$slots.default : this.value)
 
     btnEleChildren.push(
-      h(
-        `${this.link ? 'a' : 'div'}`, {
-          class: [
-            this.xclass('ele-border')
-          ]
-        }, [
-          buttonChildren
+      h('div', {
+        class: [
+          this.xclass('ele-border')
         ]
-      )
+      }, [
+        buttonChildren
+      ])
     )
   }
 
@@ -102,11 +100,11 @@ export default function (h) {
         }
       ],
       on: {
-        mousedown: this.mousedown,
-        mouseup: this.mouseup,
-        keyup: this.keyup,
-        focus: this.focus,
-        blur: this.blur
+        mousedown: this._handlerMousedown,
+        mouseup: this._handlerMouseup,
+        keyup: this._handlerKeyup,
+        focus: this._handlerFocus,
+        blur: this._handlerBlur
       },
       attrs: {
         tabindex: this.stateDisabled ? undefined : 0

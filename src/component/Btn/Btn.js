@@ -3,9 +3,9 @@
  *
  * @prop disabled - 禁止点击
  * @prop block - 按钮的宽度是父元素的宽度, width: 100%
- * @prop link - 链接地址
+ * @prop link - 链接地址（type = text 的时候才生效链接）
  * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
- * @prop size - 按钮大小
+ * @prop size - 按钮大小（S | M | L）
  * @prop submit - 提交按钮
  * @prop type - 按钮类型 (button | text | float | outline)
  * @prop value - 按钮名字
@@ -27,6 +27,7 @@ import {
 import render from './Btn.render'
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
+import methodMixin from './Btn.method.js'
 
 import Loading from '../Loading/Loading'
 import MotionRip from '../MotionRip/MotionRip'
@@ -41,7 +42,7 @@ const SIZE_L = 'L'
 export default {
   name: 'Btn',
 
-  mixins: [baseMixin, formMixin],
+  mixins: [baseMixin, formMixin, methodMixin],
 
   render,
 
@@ -143,7 +144,7 @@ export default {
       this.stateDisabled = this.disabled
     },
 
-    mouseup(event) {
+    _handlerMouseup(event) {
       if (this.inTouch) {
         return false
       }
@@ -155,14 +156,14 @@ export default {
       this.allowFocus = true
 
       if (event.button === 0) {
-        return this.click(event)
+        return this._click(event)
       }
     },
 
     /**
      * TODO: 当 IE <= 11 时，html 设置了 margin pageX 没把 margin 值算进去
      */
-    mousedown(event) {
+    _handlerMousedown(event) {
       if (this.inTouch) {
         return false
       }
@@ -191,7 +192,7 @@ export default {
       }
     },
 
-    focus(event) {
+    _handlerFocus(event) {
       if (this.stateDisabled) {
         return false
       }
@@ -212,7 +213,7 @@ export default {
       }
     },
 
-    blur(event) {
+    _handlerBlur(event) {
       if (this.stateDisabled) {
         return false
       }
@@ -230,13 +231,13 @@ export default {
     /**
      * keyup 句柄
      */
-    keyup(event) {
+    _handlerKeyup(event) {
       if (this.stateDisabled) {
         return false
       }
 
       if (event.keyCode === 13) {
-        this.click(event)
+        this._click(event)
 
         return this.$emit('keyEnter', {
           event,
@@ -248,7 +249,7 @@ export default {
     /**
      * click event
      */
-    click(event) {
+    _click(event) {
       if (this.stateDisabled) {
         return false
       }
@@ -262,37 +263,15 @@ export default {
     /**
      * 将按钮变为只读操作
      */
-    banBtn() {
+    _banBtn() {
       this.stateDisabled = true
     },
 
     /**
      * 取消按钮只读状态
      */
-    allowBtn() {
+    _allowBtn() {
       this.stateDisabled = false
-    },
-
-    /**
-     * 开启按钮等待功能
-     */
-    openLoading() {
-      if (!this.createdLoading) {
-        this.createdLoading = true
-        this.banBtn()
-      }
-
-      this.$nextTick(() => {
-        this.$refs.loading.show()
-      })
-    },
-
-    /**
-     * 关闭按钮等待功能
-     */
-    classLoading(state) {
-      this.allowBtn()
-      this.$refs.loading.hide()
     }
   }
 }

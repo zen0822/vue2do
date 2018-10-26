@@ -30,15 +30,12 @@ import './Select.scss'
 import './Select.bootstrap.scss'
 import './Select.material.scss'
 
-import Vue from 'vue'
 import SelectOpt from './SelectOpt'
 import keyCode from '../../config/keyCode.json'
 
 import render from './Select.render'
 import store from '../../vuex/store'
-import hubStore from '../../vuex/module/hub/type.json'
 import compStore from '../../vuex/module/comp/type.json'
-import tip from '../Message/tip'
 
 import Icon from '../Icon/Icon'
 import Input from '../Input/Input'
@@ -56,12 +53,6 @@ import {
 } from '../../util/dom/prop'
 
 import uid from '../../util/uid'
-import {
-  dataType
-} from '../../util/data/data'
-import {
-  unique as uniqueArray
-} from '../../util/data/array'
 
 // 搜索功能的函数节流的间隔时间
 const SEARCH_KEY_UP_INTERVAL = 500
@@ -743,9 +734,13 @@ export default {
 
           vm.menuDisplay = false
 
-          setTimeout(() => {
+          if (this.UIMaterial) {
+            setTimeout(() => {
+              vm.$refs.menu.fold()
+            }, 300)
+          } else {
             vm.$refs.menu.fold()
-          }, 300)
+          }
         }
       }
 
