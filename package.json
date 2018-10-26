@@ -9,7 +9,7 @@
   "files": [
     "bin",
     "build",
-    "component",
+    "comp",
     "dist",
     "lib",
     "src"
@@ -19,7 +19,7 @@
   "license": "MIT",
   "keywords": [
     "vue2",
-    "comp",
+    "component",
     "ui",
     "base"
   ],
