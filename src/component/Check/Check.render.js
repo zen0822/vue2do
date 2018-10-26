@@ -97,7 +97,7 @@ const checkAllEle = function (h) {
       }
     ],
     on: this.checkAllDisabled ? {} : {
-      click: this.checkAllOption,
+      click: this._checkAllOption,
       mousedown: (event) => this._handlerMousedownCheckAll(event),
       mouseup: (event) => this._handlerMouseupCheckAll(event),
       focus: (event) => this._handlerFocusCheckAll(event),
