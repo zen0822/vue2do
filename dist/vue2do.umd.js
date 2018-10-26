@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.0
+ * vue2do.js v0.4.5-beta.6
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -12,7 +12,7 @@
 		exports["Vue2do"] = factory(require("vue"), require("vuex"), require("vue-i18n"));
 	else
 		root["Vue2do"] = factory(root["Vue"], root["Vuex"], root["VueI18n"]);
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_83__, __WEBPACK_EXTERNAL_MODULE_209__) {
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_81__, __WEBPACK_EXTERNAL_MODULE_213__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -75,7 +75,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 58);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -217,7 +217,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(65);
+var	fixUrls = __webpack_require__(63);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -543,7 +543,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(82);
+var _index = __webpack_require__(80);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -555,9 +555,11 @@ var _type = __webpack_require__(11);
 
 var _type2 = _interopRequireDefault(_type);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
-var _attr = __webpack_require__(21);
+var _attr = __webpack_require__(20);
+
+var _util = __webpack_require__(85);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -583,7 +585,7 @@ exports.default = {
       type: String,
       default: _index2.default.defaultTheme,
       validator: function validator(val) {
-        return ['primary', 'grey', 'warning', 'success', 'danger', 'blue', 'orange', 'light', 'dark'].includes(val);
+        return ['primary', 'grey', 'warning', 'success', 'danger', 'blue', 'orange', 'light', 'dark', 'white', 'black'].includes(val);
       }
     },
     ui: {
@@ -801,9 +803,7 @@ exports.default = {
           _this2.$store.dispatch(_type2.default.deviceSize, content);
         };
 
-        window.addEventListener('resize', function () {
-          updateDeviceSize();
-        });
+        window.addEventListener('resize', (0, _util.throttle)(updateDeviceSize));
 
         updateDeviceSize();
       }
@@ -828,15 +828,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(89);
+__webpack_require__(93);
 
-__webpack_require__(90);
+__webpack_require__(94);
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _IconRender = __webpack_require__(92);
+var _IconRender = __webpack_require__(96);
 
 var _IconRender2 = _interopRequireDefault(_IconRender);
 
@@ -851,7 +851,7 @@ var TYPE_ALI = 'ali'; /**
                        * icon 组件
                        *
                        * @prop theme - 主题
-                       * @prop size - 大小
+                       * @prop size - 大小(xs, s, m, l, xl), 默认 s
                        * @prop color - 颜色 16 进制
                        * @prop type - 字符图标类型 (字符图标的 class 名的前缀，用户自己引入的字符图标的前缀)
                        * @prop kind - 图标的种类（ex：fa-circle -> kind='circle'，ali-fold -> kind='fold')
@@ -875,7 +875,7 @@ exports.default = {
 
     size: {
       type: String,
-      default: 'xs',
+      default: 's',
       validator: function validator(val) {
         return ['xs', 's', 'm', 'l', 'xl'].includes(val.toLowerCase());
       }
@@ -922,12 +922,124 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.handleEleDisplay = exports.prop = exports.position = exports.offset = exports.childrenHeight = undefined;
+
+var _position = __webpack_require__(78);
+
+/**
+ * 让元素展示处于显示状态，来获得实际的元素特性
+ *
+ * @param {Object} opt - 选项
+ *                     @param {Element} element
+ *                     @param {Function} cb
+ */
+var handleEleDisplay = function handleEleDisplay() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      element = _ref.element,
+      cb = _ref.cb;
+
+  if (!element || element.nodeType !== 1) {
+    return false;
+  }
+
+  var elDisplay = getComputedStyle(element).display;
+  var cssDisplay = element.style.display;
+
+  function handleElDisplay() {
+    var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+    if (elDisplay === 'none' && cssDisplay === 'none') {
+      Object.assign(element.style, {
+        visibility: show ? 'hidden' : '',
+        display: show ? '' : 'none'
+      });
+    } else if (elDisplay === 'none' && cssDisplay !== 'none') {
+      Object.assign(element.style, {
+        visibility: show ? 'hidden' : '',
+        display: ''
+      });
+    }
+
+    return element;
+  }
+
+  handleElDisplay();
+  cb && cb(element);
+  handleElDisplay(false);
+
+  return element;
+};
+
+/**
+ * 获取元素高度宽度等相关特性（无论是否是隐藏状态）
+ *
+ * @param {Element} element - dom 节点
+ */
+var prop = function prop(element) {
+  if (element && element.nodeType !== 1) {
+    return false;
+  }
+
+  var eleProp = {};
+
+  handleEleDisplay({
+    element: element,
+    cb: function cb(element) {
+      Object.assign(eleProp, {
+        clientWidth: element.clientWidth,
+        clientHeight: element.clientHeight,
+        offsetWidth: element.offsetWidth,
+        offsetHeight: element.offsetHeight,
+        offsetParent: element.offsetParent,
+        offsetTop: element.offsetTop,
+        offsetLeft: element.offsetLeft,
+        scrollWidth: element.scrollWidth,
+        scrollHeight: element.scrollHeight,
+        borderWidth: element.clientTop
+      });
+    }
+  });
+
+  return eleProp;
+};
+
+/**
+ *
+ * @param {*} el - dom 节点
+ */
+var childrenHeight = function childrenHeight(el) {
+  var children = el.children;
+  var totalHeight = 0;
+
+  for (var i = 0, len = children.length; i < len; i++) {
+    totalHeight += children[i].offsetHeight;
+  }
+
+  return totalHeight;
+};
+
+exports.childrenHeight = childrenHeight;
+exports.offset = _position.offset;
+exports.position = _position.position;
+exports.prop = prop;
+exports.handleEleDisplay = handleEleDisplay;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Message = __webpack_require__(23);
+var _Message = __webpack_require__(22);
 
 var _Message2 = _interopRequireDefault(_Message);
 
@@ -1032,118 +1144,6 @@ window.addEventListener('load', function () {
 exports.default = tip;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.handleEleDisplay = exports.prop = exports.position = exports.offset = exports.childrenHeight = undefined;
-
-var _position = __webpack_require__(80);
-
-/**
- * 让元素展示处于显示状态，来获得实际的元素特性
- *
- * @param {Object} opt - 选项
- *                     @param {Element} element
- *                     @param {Function} cb
- */
-var handleEleDisplay = function handleEleDisplay() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      element = _ref.element,
-      cb = _ref.cb;
-
-  if (!element || element.nodeType !== 1) {
-    return false;
-  }
-
-  var elDisplay = getComputedStyle(element).display;
-  var cssDisplay = element.style.display;
-
-  function handleElDisplay() {
-    var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-    if (elDisplay === 'none' && cssDisplay === 'none') {
-      Object.assign(element.style, {
-        visibility: show ? 'hidden' : '',
-        display: show ? '' : 'none'
-      });
-    } else if (elDisplay === 'none' && cssDisplay !== 'none') {
-      Object.assign(element.style, {
-        visibility: show ? 'hidden' : '',
-        display: ''
-      });
-    }
-
-    return element;
-  }
-
-  handleElDisplay();
-  cb && cb(element);
-  handleElDisplay(false);
-
-  return element;
-};
-
-/**
- * 获取元素高度宽度等相关特性（无论是否是隐藏状态）
- *
- * @param {Element} element - dom 节点
- */
-var prop = function prop(element) {
-  if (element && element.nodeType !== 1) {
-    return false;
-  }
-
-  var eleProp = {};
-
-  handleEleDisplay({
-    element: element,
-    cb: function cb(element) {
-      Object.assign(eleProp, {
-        clientWidth: element.clientWidth,
-        clientHeight: element.clientHeight,
-        offsetWidth: element.offsetWidth,
-        offsetHeight: element.offsetHeight,
-        offsetParent: element.offsetParent,
-        offsetTop: element.offsetTop,
-        offsetLeft: element.offsetLeft,
-        scrollWidth: element.scrollWidth,
-        scrollHeight: element.scrollHeight,
-        borderWidth: element.clientTop
-      });
-    }
-  });
-
-  return eleProp;
-};
-
-/**
- *
- * @param {*} el - dom 节点
- */
-var childrenHeight = function childrenHeight(el) {
-  var children = el.children;
-  var totalHeight = 0;
-
-  for (var i = 0, len = children.length; i < len; i++) {
-    totalHeight += children[i].offsetHeight;
-  }
-
-  return totalHeight;
-};
-
-exports.childrenHeight = childrenHeight;
-exports.offset = _position.offset;
-exports.position = _position.position;
-exports.prop = prop;
-exports.handleEleDisplay = handleEleDisplay;
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1159,19 +1159,19 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(83);
+var _vuex = __webpack_require__(81);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
-var _common = __webpack_require__(84);
+var _common = __webpack_require__(82);
 
 var _common2 = _interopRequireDefault(_common);
 
-var _hub = __webpack_require__(85);
+var _hub = __webpack_require__(83);
 
 var _hub2 = _interopRequireDefault(_hub);
 
-var _comp = __webpack_require__(86);
+var _comp = __webpack_require__(84);
 
 var _comp2 = _interopRequireDefault(_comp);
 
@@ -1202,7 +1202,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ColRender = __webpack_require__(103);
+var _ColRender = __webpack_require__(107);
 
 var _ColRender2 = _interopRequireDefault(_ColRender);
 
@@ -1220,6 +1220,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @prop push - 定义了列在 x 正方向偏移的栅格数
  * @prop offset - 定义了列离开头的栅格数
  * @prop span - 定义了列在行上的水平跨度（采用 12 栏栅格）
+ * @prop width - 可以使用 % 和 px 定义栏栅宽度（比 span 优先）
  * @prop xs - 加小设备的水平跨度栅格数
  * @prop s - 小设备的水平跨度栅格数
  * @prop m - 中设备的水平跨度栅格数
@@ -1230,7 +1231,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @prop shrink - (draft)同 flex-shrink属性，定义了项目的缩小比例
  */
 
-// import './Col.scss'
+// import './Col.scss' // Col.scss 已经改成从外部加载进来
 exports.default = {
   name: 'Col',
 
@@ -1262,6 +1263,12 @@ exports.default = {
         } else {
           return false;
         }
+      }
+    },
+    width: {
+      type: String,
+      validator: function validator(val) {
+        return val.includes('px') || val.includes('%');
       }
     },
     xs: {
@@ -1302,6 +1309,7 @@ exports.default = {
     },
     compStyle: function compStyle() {
       return {
+        width: this.width,
         'flex-grow': this.grow === 0 ? undefined : this.grow
       };
     }
@@ -1319,7 +1327,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _RowRender = __webpack_require__(104);
+var _RowRender = __webpack_require__(108);
 
 var _RowRender2 = _interopRequireDefault(_RowRender);
 
@@ -1403,25 +1411,25 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(143);
+__webpack_require__(147);
 
 var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Scroller = __webpack_require__(145);
+var _Scroller = __webpack_require__(149);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _ScrollerRender = __webpack_require__(146);
+var _ScrollerRender = __webpack_require__(150);
 
 var _ScrollerRender2 = _interopRequireDefault(_ScrollerRender);
 
-var _keyCode = __webpack_require__(26);
+var _keyCode = __webpack_require__(34);
 
 var _keyCode2 = _interopRequireDefault(_keyCode);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 var _MotionFade = __webpack_require__(19);
 
@@ -1576,12 +1584,6 @@ exports.default = {
         transform: 'translateX(' + this.boxLeft + 'px) translateY(' + this.boxTop + 'px)'
       };
     },
-    scrollerStyle: function scrollerStyle() {
-      return {
-        height: this.height === '100%' ? '100%' : undefined,
-        width: this.width === '100%' ? '100%' : undefined
-      };
-    },
     xComputed: function xComputed() {
       // x 方向的计算属性
       return {
@@ -1720,16 +1722,17 @@ exports.default = {
       this.boxHeight = boxHeight;
       this.boxWidth = boxWidth;
 
-      if (this.height !== '100%' && scrollerHeightChanged) {
+      if (this.height === '100%') {
+        this.$el.style.height = '100%';
+      } else if (this.height !== '100%' && scrollerHeightChanged) {
         this.$el.style.height = this.scrollerHeight + 'px';
       }
 
-      if (this.width !== '100%' && scrollerWidthChanged) {
+      if (this.width === '100%') {
+        this.$el.style.width = '100%';
+      } else if (this.width !== '100%' && scrollerWidthChanged) {
         this.$el.style.width = this.scrollerWidth + 'px';
       }
-
-      // boxHeightChanged && (this.$box.style.height = `${boxHeight}px`)
-      // boxWidthChanged && (this.$box.style.width = `${boxWidth}px`)
 
       if (scrollerHeightChanged || scrollerWidthChanged) {
         this._scrollerChange();
@@ -1757,9 +1760,6 @@ exports.default = {
       var boxPositionName = 'box' + (type === 'y' ? 'Top' : 'Left'); // 滚动内容位置名字
 
       if (length === '100%') {
-        // TODO：优化计算次数
-
-
         // 父元素大于滚动内容
         if (scrollerLength >= boxLength) {
           boxLength = scrollerLength;
@@ -1944,15 +1944,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+__webpack_require__(72);
+
 __webpack_require__(74);
 
 __webpack_require__(76);
 
-__webpack_require__(78);
+var _prop = __webpack_require__(5);
 
-var _prop = __webpack_require__(6);
-
-var _Btn = __webpack_require__(81);
+var _Btn = __webpack_require__(79);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -1964,6 +1964,10 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
+var _BtnMethod = __webpack_require__(86);
+
+var _BtnMethod2 = _interopRequireDefault(_BtnMethod);
+
 var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
@@ -1974,26 +1978,25 @@ var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BTN_TYPE_LINK = 'link'; /**
-                             * btn 组件
-                             *
-                             * @prop ban - 禁止点击
-                             * @prop block - 按钮的宽度是父元素的宽度
-                             * @prop link - 链接地址
-                             * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
-                             * @prop size - 按钮大小
-                             * @prop submit - 提交按钮
-                             * @prop type - 按钮类型 (button | flat | float | outline)
-                             * @prop textDisplay - 是否显示按钮文字
-                             * @prop value - 按钮名字
-                             * @prop outline - 只有边框有颜色的按钮
-                             *
-                             * @event click - 点击btn事件
-                             * @event keyEnter - focus 时敲击 Enter 键
-                             * @event focus
-                             * @event blur
-                             */
+/**
+ * btn 组件
+ *
+ * @prop disabled - 禁止点击
+ * @prop block - 按钮的宽度是父元素的宽度, width: 100%
+ * @prop link - 链接地址（type = text 的时候才生效链接）
+ * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
+ * @prop size - 按钮大小（S | M | L）
+ * @prop submit - 提交按钮
+ * @prop type - 按钮类型 (button | text | float | outline)
+ * @prop value - 按钮名字
+ *
+ * @event click - 点击btn事件
+ * @event keyEnter - focus 时敲击 Enter 键
+ * @event focus
+ * @event blur
+ */
 
+var BTN_TYPE_LINK = 'link';
 var BTN_TYPE_BUTTON = 'button';
 
 var SIZE_S = 'S';
@@ -2003,7 +2006,7 @@ var SIZE_L = 'L';
 exports.default = {
   name: 'Btn',
 
-  mixins: [_base2.default, _form2.default],
+  mixins: [_base2.default, _form2.default, _BtnMethod2.default],
 
   render: _Btn2.default,
 
@@ -2013,23 +2016,15 @@ exports.default = {
   },
 
   props: {
-    ban: {
-      type: Boolean,
-      default: false
-    },
     block: {
       type: Boolean,
       default: false
     },
-    kind: {
-      type: String,
-      default: 'primary'
-    },
-    link: String,
-    outline: {
+    disabled: {
       type: Boolean,
       default: false
     },
+    link: String,
     radius: {
       type: String,
       default: 's',
@@ -2038,17 +2033,6 @@ exports.default = {
 
         return ['none', 's', 'm', 'l'].includes(size);
       }
-    },
-    type: {
-      type: String,
-      default: BTN_TYPE_BUTTON,
-      validator: function validator(val) {
-        return ['button', 'float', 'flat', 'outline'].includes(val);
-      }
-    },
-    value: {
-      type: String,
-      require: true
     },
     size: {
       type: String,
@@ -2063,15 +2047,22 @@ exports.default = {
       type: Boolean,
       require: false
     },
-    textDisplay: {
-      type: Boolean,
-      default: false
+    type: {
+      type: String,
+      default: BTN_TYPE_BUTTON,
+      validator: function validator(val) {
+        return ['button', 'float', 'text', 'outline'].includes(val);
+      }
+    },
+    value: {
+      type: String,
+      require: true
     }
   },
 
   data: function data() {
     return {
-      banState: false, // 按钮的禁用状态
+      stateDisabled: false, // 按钮的禁用状态
       btnValueDisplay: false, // 按钮值显示状态
       createdLoading: false, // 是否已经创建了按钮的 loading 组件
       focusing: false, // 正在 focus 中
@@ -2087,8 +2078,8 @@ exports.default = {
 
 
   watch: {
-    ban: function ban(val) {
-      this.banState = val;
+    disabled: function disabled(val) {
+      this.stateDisabled = val;
     }
   },
 
@@ -2109,21 +2100,21 @@ exports.default = {
 
   methods: {
     _setDataOpt: function _setDataOpt() {
-      this.banState = this.ban;
+      this.stateDisabled = this.disabled;
     },
-    mouseup: function mouseup(event) {
+    _handlerMouseup: function _handlerMouseup(event) {
       if (this.inTouch) {
         return false;
       }
 
-      if (this.banState) {
+      if (this.stateDisabled) {
         return false;
       }
 
       this.allowFocus = true;
 
       if (event.button === 0) {
-        return this.click(event);
+        return this._click(event);
       }
     },
 
@@ -2131,12 +2122,12 @@ exports.default = {
     /**
      * TODO: 当 IE <= 11 时，html 设置了 margin pageX 没把 margin 值算进去
      */
-    mousedown: function mousedown(event) {
+    _handlerMousedown: function _handlerMousedown(event) {
       if (this.inTouch) {
         return false;
       }
 
-      if (this.banState) {
+      if (this.stateDisabled) {
         return false;
       }
 
@@ -2157,7 +2148,11 @@ exports.default = {
         });
       }
     },
-    focus: function focus(event) {
+    _handlerFocus: function _handlerFocus(event) {
+      if (this.stateDisabled) {
+        return false;
+      }
+
       this.focusing = true;
 
       this.$emit('focus', {
@@ -2173,7 +2168,11 @@ exports.default = {
         this.motion = true;
       }
     },
-    blur: function blur(event) {
+    _handlerBlur: function _handlerBlur(event) {
+      if (this.stateDisabled) {
+        return false;
+      }
+
       this.focusing = false;
 
       this.$emit('blur', {
@@ -2188,9 +2187,13 @@ exports.default = {
     /**
      * keyup 句柄
      */
-    keyup: function keyup(event) {
+    _handlerKeyup: function _handlerKeyup(event) {
+      if (this.stateDisabled) {
+        return false;
+      }
+
       if (event.keyCode === 13) {
-        this.click(event);
+        this._click(event);
 
         return this.$emit('keyEnter', {
           event: event,
@@ -2203,7 +2206,11 @@ exports.default = {
     /**
      * click event
      */
-    click: function click(event) {
+    _click: function _click(event) {
+      if (this.stateDisabled) {
+        return false;
+      }
+
       return this.$emit('click', {
         event: event,
         emitter: this
@@ -2214,42 +2221,16 @@ exports.default = {
     /**
      * 将按钮变为只读操作
      */
-    banBtn: function banBtn() {
-      this.banState = true;
+    _banBtn: function _banBtn() {
+      this.stateDisabled = true;
     },
 
 
     /**
      * 取消按钮只读状态
      */
-    allowBtn: function allowBtn() {
-      this.banState = false;
-    },
-
-
-    /**
-     * 开启按钮等待功能
-     */
-    openLoading: function openLoading() {
-      var _this = this;
-
-      if (!this.createdLoading) {
-        this.createdLoading = true;
-        this.banBtn();
-      }
-
-      this.$nextTick(function () {
-        _this.$refs.loading.show();
-      });
-    },
-
-
-    /**
-     * 关闭按钮等待功能
-     */
-    classLoading: function classLoading(state) {
-      this.allowBtn();
-      this.$refs.loading.hide();
+    _allowBtn: function _allowBtn() {
+      this.stateDisabled = false;
     }
   }
 };
@@ -2267,6 +2248,10 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(87);
 
+__webpack_require__(89);
+
+__webpack_require__(91);
+
 var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
@@ -2275,22 +2260,22 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Loading = __webpack_require__(93);
+var _Loading = __webpack_require__(97);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * loading 组件
- * 使用自定义的loading 需要将父元素设置成 position: relative
- *
- * @prop bgDisplay - 是否显示 loading 的背景
- * @prop text - 等待文字
- * @prop theme - 主题
- * @prop type - 类型
- *
- */
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
+                                                                                                                                                                                                                   * loading 组件
+                                                                                                                                                                                                                   * 使用自定义的loading 需要将父元素设置成 position: relative
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @prop bgDisplay - 是否显示 loading 的背景
+                                                                                                                                                                                                                   * @prop display - 马上显示，默认否
+                                                                                                                                                                                                                   * @prop size - 大小(xs, s, m, l, xl), 默认 s
+                                                                                                                                                                                                                   * @prop theme - 主题
+                                                                                                                                                                                                                   * @prop type - 类型 (rotate, spot)
+                                                                                                                                                                                                                   */
 
 var TYPE_ROTATE = 'rotate';
 var TYPE_ROTATE_2 = 'rotate2';
@@ -2310,23 +2295,31 @@ exports.default = {
   props: {
     type: {
       type: String,
-      default: TYPE_ROTATE
+      default: TYPE_ROTATE,
+      validator: function validator(val) {
+        return ['rotate', 'spot'].includes(val);
+      }
     },
-
     bgDisplay: {
       type: Boolean,
       default: false
     },
-
-    text: {
+    display: {
+      type: Boolean,
+      default: false
+    },
+    size: {
       type: String,
-      default: ''
+      default: 's',
+      validator: function validator(val) {
+        return ['xs', 's', 'm', 'l', 'xl'].includes(val.toLowerCase());
+      }
     }
   },
 
   data: function data() {
     return {
-      display: false
+      stateDisplay: false
     };
   },
 
@@ -2336,11 +2329,11 @@ exports.default = {
     cPrefix: function cPrefix() {
       return this.compPrefix + '-loading';
     },
+    compClass: function compClass() {
+      return [this.cPrefix, this.cPrefix + '-' + this.uiClass, this.cPrefix + '-' + this.themeClass, this.cPrefix + '-size-' + this.size.toLowerCase(), _defineProperty({}, this.cPrefix + '-mark', this.bgDisplay)];
+    },
     isRotate: function isRotate() {
       return this.type === TYPE_ROTATE;
-    },
-    isRotate2: function isRotate2() {
-      return this.type === TYPE_ROTATE_2;
     },
     isSpot: function isSpot() {
       return this.type === TYPE_SPOT;
@@ -2353,7 +2346,7 @@ exports.default = {
      * @return {Object} this - 组件
      */
     show: function show(cb) {
-      this.display = true;
+      this.stateDisplay = true;
 
       return this;
     },
@@ -2364,7 +2357,7 @@ exports.default = {
      * @return {Object} this - 组件
      */
     hide: function hide() {
-      this.display = false;
+      this.stateDisplay = false;
 
       return this;
     },
@@ -2387,6 +2380,12 @@ exports.default = {
         this.timeout = null;
       }
     }
+  },
+
+  mounted: function mounted() {
+    if (this.display) {
+      this.show();
+    }
   }
 };
 
@@ -2401,7 +2400,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _uid = __webpack_require__(31);
+var _uid = __webpack_require__(30);
 
 var _uid2 = _interopRequireDefault(_uid);
 
@@ -2433,7 +2432,7 @@ exports.default = {
       type: [Number, String],
       default: 'normal',
       validator: function validator(val) {
-        return ['normal', 'fast', 'slow'].includes(val);
+        return ['normal', 'fast', 'slow'].includes(val) || typeof val === 'number';
       }
     },
     sync: {
@@ -2456,7 +2455,7 @@ exports.default = {
         case 'slow':
           return 450;
         default:
-          return 300;
+          return this.speed;
       }
     },
     transitionTime: function transitionTime() {
@@ -2747,7 +2746,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _attr = __webpack_require__(21);
+var _attr = __webpack_require__(20);
 
 var _base = __webpack_require__(2);
 
@@ -2757,7 +2756,7 @@ var _motion = __webpack_require__(14);
 
 var _motion2 = _interopRequireDefault(_motion);
 
-__webpack_require__(94);
+__webpack_require__(98);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2766,7 +2765,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    *
                                                                                                                                                                                                                    * @prop assign - 指定涟漪在是什么位置开始
                                                                                                                                                                                                                    * @prop circle - 涟漪是圆形
+                                                                                                                                                                                                                   * @prop display - 默认一开始是隐藏（进来之前的状态）
+                                                                                                                                                                                                                   * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
                                                                                                                                                                                                                    * @prop overflow - 默认溢出不隐藏，true 为隐藏溢出的 spot
+                                                                                                                                                                                                                   * @prop radius - 涟漪半径大小 (S | M | L)
+                                                                                                                                                                                                                   * @prop speed - 动画速度
+                                                                                                                                                                                                                   * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @event beforeEnter - 进来过渡之前
+                                                                                                                                                                                                                   * @event enter - 进来过渡期间
+                                                                                                                                                                                                                   * @event afterEnter - 进来过渡完成
+                                                                                                                                                                                                                   * @event beforeLeave - 离开过渡之前
+                                                                                                                                                                                                                   * @event leave - 离开过渡期间
+                                                                                                                                                                                                                   * @event afterLeave - 离开过渡之后
                                                                                                                                                                                                                    */
 
 exports.default = {
@@ -2786,6 +2797,13 @@ exports.default = {
     overflow: {
       type: Boolean,
       default: false
+    },
+    radius: {
+      type: [String],
+      default: 'S',
+      validator: function validator(val) {
+        return ['s', 'm', 'l'].includes(val.toLowerCase()) || /(%|px)$/.test(val);
+      }
     }
   },
 
@@ -2793,13 +2811,25 @@ exports.default = {
     time: function time() {
       switch (this.speed) {
         case 'normal':
-          return 800;
+          return 500;
         case 'fast':
-          return 600;
+          return 300;
         case 'slow':
-          return 1000;
+          return 700;
         default:
-          return 800;
+          return this.speed;
+      }
+    },
+    ripPadding: function ripPadding() {
+      switch (this.radius.toLowerCase()) {
+        case 's':
+          return '80%';
+        case 'm':
+          return '100%';
+        case 'l':
+          return '120%';
+        default:
+          return this.radius;
       }
     }
   },
@@ -2820,7 +2850,7 @@ exports.default = {
         'display': 'none'
       });
 
-      (0, _attr.delClass)(el, [this.prefix('motion-rip-assign'), this.prefix('motion-rip-active')]);
+      (0, _attr.delClass)(el, [this.prefix('motion-rip-after'), this.prefix('motion-rip-assign'), this.prefix('motion-rip-active')]);
 
       (0, _attr.addClass)(el, this.prefix('motion-rip-comp'));
 
@@ -2849,7 +2879,6 @@ exports.default = {
 
       // HACK: trigger browser reflow
       var height = el.offsetHeight;
-      el.firstChild.style.transition = el.style.transition = 'all ' + this.time + 'ms';
 
       return new Promise(function (resolve, reject) {
         setTimeout(function () {
@@ -2879,26 +2908,39 @@ exports.default = {
       });
     },
     afterEnter: function afterEnter() {
+      var _this3 = this;
+
       var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var el = this.$el;
 
-      el.firstChild.style.transition = el.style.transition = '';
-      el.style.display = '';
+      (0, _attr.addClass)(el, this.prefix('motion-rip-after'));
 
-      (0, _attr.delClass)(el, [this.prefix('motion-rip-comp'), this.prefix('motion-rip-assign'), this.prefix('motion-rip-active')]);
+      (0, _attr.delClass)(el, [this.prefix('motion-rip-active')]);
 
-      this.$emit('afterEnter');
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          el.style.display = 'none';
 
-      return this.leave();
+          return _this3.$emit('afterEnter');
+        }, _this3.time);
+      });
     }
   },
 
   render: function render(h, context) {
     return h('transition', [h('div', {
-      class: [this.prefix('motion-rip'), _defineProperty({}, this.prefix('motion-rip-circle'), this.circle), _defineProperty({}, this.prefix('motion-rip-overflow'), this.overflow)]
+      class: [this.prefix('motion-rip'), _defineProperty({}, this.prefix('motion-rip-circle'), this.circle), _defineProperty({}, this.prefix('motion-rip-overflow'), this.overflow)],
+      style: {
+        'transition-duration': this.time + 'ms'
+      }
     }, [h('div', {
-      class: [this.prefix('motion-rip-spot')]
+      class: [this.prefix('motion-rip-spot')],
+      ref: 'spot',
+      style: {
+        padding: this.ripPadding,
+        'transition-duration': this.time + 'ms'
+      }
     })])]);
   },
   mounted: function mounted() {
@@ -3129,6 +3171,16 @@ exports.default = {
     * @prop direction - 滑动方向(north | east | west | south)
     * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
     * @prop speed - 淡出速度
+    * @prop display - 默认一开始是隐藏（进来之前的状态）
+    * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+    * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+    *
+    * @event beforeEnter - 进来过渡之前
+    * @event enter - 进来过渡期间
+    * @event afterEnter - 进来过渡完成
+    * @event beforeLeave - 离开过渡之前
+    * @event leave - 离开过渡期间
+    * @event afterLeave - 离开过渡之后
     */
 
 /***/ }),
@@ -3142,13 +3194,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(119);
-
-__webpack_require__(121);
-
 __webpack_require__(123);
 
-var _Input = __webpack_require__(125);
+__webpack_require__(125);
+
+__webpack_require__(127);
+
+var _Input = __webpack_require__(129);
 
 var _Input2 = _interopRequireDefault(_Input);
 
@@ -3156,11 +3208,11 @@ var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(20);
+var _type = __webpack_require__(28);
 
 var _type2 = _interopRequireDefault(_type);
 
-var _validate = __webpack_require__(126);
+var _validate = __webpack_require__(130);
 
 var _validate2 = _interopRequireDefault(_validate);
 
@@ -3172,7 +3224,7 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Input3 = __webpack_require__(127);
+var _Input3 = __webpack_require__(131);
 
 var _Input4 = _interopRequireDefault(_Input3);
 
@@ -3188,11 +3240,11 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _data = __webpack_require__(33);
+var _data = __webpack_require__(42);
 
-var _dom = __webpack_require__(43);
+var _dom = __webpack_require__(31);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -3846,16 +3898,21 @@ exports.default = {
     *
     * @prop speed - 淡出速度
     * @prop opacity - 使用 css 定义的 opacity 淡入淡出
+    * @prop display - 默认一开始是隐藏（进来之前的状态）
+    * @prop speed - 动画速度
+    * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+    * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+    *
+    * @event beforeEnter - 进来过渡之前
+    * @event enter - 进来过渡期间
+    * @event afterEnter - 进来过渡完成
+    * @event beforeLeave - 离开过渡之前
+    * @event leave - 离开过渡期间
+    * @event afterLeave - 离开过渡之后
     */
 
 /***/ }),
 /* 20 */
-/***/ (function(module, exports) {
-
-module.exports = {"input":{"add":"hub/input/add","delete":"hub/input/delete","get":"hub/input/get"},"select":{"add":"hub/select/add","delete":"hub/select/delete"}}
-
-/***/ }),
-/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3921,7 +3978,7 @@ exports.delClass = delClass;
 exports.childrenHeight = childrenHeight;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3931,45 +3988,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /*
-                                                                                                                                                                                                                                                                               * check - 多选框组件
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               * @prop initVal - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
-                                                                                                                                                                                                                                                                               * @prop param - 参数名
-                                                                                                                                                                                                                                                                               * @prop initOpt - 复选框数据
-                                                                                                                                                                                                                                                                               * @prop disabled - 不可选
-                                                                                                                                                                                                                                                                               * @prop required - 是否必选
-                                                                                                                                                                                                                                                                               * @prop theme - 主题
-                                                                                                                                                                                                                                                                               * @prop multiple - 是否为多选
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               * @prop errorMessage - checkbox 没选的时候显示的错误信息
-                                                                                                                                                                                                                                                                               * @prop valName - 指定读取 checkboxItems 的 value 值的 key 的名字
-                                                                                                                                                                                                                                                                               * @prop txtName - 指定读取 checkboxItems 的 text 值的 key 的名字
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               * @prop beforeCheck - 选择之前的钩子函数
-                                                                                                                                                                                                                                                                               * @prop success - 选择成功的回调函数
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               * @prop checkAll - 全选 checkbox 的选项
-                                                                                                                                                                                                                                                                               *
-                                                                                                                                                                                                                                                                               */
-
-__webpack_require__(96);
-
-__webpack_require__(98);
-
 __webpack_require__(100);
 
-var _vue = __webpack_require__(3);
+__webpack_require__(102);
 
-var _vue2 = _interopRequireDefault(_vue);
+__webpack_require__(104);
 
-var _Check = __webpack_require__(102);
+var _Check = __webpack_require__(106);
 
 var _Check2 = _interopRequireDefault(_Check);
-
-var _event = __webpack_require__(42);
-
-var _event2 = _interopRequireDefault(_event);
 
 var _Col = __webpack_require__(8);
 
@@ -3987,10 +4014,6 @@ var _MotionRip = __webpack_require__(16);
 
 var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
-var _tip = __webpack_require__(5);
-
-var _tip2 = _interopRequireDefault(_tip);
-
 var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
@@ -3999,16 +4022,37 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _CheckApi = __webpack_require__(115);
+var _CheckApi = __webpack_require__(109);
 
 var _CheckApi2 = _interopRequireDefault(_CheckApi);
 
-var _array = __webpack_require__(32);
+var _array = __webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TYPE_RADIO = 'radio';
-var TYPE_CHECKBOX = 'checkbox';
+/*
+ * check - 多选框组件
+ *
+ * @prop checkAll - 全选 checkbox 的选项
+ * @prop checkAllLabel - 全选 checkbox 的选项的 label
+ * @prop checkAllDisabled - 全选 checkbox 的选项禁用
+ * @prop errorText - checkbox 没选的时候显示的错误文本
+ * @prop multiple - 是否为多选
+ * @prop option - 选择框数据
+ *              ex: [{
+ *                    value: 1,
+ *                    text: 'a',
+ *                    disabled: true // 默认是 false
+ *                  }]
+ * @prop param - 参数名
+ * @prop required - 是否必选
+ * @prop textName - 指定读取 checkboxItems 的 text 值的 key 的名字
+ * @prop value - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
+ * @prop valueName - 指定读取 checkboxItems 的 value 值的 key 的名字
+ * @prop vertical - 选择框是否垂直分布（默认 false，是水平分布）
+ *
+ * @event check - 点击选择事件
+ */
 
 var checkCompConfig = {
   name: 'Check',
@@ -4025,13 +4069,19 @@ var checkCompConfig = {
   },
 
   props: {
-    initOpt: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
+    checkAll: {
+      type: Boolean,
+      default: false
     },
-    inputName: {
+    checkAllLabel: {
+      type: String,
+      default: '全选'
+    },
+    checkAllDisabled: {
+      type: Boolean,
+      default: false
+    },
+    errorText: {
       type: String,
       default: ''
     },
@@ -4039,15 +4089,16 @@ var checkCompConfig = {
       type: Boolean,
       default: false
     },
-    disabled: {
-      type: Boolean,
-      default: false
+    option: {
+      type: Array,
+      default: function _default() {
+        return [];
+      },
+      validator: function validator(val) {
+        return Array.isArray(val);
+      }
     },
     param: {
-      type: String,
-      default: ''
-    },
-    errorMessage: {
       type: String,
       default: ''
     },
@@ -4055,18 +4106,16 @@ var checkCompConfig = {
       type: Boolean,
       default: false
     },
-    initVal: [Number, Array],
-    beforeCheck: Function,
-    success: Function,
-    valName: {
-      type: String,
-      default: 'value'
-    },
-    txtName: {
+    textName: {
       type: String,
       default: 'text'
     },
-    checkAll: {
+    value: [Number, Array],
+    valueName: {
+      type: String,
+      default: 'value'
+    },
+    vertical: {
       type: Boolean,
       default: false
     }
@@ -4075,13 +4124,15 @@ var checkCompConfig = {
   data: function data() {
     return {
       compName: 'check', // 组件名字
-      index: {}, // 当前已选的选择框的 index，多选是数组，单选是数字 TODO:有空实现以 index 来判断已选框
-      value: {}, // check 当前 value 值
-      text: {}, // check 当前 text 值
-      option: [], // check 的选项值
+      index: {}, // 当前已选的选择框的 index，多选是数组(默认：[])，单选是数字(默认：-1) TODO:有空实现以 index 来判断已选框
+      oldIndex: {},
+      stateValue: {}, // check 当前 value 值
+      text: {}, // check 当前 text 值, 多选默认是 [], 单选是 'undefined'
+      stateOption: [], // check 的选项值
       oldValue: [], // check 的旧的 value 值
       verified: true, // 组件的验证状态
-      motion: [], // 启动选择框的沦漪效果
+      optionFocus: [], // 选择框组的 focus 状态
+      focusedCheckAll: false, // 全选选择框的 focus 状态
       allowFocus: true, // 允许执行 focus 事件
       dangerTip: '',
       slotItems: []
@@ -4102,7 +4153,13 @@ var checkCompConfig = {
     checkedAll: function checkedAll() {
       // 是否已经全选
       if (this.checkAll && this.multiple) {
-        return this.value.length === this.option.length;
+        return this.index.length === this.stateOption.length;
+      }
+    },
+    checkedSome: function checkedSome() {
+      // 是否只选择了一部分的子选择框
+      if (this.checkAll && this.multiple) {
+        return this.index.length < this.stateOption.length && this.index.length > 0;
       }
     },
     checkIconName: function checkIconName() {
@@ -4115,7 +4172,8 @@ var checkCompConfig = {
             },
             checkbox: {
               uncheck: 'square-bs',
-              checked: 'square-check-bs'
+              checked: 'square-check-bs',
+              indeterminate: 'square-indeterminate-bs'
             }
           };
         case 'material':
@@ -4136,13 +4194,11 @@ var checkCompConfig = {
 
   watch: {
     value: function value(val) {
+      this.stateValue = val;
       this._initCheckbox();
     },
-    initVal: function initVal(val) {
-      this.value = val;
-    },
-    initOpt: function initOpt(val) {
-      this.option = val;
+    option: function option(val) {
+      this.stateOption = val;
       this._initCheckbox();
     }
   },
@@ -4152,14 +4208,17 @@ var checkCompConfig = {
      * 设置 data 选项的默认值
      */
     _setDataOpt: function _setDataOpt() {
-      if (_typeof(this.initVal) === 'object') {
-        this.value = Object.assign([], this.initVal);
+      if (this.value === undefined) {
+        this.stateValue = this.isCheckbox ? [] : -1;
       } else {
-        this.value = this.initVal;
+        this.stateValue = this.isCheckbox ? this.value.slice() : this.value;
       }
 
-      this.option = Object.assign([], this.initOpt);
-      this.motion = this.initOpt.map(function () {
+      this.index = this.isCheckbox ? [] : undefined;
+      this.text = this.isCheckbox ? [] : undefined;
+
+      this.stateOption = Object.assign([], this.option);
+      this.optionFocus = this.option.map(function () {
         return false;
       });
     },
@@ -4168,51 +4227,34 @@ var checkCompConfig = {
     /**
      * 获取选择框的图标名字
      *
-     * @param {Boolean} check - 已选的图标
+     * @param {Boolean} checked - 选择状态
      * @param {Boolean} multiple - 复选框
      */
     _getIconName: function _getIconName() {
-      var check = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      var multiple = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.multiple;
+      var checked = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var indeterminate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var multiple = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this.multiple;
 
-      if (this.multiple) {
-        return check ? this.checkIconName.checkbox.checked : this.checkIconName.checkbox.uncheck;
+      if (multiple) {
+        if (indeterminate) {
+          return this.checkIconName.checkbox.indeterminate;
+        }
+
+        return checked ? this.checkIconName.checkbox.checked : this.checkIconName.checkbox.uncheck;
       } else {
-        return check ? this.checkIconName.radio.checked : this.checkIconName.radio.uncheck;
+        return checked ? this.checkIconName.radio.checked : this.checkIconName.radio.uncheck;
       }
     },
 
 
     /**
      * 初始化checkbox
-     *
-     * @return {Function}
      **/
     _initCheckbox: function _initCheckbox() {
-      if (this.isCheckbox) {
-        if (!Array.isArray(this.value)) {
-          this.index = [];
-          this.text = [];
-          this.value = [];
-          this.oldValue = [];
-        }
+      this.setIndex();
+      this.setText();
 
-        this.setText();
-        this.verified = !this.required || this.value.length !== 0;
-      } else {
-        if (!this.value && this.value !== 0) {
-          this.index = undefined;
-          this.value = undefined;
-          this.oldValue = undefined;
-        } else {
-          this.setIndex();
-          this.setText();
-        }
-
-        if (this.required) {
-          this.verified = this.value !== 'undefined';
-        }
-      }
+      this.verified = !this.required || (this.isCheckbox ? this.stateValue.length !== 0 : this.stateValue !== 'undefined');
     },
 
 
@@ -4246,7 +4288,7 @@ var checkCompConfig = {
       }
 
       var items = [];
-      var checkboxItemsEmpty = (0, _array.isEmpty)(this.option);
+      var checkboxItemsEmpty = (0, _array.isEmpty)(this.stateOption);
 
       $checkEles.each(function (index, el) {
         var $el = $(el);
@@ -4299,7 +4341,6 @@ var checkCompConfig = {
 
       $(this.$el).find('.' + this.cPrefix + '-opt-slot .item').each(function (index, el) {
         if (_this2.slotItems[index]) {
-          var $el = $(el);
           var dom = document.createElement('div');
 
           dom.innerHTML = _this2.slotItems[index];
@@ -4314,16 +4355,19 @@ var checkCompConfig = {
      * 删除或者增加复选 checkbox 的 value 值
      *
      * @param {String, Number} - checkbox 的值
+     * @param {Number} - checkbox 选项的索引值
      */
-    _changeCheckbox: function _changeCheckbox(val) {
+    _changeCheckbox: function _changeCheckbox(index, val) {
       var _this3 = this;
 
       var hasDelflag = false;
 
-      this.value.every(function (item, index) {
+      this.stateValue.every(function (item, index) {
         if (val === item) {
           hasDelflag = true;
-          _this3.value.splice(index, 1);
+
+          _this3.stateValue.splice(index, 1);
+          _this3.index.splice(index, 1);
 
           return false;
         }
@@ -4335,7 +4379,8 @@ var checkCompConfig = {
         return this;
       }
 
-      return this.value.push(val);
+      this.stateValue.push(val);
+      this.index.push(index);
     },
 
 
@@ -4344,7 +4389,6 @@ var checkCompConfig = {
      */
     _handlerClick: function _handlerClick(event, index) {
       this.check(event, index);
-      // this.motion.splice(index - 1, 1, false)
     },
 
 
@@ -4387,7 +4431,7 @@ var checkCompConfig = {
      */
     _handlerFocus: function _handlerFocus(event, index) {
       if (this.allowFocus) {
-        this.motion.splice(index - 1, 1, true);
+        this.optionFocus.splice(index - 1, 1, true);
       }
     },
 
@@ -4396,13 +4440,64 @@ var checkCompConfig = {
      * blur 事件句柄
      */
     _handlerBlur: function _handlerBlur(event, index) {
-      this.motion.splice(index - 1, 1, false);
+      this.optionFocus.splice(index - 1, 1, false);
+    },
+
+
+    /**
+     * 全选 Mousedown 事件句柄
+     */
+    _handlerMousedownCheckAll: function _handlerMousedownCheckAll(event) {
+      if (this.inTouch) {
+        return false;
+      }
+
+      this.allowFocus = false;
+    },
+
+
+    /**
+     * 全选 Mouseup 事件句柄
+     */
+    _handlerMouseupCheckAll: function _handlerMouseupCheckAll(event) {
+      if (this.inTouch) {
+        return false;
+      }
+
+      this.allowFocus = true;
+    },
+
+
+    /**
+     * 全选 focus 事件句柄
+     */
+    _handlerFocusCheckAll: function _handlerFocusCheckAll(event) {
+      if (this.allowFocus) {
+        this.focusedCheckAll = true;
+      }
+    },
+
+
+    /**
+     * 全选 blur 事件句柄
+     */
+    _handlerBlurCheckAll: function _handlerBlurCheckAll(event) {
+      this.focusedCheckAll = false;
+    },
+
+
+    /**
+     * 全选 keyup 事件句柄
+     */
+    _handlerKeyupCheckAll: function _handlerKeyupCheckAll(event) {
+      if (event.keyCode === 13) {
+        return this.checkAllOption();
+      }
     }
   },
 
   created: function created() {
     this._initCheckboxItems();
-
     this._initCheckbox();
   }
 };
@@ -4410,7 +4505,7 @@ var checkCompConfig = {
 exports.default = checkCompConfig;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4420,11 +4515,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(105);
+__webpack_require__(110);
 
-__webpack_require__(107);
+__webpack_require__(112);
 
-var _Message = __webpack_require__(109);
+var _Message = __webpack_require__(114);
 
 var _Message2 = _interopRequireDefault(_Message);
 
@@ -4432,11 +4527,11 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Pop = __webpack_require__(24);
+var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4642,7 +4737,7 @@ var messageComp = {
 exports.default = messageComp;
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4652,11 +4747,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(110);
+__webpack_require__(115);
 
-__webpack_require__(112);
+__webpack_require__(117);
 
-var _Pop = __webpack_require__(114);
+var _Pop = __webpack_require__(119);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
@@ -4668,7 +4763,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _dom = __webpack_require__(43);
+var _dom = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4965,7 +5060,7 @@ var popComp = {
 exports.default = popComp;
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4975,15 +5070,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(131);
-
-__webpack_require__(133);
-
 __webpack_require__(135);
 
 __webpack_require__(137);
 
-var _Modal = __webpack_require__(139);
+__webpack_require__(139);
+
+__webpack_require__(141);
+
+var _Modal = __webpack_require__(143);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -4991,11 +5086,11 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Modal3 = __webpack_require__(142);
+var _Modal3 = __webpack_require__(146);
 
 var _Modal4 = _interopRequireDefault(_Modal3);
 
-var _Pop = __webpack_require__(24);
+var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
@@ -5023,7 +5118,7 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5148,14 +5243,12 @@ var modalComp = {
         x: 0,
         y: 0
       },
-      state: {
-        ui: '',
-        theme: ''
-      },
+      stateUI: '',
+      stateTheme: '',
       isMousedown: false,
       modalDisplay: false,
-      modalMessage: '',
-      modalHeader: '',
+      stateMessage: '',
+      stateHeader: '',
       showCb: null, // 模态框显示之后的回调函数
       hideCb: null, // 模态框隐藏之后的回调函数
       okCbFun: null,
@@ -5170,19 +5263,19 @@ var modalComp = {
       return this.compPrefix + '-modal';
     },
     uiClass: function uiClass() {
-      return 'ui-' + this.state.ui;
+      return 'ui-' + this.stateUI;
     },
     themeClass: function themeClass() {
-      return 'theme-' + this.state.theme;
+      return 'theme-' + this.stateTheme;
     },
     UIMaterial: function UIMaterial() {
-      return this.state.ui === 'material';
+      return this.stateUI === 'material';
     },
     headerClass: function headerClass() {
       var _ref;
 
       // 组件的 header 的 class 名字
-      return _ref = {}, _defineProperty(_ref, this.cPrefix + '-no-header', !this.modalHeaderDisplay), _defineProperty(_ref, this.cPrefix + '-no-header-title', !this.modalHeader), _ref;
+      return _ref = {}, _defineProperty(_ref, this.cPrefix + '-no-header', !this.modalHeaderDisplay), _defineProperty(_ref, this.cPrefix + '-no-header-title', !this.stateHeader), _ref;
     },
     footerClass: function footerClass() {
       // 组件的 footer 的 class 名字
@@ -5212,7 +5305,7 @@ var modalComp = {
         case 'simple':
           return false;
         default:
-          return !!this.modalHeader;
+          return !!this.stateHeader;
       }
     },
     modalFooterDisplay: function modalFooterDisplay() {
@@ -5281,7 +5374,7 @@ var modalComp = {
     _initModal: function _initModal() {
       var _this2 = this;
 
-      this.$refs.scroller.$on('yBarChange', function (_ref3) {
+      this.$refs.scroller && this.$refs.scroller.$on('yBarChange', function (_ref3) {
         var hasScroller = _ref3.hasScroller;
 
         _this2.hasScroller = hasScroller;
@@ -5293,14 +5386,14 @@ var modalComp = {
      * 设置数据
      */
     _setDataOpt: function _setDataOpt() {
-      this.modalMessage = this.message;
-      this.modalHeader = this.header;
+      this.stateMessage = this.message;
+      this.stateHeader = this.header;
 
       this.okCbFun = this.okCb;
       this.noCbFun = this.noCb;
 
-      this.state.ui = this.ui;
-      this.state.theme = this.theme;
+      this.stateUI = this.ui;
+      this.stateTheme = this.theme;
     },
 
 
@@ -5316,13 +5409,7 @@ var modalComp = {
 exports.default = modalComp;
 
 /***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = {"backspace":8,"ctrl":17,"enter":13,"tab":9,"shift":16,"up":38,"down":40,"left":37,"right":39}
-
-/***/ }),
-/* 27 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5332,9 +5419,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _attr = __webpack_require__(21);
+var _attr = __webpack_require__(20);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 var _base = __webpack_require__(2);
 
@@ -5350,6 +5437,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * fold(折叠) motion component
  *
  * @prop height - 被过渡的元素高度
+ * @prop display - 默认一开始是隐藏（进来之前的状态）
+ * @prop speed - 动画速度
+ * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+ * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+ *
+ * @event beforeEnter - 进来过渡之前
+ * @event enter - 进来过渡期间
+ * @event afterEnter - 进来过渡完成
+ * @event beforeLeave - 离开过渡之前
+ * @event leave - 离开过渡期间
+ * @event afterLeave - 离开过渡之后
  *
  */
 
@@ -5513,7 +5611,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 28 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5523,7 +5621,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(162);
+__webpack_require__(166);
 
 var _Btn = __webpack_require__(12);
 
@@ -5549,7 +5647,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Page = __webpack_require__(164);
+var _Page = __webpack_require__(168);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -5831,7 +5929,7 @@ var pageComp = {
 exports.default = pageComp;
 
 /***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5841,13 +5939,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(168);
+__webpack_require__(172);
 
-var _List = __webpack_require__(170);
+var _List = __webpack_require__(174);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -5859,7 +5957,7 @@ var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Page = __webpack_require__(28);
+var _Page = __webpack_require__(26);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -5875,40 +5973,38 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _List3 = __webpack_require__(171);
+var _List3 = __webpack_require__(175);
 
 var _List4 = _interopRequireDefault(_List3);
 
-var _list = __webpack_require__(48);
+var _list = __webpack_require__(46);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _util = __webpack_require__(39);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * list 组件
- *
- * @prop auto - 根据传入的列表数据自动生成分页数据
- * @prop autoHideScroller - 是否自动隐藏滚动条
- * @prop autoHidePage - 是否自动隐藏分页触发器
- * @prop item - 列表数据
- * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
- * @prop pager - 启动分页功能
- * @prop pageSize - 将列表数据（item）分为每页多少条数据
- * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
- * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
- *
- * @event switchPage - 换页触发事件
- * @event scrollerChange - 滚动区域的高度/宽度变化
- *
- * @slot loadMore - 加载更多的内容
- *
- * @slotScope - 列表的内容
- */
+var PAGE_TYPE_NUM = 'num'; /**
+                            * list 组件
+                            *
+                            * @prop auto - 根据传入的列表数据自动生成分页数据
+                            * @prop autoHideScroller - 是否自动隐藏滚动条
+                            * @prop autoHidePage - 是否自动隐藏分页触发器
+                            * @prop item - 列表数据
+                            * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+                            * @prop pager - 启动分页功能
+                            * @prop pageSize - 将列表数据（item）分为每页多少条数据
+                            * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
+                            * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
+                            * @prop height - 滚动条高度
+                            *
+                            * @event switchPage - 换页触发事件
+                            * @event scrollerChange - 滚动区域的高度/宽度变化
+                            *
+                            * @slot loadMore - 加载更多的内容
+                            *
+                            * @slotScope - 列表的内容
+                            */
 
-var PAGE_TYPE_NUM = 'num';
 var PAGE_TYPE_MORE = 'more';
 
 exports.default = {
@@ -5922,8 +6018,7 @@ exports.default = {
     icon: _Icon2.default,
     loading: _Loading2.default,
     page: _Page2.default,
-    scroller: _Scroller2.default,
-    'slide-transition': _MotionSlide2.default
+    scroller: _Scroller2.default
   },
 
   props: {
@@ -5968,29 +6063,30 @@ exports.default = {
       type: Boolean,
       default: false
     },
-    scrollerHeight: {
+    height: {
       type: [String, Number],
       default: 'auto'
     }
   },
 
   data: function data() {
+    this.pageHeight = 44; // TODO: 动态计算分页高度
+
     return {
-      listItem: [],
-      pageData: {},
+      stateItem: [],
+      pageData: {
+        size: 0,
+        length: 0,
+        current: 1,
+        total: 0
+      },
       arrowOfMoreDisplay: true, // 滚动加载更多时的图标显示状态
-      moreDisplay: false, // 加载更多的显示状态
-      scrollerAlmostInBottom: false, // 滚动条是否在底部
       loadingListData: false, // 是否正在加载列表数据
       pageDetail: { // 分页的相关信息
         top: 0,
         left: 0,
         bottom: 0
-      },
-      scrollerWidth: 0, // 滚动组件的宽度
-      pagerDisplay: false, // 分页显示状态
-      transitionQueue: [], // 分页动画队列
-      transitedQueueInterval: {} // 轮询分页动画定时器
+      }
     };
   },
 
@@ -6000,42 +6096,29 @@ exports.default = {
       // 组件类名的前缀
       return this.compPrefix + '-list';
     },
-    loadMoreText: function loadMoreText() {
-      // 加载更多的显示文字
-      if (this.pageType === PAGE_TYPE_MORE) {
-        return (this.pageTrigger === 'click' ? '点击' : '滚动') + '\u52A0\u8F7D\u66F4\u591A';
-      }
-    },
-    pagerDisplayStatus: function pagerDisplayStatus() {
+    pagerDisplay: function pagerDisplay() {
       // 分页的显示状态
-      return this.pageData.total !== 0 && this.pageData.current !== this.pageData.total && this.scrollerAlmostInBottom;
+      return this.pageData.total !== 0 && this.pageData.current !== this.pageData.total;
     },
     isPageTypeMore: function isPageTypeMore() {
       // 是否是加载更多的触发方式
       return this.pageType === PAGE_TYPE_MORE;
-    },
-    pagerStyle: function pagerStyle() {
-      // 分页组件的样式
-      return {
-        top: this.pageDetail.top + 'px',
-        left: this.pageDetail.left + 'px'
-      };
     }
   },
 
   watch: {
     item: function item(val) {
       if (this.auto) {
-        this.initPage();
+        this.setPageData({
+          current: this.pageData.current
+        });
       }
 
-      this.initList({
+      this.setListItem({
         pageNum: this.pageData.current,
-        listItem: val
+        pageSize: this.pageData.size,
+        listItem: this.item
       });
-    },
-    pagerDisplayStatus: function pagerDisplayStatus(val) {
-      this._transitePage(val);
     }
   },
 
@@ -6043,34 +6126,24 @@ exports.default = {
     _setDataOpt: function _setDataOpt() {
       this.pageData = Object.assign({}, this.page);
     },
-    _initComp: function _initComp() {
-      this.scrollerWidth = this.$refs.scroller.$el.offsetWidth;
-    },
     _binder: function _binder() {
       var _this = this;
 
       var refScroller = this.$refs.scroller;
 
       refScroller.$on('scrollY', function (_ref) {
-        var offset = _ref.offset,
-            top = _ref.top,
-            isBottom = _ref.isBottom;
+        var box = _ref.box;
 
         if (_this.pageTrigger === 'scroll') {
-          if (offset - top < 5 && _this.pageData.current + 1 <= _this.pageData.total) {
+          if (box.position.top - box.offset.top < _this.pageHeight && _this.pageData.current + 1 <= _this.pageData.total) {
             return _this.switchPage({
               currentPage: _this.pageData.current + 1
             });
           }
-
-          _this.scrollerAlmostInBottom = offset - top < 30;
         }
       });
 
       refScroller.$on('change', function (opt) {
-        _this.scrollerWidth = refScroller.$el.offsetWidth;
-        _this.initPagePosition();
-
         return _this.$emit('scrollerChange', Object.assign({}, opt, {
           emitter: _this
         }));
@@ -6082,58 +6155,35 @@ exports.default = {
         if (!_this.$el.offsetHeight) {
           return false;
         }
-
-        _this.initPagePosition();
-        _this.$nextTick(function () {
-          _this.scrollerAlmostInBottom = isBottom;
-        });
-      });
-    },
-
-
-    /**
-     * 执行分页过渡动画
-     */
-    _transitePage: function _transitePage() {
-      var _this2 = this;
-
-      var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      this.$nextTick(function () {
-        var refPageTransition = _this2.$refs.pageSlideTransition;
-
-        if (show) {
-          return refPageTransition.enter();
-        } else {
-          return refPageTransition.leave();
-        }
       });
     }
   },
 
   created: function created() {
-    this.initPage().initList({
-      pageNum: this.pageData.current,
-      listItem: this.item
-    });
-  },
-  mounted: function mounted() {
-    var _this3 = this;
+    this.initPageData();
 
-    this.$nextTick(function () {
-      _this3.initPagePosition();
+    this.setListItem({
+      pageNum: this.pageData.current,
+      pageSize: this.pageData.size,
+      listItem: this.item
     });
   }
 };
 
 /***/ }),
-/* 30 */
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = {"input":{"add":"hub/input/add","delete":"hub/input/delete","get":"hub/input/get"},"select":{"add":"hub/select/add","delete":"hub/select/delete"}}
+
+/***/ }),
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = {"common":{"add":"comp/common/add","delete":"comp/common/delete","get":"comp/common/get"},"input":{"add":"comp/input/add","delete":"comp/input/delete","get":"comp/input/get"},"menu":{"add":"comp/menu/add","delete":"comp/menu/delete"},"select":{"add":"comp/select/add","delete":"comp/select/delete"}}
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6157,72 +6207,73 @@ function uid() {
 exports.default = uid;
 
 /***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * 判断是否有滚动条
+ *
+ * @param {DOMElement} el - dom 元素
+ * @param {string} type - 默认是垂直方向的滚动条（可选 x: 水平方向，y：垂直方向）
+ */
+var hasScroller = function hasScroller() {
+  var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.body;
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'y';
+
+  var style = window.getComputedStyle(el);
+
+  if (style.getPropertyValue('overflow') === 'hidden') {
+    return false;
+  }
+
+  if (type === 'y') {
+    if (style.getPropertyValue('overflow-y') === 'hidden') {
+      return false;
+    }
+
+    return el.scrollHeight > window.innerHeight;
+  } else {
+    if (style.getPropertyValue('overflow-x') === 'hidden') {
+      return false;
+    }
+
+    return el.scrollWidth > window.innerWidth;
+  }
+};
+
+/**
+ * 查找指定的祖先元素
+ *
+ * @param {Object} parent - 组件的爸爸
+ * @param {String} grandpaName
+ */
+var findGrandpa = function findGrandpa(parent, grandpaName) {
+  function checkGrandpa() {
+    var parent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    if (parent.compName === grandpaName) {
+      return parent;
+    } else if (parent.constructor.name === 'VueComponent') {
+      return checkGrandpa(parent.$parent);
+    } else {
+      return false;
+    }
+  }
+
+  return checkGrandpa(parent);
+};
+
+exports.hasScroller = hasScroller;
+exports.findGrandpa = findGrandpa;
+
+/***/ }),
 /* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * to judge whether array is empty
- *
- * @param array
- * @return {Boolean} - whether array is empty.
- */
-var isEmpty = function isEmpty(arr) {
-  return arr.length === 0;
-};
-
-/**
- * remove repeated array element
- *
- * @param array
- * @return { Array } - whether array is empty.
- */
-var unique = function unique(arr) {
-  return Array.from(new Set(arr));
-};
-
-exports.isEmpty = isEmpty;
-exports.unique = unique;
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * analyzing data types
- *
- * @param variable
- * @return {String} - data type.
- *
- * @example
- * type({}) // "object"
- * type([]) // "array"
- * type(5) // "number"
- * type(null) // "null"
- * type() // "undefined"
- * type(/abcd/) // "regex"
- * type(new Date()) // "date"
- */
-var dataType = function dataType(variable) {
-  var str = Object.prototype.toString.call(variable);
-  return str.match(/\[object (.*?)\]/)[1].toLowerCase();
-};
-
-exports.dataType = dataType;
-
-/***/ }),
-/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6236,13 +6287,13 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-__webpack_require__(128);
+__webpack_require__(132);
 
 var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Bubble = __webpack_require__(130);
+var _Bubble = __webpack_require__(134);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
@@ -6250,11 +6301,11 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _MotionZoom = __webpack_require__(35);
+var _MotionZoom = __webpack_require__(33);
 
 var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6604,7 +6655,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 35 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6776,10 +6827,27 @@ exports.default = {
     * @prop speed - 淡出速度
     * @prop origin - 放大缩小的起始位置 (同 css 里的属性 'transform-origin')
     * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
+    * @prop display - 默认一开始是隐藏（进来之前的状态）
+    * @prop speed - 动画速度
+    * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+    * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+    *
+    * @event beforeEnter - 进来过渡之前
+    * @event enter - 进来过渡期间
+    * @event afterEnter - 进来过渡完成
+    * @event beforeLeave - 离开过渡之前
+    * @event leave - 离开过渡期间
+    * @event afterLeave - 离开过渡之后
     */
 
 /***/ }),
-/* 36 */
+/* 34 */
+/***/ (function(module, exports) {
+
+module.exports = {"backspace":8,"ctrl":17,"enter":13,"tab":9,"shift":16,"up":38,"down":40,"left":37,"right":39}
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6793,9 +6861,9 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-__webpack_require__(156);
+__webpack_require__(160);
 
-var _FoldRender = __webpack_require__(158);
+var _FoldRender = __webpack_require__(162);
 
 var _FoldRender2 = _interopRequireDefault(_FoldRender);
 
@@ -6807,11 +6875,11 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _MotionFold = __webpack_require__(27);
+var _MotionFold = __webpack_require__(25);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7021,7 +7089,7 @@ var Fold = {
 exports.default = Fold;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7054,7 +7122,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7087,41 +7155,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-/**
- * 查找指定的祖先元素
- *
- * @param {Object} parent - 组件的爸爸
- * @param {String} grandpaName
- */
-var findGrandpa = function findGrandpa(parent, grandpaName) {
-  function checkGrandpa() {
-    var parent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    if (parent.compName === grandpaName) {
-      return parent;
-    } else if (parent.constructor.name === 'VueComponent') {
-      return checkGrandpa(parent.$parent);
-    } else {
-      return false;
-    }
-  }
-
-  return checkGrandpa(parent);
-};
-
-exports.findGrandpa = findGrandpa;
-
-/***/ }),
-/* 40 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7131,13 +7165,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(179);
+__webpack_require__(183);
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Menu = __webpack_require__(181);
+var _Menu = __webpack_require__(185);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -7145,15 +7179,15 @@ var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(20);
+var _type = __webpack_require__(28);
 
 var _type2 = _interopRequireDefault(_type);
 
-var _type3 = __webpack_require__(30);
+var _type3 = __webpack_require__(29);
 
 var _type4 = _interopRequireDefault(_type3);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -7165,7 +7199,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Motion = __webpack_require__(182);
+var _Motion = __webpack_require__(186);
 
 var _Motion2 = _interopRequireDefault(_Motion);
 
@@ -7181,19 +7215,19 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Menu3 = __webpack_require__(183);
+var _Menu3 = __webpack_require__(187);
 
 var _Menu4 = _interopRequireDefault(_Menu3);
 
-var _uid = __webpack_require__(31);
+var _uid = __webpack_require__(30);
 
 var _uid2 = _interopRequireDefault(_uid);
 
-var _data = __webpack_require__(33);
+var _data = __webpack_require__(42);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
-var _array = __webpack_require__(32);
+var _array = __webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7467,7 +7501,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 41 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7477,9 +7511,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(184);
+__webpack_require__(188);
 
-var _ShiftRender = __webpack_require__(186);
+var _ShiftRender = __webpack_require__(190);
 
 var _ShiftRender2 = _interopRequireDefault(_ShiftRender);
 
@@ -7653,13 +7687,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-module.exports = {"select":{"option":{"change":"selectOptChange"}},"input":{"focus":"focusInput","blur":"blurInput","keyup":"keyupInput","change":"changeInput","completion":{"click":"clickCompletion"}},"tab":{"change":"tabChange"},"checkbox":{"change":"checkboxChange"},"btn":{"click":"clickBtn"},"scroller":{"change":{"height":"changeHeight","bar":{"y":"changeYBar","x":"changeXBar"}},"scroll":{"y":"scrollY","x":"scrollX"}},"common":{"searchTool":{"change":"searchQueryChange"}}}
-
-/***/ }),
-/* 43 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7669,40 +7697,30 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
- * 判断是否有滚动条
+ * to judge whether array is empty
  *
- * @param {DOMElement} el - dom 元素
- * @param {string} type - 默认是垂直方向的滚动条（可选 x: 水平方向，y：垂直方向）
+ * @param array
+ * @return {Boolean} - whether array is empty.
  */
-var hasScroller = function hasScroller() {
-  var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.body;
-  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'y';
-
-  var style = window.getComputedStyle(el);
-
-  if (style.getPropertyValue('overflow') === 'hidden') {
-    return false;
-  }
-
-  if (type === 'y') {
-    if (style.getPropertyValue('overflow-y') === 'hidden') {
-      return false;
-    }
-
-    return el.scrollHeight > window.innerHeight;
-  } else {
-    if (style.getPropertyValue('overflow-x') === 'hidden') {
-      return false;
-    }
-
-    return el.scrollWidth > window.innerWidth;
-  }
+var isEmpty = function isEmpty(arr) {
+  return arr.length === 0;
 };
 
-exports.hasScroller = hasScroller;
+/**
+ * remove repeated array element
+ *
+ * @param array
+ * @return { Array } - whether array is empty.
+ */
+var unique = function unique(arr) {
+  return Array.from(new Set(arr));
+};
+
+exports.isEmpty = isEmpty;
+exports.unique = unique;
 
 /***/ }),
-/* 44 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7712,9 +7730,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(116);
+__webpack_require__(120);
 
-var _Form = __webpack_require__(118);
+var _Form = __webpack_require__(122);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -7722,7 +7740,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -8055,7 +8073,39 @@ var formComp = {
 exports.default = formComp;
 
 /***/ }),
-/* 45 */
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * analyzing data types
+ *
+ * @param variable
+ * @return {String} - data type.
+ *
+ * @example
+ * type({}) // "object"
+ * type([]) // "array"
+ * type(5) // "number"
+ * type(null) // "null"
+ * type() // "undefined"
+ * type(/abcd/) // "regex"
+ * type(new Date()) // "date"
+ */
+var dataType = function dataType(variable) {
+  var str = Object.prototype.toString.call(variable);
+  return str.match(/\[object (.*?)\]/)[1].toLowerCase();
+};
+
+exports.dataType = dataType;
+
+/***/ }),
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8065,11 +8115,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(151);
+__webpack_require__(155);
 
-__webpack_require__(153);
+__webpack_require__(157);
 
-var _NavRender = __webpack_require__(155);
+var _NavRender = __webpack_require__(159);
 
 var _NavRender2 = _interopRequireDefault(_NavRender);
 
@@ -8077,19 +8127,19 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Fold = __webpack_require__(36);
+var _Fold = __webpack_require__(35);
 
 var _Fold2 = _interopRequireDefault(_Fold);
 
-var _FoldTitle = __webpack_require__(37);
+var _FoldTitle = __webpack_require__(36);
 
 var _FoldTitle2 = _interopRequireDefault(_FoldTitle);
 
-var _FoldContent = __webpack_require__(38);
+var _FoldContent = __webpack_require__(37);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
-var _MotionFold = __webpack_require__(27);
+var _MotionFold = __webpack_require__(25);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
@@ -8273,7 +8323,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 46 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8283,9 +8333,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(159);
+__webpack_require__(163);
 
-var _OmitRender = __webpack_require__(161);
+var _OmitRender = __webpack_require__(165);
 
 var _OmitRender2 = _interopRequireDefault(_OmitRender);
 
@@ -8389,12 +8439,15 @@ exports.default = {
         var lineWidth = 0; // 这一行的宽度
         var j = index;
         var char = '';
-        var singleChar = 0;
+        var lastFontWidthOver = false; // 最后一行的文字宽度是否小于容器宽度
 
         for (; j < contentArrayLength; j++) {
           var fontWidth = this.textWidth(contentArray[j]);
 
           if (contentArray[j] === undefined || fontWidth + lineWidth >= this.boxWidth) {
+            // 最后一行并且文字总宽度大于容器宽度时
+            lastFontWidthOver = i === lineLength - 1 && fontWidth + lineWidth >= this.boxWidth;
+
             break;
           }
 
@@ -8402,7 +8455,8 @@ exports.default = {
           char = char + contentArray[j];
         }
 
-        lineFont.push(i === lineLength - 1 ? char + char : char);
+        lineFont.push(lastFontWidthOver && i === lineLength - 1 ? char + '....' : char);
+
         index = j;
       }
 
@@ -8421,7 +8475,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 47 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8431,9 +8485,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(165);
+__webpack_require__(169);
 
-var _Search = __webpack_require__(167);
+var _Search = __webpack_require__(171);
 
 var _Search2 = _interopRequireDefault(_Search);
 
@@ -8441,7 +8495,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -8449,7 +8503,7 @@ var _Input = __webpack_require__(18);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _List = __webpack_require__(29);
+var _List = __webpack_require__(27);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -8562,7 +8616,7 @@ var searchComp = {
 exports.default = searchComp;
 
 /***/ }),
-/* 48 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8580,7 +8634,7 @@ var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Page = __webpack_require__(28);
+var _Page = __webpack_require__(26);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -8613,7 +8667,8 @@ exports.default = {
       var listItem = _ref.listItem,
           _ref$pageNum = _ref.pageNum,
           pageNum = _ref$pageNum === undefined ? 1 : _ref$pageNum,
-          pageSize = _ref.pageSize,
+          _ref$pageSize = _ref.pageSize,
+          pageSize = _ref$pageSize === undefined ? 0 : _ref$pageSize,
           _ref$pageType = _ref.pageType,
           pageType = _ref$pageType === undefined ? PAGE_TYPE_NUM : _ref$pageType;
 
@@ -8621,7 +8676,7 @@ exports.default = {
         return false;
       }
 
-      if (!pageSize) {
+      if (pageSize === 0) {
         return listItem.slice();
       }
 
@@ -8641,7 +8696,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 49 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8651,13 +8706,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(172);
-
-__webpack_require__(174);
-
 __webpack_require__(176);
 
-var _Table = __webpack_require__(178);
+__webpack_require__(178);
+
+__webpack_require__(180);
+
+var _Table = __webpack_require__(182);
 
 var _Table2 = _interopRequireDefault(_Table);
 
@@ -8669,15 +8724,13 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _list = __webpack_require__(48);
+var _list = __webpack_require__(46);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
-
-var _util = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8921,7 +8974,7 @@ var Table = {
 exports.default = Table;
 
 /***/ }),
-/* 50 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8957,7 +9010,7 @@ var tableRowComp = {
 exports.default = tableRowComp;
 
 /***/ }),
-/* 51 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8971,7 +9024,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _util = __webpack_require__(39);
+var _dom = __webpack_require__(31);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9071,7 +9124,7 @@ var tableColComp = {
     }
   },
   beforeMount: function beforeMount() {
-    this.table = (0, _util.findGrandpa)(this.$parent, 'table');
+    this.table = (0, _dom.findGrandpa)(this.$parent, 'table');
   },
   mounted: function mounted() {
     var _this = this;
@@ -9085,7 +9138,7 @@ var tableColComp = {
 exports.default = tableColComp;
 
 /***/ }),
-/* 52 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9119,7 +9172,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 53 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9158,7 +9211,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 54 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9170,25 +9223,21 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-__webpack_require__(187);
-
-__webpack_require__(189);
-
 __webpack_require__(191);
 
-var _vue = __webpack_require__(3);
+__webpack_require__(193);
 
-var _vue2 = _interopRequireDefault(_vue);
+__webpack_require__(195);
 
-var _SelectOpt = __webpack_require__(193);
+var _SelectOpt = __webpack_require__(197);
 
 var _SelectOpt2 = _interopRequireDefault(_SelectOpt);
 
-var _keyCode = __webpack_require__(26);
+var _keyCode = __webpack_require__(34);
 
 var _keyCode2 = _interopRequireDefault(_keyCode);
 
-var _Select = __webpack_require__(197);
+var _Select = __webpack_require__(202);
 
 var _Select2 = _interopRequireDefault(_Select);
 
@@ -9196,17 +9245,9 @@ var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(20);
+var _type = __webpack_require__(29);
 
 var _type2 = _interopRequireDefault(_type);
-
-var _type3 = __webpack_require__(30);
-
-var _type4 = _interopRequireDefault(_type3);
-
-var _tip = __webpack_require__(5);
-
-var _tip2 = _interopRequireDefault(_tip);
 
 var _Icon = __webpack_require__(4);
 
@@ -9216,7 +9257,7 @@ var _Input = __webpack_require__(18);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Check = __webpack_require__(22);
+var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
@@ -9224,7 +9265,7 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Menu = __webpack_require__(40);
+var _Menu = __webpack_require__(38);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
@@ -9236,51 +9277,44 @@ var _form = __webpack_require__(15);
 
 var _form2 = _interopRequireDefault(_form);
 
-var _Select3 = __webpack_require__(198);
+var _Select3 = __webpack_require__(203);
 
 var _Select4 = _interopRequireDefault(_Select3);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
-var _uid = __webpack_require__(31);
+var _uid = __webpack_require__(30);
 
 var _uid2 = _interopRequireDefault(_uid);
-
-var _data = __webpack_require__(33);
-
-var _array = __webpack_require__(32);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
                                                                                                                                                                                                                    * menu 组件
                                                                                                                                                                                                                    *
+                                                                                                                                                                                                                   * @prop classify - 有值（数组类型）就开启标题下拉框 option 分类模式
                                                                                                                                                                                                                    * @prop classifyOpt - 分类下拉框的数据
-                                                                                                                                                                                                                   * @prop coverTrig - 菜单展开是不遮挡触发器
-                                                                                                                                                                                                                   * @prop defaultVal - 默认的选项值
-                                                                                                                                                                                                                   * @prop defaultTxt - 默认的选项文本值
-                                                                                                                                                                                                                   * @prop initVal - 默认第一个显示的值
-                                                                                                                                                                                                                   * @prop initOpt - 下拉框的 option 数据
-                                                                                                                                                                                                                   * @prop param - 搜索参数名
-                                                                                                                                                                                                                   * @prop store - 储存实例化的信息
-                                                                                                                                                                                                                   * @prop theme - 主题
-                                                                                                                                                                                                                   *
+                                                                                                                                                                                                                   * @prop coverTrig - 菜单展开时遮挡触发器，默认不开启
+                                                                                                                                                                                                                   * @prop defaultValue - 默认的选项值
+                                                                                                                                                                                                                   * @prop defaultText - 默认的选项文本值
                                                                                                                                                                                                                    * @prop errorMessage - 没选的时候显示的错误信息
                                                                                                                                                                                                                    * @prop max - 多选下拉框最多选择几个
                                                                                                                                                                                                                    * @prop min - 多选下拉框至少选择几个
+                                                                                                                                                                                                                   * @prop menuWidth - 菜单宽度
+                                                                                                                                                                                                                   * @prop multiple - 是为多选
+                                                                                                                                                                                                                   * @prop option - 下拉框的 option 数据
+                                                                                                                                                                                                                   * @prop param - 搜索参数名
                                                                                                                                                                                                                    * @prop required - 必须选择下拉框的值
                                                                                                                                                                                                                    * @prop readOnly - 只读
-                                                                                                                                                                                                                   *
-                                                                                                                                                                                                                   * @prop txtName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
-                                                                                                                                                                                                                   * @prop valName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
-                                                                                                                                                                                                                   *
-                                                                                                                                                                                                                   * @prop classify - 有值（数组类型）就开启标题下拉框 option 分类模式
-                                                                                                                                                                                                                   * @prop multiple - 是为多选
                                                                                                                                                                                                                    * @prop search - 开启搜索过滤
-                                                                                                                                                                                                                   *
                                                                                                                                                                                                                    * @prop selectAll - 启动全选的功能
                                                                                                                                                                                                                    * @prop selectAllTxt - 全选选项的名字
+                                                                                                                                                                                                                   * @prop store - 储存实例化的信息
+                                                                                                                                                                                                                   * @prop textName - 指定读取 下拉框 optionItems 的 text 值的 key 的名字
+                                                                                                                                                                                                                   * @prop value - 默认第一个显示的值
+                                                                                                                                                                                                                   * @prop valueName - 指定读取下拉框 optionItems 的 value 值的 key 的名字
                                                                                                                                                                                                                    *
+                                                                                                                                                                                                                   * @event change - 选择值的改变
                                                                                                                                                                                                                    */
 
 // 搜索功能的函数节流的间隔时间
@@ -9306,11 +9340,50 @@ exports.default = {
   },
 
   props: {
+    classify: Array,
+    classifyOpt: Object,
     coverTrig: {
       type: Boolean,
       default: false
     },
-    initOpt: {
+    defaultValue: {
+      type: [Number, String],
+      default: -1
+    },
+    defaultText: {
+      type: [Number, String],
+      default: '请选择'
+    },
+    errorMessage: {
+      type: String,
+      default: ''
+    },
+    multiple: {
+      type: Boolean,
+      default: false
+    },
+    max: {
+      type: Number,
+      default: 0
+    },
+    min: {
+      type: Number,
+      default: 0
+    },
+    menuWidth: {
+      type: [String, Number],
+      default: 170,
+      validator: function validator(val) {
+        if (typeof val === 'number') {
+          return true;
+        } else if (val === 'auto' || val === '100%') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    option: {
       type: Array,
       default: function _default() {
         return [];
@@ -9320,58 +9393,32 @@ exports.default = {
       type: String,
       default: ''
     },
-    initVal: [Number, Array, String],
-    multiple: {
-      type: Boolean,
-      default: false
-    },
-    store: Object,
-    max: {
-      type: Number,
-      default: 0
-    },
-    min: {
-      type: Number,
-      default: 0
-    },
-    defaultVal: {
-      type: [Number, String],
-      default: -1
-    },
-    defaultTxt: {
-      type: [Number, String],
-      default: '请选择'
-    },
     required: {
       type: Boolean,
       default: false
     },
-    errorMessage: {
-      type: String,
-      default: ''
-    },
-    valName: {
+    value: [Number, Array, String],
+    valueName: {
       type: String,
       default: 'value'
     },
-    txtName: {
+    textName: {
       type: String,
       default: 'text'
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
+    selectAll: {
+      type: Boolean,
+      default: false
     },
     search: {
       type: Boolean,
       default: false
     },
-    classify: Array,
-    readOnly: {
-      type: Boolean,
-      default: false
-    },
-    classifyOpt: Object,
-    selectAll: {
-      type: Boolean,
-      default: false
-    },
+    store: Object,
     selectAllTxt: {
       type: String,
       default: '全选'
@@ -9389,14 +9436,8 @@ exports.default = {
       customOptionDisplay: false, // 自定义下拉框的显示状态
       focusing: false, // 正在处于 focus 状态
       hasSlotOption: false, // 是否是 slot 定义的 option
-      menuHeight: 0, // 下拉菜单的高度
-      menuWidth: 0, // 下拉菜单的高度
       menuDisplay: false, // 下拉菜单的显示状态
       optionItemCopy: {}, // 当下拉框为 classify 的时候，将 option 转换为数组
-      option: [], // props 里面 optionItem 的 data 替换值
-      unwatchOption: {}, // 取消观察 option
-      value: undefined, // 当前下拉框的 value 值
-      verified: true, // 是否以验证通过
       searchKeyuped: false, // 搜索按键的状态
       searchOptionDisplay: false, // 是否显示搜索 optionItem
       searchOptionItem: {}, // 搜索出来的 option
@@ -9404,8 +9445,14 @@ exports.default = {
       selectedHeight: 0, // 当前选择值的样式高度值
       selectedStyleHeight: 0, // 当前选择值的样式高度值
       stateCoverTrig: false, // 遮挡下拉选择框的触发器
+      stateMenuHeight: 0, // 下拉菜单的高度
+      stateMenuWidth: this._getMenuWidth(this.menuWidth), // 下拉菜单的高度
+      stateOption: [], // props 里面 optionItem 的 data 替换值
+      stateValue: undefined, // 当前下拉框的 value 值
       transitionFinish: false, // 下拉框显示过渡完成的标识符
-      text: undefined // 当前下拉框的 text 值
+      text: undefined, // 当前下拉框的 text 值
+      unwatchOption: {}, // 取消观察 option
+      verified: true // 是否以验证通过
     };
   },
 
@@ -9426,16 +9473,16 @@ exports.default = {
     },
     isCustomOption: function isCustomOption() {
       // 自定义下拉框的显示状态
-      return this.initOpt.length > 0 && this.customOptionDisplay;
+      return this.option.length > 0 && this.customOptionDisplay;
     },
     initTxtDisplay: function initTxtDisplay() {
       // 多选框的默认值显示状态
-      return this.multiple && this.value.length === 0;
+      return this.multiple && this.stateValue.length === 0;
     }
   },
 
   watch: {
-    value: function value(val) {
+    stateValue: function stateValue(val) {
       var _this = this;
 
       if (this.multiple && this.initTxtDisplay) {
@@ -9451,10 +9498,10 @@ exports.default = {
 
       return this._initSelectTxt();
     },
-    initVal: function initVal(val) {
-      this.value = this.multiple ? val.slice() : val;
+    value: function value(val) {
+      this.stateValue = this.multiple ? val.slice() : val;
     },
-    initOpt: function initOpt(val) {
+    option: function option(val) {
       return this._processOption(val.slice());
     },
     classifyOpt: function classifyOpt(val) {
@@ -9465,6 +9512,9 @@ exports.default = {
     },
     selectedHeight: function selectedHeight(val) {
       this._adjustMenuMotion();
+    },
+    menuWidth: function menuWidth(val) {
+      this.stateMenuWidth = this._getMenuWidth(val);
     }
   },
 
@@ -9477,17 +9527,28 @@ exports.default = {
     },
 
 
+    // 获取下拉菜单宽度
+    _getMenuWidth: function _getMenuWidth(width) {
+      var triggerWidth = this.$el ? this.$el.offsetWidth : 0;
+
+      if (typeof width === 'number') {
+        return triggerWidth > width ? triggerWidth : width;
+      } else if (width === '100%') {
+        return triggerWidth;
+      } else {
+        return width;
+      }
+    },
+
+
     /**
      * 绑定事件
      */
     _binder: function _binder() {
       var _this2 = this;
 
-      if (!Array.isArray(this.option)) {
-        return false;
-      }
-
       if (this.$refs.scroller) {
+        this.$refs.scroller.$off('change');
         this.$refs.scroller.$on('change', function (_ref4) {
           var scrollerHeight = _ref4.scrollerHeight;
 
@@ -9498,11 +9559,7 @@ exports.default = {
         });
       }
 
-      this.$refs.menu.$on('afterSpread', function () {
-        _this2.$refs.option.initPagePosition();
-        _this2.$refs.option.initPageDisplay();
-      });
-
+      this.$refs.option.$off('change');
       this.$refs.option.$on('change', function (_ref5) {
         var value = _ref5.value,
             text = _ref5.text,
@@ -9514,17 +9571,23 @@ exports.default = {
 
         if (_this2.multiple) {
           if (!selectedItem) {
-            if (_this2.max === 0 || _this2.value.length !== _this2.max) {
-              _this2.value.push(value);
+            if (_this2.max === 0 || _this2.stateValue.length !== _this2.max) {
+              _this2.stateValue.push(value);
             }
           } else {
             _this2.removeMultiSelected(selectedItem.index + 1);
           }
         } else {
-          _this2.value = value;
+          _this2.stateValue = value;
 
           hideMenu && _this2._menuMotion(false);
         }
+
+        return _this2.$emit('change', {
+          value: value,
+          text: text,
+          index: index
+        });
       });
     },
 
@@ -9556,11 +9619,11 @@ exports.default = {
      * 设置 data 选项的默认值
      */
     _setDataOpt: function _setDataOpt() {
-      if (this.initVal) {
-        this.value = this.multiple ? this.initVal.slice() : this.initVal;
+      if (this.value) {
+        this.stateValue = this.multiple ? this.value.slice() : this.value;
       }
 
-      this.option = this.initOpt.slice();
+      this.stateOption = this.option.slice();
     },
 
 
@@ -9571,10 +9634,10 @@ exports.default = {
       var _this3 = this;
 
       var value = [];
-      var optionTemp = this.classify ? this.optionItemCopy : this.option;
+      var optionTemp = this.classify ? this.stateOptionItemCopy : this.stateOption;
 
       optionTemp.forEach(function (item) {
-        value.push(item[_this3.valName]);
+        value.push(item[_this3.valueName]);
       });
 
       this.allOptionVal = value;
@@ -9586,17 +9649,17 @@ exports.default = {
     /**
      * 初始化下拉 option
      */
-    _initOption: function _initOption() {
+    _optionion: function _optionion() {
       if (this.classifyOpt) {
         return this._processOption(this.classifyOpt)._initAllOptionVal()._initSelectTxt();
       } else {
         var slotOption = this._initSelectSlot();
 
         if (slotOption) {
-          this.option = slotOption;
+          this.stateOption = slotOption;
         }
 
-        return this._processOption(this.option.slice())._initAllOptionVal()._initSelectTxt();
+        return this._processOption(this.stateOption.slice())._initAllOptionVal()._initSelectTxt();
       }
     },
 
@@ -9661,25 +9724,25 @@ exports.default = {
     _initMultipleSelectTxt: function _initMultipleSelectTxt() {
       var _this4 = this;
 
-      if (!Array.isArray(this.option)) {
+      if (!Array.isArray(this.stateOption)) {
         return this;
       }
 
-      if (!Array.isArray(this.value)) {
-        console.error('\u591A\u9009\u4E0B\u62C9\u6846\u7684 "this.value" \u5FC5\u987B\u4E3A\u6570\u7EC4!!');
-        this.value = [];
+      if (!Array.isArray(this.stateValue)) {
+        console.error('\u591A\u9009\u4E0B\u62C9\u6846\u7684 "this.stateValue" \u5FC5\u987B\u4E3A\u6570\u7EC4!!');
+        this.stateValue = [];
 
         return false;
       }
 
-      var valueTemp = this.value;
-      var optionTemp = this.option;
+      var valueTemp = this.stateValue;
+      var optionTemp = this.stateOption;
       var toBeText = [];
 
       valueTemp.forEach(function (ele, index) {
         optionTemp.every(function (item, itemIndex) {
-          if (item[_this4.valName] === ele) {
-            toBeText.push(item[_this4.txtName]);
+          if (item[_this4.valueName] === ele) {
+            toBeText.push(item[_this4.textName]);
 
             return false;
           }
@@ -9701,16 +9764,16 @@ exports.default = {
     _initSingleSelectTxt: function _initSingleSelectTxt(val, txt) {
       var _this5 = this;
 
-      if (!Array.isArray(this.option)) {
+      if (!Array.isArray(this.stateOption)) {
         return this;
       }
 
-      if (this.value || this.value === 0 || this.value === '0') {
-        this.option.every(function (ele, index) {
-          if (ele[_this5.valName] === _this5.value) {
+      if (this.stateValue || this.stateValue === 0 || this.stateValue === '0') {
+        this.stateOption.every(function (ele, index) {
+          if (ele[_this5.valueName] === _this5.stateValue) {
             _this5._setTxtVal({
-              value: ele[_this5.valName],
-              text: ele[_this5.txtName]
+              value: ele[_this5.valueName],
+              text: ele[_this5.textName]
             });
 
             return false;
@@ -9722,10 +9785,10 @@ exports.default = {
         return this;
       }
 
-      if (_typeof(this.option[0]) === 'object') {
+      if (_typeof(this.stateOption[0]) === 'object') {
         this._setTxtVal({
-          value: this.option[0][this.valName],
-          text: this.option[0][this.txtName]
+          value: this.stateOption[0][this.valueName],
+          text: this.stateOption[0][this.textName]
         });
       }
 
@@ -9746,7 +9809,7 @@ exports.default = {
       var isExisted = false;
       var existItem = {};
 
-      this.value.every(function (selectedVal, index) {
+      this.stateValue.every(function (selectedVal, index) {
         if (val === selectedVal) {
           isExisted = true;
           existItem = {
@@ -9779,7 +9842,7 @@ exports.default = {
 
       if (!this.multiple || replace) {
         if (value !== undefined) {
-          this.value = value;
+          this.stateValue = value;
         }
 
         if (text !== undefined) {
@@ -9790,15 +9853,15 @@ exports.default = {
       }
 
       if (Array.isArray(value)) {
-        value.length > 0 && this.value.concat(value);
+        value.length > 0 && this.stateValue.concat(value);
       } else {
         text !== undefined && this.text.push(text);
       }
 
       if (Array.isArray(text)) {
-        value.length > 0 && this.value.concat(value);
+        value.length > 0 && this.stateValue.concat(value);
       } else {
-        value !== undefined && this.value.push(value);
+        value !== undefined && this.stateValue.push(value);
       }
 
       return this;
@@ -9826,20 +9889,20 @@ exports.default = {
       }, SEARCH_KEY_UP_INTERVAL);
 
       this.searchOptionDisplay = true;
-      var realOptionItem = this.option;
+      var realOptionItem = this.stateOption;
 
       if (this.classify || this.classifyOpt) {
-        realOptionItem = this.optionItemCopy;
+        realOptionItem = this.stateOptionItemCopy;
       }
 
       this.searchOptionItem = realOptionItem.filter(function (item) {
-        return item[_this6.txtName].indexOf(keyWord) > -1;
+        return item[_this6.textName].indexOf(keyWord) > -1;
       });
 
       if (this.searchOptionItem.length === 0) {
         var _searchOptionItem$pus;
 
-        this.searchOptionItem.push((_searchOptionItem$pus = {}, _defineProperty(_searchOptionItem$pus, this.valName, this.compPrefix + '-menu: search not found'), _defineProperty(_searchOptionItem$pus, this.txtName, '查无此数据'), _defineProperty(_searchOptionItem$pus, 'classify', true), _searchOptionItem$pus));
+        this.searchOptionItem.push((_searchOptionItem$pus = {}, _defineProperty(_searchOptionItem$pus, this.valueName, this.compPrefix + '-menu: search not found'), _defineProperty(_searchOptionItem$pus, this.textName, '查无此数据'), _defineProperty(_searchOptionItem$pus, 'classify', true), _searchOptionItem$pus));
       }
     },
 
@@ -9870,7 +9933,7 @@ exports.default = {
         toBeOption = optionItem;
       }
 
-      this.option = toBeOption;
+      this.stateOption = toBeOption;
 
       return this;
     },
@@ -9892,7 +9955,7 @@ exports.default = {
       this.classify.forEach(function (item) {
         var _ref7;
 
-        optionTemp = optionTemp.concat([(_ref7 = {}, _defineProperty(_ref7, _this7.valName, item.key), _defineProperty(_ref7, _this7.txtName, item.text), _defineProperty(_ref7, 'classify', true), _ref7)], optionItem[item.key]);
+        optionTemp = optionTemp.concat([(_ref7 = {}, _defineProperty(_ref7, _this7.valueName, item.key), _defineProperty(_ref7, _this7.textName, item.text), _defineProperty(_ref7, 'classify', true), _ref7)], optionItem[item.key]);
 
         allOption = allOption.concat(optionItem[item.key]);
       });
@@ -9909,9 +9972,9 @@ exports.default = {
 
       allOption = allOptionTemp;
 
-      optionTemp = optionTemp.concat([(_ref8 = {}, _defineProperty(_ref8, this.valName, 'all'), _defineProperty(_ref8, this.txtName, '全部'), _defineProperty(_ref8, 'classify', true), _ref8)], allOption);
+      optionTemp = optionTemp.concat([(_ref8 = {}, _defineProperty(_ref8, this.valueName, 'all'), _defineProperty(_ref8, this.textName, '全部'), _defineProperty(_ref8, 'classify', true), _ref8)], allOption);
 
-      this.optionItemCopy = allOption;
+      this.stateOptionItemCopy = allOption;
 
       return optionTemp;
     },
@@ -9938,9 +10001,8 @@ exports.default = {
             var scrollerComp = vm.$refs.option.$refs.list.$refs.scroller;
             scrollerComp.initScroller();
 
-            var offsetWidth = vm.$el.offsetWidth;
-            vm.menuHeight = scrollerComp.scrollerHeight;
-            vm.menuWidth = offsetWidth < MENU_WIDTH ? MENU_WIDTH : offsetWidth;
+            vm.stateMenuHeight = scrollerComp.scrollerHeight;
+            // vm.stateMenuWidth = this._getMenuWidth(this.state)
           }
         });
       };
@@ -9959,7 +10021,14 @@ exports.default = {
           getMenuData(vm);
 
           vm.menuDisplay = false;
-          vm.$refs.menu.fold();
+
+          if (_this8.UIMaterial) {
+            setTimeout(function () {
+              vm.$refs.menu.fold();
+            }, 300);
+          } else {
+            vm.$refs.menu.fold();
+          }
         }
       };
 
@@ -10016,7 +10085,7 @@ exports.default = {
   created: function created() {
     this.uid = (0, _uid2.default)();
 
-    this.$store.dispatch(_type4.default.common.add, {
+    this.$store.dispatch(_type2.default.common.add, {
       vm: this,
       name: this.compName,
       id: this.uid
@@ -10024,23 +10093,33 @@ exports.default = {
 
     if (this.multiple) {
       this._setTxtVal({
-        value: this.value || [],
+        value: this.stateValue || [],
         text: [],
         replace: true
       });
     }
 
-    this._initOption();
+    this._optionion();
   },
   mounted: function mounted() {
+    var _this9 = this;
+
     if (this.$scopedSlots.custom) {
       this.customOptionDisplay = true;
     }
+
+    this.$nextTick(function () {
+      _this9.stateMenuWidth = _this9._getMenuWidth(_this9.menuWidth);
+    });
+  },
+  updated: function updated() {
+    // TODO：不知道为啥切换 UI 属性 option 组件的事件就监听不了了
+    this._binder();
   }
 };
 
 /***/ }),
-/* 55 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10074,7 +10153,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 56 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10084,13 +10163,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(199);
+__webpack_require__(204);
 
-__webpack_require__(201);
+__webpack_require__(206);
 
-__webpack_require__(203);
+__webpack_require__(208);
 
-var _Shift = __webpack_require__(41);
+var _Shift = __webpack_require__(39);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
@@ -10106,11 +10185,11 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _TabRender = __webpack_require__(205);
+var _TabRender = __webpack_require__(210);
 
 var _TabRender2 = _interopRequireDefault(_TabRender);
 
-var _url = __webpack_require__(206);
+var _url = __webpack_require__(211);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10274,7 +10353,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 57 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10310,7 +10389,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 58 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10321,9 +10400,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.install = exports.set = exports.MotionZoom = exports.MotionSlide = exports.MotionRip = exports.MotionFold = exports.MotionFade = exports.TableRow = exports.TableCol = exports.Table = exports.TabEle = exports.Tab = exports.ShiftEle = exports.Shift = exports.SelectEle = exports.Select = exports.Search = exports.Scroller = exports.Row = exports.Fold = exports.Pop = exports.Page = exports.Omit = exports.Nav = exports.Modal = exports.MenuEle = exports.Menu = exports.Message = exports.List = exports.Loading = exports.Icon = exports.Input = exports.FoldContent = exports.FoldTitle = exports.Form = exports.Col = exports.Check = exports.Btn = exports.Bubble = exports.tooltip = exports.toast = exports.tip = exports.confirm = exports.alert = undefined;
 
-__webpack_require__(59);
+__webpack_require__(57);
 
-__webpack_require__(63);
+__webpack_require__(61);
+
+__webpack_require__(64);
 
 __webpack_require__(66);
 
@@ -10331,35 +10412,29 @@ __webpack_require__(68);
 
 __webpack_require__(70);
 
-__webpack_require__(72);
-
-var _src = __webpack_require__(73);
+var _src = __webpack_require__(71);
 
 var _src2 = _interopRequireDefault(_src);
 
-var _zhCn = __webpack_require__(207);
+var _config = __webpack_require__(212);
 
-var _zhCn2 = _interopRequireDefault(_zhCn);
-
-var _config = __webpack_require__(208);
-
-var _alert = __webpack_require__(210);
+var _alert = __webpack_require__(214);
 
 var _alert2 = _interopRequireDefault(_alert);
 
-var _confirm = __webpack_require__(211);
+var _confirm = __webpack_require__(215);
 
 var _confirm2 = _interopRequireDefault(_confirm);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
-var _toast = __webpack_require__(212);
+var _toast = __webpack_require__(216);
 
 var _toast2 = _interopRequireDefault(_toast);
 
-var _tooltip = __webpack_require__(213);
+var _tooltip = __webpack_require__(217);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
@@ -10367,7 +10442,7 @@ var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
-var _Bubble = __webpack_require__(34);
+var _Bubble = __webpack_require__(32);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
@@ -10375,23 +10450,23 @@ var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
-var _Check = __webpack_require__(22);
+var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Form = __webpack_require__(44);
+var _Form = __webpack_require__(41);
 
 var _Form2 = _interopRequireDefault(_Form);
 
-var _Fold = __webpack_require__(36);
+var _Fold = __webpack_require__(35);
 
 var _Fold2 = _interopRequireDefault(_Fold);
 
-var _FoldTitle = __webpack_require__(37);
+var _FoldTitle = __webpack_require__(36);
 
 var _FoldTitle2 = _interopRequireDefault(_FoldTitle);
 
-var _FoldContent = __webpack_require__(38);
+var _FoldContent = __webpack_require__(37);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
@@ -10403,7 +10478,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _List = __webpack_require__(29);
+var _List = __webpack_require__(27);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -10411,35 +10486,35 @@ var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Message = __webpack_require__(23);
+var _Message = __webpack_require__(22);
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _Menu = __webpack_require__(40);
+var _Menu = __webpack_require__(38);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _MenuEle = __webpack_require__(52);
+var _MenuEle = __webpack_require__(50);
 
 var _MenuEle2 = _interopRequireDefault(_MenuEle);
 
-var _Modal = __webpack_require__(25);
+var _Modal = __webpack_require__(24);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _Nav = __webpack_require__(45);
+var _Nav = __webpack_require__(43);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _Omit = __webpack_require__(46);
+var _Omit = __webpack_require__(44);
 
 var _Omit2 = _interopRequireDefault(_Omit);
 
-var _Page = __webpack_require__(28);
+var _Page = __webpack_require__(26);
 
 var _Page2 = _interopRequireDefault(_Page);
 
-var _Pop = __webpack_require__(24);
+var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
@@ -10451,43 +10526,43 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Search = __webpack_require__(47);
+var _Search = __webpack_require__(45);
 
 var _Search2 = _interopRequireDefault(_Search);
 
-var _Select = __webpack_require__(54);
+var _Select = __webpack_require__(52);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _SelectEle = __webpack_require__(55);
+var _SelectEle = __webpack_require__(53);
 
 var _SelectEle2 = _interopRequireDefault(_SelectEle);
 
-var _Shift = __webpack_require__(41);
+var _Shift = __webpack_require__(39);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
-var _ShiftEle = __webpack_require__(53);
+var _ShiftEle = __webpack_require__(51);
 
 var _ShiftEle2 = _interopRequireDefault(_ShiftEle);
 
-var _Tab = __webpack_require__(56);
+var _Tab = __webpack_require__(54);
 
 var _Tab2 = _interopRequireDefault(_Tab);
 
-var _TabEle = __webpack_require__(57);
+var _TabEle = __webpack_require__(55);
 
 var _TabEle2 = _interopRequireDefault(_TabEle);
 
-var _Table = __webpack_require__(49);
+var _Table = __webpack_require__(47);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _TableRow = __webpack_require__(50);
+var _TableRow = __webpack_require__(48);
 
 var _TableRow2 = _interopRequireDefault(_TableRow);
 
-var _TableCol = __webpack_require__(51);
+var _TableCol = __webpack_require__(49);
 
 var _TableCol2 = _interopRequireDefault(_TableCol);
 
@@ -10495,7 +10570,7 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _MotionFold = __webpack_require__(27);
+var _MotionFold = __webpack_require__(25);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
@@ -10507,7 +10582,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _MotionZoom = __webpack_require__(35);
+var _MotionZoom = __webpack_require__(33);
 
 var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
 
@@ -10560,7 +10635,7 @@ exports.set = _config.set;
 exports.install = _src2.default;
 
 /***/ }),
-/* 59 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10570,15 +10645,15 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _focus = __webpack_require__(60);
+var _focus = __webpack_require__(58);
 
 var _focus2 = _interopRequireDefault(_focus);
 
-var _bubble = __webpack_require__(61);
+var _bubble = __webpack_require__(59);
 
 var _bubble2 = _interopRequireDefault(_bubble);
 
-var _clickParent = __webpack_require__(62);
+var _clickParent = __webpack_require__(60);
 
 var _clickParent2 = _interopRequireDefault(_clickParent);
 
@@ -10605,7 +10680,7 @@ _vue2.default.directive('bubble', _bubble2.default);
 _vue2.default.directive('clickParent', _clickParent2.default);
 
 /***/ }),
-/* 60 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10652,7 +10727,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 61 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10704,7 +10779,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 62 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10767,13 +10842,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 63 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(64);
+var content = __webpack_require__(62);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -10787,8 +10862,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./box.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./box.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./box.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./box.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -10798,10 +10873,10 @@ if(false) {
 }
 
 /***/ }),
-/* 64 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -10812,7 +10887,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 全局盒子类\r\n */\n
 
 
 /***/ }),
-/* 65 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10907,6 +10982,51 @@ module.exports = function (css) {
 };
 
 /***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(65);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/postcss-loader/lib/index.js!../../node_modules/sass-loader/lib/loader.js!./transition.scss", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/postcss-loader/lib/index.js!../../node_modules/sass-loader/lib/loader.js!./transition.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "/**\r\n * transition.scss\r\n */\n/**\r\n * slide transition\r\n */\n.z-slide-top-enter,\n.z-slide-top-enter-active,\n.z-slide-top-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-top-enter,\n.z-slide-top-leave-active {\n  -webkit-transform: translateY(100%) !important;\n      -ms-transform: translateY(100%) !important;\n          transform: translateY(100%) !important; }\n\n.z-slide-bottom-enter,\n.z-slide-bottom-enter-active,\n.z-slide-bottom-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-bottom-enter,\n.z-slide-bottom-leave-active {\n  -webkit-transform: translateY(-100%) !important;\n      -ms-transform: translateY(-100%) !important;\n          transform: translateY(-100%) !important; }\n\n.z-slide-left-enter,\n.z-slide-left-enter-active,\n.z-slide-left-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-left-enter,\n.z-slide-left-leave-active {\n  -webkit-transform: translateX(-100%) !important;\n      -ms-transform: translateX(-100%) !important;\n          transform: translateX(-100%) !important; }\n\n.z-slide-right-enter,\n.z-slide-right-enter-active,\n.z-slide-right-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-right-enter,\n.z-slide-right-leave-active {\n  -webkit-transform: translateX(100%) !important;\n      -ms-transform: translateX(100%) !important;\n          transform: translateX(100%) !important; }\n\n.z-fade-enter-active,\n.z-fade-leave-active {\n  opacity: 1 !important;\n  transition: opacity 500ms ease-out !important; }\n\n.z-fade-enter,\n.z-fade-leave-active {\n  opacity: 0 !important; }\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10927,8 +11047,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./transition.scss", function() {
-			var newContent = require("!!../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./transition.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -10941,12 +11061,12 @@ if(false) {
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "/**\r\n * transition.scss\r\n */\n/**\r\n * slide transition\r\n */\n.z-slide-top-enter,\n.z-slide-top-enter-active,\n.z-slide-top-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-top-enter,\n.z-slide-top-leave-active {\n  -webkit-transform: translateY(100%) !important;\n      -ms-transform: translateY(100%) !important;\n          transform: translateY(100%) !important; }\n\n.z-slide-bottom-enter,\n.z-slide-bottom-enter-active,\n.z-slide-bottom-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-bottom-enter,\n.z-slide-bottom-leave-active {\n  -webkit-transform: translateY(-100%) !important;\n      -ms-transform: translateY(-100%) !important;\n          transform: translateY(-100%) !important; }\n\n.z-slide-left-enter,\n.z-slide-left-enter-active,\n.z-slide-left-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-left-enter,\n.z-slide-left-leave-active {\n  -webkit-transform: translateX(-100%) !important;\n      -ms-transform: translateX(-100%) !important;\n          transform: translateX(-100%) !important; }\n\n.z-slide-right-enter,\n.z-slide-right-enter-active,\n.z-slide-right-leave-active {\n  transition: -webkit-transform 500ms ease-out !important;\n  transition: transform 500ms ease-out !important;\n  transition: transform 500ms ease-out, -webkit-transform 500ms ease-out !important; }\n\n.z-slide-right-enter,\n.z-slide-right-leave-active {\n  -webkit-transform: translateX(100%) !important;\n      -ms-transform: translateX(100%) !important;\n          transform: translateX(100%) !important; }\n\n.z-fade-enter-active,\n.z-fade-leave-active {\n  opacity: 1 !important;\n  transition: opacity 500ms ease-out !important; }\n\n.z-fade-enter,\n.z-fade-leave-active {\n  opacity: 0 !important; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 主要样式\r\n */\n.z-css-device-size {\n  position: absolute;\n  height: 0;\n  width: 0;\n  overflow: hidden;\n  visibility: hidden;\n  z-index: -999; }\n  .z-css-device-size::after {\n    content: \"xl\"; }\n  @media only screen and (max-width: 1911px) {\n    .z-css-device-size::after {\n      content: \"l\"; } }\n  @media only screen and (max-width: 991px) {\n    .z-css-device-size::after {\n      content: \"m\"; } }\n  @media only screen and (max-width: 767px) {\n    .z-css-device-size::after {\n      content: \"s\"; } }\n  @media only screen and (max-width: 575px) {\n    .z-css-device-size::after {\n      content: \"xs\"; } }\n\n.z-css-ul {\n  margin: 0;\n  padding: 0;\n  list-style-type: none; }\n\n.z-css-motion-rip {\n  background-color: rgba(0, 0, 0, 0.2);\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden; }\n  .z-css-motion-rip:after {\n    content: \"\";\n    position: absolute;\n    background-color: rgba(255, 255, 255, 0.3);\n    top: 50%;\n    left: 50%;\n    width: 80%;\n    height: 200%;\n    border-radius: 50%;\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n        -ms-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1);\n    -webkit-animation: z-css-motion-rip 2s infinite ease-in-out;\n            animation: z-css-motion-rip 2s infinite ease-in-out; }\n\n@-webkit-keyframes z-css-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scaleX(0.8);\n            transform: translate(-50%, -50%) scaleX(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); } }\n\n@keyframes z-css-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scaleX(0.8);\n            transform: translate(-50%, -50%) scaleX(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); } }\n", ""]);
 
 // exports
 
@@ -10972,8 +11092,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./main.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./main.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./common.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./common.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -10986,52 +11106,7 @@ if(false) {
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 主要样式\r\n */\n* {\n  -webkit-tap-highlight-color: transparent; }\n\n.z-css-device-size {\n  position: absolute;\n  height: 0;\n  width: 0;\n  overflow: hidden;\n  visibility: hidden;\n  z-index: -999; }\n  .z-css-device-size::after {\n    content: \"xl\"; }\n  @media only screen and (max-width: 1911px) {\n    .z-css-device-size::after {\n      content: \"l\"; } }\n  @media only screen and (max-width: 991px) {\n    .z-css-device-size::after {\n      content: \"m\"; } }\n  @media only screen and (max-width: 767px) {\n    .z-css-device-size::after {\n      content: \"s\"; } }\n  @media only screen and (max-width: 575px) {\n    .z-css-device-size::after {\n      content: \"xs\"; } }\n\n.z-css-ul {\n  margin: 0;\n  padding: 0;\n  list-style-type: none; }\n\n.z-css-motion-rip {\n  background-color: rgba(0, 0, 0, 0.2);\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden; }\n  .z-css-motion-rip:after {\n    content: \"\";\n    position: absolute;\n    background-color: rgba(255, 255, 255, 0.3);\n    top: 50%;\n    left: 50%;\n    width: 80%;\n    height: 200%;\n    border-radius: 50%;\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n        -ms-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1);\n    -webkit-animation: z-css-motion-rip 2s infinite ease-in-out;\n            animation: z-css-motion-rip 2s infinite ease-in-out; }\n\n@-webkit-keyframes z-css-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scaleX(0.8);\n            transform: translate(-50%, -50%) scaleX(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); } }\n\n@keyframes z-css-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scaleX(0.8);\n            transform: translate(-50%, -50%) scaleX(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1); } }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 70 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(71);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./common.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./common.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -11042,13 +11117,13 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 组件公共类样式\r\
 
 
 /***/ }),
-/* 72 */
+/* 70 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 73 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11063,11 +11138,11 @@ var _Btn = __webpack_require__(12);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
-var _Check = __webpack_require__(22);
+var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Form = __webpack_require__(44);
+var _Form = __webpack_require__(41);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -11079,23 +11154,23 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Bubble = __webpack_require__(34);
+var _Bubble = __webpack_require__(32);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
-var _Modal = __webpack_require__(25);
+var _Modal = __webpack_require__(24);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _Pop = __webpack_require__(24);
+var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
-var _Message = __webpack_require__(23);
+var _Message = __webpack_require__(22);
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _Code = __webpack_require__(147);
+var _Code = __webpack_require__(151);
 
 var _Code2 = _interopRequireDefault(_Code);
 
@@ -11103,15 +11178,15 @@ var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Nav = __webpack_require__(45);
+var _Nav = __webpack_require__(43);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _Omit = __webpack_require__(46);
+var _Omit = __webpack_require__(44);
 
 var _Omit2 = _interopRequireDefault(_Omit);
 
-var _Page = __webpack_require__(28);
+var _Page = __webpack_require__(26);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -11119,67 +11194,67 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Search = __webpack_require__(47);
+var _Search = __webpack_require__(45);
 
 var _Search2 = _interopRequireDefault(_Search);
 
-var _Fold = __webpack_require__(36);
+var _Fold = __webpack_require__(35);
 
 var _Fold2 = _interopRequireDefault(_Fold);
 
-var _FoldTitle = __webpack_require__(37);
+var _FoldTitle = __webpack_require__(36);
 
 var _FoldTitle2 = _interopRequireDefault(_FoldTitle);
 
-var _FoldContent = __webpack_require__(38);
+var _FoldContent = __webpack_require__(37);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
-var _List = __webpack_require__(29);
+var _List = __webpack_require__(27);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Table = __webpack_require__(49);
+var _Table = __webpack_require__(47);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _TableRow = __webpack_require__(50);
+var _TableRow = __webpack_require__(48);
 
 var _TableRow2 = _interopRequireDefault(_TableRow);
 
-var _TableCol = __webpack_require__(51);
+var _TableCol = __webpack_require__(49);
 
 var _TableCol2 = _interopRequireDefault(_TableCol);
 
-var _Menu = __webpack_require__(40);
+var _Menu = __webpack_require__(38);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _MenuEle = __webpack_require__(52);
+var _MenuEle = __webpack_require__(50);
 
 var _MenuEle2 = _interopRequireDefault(_MenuEle);
 
-var _Shift = __webpack_require__(41);
+var _Shift = __webpack_require__(39);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
-var _ShiftEle = __webpack_require__(53);
+var _ShiftEle = __webpack_require__(51);
 
 var _ShiftEle2 = _interopRequireDefault(_ShiftEle);
 
-var _Select = __webpack_require__(54);
+var _Select = __webpack_require__(52);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _SelectEle = __webpack_require__(55);
+var _SelectEle = __webpack_require__(53);
 
 var _SelectEle2 = _interopRequireDefault(_SelectEle);
 
-var _Tab = __webpack_require__(56);
+var _Tab = __webpack_require__(54);
 
 var _Tab2 = _interopRequireDefault(_Tab);
 
-var _TabEle = __webpack_require__(57);
+var _TabEle = __webpack_require__(55);
 
 var _TabEle2 = _interopRequireDefault(_TabEle);
 
@@ -11195,7 +11270,7 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _MotionFold = __webpack_require__(27);
+var _MotionFold = __webpack_require__(25);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
@@ -11207,7 +11282,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _MotionZoom = __webpack_require__(35);
+var _MotionZoom = __webpack_require__(33);
 
 var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
 
@@ -11236,6 +11311,51 @@ exports.install = install;
 exports.default = install;
 
 /***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(73);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Btn.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Btn.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件样式\r\n */\n.z-btn.z-btn-disabled .z-btn-read-only-shadow {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n.z-btn {\n  position: relative;\n  display: inline-block;\n  cursor: pointer;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }\n  .z-btn > .z-btn-ele {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position: relative;\n    min-width: 64px;\n    box-sizing: border-box;\n    border-radius: 3px;\n    color: #fff;\n    text-align: center;\n    font-size: 14px;\n    overflow: hidden;\n    line-height: 1;\n    white-space: nowrap;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    transition-duration: 150ms;\n    transition-property: background-color, border-color, box-shadow, color;\n    transition-timing-function: ease-in-out; }\n    .z-btn > .z-btn-ele > .z-btn-ele-border {\n      border: rgba(0, 0, 0, 0) 1px solid;\n      padding: 10px 8px; }\n    .z-btn > .z-btn-ele .z-btn-loading {\n      position: absolute;\n      left: 8px;\n      z-index: 2; }\n  .z-btn > a.z-btn-ele {\n    width: 100%; }\n  .z-btn.z-btn-block {\n    display: block;\n    width: 100%; }\n  .z-btn.z-btn-size-m > .z-btn-ele {\n    min-width: 108px; }\n  .z-btn.z-btn-size-l > .z-btn-ele {\n    min-width: 128px; }\n  .z-btn.z-btn-size.z-btn-type-float-m > .z-btn-ele {\n    width: 56px;\n    height: 56px; }\n  .z-btn.z-btn-size.z-btn-type-float-l > .z-btn-ele {\n    width: 72px;\n    height: 72px; }\n  .z-btn.z-btn-disabled .z-btn-ele {\n    color: rgba(0, 0, 0, 0.4);\n    background-color: rgba(0, 0, 0, 0.12); }\n  .z-btn.z-btn-disabled .z-btn-read-only-shadow {\n    background-color: rgba(255, 255, 255, 0.5);\n    border-radius: 3px;\n    cursor: default;\n    z-index: 1; }\n  .z-btn.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 3px;\n    background-color: #2196f3; }\n  .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 100%;\n    width: 40px;\n    height: 40px;\n    box-sizing: border-box;\n    padding: 0;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n    min-width: auto; }\n    .z-btn.z-btn-type-float > .z-btn-ele::after {\n      content: \" \";\n      display: inline-block;\n      vertical-align: middle;\n      height: 100%;\n      width: 0; }\n    .z-btn.z-btn-type-float > .z-btn-ele .z-btn-ele-border {\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-btn.z-btn-type-text > .z-btn-ele {\n    background-color: #fff;\n    color: #2196f3; }\n  .z-btn.z-btn-type-outline > .z-btn-ele {\n    background-color: #fff;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #2196f3;\n    color: #2196f3; }\n  .z-btn.z-btn-radius-none > .z-btn-ele {\n    border-radius: 0; }\n  .z-btn.z-btn-radius-m > .z-btn-ele {\n    border-radius: 10px; }\n  .z-btn.z-btn-radius-l > .z-btn-ele {\n    border-radius: 30px; }\n  .z-btn .z-btn-value-show {\n    display: inline-block; }\n\n.z-btn.z-btn-theme-success.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-success.z-btn-type-float > .z-btn-ele {\n  background-color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-text > .z-btn-ele {\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-outline > .z-btn-ele {\n  border-color: #4caf50;\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-danger.z-btn-type-float > .z-btn-ele {\n  background-color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-text > .z-btn-ele {\n  color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele {\n  border-color: #f44336;\n  color: #f44336; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-blue.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-text > .z-btn-ele {\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3;\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-warning.z-btn-type-float > .z-btn-ele {\n  background-color: #ffeb3b; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-text > .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele {\n  border-color: #ffeb3b;\n  color: #ffeb3b; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-orange.z-btn-type-float > .z-btn-ele {\n  background-color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-text > .z-btn-ele {\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele {\n  border-color: #ff5722;\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-grey.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-text > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-light.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-light.z-btn-type-float > .z-btn-ele {\n  background-color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-text > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-outline > .z-btn-ele {\n  border-color: #f5f5f5;\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-black.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-black.z-btn-type-float > .z-btn-ele {\n  background-color: #000; }\n\n.z-btn.z-btn-theme-black.z-btn-type-text > .z-btn-ele {\n  color: #000; }\n\n.z-btn.z-btn-theme-black.z-btn-type-outline > .z-btn-ele {\n  border-color: #000;\n  color: #000; }\n\n.z-btn.z-btn-theme-white.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-white.z-btn-type-float > .z-btn-ele {\n  background-color: #fff; }\n\n.z-btn.z-btn-theme-white.z-btn-type-text > .z-btn-ele {\n  color: #fff; }\n\n.z-btn.z-btn-theme-white.z-btn-type-outline > .z-btn-ele {\n  border-color: #fff;\n  color: #fff; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-dark.z-btn-type-float > .z-btn-ele {\n  background-color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-text > .z-btn-ele {\n  color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele {\n  border-color: #424242;\n  color: #424242; }\n", ""]);
+
+// exports
+
+
+/***/ }),
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11256,8 +11376,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Btn.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Btn.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Btn.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Btn.material.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -11270,12 +11390,12 @@ if(false) {
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件样式\r\n */\n.z-btn.z-btn-ban .z-btn-read-only-shadow {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n.z-btn {\n  position: relative;\n  display: inline-block;\n  cursor: pointer;\n  vertical-align: middle; }\n  .z-btn > .z-btn-ele {\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position: relative;\n    min-width: 64px;\n    box-sizing: border-box;\n    border-radius: 3px;\n    color: #fff;\n    text-align: center;\n    font-size: 14px;\n    overflow: hidden;\n    line-height: 1;\n    white-space: nowrap;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    transition-duration: 150ms;\n    transition-property: background-color, border-color, box-shadow, color;\n    transition-timing-function: ease-in-out; }\n    .z-btn > .z-btn-ele > .z-btn-ele-border {\n      border: transparent 1px solid;\n      padding: 10px 8px; }\n    .z-btn > .z-btn-ele .z-btn-loading {\n      position: absolute;\n      left: 8px;\n      z-index: 2; }\n  .z-btn > a.z-btn-ele {\n    width: 100%; }\n  .z-btn.z-btn-block {\n    display: block;\n    width: 100%; }\n  .z-btn.z-btn-size-m > .z-btn-ele {\n    min-width: 108px; }\n  .z-btn.z-btn-size-l > .z-btn-ele {\n    min-width: 128px; }\n  .z-btn.z-btn-size.z-btn-type-float-m > .z-btn-ele {\n    width: 56px;\n    height: 56px; }\n  .z-btn.z-btn-size.z-btn-type-float-l > .z-btn-ele {\n    width: 72px;\n    height: 72px; }\n  .z-btn.z-btn-radius-none > .z-btn-ele {\n    border-radius: 0; }\n  .z-btn.z-btn-radius-m > .z-btn-ele {\n    border-radius: 10px; }\n  .z-btn.z-btn-radius-l > .z-btn-ele {\n    border-radius: 30px; }\n  .z-btn.z-btn-ban .z-btn-ele {\n    color: rgba(0, 0, 0, 0.4);\n    background-color: rgba(0, 0, 0, 0.12) !important; }\n  .z-btn.z-btn-ban .z-btn-read-only-shadow {\n    background-color: rgba(255, 255, 255, 0.5);\n    border-radius: 3px;\n    cursor: not-allowed;\n    z-index: 1; }\n  .z-btn.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 3px;\n    background-color: #2196f3; }\n  .z-btn.z-btn-type-float > .z-btn-ele {\n    border-radius: 100%;\n    width: 40px;\n    height: 40px;\n    box-sizing: border-box;\n    padding: 0;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n    min-width: auto; }\n    .z-btn.z-btn-type-float > .z-btn-ele::after {\n      content: \" \";\n      display: inline-block;\n      vertical-align: middle;\n      height: 100%;\n      width: 0; }\n    .z-btn.z-btn-type-float > .z-btn-ele .z-btn-ele-border {\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-btn.z-btn-type-flat > .z-btn-ele {\n    background-color: #fff;\n    color: #2196f3; }\n  .z-btn.z-btn-type-outline > .z-btn-ele {\n    background-color: #fff;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #2196f3;\n    color: #2196f3; }\n  .z-btn .z-btn-value-show {\n    display: inline-block; }\n\n.z-btn.z-btn-theme-success.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-success.z-btn-type-float > .z-btn-ele {\n  background-color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-flat > .z-btn-ele {\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-success.z-btn-type-outline > .z-btn-ele {\n  border-color: #4caf50;\n  color: #4caf50; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-danger.z-btn-type-float > .z-btn-ele {\n  background-color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-flat > .z-btn-ele {\n  color: #f44336; }\n\n.z-btn.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele {\n  border-color: #f44336;\n  color: #f44336; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-blue.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-flat > .z-btn-ele {\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3;\n  color: #2196f3; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-warning.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-flat > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-orange.z-btn-type-float > .z-btn-ele {\n  background-color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-flat > .z-btn-ele {\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele {\n  border-color: #ff5722;\n  color: #ff5722; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-grey.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-flat > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e;\n  color: #9e9e9e; }\n\n.z-btn.z-btn-theme-light.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-light.z-btn-type-float > .z-btn-ele {\n  background-color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-flat > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-light.z-btn-type-outline > .z-btn-ele {\n  border-color: #f5f5f5;\n  color: #f5f5f5; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-theme-dark.z-btn-type-float > .z-btn-ele {\n  background-color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-flat > .z-btn-ele {\n  color: #424242; }\n\n.z-btn.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele {\n  border-color: #424242;\n  color: #424242; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 material UI 样式\r\n */\n.z-btn.z-btn-ui-material:focus {\n  outline: none; }\n\n.z-btn.z-btn-ui-material .z-btn-overlay {\n  background-color: rgba(0, 0, 0, 0.12);\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%; }\n\n.z-btn.z-btn-ui-material.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-material.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n  .z-btn.z-btn-ui-material.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-material.z-btn-type-float > .z-btn-ele:hover {\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n\n.z-btn.z-btn-ui-material.z-btn-type-float > .z-btn-ele > .z-css-motion-rip::after {\n  height: 100%;\n  width: 100%;\n  border-radius: 100%; }\n\n.z-btn.z-btn-ui-material.z-btn-disabled .z-btn-ele {\n  color: rgba(0, 0, 0, 0.4);\n  background-color: rgba(0, 0, 0, 0.12); }\n\n.z-btn.z-btn-ui-material.z-btn-disabled.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-material.z-btn-disabled.z-btn-type-float > .z-btn-ele:hover {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n", ""]);
 
 // exports
 
@@ -11301,8 +11421,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Btn.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Btn.material.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Btn.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Btn.bootstrap.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -11315,63 +11435,18 @@ if(false) {
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 material UI 样式\r\n */\n.z-btn.z-btn-ui-material:focus {\n  outline: none; }\n\n.z-btn.z-btn-ui-material.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-material.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n  .z-btn.z-btn-ui-material.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-material.z-btn-type-float > .z-btn-ele:hover {\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 bootstrap UI 样式\r\n */\n.z-btn.z-btn-ui-bootstrap:focus {\n  outline: none; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3;\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(0, 105, 192, 0.8);\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(0, 105, 192, 0.9);\n    border-color: #0069c0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #2196f3;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #2196f3;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-type-text:hover > .z-btn-ele {\n  color: #0069c0;\n  text-decoration: underline; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-focus.z-btn-type-text > .z-btn-ele {\n  text-decoration: underline; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-disabled > .z-btn-ele {\n  background-color: #6ec6ff;\n  border-color: #6ec6ff;\n  color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #6ec6ff;\n    border-color: #6ec6ff; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele {\n  background-color: #4caf50;\n  border-color: #4caf50; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(8, 127, 35, 0.8);\n    border-color: rgba(8, 127, 35, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(8, 127, 35, 0.9);\n    border-color: #087f23; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele {\n  border-color: #4caf50; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #4caf50;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #4caf50;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-text:hover > .z-btn-ele {\n  color: #087f23; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-disabled > .z-btn-ele {\n  background-color: #80e27e;\n  border-color: #80e27e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #80e27e;\n    border-color: #80e27e; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele {\n  background-color: #f44336;\n  border-color: #f44336; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(186, 0, 13, 0.8);\n    border-color: rgba(186, 0, 13, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(186, 0, 13, 0.9);\n    border-color: #ba000d; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele {\n  border-color: #f44336; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #f44336;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #f44336;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-text:hover > .z-btn-ele {\n  color: #ba000d; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-disabled > .z-btn-ele {\n  background-color: #ff7961;\n  border-color: #ff7961; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #ff7961;\n    border-color: #ff7961; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele {\n  background-color: #ffeb3b;\n  border-color: #ffeb3b; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(200, 185, 0, 0.8);\n    border-color: rgba(200, 185, 0, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(200, 185, 0, 0.9);\n    border-color: #c8b900; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele {\n  border-color: #ffeb3b; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #ffeb3b;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #ffeb3b;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-text:hover > .z-btn-ele {\n  color: #c8b900; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-disabled > .z-btn-ele {\n  background-color: #ffff72;\n  border-color: #ffff72; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #ffff72;\n    border-color: #ffff72; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3;\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(0, 105, 192, 0.8);\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(0, 105, 192, 0.9);\n    border-color: #0069c0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #2196f3;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #2196f3;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-text:hover > .z-btn-ele {\n  color: #0069c0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-disabled > .z-btn-ele {\n  background-color: #6ec6ff;\n  border-color: #6ec6ff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #6ec6ff;\n    border-color: #6ec6ff; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele {\n  background-color: #ff5722;\n  border-color: #ff5722; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(196, 28, 0, 0.8);\n    border-color: rgba(196, 28, 0, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(196, 28, 0, 0.9);\n    border-color: #c41c00; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele {\n  border-color: #ff5722; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #ff5722;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #ff5722;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-text:hover > .z-btn-ele {\n  color: #c41c00; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-disabled > .z-btn-ele {\n  background-color: #ff8a50;\n  border-color: #ff8a50; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #ff8a50;\n    border-color: #ff8a50; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele {\n  background-color: #f5f5f5;\n  border-color: #f5f5f5; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(224, 224, 224, 0.8);\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(224, 224, 224, 0.9);\n    border-color: #e0e0e0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele {\n  border-color: #f5f5f5; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #f5f5f5;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #f5f5f5;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-text:hover > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-disabled > .z-btn-ele {\n  background-color: #fff;\n  border-color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #fff;\n    border-color: #fff; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele {\n  background-color: #424242;\n  border-color: #424242; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(27, 27, 27, 0.8);\n    border-color: rgba(27, 27, 27, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(27, 27, 27, 0.9);\n    border-color: #1b1b1b; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele {\n  border-color: #424242; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #424242;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #424242;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-text:hover > .z-btn-ele {\n  color: #1b1b1b; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-disabled > .z-btn-ele {\n  background-color: #6d6d6d;\n  border-color: #6d6d6d; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #6d6d6d;\n    border-color: #6d6d6d; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-float > .z-btn-ele {\n  background-color: #000;\n  border-color: #000; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(0, 0, 0, 0.8);\n    border-color: rgba(0, 0, 0, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(0, 0, 0, 0.9);\n    border-color: #000; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-outline > .z-btn-ele {\n  border-color: #000; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #000;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #000;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-type-text:hover > .z-btn-ele {\n  color: #000; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-disabled > .z-btn-ele {\n  background-color: #6d6d6d;\n  border-color: #6d6d6d; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-black.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #6d6d6d;\n    border-color: #6d6d6d; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-float > .z-btn-ele {\n  background-color: #fff;\n  border-color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(224, 224, 224, 0.8);\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(224, 224, 224, 0.9);\n    border-color: #e0e0e0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-outline > .z-btn-ele {\n  border-color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #fff;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #fff;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-type-text:hover > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-disabled > .z-btn-ele {\n  background-color: #fff;\n  border-color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-white.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #fff;\n    border-color: #fff; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e;\n  border-color: #9e9e9e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(112, 112, 112, 0.8);\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(112, 112, 112, 0.9);\n    border-color: #707070; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #9e9e9e;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #9e9e9e;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-text:hover > .z-btn-ele {\n  color: #707070; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-focus.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-focus.z-btn-type-float > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-focus.z-btn-type-outline > .z-btn-ele {\n  box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-disabled > .z-btn-ele {\n  background-color: #cfcfcf;\n  border-color: #cfcfcf; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-disabled > .z-btn-ele:hover {\n    background-color: #cfcfcf;\n    border-color: #cfcfcf; }\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(79);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Btn.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Btn.bootstrap.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 bootstrap UI 样式\r\n */\n.z-btn.z-btn-ui-bootstrap:focus {\n  outline: none; }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3;\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(0, 105, 192, 0.8);\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(0, 105, 192, 0.9);\n    border-color: #0069c0; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #2196f3;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #2196f3;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele {\n  background-color: #4caf50;\n  border-color: #4caf50; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(8, 127, 35, 0.8);\n    border-color: rgba(8, 127, 35, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(8, 127, 35, 0.9);\n    border-color: #087f23; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele {\n  border-color: #4caf50; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #4caf50;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #4caf50;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-success.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele {\n  background-color: #f44336;\n  border-color: #f44336; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(186, 0, 13, 0.8);\n    border-color: rgba(186, 0, 13, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(186, 0, 13, 0.9);\n    border-color: #ba000d; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele {\n  border-color: #f44336; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #f44336;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #f44336;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-danger.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e;\n  border-color: #9e9e9e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(112, 112, 112, 0.8);\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(112, 112, 112, 0.9);\n    border-color: #707070; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #9e9e9e;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #9e9e9e;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-warning.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele {\n  background-color: #2196f3;\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(0, 105, 192, 0.8);\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(0, 105, 192, 0.9);\n    border-color: #0069c0; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele {\n  border-color: #2196f3; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #2196f3;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #2196f3;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-blue.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele {\n  background-color: #ff5722;\n  border-color: #ff5722; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(196, 28, 0, 0.8);\n    border-color: rgba(196, 28, 0, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(196, 28, 0, 0.9);\n    border-color: #c41c00; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele {\n  border-color: #ff5722; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #ff5722;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #ff5722;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-orange.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele {\n  background-color: #f5f5f5;\n  border-color: #f5f5f5; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(224, 224, 224, 0.8);\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(224, 224, 224, 0.9);\n    border-color: #e0e0e0; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele {\n  border-color: #f5f5f5; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #f5f5f5;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #f5f5f5;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-light.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele {\n  background-color: #424242;\n  border-color: #424242; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(27, 27, 27, 0.8);\n    border-color: rgba(27, 27, 27, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(27, 27, 27, 0.9);\n    border-color: #1b1b1b; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele {\n  border-color: #424242; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #424242;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #424242;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-dark.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele {\n  background-color: #9e9e9e;\n  border-color: #9e9e9e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:hover, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:hover {\n    background-color: rgba(112, 112, 112, 0.8);\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:active, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:active {\n    background-color: rgba(112, 112, 112, 0.9);\n    border-color: #707070; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-button > .z-btn-ele:active:focus, .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-float > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n\n.z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele {\n  border-color: #9e9e9e; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:hover {\n    background-color: #9e9e9e;\n    color: #fff; }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:active {\n    background-color: #9e9e9e;\n    color: #000; }\n    .z-btn.z-btn-ui-bootstrap.z-btn-theme-grey.z-btn-type-outline > .z-btn-ele:active:focus {\n      box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11461,7 +11536,7 @@ exports.offset = offset;
 exports.position = position;
 
 /***/ }),
-/* 81 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11474,7 +11549,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = function (h) {
   var btnEleChildren = [];
 
-  if (this.banState) {
+  if (this.stateDisabled) {
     btnEleChildren.push(h('div', {
       class: [this.xclass('read-only-shadow')]
     }));
@@ -11484,7 +11559,7 @@ exports.default = function (h) {
     btnEleChildren.push(h('div', {
       class: [this.xclass('value-show')]
     }, [this.$slots.default]));
-  } else if (this.type === 'flat') {
+  } else if (this.type === 'text') {
     var ele = this.$slots.default ? this.$slots.default : this.value;
 
     btnEleChildren.push(this.link ? h('a', {
@@ -11512,7 +11587,7 @@ exports.default = function (h) {
 
     buttonChildren.push(this.$slots.default ? this.$slots.default : this.value);
 
-    btnEleChildren.push(h('' + (this.link ? 'a' : 'div'), {
+    btnEleChildren.push(h('div', {
       class: [this.xclass('ele-border')]
     }, [buttonChildren]));
   }
@@ -11522,11 +11597,13 @@ exports.default = function (h) {
       class: [this.xclass('rip')],
       props: {
         assign: !this.isFloatBtn,
-        mousePoi: this.mousePoi
+        mousePoi: this.mousePoi,
+        speed: 300,
+        radius: 'L'
       },
       ref: 'transition'
     }), h('div', {
-      class: [this.prefix('css-motion-rip')],
+      class: [this.xclass('overlay')],
       directives: [{
         name: 'show',
         value: this.motion
@@ -11535,16 +11612,16 @@ exports.default = function (h) {
   }
 
   return h('div', {
-    class: [this.cPrefix, this.btnClass, _defineProperty({}, this.xclass('ban'), this.banState), _defineProperty({}, this.xclass('block'), this.block), _defineProperty({}, this.xclass('rip'), this.motion)],
+    class: [this.cPrefix, this.btnClass, _defineProperty({}, this.xclass('disabled'), this.stateDisabled), _defineProperty({}, this.xclass('block'), this.block), _defineProperty({}, this.xclass('rip'), !this.stateDisabled && this.motion), _defineProperty({}, this.xclass('focus'), !this.stateDisabled && this.focusing)],
     on: {
-      mousedown: this.mousedown,
-      mouseup: this.mouseup,
-      keyup: this.keyup,
-      focus: this.focus,
-      blur: this.blur
+      mousedown: this._handlerMousedown,
+      mouseup: this._handlerMouseup,
+      keyup: this._handlerKeyup,
+      focus: this._handlerFocus,
+      blur: this._handlerBlur
     },
     attrs: {
-      tabindex: 0
+      tabindex: this.stateDisabled ? undefined : 0
     }
   }, [h('div', {
     class: [this.xclass('ele')]
@@ -11556,19 +11633,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 82 */
+/* 80 */
 /***/ (function(module, exports) {
 
 module.exports = {"prefix":"z","defaultTheme":"primary","defaultUI":"material","language":"zh-CN"}
 
 /***/ }),
-/* 83 */
+/* 81 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_83__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_81__;
 
 /***/ }),
-/* 84 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11666,7 +11743,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 85 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11678,7 +11755,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _actions, _mutations;
 
-var _type = __webpack_require__(20);
+var _type = __webpack_require__(28);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -11718,7 +11795,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 86 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11728,7 +11805,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(30);
+var _type = __webpack_require__(29);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -11767,6 +11844,118 @@ exports.default = {
 };
 
 /***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * 函数防抖
+ * 将延迟函数的执行(真正的执行)，在函数最后一次调用时刻的 wait 毫秒之后
+ * ex: 渲染一个Markdown格式的评论预览, 当窗口停止改变大小之后重新计算布局
+ *
+ * @param {Object} func - 执行函数
+ * @param {Number} wait - 间隔时间
+ */
+var debounce = function debounce(func, wait) {
+  var timeout = void 0,
+      result = void 0;
+
+  var later = function later(context, args) {};
+
+  var debounced = function debounced(args) {};
+
+  debounced.cancel = function () {
+    clearTimeout(timeout);
+    timeout = null;
+  };
+
+  return debounced;
+};
+
+/**
+ * 函数节流
+ * 在一段时间内只能执行一次函数
+ *
+ * @param {Object} func - 执行函数
+ * @param {Number} wait - 间隔时间
+ */
+var throttle = function throttle(func) {
+  var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
+
+  var startTime = Date.now();
+
+  var throttled = function throttled() {
+    var time = Date.now();
+
+    if (startTime + wait - time <= 0) {
+      startTime = time;
+
+      return func();
+    }
+  };
+
+  throttled.cancel = function () {
+    startTime = Date.now();
+  };
+
+  return throttled;
+};
+
+exports.debounce = debounce;
+exports.throttle = throttle;
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * btn method
+ *
+ * @method closeLoading - 关闭按钮等待功能
+ * @method openLoading - 开启按钮等待功能
+ */
+
+exports.default = {
+  methods: {
+    /**
+     * 开启按钮等待功能
+     */
+    openLoading: function openLoading() {
+      var _this = this;
+
+      if (!this.createdLoading) {
+        this.createdLoading = true;
+        this._banBtn();
+      }
+
+      this.$nextTick(function () {
+        _this.$refs.loading.show();
+      });
+    },
+
+
+    /**
+     * 关闭按钮等待功能
+     */
+    closeLoading: function closeLoading(state) {
+      this._allowBtn();
+      this.$refs.loading.hide();
+    }
+  }
+};
+
+/***/ }),
 /* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11787,8 +11976,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Loading.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Loading.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Loading.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Loading.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -11801,12 +11990,12 @@ if(false) {
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.z-loading.z-loading-mark .z-loading-bg, .z-loading.z-loading-theme-secondary.z-loading-mark .z-loading-bg {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n@-webkit-keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n\n@keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n\n.z-loading.z-loading-theme-primary .z-loading-rotate .z-loading-icon, .z-loading.z-loading-theme-secondary .z-loading-rotate .z-loading-icon {\n  line-height: 0;\n  -webkit-transform-origin: 50%;\n      -ms-transform-origin: 50%;\n          transform-origin: 50%;\n  -webkit-animation: z-loading-rotate 1s linear infinite;\n          animation: z-loading-rotate 1s linear infinite;\n  margin: 0; }\n\n.z-loading.z-loading-theme-primary .z-loading-spot .z-loading-spot-1, .z-loading.z-loading-theme-primary .z-loading-spot .z-loading-spot-2, .z-loading.z-loading-theme-primary .z-loading-spot .z-loading-spot-3 {\n  opacity: 0; }\n\n.z-loading.z-loading-theme-primary .z-loading-spot .z-loading-spot-1 {\n  -webkit-animation: z-loading-spot-fade-1 2s infinite;\n          animation: z-loading-spot-fade-1 2s infinite; }\n\n@-webkit-keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n.z-loading.z-loading-theme-primary .z-loading-spot .z-loading-spot-2 {\n  -webkit-animation: z-loading-spot-fade-2 2s infinite;\n          animation: z-loading-spot-fade-2 2s infinite; }\n\n@-webkit-keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n.z-loading.z-loading-theme-primary .z-loading-spot .z-loading-spot-3 {\n  -webkit-animation: z-loading-spot-fade-3 2s infinite;\n          animation: z-loading-spot-fade-3 2s infinite; }\n\n@-webkit-keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n/**\r\n * loading 组件样式\r\n */\n.z-loading {\n  display: inline-block; }\n  .z-loading .z-loading-wrap {\n    width: 100%;\n    height: 100%; }\n    .z-loading .z-loading-wrap .z-loading-rotate {\n      display: inline-block; }\n  .z-loading.z-loading-mark {\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n    margin: auto;\n    z-index: 949; }\n    .z-loading.z-loading-mark .z-loading-wrap {\n      position: relative;\n      z-index: 2; }\n    .z-loading.z-loading-mark .z-loading-bg {\n      background: rgba(255, 255, 255, 0.6);\n      width: 100%;\n      height: 100%; }\n  .z-loading.z-loading-theme-primary.z-loading-mark .z-loading-spot {\n    z-index: 2;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n        -ms-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%); }\n  .z-loading.z-loading-theme-primary.z-loading-mark .z-loading-rotate {\n    position: absolute;\n    z-index: 2;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n        -ms-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%); }\n  .z-loading.z-loading-theme-secondary.z-loading-mark .z-loading-bg {\n    background: #9e9e9e;\n    opacity: .6; }\n  .z-loading.z-loading-theme-secondary.z-loading-mark .z-loading-rotate {\n    position: absolute;\n    z-index: 2;\n    top: 50%;\n    left: 50%; }\n  .z-loading.z-loading-theme-secondary .z-loading-rotate {\n    background-color: #fff;\n    border-radius: 3px;\n    padding: 4px; }\n    .z-loading.z-loading-theme-secondary .z-loading-rotate .z-loading-icon i {\n      color: #9e9e9e; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * loading 组件样式\r\n */\n.z-loading.z-loading-mark .z-loading-bg {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n@-webkit-keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n\n@keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n\n.z-loading .z-loading-spot .z-loading-spot-1,\n.z-loading .z-loading-spot .z-loading-spot-2,\n.z-loading .z-loading-spot .z-loading-spot-3 {\n  opacity: 0; }\n\n.z-loading .z-loading-spot .z-loading-spot-1 {\n  -webkit-animation: z-loading-spot-fade-1 2s infinite;\n          animation: z-loading-spot-fade-1 2s infinite; }\n\n@-webkit-keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n\n.z-loading .z-loading-spot .z-loading-spot-2 {\n  -webkit-animation: z-loading-spot-fade-2 2s infinite;\n          animation: z-loading-spot-fade-2 2s infinite; }\n\n@-webkit-keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n\n.z-loading .z-loading-spot .z-loading-spot-3 {\n  -webkit-animation: z-loading-spot-fade-3 2s infinite;\n          animation: z-loading-spot-fade-3 2s infinite; }\n\n@-webkit-keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-rotate {\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@-webkit-keyframes z-loading-rotate-fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n            transform: rotate(135deg); }\n  25% {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg); }\n  37.5% {\n    -webkit-transform: rotate(405deg);\n            transform: rotate(405deg); }\n  50% {\n    -webkit-transform: rotate(540deg);\n            transform: rotate(540deg); }\n  62.5% {\n    -webkit-transform: rotate(675deg);\n            transform: rotate(675deg); }\n  75% {\n    -webkit-transform: rotate(810deg);\n            transform: rotate(810deg); }\n  87.5% {\n    -webkit-transform: rotate(945deg);\n            transform: rotate(945deg); }\n  100% {\n    -webkit-transform: rotate(1080deg);\n            transform: rotate(1080deg); } }\n\n@keyframes z-loading-rotate-fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n            transform: rotate(135deg); }\n  25% {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg); }\n  37.5% {\n    -webkit-transform: rotate(405deg);\n            transform: rotate(405deg); }\n  50% {\n    -webkit-transform: rotate(540deg);\n            transform: rotate(540deg); }\n  62.5% {\n    -webkit-transform: rotate(675deg);\n            transform: rotate(675deg); }\n  75% {\n    -webkit-transform: rotate(810deg);\n            transform: rotate(810deg); }\n  87.5% {\n    -webkit-transform: rotate(945deg);\n            transform: rotate(945deg); }\n  100% {\n    -webkit-transform: rotate(1080deg);\n            transform: rotate(1080deg); } }\n\n@-webkit-keyframes z-loading-rotate-spin-left {\n  0% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); }\n  50% {\n    -webkit-transform: rotate(-5deg);\n            transform: rotate(-5deg); }\n  100% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); } }\n\n@keyframes z-loading-rotate-spin-left {\n  0% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); }\n  50% {\n    -webkit-transform: rotate(-5deg);\n            transform: rotate(-5deg); }\n  100% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); } }\n\n@-webkit-keyframes z-loading-rotate-spin-right {\n  0% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); }\n  50% {\n    -webkit-transform: rotate(5deg);\n            transform: rotate(5deg); }\n  100% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); } }\n\n@keyframes z-loading-rotate-spin-right {\n  0% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); }\n  50% {\n    -webkit-transform: rotate(5deg);\n            transform: rotate(5deg); }\n  100% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); } }\n\n.z-loading {\n  display: inline-block; }\n  .z-loading .z-loading-wrap {\n    width: 100%;\n    height: 100%; }\n    .z-loading .z-loading-wrap .z-loading-rotate {\n      display: inline-block;\n      vertical-align: middle; }\n  .z-loading.z-loading-mark {\n    position: absolute;\n    top: 0;\n    left: 0;\n    bottom: 0;\n    right: 0;\n    margin: auto;\n    z-index: 949; }\n    .z-loading.z-loading-mark .z-loading-wrap {\n      position: relative;\n      z-index: 2; }\n    .z-loading.z-loading-mark .z-loading-bg {\n      background: rgba(255, 255, 255, 0.6);\n      width: 100%;\n      height: 100%; }\n    .z-loading.z-loading-mark .z-loading-spot {\n      z-index: 2;\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n          -ms-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%); }\n    .z-loading.z-loading-mark .z-loading-rotate {\n      position: absolute;\n      z-index: 2;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n          -ms-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%); }\n  .z-loading.z-loading-size-xs .z-loading-spot {\n    font-size: 12px; }\n  .z-loading.z-loading-size-m .z-loading-spot {\n    font-size: 16px; }\n  .z-loading.z-loading-size-l .z-loading-spot {\n    font-size: 20px; }\n  .z-loading.z-loading-size-xl .z-loading-spot {\n    font-size: 24px; }\n", ""]);
 
 // exports
 
@@ -11815,11 +12004,101 @@ exports.push([module.i, "@charset \"UTF-8\";\n.z-loading.z-loading-mark .z-loadi
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(90);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Loading.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Loading.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * loading 组件的 bootstrap UI 样式\r\n */\n@-webkit-keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n@keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n\n.z-loading.z-loading-ui-bootstrap .z-loading-rotate .z-loading-icon {\n  line-height: 0;\n  -webkit-transform-origin: 50%;\n      -ms-transform-origin: 50%;\n          transform-origin: 50%;\n  -webkit-animation: z-loading-rotate 1s linear infinite;\n          animation: z-loading-rotate 1s linear infinite;\n  margin: 0; }\n\n@-webkit-keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@-webkit-keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@-webkit-keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-rotate {\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@-webkit-keyframes z-loading-rotate-fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n            transform: rotate(135deg); }\n  25% {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg); }\n  37.5% {\n    -webkit-transform: rotate(405deg);\n            transform: rotate(405deg); }\n  50% {\n    -webkit-transform: rotate(540deg);\n            transform: rotate(540deg); }\n  62.5% {\n    -webkit-transform: rotate(675deg);\n            transform: rotate(675deg); }\n  75% {\n    -webkit-transform: rotate(810deg);\n            transform: rotate(810deg); }\n  87.5% {\n    -webkit-transform: rotate(945deg);\n            transform: rotate(945deg); }\n  100% {\n    -webkit-transform: rotate(1080deg);\n            transform: rotate(1080deg); } }\n\n@keyframes z-loading-rotate-fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n            transform: rotate(135deg); }\n  25% {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg); }\n  37.5% {\n    -webkit-transform: rotate(405deg);\n            transform: rotate(405deg); }\n  50% {\n    -webkit-transform: rotate(540deg);\n            transform: rotate(540deg); }\n  62.5% {\n    -webkit-transform: rotate(675deg);\n            transform: rotate(675deg); }\n  75% {\n    -webkit-transform: rotate(810deg);\n            transform: rotate(810deg); }\n  87.5% {\n    -webkit-transform: rotate(945deg);\n            transform: rotate(945deg); }\n  100% {\n    -webkit-transform: rotate(1080deg);\n            transform: rotate(1080deg); } }\n\n@-webkit-keyframes z-loading-rotate-spin-left {\n  0% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); }\n  50% {\n    -webkit-transform: rotate(-5deg);\n            transform: rotate(-5deg); }\n  100% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); } }\n\n@keyframes z-loading-rotate-spin-left {\n  0% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); }\n  50% {\n    -webkit-transform: rotate(-5deg);\n            transform: rotate(-5deg); }\n  100% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); } }\n\n@-webkit-keyframes z-loading-rotate-spin-right {\n  0% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); }\n  50% {\n    -webkit-transform: rotate(5deg);\n            transform: rotate(5deg); }\n  100% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); } }\n\n@keyframes z-loading-rotate-spin-right {\n  0% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); }\n  50% {\n    -webkit-transform: rotate(5deg);\n            transform: rotate(5deg); }\n  100% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); } }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(92);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Loading.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Loading.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * loading 组件的 material UI 样式\r\n */\n@-webkit-keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n@keyframes z-loading-rotate {\n  0% {\n    -webkit-transform: rotateZ(0deg);\n            transform: rotateZ(0deg); }\n  50% {\n    -webkit-transform: rotateZ(180deg);\n            transform: rotateZ(180deg); }\n  100% {\n    -webkit-transform: rotateZ(360deg);\n            transform: rotateZ(360deg); } }\n\n@-webkit-keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-1 {\n  0% {\n    opacity: 0; }\n  25% {\n    opacity: 0; }\n  26% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@-webkit-keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-2 {\n  0% {\n    opacity: 0; }\n  50% {\n    opacity: 0; }\n  51% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@-webkit-keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n@keyframes z-loading-spot-fade-3 {\n  0% {\n    opacity: 0; }\n  75% {\n    opacity: 0; }\n  76% {\n    opacity: 1; }\n  100% {\n    opacity: 1; } }\n\n.z-loading.z-loading-ui-material .z-loading-rotate {\n  border-color: #2196f3;\n  -webkit-animation: z-loading-rotate 2s infinite;\n          animation: z-loading-rotate 2s infinite;\n  width: 28px;\n  height: 28px;\n  position: relative; }\n\n@keyframes z-loading-rotate {\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n  .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage {\n    -webkit-animation: z-loading-rotate-fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, z-loading-rotate-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n            animation: z-loading-rotate-fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, z-loading-rotate-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n    border-color: inherit;\n    position: absolute;\n    width: 100%;\n    height: 100%; }\n\n@-webkit-keyframes z-loading-rotate-fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n            transform: rotate(135deg); }\n  25% {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg); }\n  37.5% {\n    -webkit-transform: rotate(405deg);\n            transform: rotate(405deg); }\n  50% {\n    -webkit-transform: rotate(540deg);\n            transform: rotate(540deg); }\n  62.5% {\n    -webkit-transform: rotate(675deg);\n            transform: rotate(675deg); }\n  75% {\n    -webkit-transform: rotate(810deg);\n            transform: rotate(810deg); }\n  87.5% {\n    -webkit-transform: rotate(945deg);\n            transform: rotate(945deg); }\n  100% {\n    -webkit-transform: rotate(1080deg);\n            transform: rotate(1080deg); } }\n\n@keyframes z-loading-rotate-fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n            transform: rotate(135deg); }\n  25% {\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg); }\n  37.5% {\n    -webkit-transform: rotate(405deg);\n            transform: rotate(405deg); }\n  50% {\n    -webkit-transform: rotate(540deg);\n            transform: rotate(540deg); }\n  62.5% {\n    -webkit-transform: rotate(675deg);\n            transform: rotate(675deg); }\n  75% {\n    -webkit-transform: rotate(810deg);\n            transform: rotate(810deg); }\n  87.5% {\n    -webkit-transform: rotate(945deg);\n            transform: rotate(945deg); }\n  100% {\n    -webkit-transform: rotate(1080deg);\n            transform: rotate(1080deg); } }\n    .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-spin {\n      position: absolute;\n      top: 0;\n      right: 0;\n      bottom: 0;\n      left: 0;\n      box-sizing: border-box;\n      height: 100%;\n      border-width: 3px;\n      border-style: solid;\n      border-color: inherit;\n      border-bottom-color: #0000;\n      border-radius: 50%;\n      -webkit-animation: none;\n              animation: none; }\n    .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-left {\n      display: inline-block;\n      position: relative;\n      width: 50%;\n      height: 100%;\n      overflow: hidden;\n      border-color: inherit; }\n\n@-webkit-keyframes z-loading-rotate-spin-left {\n  0% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); }\n  50% {\n    -webkit-transform: rotate(-5deg);\n            transform: rotate(-5deg); }\n  100% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); } }\n\n@keyframes z-loading-rotate-spin-left {\n  0% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); }\n  50% {\n    -webkit-transform: rotate(-5deg);\n            transform: rotate(-5deg); }\n  100% {\n    -webkit-transform: rotate(130deg);\n            transform: rotate(130deg); } }\n      .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-left .z-loading-rotate-spin {\n        -webkit-animation: z-loading-rotate-spin-left 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n                animation: z-loading-rotate-spin-left 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n        width: 200%;\n        -webkit-transform: rotate(129deg);\n            -ms-transform: rotate(129deg);\n                transform: rotate(129deg);\n        border-right-color: #0000; }\n    .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-center {\n      position: absolute;\n      box-sizing: border-box;\n      top: 0;\n      left: 45%;\n      width: 10%;\n      height: 100%;\n      overflow: hidden;\n      border-color: inherit; }\n      .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-center .z-loading-rotate-spin {\n        width: 1000%;\n        left: -450%; }\n    .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-right {\n      display: inline-block;\n      position: relative;\n      width: 50%;\n      height: 100%;\n      overflow: hidden;\n      border-color: inherit; }\n\n@-webkit-keyframes z-loading-rotate-spin-right {\n  0% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); }\n  50% {\n    -webkit-transform: rotate(5deg);\n            transform: rotate(5deg); }\n  100% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); } }\n\n@keyframes z-loading-rotate-spin-right {\n  0% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); }\n  50% {\n    -webkit-transform: rotate(5deg);\n            transform: rotate(5deg); }\n  100% {\n    -webkit-transform: rotate(-130deg);\n            transform: rotate(-130deg); } }\n      .z-loading.z-loading-ui-material .z-loading-rotate .z-loading-rotate-stage .z-loading-rotate-right .z-loading-rotate-spin {\n        -webkit-animation: z-loading-rotate-spin-right 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n                animation: z-loading-rotate-spin-right 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n        width: 200%;\n        left: -100%;\n        border-left-color: #0000;\n        -webkit-transform: rotate(-129deg);\n            -ms-transform: rotate(-129deg);\n                transform: rotate(-129deg); }\n\n.z-loading.z-loading-ui-material.z-loading-theme-success .z-loading-rotate {\n  border-color: #4caf50; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-danger .z-loading-rotate {\n  border-color: #f44336; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-warning .z-loading-rotate {\n  border-color: #ffeb3b; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-blue .z-loading-rotate {\n  border-color: #2196f3; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-orange .z-loading-rotate {\n  border-color: #ff5722; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-light .z-loading-rotate {\n  border-color: #f5f5f5; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-dark .z-loading-rotate {\n  border-color: #424242; }\n\n.z-loading.z-loading-ui-bootstrap.z-loading-theme-black .z-loading-rotate {\n  border-color: #000; }\n\n.z-loading.z-loading-ui-bootstrap.z-loading-theme-white .z-loading-rotate {\n  border-color: #fff; }\n\n.z-loading.z-loading-ui-material.z-loading-theme-grey .z-loading-rotate {\n  border-color: #9e9e9e; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
 (function (window) {
-  var svgSprite = '<svg><symbol id="ali-icon-danger" viewBox="0 0 1024 1024"><path d="M942.656 769.376 602.112 159.584c-22.144-39.712-55.104-62.496-90.304-62.496-35.232 0-68.16 22.784-90.368 62.528L81.312 769.344c-22.016 39.456-24.256 79.456-6.112 110.4C93.344 910.624 129.664 928 174.88 928l674.24 0c45.184 0 81.536-17.376 99.648-48.256C966.944 848.8 964.672 808.832 942.656 769.376zM480 320c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288c0 17.696-14.336 32-32 32s-32-14.304-32-32L480 320zM512 832.128c-26.528 0-48-21.504-48-48s21.472-48 48-48 48 21.504 48 48S538.528 832.128 512 832.128z"  ></path></symbol><symbol id="ali-icon-danger-o" viewBox="0 0 1024 1024"><path d="M849.12 928.704 174.88 928.704c-45.216 0-81.536-17.728-99.68-48.64-18.144-30.912-15.936-71.296 6.08-110.752L421.472 159.648c22.144-39.744 55.072-62.528 90.304-62.528s68.128 22.752 90.336 62.464l340.544 609.792c22.016 39.456 24.288 79.808 6.112 110.72C930.656 911.008 894.304 928.704 849.12 928.704zM511.808 161.12c-11.2 0-24.032 11.104-34.432 29.696L137.184 800.544c-10.656 19.136-13.152 36.32-6.784 47.168 6.368 10.816 22.592 17.024 44.48 17.024l674.24 0c21.92 0 38.112-6.176 44.48-17.024 6.336-10.816 3.872-28-6.816-47.136L546.24 190.816C535.872 172.224 522.976 161.12 511.808 161.12z"  ></path><path d="M512 640c-17.664 0-32-14.304-32-32l0-288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288C544 625.696 529.664 640 512 640z"  ></path><path d="M512 752.128m-48 0a1.5 1.5 0 1 0 96 0 1.5 1.5 0 1 0-96 0Z"  ></path></symbol><symbol id="ali-icon-search" viewBox="0 0 1024 1024"><path d="M83.064 62.638v0z"  ></path><path d="M103.49 62.638v0z"  ></path><path d="M123.914 62.638v0z"  ></path><path d="M144.341 62.638v0z"  ></path><path d="M164.766 62.638v0z"  ></path><path d="M185.192 62.638v0z"  ></path><path d="M205.617 62.638v0z"  ></path><path d="M226.043 62.638v0z"  ></path><path d="M246.468 62.638v0z"  ></path><path d="M266.893 62.638v0z"  ></path><path d="M287.319 62.638v0z"  ></path><path d="M307.745 62.638v0z"  ></path><path d="M328.17 62.638v0z"  ></path><path d="M348.596 62.638v0z"  ></path><path d="M369.021 62.638v0z"  ></path><path d="M389.447 62.638v0z"  ></path><path d="M409.872 62.638v0z"  ></path><path d="M430.298 62.638v0z"  ></path><path d="M450.723 62.638v0z"  ></path><path d="M471.149 62.638v0z"  ></path><path d="M491.575 62.638v0z"  ></path><path d="M512 62.638v0z"  ></path><path d="M532.425 62.638v0z"  ></path><path d="M552.851 62.638v0z"  ></path><path d="M573.277 62.638v0z"  ></path><path d="M593.702 62.638v0z"  ></path><path d="M614.128 62.638v0z"  ></path><path d="M634.553 62.638v0z"  ></path><path d="M654.979 62.638v0z"  ></path><path d="M675.404 62.638v0z"  ></path><path d="M695.83 62.638v0z"  ></path><path d="M716.255 62.638v0z"  ></path><path d="M736.681 62.638v0z"  ></path><path d="M757.107 62.638v0z"  ></path><path d="M777.532 62.638v0z"  ></path><path d="M797.957 62.638v0z"  ></path><path d="M818.383 62.638v0z"  ></path><path d="M838.808 62.638v0z"  ></path><path d="M859.234 62.638v0z"  ></path><path d="M879.659 62.638v0z"  ></path><path d="M900.086 62.638v0z"  ></path><path d="M920.51 62.638v0z"  ></path><path d="M940.936 62.638v0z"  ></path><path d="M62.638 83.064v0z"  ></path><path d="M62.638 103.49v0z"  ></path><path d="M62.638 123.914v0z"  ></path><path d="M62.638 144.341v0z"  ></path><path d="M62.638 164.766v0z"  ></path><path d="M62.638 185.192v0z"  ></path><path d="M62.638 205.617v0z"  ></path><path d="M62.638 226.043v0z"  ></path><path d="M62.638 246.468v0z"  ></path><path d="M62.638 266.893v0z"  ></path><path d="M62.638 287.319v0z"  ></path><path d="M62.638 307.745v0z"  ></path><path d="M62.638 328.17v0z"  ></path><path d="M62.638 348.596v0z"  ></path><path d="M62.638 369.021v0z"  ></path><path d="M62.638 389.447v0z"  ></path><path d="M62.638 409.872v0z"  ></path><path d="M62.638 430.298v0z"  ></path><path d="M62.638 450.723v0z"  ></path><path d="M62.638 471.149v0z"  ></path><path d="M62.638 491.575v0z"  ></path><path d="M62.638 512v0z"  ></path><path d="M62.638 532.425v0z"  ></path><path d="M62.638 552.851v0z"  ></path><path d="M62.638 573.277v0z"  ></path><path d="M62.638 593.702v0z"  ></path><path d="M62.638 614.128v0z"  ></path><path d="M62.638 634.553v0z"  ></path><path d="M62.638 654.979v0z"  ></path><path d="M62.638 675.404v0z"  ></path><path d="M62.638 695.83v0z"  ></path><path d="M62.638 716.255v0z"  ></path><path d="M62.638 736.681v0z"  ></path><path d="M62.638 757.107v0z"  ></path><path d="M62.638 777.532v0z"  ></path><path d="M62.638 797.957v0z"  ></path><path d="M62.638 818.383v0z"  ></path><path d="M62.638 838.808v0z"  ></path><path d="M62.638 859.234v0z"  ></path><path d="M62.638 879.659v0z"  ></path><path d="M62.638 900.086v0z"  ></path><path d="M62.638 920.51v0z"  ></path><path d="M62.638 940.936v0z"  ></path><path d="M961.362 879.659c0 81.702-81.702 81.702-81.702 81.702l-233.75-233.709c-60.582 44.037-134.932 70.305-215.612 70.305-203.070 0-367.659-164.589-367.659-367.659s164.589-367.659 367.659-367.659 367.659 164.589 367.659 367.659c0 80.681-26.308 155.030-70.346 215.653l233.75 233.709zM430.298 144.341c-157.929 0-285.957 128.028-285.957 285.957s128.028 285.957 285.957 285.957 285.957-128.028 285.957-285.957-128.028-285.957-285.957-285.957z"  ></path></symbol><symbol id="ali-icon-sort" viewBox="0 0 1024 1024"><path d="M384 320l512 0c17.696 0 32-14.336 32-32s-14.304-32-32-32L384 256c-17.664 0-32 14.336-32 32S366.336 320 384 320z"  ></path><path d="M896 480 384 480c-17.664 0-32 14.336-32 32s14.336 32 32 32l512 0c17.696 0 32-14.336 32-32S913.696 480 896 480z"  ></path><path d="M896 704 384 704c-17.664 0-32 14.304-32 32s14.336 32 32 32l512 0c17.696 0 32-14.304 32-32S913.696 704 896 704z"  ></path><path d="M192 288m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 512m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 736m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path></symbol><symbol id="ali-icon-spinner" viewBox="0 0 1024 1024"><path d="M392 173.333c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM646.559 278.774c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM812 533.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM706.559 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM452.002 893.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM197.442 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM167.442 278.774c0 49.705 40.295 90 90 90s90-40.295 90-90c0-49.705-40.295-90-90-90-49.705 0-90 40.295-90 90zM84.5 533.333c0 37.28 30.22 67.5 67.5 67.5s67.5-30.22 67.5-67.5c0-37.28-30.22-67.5-67.5-67.5-37.28 0-67.5 30.22-67.5 67.5z"  ></path></symbol><symbol id="ali-icon-circle" viewBox="0 0 1024 1024"><path d="M511.317455 510.805802m-448.208115 0a438 438 0 1 0 896.41623 0 438 438 0 1 0-896.41623 0Z"  ></path></symbol><symbol id="ali-icon-arrow-down-thick" viewBox="0 0 1024 1024"><path d="M306.2375 116.16875h423.309375l-8.184375 410.7375 183.5015625 1.0828125-386.690625 384.525-390.54375-392.709375 182.4328125-2.1796875z"  ></path></symbol><symbol id="ali-icon-circle-check" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM512 672.00086c-88.223841 0-160.00086-71.775299-160.00086-160.00086s71.775299-159.99914 160.00086-159.99914 160.00086 71.775299 160.00086 159.99914S600.223841 672.00086 512 672.00086z"  ></path></symbol><symbol id="ali-icon-warning" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.952318 0-446.016611 200.064292-446.016611 446.016611S266.047682 958.016611 512 958.016611 958.016611 757.952318 958.016611 512 757.952318 65.983389 512 65.983389zM544.00086 736.00086c0 17.695686-14.303454 32.00086-32.00086 32.00086s-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.695686 14.303454-32.00086 32.00086-32.00086 17.695686 0 32.00086 14.303454 32.00086 32.00086L544.00086 736.00086zM512 352.00086c-26.496224 0-48.00043-21.53689-48.00043-48.00043 0-26.527187 21.504206-48.00043 48.00043-48.00043s48.00043 21.471523 48.00043 48.00043C560.00043 330.46397 538.496224 352.00086 512 352.00086z"  ></path></symbol><symbol id="ali-icon-warning-o" viewBox="0 0 1024 1024"><path d="M512 958.016611c-245.919634 0-446.016611-200.064292-446.016611-446.016611 0-245.919634 200.095256-446.016611 446.016611-446.016611 245.952318 0 446.016611 200.064292 446.016611 446.016611S757.952318 958.016611 512 958.016611zM512 129.983389c-210.655557 0-382.016611 171.359333-382.016611 382.016611 0 210.624593 171.359333 382.016611 382.016611 382.016611 210.624593 0 382.016611-171.359333 382.016611-382.016611S722.624593 129.983389 512 129.983389z"  ></path><path d="M463.99957 304.00043c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043-21.490445-48.00043-48.00043-48.00043S463.99957 277.490445 463.99957 304.00043z"  ></path><path d="M512 768c-17.664722 0-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.664722 14.336138-32.00086 32.00086-32.00086s32.00086 14.336138 32.00086 32.00086l0 287.99914C544.00086 753.696546 529.664722 768 512 768z"  ></path></symbol><symbol id="ali-icon-question" viewBox="0 0 1024 1024"><path d="M512 64c-247.039484 0-448 200.960516-448 448S264.960516 960 512 960 960 759.039484 960 512 759.039484 64 512 64zM512 832.352641c-26.496224 0-48.00043-21.504206-48.00043-48.00043 0-26.496224 21.504206-48.00043 48.00043-48.00043s48.00043 21.504206 48.00043 48.00043S538.496224 832.352641 512 832.352641zM600.576482 505.184572c-27.839699 27.808735-56.575622 56.544658-56.575622 82.368284l0 54.112297c0 17.664722-14.336138 32.00086-32.00086 32.00086s-32.00086-14.336138-32.00086-32.00086l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.887273 52.67249-52.639806 52.67249-73.984034 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385C672.00086 433.791157 635.680581 470.080473 600.576482 505.184572z"  ></path></symbol><symbol id="ali-icon-question-o" viewBox="0 0 1024 1024"><path d="M463.99957 784.352211c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043c0-26.509985-21.490445-48.00043-48.00043-48.00043S463.99957 757.842226 463.99957 784.352211z"  ></path><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M512 673.695256c-17.664722 0-32.00086-14.336138-32.00086-31.99914l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.919957 52.67249-52.67249 52.67249-74.016718 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385c0 47.904099-36.32028 84.191695-71.424378 119.295794-27.839699 27.776052-56.575622 56.511974-56.575622 82.3356l0 54.112297C544.00086 659.328155 529.664722 673.695256 512 673.695256z"  ></path></symbol><symbol id="ali-icon-success" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM727.231286 438.432254 471.00766 697.439161c-0.063647 0.063647-0.192662 0.096331-0.25631 0.192662-0.096331 0.063647-0.096331 0.192662-0.192662 0.25631-2.048757 1.983389-4.575729 3.19957-6.944443 4.544765-1.183497 0.672598-2.143368 1.696116-3.392232 2.176052-3.839484 1.536138-7.904314 2.33603-11.967424 2.33603-4.095794 0-8.224271-0.799892-12.096439-2.399677-1.279828-0.543583-2.303346-1.632469-3.519527-2.303346-2.368714-1.343475-4.832039-2.528692-6.880796-4.544765-0.063647-0.063647-0.096331-0.192662-0.159978-0.25631-0.063647-0.096331-0.192662-0.096331-0.25631-0.192662l-126.016611-129.503454c-12.320065-12.672705-12.032791-32.928047 0.639914-45.248112 12.672705-12.287381 32.895364-12.063755 45.248112 0.639914l103.26354 106.112189 233.279613-235.839269c12.416396-12.576374 32.704421-12.703669 45.248112-0.25631C739.520387 405.600538 739.647682 425.85588 727.231286 438.432254z"  ></path></symbol><symbol id="ali-icon-success-o" viewBox="0 0 1024 1024"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M726.976697 393.184142c-12.54369-12.447359-32.831716-12.320065-45.248112 0.25631l-233.279613 235.839269-103.26354-106.112189c-12.352748-12.703669-32.60809-12.927295-45.248112-0.639914-12.672705 12.320065-12.959978 32.60809-0.639914 45.248112l126.016611 129.503454c0.063647 0.096331 0.192662 0.096331 0.25631 0.192662 0.063647 0.063647 0.096331 0.192662 0.159978 0.25631 2.016073 1.983389 4.512082 3.19957 6.880796 4.544765 1.247144 0.672598 2.239699 1.792447 3.519527 2.303346 3.872168 1.599785 8.000645 2.399677 12.096439 2.399677 4.06483 0 8.12794-0.799892 11.967424-2.33603 1.247144-0.512619 2.208735-1.536138 3.392232-2.176052 2.399677-1.343475 4.895686-2.528692 6.944443-4.544765 0.063647-0.063647 0.096331-0.192662 0.192662-0.25631 0.063647-0.096331 0.159978-0.127295 0.25631-0.192662l256.223626-259.008628C739.647682 425.85588 739.520387 405.600538 726.976697 393.184142z"  ></path></symbol><symbol id="ali-icon-triangle-up" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M839.57855094 724.55691406c39.00443531 0 61.15629656-51.52855781 32.74559906-79.92957937L544.87945156 317.17941125c-18.77812125-18.77973375-46.70823844-18.77973375-65.48797218 0L151.95807031 644.62733469c-29.14285687 29.13156844-4.81548187 79.92957938 33.22617938 79.92957937L839.57855094 724.55691406 839.57855094 724.55691406z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-triangle-down" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M185.18424969 303.09582031c-38.04166125 0-62.36742375 50.79801094-33.22617938 79.92957938L479.39147938 710.47332313c18.77973375 18.77973375 46.70985094 18.77973375 65.48797218-1e-8l327.44469844-327.44792343c28.4106975-28.40102156 6.26044875-79.92957938-32.74559906-79.92957938L185.18424969 303.09582031 185.18424969 303.09582031z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-arrow-down-thick-moving" viewBox="0 0 1024 1024"><path d="M512 965.334l373.333-533.333h-160v-106.667h-426.667v106.667h-160l373.333 533.333zM725.334 165.333h-426.667v106.667h426.667v-106.667zM725.334 58.666h-426.667v53.334h426.667v-53.334z"  ></path></symbol><symbol id="ali-icon-square-bs" viewBox="0 0 1024 1024"><path d="M962 763.465625C962 873.125 873.125 962 763.465625 962L260.534375 962C150.875 962 62 873.125 62 763.465625L62 260.534375C62 150.875 150.875 62 260.534375 62l502.93125 0C873.125 62 962 150.875 962 260.534375L962 763.465625z"  ></path></symbol><symbol id="ali-icon-close" viewBox="0 0 1024 1024"><path d="M590.13853558 518.6416597c0.00082974-1.7870386-0.0862825-3.57407639-0.24640218-5.35530679l303.83382622-309.09372501c22.61424682-23.00251685 22.61424682-60.25819758 0-83.28145551-11.29799707-11.46973233-26.1061886-17.23570972-40.92018831-17.23570972-14.81068076 0-29.61638305 5.76597739-40.92350647 17.23570972L516.99939261 420.93281582 217.17188337 121.02732068c-11.57924433-11.54688848-26.73754267-17.35185882-41.90413761-17.35185883-15.16410571 0-30.33070066 5.80497034-41.89833024 17.35185883-23.15931839 23.17425127-23.15931839 60.68546054 0 83.84726816L447.06015997 518.61925913 133.36858662 832.37969287c-23.15931839 23.15931839-23.15931839 60.66472027-1e-8 83.80910496 23.14770282 23.1684439 60.65227579 23.1684439 83.80246784 0l302.58024527-302.62504561 292.13096675 297.18843393c22.60760971 23.01413159 59.23525535 23.01413159 81.8436948 0 22.61424682-22.9933905 22.61424682-60.24907205 0-83.25158807L590.13853558 518.6416597z"  ></path></symbol><symbol id="ali-icon-github" viewBox="0 0 1024 1024"><path d="M512 62c-248.484375 0-450 206.71875-450 461.446875 0 203.90625 128.98125 376.678125 307.771875 437.7375 2.8125 0.590625 5.23125 0.815625 7.621875 0.815625 16.678125 0 23.090625-12.2625 23.090625-22.89375 0-11.053125-0.39375-39.965625-0.590625-78.553125-16.875 3.825-31.95 5.428125-45.39375 5.428125-86.596875 0-106.25625-67.303125-106.25625-67.303125-20.503125-53.240625-50.034375-67.5-50.034375-67.5-39.178125-27.534375-0.196875-28.321875 2.8125-28.321875 0.196875 0 0.196875 0 0.196875 0 45.196875 4.021875 68.90625 47.8125 68.90625 47.8125 22.5 39.375 52.621875 50.428125 79.565625 50.428125 21.09375 0 40.190625-6.834375 51.440625-12.065625 4.021875-29.728125 15.665625-50.034375 28.51875-61.678125-99.84375-11.64375-204.91875-51.215625-204.91875-228.009375 0-50.428125 17.465625-91.603125 46.209375-123.75-4.6125-11.64375-20.08125-58.66875 4.415625-122.146875 0 0 3.20625-1.0125 10.040625-1.0125 16.284375 0 53.04375 6.215625 113.709375 48.403125 35.971875-10.2375 74.334375-15.271875 112.696875-15.46875 38.165625 0.196875 76.753125 5.23125 112.696875 15.46875 60.665625-42.1875 97.425-48.403125 113.709375-48.403125 6.834375 0 10.040625 1.0125 10.040625 1.0125 24.496875 63.478125 9.028125 110.475 4.415625 122.146875 28.715625 32.34375 46.209375 73.51875 46.209375 123.75 0 177.1875-105.271875 216.16875-205.509375 227.615625 16.059375 14.259375 30.54375 42.384375 30.54375 85.3875 0 61.678125-0.590625 111.4875-0.590625 126.5625 0 10.85625 6.215625 23.090625 22.89375 23.090625 2.41875 0 5.23125-0.196875 8.04375-0.815625 178.9875-61.059375 307.771875-234.028125 307.771875-437.7375 0-254.728125-201.4875-461.446875-450-461.446875z"  ></path></symbol><symbol id="ali-icon-square-check-bs" viewBox="0 0 1024 1024"><path d="M787.22383 63.960731 236.188792 63.960731c-95.112218 0-172.197874 77.086679-172.197874 172.198897l0 551.035038c0 95.112218 77.085656 172.21527 172.197874 172.21527l551.035038 0c95.079472 0 172.197874-77.103052 172.197874-172.21527L959.421704 236.159628C959.421704 141.046387 882.303302 63.960731 787.22383 63.960731zM746.225067 427.76348 479.485981 711.319581c-5.684466 5.717212-35.449373 5.918803-40.897456 0.436952L277.590737 534.681582c-6.962575-6.996344-6.962575-18.295692 0-25.258267l25.223474-25.224498c6.996344-6.961552 18.296715-6.961552 25.25929 0L461.627241 617.753579l237.310847-237.310847c6.5246-6.5246 17.08512-6.5246 23.64349 0l23.642466 23.677259C752.78446 410.644591 752.78446 421.23888 746.225067 427.76348z"  ></path></symbol><symbol id="ali-icon-square-o" viewBox="0 0 1024 1024"><path d="M810.666667 128H213.333333c-47.36 0-85.333333 37.973333-85.333333 85.333333v597.333334a85.333333 85.333333 0 0 0 85.333333 85.333333h597.333334a85.333333 85.333333 0 0 0 85.333333-85.333333V213.333333a85.333333 85.333333 0 0 0-85.333333-85.333333m0 85.333333v597.333334H213.333333V213.333333h597.333334z" fill="" ></path></symbol><symbol id="ali-icon-square-check" viewBox="0 0 1024 1024"><path d="M426.666667 725.333333l-213.333334-213.333333 60.16-60.586667L426.666667 604.586667l323.84-323.84L810.666667 341.333333m0-213.333333H213.333333c-47.36 0-85.333333 37.973333-85.333333 85.333333v597.333334a85.333333 85.333333 0 0 0 85.333333 85.333333h597.333334a85.333333 85.333333 0 0 0 85.333333-85.333333V213.333333a85.333333 85.333333 0 0 0-85.333333-85.333333z" fill="" ></path></symbol><symbol id="ali-icon-arrow-south-fast" viewBox="0 0 1024 1024"><path d="M800.45212457 109.17252369L889.06160075 197.78199986l-377.06160075 377.06160075-377.06160075-377.06160075 88.60947618-88.60947617L512 396.99621177l288.45212457-287.82368808m0 377.06160075L889.06160075 574.84360061l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-88.60947617L512 774.05781251l288.45212457-287.82368807z" fill="" ></path></symbol><symbol id="ali-icon-arrow-west-fast" viewBox="0 0 1024 1024"><path d="M914.82747631 223.54787543L826.21800014 134.93839925l-377.06160075 377.06160075 377.06160075 377.06160075 88.60947617-88.60947618L627.00378823 512l287.82368808-288.45212457m-377.06160075 0L449.15639939 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947617-88.60947618L249.94218749 512l287.82368807-288.45212457z" fill="" ></path></symbol><symbol id="ali-icon-arrow-east-fast" viewBox="0 0 1024 1024"><path d="M109.17252369 223.54787543L197.78199986 134.93839925l377.06160075 377.06160075-377.06160075 377.06160075-88.60947617-88.60947618L396.99621177 512 109.17252369 223.54787543m377.06160075 0L574.84360061 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947617-88.60947618L774.05781251 512l-287.82368807-288.45212457z" fill="" ></path></symbol><symbol id="ali-icon-arrow-north-fast" viewBox="0 0 1024 1024"><path d="M223.54787543 914.82747631L134.93839925 826.21800014l377.06160075-377.06160075 377.06160075 377.06160075-88.60947618 88.60947617L512 627.00378823l-288.45212457 287.82368808m0-377.06160075L134.93839925 449.15639939l377.06160075-377.06160074 377.06160075 377.06160074-88.60947618 88.60947617L512 249.94218749l-288.45212457 287.82368807z" fill="" ></path></symbol><symbol id="ali-icon-arrow-south" viewBox="0 0 1024 1024"><path d="M223.54787543 297.07488757L512 585.52701215l288.45212457-288.45212458L889.06160075 386.31280025l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-89.23791268z" fill="" ></path></symbol><symbol id="ali-icon-arrow-west" viewBox="0 0 1024 1024"><path d="M726.29667594 799.82368807L438.47298785 512l287.82368809-288.45212457L637.68719975 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947619-89.23791268z" fill="" ></path></symbol><symbol id="ali-icon-arrow-east" viewBox="0 0 1024 1024"><path d="M297.70332406 799.82368807L585.52701215 512 297.70332406 223.54787543 386.31280025 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947619-89.23791268z" fill="" ></path></symbol><symbol id="ali-icon-arrow-north" viewBox="0 0 1024 1024"><path d="M223.54787543 726.29667594L512 438.47298785l288.45212457 287.82368809L889.06160075 637.68719975l-377.06160075-377.06160074-377.06160075 377.06160074 88.60947618 88.60947619z" fill="" ></path></symbol><symbol id="ali-icon-circle-check-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971m0 187.50000058a187.49999971 187.49999971 0 0 0-187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971-187.49999971 187.49999971 187.49999971 0 0 0-187.49999971-187.49999971z" fill="" ></path></symbol><symbol id="ali-icon-circle-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971z" fill="" ></path></symbol><symbol id="ali-icon-menu" viewBox="0 0 1024 1024"><path d="M128 170.666667h768v170.666666H128V170.666667m0 256h768v170.666666H128v-170.666666m0 256h768v170.666666H128v-170.666666z" fill="" ></path></symbol><symbol id="ali-icon-download" viewBox="0 0 1024 1024"><path d="M494.933333 782.933333c2.133333 2.133333 4.266667 4.266667 8.533334 6.4h8.533333c6.4 0 10.666667-2.133333 14.933333-6.4l2.133334-2.133333 275.2-275.2c8.533333-8.533333 8.533333-21.333333 0-29.866667-8.533333-8.533333-21.333333-8.533333-29.866667 0L533.333333 716.8V128c0-12.8-8.533333-21.333333-21.333333-21.333333s-21.333333 8.533333-21.333333 21.333333v588.8L249.6 475.733333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.533333 21.333333 0 29.866667l275.2 277.333333zM853.333333 874.666667H172.8c-12.8 0-21.333333 8.533333-21.333333 21.333333s8.533333 21.333333 21.333333 21.333333H853.333333c12.8 0 21.333333-8.533333 21.333334-21.333333s-10.666667-21.333333-21.333334-21.333333z"  ></path></symbol><symbol id="ali-icon-arrow-right" viewBox="0 0 1024 1024"><path d="M522.002 180.667c-13.347 13.347-13.347 34.917 0 48.266l248.934 248.934h-600.27c-18.843 0-34.133 15.292-34.134 34.134s15.292 34.133 34.134 34.134h600.27l-248.934 248.934c-13.347 13.347-13.347 34.917 0 48.266s34.917 13.347 48.266 0l307.166-307.201c3.174-3.139 5.666-6.928 7.407-11.126 1.741-4.13 2.627-8.567 2.627-13.006 0-4.436-0.889-8.876-2.628-13.039-1.742-4.198-4.233-7.952-7.407-11.126l-307.166-307.201c-13.347-13.312-34.918-13.312-48.265 0.033z"  ></path></symbol><symbol id="ali-icon-arrow-down" viewBox="0 0 1024 1024"><path d="M843.333 522.002c-13.347-13.347-34.917-13.347-48.265 0l-248.934 248.934v-600.27c0-18.843-15.292-34.134-34.134-34.134s-34.134 15.292-34.134 34.134v600.27l-248.934-248.934c-13.347-13.347-34.917-13.347-48.265 0s-13.347 34.917 0 48.265l307.201 307.166c3.139 3.174 6.928 5.666 11.126 7.407 4.13 1.741 8.567 2.627 13.006 2.627 4.436 0 8.876-0.889 13.039-2.627 4.198-1.741 7.952-4.233 11.126-7.407l307.201-307.166c13.312-13.347 13.312-34.919-0.033-48.265z"  ></path></symbol><symbol id="ali-icon-arrow-left" viewBox="0 0 1024 1024"><path d="M501.998 843.333c13.347-13.347 13.347-34.917 0-48.266l-248.934-248.934h600.27c18.843 0 34.133-15.292 34.134-34.134s-15.292-34.133-34.134-34.134h-600.27l248.934-248.934c13.347-13.347 13.347-34.917 0-48.266s-34.917-13.347-48.266 0l-307.166 307.201c-3.174 3.139-5.666 6.928-7.407 11.126-1.741 4.13-2.627 8.567-2.627 13.006 0 4.436 0.889 8.876 2.628 13.039 1.742 4.198 4.233 7.952 7.407 11.126l307.166 307.201c13.347 13.312 34.918 13.312 48.265-0.033z"  ></path></symbol><symbol id="ali-icon-arrow-up" viewBox="0 0 1024 1024"><path d="M180.667 501.998c13.347 13.347 34.917 13.347 48.266 0l248.934-248.934v600.27c0 18.843 15.292 34.133 34.134 34.134s34.133-15.292 34.134-34.134v-600.27l248.934 248.934c13.347 13.347 34.917 13.347 48.266 0s13.347-34.917 0-48.266l-307.201-307.166c-3.139-3.174-6.928-5.666-11.126-7.407-4.13-1.741-8.567-2.627-13.006-2.627-4.436 0-8.876 0.889-13.039 2.628-4.198 1.742-7.952 4.233-11.126 7.407l-307.201 307.166c-13.312 13.347-13.312 34.918 0.033 48.265z"  ></path></symbol></svg>';var script = function () {
+  var svgSprite = '<svg><symbol id="ali-icon-danger" viewBox="0 0 1024 1024"><path d="M942.656 769.376 602.112 159.584c-22.144-39.712-55.104-62.496-90.304-62.496-35.232 0-68.16 22.784-90.368 62.528L81.312 769.344c-22.016 39.456-24.256 79.456-6.112 110.4C93.344 910.624 129.664 928 174.88 928l674.24 0c45.184 0 81.536-17.376 99.648-48.256C966.944 848.8 964.672 808.832 942.656 769.376zM480 320c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288c0 17.696-14.336 32-32 32s-32-14.304-32-32L480 320zM512 832.128c-26.528 0-48-21.504-48-48s21.472-48 48-48 48 21.504 48 48S538.528 832.128 512 832.128z"  ></path></symbol><symbol id="ali-icon-danger-o" viewBox="0 0 1024 1024"><path d="M849.12 928.704 174.88 928.704c-45.216 0-81.536-17.728-99.68-48.64-18.144-30.912-15.936-71.296 6.08-110.752L421.472 159.648c22.144-39.744 55.072-62.528 90.304-62.528s68.128 22.752 90.336 62.464l340.544 609.792c22.016 39.456 24.288 79.808 6.112 110.72C930.656 911.008 894.304 928.704 849.12 928.704zM511.808 161.12c-11.2 0-24.032 11.104-34.432 29.696L137.184 800.544c-10.656 19.136-13.152 36.32-6.784 47.168 6.368 10.816 22.592 17.024 44.48 17.024l674.24 0c21.92 0 38.112-6.176 44.48-17.024 6.336-10.816 3.872-28-6.816-47.136L546.24 190.816C535.872 172.224 522.976 161.12 511.808 161.12z"  ></path><path d="M512 640c-17.664 0-32-14.304-32-32l0-288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288C544 625.696 529.664 640 512 640z"  ></path><path d="M512 752.128m-48 0a1.5 1.5 0 1 0 96 0 1.5 1.5 0 1 0-96 0Z"  ></path></symbol><symbol id="ali-icon-search" viewBox="0 0 1024 1024"><path d="M83.064 62.638v0z"  ></path><path d="M103.49 62.638v0z"  ></path><path d="M123.914 62.638v0z"  ></path><path d="M144.341 62.638v0z"  ></path><path d="M164.766 62.638v0z"  ></path><path d="M185.192 62.638v0z"  ></path><path d="M205.617 62.638v0z"  ></path><path d="M226.043 62.638v0z"  ></path><path d="M246.468 62.638v0z"  ></path><path d="M266.893 62.638v0z"  ></path><path d="M287.319 62.638v0z"  ></path><path d="M307.745 62.638v0z"  ></path><path d="M328.17 62.638v0z"  ></path><path d="M348.596 62.638v0z"  ></path><path d="M369.021 62.638v0z"  ></path><path d="M389.447 62.638v0z"  ></path><path d="M409.872 62.638v0z"  ></path><path d="M430.298 62.638v0z"  ></path><path d="M450.723 62.638v0z"  ></path><path d="M471.149 62.638v0z"  ></path><path d="M491.575 62.638v0z"  ></path><path d="M512 62.638v0z"  ></path><path d="M532.425 62.638v0z"  ></path><path d="M552.851 62.638v0z"  ></path><path d="M573.277 62.638v0z"  ></path><path d="M593.702 62.638v0z"  ></path><path d="M614.128 62.638v0z"  ></path><path d="M634.553 62.638v0z"  ></path><path d="M654.979 62.638v0z"  ></path><path d="M675.404 62.638v0z"  ></path><path d="M695.83 62.638v0z"  ></path><path d="M716.255 62.638v0z"  ></path><path d="M736.681 62.638v0z"  ></path><path d="M757.107 62.638v0z"  ></path><path d="M777.532 62.638v0z"  ></path><path d="M797.957 62.638v0z"  ></path><path d="M818.383 62.638v0z"  ></path><path d="M838.808 62.638v0z"  ></path><path d="M859.234 62.638v0z"  ></path><path d="M879.659 62.638v0z"  ></path><path d="M900.086 62.638v0z"  ></path><path d="M920.51 62.638v0z"  ></path><path d="M940.936 62.638v0z"  ></path><path d="M62.638 83.064v0z"  ></path><path d="M62.638 103.49v0z"  ></path><path d="M62.638 123.914v0z"  ></path><path d="M62.638 144.341v0z"  ></path><path d="M62.638 164.766v0z"  ></path><path d="M62.638 185.192v0z"  ></path><path d="M62.638 205.617v0z"  ></path><path d="M62.638 226.043v0z"  ></path><path d="M62.638 246.468v0z"  ></path><path d="M62.638 266.893v0z"  ></path><path d="M62.638 287.319v0z"  ></path><path d="M62.638 307.745v0z"  ></path><path d="M62.638 328.17v0z"  ></path><path d="M62.638 348.596v0z"  ></path><path d="M62.638 369.021v0z"  ></path><path d="M62.638 389.447v0z"  ></path><path d="M62.638 409.872v0z"  ></path><path d="M62.638 430.298v0z"  ></path><path d="M62.638 450.723v0z"  ></path><path d="M62.638 471.149v0z"  ></path><path d="M62.638 491.575v0z"  ></path><path d="M62.638 512v0z"  ></path><path d="M62.638 532.425v0z"  ></path><path d="M62.638 552.851v0z"  ></path><path d="M62.638 573.277v0z"  ></path><path d="M62.638 593.702v0z"  ></path><path d="M62.638 614.128v0z"  ></path><path d="M62.638 634.553v0z"  ></path><path d="M62.638 654.979v0z"  ></path><path d="M62.638 675.404v0z"  ></path><path d="M62.638 695.83v0z"  ></path><path d="M62.638 716.255v0z"  ></path><path d="M62.638 736.681v0z"  ></path><path d="M62.638 757.107v0z"  ></path><path d="M62.638 777.532v0z"  ></path><path d="M62.638 797.957v0z"  ></path><path d="M62.638 818.383v0z"  ></path><path d="M62.638 838.808v0z"  ></path><path d="M62.638 859.234v0z"  ></path><path d="M62.638 879.659v0z"  ></path><path d="M62.638 900.086v0z"  ></path><path d="M62.638 920.51v0z"  ></path><path d="M62.638 940.936v0z"  ></path><path d="M961.362 879.659c0 81.702-81.702 81.702-81.702 81.702l-233.75-233.709c-60.582 44.037-134.932 70.305-215.612 70.305-203.070 0-367.659-164.589-367.659-367.659s164.589-367.659 367.659-367.659 367.659 164.589 367.659 367.659c0 80.681-26.308 155.030-70.346 215.653l233.75 233.709zM430.298 144.341c-157.929 0-285.957 128.028-285.957 285.957s128.028 285.957 285.957 285.957 285.957-128.028 285.957-285.957-128.028-285.957-285.957-285.957z"  ></path></symbol><symbol id="ali-icon-sort" viewBox="0 0 1024 1024"><path d="M384 320l512 0c17.696 0 32-14.336 32-32s-14.304-32-32-32L384 256c-17.664 0-32 14.336-32 32S366.336 320 384 320z"  ></path><path d="M896 480 384 480c-17.664 0-32 14.336-32 32s14.336 32 32 32l512 0c17.696 0 32-14.336 32-32S913.696 480 896 480z"  ></path><path d="M896 704 384 704c-17.664 0-32 14.304-32 32s14.336 32 32 32l512 0c17.696 0 32-14.304 32-32S913.696 704 896 704z"  ></path><path d="M192 288m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 512m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 736m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path></symbol><symbol id="ali-icon-spinner" viewBox="0 0 1024 1024"><path d="M392 173.333c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM646.559 278.774c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM812 533.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM706.559 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM452.002 893.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM197.442 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM167.442 278.774c0 49.705 40.295 90 90 90s90-40.295 90-90c0-49.705-40.295-90-90-90-49.705 0-90 40.295-90 90zM84.5 533.333c0 37.28 30.22 67.5 67.5 67.5s67.5-30.22 67.5-67.5c0-37.28-30.22-67.5-67.5-67.5-37.28 0-67.5 30.22-67.5 67.5z"  ></path></symbol><symbol id="ali-icon-circle" viewBox="0 0 1024 1024"><path d="M511.317455 510.805802m-448.208115 0a438 438 0 1 0 896.41623 0 438 438 0 1 0-896.41623 0Z"  ></path></symbol><symbol id="ali-icon-arrow-down-thick" viewBox="0 0 1024 1024"><path d="M306.2375 116.16875h423.309375l-8.184375 410.7375 183.5015625 1.0828125-386.690625 384.525-390.54375-392.709375 182.4328125-2.1796875z"  ></path></symbol><symbol id="ali-icon-circle-check" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM512 672.00086c-88.223841 0-160.00086-71.775299-160.00086-160.00086s71.775299-159.99914 160.00086-159.99914 160.00086 71.775299 160.00086 159.99914S600.223841 672.00086 512 672.00086z"  ></path></symbol><symbol id="ali-icon-warning" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.952318 0-446.016611 200.064292-446.016611 446.016611S266.047682 958.016611 512 958.016611 958.016611 757.952318 958.016611 512 757.952318 65.983389 512 65.983389zM544.00086 736.00086c0 17.695686-14.303454 32.00086-32.00086 32.00086s-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.695686 14.303454-32.00086 32.00086-32.00086 17.695686 0 32.00086 14.303454 32.00086 32.00086L544.00086 736.00086zM512 352.00086c-26.496224 0-48.00043-21.53689-48.00043-48.00043 0-26.527187 21.504206-48.00043 48.00043-48.00043s48.00043 21.471523 48.00043 48.00043C560.00043 330.46397 538.496224 352.00086 512 352.00086z"  ></path></symbol><symbol id="ali-icon-warning-o" viewBox="0 0 1024 1024"><path d="M512 958.016611c-245.919634 0-446.016611-200.064292-446.016611-446.016611 0-245.919634 200.095256-446.016611 446.016611-446.016611 245.952318 0 446.016611 200.064292 446.016611 446.016611S757.952318 958.016611 512 958.016611zM512 129.983389c-210.655557 0-382.016611 171.359333-382.016611 382.016611 0 210.624593 171.359333 382.016611 382.016611 382.016611 210.624593 0 382.016611-171.359333 382.016611-382.016611S722.624593 129.983389 512 129.983389z"  ></path><path d="M463.99957 304.00043c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043-21.490445-48.00043-48.00043-48.00043S463.99957 277.490445 463.99957 304.00043z"  ></path><path d="M512 768c-17.664722 0-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.664722 14.336138-32.00086 32.00086-32.00086s32.00086 14.336138 32.00086 32.00086l0 287.99914C544.00086 753.696546 529.664722 768 512 768z"  ></path></symbol><symbol id="ali-icon-question" viewBox="0 0 1024 1024"><path d="M512 64c-247.039484 0-448 200.960516-448 448S264.960516 960 512 960 960 759.039484 960 512 759.039484 64 512 64zM512 832.352641c-26.496224 0-48.00043-21.504206-48.00043-48.00043 0-26.496224 21.504206-48.00043 48.00043-48.00043s48.00043 21.504206 48.00043 48.00043S538.496224 832.352641 512 832.352641zM600.576482 505.184572c-27.839699 27.808735-56.575622 56.544658-56.575622 82.368284l0 54.112297c0 17.664722-14.336138 32.00086-32.00086 32.00086s-32.00086-14.336138-32.00086-32.00086l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.887273 52.67249-52.639806 52.67249-73.984034 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385C672.00086 433.791157 635.680581 470.080473 600.576482 505.184572z"  ></path></symbol><symbol id="ali-icon-question-o" viewBox="0 0 1024 1024"><path d="M463.99957 784.352211c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043c0-26.509985-21.490445-48.00043-48.00043-48.00043S463.99957 757.842226 463.99957 784.352211z"  ></path><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M512 673.695256c-17.664722 0-32.00086-14.336138-32.00086-31.99914l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.919957 52.67249-52.67249 52.67249-74.016718 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385c0 47.904099-36.32028 84.191695-71.424378 119.295794-27.839699 27.776052-56.575622 56.511974-56.575622 82.3356l0 54.112297C544.00086 659.328155 529.664722 673.695256 512 673.695256z"  ></path></symbol><symbol id="ali-icon-success" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM727.231286 438.432254 471.00766 697.439161c-0.063647 0.063647-0.192662 0.096331-0.25631 0.192662-0.096331 0.063647-0.096331 0.192662-0.192662 0.25631-2.048757 1.983389-4.575729 3.19957-6.944443 4.544765-1.183497 0.672598-2.143368 1.696116-3.392232 2.176052-3.839484 1.536138-7.904314 2.33603-11.967424 2.33603-4.095794 0-8.224271-0.799892-12.096439-2.399677-1.279828-0.543583-2.303346-1.632469-3.519527-2.303346-2.368714-1.343475-4.832039-2.528692-6.880796-4.544765-0.063647-0.063647-0.096331-0.192662-0.159978-0.25631-0.063647-0.096331-0.192662-0.096331-0.25631-0.192662l-126.016611-129.503454c-12.320065-12.672705-12.032791-32.928047 0.639914-45.248112 12.672705-12.287381 32.895364-12.063755 45.248112 0.639914l103.26354 106.112189 233.279613-235.839269c12.416396-12.576374 32.704421-12.703669 45.248112-0.25631C739.520387 405.600538 739.647682 425.85588 727.231286 438.432254z"  ></path></symbol><symbol id="ali-icon-success-o" viewBox="0 0 1024 1024"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M726.976697 393.184142c-12.54369-12.447359-32.831716-12.320065-45.248112 0.25631l-233.279613 235.839269-103.26354-106.112189c-12.352748-12.703669-32.60809-12.927295-45.248112-0.639914-12.672705 12.320065-12.959978 32.60809-0.639914 45.248112l126.016611 129.503454c0.063647 0.096331 0.192662 0.096331 0.25631 0.192662 0.063647 0.063647 0.096331 0.192662 0.159978 0.25631 2.016073 1.983389 4.512082 3.19957 6.880796 4.544765 1.247144 0.672598 2.239699 1.792447 3.519527 2.303346 3.872168 1.599785 8.000645 2.399677 12.096439 2.399677 4.06483 0 8.12794-0.799892 11.967424-2.33603 1.247144-0.512619 2.208735-1.536138 3.392232-2.176052 2.399677-1.343475 4.895686-2.528692 6.944443-4.544765 0.063647-0.063647 0.096331-0.192662 0.192662-0.25631 0.063647-0.096331 0.159978-0.127295 0.25631-0.192662l256.223626-259.008628C739.647682 425.85588 739.520387 405.600538 726.976697 393.184142z"  ></path></symbol><symbol id="ali-icon-triangle-up" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M839.57855094 724.55691406c39.00443531 0 61.15629656-51.52855781 32.74559906-79.92957937L544.87945156 317.17941125c-18.77812125-18.77973375-46.70823844-18.77973375-65.48797218 0L151.95807031 644.62733469c-29.14285687 29.13156844-4.81548187 79.92957938 33.22617938 79.92957937L839.57855094 724.55691406 839.57855094 724.55691406z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-triangle-down" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M185.18424969 303.09582031c-38.04166125 0-62.36742375 50.79801094-33.22617938 79.92957938L479.39147938 710.47332313c18.77973375 18.77973375 46.70985094 18.77973375 65.48797218-1e-8l327.44469844-327.44792343c28.4106975-28.40102156 6.26044875-79.92957938-32.74559906-79.92957938L185.18424969 303.09582031 185.18424969 303.09582031z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-arrow-down-thick-moving" viewBox="0 0 1024 1024"><path d="M512 965.334l373.333-533.333h-160v-106.667h-426.667v106.667h-160l373.333 533.333zM725.334 165.333h-426.667v106.667h426.667v-106.667zM725.334 58.666h-426.667v53.334h426.667v-53.334z"  ></path></symbol><symbol id="ali-icon-square-bs" viewBox="0 0 1024 1024"><path d="M962 763.465625C962 873.125 873.125 962 763.465625 962L260.534375 962C150.875 962 62 873.125 62 763.465625L62 260.534375C62 150.875 150.875 62 260.534375 62l502.93125 0C873.125 62 962 150.875 962 260.534375L962 763.465625z"  ></path></symbol><symbol id="ali-icon-close" viewBox="0 0 1024 1024"><path d="M590.13853558 518.6416597c0.00082974-1.7870386-0.0862825-3.57407639-0.24640218-5.35530679l303.83382622-309.09372501c22.61424682-23.00251685 22.61424682-60.25819758 0-83.28145551-11.29799707-11.46973233-26.1061886-17.23570972-40.92018831-17.23570972-14.81068076 0-29.61638305 5.76597739-40.92350647 17.23570972L516.99939261 420.93281582 217.17188337 121.02732068c-11.57924433-11.54688848-26.73754267-17.35185882-41.90413761-17.35185883-15.16410571 0-30.33070066 5.80497034-41.89833024 17.35185883-23.15931839 23.17425127-23.15931839 60.68546054 0 83.84726816L447.06015997 518.61925913 133.36858662 832.37969287c-23.15931839 23.15931839-23.15931839 60.66472027-1e-8 83.80910496 23.14770282 23.1684439 60.65227579 23.1684439 83.80246784 0l302.58024527-302.62504561 292.13096675 297.18843393c22.60760971 23.01413159 59.23525535 23.01413159 81.8436948 0 22.61424682-22.9933905 22.61424682-60.24907205 0-83.25158807L590.13853558 518.6416597z"  ></path></symbol><symbol id="ali-icon-github" viewBox="0 0 1024 1024"><path d="M512 62c-248.484375 0-450 206.71875-450 461.446875 0 203.90625 128.98125 376.678125 307.771875 437.7375 2.8125 0.590625 5.23125 0.815625 7.621875 0.815625 16.678125 0 23.090625-12.2625 23.090625-22.89375 0-11.053125-0.39375-39.965625-0.590625-78.553125-16.875 3.825-31.95 5.428125-45.39375 5.428125-86.596875 0-106.25625-67.303125-106.25625-67.303125-20.503125-53.240625-50.034375-67.5-50.034375-67.5-39.178125-27.534375-0.196875-28.321875 2.8125-28.321875 0.196875 0 0.196875 0 0.196875 0 45.196875 4.021875 68.90625 47.8125 68.90625 47.8125 22.5 39.375 52.621875 50.428125 79.565625 50.428125 21.09375 0 40.190625-6.834375 51.440625-12.065625 4.021875-29.728125 15.665625-50.034375 28.51875-61.678125-99.84375-11.64375-204.91875-51.215625-204.91875-228.009375 0-50.428125 17.465625-91.603125 46.209375-123.75-4.6125-11.64375-20.08125-58.66875 4.415625-122.146875 0 0 3.20625-1.0125 10.040625-1.0125 16.284375 0 53.04375 6.215625 113.709375 48.403125 35.971875-10.2375 74.334375-15.271875 112.696875-15.46875 38.165625 0.196875 76.753125 5.23125 112.696875 15.46875 60.665625-42.1875 97.425-48.403125 113.709375-48.403125 6.834375 0 10.040625 1.0125 10.040625 1.0125 24.496875 63.478125 9.028125 110.475 4.415625 122.146875 28.715625 32.34375 46.209375 73.51875 46.209375 123.75 0 177.1875-105.271875 216.16875-205.509375 227.615625 16.059375 14.259375 30.54375 42.384375 30.54375 85.3875 0 61.678125-0.590625 111.4875-0.590625 126.5625 0 10.85625 6.215625 23.090625 22.89375 23.090625 2.41875 0 5.23125-0.196875 8.04375-0.815625 178.9875-61.059375 307.771875-234.028125 307.771875-437.7375 0-254.728125-201.4875-461.446875-450-461.446875z"  ></path></symbol><symbol id="ali-icon-square-check-bs" viewBox="0 0 1024 1024"><path d="M787.22383 63.960731 236.188792 63.960731c-95.112218 0-172.197874 77.086679-172.197874 172.198897l0 551.035038c0 95.112218 77.085656 172.21527 172.197874 172.21527l551.035038 0c95.079472 0 172.197874-77.103052 172.197874-172.21527L959.421704 236.159628C959.421704 141.046387 882.303302 63.960731 787.22383 63.960731zM746.225067 427.76348 479.485981 711.319581c-5.684466 5.717212-35.449373 5.918803-40.897456 0.436952L277.590737 534.681582c-6.962575-6.996344-6.962575-18.295692 0-25.258267l25.223474-25.224498c6.996344-6.961552 18.296715-6.961552 25.25929 0L461.627241 617.753579l237.310847-237.310847c6.5246-6.5246 17.08512-6.5246 23.64349 0l23.642466 23.677259C752.78446 410.644591 752.78446 421.23888 746.225067 427.76348z"  ></path></symbol><symbol id="ali-icon-square-o" viewBox="0 0 1024 1024"><path d="M810.666667 128H213.333333c-47.36 0-85.333333 37.973333-85.333333 85.333333v597.333334a85.333333 85.333333 0 0 0 85.333333 85.333333h597.333334a85.333333 85.333333 0 0 0 85.333333-85.333333V213.333333a85.333333 85.333333 0 0 0-85.333333-85.333333m0 85.333333v597.333334H213.333333V213.333333h597.333334z"  ></path></symbol><symbol id="ali-icon-square-check" viewBox="0 0 1024 1024"><path d="M386.31280025 847.55133347l-314.2180016-314.21800014 88.60947616-89.23791267L386.31280025 669.70394609l476.98292494-476.98292496L951.90520135 281.95893234m0-314.21800013H72.09479865c-69.75639613 0-125.68719975 55.93080361-125.68719977 125.68719977v879.8104027a125.68719975 125.68719975 0 0 0 125.68719977 125.68719977h879.8104027a125.68719975 125.68719975 0 0 0 125.68719977-125.68719977V93.42813198a125.68719975 125.68719975 0 0 0-125.68719977-125.68719977z"  ></path></symbol><symbol id="ali-icon-arrow-south-fast" viewBox="0 0 1024 1024"><path d="M800.45212457 109.17252369L889.06160075 197.78199986l-377.06160075 377.06160075-377.06160075-377.06160075 88.60947618-88.60947617L512 396.99621177l288.45212457-287.82368808m0 377.06160075L889.06160075 574.84360061l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-88.60947617L512 774.05781251l288.45212457-287.82368807z"  ></path></symbol><symbol id="ali-icon-arrow-west-fast" viewBox="0 0 1024 1024"><path d="M914.82747631 223.54787543L826.21800014 134.93839925l-377.06160075 377.06160075 377.06160075 377.06160075 88.60947617-88.60947618L627.00378823 512l287.82368808-288.45212457m-377.06160075 0L449.15639939 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947617-88.60947618L249.94218749 512l287.82368807-288.45212457z"  ></path></symbol><symbol id="ali-icon-arrow-east-fast" viewBox="0 0 1024 1024"><path d="M109.17252369 223.54787543L197.78199986 134.93839925l377.06160075 377.06160075-377.06160075 377.06160075-88.60947617-88.60947618L396.99621177 512 109.17252369 223.54787543m377.06160075 0L574.84360061 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947617-88.60947618L774.05781251 512l-287.82368807-288.45212457z"  ></path></symbol><symbol id="ali-icon-arrow-north-fast" viewBox="0 0 1024 1024"><path d="M223.54787543 914.82747631L134.93839925 826.21800014l377.06160075-377.06160075 377.06160075 377.06160075-88.60947618 88.60947617L512 627.00378823l-288.45212457 287.82368808m0-377.06160075L134.93839925 449.15639939l377.06160075-377.06160074 377.06160075 377.06160074-88.60947618 88.60947617L512 249.94218749l-288.45212457 287.82368807z"  ></path></symbol><symbol id="ali-icon-arrow-south" viewBox="0 0 1024 1024"><path d="M223.54787543 297.07488757L512 585.52701215l288.45212457-288.45212458L889.06160075 386.31280025l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-west" viewBox="0 0 1024 1024"><path d="M726.29667594 799.82368807L438.47298785 512l287.82368809-288.45212457L637.68719975 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947619-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-east" viewBox="0 0 1024 1024"><path d="M297.70332406 799.82368807L585.52701215 512 297.70332406 223.54787543 386.31280025 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947619-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-north" viewBox="0 0 1024 1024"><path d="M223.54787543 726.29667594L512 438.47298785l288.45212457 287.82368809L889.06160075 637.68719975l-377.06160075-377.06160074-377.06160075 377.06160074 88.60947618 88.60947619z"  ></path></symbol><symbol id="ali-icon-circle-check-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971m0 187.50000058a187.49999971 187.49999971 0 0 0-187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971-187.49999971 187.49999971 187.49999971 0 0 0-187.49999971-187.49999971z"  ></path></symbol><symbol id="ali-icon-circle-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971z"  ></path></symbol><symbol id="ali-icon-menu" viewBox="0 0 1024 1024"><path d="M128 170.666667h768v170.666666H128V170.666667m0 256h768v170.666666H128v-170.666666m0 256h768v170.666666H128v-170.666666z"  ></path></symbol><symbol id="ali-icon-checked" viewBox="0 0 1024 1024"><path d="M356.65540741 727.9289837L140.7264237 512l-73.27086576 73.27086577L356.65540741 874.47071645l621.37837037-621.37837037-73.27086577-73.27086698z"  ></path></symbol><symbol id="ali-icon-download" viewBox="0 0 1024 1024"><path d="M494.933333 782.933333c2.133333 2.133333 4.266667 4.266667 8.533334 6.4h8.533333c6.4 0 10.666667-2.133333 14.933333-6.4l2.133334-2.133333 275.2-275.2c8.533333-8.533333 8.533333-21.333333 0-29.866667-8.533333-8.533333-21.333333-8.533333-29.866667 0L533.333333 716.8V128c0-12.8-8.533333-21.333333-21.333333-21.333333s-21.333333 8.533333-21.333333 21.333333v588.8L249.6 475.733333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.533333 21.333333 0 29.866667l275.2 277.333333zM853.333333 874.666667H172.8c-12.8 0-21.333333 8.533333-21.333333 21.333333s8.533333 21.333333 21.333333 21.333333H853.333333c12.8 0 21.333333-8.533333 21.333334-21.333333s-10.666667-21.333333-21.333334-21.333333z"  ></path></symbol><symbol id="ali-icon-arrow-right" viewBox="0 0 1024 1024"><path d="M522.002 180.667c-13.347 13.347-13.347 34.917 0 48.266l248.934 248.934h-600.27c-18.843 0-34.133 15.292-34.134 34.134s15.292 34.133 34.134 34.134h600.27l-248.934 248.934c-13.347 13.347-13.347 34.917 0 48.266s34.917 13.347 48.266 0l307.166-307.201c3.174-3.139 5.666-6.928 7.407-11.126 1.741-4.13 2.627-8.567 2.627-13.006 0-4.436-0.889-8.876-2.628-13.039-1.742-4.198-4.233-7.952-7.407-11.126l-307.166-307.201c-13.347-13.312-34.918-13.312-48.265 0.033z"  ></path></symbol><symbol id="ali-icon-arrow-down" viewBox="0 0 1024 1024"><path d="M843.333 522.002c-13.347-13.347-34.917-13.347-48.265 0l-248.934 248.934v-600.27c0-18.843-15.292-34.134-34.134-34.134s-34.134 15.292-34.134 34.134v600.27l-248.934-248.934c-13.347-13.347-34.917-13.347-48.265 0s-13.347 34.917 0 48.265l307.201 307.166c3.139 3.174 6.928 5.666 11.126 7.407 4.13 1.741 8.567 2.627 13.006 2.627 4.436 0 8.876-0.889 13.039-2.627 4.198-1.741 7.952-4.233 11.126-7.407l307.201-307.166c13.312-13.347 13.312-34.919-0.033-48.265z"  ></path></symbol><symbol id="ali-icon-arrow-left" viewBox="0 0 1024 1024"><path d="M501.998 843.333c13.347-13.347 13.347-34.917 0-48.266l-248.934-248.934h600.27c18.843 0 34.133-15.292 34.134-34.134s-15.292-34.133-34.134-34.134h-600.27l248.934-248.934c13.347-13.347 13.347-34.917 0-48.266s-34.917-13.347-48.266 0l-307.166 307.201c-3.174 3.139-5.666 6.928-7.407 11.126-1.741 4.13-2.627 8.567-2.627 13.006 0 4.436 0.889 8.876 2.628 13.039 1.742 4.198 4.233 7.952 7.407 11.126l307.166 307.201c13.347 13.312 34.918 13.312 48.265-0.033z"  ></path></symbol><symbol id="ali-icon-arrow-up" viewBox="0 0 1024 1024"><path d="M180.667 501.998c13.347 13.347 34.917 13.347 48.266 0l248.934-248.934v600.27c0 18.843 15.292 34.133 34.134 34.134s34.133-15.292 34.134-34.134v-600.27l248.934 248.934c13.347 13.347 34.917 13.347 48.266 0s13.347-34.917 0-48.266l-307.201-307.166c-3.139-3.174-6.928-5.666-11.126-7.407-4.13-1.741-8.567-2.627-13.006-2.627-4.436 0-8.876 0.889-13.039 2.628-4.198 1.742-7.952 4.233-11.126 7.407l-307.201 307.166c-13.312 13.347-13.312 34.918 0.033 48.265z"  ></path></symbol><symbol id="ali-icon-square-indeterminate-bs" viewBox="0 0 1024 1024"><path d="M787.87381572 62.80348203c95.34234023 0 172.67715878 77.29972119 172.67715879 172.67590547v552.57116924c0 95.37618427-77.33481856 172.69596123-172.67715878 172.69596123H235.30389981C139.92646221 960.74651797 62.62674102 883.42674102 62.62674102 788.05055674V235.4793875C62.62674102 140.10320323 139.92646221 62.80348203 235.30389981 62.80348203h552.56991592zM260.67687998 464.36768809v100.27855107h505.15320322v-100.27855109H260.67687998z"  ></path></symbol></svg>';var script = function () {
     var scripts = document.getElementsByTagName("script");return scripts[scripts.length - 1];
   }();var shouldInjectCss = script.getAttribute("data-injectcss");var ready = function ready(fn) {
     if (document.addEventListener) {
@@ -11873,13 +12152,13 @@ exports.push([module.i, "@charset \"UTF-8\";\n.z-loading.z-loading-mark .z-loadi
 })(window);
 
 /***/ }),
-/* 90 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(91);
+var content = __webpack_require__(95);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -11893,8 +12172,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Icon.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Icon.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Icon.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Icon.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -11904,21 +12183,21 @@ if(false) {
 }
 
 /***/ }),
-/* 91 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n* icon 组件样式\r\n*/\n.z-icon {\n  display: inline-block;\n  line-height: 0; }\n  .z-icon-stage {\n    display: inline-block;\n    line-height: 0; }\n  .z-icon-size-xxs {\n    font-size: 12px; }\n  .z-icon-size-xs {\n    font-size: 14px; }\n  .z-icon-size-s {\n    font-size: 20px; }\n  .z-icon-size-m {\n    font-size: 30px; }\n  .z-icon-size-l {\n    font-size: 40px; }\n  .z-icon-size-xl {\n    font-size: 50px; }\n  .z-icon-ali {\n    width: 1em;\n    height: 1em;\n    vertical-align: -0.15em;\n    fill: currentColor;\n    overflow: hidden; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n* icon 组件样式\r\n*/\n.z-icon {\n  display: inline-block;\n  line-height: 0;\n  color: #2196f3;\n  -webkit-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n  .z-icon-stage {\n    display: inline-block;\n    line-height: 0; }\n  .z-icon-size-xxs {\n    font-size: 12px; }\n  .z-icon-size-xs {\n    font-size: 14px; }\n  .z-icon-size-s {\n    font-size: 20px; }\n  .z-icon-size-m {\n    font-size: 30px; }\n  .z-icon-size-l {\n    font-size: 40px; }\n  .z-icon-size-xl {\n    font-size: 50px; }\n  .z-icon-ali {\n    width: 1em;\n    height: 1em;\n    vertical-align: -0.15em;\n    fill: currentColor;\n    overflow: hidden; }\n\n.z-icon.z-icon-theme-success {\n  color: #4caf50; }\n\n.z-icon.z-icon-theme-danger {\n  color: #f44336; }\n\n.z-icon.z-icon-theme-warning {\n  color: #ffeb3b; }\n\n.z-icon.z-icon-theme-blue {\n  color: #2196f3; }\n\n.z-icon.z-icon-theme-orange {\n  color: #ff5722; }\n\n.z-icon.z-icon-theme-light {\n  color: #f5f5f5; }\n\n.z-icon.z-icon-theme-dark {\n  color: #424242; }\n\n.z-icon.z-icon-theme-black {\n  color: #000; }\n\n.z-icon.z-icon-theme-white {\n  color: #fff; }\n\n.z-icon.z-icon-theme-grey {\n  color: #9e9e9e; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 92 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11956,7 +12235,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 93 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11970,32 +12249,43 @@ exports.default = function (h) {
   var loadingChildren = [];
 
   if (this.isRotate) {
-    var rotateChildren = [];
+    var rotateEle = null;
 
-    rotateChildren.push(h('icon', {
-      class: [this.xclass('icon')],
-      props: {
-        kind: 'spinner',
-        ui: this.ui,
-        theme: this.theme
-      }
-    }));
-
-    if (this.text) {
-      rotateChildren.push(h('span', {
-        class: [this.compPrefix + '-m-l-half']
-      }, this.text));
+    if (this.UIBootstrap) {
+      rotateEle = h('div', {
+        class: [this.xclass('rotate')]
+      }, [h('icon', {
+        class: [this.xclass('icon')],
+        props: {
+          size: this.size,
+          kind: 'spinner',
+          ui: this.ui,
+          theme: this.theme
+        }
+      })]);
+    } else {
+      rotateEle = h('div', {
+        class: [this.xclass('rotate')]
+      }, [h('div', {
+        class: [this.xclass('rotate-stage')]
+      }, [h('div', {
+        class: [this.xclass('rotate-left')]
+      }, [h('div', {
+        class: [this.xclass('rotate-spin')]
+      })]), h('div', {
+        class: [this.xclass('rotate-center')]
+      }, [h('div', {
+        class: [this.xclass('rotate-spin')]
+      })]), h('div', {
+        class: [this.xclass('rotate-right')]
+      }, [h('div', {
+        class: [this.xclass('rotate-spin')]
+      })])])]);
     }
 
-    loadingChildren.push(h('div', {
-      class: [this.xclass('rotate')]
-    }, rotateChildren));
+    loadingChildren.push(rotateEle);
   } else if (this.isSpot) {
     var spotChildren = [];
-
-    spotChildren.push(h('span', {
-      class: [this.xclass('spot')]
-    }, this.text));
 
     for (var i = 1; i <= 3; i++) {
       spotChildren.push(h('span', {
@@ -12015,109 +12305,15 @@ exports.default = function (h) {
   }
 
   return h('div', {
-    class: [this.cPrefix, this.cPrefix + '-' + this.themeClass, _defineProperty({}, this.cPrefix + '-mark', this.bgDisplay)],
+    class: this.compClass,
     directives: [{
       name: 'show',
-      value: this.display
+      value: this.stateDisplay
     }]
   }, [h('div', {
     class: [this.xclass('wrap')]
   }, loadingChildren)]);
 };
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
-                                                                                                                                                                                                                   * loading.render.js
-                                                                                                                                                                                                                   */
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(95);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./MotionRip.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./MotionRip.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".z-motion-rip.z-motion-rip-comp {\n  position: absolute;\n  box-sizing: border-box;\n  background-color: rgba(0, 0, 0, 0.2);\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  top: 0;\n  left: 0;\n  transition: opacity 800ms ease-out; }\n  .z-motion-rip.z-motion-rip-comp.z-motion-rip-circle {\n    border-radius: 100%; }\n  .z-motion-rip.z-motion-rip-comp.z-motion-rip-overflow {\n    overflow: hidden; }\n  .z-motion-rip.z-motion-rip-comp > .z-motion-rip-spot {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    padding: 100%;\n    box-sizing: border-box;\n    background-color: rgba(0, 0, 0, 0.2);\n    border-radius: 100%;\n    opacity: 1;\n    will-change: transform;\n    -webkit-transform-origin: 50% 50%;\n        -ms-transform-origin: 50% 50%;\n            transform-origin: 50% 50%;\n    -webkit-transform: translate(-50%, -50%) scale(0);\n        -ms-transform: translate(-50%, -50%) scale(0);\n            transform: translate(-50%, -50%) scale(0); }\n\n.z-motion-rip.z-motion-rip-assign > .z-motion-rip-spot {\n  top: auto;\n  left: auto;\n  -webkit-transform: scale(0);\n      -ms-transform: scale(0);\n          transform: scale(0); }\n\n.z-motion-rip.z-motion-rip-active {\n  opacity: 0; }\n  .z-motion-rip.z-motion-rip-active.z-motion-rip-assign > .z-motion-rip-spot {\n    -webkit-transform: scale(1);\n        -ms-transform: scale(1);\n            transform: scale(1); }\n  .z-motion-rip.z-motion-rip-active > .z-motion-rip-spot {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n        -ms-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(97);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Check.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Check.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n* check 组件样式\r\n*/\n.z-check {\n  display: inline-block;\n  vertical-align: middle;\n  position: relative; }\n  .z-check-disabled {\n    position: absolute;\n    top: 0;\n    left: 0;\n    z-index: 2;\n    width: 100%;\n    height: 100%;\n    background: #000;\n    opacity: 0; }\n  .z-check > .z-check-opt-row > .z-check-opt-col {\n    display: inline-block;\n    line-height: 0; }\n    .z-check > .z-check-opt-row > .z-check-opt-col > .z-check-box {\n      display: inline-block; }\n      .z-check > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-icon {\n        color: #2196f3; }\n      .z-check > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon {\n        position: relative;\n        display: inline-block;\n        vertical-align: middle;\n        line-height: 0; }\n        .z-check > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n          vertical-align: middle; }\n          .z-check > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon .z-icon-ali {\n            text-align: center; }\n      .z-check > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-lable {\n        display: inline-block;\n        vertical-align: middle;\n        line-height: 1;\n        margin-left: 4px;\n        cursor: default; }\n  .z-check .z-check-opt-check-all .z-check-checked > .z-icon {\n    color: #2196f3; }\n  .z-check .z-check-opt-check-all .z-check-lable {\n    cursor: default;\n    margin-left: 5px; }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-theme-success .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-theme-danger .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-theme-warning .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-theme-orange .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-theme-blue .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #2196f3; }\n", ""]);
-
-// exports
-
 
 /***/ }),
 /* 98 */
@@ -12140,8 +12336,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Check.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Check.material.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./MotionRip.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./MotionRip.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12154,12 +12350,12 @@ if(false) {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 material UI 样式\r\n */\n.z-check.z-check-ui-material .z-check-motion-rip {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0; }\n  .z-check.z-check-ui-material .z-check-motion-rip:after {\n    content: \"\";\n    position: absolute;\n    background-color: rgba(204, 204, 204, 0.3);\n    top: 50%;\n    left: 50%;\n    width: 200%;\n    height: 200%;\n    border-radius: 100%;\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n        -ms-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1);\n    -webkit-animation: z-check-motion-rip 2s infinite ease-in-out;\n            animation: z-check-motion-rip 2s infinite ease-in-out; }\n\n@-webkit-keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); } }\n\n@keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8); }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1); } }\n\n.z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col {\n  display: inline-block;\n  line-height: 0; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus {\n    outline: none; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n    font-size: 18px; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-check-rip {\n    position: absolute;\n    top: 0;\n    left: 0;\n    background-color: rgba(204, 204, 204, 0.4); }\n    .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n      background-color: rgba(204, 204, 204, 0.8); }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n    color: #2196f3; }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n    background-color: rgba(33, 150, 243, 0.3); }\n  .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n    background-color: rgba(33, 150, 243, 0.2); }\n    .z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n      background-color: rgba(33, 150, 243, 0.8); }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(76, 175, 80, 0.3); }\n\n.z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(76, 175, 80, 0.4); }\n  .z-check.z-check-theme-success > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(76, 175, 80, 0.8); }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(244, 67, 54, 0.3); }\n\n.z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(244, 67, 54, 0.4); }\n  .z-check.z-check-theme-danger > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(244, 67, 54, 0.8); }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(158, 158, 158, 0.3); }\n\n.z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(158, 158, 158, 0.4); }\n  .z-check.z-check-theme-warning > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(158, 158, 158, 0.8); }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(255, 87, 34, 0.3); }\n\n.z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(255, 87, 34, 0.4); }\n  .z-check.z-check-theme-orange > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(255, 87, 34, 0.8); }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked .z-check-motion-rip::after {\n  background-color: rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip {\n  background-color: rgba(33, 150, 243, 0.4); }\n  .z-check.z-check-theme-blue > .z-check-opt-row > .z-check-opt-col > .z-check-box.z-check-checked > .z-check-icon > .z-check-rip > .z-motion-rip-spot {\n    background-color: rgba(33, 150, 243, 0.8); }\n", ""]);
+exports.push([module.i, ".z-motion-rip {\n  position: absolute;\n  box-sizing: border-box;\n  width: 100%;\n  height: 100%;\n  opacity: 1;\n  top: 0;\n  left: 0;\n  will-change: opacity;\n  transition-property: opacity;\n  transition-timing-function: ease-in; }\n  .z-motion-rip.z-motion-rip-circle {\n    border-radius: 100%; }\n    .z-motion-rip.z-motion-rip-circle > .z-motion-rip-spot {\n      padding: 80%; }\n  .z-motion-rip.z-motion-rip-overflow {\n    overflow: hidden; }\n  .z-motion-rip.z-motion-rip-assign > .z-motion-rip-spot {\n    top: auto;\n    left: auto;\n    -webkit-transform: scale(0);\n        -ms-transform: scale(0);\n            transform: scale(0); }\n  .z-motion-rip.z-motion-rip-active {\n    opacity: 1; }\n    .z-motion-rip.z-motion-rip-active.z-motion-rip-assign > .z-motion-rip-spot {\n      -webkit-transform: scale(1);\n          -ms-transform: scale(1);\n              transform: scale(1); }\n    .z-motion-rip.z-motion-rip-active > .z-motion-rip-spot {\n      -webkit-transform: translate(-50%, -50%) scale(1);\n          -ms-transform: translate(-50%, -50%) scale(1);\n              transform: translate(-50%, -50%) scale(1); }\n  .z-motion-rip.z-motion-rip-after {\n    opacity: 0; }\n    .z-motion-rip.z-motion-rip-after.z-motion-rip-assign > .z-motion-rip-spot {\n      -webkit-transform: scale(1);\n          -ms-transform: scale(1);\n              transform: scale(1); }\n    .z-motion-rip.z-motion-rip-after > .z-motion-rip-spot {\n      -webkit-transform: translate(-50%, -50%) scale(1);\n          -ms-transform: translate(-50%, -50%) scale(1);\n              transform: translate(-50%, -50%) scale(1); }\n  .z-motion-rip > .z-motion-rip-spot {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    padding: 100%;\n    box-sizing: border-box;\n    background-color: rgba(0, 0, 0, 0.16);\n    border-radius: 100%;\n    opacity: 1;\n    will-change: transform;\n    -webkit-transform-origin: 50% 50%;\n        -ms-transform-origin: 50% 50%;\n            transform-origin: 50% 50%;\n    -webkit-transform: translate(-50%, -50%) scale(0);\n        -ms-transform: translate(-50%, -50%) scale(0);\n            transform: translate(-50%, -50%) scale(0);\n    transition-timing-function: ease-in;\n    transition-property: -webkit-transform;\n    transition-property: transform;\n    transition-property: transform, -webkit-transform; }\n", ""]);
 
 // exports
 
@@ -12185,8 +12381,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Check.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Check.bootstrap.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Check.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Check.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12199,18 +12395,108 @@ if(false) {
 /* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 bootstrap UI 样式\r\n */\n.z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus > .z-check-icon, .z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:active > .z-check-icon, .z-check.z-check-ui-bootstrap.z-check-multiple > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus:active > .z-check-icon {\n  border-radius: 4px; }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus {\n  outline: none; }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus > .z-check-icon, .z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:active > .z-check-icon, .z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box:focus:active > .z-check-icon {\n  border-radius: 100%;\n  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-bootstrap > .z-check-opt-row > .z-check-opt-col > .z-check-box > .z-check-icon > .z-icon {\n  color: #f5f5f5;\n  font-size: 16px; }\n\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all > .z-icon {\n  color: #f5f5f5;\n  font-size: 16px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n* check 组件样式\r\n*/\n.z-check {\n  display: inline-block;\n  vertical-align: middle;\n  position: relative;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }\n  .z-check-vertical .z-check-opt-row {\n    margin-left: 20px; }\n  .z-check > .z-check-opt-row > .z-check-opt-col {\n    display: inline-block;\n    line-height: 0; }\n  .z-check .z-check-overlay {\n    background-color: rgba(255, 255, 255, 0);\n    position: absolute;\n    z-index: 1;\n    left: 0;\n    top: 0;\n    height: 100%;\n    width: 100%; }\n  .z-check .z-check-box,\n  .z-check .z-check-opt-check-all {\n    position: relative;\n    display: inline-block; }\n    .z-check .z-check-box.z-check-checked > .z-check-icon > .z-icon,\n    .z-check .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n      color: #2196f3; }\n    .z-check .z-check-box.z-check-disabled > .z-check-lable,\n    .z-check .z-check-opt-check-all.z-check-disabled > .z-check-lable {\n      color: rgba(0, 0, 0, 0.38); }\n    .z-check .z-check-box > .z-check-lable,\n    .z-check .z-check-opt-check-all > .z-check-lable {\n      display: inline-block;\n      vertical-align: middle;\n      line-height: 1;\n      margin-left: 8px;\n      cursor: default; }\n  .z-check .z-check-box-style,\n  .z-check .z-check-opt-check-all {\n    margin: 0 20px 20px 0; }\n  .z-check .z-check-icon {\n    position: relative;\n    display: inline-block;\n    vertical-align: middle;\n    line-height: 1; }\n    .z-check .z-check-icon > .z-icon {\n      vertical-align: middle; }\n      .z-check .z-check-icon > .z-icon .z-icon-ali {\n        text-align: center; }\n\n.z-check.z-check-theme-success .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-theme-danger .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-theme-warning .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #ffeb3b; }\n\n.z-check.z-check-theme-orange .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-theme-blue .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-theme-light .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #f5f5f5; }\n\n.z-check.z-check-theme-dark .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #424242; }\n\n.z-check.z-check-theme-black .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #000; }\n\n.z-check.z-check-theme-white .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-theme-grey .z-check-opt-check-all.z-check-checked > .z-icon {\n  color: #9e9e9e; }\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(103);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Check.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Check.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 material UI 样式\r\n */\n.z-check.z-check-ui-material > .z-check-opt-row > .z-check-opt-col {\n  display: inline-block;\n  line-height: 0; }\n\n.z-check.z-check-ui-material .z-check-motion-rip {\n  opacity: 0;\n  transition: opacity 150ms; }\n\n.z-check.z-check-ui-material .z-check-box:focus,\n.z-check.z-check-ui-material .z-check-opt-check-all:focus {\n  outline: none; }\n\n.z-check.z-check-ui-material .z-check-box.z-check-focused .z-check-motion-rip,\n.z-check.z-check-ui-material .z-check-opt-check-all.z-check-focused .z-check-motion-rip {\n  opacity: 1; }\n\n.z-check.z-check-ui-material .z-check-box .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material .z-check-opt-check-all .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(158, 158, 158, 0.2); }\n\n.z-check.z-check-ui-material .z-check-icon-box {\n  box-sizing: border-box;\n  position: relative;\n  height: 20px;\n  width: 20px; }\n  .z-check.z-check-ui-material .z-check-icon-box-rail {\n    border: rgba(0, 0, 0, 0.54) 2px solid;\n    box-sizing: border-box;\n    border-radius: 100%;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    top: 0;\n    left: 0; }\n  .z-check.z-check-ui-material .z-check-icon-box-checked, .z-check.z-check-ui-material .z-check-icon-box-dot, .z-check.z-check-ui-material .z-check-icon-box-indeterminate {\n    background-color: #2196f3;\n    box-sizing: border-box;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    height: 100%;\n    width: 100%;\n    -webkit-transform: translate(-50%, -50%) scale(0);\n        -ms-transform: translate(-50%, -50%) scale(0);\n            transform: translate(-50%, -50%) scale(0);\n    transition: -webkit-transform 150ms;\n    transition: transform 150ms;\n    transition: transform 150ms, -webkit-transform 150ms; }\n  .z-check.z-check-ui-material .z-check-icon-box-dot {\n    border-radius: 100%;\n    height: 50%;\n    width: 50%; }\n  .z-check.z-check-ui-material .z-check-icon-box-indeterminate::after {\n    content: '';\n    background-color: #fff;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    height: 2px;\n    width: 60%;\n    -webkit-transform: translate(-50%, -50%);\n        -ms-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%); }\n\n.z-check.z-check-ui-material .z-check-icon.z-check-icon-checkbox .z-check-icon-box {\n  height: 20px;\n  width: 20px;\n  border-radius: 2px;\n  overflow: hidden; }\n  .z-check.z-check-ui-material .z-check-icon.z-check-icon-checkbox .z-check-icon-box-rail {\n    border-radius: 0; }\n  .z-check.z-check-ui-material .z-check-icon.z-check-icon-checkbox .z-check-icon-box-indeterminate, .z-check.z-check-ui-material .z-check-icon.z-check-icon-checkbox .z-check-icon-box-checked {\n    width: 18px;\n    height: 18px; }\n    .z-check.z-check-ui-material .z-check-icon.z-check-icon-checkbox .z-check-icon-box-indeterminate .z-icon, .z-check.z-check-ui-material .z-check-icon.z-check-icon-checkbox .z-check-icon-box-checked .z-icon {\n      font-size: 18px;\n      color: #fff;\n      vertical-align: middle; }\n\n.z-check.z-check-ui-material .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(33, 150, 243, 0.2); }\n\n.z-check.z-check-ui-material .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-material .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #2196f3; }\n\n.z-check.z-check-ui-material .z-check-checked .z-check-icon-box-checked, .z-check.z-check-ui-material .z-check-checked .z-check-icon-box-dot {\n  -webkit-transform: translate(-50%, -50%) scale(1);\n      -ms-transform: translate(-50%, -50%) scale(1);\n          transform: translate(-50%, -50%) scale(1); }\n\n.z-check.z-check-ui-material .z-check-indeterminate .z-check-icon-box-indeterminate {\n  -webkit-transform: translate(-50%, -50%) scale(1);\n      -ms-transform: translate(-50%, -50%) scale(1);\n          transform: translate(-50%, -50%) scale(1); }\n\n.z-check.z-check-ui-material .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #bbdefb; }\n\n.z-check.z-check-ui-material .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #bbdefb; }\n\n.z-check.z-check-ui-material .z-check-motion-rip {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0; }\n  .z-check.z-check-ui-material .z-check-motion-rip:after {\n    content: \"\";\n    position: absolute;\n    background-color: rgba(158, 158, 158, 0.3);\n    top: 50%;\n    left: 50%;\n    width: 200%;\n    height: 200%;\n    border-radius: 100%;\n    -webkit-transform: translate(-50%, -50%) scaleX(1);\n        -ms-transform: translate(-50%, -50%) scaleX(1);\n            transform: translate(-50%, -50%) scaleX(1);\n    -webkit-animation: z-check-motion-rip 1.5s infinite ease-in-out;\n            animation: z-check-motion-rip 1.5s infinite ease-in-out; }\n\n@-webkit-keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1);\n    opacity: .6; }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8);\n    opacity: 1; }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1);\n    opacity: .6; } }\n\n@keyframes z-check-motion-rip {\n  0% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1);\n    opacity: .6; }\n  50% {\n    -webkit-transform: translate(-50%, -50%) scale(0.8);\n            transform: translate(-50%, -50%) scale(0.8);\n    opacity: 1; }\n  100% {\n    -webkit-transform: translate(-50%, -50%) scale(1);\n            transform: translate(-50%, -50%) scale(1);\n    opacity: .6; } }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-success .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(76, 175, 80, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-success .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(76, 175, 80, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-success .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #4caf50; }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-success .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-success .z-check-icon-box-indeterminate {\n  background-color: #4caf50; }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-success .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-success .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #c8e6c9; }\n\n.z-check.z-check-ui-material.z-check-theme-success .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-success .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #c8e6c9; }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(244, 67, 54, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(244, 67, 54, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #f44336; }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-danger .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-danger .z-check-icon-box-indeterminate {\n  background-color: #f44336; }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #ffcdd2; }\n\n.z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-danger .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #ffcdd2; }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(255, 235, 59, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(255, 235, 59, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #ffeb3b; }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-warning .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-warning .z-check-icon-box-indeterminate {\n  background-color: #ffeb3b; }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #fff9c4; }\n\n.z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-warning .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #fff9c4; }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(255, 87, 34, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(255, 87, 34, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #ff5722; }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-orange .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-orange .z-check-icon-box-indeterminate {\n  background-color: #ff5722; }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #ffe0b2; }\n\n.z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-orange .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #ffe0b2; }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(33, 150, 243, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #2196f3; }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-blue .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-blue .z-check-icon-box-indeterminate {\n  background-color: #2196f3; }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #bbdefb; }\n\n.z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-blue .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #bbdefb; }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-light .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(245, 245, 245, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-light .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(245, 245, 245, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-light .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #f5f5f5; }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-light .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-light .z-check-icon-box-indeterminate {\n  background-color: #f5f5f5; }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-light .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-light .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #fff; }\n\n.z-check.z-check-ui-material.z-check-theme-light .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-light .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #fff; }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(66, 66, 66, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(66, 66, 66, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #424242; }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-dark .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-dark .z-check-icon-box-indeterminate {\n  background-color: #424242; }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #9e9e9e; }\n\n.z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-dark .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #9e9e9e; }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(158, 158, 158, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(158, 158, 158, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #9e9e9e; }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-grey .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-grey .z-check-icon-box-indeterminate {\n  background-color: #9e9e9e; }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #eee; }\n\n.z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-grey .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #eee; }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-black .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(0, 0, 0, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-black .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(0, 0, 0, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-black .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #000; }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-black .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-black .z-check-icon-box-indeterminate {\n  background-color: #000; }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-black .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-black .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #9e9e9e; }\n\n.z-check.z-check-ui-material.z-check-theme-black .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-black .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #9e9e9e; }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-checked .z-check-rip > .z-motion-rip-spot,\n.z-check.z-check-ui-material.z-check-theme-white .z-check-indeterminate .z-check-rip > .z-motion-rip-spot {\n  background-color: rgba(255, 255, 255, 0.2); }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-checked .z-check-motion-rip::after,\n.z-check.z-check-ui-material.z-check-theme-white .z-check-indeterminate .z-check-motion-rip::after {\n  background-color: rgba(255, 255, 255, 0.3); }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-checked .z-check-icon-box-rail,\n.z-check.z-check-ui-material.z-check-theme-white .z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #fff; }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-white .z-check-icon-box-checked, .z-check.z-check-ui-material.z-check-theme-white .z-check-icon-box-indeterminate {\n  background-color: #fff; }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-disabled .z-check-icon-box-dot, .z-check.z-check-ui-material.z-check-theme-white .z-check-disabled .z-check-icon-box-checked {\n  background-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-disabled .z-check-icon-box-rail {\n  border-color: #dadada; }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-disabled.z-check-opt-check-all .z-check-icon-box-checked,\n.z-check.z-check-ui-material.z-check-theme-white .z-check-disabled.z-check-indeterminate .z-check-icon-box-indeterminate {\n  background-color: #fff; }\n\n.z-check.z-check-ui-material.z-check-theme-white .z-check-disabled.z-check-opt-check-all.z-check-checked .z-check-icon-box-rail, .z-check.z-check-ui-material.z-check-theme-white .z-check-disabled.z-check-opt-check-all.z-check-indeterminate .z-check-icon-box-rail {\n  border-color: #fff; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(105);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Check.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Check.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * check 组件的 bootstrap UI 样式\r\n */\n.z-check.z-check-ui-bootstrap.z-check-multiple .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-multiple .z-check-opt-check-all:focus > .z-check-icon {\n  border-radius: 4px; }\n\n.z-check.z-check-ui-bootstrap .z-check-box:focus,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all:focus {\n  outline: none; }\n\n.z-check.z-check-ui-bootstrap .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-ui-bootstrap .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: rgba(207, 207, 207, 0.38); }\n\n.z-check.z-check-ui-bootstrap .z-check-box.z-check-disabled.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap .z-check-box.z-check-disabled.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all.z-check-disabled.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all.z-check-disabled.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #bbdefb; }\n\n.z-check.z-check-ui-bootstrap .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all:focus > .z-check-icon {\n  border-radius: 100%;\n  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-bootstrap .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #cfcfcf;\n  font-size: 21px; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #c8e6c9; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #80e27e; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #4caf50; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-success .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #80e27e; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #ffcdd2; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #ff7961; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #f44336; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-danger .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #ff7961; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #ffeb3b; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #fff9c4; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(255, 235, 59, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #ffff72; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #ffeb3b; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-warning .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #ffff72; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #ffe0b2; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #ff8a50; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #ff5722; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-orange .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #ff8a50; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #bbdefb; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #6ec6ff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #2196f3; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-blue .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #6ec6ff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #f5f5f5; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(245, 245, 245, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #f5f5f5; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-light .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #424242; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(66, 66, 66, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #6d6d6d; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #424242; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-dark .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #6d6d6d; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #000; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #6d6d6d; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #000; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-black .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #6d6d6d; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-white .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #fff; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-box.z-check-checked > .z-check-icon > .z-icon, .z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-box.z-check-indeterminate > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all.z-check-indeterminate > .z-check-icon > .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-box.z-check-disabled > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all.z-check-disabled > .z-check-icon > .z-icon {\n  color: #eee; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-box:focus > .z-check-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all:focus > .z-check-icon {\n  box-shadow: 0 0 0 3px rgba(158, 158, 158, 0.3); }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-box > .z-check-icon > .z-icon,\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #cfcfcf; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all.z-check-checked > .z-check-icon > .z-icon {\n  color: #9e9e9e; }\n\n.z-check.z-check-ui-bootstrap.z-check-theme-grey .z-check-opt-check-all > .z-check-icon > .z-icon {\n  color: #cfcfcf; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12221,98 +12507,86 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (h) {
-  var _this = this;
+  var _this2 = this;
 
   var RowChildren = [];
 
-  if (Array.isArray(this.option) && this.option.length > 0) {
-    var checkEle = [];
-
-    this.option.forEach(function (item, index) {
-      var currentIndex = index + 1;
-
-      checkEle.push(h('column', {
-        class: [_this.xclass('opt-col')]
-      }, [h('div', {
-        attrs: {
-          tabindex: 0
-        },
-        class: [_this.xclass('box'), _defineProperty({}, _this.xclass('checked'), _this.isCheckbox ? _this.value.includes(item.value) : index === _this.index)],
-        on: {
-          click: function click(event) {
-            return _this._handlerClick(event, currentIndex);
-          },
-          mousedown: function mousedown(event) {
-            return _this._handlerMousedown(event, currentIndex);
-          },
-          mouseup: function mouseup(event) {
-            return _this._handlerMouseup(event, currentIndex);
-          },
-          focus: function focus(event) {
-            return _this._handlerFocus(event, currentIndex);
-          },
-          blur: function blur(event) {
-            return _this._handlerBlur(event, currentIndex);
-          },
-          keyup: function keyup(event) {
-            return _this._handlerKeyup(event, currentIndex);
-          }
-        }
-      }, [h('div', {
-        class: [_this.xclass('icon')]
-      }, [h('icon', {
-        props: {
-          kind: _this.iconName(item[_this.valName]),
-          ui: _this.ui,
-          theme: _this.theme
-        }
-      }), h('motion-rip', {
-        class: [_this.xclass('rip')],
-        props: {
-          circle: true
-        },
-        ref: 'motionCheck' + currentIndex
-      }), h('div', {
-        class: [_this.xclass('motion-rip')],
-        directives: [{
-          name: 'show',
-          value: _this.motion[index]
-        }]
-      })]), function () {
-        if (item[_this.txtName]) {
-          return h('span', {
-            class: [_this.xclass('lable')]
-          }, item[_this.txtName]);
-        }
-      }()])]));
-    });
-
-    RowChildren.push(checkEle);
+  if (!Array.isArray(this.stateOption) || this.stateOption.length === 0) {
+    return false;
   }
 
+  var checkEle = [];
+
+  this.stateOption.forEach(function (item, index) {
+    var addBoxStyle = _this2.stateOption.length > 1;
+    var currentIndex = index + 1;
+    var iconTypeEle = null;
+
+    if (_this2.UIBootstrap) {
+      iconTypeEle = bootstrapCheck.call(_this2, h, {
+        checked: _this2.isRadio ? _this2.index === index : _this2.index.includes(index),
+        ripRefName: 'motionCheck' + currentIndex,
+        motionRipFocused: _this2.optionFocus[index]
+      });
+    } else {
+      iconTypeEle = materialCheck.call(_this2, h, {
+        multiple: _this2.isCheckbox,
+        ripRefName: 'motionCheck' + currentIndex
+      });
+    }
+
+    checkEle.push(h('column', {
+      class: [_this2.xclass('opt-col')],
+      props: {
+        span: _this2.vertical ? 12 : undefined
+      }
+    }, [h('div', {
+      attrs: {
+        tabindex: item.disabled ? undefined : 0
+      },
+      class: [_this2.xclass('box'), _defineProperty({}, _this2.xclass('box-style'), addBoxStyle), _defineProperty({}, _this2.xclass('checked'), _this2.isCheckbox ? _this2.index.includes(index) : index === _this2.index), _defineProperty({}, _this2.xclass('focused'), !item.disabled && _this2.optionFocus[index]), _defineProperty({}, _this2.xclass('disabled'), item.disabled)],
+      on: item.disabled ? {} : {
+        click: function click(event) {
+          return _this2._handlerClick(event, currentIndex);
+        },
+        mousedown: function mousedown(event) {
+          return _this2._handlerMousedown(event, currentIndex);
+        },
+        mouseup: function mouseup(event) {
+          return _this2._handlerMouseup(event, currentIndex);
+        },
+        focus: function focus(event) {
+          return _this2._handlerFocus(event, currentIndex);
+        },
+        blur: function blur(event) {
+          return _this2._handlerBlur(event, currentIndex);
+        },
+        keyup: function keyup(event) {
+          return _this2._handlerKeyup(event, currentIndex);
+        }
+      }
+    }, [iconTypeEle, function () {
+      if (item[_this2.textName]) {
+        return h('span', {
+          class: [_this2.xclass('lable')]
+        }, item[_this2.textName]);
+      }
+    }(), function () {
+      if (item.disabled) {
+        return h('div', {
+          class: [_this2.xclass('overlay')]
+        });
+      }
+    }()])]));
+  });
+
+  RowChildren.push(checkEle);
+
   return h('div', {
-    class: [this.cPrefix, this.xclass(['stage', this.themeClass, this.uiClass]), _defineProperty({}, this.xclass('multiple'), this.multiple)]
-  }, [h('div', {
-    class: [this.xclass('disabled')],
-    directives: [{
-      name: 'show',
-      value: this.disabled
-    }]
-  }), function () {
-    if (_this.checkAll && _this.multiple) {
-      return h('div', {
-        class: [_this.xclass('opt-check-all'), _defineProperty({}, _this.xclass('checked'), _this.checkedAll)],
-        on: {
-          click: _this.checkAllOption
-        }
-      }, [h('icon', {
-        props: {
-          kind: _this._getIconName(_this.checkedAll),
-          theme: _this.theme
-        }
-      }), h('span', {
-        class: [_this.xclass('lable')]
-      }, '全选')]);
+    class: [this.cPrefix, this.xclass(['stage', this.themeClass, this.uiClass]), _defineProperty({}, this.xclass('multiple'), this.multiple), _defineProperty({}, this.xclass('vertical'), this.vertical)]
+  }, [function () {
+    if (_this2.checkAll && _this2.multiple) {
+      return checkAllEle.call(_this2, h);
     }
   }(), h('row', {
     class: [this.xclass('opt-row')],
@@ -12322,18 +12596,133 @@ exports.default = function (h) {
   }, RowChildren)]);
 };
 
-var _vue = __webpack_require__(3);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var _vue2 = _interopRequireDefault(_vue);
+/**
+ * check.render.js
+ */
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var bootstrapCheck = function bootstrapCheck(h) {
+  var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref$className = _ref.className,
+      className = _ref$className === undefined ? '' : _ref$className,
+      _ref$checked = _ref.checked,
+      checked = _ref$checked === undefined ? false : _ref$checked,
+      _ref$indeterminate = _ref.indeterminate,
+      indeterminate = _ref$indeterminate === undefined ? false : _ref$indeterminate,
+      _ref$multiple = _ref.multiple,
+      multiple = _ref$multiple === undefined ? false : _ref$multiple;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
-                                                                                                                                                                                                                   * check.render.js
-                                                                                                                                                                                                                   */
+  return h('div', {
+    class: [this.xclass('icon')]
+  }, [h('icon', {
+    props: {
+      kind: this._getIconName(checked, indeterminate),
+      ui: this.ui,
+      theme: this.theme
+    }
+  })]);
+};
+
+var materialCheck = function materialCheck(h) {
+  var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+      _ref2$className = _ref2.className,
+      className = _ref2$className === undefined ? '' : _ref2$className,
+      _ref2$multiple = _ref2.multiple,
+      multiple = _ref2$multiple === undefined ? false : _ref2$multiple,
+      _ref2$ripRefName = _ref2.ripRefName,
+      ripRefName = _ref2$ripRefName === undefined ? '' : _ref2$ripRefName;
+
+  var iconBoxEle = [h('div', {
+    class: [this.xclass('icon-box-rail')]
+  })];
+
+  if (multiple) {
+    iconBoxEle.push(h('div', {
+      class: [this.xclass('icon-box-checked')]
+    }, [h('icon', {
+      props: {
+        kind: 'checked'
+      }
+    })]), h('div', {
+      class: [this.xclass('icon-box-indeterminate')]
+    }));
+  } else {
+    iconBoxEle.push(h('div', {
+      class: [this.xclass('icon-box-dot')]
+    }));
+  }
+
+  return h('div', {
+    class: [this.xclass(['icon', 'icon-' + (multiple ? 'checkbox' : 'radio')])]
+  }, [h('div', {
+    class: [this.xclass(['icon-box'])]
+  }, iconBoxEle), h('div', {
+    class: [this.xclass('motion-rip')]
+  }), h('motion-rip', {
+    class: [this.xclass('rip')],
+    props: {
+      circle: true,
+      speed: 180,
+      radius: 'M'
+    },
+    ref: ripRefName
+  })]);
+};
+
+var checkAllEle = function checkAllEle(h) {
+  var _this = this;
+
+  return h('div', {
+    attrs: {
+      tabindex: this.checkAllDisabled ? undefined : 0
+    },
+    class: [this.xclass('opt-check-all'), _defineProperty({}, this.xclass('checked'), this.checkedAll), _defineProperty({}, this.xclass('indeterminate'), this.checkedSome), _defineProperty({}, this.xclass('focused'), !this.checkAllDisabled && this.focusedCheckAll), _defineProperty({}, this.xclass('disabled'), this.checkAllDisabled)],
+    on: this.checkAllDisabled ? {} : {
+      click: this.checkAllOption,
+      mousedown: function mousedown(event) {
+        return _this._handlerMousedownCheckAll(event);
+      },
+      mouseup: function mouseup(event) {
+        return _this._handlerMouseupCheckAll(event);
+      },
+      focus: function focus(event) {
+        return _this._handlerFocusCheckAll(event);
+      },
+      blur: function blur(event) {
+        return _this._handlerBlurCheckAll(event);
+      },
+      keyup: function keyup(event) {
+        return _this._handlerKeyupCheckAll(event);
+      }
+    }
+  }, [this.UIBootstrap ? bootstrapCheck.call(this, h, {
+    checked: this.checkedAll,
+    ripRefName: 'motionCheckAll',
+    indeterminate: this.checkedSome,
+    className: [this.xclass('icon')],
+    motionRipFocused: false
+  }) : materialCheck.call(this, h, {
+    multiple: true,
+    className: [this.xclass('icon')],
+    ripRefName: 'motionCheckAll'
+  }), function () {
+    if (_this.checkAllLabel) {
+      return h('span', {
+        class: [_this.xclass('lable')]
+      }, _this.checkAllLabel);
+    }
+  }(), function () {
+    if (_this.checkAllDisabled) {
+      return h('div', {
+        class: [_this.xclass('overlay')]
+      });
+    }
+  }()]);
+};
 
 /***/ }),
-/* 103 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12386,7 +12775,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 104 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12410,13 +12799,245 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 105 */
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _vue = __webpack_require__(3);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _tip = __webpack_require__(6);
+
+var _tip2 = _interopRequireDefault(_tip);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+exports.default = {
+  methods: {
+    /**
+     * 选择 checkbox
+     * @param {Number} index - 第几个选择框
+     */
+    check: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(evt, index) {
+        var _this = this;
+
+        var option, val;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                option = this.stateOption[index - 1];
+                val = option[this.valueName];
+
+
+                if (this.isCheckbox) {
+                  this.oldValue = [];
+
+                  this.stateValue.forEach(function (item) {
+                    _this.oldValue.push(item);
+                  });
+
+                  this._changeCheckbox(index - 1, val);
+                } else {
+                  this.oldValue = this.stateValue;
+
+                  this.stateValue = val;
+                }
+
+                this._initCheckbox();
+                _context.next = 6;
+                return this.$nextTick();
+
+              case 6:
+
+                this.$emit('check', {
+                  currentIndex: index,
+                  value: this.value
+                });
+
+                this.UIMaterial && this.$refs['motionCheck' + index].enter();
+
+              case 8:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function check(_x, _x2) {
+        return _ref.apply(this, arguments);
+      }
+
+      return check;
+    }(),
+
+
+    /**
+     * 设置checkbox的text值
+     *
+     * @return {Function, String}
+     **/
+    setText: function setText() {
+      var _this2 = this;
+
+      if (this.isRadio) {
+        this.oldText = this.text;
+
+        this.text = this.index === -1 ? 'undefined' : this.stateOption[this.index][this.textName];
+
+        return this;
+      } else {
+        this.oldText = this.text.slice();
+        var checkboxText = [];
+
+        this.index.forEach(function (item) {
+          checkboxText.push(_this2.stateOption[item][_this2.textName]);
+        });
+
+        this.text = checkboxText;
+      }
+    },
+
+
+    /**
+     * 设置 currentIndex
+     *
+     * @return {Function, Object}
+     **/
+    setIndex: function setIndex() {
+      var _this3 = this;
+
+      if (this.isRadio) {
+        this.oldIndex = this.index;
+
+        return this.stateOption.every(function (item, index) {
+          if (item[_this3.valueName] === _this3.stateValue) {
+            _this3.index = index;
+
+            return false;
+          }
+
+          return true;
+        });
+      } else {
+        this.oldIndex = this.index.slice();
+        var checkboxIndex = [];
+
+        this.stateValue.forEach(function (item) {
+          _this3.stateOption.forEach(function (ele, index) {
+            if (item === ele[_this3.valueName]) {
+              checkboxIndex.push(index);
+            }
+          });
+        });
+
+        this.index = checkboxIndex;
+      }
+    },
+
+
+    /**
+     * 验证数据格式
+     *
+     * @return {Object} - this - 组件
+     */
+    verify: function verify() {
+      this.dangerTip = '\u8BF7\u9009\u62E9' + this.errorText + (this.errorText ? '的' : '') + (this.isRadio ? '单选框' : '复选框') + '!';
+
+      return this.verified;
+    },
+
+
+    /**
+     * 验证数据格式并且弹出错误
+     *
+     * @return {Object} - this - 组件
+     */
+    validate: function validate() {
+      this.verify();
+
+      if (!this.verified) {
+        (0, _tip2.default)(this.dangerTip);
+
+        return false;
+      }
+
+      return this;
+    },
+
+
+    /**
+     * 全选复选框
+     *
+     * @return {Object} - this - 组件
+     */
+    checkAllOption: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+        var _this4 = this;
+
+        var value;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                value = [];
+
+
+                this.option.forEach(function (item) {
+                  value.push(item[_this4.valueName]);
+                });
+
+                if (this.checkedAll) {
+                  this.stateValue = [];
+                } else {
+                  this.stateValue = value;
+                }
+
+                this._initCheckbox();
+
+                _context2.next = 6;
+                return this.$nextTick();
+
+              case 6:
+
+                this.UIMaterial && this.$refs.motionCheckAll.enter();
+
+              case 7:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function checkAllOption() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return checkAllOption;
+    }()
+  }
+};
+
+/***/ }),
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(106);
+var content = __webpack_require__(111);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -12430,8 +13051,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Message.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Message.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Message.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Message.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12441,10 +13062,10 @@ if(false) {
 }
 
 /***/ }),
-/* 106 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -12455,13 +13076,13 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\
 
 
 /***/ }),
-/* 107 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(108);
+var content = __webpack_require__(113);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -12475,8 +13096,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Message.m.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Message.m.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Message.m.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Message.m.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12486,10 +13107,10 @@ if(false) {
 }
 
 /***/ }),
-/* 108 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -12500,7 +13121,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\
 
 
 /***/ }),
-/* 109 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12530,13 +13151,13 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 110 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(111);
+var content = __webpack_require__(116);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -12550,8 +13171,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Pop.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Pop.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Pop.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Pop.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12561,10 +13182,10 @@ if(false) {
 }
 
 /***/ }),
-/* 111 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -12575,13 +13196,13 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\
 
 
 /***/ }),
-/* 112 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(113);
+var content = __webpack_require__(118);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -12595,8 +13216,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Pop.m.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Pop.m.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Pop.m.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Pop.m.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12606,10 +13227,10 @@ if(false) {
 }
 
 /***/ }),
-/* 113 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -12620,7 +13241,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\
 
 
 /***/ }),
-/* 114 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12651,184 +13272,13 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _vue = __webpack_require__(3);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _tip = __webpack_require__(5);
-
-var _tip2 = _interopRequireDefault(_tip);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  methods: {
-    /**
-     * checkbox的icon的样式
-     *
-     * @param { String } - checkbox当前值
-     * @return { Function, Object }
-     **/
-    iconName: function iconName(val) {
-      return this.isRadio ? this._getIconName(this.value === val) : this._getIconName(this.value.includes(val));
-    },
-
-
-    /**
-     * 选择 checkbox
-     */
-    check: function check(evt, index) {
-      var _this = this;
-
-      var option = this.option[index - 1];
-      var val = option.value;
-
-      if (this.beforeCheck && this.beforeCheck.call(null, this) === false) {
-        return false;
-      }
-
-      if (this.isCheckbox) {
-        this.oldValue = [];
-
-        this.value.forEach(function (item) {
-          _this.oldValue.push(item);
-        });
-
-        this._changeCheckbox(val);
-      } else {
-        this.oldValue = this.value;
-
-        this.value = val;
-      }
-
-      this.$nextTick(function () {
-        _this.success && _this.success(_this);
-        _this.UIMaterial && _this.$refs['motionCheck' + index].enter();
-      });
-    },
-
-
-    /**
-     * 设置checkbox的text值
-     *
-     * @return {Function, String}
-     **/
-    setText: function setText() {
-      var _this2 = this;
-
-      if (this.isRadio) {
-        this.text = this.option[this.index][this.txtName];
-
-        return this;
-      } else {
-        if (!Array.isArray(this.value)) {
-          return false;
-        }
-
-        this.text = [];
-
-        return this.value.forEach(function (item) {
-          _this2.option.forEach(function (ele) {
-            if (item === ele[_this2.valName]) {
-              _this2.text.push(item);
-            }
-          });
-        });
-      }
-    },
-
-
-    /**
-     * 设置 currentIndex
-     *
-     * @return {Function, Object}
-     **/
-    setIndex: function setIndex() {
-      var _this3 = this;
-
-      if (this.isRadio) {
-        return this.option.forEach(function (item, index) {
-          if (item[_this3.valName] === _this3.value) {
-            _this3.index = index;
-          }
-        });
-      }
-
-      return this;
-    },
-
-
-    /**
-     * 验证数据格式
-     *
-     * @return {Object} - this - 组件
-     */
-    verify: function verify() {
-      this.dangerTip = '\u8BF7\u9009\u62E9' + this.errorMessage + (this.errorMessage ? '的' : '') + (this.isRadio ? '单选框' : '复选框') + '!';
-
-      return this.verified;
-    },
-
-
-    /**
-     * 验证数据格式并且弹出错误
-     *
-     * @return {Object} - this - 组件
-     */
-    validate: function validate() {
-      this.verify();
-
-      if (!this.verified) {
-        (0, _tip2.default)(this.dangerTip);
-
-        return false;
-      }
-
-      return this;
-    },
-
-
-    /**
-     * 全选复选框
-     *
-     * @return {Object} - this - 组件
-     */
-    checkAllOption: function checkAllOption() {
-      var _this4 = this;
-
-      var value = [];
-
-      this.option.forEach(function (item) {
-        value.push(item[_this4.valName]);
-      });
-
-      if (this.checkedAll) {
-        this.value = [];
-      } else {
-        this.value = value;
-      }
-    }
-  }
-};
-
-/***/ }),
-/* 116 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(117);
+var content = __webpack_require__(121);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -12842,8 +13292,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Form.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Form.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Form.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Form.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12853,10 +13303,10 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -12867,100 +13317,10 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * form 组件样式\r\n */
 
 
 /***/ }),
-/* 118 */
+/* 122 */
 /***/ (function(module, exports) {
 
 module.exports = "<div :class=\"[cPrefix]\">\r\n  <div v-xclass=\"xclass(themeClass)\">\r\n    <slot></slot>\r\n  </div>\r\n</div>";
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(120);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Input.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Input.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * input 组件样式\r\n */\n.z-input {\n  display: inline-block;\n  vertical-align: middle;\n  width: 170px;\n  position: relative;\n  font-size: 16px; }\n  .z-input.z-input-block {\n    width: 100%; }\n  .z-input.z-input-type-area > .z-input-wrap {\n    border: #d6d6d6 1px solid;\n    border-radius: 3px; }\n    .z-input.z-input-type-area > .z-input-wrap > .z-input-wrap-border {\n      border-radius: 3px;\n      border: transparent 1px solid; }\n  .z-input > .z-input-limit-txt {\n    padding: 8px 0;\n    text-align: right;\n    font-size: 12px;\n    color: gery-light; }\n  .z-input > .z-input-wrap {\n    position: relative;\n    border-bottom: #d6d6d6 1px solid;\n    background-color: #fff;\n    box-sizing: border-box; }\n    .z-input > .z-input-wrap .z-input-edit-box-start > .z-input-icon-stage {\n      line-height: 34px;\n      padding-left: 8px; }\n    .z-input > .z-input-wrap .z-input-edit-box {\n      position: relative;\n      line-height: 1.5em;\n      color: #707070; }\n      .z-input > .z-input-wrap .z-input-edit-box.z-input-edit-box-multiline > textarea {\n        position: absolute;\n        height: 100%;\n        top: 0;\n        left: 0;\n        overflow: hidden; }\n      .z-input > .z-input-wrap .z-input-edit-box.z-input-edit-box-multiline > pre {\n        font: inherit;\n        margin: 0;\n        display: block;\n        visibility: hidden;\n        white-space: pre-wrap;\n        word-break: break-all; }\n      .z-input > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input {\n        border: none;\n        width: 100%;\n        font: inherit;\n        color: inherit;\n        box-sizing: border-box;\n        display: block; }\n        .z-input > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input:focus {\n          outline: none;\n          border: none; }\n      .z-input > .z-input-wrap .z-input-edit-box > input,\n      .z-input > .z-input-wrap .z-input-edit-box > textarea {\n        -webkit-transform: rotate(0);\n            -ms-transform: rotate(0);\n                transform: rotate(0);\n        background-color: transparent; }\n      .z-input > .z-input-wrap .z-input-edit-box > textarea {\n        resize: none; }\n      .z-input > .z-input-wrap .z-input-edit-box-placeholder {\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: 100%;\n        color: #9e9e9e;\n        box-sizing: border-box;\n        white-space: nowrap;\n        overflow: hidden; }\n  .z-input .z-input-tip {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #9e9e9e;\n    position: relative; }\n    .z-input .z-input-tip::after {\n      content: 'd';\n      visibility: hidden; }\n    .z-input .z-input-tip-error, .z-input .z-input-tip-helper {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%; }\n    .z-input .z-input-tip-error {\n      color: #f44336;\n      width: 100%;\n      background: #fff; }\n\n@media only screen and (max-width: 767px) {\n  .z-input {\n    width: 100%; } }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(122);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Input.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Input.material.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * input material UI 组件样式\r\n */\n.z-input.z-input-ui-material {\n  padding-top: 10px; }\n  .z-input.z-input-ui-material.z-input-label-cover > .z-input-wrap .z-input-edit-box-input {\n    cursor: pointer; }\n  .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap:hover {\n    border: #707070 1px solid; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap:hover > .z-input-wrap-border {\n      border: #707070 1px solid; }\n  .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap.z-input-editting {\n    border-color: #2196f3 !important; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n      border-color: #2196f3 !important; }\n  .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box {\n    padding-top: 26px; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input {\n      padding: 0 13px 8px; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box-placeholder {\n      padding-top: 26px;\n      padding-left: 13px;\n      padding-right: 13px; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box-label {\n      padding-top: 12px;\n      padding-left: 13px;\n      padding-right: 13px; }\n      .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box-label-float {\n        top: -8px; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion {\n    position: absolute;\n    width: 0;\n    height: 2px;\n    left: 0;\n    right: 0;\n    margin: 0 auto;\n    bottom: -1px;\n    z-index: 1;\n    transition-property: width;\n    transition-duration: 300ms;\n    transition-timing-function: ease-in-out; }\n    .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion.z-input-wrap-border-motion-active {\n      width: 100%; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion-edit {\n    background-color: #2196f3; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion-error {\n    background-color: #f44336; }\n  .z-input.z-input-ui-material > .z-input-wrap:hover {\n    border-color: #707070; }\n    .z-input.z-input-ui-material > .z-input-wrap:hover > .z-input-wrap-border {\n      border-color: #707070; }\n  .z-input.z-input-ui-material > .z-input-wrap.z-input-error .z-input-edit-box-label {\n    color: #f44336; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border {\n    border-top-left-radius: 3px;\n    border-top-right-radius: 3px;\n    border-bottom: transparent 1px solid;\n    transition: border 100ms ease-out; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box > .z-input-edit-box-pre,\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input {\n    padding: 8px 0; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box-placeholder {\n    padding: 8px 0; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box-label {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 8px 0;\n    transition: all 150ms ease-in-out;\n    color: #9e9e9e;\n    box-sizing: border-box;\n    cursor: pointer; }\n    .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box-label-float {\n      color: #2196f3;\n      top: -22px;\n      font-size: 12px; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-auto-completion {\n    border-bottom-left-radius: 3px;\n    border-bottom-right-radius: 3px; }\n", ""]);
-
-// exports
-
 
 /***/ }),
 /* 123 */
@@ -12983,8 +13343,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Input.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Input.bootstrap.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Input.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Input.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -12997,7 +13357,97 @@ if(false) {
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * input 组件样式\r\n */\n.z-input {\n  display: inline-block;\n  vertical-align: middle;\n  width: 170px;\n  position: relative;\n  font-size: 16px;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }\n  .z-input.z-input-block {\n    width: 100%; }\n  .z-input.z-input-type-area > .z-input-wrap {\n    border: #d6d6d6 1px solid;\n    border-radius: 3px; }\n    .z-input.z-input-type-area > .z-input-wrap > .z-input-wrap-border {\n      border-radius: 3px;\n      border: rgba(0, 0, 0, 0) 1px solid; }\n  .z-input > .z-input-limit-txt {\n    padding: 8px 0;\n    text-align: right;\n    font-size: 12px;\n    color: gery-light; }\n  .z-input > .z-input-wrap {\n    position: relative;\n    border-bottom: #d6d6d6 1px solid;\n    background-color: #fff;\n    box-sizing: border-box; }\n    .z-input > .z-input-wrap .z-input-edit-box-start > .z-input-icon-stage {\n      line-height: 34px;\n      padding-left: 8px; }\n    .z-input > .z-input-wrap .z-input-edit-box {\n      position: relative;\n      line-height: 1.5em;\n      color: #707070; }\n      .z-input > .z-input-wrap .z-input-edit-box.z-input-edit-box-multiline > textarea {\n        position: absolute;\n        height: 100%;\n        top: 0;\n        left: 0;\n        overflow: hidden; }\n      .z-input > .z-input-wrap .z-input-edit-box.z-input-edit-box-multiline > pre {\n        font: inherit;\n        margin: 0;\n        display: block;\n        visibility: hidden;\n        white-space: pre-wrap;\n        word-break: break-all; }\n      .z-input > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input {\n        border: none;\n        width: 100%;\n        font: inherit;\n        color: inherit;\n        box-sizing: border-box;\n        display: block; }\n        .z-input > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input:focus {\n          outline: none;\n          border: none; }\n      .z-input > .z-input-wrap .z-input-edit-box > input,\n      .z-input > .z-input-wrap .z-input-edit-box > textarea {\n        -webkit-transform: rotate(0);\n            -ms-transform: rotate(0);\n                transform: rotate(0);\n        background-color: transparent; }\n      .z-input > .z-input-wrap .z-input-edit-box > textarea {\n        resize: none; }\n      .z-input > .z-input-wrap .z-input-edit-box-placeholder {\n        position: absolute;\n        top: 0;\n        left: 0;\n        width: 100%;\n        color: #9e9e9e;\n        box-sizing: border-box;\n        white-space: nowrap;\n        overflow: hidden; }\n  .z-input .z-input-tip {\n    margin-top: 8px;\n    font-size: 12px;\n    color: #9e9e9e;\n    position: relative; }\n    .z-input .z-input-tip::after {\n      content: 'd';\n      visibility: hidden; }\n    .z-input .z-input-tip-error, .z-input .z-input-tip-helper {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%; }\n    .z-input .z-input-tip-error {\n      color: #f44336;\n      width: 100%;\n      background: #fff; }\n\n@media only screen and (max-width: 767px) {\n  .z-input {\n    width: 100%; } }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(126);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Input.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Input.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * input material UI 组件样式\r\n */\n.z-input.z-input-ui-material {\n  padding-top: 10px; }\n  .z-input.z-input-ui-material.z-input-label-cover > .z-input-wrap .z-input-edit-box-input {\n    cursor: pointer; }\n  .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap:hover {\n    border: #707070 1px solid; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap:hover > .z-input-wrap-border {\n      border: #707070 1px solid; }\n  .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap.z-input-editting {\n    border-color: #2196f3 !important; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n      border-color: #2196f3 !important; }\n  .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box {\n    padding-top: 26px; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input {\n      padding: 0 13px 8px; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box-placeholder {\n      padding-top: 26px;\n      padding-left: 13px;\n      padding-right: 13px; }\n    .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box-label {\n      padding-top: 12px;\n      padding-left: 13px;\n      padding-right: 13px; }\n      .z-input.z-input-ui-material.z-input-type-area > .z-input-wrap .z-input-edit-box-label-float {\n        top: -8px; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion {\n    position: absolute;\n    width: 0;\n    height: 2px;\n    left: 0;\n    right: 0;\n    margin: 0 auto;\n    bottom: -1px;\n    z-index: 1;\n    transition-property: width;\n    transition-duration: 300ms;\n    transition-timing-function: ease-in-out; }\n    .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion.z-input-wrap-border-motion-active {\n      width: 100%; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion-edit {\n    background-color: #2196f3; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border-motion-error {\n    background-color: #f44336; }\n  .z-input.z-input-ui-material > .z-input-wrap:hover {\n    border-color: #707070; }\n    .z-input.z-input-ui-material > .z-input-wrap:hover > .z-input-wrap-border {\n      border-color: #707070; }\n  .z-input.z-input-ui-material > .z-input-wrap.z-input-error .z-input-edit-box-label {\n    color: #f44336; }\n  .z-input.z-input-ui-material > .z-input-wrap > .z-input-wrap-border {\n    border-top-left-radius: 3px;\n    border-top-right-radius: 3px;\n    border-bottom: rgba(0, 0, 0, 0) 1px solid;\n    transition: border 100ms ease-out; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box > .z-input-edit-box-pre,\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box > .z-input-edit-box-input {\n    padding: 8px 0; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box-placeholder {\n    padding: 8px 0; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box-label {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    padding: 8px 0;\n    transition: all 150ms ease-in-out;\n    color: #9e9e9e;\n    box-sizing: border-box;\n    cursor: pointer; }\n    .z-input.z-input-ui-material > .z-input-wrap .z-input-edit-box-label-float {\n      color: #2196f3;\n      top: -22px;\n      font-size: 12px; }\n  .z-input.z-input-ui-material > .z-input-wrap .z-input-auto-completion {\n    border-bottom-left-radius: 3px;\n    border-bottom-right-radius: 3px; }\n\n.z-input.z-input-ui-material.z-input-theme-success.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #4caf50 !important; }\n  .z-input.z-input-ui-material.z-input-theme-success.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #4caf50 !important; }\n\n.z-input.z-input-ui-material.z-input-theme-success > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #4caf50; }\n\n.z-input.z-input-ui-material.z-input-theme-success > .z-input-wrap .z-input-edit-box-label-float {\n  color: #4caf50; }\n\n.z-input.z-input-ui-material.z-input-theme-danger.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #f44336 !important; }\n  .z-input.z-input-ui-material.z-input-theme-danger.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #f44336 !important; }\n\n.z-input.z-input-ui-material.z-input-theme-danger > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #f44336; }\n\n.z-input.z-input-ui-material.z-input-theme-danger > .z-input-wrap .z-input-edit-box-label-float {\n  color: #f44336; }\n\n.z-input.z-input-ui-material.z-input-theme-warning.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #ffeb3b !important; }\n  .z-input.z-input-ui-material.z-input-theme-warning.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #ffeb3b !important; }\n\n.z-input.z-input-ui-material.z-input-theme-warning > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #ffeb3b; }\n\n.z-input.z-input-ui-material.z-input-theme-warning > .z-input-wrap .z-input-edit-box-label-float {\n  color: #ffeb3b; }\n\n.z-input.z-input-ui-material.z-input-theme-orange.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #ff5722 !important; }\n  .z-input.z-input-ui-material.z-input-theme-orange.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #ff5722 !important; }\n\n.z-input.z-input-ui-material.z-input-theme-orange > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #ff5722; }\n\n.z-input.z-input-ui-material.z-input-theme-orange > .z-input-wrap .z-input-edit-box-label-float {\n  color: #ff5722; }\n\n.z-input.z-input-ui-material.z-input-theme-blue.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #2196f3 !important; }\n  .z-input.z-input-ui-material.z-input-theme-blue.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #2196f3 !important; }\n\n.z-input.z-input-ui-material.z-input-theme-blue > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #2196f3; }\n\n.z-input.z-input-ui-material.z-input-theme-blue > .z-input-wrap .z-input-edit-box-label-float {\n  color: #2196f3; }\n\n.z-input.z-input-ui-material.z-input-theme-light.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #f5f5f5 !important; }\n  .z-input.z-input-ui-material.z-input-theme-light.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #f5f5f5 !important; }\n\n.z-input.z-input-ui-material.z-input-theme-light > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #f5f5f5; }\n\n.z-input.z-input-ui-material.z-input-theme-light > .z-input-wrap .z-input-edit-box-label-float {\n  color: #f5f5f5; }\n\n.z-input.z-input-ui-material.z-input-theme-dark.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #424242 !important; }\n  .z-input.z-input-ui-material.z-input-theme-dark.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #424242 !important; }\n\n.z-input.z-input-ui-material.z-input-theme-dark > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #424242; }\n\n.z-input.z-input-ui-material.z-input-theme-dark > .z-input-wrap .z-input-edit-box-label-float {\n  color: #424242; }\n\n.z-input.z-input-ui-bootstrap.z-input-theme-black.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #000 !important; }\n  .z-input.z-input-ui-bootstrap.z-input-theme-black.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #000 !important; }\n\n.z-input.z-input-ui-bootstrap.z-input-theme-black > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #000; }\n\n.z-input.z-input-ui-bootstrap.z-input-theme-black > .z-input-wrap .z-input-edit-box-label-float {\n  color: #000; }\n\n.z-input.z-input-ui-bootstrap.z-input-theme-white.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #fff !important; }\n  .z-input.z-input-ui-bootstrap.z-input-theme-white.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #fff !important; }\n\n.z-input.z-input-ui-bootstrap.z-input-theme-white > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #fff; }\n\n.z-input.z-input-ui-bootstrap.z-input-theme-white > .z-input-wrap .z-input-edit-box-label-float {\n  color: #fff; }\n\n.z-input.z-input-ui-material.z-input-theme-grey.z-input-type-area > .z-input-wrap.z-input-editting {\n  border-color: #9e9e9e !important; }\n  .z-input.z-input-ui-material.z-input-theme-grey.z-input-type-area > .z-input-wrap.z-input-editting > .z-input-wrap-border {\n    border-color: #9e9e9e !important; }\n\n.z-input.z-input-ui-material.z-input-theme-grey > .z-input-wrap > .z-input-wrap-border-motion-edit {\n  background-color: #9e9e9e; }\n\n.z-input.z-input-ui-material.z-input-theme-grey > .z-input-wrap .z-input-edit-box-label-float {\n  color: #9e9e9e; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(128);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Input.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Input.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -13008,7 +13458,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * input bootstrap UI 组�
 
 
 /***/ }),
-/* 125 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13176,7 +13626,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 126 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13252,7 +13702,7 @@ exports.default = function (verifedType) {
 };
 
 /***/ }),
-/* 127 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13262,7 +13712,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -13396,13 +13846,13 @@ exports.default = {
     */
 
 /***/ }),
-/* 128 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(129);
+var content = __webpack_require__(133);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -13416,8 +13866,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Bubble.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Bubble.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Bubble.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Bubble.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -13427,10 +13877,10 @@ if(false) {
 }
 
 /***/ }),
-/* 129 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -13441,7 +13891,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * bubble 组件样式\r\n 
 
 
 /***/ }),
-/* 130 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13498,96 +13948,6 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 131 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(132);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n.z-modal {\n  position: fixed;\n  left: 0;\n  top: 0;\n  height: 100%;\n  width: 100%;\n  z-index: 1000; }\n  .z-modal.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n    padding-top: 16px; }\n  .z-modal > .z-modal-bg {\n    background: rgba(0, 0, 0, 0.12);\n    height: 100%;\n    width: 100%;\n    position: fixed;\n    left: 0;\n    top: 0; }\n  .z-modal > .z-modal-pop {\n    position: absolute;\n    background: #fff;\n    border-radius: 3px;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n    .z-modal > .z-modal-pop > header {\n      cursor: move;\n      padding: 16px;\n      box-sizing: border-box;\n      width: 100%; }\n      .z-modal > .z-modal-pop > header .z-modal-header-title {\n        font-size: 16px;\n        line-height: 1;\n        font-weight: bold; }\n    .z-modal > .z-modal-pop > article {\n      box-sizing: border-box;\n      max-width: 100%;\n      min-width: 280px; }\n      .z-modal > .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n        padding: 16px;\n        box-sizing: border-box; }\n    .z-modal > .z-modal-pop > footer {\n      padding: 16px;\n      box-sizing: border-box;\n      line-height: normal;\n      text-align: right;\n      height: auto;\n      width: 100%; }\n      .z-modal > .z-modal-pop > footer > .z-btn {\n        margin: 0 4px; }\n  .z-modal.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n    border-color: #2196f3; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 530px;\n    padding-top: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      color: #fff;\n      padding-top: 12px;\n      padding-bottom: 12px;\n      background-color: #2196f3;\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n      .z-modal.z-modal-type-full .z-modal-pop > header > div {\n        min-height: 36px; }\n      .z-modal.z-modal-type-full .z-modal-pop > header .z-modal-header-nav {\n        line-height: 1; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      height: 300px; }\n    .z-modal.z-modal-type-full .z-modal-pop > footer {\n      border-top: #d6d6d6 1px solid;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-modal.z-modal-size-m > .z-modal-pop > article {\n    min-width: 500px; }\n  .z-modal.z-modal-size-l > .z-modal-pop > article {\n    min-width: 800px; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #4caf50; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full .z-modal-pop > header {\n  background-color: #4caf50; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f44336; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full .z-modal-pop > header {\n  background-color: #f44336; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full .z-modal-pop > header {\n  background-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ff5722; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full .z-modal-pop > header {\n  background-color: #ff5722; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #2196f3; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full .z-modal-pop > header {\n  background-color: #2196f3; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(134);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.m.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.m.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 134 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n@media only screen and (max-width: 767px) {\n  .z-modal .z-modal-bg {\n    background: rgba(0, 0, 0, 0.5); }\n  .z-modal .z-modal-pop {\n    width: 96%; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 100%;\n    height: 100%;\n    position: relative;\n    border-radius: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      position: absolute;\n      top: 0;\n      left: 0;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      min-height: auto;\n      width: 100%;\n      height: 100%;\n      padding-top: 60px; } }\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13608,8 +13968,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.material.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -13622,12 +13982,12 @@ if(false) {
 /* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 material 样式\r\n */\n.z-modal.z-modal-ui-material.z-modal-no-header .z-modal-pop > article > .z-modal-scroller\n> .z-scroller-box {\n  padding-top: 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > header {\n  padding: 24px 24px 20px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > header .z-modal-header-title {\n    font-size: 16px;\n    line-height: 1; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > article > .z-modal-scroller\n> .z-scroller-box {\n  padding: 0 24px 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > footer {\n  padding: 8px 8px 8px 24px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > footer > .z-btn {\n    margin: 0 4px; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > header {\n  border-bottom: #d6d6d6 1px solid; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > article {\n  padding-top: 0;\n  padding-bottom: 0; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > footer {\n  border-top: #d6d6d6 1px solid; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n.z-modal {\n  position: fixed;\n  left: 0;\n  top: 0;\n  height: 100%;\n  width: 100%;\n  z-index: 1000; }\n  .z-modal.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n    padding-top: 16px; }\n  .z-modal > .z-modal-bg {\n    background: rgba(0, 0, 0, 0.12);\n    height: 100%;\n    width: 100%;\n    position: fixed;\n    left: 0;\n    top: 0; }\n  .z-modal > .z-modal-pop {\n    position: absolute;\n    background: #fff;\n    border-radius: 3px;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n    .z-modal > .z-modal-pop > header {\n      cursor: move;\n      padding: 16px;\n      box-sizing: border-box;\n      width: 100%; }\n      .z-modal > .z-modal-pop > header .z-modal-header-title {\n        font-size: 16px;\n        line-height: 1;\n        font-weight: bold; }\n    .z-modal > .z-modal-pop > article {\n      box-sizing: border-box;\n      max-width: 100%;\n      min-width: 280px; }\n      .z-modal > .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n        padding: 16px;\n        box-sizing: border-box; }\n    .z-modal > .z-modal-pop > footer {\n      padding: 16px;\n      box-sizing: border-box;\n      line-height: normal;\n      text-align: right;\n      height: auto;\n      width: 100%; }\n      .z-modal > .z-modal-pop > footer > .z-btn {\n        margin: 0 4px; }\n  .z-modal.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n    border-bottom: #d6d6d6 1px solid;\n    border-color: #2196f3; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 530px;\n    padding-top: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      color: #fff;\n      padding-top: 12px;\n      padding-bottom: 12px;\n      background-color: #2196f3;\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n      .z-modal.z-modal-type-full .z-modal-pop > header > div {\n        min-height: 36px; }\n      .z-modal.z-modal-type-full .z-modal-pop > header .z-modal-header-nav {\n        line-height: 1; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      height: 300px; }\n    .z-modal.z-modal-type-full .z-modal-pop > footer {\n      border-top: #d6d6d6 1px solid;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-modal.z-modal-size-m > .z-modal-pop > article {\n    min-width: 500px; }\n  .z-modal.z-modal-size-l > .z-modal-pop > article {\n    min-width: 800px; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #4caf50; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full .z-modal-pop > header {\n  background-color: #4caf50; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f44336; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full .z-modal-pop > header {\n  background-color: #f44336; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ffeb3b; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full .z-modal-pop > header {\n  background-color: #ffeb3b; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ff5722; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full .z-modal-pop > header {\n  background-color: #ff5722; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #2196f3; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full .z-modal-pop > header {\n  background-color: #2196f3; }\n\n.z-modal.z-modal-theme-light.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f5f5f5; }\n\n.z-modal.z-modal-theme-light.z-modal-type-full .z-modal-pop > header {\n  background-color: #f5f5f5; }\n\n.z-modal.z-modal-theme-dark.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #424242; }\n\n.z-modal.z-modal-theme-dark.z-modal-type-full .z-modal-pop > header {\n  background-color: #424242; }\n\n.z-modal.z-modal-theme-grey.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-grey.z-modal-type-full .z-modal-pop > header {\n  background-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-black.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #000; }\n\n.z-modal.z-modal-theme-black.z-modal-type-full .z-modal-pop > header {\n  background-color: #000; }\n\n.z-modal.z-modal-theme-white.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #fff; }\n\n.z-modal.z-modal-theme-white.z-modal-type-full .z-modal-pop > header {\n  background-color: #fff; }\n", ""]);
 
 // exports
 
@@ -13653,8 +14013,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Modal.bootstrap.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.m.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.m.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -13667,7 +14027,97 @@ if(false) {
 /* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n@media only screen and (max-width: 767px) {\n  .z-modal .z-modal-bg {\n    background: rgba(0, 0, 0, 0.5); }\n  .z-modal .z-modal-pop {\n    width: 96%; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 100%;\n    height: 100%;\n    position: relative;\n    border-radius: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      position: absolute;\n      top: 0;\n      left: 0;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      min-height: auto;\n      width: 100%;\n      height: 100%;\n      padding-top: 60px; } }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(140);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 material 样式\r\n */\n.z-modal.z-modal-ui-material.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding-top: 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > header {\n  padding: 24px 24px 20px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > header .z-modal-header-title {\n    font-size: 16px;\n    line-height: 1; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding: 0 24px 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > footer {\n  padding: 8px 8px 8px 24px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > footer > .z-btn {\n    margin: 0 4px; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > article {\n  padding-top: 0;\n  padding-bottom: 0; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > footer {\n  border-top: #d6d6d6 1px solid; }\n\n@media only screen and (max-width: 767px) {\n  .z-modal.z-modal-ui-material.z-modal-type-full .z-modal-pop > article {\n    padding-top: 80px; } }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(142);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Modal.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -13678,7 +14128,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 bootstrap 样
 
 
 /***/ }),
-/* 139 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13692,7 +14142,7 @@ exports.default = function (h) {
   var modalChildren = [];
   var articleEle = this.$slots.default ? this.$slots.default : [h('div', {
     class: this.xclass('alert-message')
-  }, this.modalMessage)];
+  }, this.stateMessage)];
   var headerChildren = _ModalHeader2.default.call(this, h);
   var footerChildren = _ModalFooter2.default.call(this, h);
 
@@ -13705,8 +14155,8 @@ exports.default = function (h) {
     }, [h('row', {
       props: {
         justify: 'justify',
-        ui: this.state.ui,
-        theme: this.state.theme
+        ui: this.stateUI,
+        theme: this.stateTheme
       }
     }, headerChildren)]));
   }
@@ -13717,8 +14167,8 @@ exports.default = function (h) {
       height: this.modalHeight,
       width: '100%',
       autoHide: true,
-      ui: this.state.ui,
-      theme: this.state.theme
+      ui: this.stateUI,
+      theme: this.stateTheme
     },
     ref: 'scroller'
   }, articleEle)]) : h('article', articleEle));
@@ -13755,18 +14205,18 @@ exports.default = function (h) {
   })]), h('pop', {
     class: [this.xclass('pop')],
     props: {
-      ui: this.state.ui,
-      theme: this.state.theme
+      ui: this.stateUI,
+      theme: this.stateTheme
     },
     ref: 'pop'
   }, [modalChildren])]);
 };
 
-var _ModalHeader = __webpack_require__(140);
+var _ModalHeader = __webpack_require__(144);
 
 var _ModalHeader2 = _interopRequireDefault(_ModalHeader);
 
-var _ModalFooter = __webpack_require__(141);
+var _ModalFooter = __webpack_require__(145);
 
 var _ModalFooter2 = _interopRequireDefault(_ModalFooter);
 
@@ -13777,7 +14227,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 140 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13804,7 +14254,8 @@ exports.default = function (h) {
       }, [h('icon', {
         props: {
           kind: this.commit ? 'close' : 'arrow-left',
-          size: 'S'
+          size: 'S',
+          theme: 'white'
         }
       })]));
     }
@@ -13816,7 +14267,7 @@ exports.default = function (h) {
       }
     }, [h('span', {
       class: this.xclass('header-title')
-    }, this.modalHeader)]));
+    }, this.stateHeader)]));
 
     if (!this.isBiggerFull && this.commit) {
       headerChildren.push(h('column', {
@@ -13833,14 +14284,14 @@ exports.default = function (h) {
       }
     }, [h('span', {
       class: this.xclass('header-title')
-    }, this.modalHeader)]));
+    }, this.stateHeader)]));
   }
 
   return headerChildren;
 };
 
 /***/ }),
-/* 141 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13857,9 +14308,9 @@ exports.default = function (h) {
     footerChildren.push(h('btn', {
       props: {
         value: this.noBtn,
-        type: this.UIMaterial ? 'flat' : 'button',
-        ui: this.state.ui,
-        theme: 'grey'
+        type: this.UIMaterial ? 'text' : 'button',
+        ui: this.stateUI,
+        theme: 'white'
       },
       on: {
         click: this.no
@@ -13871,9 +14322,9 @@ exports.default = function (h) {
     footerChildren.push(h('btn', {
       props: {
         value: this.okBtn,
-        type: this.UIMaterial ? 'flat' : 'button',
-        ui: this.state.ui,
-        theme: this.state.theme
+        type: this.UIMaterial ? 'text' : 'button',
+        ui: this.stateUI,
+        theme: this.stateTheme
       },
       on: {
         click: this.ok
@@ -13885,7 +14336,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 142 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14063,7 +14514,7 @@ exports.default = {
      */
     title: function title(text) {
       if (text === '' || text) {
-        this.modalHeader = text;
+        this.stateHeader = text;
       }
 
       return this;
@@ -14078,7 +14529,7 @@ exports.default = {
      */
     info: function info(text) {
       if (text === '' || text) {
-        this.modalMessage = text;
+        this.stateMessage = text;
       }
 
       return this;
@@ -14115,11 +14566,11 @@ exports.default = {
       this.noCbFun = noCb;
       this.showCb = showCb;
       this.hideCb = hideCb;
-      this.modalHeader = title;
-      this.modalMessage = message;
+      this.stateHeader = title;
+      this.stateMessage = message;
 
-      this.state.ui = ui;
-      this.state.theme = theme;
+      this.stateUI = ui;
+      this.stateTheme = theme;
 
       return this;
     }
@@ -14127,13 +14578,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 143 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(144);
+var content = __webpack_require__(148);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -14147,8 +14598,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Scroller.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Scroller.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Scroller.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Scroller.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -14158,10 +14609,10 @@ if(false) {
 }
 
 /***/ }),
-/* 144 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -14172,7 +14623,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * scroller 组件样式\r\
 
 
 /***/ }),
-/* 145 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14357,31 +14808,36 @@ exports.default = {
     triggerScroll: function triggerScroll(type) {
       var _this2 = this;
 
-      var data = {};
-      var eventName = '';
-
-      if (type === 'y') {
-        eventName = 'scrollY';
-        data = {
-          emitter: this,
-          top: this.yData.barTop,
-          offset: this.yData.barAndScrollerOffset,
-          isBottom: this.yComputed.isBottom,
-          isTop: this.yComputed.isTop
-        };
-      } else {
-        eventName = 'scrollX';
-        data = {
-          emitter: this,
-          left: this.xData.barLeft,
-          offset: this.xData.barAndScrollerOffset,
-          isRight: this.xComputed.isRight,
-          isLeft: this.xComputed.isLeft
-        };
-      }
+      var eventName = type === 'y' ? 'scrollY' : 'scrollX';
 
       return this.$nextTick(function () {
-        _this2.$emit(eventName, data);
+        _this2.$emit(eventName, {
+          emitter: _this2,
+          bar: {
+            position: {
+              top: _this2.yData.barTop,
+              left: _this2.xData.barLeft
+            },
+            offset: {
+              top: _this2.yData.barAndScrollerOffset,
+              left: _this2.xData.barAndScrollerOffset
+            },
+            isBottom: _this2.yComputed.isBottom,
+            isTop: _this2.yComputed.isTop,
+            isRight: _this2.xComputed.isRight,
+            isLeft: _this2.xComputed.isLeft
+          },
+          box: {
+            position: {
+              top: -_this2.yData.barTop * _this2.yData.boxBarRate,
+              left: -_this2.xData.barLeft * _this2.xData.boxBarRate
+            },
+            offset: {
+              top: -_this2.yData.barAndScrollerOffset * _this2.yData.boxBarRate,
+              left: -_this2.xData.barAndScrollerOffset * _this2.xData.boxBarRate
+            }
+          }
+        });
       });
     },
 
@@ -14554,7 +15010,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 146 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14610,7 +15066,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 147 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14620,9 +15076,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(148);
+__webpack_require__(152);
 
-var _CodeRender = __webpack_require__(150);
+var _CodeRender = __webpack_require__(154);
 
 var _CodeRender2 = _interopRequireDefault(_CodeRender);
 
@@ -14696,13 +15152,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 148 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(149);
+var content = __webpack_require__(153);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -14716,8 +15172,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Code.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Code.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Code.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Code.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -14727,21 +15183,21 @@ if(false) {
 }
 
 /***/ }),
-/* 149 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * code 组件样式\r\n */\n.z-code {\n  font-size: 14px;\n  background-color: #fff;\n  border: #6ec6ff 1px solid;\n  border-radius: 3px;\n  position: relative;\n  padding: 8px 16px; }\n  .z-code .z-code-header {\n    color: #d6d6d6;\n    font-weight: bold;\n    text-align: right;\n    margin-bottom: 5px; }\n  .z-code .z-code-article .z-code-pre {\n    width: 100%;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    font-size: 1em;\n    line-height: 16px;\n    -webkit-font-smoothing: initial;\n    -moz-osx-font-smoothing: initial; }\n    .z-code .z-code-article .z-code-pre .z-code-content {\n      position: relative;\n      padding: 0 0 0 50px; }\n  .z-code .z-code-line-num {\n    border-right: 2px #2196f3 solid;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    line-height: 16px;\n    text-align: right;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-right: 5px;\n    width: 24px; }\n\n.z-code.z-code-theme-success .z-code {\n  border: #80e27e 1px solid; }\n  .z-code.z-code-theme-success .z-code .z-code-line-num {\n    border-right: 2px #4caf50 solid; }\n\n.z-code.z-code-theme-danger .z-code {\n  border: #ff7961 1px solid; }\n  .z-code.z-code-theme-danger .z-code .z-code-line-num {\n    border-right: 2px #f44336 solid; }\n\n.z-code.z-code-theme-blue .z-code {\n  border: #6ec6ff 1px solid; }\n  .z-code.z-code-theme-blue .z-code .z-code-line-num {\n    border-right: 2px #2196f3 solid; }\n\n.z-code.z-code-theme-warning .z-code {\n  border: #cfcfcf 1px solid; }\n  .z-code.z-code-theme-warning .z-code .z-code-line-num {\n    border-right: 2px #9e9e9e solid; }\n\n.z-code.z-code-theme-orange .z-code {\n  border: #ff8a50 1px solid; }\n  .z-code.z-code-theme-orange .z-code .z-code-line-num {\n    border-right: 2px #ff5722 solid; }\n\n.z-code.z-code-theme-grey .z-code {\n  border: #cfcfcf 1px solid; }\n  .z-code.z-code-theme-grey .z-code .z-code-line-num {\n    border-right: 2px #9e9e9e solid; }\n\n.z-code.z-code-theme-light .z-code {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-light .z-code .z-code-line-num {\n    border-right: 2px #f5f5f5 solid; }\n\n.z-code.z-code-theme-dark .z-code {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-dark .z-code .z-code-line-num {\n    border-right: 2px #424242 solid; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * code 组件样式\r\n */\n.z-code {\n  font-size: 14px;\n  background-color: #fff;\n  border: #6ec6ff 1px solid;\n  border-radius: 3px;\n  position: relative;\n  padding: 8px 16px; }\n  .z-code .z-code-header {\n    color: #d6d6d6;\n    font-weight: bold;\n    text-align: right;\n    margin-bottom: 5px; }\n  .z-code .z-code-article .z-code-pre {\n    width: 100%;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    font-size: 1em;\n    line-height: 16px;\n    -webkit-font-smoothing: initial;\n    -moz-osx-font-smoothing: initial; }\n    .z-code .z-code-article .z-code-pre .z-code-content {\n      position: relative;\n      padding: 0 0 0 50px; }\n  .z-code .z-code-line-num {\n    border-right: 2px #2196f3 solid;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    line-height: 16px;\n    text-align: right;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-right: 5px;\n    width: 24px; }\n\n.z-code.z-code-theme-success {\n  border: #80e27e 1px solid; }\n  .z-code.z-code-theme-success .z-code-line-num {\n    border-right: 2px #4caf50 solid; }\n\n.z-code.z-code-theme-danger {\n  border: #ff7961 1px solid; }\n  .z-code.z-code-theme-danger .z-code-line-num {\n    border-right: 2px #f44336 solid; }\n\n.z-code.z-code-theme-blue {\n  border: #6ec6ff 1px solid; }\n  .z-code.z-code-theme-blue .z-code-line-num {\n    border-right: 2px #2196f3 solid; }\n\n.z-code.z-code-theme-warning {\n  border: #ffff72 1px solid; }\n  .z-code.z-code-theme-warning .z-code-line-num {\n    border-right: 2px #ffeb3b solid; }\n\n.z-code.z-code-theme-orange {\n  border: #ff8a50 1px solid; }\n  .z-code.z-code-theme-orange .z-code-line-num {\n    border-right: 2px #ff5722 solid; }\n\n.z-code.z-code-theme-grey {\n  border: #cfcfcf 1px solid; }\n  .z-code.z-code-theme-grey .z-code-line-num {\n    border-right: 2px #9e9e9e solid; }\n\n.z-code.z-code-theme-light {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-light .z-code-line-num {\n    border-right: 2px #f5f5f5 solid; }\n\n.z-code.z-code-theme-dark {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-dark .z-code-line-num {\n    border-right: 2px #424242 solid; }\n\n.z-code.z-code-theme-black {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-black .z-code-line-num {\n    border-right: 2px #000 solid; }\n\n.z-code.z-code-theme-white {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-white .z-code-line-num {\n    border-right: 2px #fff solid; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 150 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14792,97 +15248,97 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 151 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(152);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Nav.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Nav.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 152 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n.z-nav {\n  position: relative; }\n  .z-nav-arrow {\n    text-align: right; }\n    .z-nav-arrow-fold {\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n    .z-nav-arrow-spread {\n      -webkit-transform: rotate(-180deg);\n          -ms-transform: rotate(-180deg);\n              transform: rotate(-180deg); }\n  .z-nav .z-nav-trigger {\n    display: none;\n    background-color: #f5f5f5;\n    padding: 8px;\n    border-bottom: #d6d6d6 1px solid;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-sub-fold {\n    margin-left: 0; }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl {\n    cursor: pointer; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl .z-fold-dt {\n      cursor: pointer; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt {\n      background-color: rgba(238, 238, 238, 0);\n      transition: background-color 300ms;\n      padding: 12px 16px;\n      color: rgba(0, 0, 0, 0.87);\n      font-weight: bold; }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt:hover {\n        background-color: rgba(238, 238, 238, 0.8); }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt .z-nav-icon {\n        right: 16px; }\n  .z-nav .z-nav-stage .z-nav-sub-fold {\n    margin-left: 32px; }\n    .z-nav .z-nav-stage .z-nav-sub-fold a {\n      display: block; }\n  .z-nav .z-nav-close-nav {\n    display: none; }\n\n.z-nav.z-nav-theme-success .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #4caf50; }\n\n.z-nav.z-nav-theme-danger .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f44336; }\n\n.z-nav.z-nav-theme-blue .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #2196f3; }\n\n.z-nav.z-nav-theme-warning .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #9e9e9e; }\n\n.z-nav.z-nav-theme-orange .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ff5722; }\n\n.z-nav.z-nav-theme-grey .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #9e9e9e; }\n\n.z-nav.z-nav-theme-light .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f5f5f5; }\n\n.z-nav.z-nav-theme-dark .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #424242; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 153 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(154);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Nav.m.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Nav.m.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n@media only screen and (max-width: 767px) {\n  .z-nav {\n    font-size: 16px; }\n    .z-nav .z-nav-trigger {\n      display: block;\n      font-size: 21px; }\n    .z-nav .z-nav-stage {\n      box-sizing: border-box;\n      width: 100%;\n      z-index: 999; }\n      .z-nav .z-nav-stage.z-nav-animate-slide {\n        position: fixed;\n        margin: auto;\n        top: 0;\n        bottom: 0; }\n        .z-nav .z-nav-stage.z-nav-animate-slide > .z-nav-motion-content {\n          background-color: #fff;\n          box-sizing: border-box;\n          padding: 15% 10% 10%;\n          width: 80%;\n          height: 100%;\n          position: absolute;\n          left: 0;\n          top: 0; }\n        .z-nav .z-nav-stage.z-nav-animate-slide > .z-nav-motion-empty {\n          background: rgba(0, 0, 0, 0.8);\n          width: 20%;\n          height: 100%;\n          position: absolute;\n          right: 0;\n          top: 0; }\n      .z-nav .z-nav-stage.z-nav-animate-fold {\n        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);\n        position: absolute;\n        overflow: hidden; }\n        .z-nav .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content {\n          background-color: #fff; }\n          .z-nav .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-close-nav {\n            display: none; }\n          .z-nav .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-sub-fold {\n            padding: 24px 24px 40px; }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav {\n        position: absolute;\n        display: block;\n        right: 16px;\n        top: 16px;\n        cursor: pointer; }\n        .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav .z-icon-close {\n          font-size: 20px; }\n      .z-nav .z-nav-stage .z-icon-ali {\n        font-size: 20px; }\n      .z-nav .z-nav-stage .z-nav-sub-fold a {\n        color: rgba(0, 0, 0, 0.87);\n        text-decoration: none; } }\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 155 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(156);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Nav.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Nav.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n.z-nav {\n  position: relative; }\n  .z-nav-arrow {\n    text-align: right; }\n    .z-nav-arrow-fold {\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n    .z-nav-arrow-spread {\n      -webkit-transform: rotate(-180deg);\n          -ms-transform: rotate(-180deg);\n              transform: rotate(-180deg); }\n  .z-nav .z-nav-trigger {\n    display: none;\n    background-color: #f5f5f5;\n    padding: 8px;\n    border-bottom: #d6d6d6 1px solid;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-sub-fold {\n    margin-left: 0; }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl {\n    cursor: pointer; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl .z-fold-dt {\n      cursor: pointer;\n      padding: 8px 0; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt {\n      background-color: rgba(238, 238, 238, 0);\n      transition: background-color 300ms;\n      padding: 12px 32px 12px 16px;\n      color: rgba(0, 0, 0, 0.87);\n      font-weight: bold; }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt:hover {\n        background-color: rgba(238, 238, 238, 0.8); }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt .z-nav-icon {\n        right: 16px; }\n  .z-nav .z-nav-stage .z-nav-sub-fold {\n    margin-left: 32px; }\n    .z-nav .z-nav-stage .z-nav-sub-fold a {\n      display: block; }\n  .z-nav .z-nav-close-nav {\n    display: none; }\n\n.z-nav.z-nav-theme-success .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #4caf50; }\n\n.z-nav.z-nav-theme-danger .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f44336; }\n\n.z-nav.z-nav-theme-blue .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #2196f3; }\n\n.z-nav.z-nav-theme-warning .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ffeb3b; }\n\n.z-nav.z-nav-theme-orange .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ff5722; }\n\n.z-nav.z-nav-theme-grey .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #9e9e9e; }\n\n.z-nav.z-nav-theme-light .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f5f5f5; }\n\n.z-nav.z-nav-theme-dark .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #424242; }\n\n.z-nav.z-nav-theme-black .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #000; }\n\n.z-nav.z-nav-theme-white .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #fff; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(158);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Nav.m.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Nav.m.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n@media only screen and (max-width: 767px) {\n  .z-nav {\n    font-size: 16px; }\n    .z-nav .z-nav-trigger {\n      display: block;\n      font-size: 21px; }\n    .z-nav .z-nav-stage {\n      box-sizing: border-box;\n      width: 100%;\n      z-index: 999; }\n      .z-nav .z-nav-stage.z-nav-animate-slide {\n        position: fixed;\n        margin: auto;\n        bottom: 0;\n        top: 0;\n        left: 0; }\n        .z-nav .z-nav-stage.z-nav-animate-slide > .z-nav-motion-content {\n          background-color: #fff;\n          box-sizing: border-box;\n          padding: 15% 10% 10%;\n          width: 80%;\n          height: 100%;\n          position: absolute;\n          left: 0;\n          top: 0; }\n        .z-nav .z-nav-stage.z-nav-animate-slide > .z-nav-motion-empty {\n          background: rgba(0, 0, 0, 0.8);\n          width: 20%;\n          height: 100%;\n          position: absolute;\n          right: 0;\n          top: 0; }\n      .z-nav .z-nav-stage.z-nav-animate-fold {\n        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);\n        position: absolute;\n        overflow: hidden; }\n        .z-nav .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content {\n          background-color: #fff; }\n          .z-nav .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-close-nav {\n            display: none; }\n          .z-nav .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-sub-fold {\n            padding: 24px 24px 40px; }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav {\n        position: absolute;\n        display: block;\n        right: 16px;\n        top: 16px;\n        cursor: pointer; }\n        .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav .z-icon-close {\n          font-size: 20px; }\n      .z-nav .z-nav-stage .z-icon-ali {\n        font-size: 20px; }\n      .z-nav .z-nav-stage .z-nav-sub-fold a {\n        color: rgba(0, 0, 0, 0.87);\n        text-decoration: none; } }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14905,6 +15361,7 @@ exports.default = function (h) {
   }, [h('icon', {
     props: {
       kind: 'close',
+      size: 'xs',
       ui: this.ui,
       theme: this.theme
     }
@@ -15037,13 +15494,13 @@ function foldContent(h, foldList) {
 }
 
 /***/ }),
-/* 156 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(157);
+var content = __webpack_require__(161);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15057,8 +15514,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Fold.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Fold.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Fold.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Fold.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -15068,21 +15525,21 @@ if(false) {
 }
 
 /***/ }),
-/* 157 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * fold 组件样式\r\n */\n.z-fold .z-fold-dl {\n  margin: 0; }\n  .z-fold .z-fold-dl > .z-fold-dt {\n    position: relative;\n    padding-right: 16px;\n    cursor: default; }\n    .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon {\n      position: absolute;\n      height: 14px;\n      margin: auto;\n      right: 0;\n      top: 0;\n      bottom: 0;\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      -webkit-transform-origin: center center;\n          -ms-transform-origin: center center;\n              transform-origin: center center;\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n      .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon-fold {\n        -webkit-transform: rotate(180deg);\n            -ms-transform: rotate(180deg);\n                transform: rotate(180deg); }\n  .z-fold .z-fold-dl > .z-fold-dd {\n    margin-left: 0;\n    overflow: hidden; }\n    .z-fold .z-fold-dl > .z-fold-dd > .z-fold-transition {\n      will-change: height;\n      transition: height 500ms ease; }\n\n.z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt {\n  padding: 4px 16px 4px 0; }\n  .z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt .z-fold-icon {\n    position: absolute;\n    right: 8px; }\n\n.z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dd > .z-fold-transition > .z-fold-content {\n  padding: 8px 0; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * fold 组件样式\r\n */\n.z-fold .z-fold-dl {\n  margin: 0; }\n  .z-fold .z-fold-dl > .z-fold-dt {\n    position: relative;\n    padding-right: 16px;\n    cursor: default; }\n    .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon {\n      position: absolute;\n      height: 14px;\n      margin: auto;\n      right: 12px;\n      top: 0;\n      bottom: 0;\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      -webkit-transform-origin: center center;\n          -ms-transform-origin: center center;\n              transform-origin: center center;\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n      .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon-fold {\n        -webkit-transform: rotate(180deg);\n            -ms-transform: rotate(180deg);\n                transform: rotate(180deg); }\n  .z-fold .z-fold-dl > .z-fold-dd {\n    margin-left: 0;\n    overflow: hidden; }\n    .z-fold .z-fold-dl > .z-fold-dd > .z-fold-transition {\n      will-change: height;\n      transition: height 500ms ease; }\n\n.z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt {\n  padding: 4px 16px 4px 0; }\n  .z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt .z-fold-icon {\n    position: absolute;\n    right: 8px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 158 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15108,7 +15565,8 @@ exports.default = function (h) {
         foldTitle.push(h('icon', {
           class: [_this.xclass('icon'), _defineProperty({}, _this.xclass('icon-fold'), _this.foldContentActive(contentIndex))],
           props: {
-            kind: 'arrow-south',
+            kind: 'arrow-north',
+            size: 'xs',
             ui: _this.ui,
             theme: _this.theme
           }
@@ -15161,13 +15619,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 159 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(160);
+var content = __webpack_require__(164);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15181,8 +15639,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Omit.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Omit.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Omit.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Omit.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -15192,10 +15650,10 @@ if(false) {
 }
 
 /***/ }),
-/* 160 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -15206,7 +15664,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n * omit 组件样式\r\n */\
 
 
 /***/ }),
-/* 161 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15242,13 +15700,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 162 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(163);
+var content = __webpack_require__(167);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15262,8 +15720,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Page.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Page.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Page.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Page.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -15273,21 +15731,21 @@ if(false) {
 }
 
 /***/ }),
-/* 163 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * page 组件样式\r\n */\n.z-page {\n  color: #707070; }\n  .z-page.z-page-type-more {\n    display: inline-block; }\n  .z-page .z-page-more {\n    padding: 8px 0;\n    color: #9e9e9e; }\n    .z-page .z-page-more .z-page-load {\n      cursor: pointer; }\n  .z-page .z-page-num .z-page-length {\n    color: #ccc; }\n  .z-page .z-page-num .z-page-ele {\n    cursor: pointer;\n    min-width: 20px; }\n  .z-page .z-page-num .z-page-ul {\n    margin: 0 8px;\n    display: inline-block;\n    vertical-align: middle; }\n    .z-page .z-page-num .z-page-ul > .z-page-li {\n      display: inline-block;\n      color: #ccc;\n      padding: 4px 0;\n      border-radius: 6px;\n      min-width: 30px;\n      text-align: center; }\n      .z-page .z-page-num .z-page-ul > .z-page-li.z-page-li-active {\n        background-color: #2196f3;\n        color: #fff; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:first-child {\n        margin-left: 0; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:last-child {\n        margin-right: 0; }\n  .z-page .z-page-num .z-page-total {\n    color: #ccc;\n    margin: 0 16px; }\n  .z-page .z-page-num .z-page-search {\n    display: inline-block; }\n    .z-page .z-page-num .z-page-search .z-page-jump-box {\n      width: 50px; }\n    .z-page .z-page-num .z-page-search .z-page-jump-btn {\n      margin-left: 8px; }\n      .z-page .z-page-num .z-page-search .z-page-jump-btn .btn-default {\n        color: #9e9e9e; }\n  .z-page.z-page-theme-primary {\n    text-align: center; }\n  @media only screen and (max-width: 767px) {\n    .z-page.z-page-type-more {\n      width: 100%; }\n    .z-page .z-page-num .z-page-search,\n    .z-page .z-page-num .z-page-length {\n      display: none; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * page 组件样式\r\n */\n.z-page {\n  color: #707070;\n  text-align: center; }\n  .z-page.z-page-type-more {\n    display: inline-block; }\n  .z-page .z-page-more {\n    padding: 8px 0;\n    color: #9e9e9e; }\n    .z-page .z-page-more .z-page-load {\n      cursor: pointer; }\n  .z-page .z-page-num .z-page-length {\n    color: #ccc; }\n  .z-page .z-page-num .z-page-ele {\n    cursor: pointer;\n    min-width: 20px; }\n  .z-page .z-page-num .z-page-ul {\n    margin: 0 8px;\n    display: inline-block;\n    vertical-align: middle; }\n    .z-page .z-page-num .z-page-ul > .z-page-li {\n      display: inline-block;\n      color: #ccc;\n      padding: 4px 0;\n      border-radius: 6px;\n      min-width: 30px;\n      text-align: center; }\n      .z-page .z-page-num .z-page-ul > .z-page-li.z-page-li-active {\n        background-color: #2196f3;\n        color: #fff; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:first-child {\n        margin-left: 0; }\n      .z-page .z-page-num .z-page-ul > .z-page-li:last-child {\n        margin-right: 0; }\n  .z-page .z-page-num .z-page-total {\n    color: #ccc;\n    margin: 0 16px; }\n  .z-page .z-page-num .z-page-search {\n    display: inline-block; }\n    .z-page .z-page-num .z-page-search .z-page-jump-box {\n      width: 50px; }\n    .z-page .z-page-num .z-page-search .z-page-jump-btn {\n      margin-left: 8px; }\n      .z-page .z-page-num .z-page-search .z-page-jump-btn .btn-default {\n        color: #9e9e9e; }\n  @media only screen and (max-width: 767px) {\n    .z-page.z-page-type-more {\n      width: 100%; }\n    .z-page .z-page-num .z-page-search,\n    .z-page .z-page-num .z-page-length {\n      display: none; } }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 164 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15422,13 +15880,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 165 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(166);
+var content = __webpack_require__(170);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15442,8 +15900,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Search.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Search.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Search.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Search.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -15453,10 +15911,10 @@ if(false) {
 }
 
 /***/ }),
-/* 166 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -15467,7 +15925,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n.z-search .z-search-match .z-searc
 
 
 /***/ }),
-/* 167 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15507,7 +15965,7 @@ exports.default = function (h) {
       auto: true,
       pageType: 'more',
       pager: true,
-      scrollerHeight: 150,
+      height: 150,
       ui: this.ui,
       theme: this.theme
     },
@@ -15527,13 +15985,13 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 168 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(169);
+var content = __webpack_require__(173);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -15547,8 +16005,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./List.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./List.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./List.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./List.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -15558,21 +16016,21 @@ if(false) {
 }
 
 /***/ }),
-/* 169 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * list 组件样式\r\n */\n.z-list {\n  position: relative;\n  background-color: #fff;\n  overflow: hidden; }\n  .z-list .z-list-page {\n    background-color: #fff;\n    border-top: #d6d6d6 1px solid;\n    margin: 0 auto;\n    position: absolute;\n    left: 0;\n    right: 0;\n    transition: top 150ms ease-out; }\n  .z-list .z-list-ul {\n    list-style-type: none; }\n  .z-list .z-list-empty-data {\n    padding: 8px 0;\n    text-align: center; }\n  .z-list.z-list-theme-primary .z-list-ul {\n    list-style-type: none; }\n    .z-list.z-list-theme-primary .z-list-ul > .z-list-li:last-child {\n      border: none; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * list 组件样式\r\n */\n.z-list {\n  position: relative;\n  background-color: #fff;\n  overflow: hidden; }\n  .z-list .z-list-page {\n    background-color: #fff;\n    margin: 0 auto;\n    width: 100%; }\n  .z-list .z-list-ul {\n    list-style-type: none; }\n    .z-list .z-list-ul > .z-list-li:last-child {\n      border: none; }\n  .z-list .z-list-empty-data {\n    padding: 8px 0;\n    text-align: center; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 170 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15589,14 +16047,15 @@ exports.default = function (h) {
   var scrollerChildren = [];
   var loadingOfNum = [];
 
-  if (this.listItem.length > 0) {
+  if (this.stateItem.length > 0) {
     var listItems = [];
 
-    this.listItem.forEach(function (item, index) {
-      var $slot = _this.$scopedSlots ? [_this.$scopedSlots.default({
+    this.stateItem.forEach(function (item, index) {
+      var $scopedSlots = [_this.$scopedSlots.default({
         index: index + 1,
         item: item
-      })] : _this.$slots.default;
+      })];
+      var $slot = _this.$scopedSlots ? $scopedSlots : _this.$slots.default;
 
       listItems.push(h('li', {
         class: [_this.xclass('li')]
@@ -15607,16 +16066,48 @@ exports.default = function (h) {
       attrs: {
         class: this.compPrefix + '-ul'
       },
-      class: [this.xclass('ul')],
-      style: {
-        'min-width': this.scrollerWidth + 'px'
-      }
+      class: [this.xclass('ul')]
     }, listItems)];
   } else {
     scrollerChildren = [h('div', {
       class: [this.xclass('empty-data')]
     }, '暂无数据')];
   }
+
+  scrollerChildren.push(h('page', {
+    class: [this.xclass('page')],
+    directives: [{
+      name: 'show',
+      value: this.pagerDisplay
+    }],
+    props: {
+      data: this.pageData,
+      type: this.pageType,
+      loadMoreText: this.loadMoreText,
+      ui: this.ui,
+      theme: this.theme
+    },
+    on: {
+      'switch': this.switchPage
+    },
+    ref: 'page'
+  }, function () {
+    if (_this.isPageTypeMore) {
+      return [h('div', {
+        slot: 'loadMore'
+      }, [h('loading', {
+        class: [_this.compPrefix + '-m-r-half'].concat(_this.xclass(['loading', 'loading-more'])),
+        props: {
+          display: true,
+          ui: _this.ui,
+          theme: _this.theme
+        },
+        ref: 'loadingOfMore'
+      })])];
+    }
+
+    return null;
+  }()));
 
   if (!this.isPageTypeMore) {
     loadingOfNum.push(h('loading', {
@@ -15634,64 +16125,11 @@ exports.default = function (h) {
     class: [this.xclass('scroller')],
     props: {
       autoHide: this.autoHideScroller,
-      height: this.scrollerHeight,
+      height: this.height,
       width: '100%'
     },
     ref: 'scroller'
   }, scrollerChildren));
-
-  listChildren.push(h('slide-transition', {
-    props: {
-      direction: 'north',
-      offset: this.pageDetail.bottom
-    },
-    ref: 'pageSlideTransition'
-  }, [h('page', {
-    class: [this.xclass('page')],
-    props: {
-      data: this.pageData,
-      type: this.pageType,
-      loadMoreText: this.loadMoreText,
-      ui: this.ui,
-      theme: this.theme
-    },
-    on: {
-      'switch': this.switchPage
-    },
-    ref: 'page',
-    style: this.pagerStyle
-  }, function () {
-    var ele = [h('icon', {
-      class: [_this.compPrefix + '-m-r-half'],
-      props: {
-        kind: 'arrow-down-thick-moving'
-      }
-    }), h('span', _this.loadMoreText)];
-
-    if (_this.isPageTypeMore) {
-      return [h('div', {
-        slot: 'loadMore'
-      }, [h('loading', {
-        class: [_this.compPrefix + '-m-r-half'].concat(_this.xclass(['loading', 'loading-more'])),
-        props: {
-          ui: _this.ui,
-          theme: _this.theme
-        },
-        ref: 'loadingOfMore'
-      }), h('icon', {
-        class: [_this.compPrefix + '-m-r-half'],
-        directives: [{
-          name: 'show',
-          value: _this.arrowOfMoreDisplay
-        }],
-        props: {
-          kind: 'arrow-down-thick-moving'
-        }
-      }), h('span', _this.loadMoreText)])];
-    }
-
-    return ele;
-  }())]));
 
   listChildren.push(loadingOfNum);
 
@@ -15701,7 +16139,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 171 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15726,79 +16164,79 @@ exports.default = {
      */
     update: function update(listItem) {
       if (this.auto) {
-        this.initPage();
+        this.pageData = this.getPageData();
       }
 
-      this.initList({
+      this.stateItem = this.getListData({
         pageNum: this.pageData.current,
-        listItem: listItem
+        stateItem: listItem
       });
     },
 
 
     /**
-     * 初始化分页
+     * 设置分页数据
      */
-    initPage: function initPage() {
-      var pageData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    setPageData: function setPageData(pageData) {
+      this.pageData = Object.assign({}, this.pageData, pageData);
+    },
 
-      if (!this.auto) {
-        this.pageData = Object.assign({}, this.pageData, pageData);
 
-        return this;
+    /**
+     * 初始化分页数据
+     */
+    initPageData: function initPageData(data) {
+      var pageData = null;
+
+      if (this.auto) {
+        pageData = Object.assign({
+          size: this.pageSize,
+          length: this.item.length,
+          total: Math.ceil(this.item.length / this.pageSize),
+          current: 1
+        }, data);
+      } else {
+        pageData = this.page;
       }
 
-      this.pageData = Object.assign(pageData, {
-        length: this.item.length,
-        size: this.pageSize,
-        current: 1,
-        total: Math.ceil(this.item.length / this.pageSize)
-      });
-
-      return this;
+      this.pageData = Object.assign({}, pageData);
     },
 
 
     /**
-     * 初始化列表数据
+     * 获取列表数据
      */
-    initList: function initList() {
+    setListItem: function setListItem() {
       var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          _ref$pageNum = _ref.pageNum,
-          pageNum = _ref$pageNum === undefined ? 1 : _ref$pageNum,
-          _ref$pageData = _ref.pageData,
-          pageData = _ref$pageData === undefined ? {} : _ref$pageData,
+          pageNum = _ref.pageNum,
+          pageSize = _ref.pageSize,
           _ref$listItem = _ref.listItem,
           listItem = _ref$listItem === undefined ? [] : _ref$listItem;
 
-      if (!this.auto) {
-        this.listItem = listItem.slice();
+      var listItemTemp = null;
 
-        this.initPage(Object.assign(pageData, {
-          current: pageNum
-        }));
+      if (this.auto) {
+        var startSlice = 0;
+        var endSlice = 0;
 
-        return this;
-      }
+        if (this.isPageTypeMore) {
+          endSlice = pageNum * this.pageSize;
+        } else {
+          startSlice = (pageNum - 1) * this.pageSize;
+          endSlice = startSlice + this.pageSize;
+        }
 
-      var startSlice = 0;
-      var endSlice = 0;
-
-      if (this.isPageTypeMore) {
-        endSlice = pageNum * this.pageSize;
+        listItemTemp = this.getListItemByPage({
+          listItem: this.item,
+          pageNum: pageNum,
+          pageSize: pageSize,
+          pageType: this.pageType
+        });
       } else {
-        startSlice = (pageNum - 1) * this.pageSize;
-        endSlice = startSlice + this.pageSize;
+        listItemTemp = listItem;
       }
 
-      this.listItem = this.getListItemByPage({
-        listItem: this.item.slice(),
-        pageNum: pageNum,
-        pageSize: this.auto ? this.pageSize : false,
-        pageType: this.pageType
-      });
-
-      return this;
+      this.stateItem = listItemTemp;
     },
 
 
@@ -15826,18 +16264,26 @@ exports.default = {
       if (this.auto) {
         this.showLoading();
         this.loadingListData = true;
-        this.pageData.current = currentPage;
 
         setTimeout(function () {
           _this.loadingListData = false;
 
-          _this.initList({
+          _this.setListItem({
+            pageSize: _this.pageData.size,
             pageNum: currentPage,
             listItem: _this.item
           });
 
+          _this.setPageData({
+            current: currentPage
+          });
+
           _this.hideLoading();
-        }, 1000);
+        }, 500);
+      } else {
+        this.initPage({
+          current: currentPage
+        });
       }
     },
 
@@ -15879,35 +16325,6 @@ exports.default = {
 
 
     /**
-     * 初始化分页组件的位置
-     */
-    initPagePosition: function initPagePosition() {
-      var parentHeight = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.$el.offsetHeight;
-
-      if (!this.$refs.page) {
-        return false;
-      }
-
-      var ele = this.elementProp(this.$refs.page.$el);
-      var height = ele.offsetHeight;
-      var top = parentHeight - height;
-      this.pageDetail = {
-        top: top,
-        left: ele.offsetLeft,
-        bottom: 0
-      };
-    },
-
-
-    /**
-     * 初始化分页组件的显示状态
-     */
-    initPageDisplay: function initPageDisplay() {
-      this.scrollerAlmostInBottom = this.$refs.scroller.yComputed.isBottom;
-    },
-
-
-    /**
      * 列表滚动到指定高度
      *
      * @param {Number} top - 滚动内容的滚动距离
@@ -15917,96 +16334,6 @@ exports.default = {
     }
   }
 };
-
-/***/ }),
-/* 172 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(173);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 173 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件样式\r\n */\n.z-table {\n  position: relative; }\n  .z-table.z-table-stripe .z-table-header-group {\n    background: #f5f5f5; }\n  .z-table.z-table-stripe .z-table-row:hover {\n    background-color: transparent; }\n  .z-table.z-table-stripe .z-table-row:nth-child(2n) {\n    background: #f5f5f5; }\n  .z-table-page {\n    border-top: #d6d6d6 1px solid; }\n  .z-table .z-table-row:hover {\n    background-color: #f5f5f5; }\n  .z-table .z-table-col {\n    text-align: left; }\n  .z-table .z-table-col > div {\n    display: inline-block; }\n  .z-table.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-border-all .z-table-header-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n  .z-table.z-table-border-row .z-table-row-group .z-table-row, .z-table.z-table-border-all .z-table-row-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n    .z-table.z-table-border-row .z-table-row-group .z-table-row:last-child, .z-table.z-table-border-all .z-table-row-group .z-table-row:last-child {\n      border-bottom: none; }\n  .z-table.z-table-border-col .z-table-row .z-table-col, .z-table.z-table-border-all .z-table-row .z-table-col {\n    border-right: #d6d6d6 1px solid; }\n    .z-table.z-table-border-col .z-table-row .z-table-col:last-child, .z-table.z-table-border-all .z-table-row .z-table-col:last-child {\n      border-right: none; }\n  .z-table .z-table-empty-data {\n    color: #f44336;\n    text-align: center;\n    padding: 8px 0; }\n  .z-table .z-table-wrap {\n    background: #fff;\n    border-collapse: collapse;\n    width: 100%; }\n  .z-table .z-table-header {\n    padding: 16px 24px; }\n  .z-table .z-table-col {\n    padding: 16px 24px; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(175);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.material.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 175 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 material UI 样式\r\n */\n.z-table.z-table-ui-material {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n", ""]);
-
-// exports
-
 
 /***/ }),
 /* 176 */
@@ -16029,8 +16356,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Table.bootstrap.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Table.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Table.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -16043,7 +16370,97 @@ if(false) {
 /* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件样式\r\n */\n.z-table {\n  position: relative; }\n  .z-table.z-table-stripe .z-table-header-group {\n    background: #f5f5f5; }\n  .z-table.z-table-stripe .z-table-row:hover {\n    background-color: transparent; }\n  .z-table.z-table-stripe .z-table-row:nth-child(2n) {\n    background: #f5f5f5; }\n  .z-table-page {\n    border-top: #d6d6d6 1px solid; }\n  .z-table .z-table-row:hover {\n    background-color: #f5f5f5; }\n  .z-table .z-table-col {\n    text-align: left; }\n  .z-table .z-table-col > div {\n    display: inline-block; }\n  .z-table.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-border-all .z-table-header-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n  .z-table.z-table-border-row .z-table-row-group .z-table-row, .z-table.z-table-border-all .z-table-row-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n    .z-table.z-table-border-row .z-table-row-group .z-table-row:last-child, .z-table.z-table-border-all .z-table-row-group .z-table-row:last-child {\n      border-bottom: none; }\n  .z-table.z-table-border-col .z-table-row .z-table-col, .z-table.z-table-border-all .z-table-row .z-table-col {\n    border-right: #d6d6d6 1px solid; }\n    .z-table.z-table-border-col .z-table-row .z-table-col:last-child, .z-table.z-table-border-all .z-table-row .z-table-col:last-child {\n      border-right: none; }\n  .z-table .z-table-empty-data {\n    color: #f44336;\n    text-align: center;\n    padding: 8px 0; }\n  .z-table .z-table-wrap {\n    background: #fff;\n    border-collapse: collapse;\n    width: 100%; }\n  .z-table .z-table-header {\n    padding: 16px 24px; }\n  .z-table .z-table-col {\n    padding: 16px 24px; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(179);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Table.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Table.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 material UI 样式\r\n */\n.z-table.z-table-ui-material {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(181);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Table.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Table.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -16054,7 +16471,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 bootstra
 
 
 /***/ }),
-/* 178 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16188,13 +16605,13 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 179 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(180);
+var content = __webpack_require__(184);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16208,8 +16625,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Menu.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Menu.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Menu.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Menu.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -16219,21 +16636,21 @@ if(false) {
 }
 
 /***/ }),
-/* 180 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * menu 组件样式\r\n */\n.z-menu {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  line-height: 0; }\n  .z-menu > .z-menu-ban {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-menu > .z-menu-trigger {\n    position: relative;\n    display: inline-block;\n    line-height: 0; }\n  .z-menu > .z-menu-panel {\n    position: absolute;\n    top: 0;\n    left: 0;\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    line-height: 1;\n    z-index: 2;\n    transition: top 300ms ease, height 300ms ease;\n    will-change: top, height; }\n    .z-menu > .z-menu-panel .z-menu-container > .z-menu-ele {\n      background-color: #fff;\n      padding: 8px; }\n\n.z-menu.z-menu-theme-primary {\n  vertical-align: middle;\n  border-radius: 3px; }\n\n@media only screen and (max-width: 767px) {\n  .z-menu {\n    width: 100%; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * menu 组件样式\r\n */\n.z-menu {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  line-height: 0; }\n  .z-menu > .z-menu-ban {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-menu > .z-menu-trigger {\n    position: relative;\n    display: inline-block;\n    line-height: 0; }\n  .z-menu > .z-menu-panel {\n    position: absolute;\n    top: 0;\n    left: 0;\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    line-height: 1;\n    z-index: 2;\n    transition: top 300ms ease, height 300ms ease;\n    will-change: top, height; }\n    .z-menu > .z-menu-panel .z-menu-container > .z-menu-ele {\n      background-color: #fff;\n      padding: 8px; }\n\n.z-menu.z-menu-ui-material.z-menu-theme-primary {\n  vertical-align: middle;\n  border-radius: 3px; }\n  @media only screen and (max-width: 767px) {\n    .z-menu.z-menu-ui-material.z-menu-theme-primary {\n      width: 100%; } }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 181 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16279,8 +16696,7 @@ exports.default = function (h) {
       props: {
         kind: 'sort',
         size: 'S',
-        ui: this.ui,
-        theme: this.theme
+        theme: 'light'
       }
     })])];
 
@@ -16348,7 +16764,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 182 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16358,9 +16774,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _attr = __webpack_require__(21);
+var _attr = __webpack_require__(20);
 
-var _prop = __webpack_require__(6);
+var _prop = __webpack_require__(5);
 
 var _base = __webpack_require__(2);
 
@@ -16602,7 +17018,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 183 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16612,11 +17028,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _keyCode = __webpack_require__(26);
+var _keyCode = __webpack_require__(34);
 
 var _keyCode2 = _interopRequireDefault(_keyCode);
 
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -16733,13 +17149,13 @@ exports.default = {
 };
 
 /***/ }),
-/* 184 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(185);
+var content = __webpack_require__(189);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -16753,8 +17169,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Shift.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Shift.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Shift.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Shift.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -16764,10 +17180,10 @@ if(false) {
 }
 
 /***/ }),
-/* 185 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
@@ -16778,7 +17194,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * shift 组件样式\r\n *
 
 
 /***/ }),
-/* 186 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16819,96 +17235,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 187 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(188);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Select.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Select.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 188 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select 组件样式\r\n */\n.z-select > .z-select-selected-box > .z-select-init-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default; }\n  .z-select > .z-select-read-only {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-select > .z-select-selected-box {\n    display: inline-block;\n    position: relative;\n    padding: 8px 30px 8px 16px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    width: 100%;\n    box-sizing: border-box;\n    vertical-align: middle; }\n    .z-select > .z-select-selected-box > .z-select-init-text {\n      width: 100%;\n      outline: none;\n      border: none;\n      cursor: default;\n      font-size: 14px; }\n      .z-select > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n        color: #999; }\n    .z-select > .z-select-selected-box > .z-select-caret-down-icon {\n      position: absolute;\n      right: 10px;\n      top: 11px;\n      height: 13px; }\n  .z-select > .z-select-menu {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%; }\n  .z-select .z-select-panel {\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    z-index: 2; }\n    .z-select .z-select-panel .z-select-tag-opt > .z-select-ele {\n      background-color: #fff;\n      padding: 8px; }\n    .z-select .z-select-panel .z-select-opt-comp {\n      position: static;\n      display: block; }\n    .z-select .z-select-panel .z-select-search-input {\n      box-sizing: border-box;\n      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      border-bottom: 1px solid #d6d6d6;\n      display: inline-block;\n      width: 100%; }\n  .z-select.z-select-multiple {\n    position: relative;\n    height: auto;\n    min-height: 36px; }\n    .z-select.z-select-multiple > .z-select-selected-box {\n      box-sizing: border-box;\n      opacity: 1; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text {\n        transition-property: opacity;\n        transition-duration: 150ms; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text.z-select-opacity {\n          opacity: 0;\n          position: absolute;\n          top: 0;\n          left: 0;\n          height: 0;\n          padding: 0; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller {\n        transition: height 300ms ease;\n        will-change: height; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller > .z-scroller-box > .z-select-multiple {\n          margin-right: 24px; }\n      .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li {\n        background-color: #f5f5f5;\n        display: inline-block;\n        margin: 4.5px 3px;\n        padding: 3px; }\n        .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li:hover {\n          background-color: #d6d6d6; }\n    .z-select.z-select-multiple .z-select-panel,\n    .z-select.z-select-multiple .z-select-opt-comp {\n      width: 100%; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 189 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(190);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Select.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Select.bootstrap.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 190 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".z-select.z-select-ui-bootstrap {\n  width: 170px;\n  height: 36px;\n  background-color: #fff;\n  border-width: 1px;\n  border-style: solid;\n  border-color: #2196f3;\n  border-radius: 3px;\n  transition: background-color 150ms ease-out; }\n  .z-select.z-select-ui-bootstrap:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    outline: none; }\n  .z-select.z-select-ui-bootstrap.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n    color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-caret-down-icon {\n    color: #9e9e9e; }\n\n.z-select.z-select-theme-success {\n  border-color: #4caf50; }\n  .z-select.z-select-theme-success:hover {\n    border-color: rgba(8, 127, 35, 0.9); }\n  .z-select.z-select-theme-success:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-select.z-select-theme-success.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #087f23; }\n\n.z-select.z-select-theme-danger {\n  border-color: #f44336; }\n  .z-select.z-select-theme-danger:hover {\n    border-color: rgba(186, 0, 13, 0.9); }\n  .z-select.z-select-theme-danger:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-select.z-select-theme-danger.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #ba000d; }\n\n.z-select.z-select-theme-blue {\n  border-color: #2196f3; }\n  .z-select.z-select-theme-blue:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-theme-blue:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-select.z-select-theme-blue.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n\n.z-select.z-select-theme-warning {\n  border-color: #9e9e9e; }\n  .z-select.z-select-theme-warning:hover {\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-select.z-select-theme-warning:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-select.z-select-theme-warning.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #707070; }\n\n.z-select.z-select-theme-orange {\n  border-color: #ff5722; }\n  .z-select.z-select-theme-orange:hover {\n    border-color: rgba(196, 28, 0, 0.9); }\n  .z-select.z-select-theme-orange:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-select.z-select-theme-orange.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #c41c00; }\n\n.z-select.z-select-theme-grey {\n  border-color: #9e9e9e; }\n  .z-select.z-select-theme-grey:hover {\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-select.z-select-theme-grey:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-select.z-select-theme-grey.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #707070; }\n\n.z-select.z-select-theme-light {\n  border-color: #f5f5f5; }\n  .z-select.z-select-theme-light:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-theme-light:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-select.z-select-theme-light.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #e0e0e0; }\n\n.z-select.z-select-theme-dark {\n  border-color: #424242; }\n  .z-select.z-select-theme-dark:hover {\n    border-color: rgba(27, 27, 27, 0.9); }\n  .z-select.z-select-theme-dark:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-select.z-select-theme-dark.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #1b1b1b; }\n", ""]);
-
-// exports
-
-
-/***/ }),
 /* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16929,8 +17255,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Select.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Select.material.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Select.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Select.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -16943,18 +17269,108 @@ if(false) {
 /* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, ".z-select.z-select-ui-material {\n  height: 36px;\n  vertical-align: middle;\n  border-radius: 3px; }\n  .z-select.z-select-ui-material:focus {\n    outline: none; }\n  .z-select.z-select-ui-material.z-select-multiple {\n    width: 250px;\n    height: auto; }\n  .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box::after {\n    opacity: 1; }\n  .z-select.z-select-ui-material.z-select-focusing .z-select-selected-box::after {\n    opacity: 1; }\n  .z-select.z-select-ui-material > .z-select-selected-box::after {\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    content: '';\n    opacity: 0;\n    transition: opacity 300ms ease-out;\n    width: 100%;\n    height: 100%;\n    position: absolute;\n    left: 0;\n    top: 0;\n    z-index: -1; }\n  .z-select.z-select-ui-material .z-select-opt-comp {\n    border-top: none;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0;\n    border: none; }\n    .z-select.z-select-ui-material .z-select-opt-comp > .z-select-opt-li:first-child {\n      border-top: #e5e5e5 1px solid; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select 组件样式\r\n */\n.z-select > .z-select-selected-box > .z-select-init-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }\n  .z-select > .z-select-read-only {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-select > .z-select-selected-box {\n    display: inline-block;\n    position: relative;\n    padding: 8px 30px 8px 16px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    width: 100%;\n    box-sizing: border-box;\n    vertical-align: middle; }\n    .z-select > .z-select-selected-box > .z-select-init-text {\n      width: 100%;\n      outline: none;\n      border: none;\n      cursor: default;\n      font-size: 14px; }\n      .z-select > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n        color: #999; }\n    .z-select > .z-select-selected-box > .z-select-caret-down-icon {\n      position: absolute;\n      right: 10px;\n      top: 11px;\n      height: 13px; }\n  .z-select > .z-select-menu {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%; }\n  .z-select .z-select-panel {\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    z-index: 2; }\n    .z-select .z-select-panel .z-select-tag-opt > .z-select-ele {\n      background-color: #fff;\n      padding: 8px; }\n    .z-select .z-select-panel .z-select-opt-comp {\n      position: static;\n      display: block; }\n    .z-select .z-select-panel .z-select-search-input {\n      box-sizing: border-box;\n      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      border-bottom: 1px solid #d6d6d6;\n      display: inline-block;\n      width: 100%; }\n  .z-select.z-select-multiple {\n    position: relative;\n    height: auto;\n    min-height: 36px; }\n    .z-select.z-select-multiple > .z-select-selected-box {\n      box-sizing: border-box;\n      opacity: 1; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text {\n        transition-property: opacity;\n        transition-duration: 150ms; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text.z-select-opacity {\n          opacity: 0;\n          position: absolute;\n          top: 0;\n          left: 0;\n          height: 0;\n          padding: 0; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller {\n        transition: height 300ms ease;\n        will-change: height; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller > .z-scroller-box > .z-select-multiple {\n          margin-right: 24px; }\n      .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li {\n        background-color: #f5f5f5;\n        display: inline-block;\n        margin: 4.5px 3px;\n        padding: 3px; }\n        .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li:hover {\n          background-color: #d6d6d6; }\n    .z-select.z-select-multiple .z-select-panel,\n    .z-select.z-select-multiple .z-select-opt-comp {\n      width: 100%; }\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 193 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(194);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Select.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Select.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 194 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".z-select.z-select-ui-bootstrap {\n  width: 170px;\n  height: 36px;\n  background-color: #fff;\n  border-width: 1px;\n  border-style: solid;\n  border-color: #2196f3;\n  border-radius: 3px;\n  transition: background-color 150ms ease-out; }\n  .z-select.z-select-ui-bootstrap:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    outline: none; }\n  .z-select.z-select-ui-bootstrap.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n    color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-caret-down-icon {\n    color: #9e9e9e; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-success {\n  border-color: #4caf50; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success:hover {\n    border-color: rgba(8, 127, 35, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);\n    border-color: #087f23; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-danger {\n  border-color: #f44336; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger:hover {\n    border-color: rgba(186, 0, 13, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3);\n    border-color: #ba000d; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-blue {\n  border-color: #2196f3; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-warning {\n  border-color: #ffeb3b; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning:hover {\n    border-color: rgba(200, 185, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning:focus {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3);\n    border-color: #c8b900; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-orange {\n  border-color: #ff5722; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange:hover {\n    border-color: rgba(196, 28, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3);\n    border-color: #c41c00; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-grey {\n  border-color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey:hover {\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3);\n    border-color: #707070; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-light {\n  border-color: #f5f5f5; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3);\n    border-color: #e0e0e0; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-dark {\n  border-color: #424242; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark:hover {\n    border-color: rgba(27, 27, 27, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3);\n    border-color: #1b1b1b; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-black {\n  border-color: #000; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black:hover {\n    border-color: rgba(0, 0, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black:focus {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3);\n    border-color: #000; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-white {\n  border-color: #fff; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white:focus {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);\n    border-color: #e0e0e0; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(196);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Select.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Select.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".z-select.z-select-ui-material {\n  height: 36px;\n  vertical-align: middle;\n  border-radius: 3px; }\n  .z-select.z-select-ui-material:focus {\n    outline: none; }\n  .z-select.z-select-ui-material.z-select-multiple {\n    width: 250px;\n    height: auto; }\n  .z-select.z-select-ui-material.z-select-selecting {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n    .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box {\n      border-bottom-right-radius: 0;\n      border-bottom-left-radius: 0; }\n      .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box::after {\n        border-bottom-right-radius: 0;\n        border-bottom-left-radius: 0;\n        opacity: 1; }\n  .z-select.z-select-ui-material.z-select-focusing .z-select-selected-box::after {\n    opacity: 1; }\n  .z-select.z-select-ui-material > .z-select-selected-box {\n    border-radius: 3px; }\n    .z-select.z-select-ui-material > .z-select-selected-box::after {\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n      border-radius: 3px;\n      content: '';\n      opacity: 0;\n      transition: opacity 300ms ease-out;\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n      z-index: 1; }\n  .z-select.z-select-ui-material .z-select-opt-comp {\n    border-top: none;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0;\n    border: none; }\n    .z-select.z-select-ui-material .z-select-opt-comp > .z-select-opt-li:first-child {\n      border-top: #e5e5e5 1px solid; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16964,17 +17380,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(194);
+__webpack_require__(198);
 
 var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _SelectOpt = __webpack_require__(196);
+var _SelectOpt = __webpack_require__(200);
 
 var _SelectOpt2 = _interopRequireDefault(_SelectOpt);
 
-var _event = __webpack_require__(42);
+var _event = __webpack_require__(201);
 
 var _event2 = _interopRequireDefault(_event);
 
@@ -16982,11 +17398,11 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Check = __webpack_require__(22);
+var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _List = __webpack_require__(29);
+var _List = __webpack_require__(27);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -17014,8 +17430,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    * @prop multiple - 是否为多选
                                                                                                                                                                                                                    * @prop option - 下拉框option数据
                                                                                                                                                                                                                    * @prop optRoot - 递归调用的父元素
-                                                                                                                                                                                                                   * @prop valName - 下拉框 options 的 value 值的 key name
-                                                                                                                                                                                                                   * @prop txtName - 下拉框 options 的 text 值的 key name
+                                                                                                                                                                                                                   * @prop valueName - 下拉框 options 的 value 值的 key name
+                                                                                                                                                                                                                   * @prop textName - 下拉框 options 的 text 值的 key name
+                                                                                                                                                                                                                   * @prop menuWidth - 菜单宽度
                                                                                                                                                                                                                    *
                                                                                                                                                                                                                    * @event change - checkbox的option值改变
                                                                                                                                                                                                                    * @event changeScroller - 滚动区域的高度/宽度变化
@@ -17044,27 +17461,26 @@ exports.default = {
         return [];
       }
     },
-
     multiple: {
       type: Boolean,
       default: false
     },
-
     optRoot: {
       type: Object,
       default: function _default() {
         return {};
       }
     },
-
-    valName: {
+    valueName: {
       type: String,
       default: 'value'
     },
-
-    txtName: {
+    textName: {
       type: String,
       default: 'text'
+    },
+    menuWidth: {
+      type: Number
     }
   },
 
@@ -17155,6 +17571,7 @@ exports.default = {
      */
     selectOption: function selectOption(index) {
       var hideMenu = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      var cb = arguments[2];
 
       var option = this.option[parseInt(index - 1, 10)];
 
@@ -17162,71 +17579,47 @@ exports.default = {
         return false;
       }
 
+      cb && cb();
+
       this.$emit('change', {
         emitter: this,
-        value: option[this.valName],
-        text: option[this.txtName],
+        value: option[this.valueName],
+        text: option[this.textName],
         index: index,
         hideMenu: hideMenu
       });
     },
-
-
-    /**
-     * 初始化列表的分页组件位置
-     */
-    initPagePosition: function initPagePosition() {
-      return this.$refs.list.initPagePosition();
-    },
-
-
-    /**
-     * 初始化分页组件的显示状态
-     */
-    initPageDisplay: function initPageDisplay() {
-      return this.$refs.list.initPageDisplay();
-    },
     _handlerMouseenter: function _handlerMouseenter(event, index) {
       this.focusIndex = index - 1;
     },
-    _handlerClidk: function _handlerClidk(event, index) {
+    _handlerClick: function _handlerClick(event, index) {
+      var _this2 = this;
+
       event && event.stopPropagation();
 
-      var option = this.option[parseInt(index - 1, 10)];
-
-      if (option.classify) {
-        return false;
-      }
-
-      this.$refs['rip' + index].enter();
-
-      this.$emit('change', {
-        emitter: this,
-        value: option[this.valName],
-        text: option[this.txtName],
-        index: index,
-        hideMenu: true
+      this.selectOption(index, true, function () {
+        return _this2.$refs['rip' + index].enter();
       });
     }
   },
 
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.$nextTick(function () {
-      _this2.optionEleH = _this2.$refs.option1.offsetHeight;
+      _this3.optionEleH = _this3.$refs.option1.offsetHeight;
     });
   }
 };
 
 /***/ }),
-/* 194 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(195);
+var content = __webpack_require__(199);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -17240,8 +17633,8 @@ if(content.locals) module.exports = content.locals;
 if(false) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./SelectOpt.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./SelectOpt.scss");
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./SelectOpt.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./SelectOpt.scss");
 			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 			update(newContent);
 		});
@@ -17251,21 +17644,21 @@ if(false) {
 }
 
 /***/ }),
-/* 195 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select-opt 组件样式\r\n */\n.z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select-opt-ul {\n  display: none;\n  background-color: #fff; }\n  .z-select-opt-ul .z-select-opt-li {\n    position: relative;\n    padding: 8px 16px;\n    box-sizing: border-box;\n    width: 100%;\n    text-align: left;\n    cursor: default;\n    background-color: rgba(245, 245, 245, 0); }\n    .z-select-opt-ul .z-select-opt-li:first-child {\n      padding-top: 8px; }\n    .z-select-opt-ul .z-select-opt-li:last-child {\n      padding-bottom: 8px; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-default-txt {\n      color: #999; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-classify-title {\n      font-weight: bold; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-li-focus {\n      background-color: whitesmoke; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-check {\n      line-height: 1; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n      display: inline-block;\n      vertical-align: middle;\n      width: 100%;\n      padding: 0 8px;\n      box-sizing: border-box; }\n\n@media only screen and (max-width: 767px) {\n  .z-select-opt-ul {\n    width: 100%; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select-opt 组件样式\r\n */\n.z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select-opt-ul {\n  display: none;\n  background-color: #fff; }\n  .z-select-opt-ul .z-select-opt-li {\n    position: relative;\n    padding: 8px 16px;\n    box-sizing: border-box;\n    width: 100%;\n    text-align: left;\n    cursor: default;\n    background-color: rgba(245, 245, 245, 0); }\n    .z-select-opt-ul .z-select-opt-li:first-child {\n      padding-top: 8px; }\n    .z-select-opt-ul .z-select-opt-li:last-child {\n      padding-bottom: 8px; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-default-txt {\n      color: #999; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-classify-title {\n      font-weight: bold; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-li-focus {\n      background-color: whitesmoke; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-check {\n      line-height: 1; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n      display: inline-block;\n      vertical-align: middle;\n      width: 100%;\n      box-sizing: border-box;\n      line-height: normal; }\n\n@media only screen and (max-width: 767px) {\n  .z-select-opt-ul {\n    width: 100%; } }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 196 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17285,23 +17678,24 @@ exports.default = function (h) {
         index = _ref.index;
 
     var element = [];
-    var optTxt = item[_this.txtName];
-    var optVal = item[_this.valName];
+    var optTxt = item[_this.textName];
+    var optVal = item[_this.valueName];
     var rowEle = [];
 
     if (_this.multiple && !item.classify) {
       rowEle.push(h('column', {
         props: {
-          span: 1,
-          ui: _this.ui,
-          theme: _this.theme
+          span: 1
+        },
+        style: {
+          width: '20px'
         }
       }, [h('check', {
         class: [_this.xclass('li-check')],
         props: {
           multiple: true,
-          initVal: _this.optRoot.checkboxVal(optVal),
-          initOpt: _this.selectedAllCheckOpt,
+          value: _this.optRoot.checkboxVal(optVal),
+          option: _this.selectedAllCheckOpt,
           ui: _this.ui,
           theme: _this.theme
         }
@@ -17311,26 +17705,38 @@ exports.default = function (h) {
     if (_this.$scopedSlots[index]) {
       rowEle.push(h('column', {
         props: {
-          span: 11,
-          ui: _this.ui,
-          theme: _this.theme
+          span: _this.multiple ? 11 : 12
+        },
+        style: {
+          width: _this.multiple ? 'calc(100% - 20px)' : undefined
         }
       }, [_this.$scopedSlots[index]({
         item: item
       })]));
     } else {
+      var attrs = {};
+      var omitTxt = false; // TODO: 计算字符是否被省略了
+
+      if (omitTxt) {
+        Object.assign(attrs, {
+          title: optTxt
+        });
+      }
+
       rowEle.push(h('column', {
         props: {
-          span: 11,
-          ui: _this.ui,
-          theme: _this.theme
+          span: _this.multiple ? 11 : 12
+        },
+        style: {
+          width: _this.multiple ? 'calc(100% - 20px)' : undefined
         }
       }, [h('span', {
+        attrs: attrs,
         class: [_this.xclass('li-text')],
         directives: [{
           name: 'bubble',
           value: {
-            text: optTxt && optTxt.length > 9 ? optTxt : ''
+            text: optTxt === undefined ? '' : optTxt
           }
         }]
       }, optTxt)]));
@@ -17338,9 +17744,7 @@ exports.default = function (h) {
 
     element.push(h('row', {
       props: {
-        justify: 'justify',
-        ui: _this.ui,
-        theme: _this.theme
+        justify: 'justify'
       }
     }, rowEle));
 
@@ -17364,16 +17768,20 @@ exports.default = function (h) {
       class: [_this.liClass(item.classify, optVal), _defineProperty({}, _this.xclass('li-focus'), index - 1 === _this.focusIndex)],
       on: {
         click: function click(event) {
-          return _this._handlerClidk(event, index);
+          return _this._handlerClick(event, index);
         },
         mouseenter: function mouseenter(event) {
           return _this._handlerMouseenter(event, index);
         }
       },
-      ref: 'option' + index
+      ref: 'option' + index,
+      style: {
+        minWidth: _this.menuWidth + 'px'
+      }
     }, [element, h('motion-rip', {
       props: {
-        overflow: true
+        overflow: true,
+        speed: 'fast'
       },
       ref: 'rip' + index
     })]);
@@ -17388,8 +17796,8 @@ exports.default = function (h) {
     }, [h('check', {
       props: {
         multiple: true,
-        initVal: this.$parent.selectAll ? [-1] : [],
-        initOpt: this.selectedAllCheckOpt,
+        value: this.$parent.selectAll ? [-1] : [],
+        option: this.selectedAllCheckOpt,
         ui: this.ui,
         theme: this.theme
       }
@@ -17404,7 +17812,7 @@ exports.default = function (h) {
       pageSize: 6,
       pageType: 'more',
       pager: true,
-      scrollerHeight: 200,
+      height: 200,
       ui: this.ui,
       theme: this.theme
     },
@@ -17424,7 +17832,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 197 */
+/* 201 */
+/***/ (function(module, exports) {
+
+module.exports = {"select":{"option":{"change":"selectOptChange"}},"input":{"focus":"focusInput","blur":"blurInput","keyup":"keyupInput","change":"changeInput","completion":{"click":"clickCompletion"}},"tab":{"change":"tabChange"},"checkbox":{"change":"checkboxChange"},"btn":{"click":"clickBtn"},"scroller":{"change":{"height":"changeHeight","bar":{"y":"changeYBar","x":"changeXBar"}},"scroll":{"y":"scrollY","x":"scrollX"}},"common":{"searchTool":{"change":"searchQueryChange"}}}
+
+/***/ }),
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17444,11 +17858,12 @@ exports.default = function (h) {
     var liELe = [];
 
     selectedBoxChildren.push(h('div', {
-      class: [this.defaultValClassName(this.value), this.xclass('init-text'), _defineProperty({}, this.xclass('opacity'), !this.initTxtDisplay)]
-    }, this.defaultTxt));
+      class: [this.defaultValClassName(this.stateValue), this.xclass('init-text'), _defineProperty({}, this.xclass('opacity'), !this.initTxtDisplay)]
+    }, this.defaultText));
 
     this.text.forEach(function (txt, index) {
       liELe.push(h('li', [h('span', txt), h('span', {
+        class: [_this.prefix('css-m-l-half')],
         on: {
           click: function click(event) {
             return _this.clickMultiSelected(event, index + 1);
@@ -17456,7 +17871,9 @@ exports.default = function (h) {
         }
       }, [h('icon', {
         props: {
-          kind: 'close'
+          kind: 'close',
+          theme: 'grey',
+          size: 'xs'
         }
       })])]));
     });
@@ -17465,9 +17882,7 @@ exports.default = function (h) {
       class: [this.xclass('scroller')],
       props: {
         height: 100,
-        width: '100%',
-        ui: this.ui,
-        theme: this.theme
+        width: '100%'
       },
       directives: [{
         name: 'show',
@@ -17479,14 +17894,16 @@ exports.default = function (h) {
     }, [liELe])]));
   } else {
     selectedBoxChildren.push(h('div', {
-      class: [this.defaultValClassName(this.value), this.xclass('init-text')]
+      class: [this.defaultValClassName(this.stateValue), this.xclass('init-text')]
     }, this.text));
   }
 
   selectedBoxChildren.push(h('icon', {
     class: [this.xclass('caret-down-icon')],
     props: {
-      kind: 'triangle-down'
+      kind: 'triangle-down',
+      theme: 'dark',
+      size: 'xs'
     }
   }));
 
@@ -17508,17 +17925,19 @@ exports.default = function (h) {
       }
     }, [h('icon', {
       props: {
-        kind: 'search'
+        kind: 'search',
+        theme: 'grey',
+        size: 'xs'
       },
       slot: 'header'
     })])]));
   }
 
-  if (Array.isArray(this.option)) {
+  if (Array.isArray(this.stateOption)) {
     var scopedSlots = [];
 
     if (this.$scopedSlots && this.$scopedSlots['custom']) {
-      this.option.forEach(function (item, index) {
+      this.stateOption.forEach(function (item, index) {
         Object.assign(scopedSlots, _defineProperty({}, '' + index, function undefined(props) {
           return _this.$scopedSlots['custom']({
             item: item,
@@ -17532,9 +17951,10 @@ exports.default = function (h) {
       class: [this.xclass('opt-comp')],
       props: {
         multiple: this.multiple,
-        valName: this.valName,
-        txtName: this.txtName,
-        option: this.searchOptionDisplay ? this.searchOptionItem : this.option,
+        menuWidth: this.stateMenuWidth,
+        valueName: this.valueName,
+        textName: this.textName,
+        option: this.searchOptionDisplay ? this.searchOptionItem : this.stateOption,
         optRoot: this.me,
         ui: this.ui,
         theme: this.theme
@@ -17583,7 +18003,7 @@ exports.default = function (h) {
     props: {
       noTrig: true,
       coverTrig: this.coverTrig,
-      width: this.menuWidth,
+      width: this.stateMenuWidth,
       trigHeight: this.UIBootstrap ? this.selectedHeight + 4 : this.selectedHeight,
       ui: this.ui,
       theme: this.theme
@@ -17599,7 +18019,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 /***/ }),
-/* 198 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17609,15 +18029,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _keyCode = __webpack_require__(26);
-
-var _keyCode2 = _interopRequireDefault(_keyCode);
-
-var _tip = __webpack_require__(5);
+var _tip = __webpack_require__(6);
 
 var _tip2 = _interopRequireDefault(_tip);
-
-var _prop = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17649,7 +18063,7 @@ exports.default = {
      * 默认值的 css 的 class 名字
      */
     defaultValClassName: function defaultValClassName(value) {
-      return this.defaultVal === value ? this.cPrefix + '-default-text' : '';
+      return this.defaultValue === value ? this.cPrefix + '-default-text' : '';
     },
 
 
@@ -17663,11 +18077,11 @@ exports.default = {
       this.dangerTip = '\u8BF7\u9009\u62E9' + this.errorMessage + (this.errorMessage ? '的' : '') + '\u4E0B\u62C9\u6846!';
 
       if (this.multiple) {
-        this.verified = this.value.length >= this.min;
+        this.verified = this.stateValue.length >= this.min;
 
         return this.verified;
       } else if (this.required) {
-        this.verified = this.value !== -1;
+        this.verified = this.stateValue !== -1;
 
         return this.verified;
       }
@@ -17682,17 +18096,17 @@ exports.default = {
      * @param {String, Number} - 多选下拉框的值
      */
     removeMultiSelected: function removeMultiSelected(index) {
-      if (this.min !== 0 && this.value.length === this.min) {
+      if (this.min !== 0 && this.stateValue.length === this.min) {
         (0, _tip2.default)('\u81F3\u5C11\u9700\u9009\u62E9 ' + this.min + ' \u9879\uFF01');
 
-        var valTmp = this.value;
-        this.value = [];
-        this.value = valTmp;
+        var valTmp = this.stateValue;
+        this.stateValue = [];
+        this.stateValue = valTmp;
 
-        return this.value;
+        return this.stateValue;
       }
 
-      this.value.splice(index - 1, 1);
+      this.stateValue.splice(index - 1, 1);
     },
 
 
@@ -17756,9 +18170,9 @@ exports.default = {
      */
     selectAllOption: function selectAllOption() {
       if (this.selectedAll) {
-        this.value = [];
+        this.stateValue = [];
       } else {
-        this.value = this.allOptionVal.slice();
+        this.stateValue = this.allOptionVal.slice();
       }
 
       this.selectedAll = !this.selectedAll;
@@ -17810,6 +18224,15 @@ exports.default = {
      */
     fold: function fold() {
       return this.toggle(false);
+    },
+
+
+    /**
+     * 折叠下拉框
+     * @return {String, Number} - 下拉组件的当前值
+     */
+    val: function val() {
+      return this.value;
     }
   }
 }; /**
@@ -17817,142 +18240,142 @@ exports.default = {
     */
 
 /***/ }),
-/* 199 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(200);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 200 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".z-tab {\n  cursor: pointer;\n  width: 100%; }\n  @media only screen and (max-width: 767px) {\n    .z-tab .z-tab-shift > .z-shift-row > .z-shift-col {\n      -webkit-flex-grow: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1; } }\n  .z-tab .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-bottom: #d6d6d6 1px solid; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 201 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(202);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.material.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.material.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 202 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 material UI 样式\r\n */\n.z-tab.z-tab-ui-material {\n  border-bottom: 1px solid #d6d6d6;\n  position: relative; }\n  .z-tab.z-tab-ui-material .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-material .z-tab-btn > .z-btn-ele {\n      padding: 5px 0; }\n  .z-tab.z-tab-ui-material .z-tab-bar {\n    background-color: #2196f3;\n    height: 2px;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    transition: left 300ms; }\n  .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col {\n    min-width: 72px;\n    text-align: center; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n      color: #2196f3; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-bottom: none; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n      color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-bar {\n  background-color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-bar {\n  background-color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-bar {\n  background-color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-bar {\n  background-color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-bar {\n  background-color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-bar {\n  background-color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 203 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(204);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.bootstrap.scss", function() {
-			var newContent = require("!!../../../node_modules/_css-loader@0.28.7@css-loader/index.js!../../../node_modules/_postcss-loader@2.0.9@postcss-loader/lib/index.js!../../../node_modules/_sass-loader@6.0.6@sass-loader/lib/loader.js!./Tab.bootstrap.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
 /* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(undefined);
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(205);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Tab.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Tab.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 bootstrap UI 样式\r\n */\n.z-tab.z-tab-ui-bootstrap {\n  border-bottom: 1px solid #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col {\n    border-top-left-radius: 6px;\n    border-top-right-radius: 6px; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn {\n      width: 100%;\n      height: 100%; }\n      .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n        color: #2196f3;\n        padding: 5px 0;\n        border-top-left-radius: 6px;\n        border-top-right-radius: 6px; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-ele {\n      min-width: 100px;\n      background-color: #fff;\n      text-align: center;\n      border: transparent 1px solid;\n      border-bottom: none;\n      border-top-left-radius: 6px;\n      border-top-right-radius: 6px; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-color: #d6d6d6; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n      color: #0069c0; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n      color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #087f23; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #ba000d; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #0069c0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c41c00; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #1b1b1b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n", ""]);
+exports.push([module.i, ".z-tab {\n  cursor: pointer;\n  width: 100%;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }\n  @media only screen and (max-width: 767px) {\n    .z-tab .z-tab-shift > .z-shift-row > .z-shift-col {\n      -webkit-flex-grow: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1; } }\n  .z-tab .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-bottom: #d6d6d6 1px solid; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 205 */
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(207);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Tab.material.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Tab.material.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 207 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 material UI 样式\r\n */\n.z-tab.z-tab-ui-material {\n  border-bottom: 1px solid #d6d6d6;\n  position: relative; }\n  .z-tab.z-tab-ui-material .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-material .z-tab-btn > .z-btn-ele {\n      padding: 5px 0; }\n  .z-tab.z-tab-ui-material .z-tab-bar {\n    background-color: #2196f3;\n    height: 2px;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    transition: left 300ms; }\n  .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col {\n    min-width: 72px;\n    text-align: center; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n      color: #2196f3; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-bottom: none; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n      color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-bar {\n  background-color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-bar {\n  background-color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-bar {\n  background-color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-bar {\n  background-color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-bar {\n  background-color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-bar {\n  background-color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-bar {\n  background-color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-bar {\n  background-color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-bar {\n  background-color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 208 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(209);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Tab.bootstrap.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./Tab.bootstrap.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 bootstrap UI 样式\r\n */\n.z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col {\n  border-top-left-radius: 6px;\n  border-top-right-radius: 6px;\n  border-bottom: 1px solid #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n      color: #2196f3;\n      padding: 5px 0;\n      border-top-left-radius: 6px;\n      border-top-right-radius: 6px; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-ele {\n    min-width: 100px;\n    background-color: #fff;\n    text-align: center;\n    border: transparent 1px solid;\n    border-bottom: none;\n    border-top-left-radius: 6px;\n    border-top-right-radius: 6px; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-color: #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n    color: #0069c0; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active {\n    border-bottom-color: transparent; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n      color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #087f23; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #ba000d; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c8b900; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #0069c0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c41c00; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #1b1b1b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #fff; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17976,7 +18399,7 @@ exports.default = function (h) {
         }
       },
       props: {
-        type: 'flat',
+        type: 'text',
         ui: _this.ui,
         theme: 'grey',
         radius: 'none'
@@ -18060,7 +18483,7 @@ exports.default = function (h) {
 };
 
 /***/ }),
-/* 206 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18102,13 +18525,7 @@ var search = function search(urlSearch) {
 exports.search = search;
 
 /***/ }),
-/* 207 */
-/***/ (function(module, exports) {
-
-module.exports = {"btn":{},"column":{},"check":{},"form":{},"input":{},"icon":{},"loading":{},"page":{},"pop":{},"list":{},"scroller":{},"select":{},"selectEle":{},"shift":{},"shiftEle":{},"tab":{},"tabEle":{},"row":{},"table":{"emptyData":"暂无数据"}}
-
-/***/ }),
-/* 208 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18123,7 +18540,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vueI18n = __webpack_require__(209);
+var _vueI18n = __webpack_require__(213);
 
 var _vueI18n2 = _interopRequireDefault(_vueI18n);
 
@@ -18156,13 +18573,13 @@ var set = {
 exports.set = set;
 
 /***/ }),
-/* 209 */
+/* 213 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_209__;
+module.exports = __WEBPACK_EXTERNAL_MODULE_213__;
 
 /***/ }),
-/* 210 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18176,7 +18593,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Modal = __webpack_require__(25);
+var _Modal = __webpack_require__(24);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -18280,7 +18697,7 @@ window.addEventListener('load', function () {
 exports.default = alert;
 
 /***/ }),
-/* 211 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18294,7 +18711,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Modal = __webpack_require__(25);
+var _Modal = __webpack_require__(24);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -18407,7 +18824,7 @@ window.addEventListener('load', function () {
 exports.default = confirm;
 
 /***/ }),
-/* 212 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18421,7 +18838,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Message = __webpack_require__(23);
+var _Message = __webpack_require__(22);
 
 var _Message2 = _interopRequireDefault(_Message);
 
@@ -18529,7 +18946,7 @@ window.addEventListener('load', function () {
 exports.default = toast;
 
 /***/ }),
-/* 213 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18543,7 +18960,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Bubble = __webpack_require__(34);
+var _Bubble = __webpack_require__(32);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
