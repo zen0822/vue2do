@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.0
+ * vue2do.js v[A[B0.[A[D[B[D.4.5-beta.1
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -8,8 +8,6 @@
  * col 组件样式
  */
 .z-col {
-  display: inline-block;
-  vertical-align: middle;
   box-sizing: border-box; }
   .z-col.z-col-span-1 {
     width: 8.33333%; }
