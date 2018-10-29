@@ -27,6 +27,7 @@
  */
 
 import '../../lib/directive/clickParent'
+import '../../scss/common/box.scss'
 import './Select.scss'
 import './Select.bootstrap.scss'
 import './Select.material.scss'
