@@ -1,6 +1,10 @@
+/**
+ * 获取焦点指令
+ */
+
 import Vue from 'vue'
 
-export default {
+const focusDirective = {
   priority: 1000,
 
   inserted(el, binding) {
@@ -31,3 +35,5 @@ export default {
     binding.zBound = false
   }
 }
+
+Vue.directive('focus', focusDirective)

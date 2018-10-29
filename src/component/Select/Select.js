@@ -26,6 +26,7 @@
  * @event change - 选择值的改变
  */
 
+import '../../lib/directive/clickParent'
 import './Select.scss'
 import './Select.bootstrap.scss'
 import './Select.material.scss'

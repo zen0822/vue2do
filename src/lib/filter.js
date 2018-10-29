@@ -1,7 +1,5 @@
 import Vue from 'vue'
 
-const stringUtil = require('src/common/utils/string')
-
 /**
  * 根据组件的主题转换成主题的 class
  *

@@ -39,6 +39,7 @@
  * @slot footer
  */
 
+import '../../lib/directive/focus'
 import './Input.scss'
 import './Input.material.scss'
 import './Input.bootstrap.scss'
@@ -55,14 +56,6 @@ import apiMixin from './Input.api'
 import Row from '../Row/Row'
 import Col from '../Col/Col'
 import MotionFade from '../MotionFade/MotionFade'
-
-import {
-  dataType
-} from '../../util/data/data'
-import {
-  hasScroller
-} from '../../util/dom'
-import tip from '../Message/tip'
 
 const TYPE_TEXT_AREA = 'area'
 const TYPE_TEXT = 'field'

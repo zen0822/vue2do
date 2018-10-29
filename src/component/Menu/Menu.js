@@ -19,15 +19,11 @@
  * @event scrollerChange - 滚动组件发生变化
  */
 
+import '../../lib/directive/clickParent'
 import './Menu.scss'
-
-import Vue from 'vue'
 
 import render from './Menu.render'
 import store from '../../vuex/store'
-import hubStore from '../../vuex/module/hub/type.json'
-import compStore from '../../vuex/module/comp/type.json'
-import tip from '../Message/tip'
 
 import Btn from '../Btn/Btn'
 import Icon from '../Icon/Icon'
@@ -37,17 +33,6 @@ import Scroller from '../Scroller/Scroller'
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
 import apiMixin from './Menu.api'
-
-import uid from '../../util/uid'
-import {
-  dataType
-} from '../../util/data/data'
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
-import {
-  unique as uniqueArray
-} from '../../util/data/array'
 
 export default {
   name: 'Menu',

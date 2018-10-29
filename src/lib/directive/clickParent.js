@@ -1,3 +1,9 @@
+/**
+ * 绑定元素的父元素的 click 事件
+ */
+
+import Vue from 'vue'
+
 let nodeList = []
 const storeName = '__VUE_2_DO_DIRECTIVE_CLICK_PARENT_STORE_NAME__'
 
@@ -9,7 +15,7 @@ window.addEventListener('load', () => {
   })
 })
 
-export default {
+const clickParentDirective = {
   bind(el, binding, vnode) {
     const id = nodeList.push(el) - 1
     const context = vnode.context
@@ -52,3 +58,5 @@ export default {
     })
   }
 }
+
+Vue.directive('clickParent', clickParentDirective)
