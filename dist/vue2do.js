@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.5-beta.8
+ * vue2do.js v0.4.5-beta.9
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -66,7 +66,7 @@ var Vue2do =
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 57);
+/******/ 	return __webpack_require__(__webpack_require__.s = 58);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2391,7 +2391,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _uid = __webpack_require__(41);
+var _uid = __webpack_require__(42);
 
 var _uid2 = _interopRequireDefault(_uid);
 
@@ -3201,7 +3201,7 @@ var _store = __webpack_require__(6);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(39);
+var _type = __webpack_require__(40);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -3240,7 +3240,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    *
                                                                                                                                                                                                                    * @prop block - 将宽度设置为和父元素一样
                                                                                                                                                                                                                    * @prop hidden - 设置为隐藏域
-                                                                                                                                                                                                                   * @prop initVal - 设置当前输入框的值
+                                                                                                                                                                                                                   * @prop value - 设置当前输入框的值
                                                                                                                                                                                                                    * @prop label - 输入框的标签
                                                                                                                                                                                                                    * @prop multiline - 可以输入多行文本（自适应文本高度）
                                                                                                                                                                                                                    * @prop number - 输入框的数字指定为 nmuber 类型
@@ -3314,7 +3314,7 @@ exports.default = {
       type: String,
       default: ''
     },
-    initVal: {
+    value: {
       type: [String, Number],
       default: ''
     },
@@ -3393,10 +3393,10 @@ exports.default = {
     this.compName = 'input'; // 组件名字
 
     return {
-      value: this.number ? this._switchNum(this.initVal) : this.initVal, // 输入框的当前的值
+      stateValue: this.number ? this._switchNum(this.value) : this.value, // 输入框的当前的值
       focusing: false, // 输入框是否处于 focus 状态
       keyuping: false, // 是否处于 keyup 状态
-      errorTip: '', // 错误信息提示信息
+      verifiedHint: '', // 错误信息提示信息
       dataTypeName: '', // 数据类型的名称
       verified: true, // 是否验证通过
       inputTextLength: 0, // 当前输入框值的长度
@@ -3422,7 +3422,7 @@ exports.default = {
     },
     placeholderDisplay: function placeholderDisplay() {
       // 输入框占位符的显示状态
-      var empty = this.value === '' || this.value === undefined;
+      var empty = this.stateValue === '' || this.stateValue === undefined;
 
       if (this.UIMaterial) {
         if (this.label) {
@@ -3443,16 +3443,16 @@ exports.default = {
       if (this.focusing) {
         return true;
       } else {
-        return !(this.value === '' || this.value === undefined);
+        return !(this.stateValue === '' || this.stateValue === undefined);
       }
     },
     errorTextDisplay: function errorTextDisplay() {
       // 错误提示的显示状态
-      return !!this.errorTip && this.errorTipType === 'bottom';
+      return !!this.verifiedHint && this.errorTipType === 'bottom';
     },
     errorBorderDisplay: function errorBorderDisplay() {
       // 错误提示框的显示状态
-      return this.ui === 'bootstrap' && !!this.errorTip;
+      return this.ui === 'bootstrap' && !!this.verifiedHint;
     },
     isTextarea: function isTextarea() {
       return this.type === TYPE_TEXT_AREA;
@@ -3490,10 +3490,10 @@ exports.default = {
   },
 
   watch: {
-    initVal: function initVal(val, oldVal) {
-      this.value = val;
-    },
     value: function value(val, oldVal) {
+      this.stateValue = val;
+    },
+    stateValue: function stateValue(val, oldVal) {
       var valueLength = String(val).length;
 
       if (this.textLengthTip) {
@@ -3501,7 +3501,7 @@ exports.default = {
           this._dispatchChange();
           this.inputTextLength = valueLength;
         } else {
-          this.value = val.substr(0, this.max);
+          this.stateValue = val.substr(0, this.max);
         }
       } else {
         this._dispatchChange();
@@ -3513,7 +3513,7 @@ exports.default = {
     },
     errorTextDisplay: function errorTextDisplay(val) {
       if (this.tipDisplay) {
-        val ? this.$refs.helperTip.leave() : this.$refs.errorTip.leave();
+        val ? this.$refs.helperTip.leave() : this.$refs.verifiedHint.leave();
       }
     },
     placeholderDisplay: function placeholderDisplay(val) {
@@ -3532,12 +3532,12 @@ exports.default = {
       var _this = this;
 
       if (this.tipDisplay) {
-        this.$refs.errorTip.$on('afterLeave', function () {
+        this.$refs.verifiedHint.$on('afterLeave', function () {
           _this.$refs.helperTip.enter();
         });
 
         this.$refs.helperTip.$on('afterLeave', function () {
-          _this.$refs.errorTip.enter();
+          _this.$refs.verifiedHint.enter();
         });
       }
     },
@@ -3572,7 +3572,7 @@ exports.default = {
     _dispatchChange: function _dispatchChange() {
       return this.$emit('change', {
         emitter: this,
-        value: this.value
+        value: this.stateValue
       });
     },
 
@@ -3582,23 +3582,23 @@ exports.default = {
      *
      * @return {Object} -
      *                  verified - 验证情况
-     *                  errorTip - 错误提示
+     *                  verifiedHint - 错误提示
      */
     _verifyEmpty: function _verifyEmpty(firstVerify) {
-      var errorTip = '';
+      var verifiedHint = '';
 
       if (this.required) {
-        errorTip = this.name + '\u4E0D\u80FD\u4E3A\u7A7A';
+        verifiedHint = this.name + '\u4E0D\u80FD\u4E3A\u7A7A';
 
         return {
           verified: false,
-          errorTip: errorTip
+          verifiedHint: verifiedHint
         };
       }
 
       return {
         verified: true,
-        errorTip: errorTip
+        verifiedHint: verifiedHint
       };
     },
 
@@ -3652,7 +3652,7 @@ exports.default = {
 
       return this.$emit('focus', {
         emitter: this,
-        valeu: this.value,
+        valeu: this.stateValue,
         event: evt
       });
     },
@@ -3666,7 +3666,7 @@ exports.default = {
       this.focusing = false;
 
       if (this.number) {
-        this.value = this._switchNum(this.value);
+        this.stateValue = this._switchNum(this.stateValue);
       }
 
       if (this.activeVerify) {
@@ -3679,7 +3679,7 @@ exports.default = {
 
       return this.$emit('blur', {
         emitter: this,
-        valeu: this.value,
+        valeu: this.stateValue,
         event: evt
       });
     },
@@ -3711,8 +3711,8 @@ exports.default = {
     _handlerInput: function _handlerInput(event) {
       var refInput = this.$refs.input;
 
-      this.value = event.currentTarget.value;
-      this.multiline && (this.$refs.pre.innerText = this.value);
+      this.stateValue = event.currentTarget.value;
+      this.multiline && (this.$refs.pre.innerText = this.stateValue);
 
       if (this.focusing && this.errorTextDisplay) {
         this.verify();
@@ -4748,7 +4748,7 @@ var _MotionSlide = __webpack_require__(17);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
-var _dom = __webpack_require__(42);
+var _dom = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5962,7 +5962,7 @@ var _List3 = __webpack_require__(174);
 
 var _List4 = _interopRequireDefault(_List3);
 
-var _list = __webpack_require__(47);
+var _list = __webpack_require__(48);
 
 var _list2 = _interopRequireDefault(_list);
 
@@ -7727,18 +7727,49 @@ _vue2.default.directive('bubble', bubbleDirective);
 
 /***/ }),
 /* 39 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = {"input":{"add":"hub/input/add","delete":"hub/input/delete","get":"hub/input/get"},"select":{"add":"hub/select/add","delete":"hub/select/delete"}}
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(60);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./box.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./box.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports) {
 
-module.exports = {"common":{"add":"comp/common/add","delete":"comp/common/delete","get":"comp/common/get"},"input":{"add":"comp/input/add","delete":"comp/input/delete","get":"comp/input/get"},"menu":{"add":"comp/menu/add","delete":"comp/menu/delete"},"select":{"add":"comp/select/add","delete":"comp/select/delete"}}
+module.exports = {"input":{"add":"hub/input/add","delete":"hub/input/delete","get":"hub/input/get"},"select":{"add":"hub/select/add","delete":"hub/select/delete"}}
 
 /***/ }),
 /* 41 */
+/***/ (function(module, exports) {
+
+module.exports = {"common":{"add":"comp/common/add","delete":"comp/common/delete","get":"comp/common/get"},"input":{"add":"comp/input/add","delete":"comp/input/delete","get":"comp/input/get"},"menu":{"add":"comp/menu/add","delete":"comp/menu/delete"},"select":{"add":"comp/select/add","delete":"comp/select/delete"}}
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7762,7 +7793,7 @@ function uid() {
 exports.default = uid;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7828,7 +7859,7 @@ exports.hasScroller = hasScroller;
 exports.findGrandpa = findGrandpa;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7840,9 +7871,9 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(119);
 
-var _Form = __webpack_require__(121);
+var _FormRender = __webpack_require__(121);
 
-var _Form2 = _interopRequireDefault(_Form);
+var _FormRender2 = _interopRequireDefault(_FormRender);
 
 var _base = __webpack_require__(2);
 
@@ -7871,7 +7902,7 @@ var formComp = {
 
   mixins: [_base2.default],
 
-  template: _Form2.default,
+  render: _FormRender2.default,
 
   props: {
     // TODO
@@ -8008,9 +8039,9 @@ var formComp = {
             break;
           }
 
-          queryOpt[compParamName] = comp.value;
+          queryOpt[compParamName] = comp.val();
           queryInfo[compParamName] = {
-            value: comp.value,
+            value: comp.val(),
             text: comp.text
           };
 
@@ -8056,8 +8087,8 @@ var formComp = {
             break;
           }
 
-          queryOpt[compParamName] = comp.value;
-          queryInfo[compParamName] = comp.value;
+          queryOpt[compParamName] = comp.val();
+          queryInfo[compParamName] = comp.val();
 
           break;
       }
@@ -8120,7 +8151,7 @@ var formComp = {
           return VERIFY_FORM_CONTROL.every(function (controlName) {
             if (comp.compName === controlName) {
               verifitation = false;
-              (0, _tip2.default)(comp.dangerTip);
+              (0, _tip2.default)(comp.verifiedHint);
 
               return false;
             }
@@ -8181,7 +8212,7 @@ var formComp = {
 exports.default = formComp;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8399,7 +8430,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8551,7 +8582,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8692,7 +8723,7 @@ var searchComp = {
 exports.default = searchComp;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8772,7 +8803,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8800,7 +8831,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _list = __webpack_require__(47);
+var _list = __webpack_require__(48);
 
 var _list2 = _interopRequireDefault(_list);
 
@@ -9050,7 +9081,7 @@ var Table = {
 exports.default = Table;
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9086,7 +9117,7 @@ var tableRowComp = {
 exports.default = tableRowComp;
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9100,7 +9131,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _dom = __webpack_require__(42);
+var _dom = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9214,7 +9245,7 @@ var tableColComp = {
 exports.default = tableColComp;
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9248,7 +9279,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9287,7 +9318,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9300,6 +9331,8 @@ Object.defineProperty(exports, "__esModule", {
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 __webpack_require__(28);
+
+__webpack_require__(39);
 
 __webpack_require__(190);
 
@@ -9323,7 +9356,7 @@ var _store = __webpack_require__(6);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(40);
+var _type = __webpack_require__(41);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -9361,7 +9394,7 @@ var _Select4 = _interopRequireDefault(_Select3);
 
 var _prop = __webpack_require__(5);
 
-var _uid = __webpack_require__(41);
+var _uid = __webpack_require__(42);
 
 var _uid2 = _interopRequireDefault(_uid);
 
@@ -9530,7 +9563,8 @@ exports.default = {
       transitionFinish: false, // 下拉框显示过渡完成的标识符
       text: undefined, // 当前下拉框的 text 值
       unwatchOption: {}, // 取消观察 option
-      verified: true // 是否以验证通过
+      verified: true, // 是否以验证通过
+      verifiedHint: '' // 验证提示
     };
   },
 
@@ -10197,7 +10231,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10231,7 +10265,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10431,7 +10465,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10467,7 +10501,7 @@ exports.default = {
     */
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10478,9 +10512,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.install = exports.set = exports.MotionZoom = exports.MotionSlide = exports.MotionRip = exports.MotionFold = exports.MotionFade = exports.TableRow = exports.TableCol = exports.Table = exports.TabEle = exports.Tab = exports.ShiftEle = exports.Shift = exports.SelectEle = exports.Select = exports.Search = exports.Scroller = exports.Row = exports.Fold = exports.Pop = exports.Page = exports.Omit = exports.Nav = exports.Modal = exports.MenuEle = exports.Menu = exports.Message = exports.List = exports.Loading = exports.Icon = exports.Input = exports.FoldContent = exports.FoldTitle = exports.Form = exports.Col = exports.Check = exports.Btn = exports.Bubble = exports.tooltip = exports.toast = exports.tip = exports.confirm = exports.alert = undefined;
 
-__webpack_require__(58);
-
 __webpack_require__(59);
+
+__webpack_require__(39);
 
 __webpack_require__(62);
 
@@ -10532,7 +10566,7 @@ var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Form = __webpack_require__(43);
+var _Form = __webpack_require__(44);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -10572,7 +10606,7 @@ var _Menu = __webpack_require__(35);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _MenuEle = __webpack_require__(51);
+var _MenuEle = __webpack_require__(52);
 
 var _MenuEle2 = _interopRequireDefault(_MenuEle);
 
@@ -10580,11 +10614,11 @@ var _Modal = __webpack_require__(24);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _Nav = __webpack_require__(44);
+var _Nav = __webpack_require__(45);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _Omit = __webpack_require__(45);
+var _Omit = __webpack_require__(46);
 
 var _Omit2 = _interopRequireDefault(_Omit);
 
@@ -10604,15 +10638,15 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Search = __webpack_require__(46);
+var _Search = __webpack_require__(47);
 
 var _Search2 = _interopRequireDefault(_Search);
 
-var _Select = __webpack_require__(53);
+var _Select = __webpack_require__(54);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _SelectEle = __webpack_require__(54);
+var _SelectEle = __webpack_require__(55);
 
 var _SelectEle2 = _interopRequireDefault(_SelectEle);
 
@@ -10620,27 +10654,27 @@ var _Shift = __webpack_require__(36);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
-var _ShiftEle = __webpack_require__(52);
+var _ShiftEle = __webpack_require__(53);
 
 var _ShiftEle2 = _interopRequireDefault(_ShiftEle);
 
-var _Tab = __webpack_require__(55);
+var _Tab = __webpack_require__(56);
 
 var _Tab2 = _interopRequireDefault(_Tab);
 
-var _TabEle = __webpack_require__(56);
+var _TabEle = __webpack_require__(57);
 
 var _TabEle2 = _interopRequireDefault(_TabEle);
 
-var _Table = __webpack_require__(48);
+var _Table = __webpack_require__(49);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _TableRow = __webpack_require__(49);
+var _TableRow = __webpack_require__(50);
 
 var _TableRow2 = _interopRequireDefault(_TableRow);
 
-var _TableCol = __webpack_require__(50);
+var _TableCol = __webpack_require__(51);
 
 var _TableCol2 = _interopRequireDefault(_TableCol);
 
@@ -10713,7 +10747,7 @@ exports.set = _config.set;
 exports.install = _src2.default;
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10724,37 +10758,6 @@ __webpack_require__(37);
 __webpack_require__(38);
 
 __webpack_require__(28);
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(60);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./box.scss", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./box.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
 
 /***/ }),
 /* 60 */
@@ -11026,7 +11029,7 @@ var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Form = __webpack_require__(43);
+var _Form = __webpack_require__(44);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -11062,11 +11065,11 @@ var _Loading = __webpack_require__(13);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Nav = __webpack_require__(44);
+var _Nav = __webpack_require__(45);
 
 var _Nav2 = _interopRequireDefault(_Nav);
 
-var _Omit = __webpack_require__(45);
+var _Omit = __webpack_require__(46);
 
 var _Omit2 = _interopRequireDefault(_Omit);
 
@@ -11078,7 +11081,7 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Search = __webpack_require__(46);
+var _Search = __webpack_require__(47);
 
 var _Search2 = _interopRequireDefault(_Search);
 
@@ -11098,15 +11101,15 @@ var _List = __webpack_require__(27);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Table = __webpack_require__(48);
+var _Table = __webpack_require__(49);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _TableRow = __webpack_require__(49);
+var _TableRow = __webpack_require__(50);
 
 var _TableRow2 = _interopRequireDefault(_TableRow);
 
-var _TableCol = __webpack_require__(50);
+var _TableCol = __webpack_require__(51);
 
 var _TableCol2 = _interopRequireDefault(_TableCol);
 
@@ -11114,7 +11117,7 @@ var _Menu = __webpack_require__(35);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _MenuEle = __webpack_require__(51);
+var _MenuEle = __webpack_require__(52);
 
 var _MenuEle2 = _interopRequireDefault(_MenuEle);
 
@@ -11122,23 +11125,23 @@ var _Shift = __webpack_require__(36);
 
 var _Shift2 = _interopRequireDefault(_Shift);
 
-var _ShiftEle = __webpack_require__(52);
+var _ShiftEle = __webpack_require__(53);
 
 var _ShiftEle2 = _interopRequireDefault(_ShiftEle);
 
-var _Select = __webpack_require__(53);
+var _Select = __webpack_require__(54);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _SelectEle = __webpack_require__(54);
+var _SelectEle = __webpack_require__(55);
 
 var _SelectEle2 = _interopRequireDefault(_SelectEle);
 
-var _Tab = __webpack_require__(55);
+var _Tab = __webpack_require__(56);
 
 var _Tab2 = _interopRequireDefault(_Tab);
 
-var _TabEle = __webpack_require__(56);
+var _TabEle = __webpack_require__(57);
 
 var _TabEle2 = _interopRequireDefault(_TabEle);
 
@@ -11639,7 +11642,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _actions, _mutations;
 
-var _type = __webpack_require__(39);
+var _type = __webpack_require__(40);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -11689,7 +11692,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _type = __webpack_require__(40);
+var _type = __webpack_require__(41);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -13235,9 +13238,20 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * form 组件样式\r\n */
 
 /***/ }),
 /* 121 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div :class=\"[cPrefix]\">\r\n  <div v-xclass=\"xclass(themeClass)\">\r\n    <slot></slot>\r\n  </div>\r\n</div>";
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (h) {
+  return h('div', {
+    class: this.cPrefix
+  }, this.$slots.default);
+};
 
 /***/ }),
 /* 122 */
@@ -13426,7 +13440,7 @@ exports.default = function (h) {
     },
     class: [this.xclass('edit-box-input')],
     domProps: {
-      value: this.value
+      value: this.stateValue
     },
     directives: [{
       name: 'focus',
@@ -13446,7 +13460,7 @@ exports.default = function (h) {
       class: this.xclass('edit-box-pre')
     }, [h('span', {
       ref: 'pre'
-    }, this.value), h('br')]));
+    }, this.stateValue), h('br')]));
   }
 
   if (this.UIMaterial) {
@@ -13524,10 +13538,10 @@ exports.default = function (h) {
     props: {
       speed: 'fast'
     },
-    ref: 'errorTip'
+    ref: 'verifiedHint'
   }, [h('div', {
     class: [this.xclass('tip-error')]
-  }, this.errorTip)])]));
+  }, this.verifiedHint)])]));
 
   return h('div', {
     class: this.stageClass,
@@ -13647,7 +13661,7 @@ exports.default = {
       var _this = this;
 
       var verified = true;
-      var errorTip = '';
+      var verifiedHint = '';
 
       var returnFun = function returnFun() {
         if (!verified) {
@@ -13655,25 +13669,25 @@ exports.default = {
         }
 
         _this.verified = verified;
-        _this.errorTip = errorTip;
+        _this.verifiedHint = verifiedHint;
 
         return verified;
       };
 
       if (!this.number) {
-        this.value = this.value.trim();
+        this.stateValue = this.stateValue.trim();
       }
 
-      if (!this.value && this.value !== 0) {
+      if (!this.stateValue && this.stateValue !== 0) {
         var verifyEmpty = this._verifyEmpty();
 
         verified = verifyEmpty.verified;
-        errorTip = verifyEmpty.errorTip;
+        verifiedHint = verifyEmpty.verifiedHint;
 
         return returnFun();
       } else {
-        if (this.number && isNaN(this.value)) {
-          errorTip = this.errorMsg + '\u8BF7\u8F93\u5165\u6570\u5B57\u7C7B\u578B';
+        if (this.number && isNaN(this.stateValue)) {
+          verifiedHint = this.errorMsg + '\u8BF7\u8F93\u5165\u6570\u5B57\u7C7B\u578B';
           verified = false;
 
           return returnFun();
@@ -13681,11 +13695,11 @@ exports.default = {
 
         if (this.min) {
           if (this.number) {
-            verified = this.min <= this.value;
-            errorTip = verified ? '' : this.name + '\u4E0D\u80FD\u5C0F\u4E8E' + this.min + '!';
+            verified = this.min <= this.stateValue;
+            verifiedHint = verified ? '' : this.name + '\u4E0D\u80FD\u5C0F\u4E8E' + this.min + '!';
           } else {
-            verified = this.min <= this.value.toString().length;
-            errorTip = verified ? '' : this.name + '\u957F\u5EA6\u4E0D\u80FD\u5C0F\u4E8E' + this.min + '\u4E2A\u5B57\u7B26!';
+            verified = this.min <= this.stateValue.toString().length;
+            verifiedHint = verified ? '' : this.name + '\u957F\u5EA6\u4E0D\u80FD\u5C0F\u4E8E' + this.min + '\u4E2A\u5B57\u7B26!';
           }
 
           if (!verified) {
@@ -13694,8 +13708,8 @@ exports.default = {
         }
 
         if (this.max) {
-          verified = this.max >= this.value.toString().length;
-          errorTip = verified ? '' : this.name + '\u957F\u5EA6\u4E0D\u80FD\u5927\u4E8E' + this.max + '\u4E2A\u5B57\u7B26!';
+          verified = this.max >= this.stateValue.toString().length;
+          verifiedHint = verified ? '' : this.name + '\u957F\u5EA6\u4E0D\u80FD\u5927\u4E8E' + this.max + '\u4E2A\u5B57\u7B26!';
 
           if (!verified) {
             return returnFun();
@@ -13703,10 +13717,10 @@ exports.default = {
         }
 
         if (this.minNum && this.number) {
-          var value = Number(this.value);
+          var value = Number(this.stateValue);
 
           verified = this.minNum <= value;
-          errorTip = verified ? '' : this.name + '\u4E0D\u80FD\u5C0F\u4E8E' + this.minNum + '!';
+          verifiedHint = verified ? '' : this.name + '\u4E0D\u80FD\u5C0F\u4E8E' + this.minNum + '!';
 
           if (!verified) {
             return returnFun();
@@ -13714,23 +13728,23 @@ exports.default = {
         }
 
         if (this.maxNum && this.number) {
-          var _value = Number(this.value);
+          var _value = Number(this.stateValue);
 
           verified = this.maxNum >= _value;
-          errorTip = verified ? '' : this.name + '\u4E0D\u80FD\u5927\u4E8E' + this.maxNum + '!';
+          verifiedHint = verified ? '' : this.name + '\u4E0D\u80FD\u5927\u4E8E' + this.maxNum + '!';
 
           if (!verified) {
             return returnFun();
           }
         }
 
-        if ((this.regex || this.verifiedType) && !this.regexObj.test(this.value)) {
+        if ((this.regex || this.verifiedType) && !this.regexObj.test(this.stateValue)) {
           verified = false;
 
           if (firstVerify) {
-            errorTip = '';
+            verifiedHint = '';
           } else {
-            errorTip = this.formatText ? this.formatText : this._formatMessage;
+            verifiedHint = this.formatText ? this.formatText : this._formatMessage;
           }
 
           return returnFun();
@@ -13750,12 +13764,22 @@ exports.default = {
       this.verify();
 
       if (!this.verified) {
-        (0, _tip2.default)(this.errorTip);
+        (0, _tip2.default)(this.verifiedHint);
 
         return false;
       }
 
       return this;
+    },
+
+
+    /**
+     * 获取当前值
+     *
+     * @return {String, Number} - 输入框的值
+     */
+    val: function val() {
+      return this.stateValue;
     }
   }
 }; /**
@@ -17979,7 +18003,7 @@ exports.default = {
      * @return {Object} - this - 组件
      */
     verify: function verify() {
-      this.dangerTip = '\u8BF7\u9009\u62E9' + this.errorMessage + (this.errorMessage ? '的' : '') + '\u4E0B\u62C9\u6846!';
+      this.verifiedHint = '\u8BF7\u9009\u62E9' + this.errorMessage + (this.errorMessage ? '的' : '') + '\u4E0B\u62C9\u6846!';
 
       if (this.multiple) {
         this.verified = this.stateValue.length >= this.min;
@@ -18133,11 +18157,12 @@ exports.default = {
 
 
     /**
-     * 折叠下拉框
+     * 获取当前值
+     *
      * @return {String, Number} - 下拉组件的当前值
      */
     val: function val() {
-      return this.value;
+      return this.stateValue;
     }
   }
 }; /**
