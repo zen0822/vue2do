@@ -40,7 +40,7 @@ export default {
      * @return {Object} - this - 组件
      */
     verify() {
-      this.dangerTip = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}下拉框!`
+      this.verifiedHint = `请选择${this.errorMessage}${this.errorMessage ? '的' : ''}下拉框!`
 
       if (this.multiple) {
         this.verified = this.stateValue.length >= this.min
@@ -181,11 +181,12 @@ export default {
     },
 
     /**
-     * 折叠下拉框
+     * 获取当前值
+     *
      * @return {String, Number} - 下拉组件的当前值
      */
     val() {
-      return this.value
+      return this.stateValue
     }
   }
 }

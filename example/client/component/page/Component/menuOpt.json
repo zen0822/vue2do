@@ -19,6 +19,10 @@
       {
         "name": "输入组件",
         "route": "/component/input"
+      },
+      {
+        "name": "表单组件",
+        "route": "/component/form"
       }
     ]
   },

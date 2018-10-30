@@ -5,7 +5,7 @@
  */
 
 import './Form.scss'
-import template from './Form.tpl'
+import render from './Form.render.js'
 
 import baseMixin from '../../mixin/base'
 import tip from '../Message/tip'
@@ -21,7 +21,7 @@ const formComp = {
 
   mixins: [baseMixin],
 
-  template,
+  render,
 
   props: {
     // TODO
@@ -150,9 +150,9 @@ const formComp = {
             break
           }
 
-          queryOpt[compParamName] = comp.value
+          queryOpt[compParamName] = comp.val()
           queryInfo[compParamName] = {
-            value: comp.value,
+            value: comp.val(),
             text: comp.text
           }
 
@@ -198,8 +198,8 @@ const formComp = {
             break
           }
 
-          queryOpt[compParamName] = comp.value
-          queryInfo[compParamName] = comp.value
+          queryOpt[compParamName] = comp.val()
+          queryInfo[compParamName] = comp.val()
 
           break
       }
@@ -257,7 +257,7 @@ const formComp = {
           return VERIFY_FORM_CONTROL.every((controlName) => {
             if (comp.compName === controlName) {
               verifitation = false
-              tip(comp.dangerTip)
+              tip(comp.verifiedHint)
 
               return false
             }

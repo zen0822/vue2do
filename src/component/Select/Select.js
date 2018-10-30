@@ -189,7 +189,8 @@ export default {
       transitionFinish: false, // 下拉框显示过渡完成的标识符
       text: undefined, // 当前下拉框的 text 值
       unwatchOption: {}, // 取消观察 option
-      verified: true // 是否以验证通过
+      verified: true, // 是否以验证通过
+      verifiedHint: '' // 验证提示
     }
   },
 
