@@ -16,6 +16,7 @@
  * @event blur
  */
 
+import '../../scss/common/main.scss'
 import './Btn.scss'
 import './Btn.material.scss'
 import './Btn.bootstrap.scss'

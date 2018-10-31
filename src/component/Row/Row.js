@@ -37,7 +37,7 @@ export default {
 
     justify: {
       type: String,
-      default: 'space-between'
+      default: 'justify'
     },
 
     wrap: {
