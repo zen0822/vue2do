@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.5-beta.9
+ * vue2do.js v0.4.5-beta.10
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -547,11 +547,11 @@ var _index = __webpack_require__(75);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(11);
+var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -1028,6 +1028,37 @@ exports.handleEleDisplay = handleEleDisplay;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(63);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -1073,7 +1104,7 @@ exports.default = commonStore;
 exports.common = commonStore;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1198,7 +1229,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1280,125 +1311,6 @@ exports.default = {
     }
   }
 };
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _vue = __webpack_require__(3);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _Message = __webpack_require__(22);
-
-var _Message2 = _interopRequireDefault(_Message);
-
-var _store = __webpack_require__(6);
-
-var _store2 = _interopRequireDefault(_store);
-
-var _type = __webpack_require__(11);
-
-var _type2 = _interopRequireDefault(_type);
-
-var _base = __webpack_require__(2);
-
-var _base2 = _interopRequireDefault(_base);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var tiping = false; /**
-                     * tip 组件
-                     */
-
-var tipHub = [];
-
-/**
- * 创建 tip 组件的实例
- **/
-var createTip = function createTip() {
-  var tipCompVm = new _vue2.default({
-    name: 'tip',
-    mixins: [_base2.default],
-    computed: {
-      // 组件类名的前缀
-      cPrefix: function cPrefix() {
-        return this.compPrefix + '-tip';
-      }
-    },
-    components: {
-      message: _Message2.default
-    },
-    store: _store2.default,
-    render: function render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [h('message', {
-        ref: 'tip'
-      })]);
-    },
-    mounted: function mounted() {
-      this.$store.dispatch(_type2.default.tip.add, this);
-    }
-  }).$mount();
-
-  document.body.appendChild(tipCompVm.$el);
-};
-
-var commonVuex = new _vue2.default({
-  store: _store2.default
-});
-
-/**
- * 调用 tip
- **/
-var tip = function tip() {
-  var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-  if (tiping) {
-    tipHub.push(opt);
-
-    return false;
-  }
-
-  tiping = true;
-
-  var option = {};
-
-  if (typeof opt === 'string') {
-    option = {
-      message: opt.toString()
-    };
-  } else {
-    option = opt;
-  }
-
-  return commonVuex.$store.getters[_type2.default.tip.get].$refs.tip.set({
-    message: option.message,
-    type: option.type,
-    hideCb: function hideCb() {
-      tiping = false;
-      option.cb && option.cb();
-
-      if (tipHub.length > 0) {
-        return tip(tipHub.shift());
-      }
-    }
-  }).show();
-};
-
-window.addEventListener('load', function () {
-  createTip();
-});
-
-exports.default = tip;
 
 /***/ }),
 /* 10 */
@@ -1929,12 +1841,131 @@ exports.default = {
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _vue = __webpack_require__(3);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _Message = __webpack_require__(22);
+
+var _Message2 = _interopRequireDefault(_Message);
+
+var _store = __webpack_require__(7);
+
+var _store2 = _interopRequireDefault(_store);
+
+var _type = __webpack_require__(12);
+
+var _type2 = _interopRequireDefault(_type);
+
+var _base = __webpack_require__(2);
+
+var _base2 = _interopRequireDefault(_base);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var tiping = false; /**
+                     * tip 组件
+                     */
+
+var tipHub = [];
+
+/**
+ * 创建 tip 组件的实例
+ **/
+var createTip = function createTip() {
+  var tipCompVm = new _vue2.default({
+    name: 'tip',
+    mixins: [_base2.default],
+    computed: {
+      // 组件类名的前缀
+      cPrefix: function cPrefix() {
+        return this.compPrefix + '-tip';
+      }
+    },
+    components: {
+      message: _Message2.default
+    },
+    store: _store2.default,
+    render: function render(h) {
+      return h('div', {
+        class: [this.cPrefix]
+      }, [h('message', {
+        ref: 'tip'
+      })]);
+    },
+    mounted: function mounted() {
+      this.$store.dispatch(_type2.default.tip.add, this);
+    }
+  }).$mount();
+
+  document.body.appendChild(tipCompVm.$el);
+};
+
+var commonVuex = new _vue2.default({
+  store: _store2.default
+});
+
+/**
+ * 调用 tip
+ **/
+var tip = function tip() {
+  var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+  if (tiping) {
+    tipHub.push(opt);
+
+    return false;
+  }
+
+  tiping = true;
+
+  var option = {};
+
+  if (typeof opt === 'string') {
+    option = {
+      message: opt.toString()
+    };
+  } else {
+    option = opt;
+  }
+
+  return commonVuex.$store.getters[_type2.default.tip.get].$refs.tip.set({
+    message: option.message,
+    type: option.type,
+    hideCb: function hideCb() {
+      tiping = false;
+      option.cb && option.cb();
+
+      if (tipHub.length > 0) {
+        return tip(tipHub.shift());
+      }
+    }
+  }).show();
+};
+
+window.addEventListener('load', function () {
+  createTip();
+});
+
+exports.default = tip;
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = {"alert":{"add":"common/alert/add","get":"common/alert/get"},"confirm":{"add":"common/confirm/add","get":"common/confirm/get"},"tip":{"add":"common/tip/add","get":"common/tip/get"},"toast":{"add":"common/toast/add","get":"common/toast/get"},"tooltip":{"add":"common/tooltip/add","get":"common/tooltip/get"},"deviceSize":"common/deviceSize"}
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1960,7 +1991,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _form = __webpack_require__(15);
+var _form = __webpack_require__(16);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -1968,11 +1999,11 @@ var _BtnMethod = __webpack_require__(81);
 
 var _BtnMethod2 = _interopRequireDefault(_BtnMethod);
 
-var _Loading = __webpack_require__(13);
+var _Loading = __webpack_require__(14);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _MotionRip = __webpack_require__(16);
+var _MotionRip = __webpack_require__(17);
 
 var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
@@ -2236,7 +2267,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2390,7 +2421,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2691,7 +2722,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2736,7 +2767,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2752,7 +2783,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _motion = __webpack_require__(14);
+var _motion = __webpack_require__(15);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -2951,239 +2982,6 @@ exports.default = {
 };
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _motion = __webpack_require__(14);
-
-var _motion2 = _interopRequireDefault(_motion);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'MotionSlide',
-
-  mixins: [_motion2.default],
-
-  props: {
-    direction: {
-      type: String,
-      default: 'south',
-      validator: function validator(val) {
-        return ['north', 'east', 'west', 'south'].includes(val);
-      }
-    },
-    global: {
-      type: Boolean,
-      default: false
-    },
-    offset: {
-      type: Number,
-      default: 0
-    }
-  },
-
-  data: function data() {
-    this.moving = false; // 是否正在执行过渡动画
-
-    return {
-      transiting: false,
-      isEnter: false,
-      isLeaving: false,
-      slideOffset: {}
-    };
-  },
-
-
-  computed: {
-    translate: function translate() {
-      return this._getTranslate();
-    },
-    transition: function transition() {
-      return 'transform ' + this.transitionTime + ' ease-out';
-    },
-    positionType: function positionType() {
-      return this.global ? 'fixed' : 'absolute';
-    }
-  },
-
-  methods: {
-    /**
-     *
-     * @param {Object} opt -
-     *                      {Number} top
-     *                      {Number} left
-     * @return {String} - 过渡的样式声明
-     *
-     */
-    _getTranslate: function _getTranslate() {
-      switch (this.direction) {
-        case 'south':
-          return 'translateY(-100%) translateY(-' + this.slideOffset + 'px)';
-        case 'north':
-          return 'translateY(100%) translateY(' + this.slideOffset + 'px)';
-        case 'east':
-          return 'translateX(-100%) translateY(-' + this.slideOffset + 'px)';
-        case 'west':
-          return 'translateX(100%) translateY(' + this.slideOffset + 'px)';
-        default:
-          return 'translateY(-100%) translateY(-' + this.slideOffset + 'px)';
-      }
-    },
-
-
-    /**
-     * 设置 offset 属性
-     */
-    setOffset: function setOffset(value) {
-      this.slideOffset = value;
-
-      return this;
-    },
-    beforeEnter: function beforeEnter() {
-      var _this = this;
-
-      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          code = _ref.code;
-
-      this.$emit('beforeEnter');
-
-      var el = this.$el;
-
-      Object.assign(el.style, {
-        'position': this.positionType,
-        'transition': this.transition,
-        'transform': this._getTranslate()
-      });
-
-      return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-          code === _this.code && (el.style.display = '');
-
-          return resolve();
-        }, 78);
-      });
-    },
-    entering: function entering() {
-      var _this2 = this;
-
-      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          code = _ref2.code;
-
-      var el = this.$el;
-      // HACK: trigger browser reflow
-      var height = el.offsetHeight;
-
-      this.$emit('entering');
-
-      Object.assign(el.style, {
-        'transform': ''
-      });
-
-      return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-          return resolve();
-        }, _this2.time);
-      });
-    },
-    afterEnter: function afterEnter() {
-      var el = this.$el;
-
-      Object.assign(el.style, {
-        'position': '',
-        'transition': ''
-      });
-
-      this.$emit('afterEnter');
-    },
-    beforeLeave: function beforeLeave() {
-      var el = this.$el;
-
-      this.$emit('beforeLeave');
-
-      return Object.assign(el.style, {
-        'position': this.positionType,
-        'transition': this.transition,
-        'transform': ''
-      });
-    },
-    leaveing: function leaveing() {
-      var _this3 = this;
-
-      var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          code = _ref3.code;
-
-      var el = this.$el;
-
-      this.$emit('leaving');
-
-      Object.assign(el.style, {
-        'transform': this.translate
-      });
-
-      return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-          code === _this3.code && (el.style.display = 'none');
-
-          return resolve();
-        }, _this3.time);
-      });
-    },
-    afterLeave: function afterLeave() {
-      var el = this.$el;
-
-      Object.assign(el.style, {
-        'position': '',
-        'transition': '',
-        'transform': ''
-      });
-
-      return this.$emit('afterLeave');
-    }
-  },
-
-  render: function render(h) {
-    return h('transition', this.$slots.default);
-  },
-  created: function created() {
-    this.slideOffset = this.offset;
-  },
-  mounted: function mounted() {
-    if (!this.display) {
-      this.$el.style.display = 'none';
-    }
-  }
-}; /**
-    * slide motion component - 滑动过度效果
-    *
-    * @prop offset - 元素滑动的偏移值,
-    *                direction 为 south：实例顶部距离实例的 offsetParent 的顶部的偏移值
-    *                direction 为 north：实例低部距离实例的 offsetParent 的低部的偏移值
-    *                direction 为 west：实例右边距离实例的 offsetParent 的右边的偏移值
-    *                direction 为 east：实例左边距离实例的 offsetParent 的左边的偏移值
-    * @prop direction - 滑动方向(north | east | west | south)
-    * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
-    * @prop speed - 淡出速度
-    * @prop display - 默认一开始是隐藏（进来之前的状态）
-    * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
-    * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
-    *
-    * @event beforeEnter - 进来过渡之前
-    * @event enter - 进来过渡期间
-    * @event afterEnter - 进来过渡完成
-    * @event beforeLeave - 离开过渡之前
-    * @event leave - 离开过渡期间
-    * @event afterLeave - 离开过渡之后
-    */
-
-/***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3196,7 +2994,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(38);
 
-__webpack_require__(29);
+__webpack_require__(6);
 
 __webpack_require__(119);
 
@@ -3208,7 +3006,7 @@ var _Input = __webpack_require__(125);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -3224,7 +3022,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _form = __webpack_require__(15);
+var _form = __webpack_require__(16);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -3232,11 +3030,11 @@ var _Input3 = __webpack_require__(127);
 
 var _Input4 = _interopRequireDefault(_Input3);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
@@ -3755,7 +3553,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _motion = __webpack_require__(14);
+var _motion = __webpack_require__(15);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -3994,11 +3792,11 @@ var _Check = __webpack_require__(101);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
@@ -4006,7 +3804,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _MotionRip = __webpack_require__(16);
+var _MotionRip = __webpack_require__(17);
 
 var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
@@ -4014,7 +3812,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _form = __webpack_require__(15);
+var _form = __webpack_require__(16);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -4755,7 +4553,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _MotionSlide = __webpack_require__(17);
+var _MotionSlide = __webpack_require__(24);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
@@ -5066,6 +4864,241 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _motion = __webpack_require__(15);
+
+var _motion2 = _interopRequireDefault(_motion);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'MotionSlide',
+
+  mixins: [_motion2.default],
+
+  props: {
+    direction: {
+      type: String,
+      default: 'south',
+      validator: function validator(val) {
+        return ['north', 'east', 'west', 'south'].includes(val);
+      }
+    },
+    global: {
+      type: Boolean,
+      default: false
+    },
+    offset: {
+      type: Number,
+      default: 0
+    }
+  },
+
+  data: function data() {
+    this.moving = false; // 是否正在执行过渡动画
+
+    return {
+      transiting: false,
+      isEnter: false,
+      isLeaving: false,
+      slideOffset: {}
+    };
+  },
+
+
+  computed: {
+    translate: function translate() {
+      return this._getTranslate();
+    },
+    transition: function transition() {
+      return 'transform ' + this.transitionTime + ' ease-out';
+    },
+    positionType: function positionType() {
+      return this.global ? 'fixed' : 'absolute';
+    }
+  },
+
+  methods: {
+    /**
+     *
+     * @param {Object} opt -
+     *                      {Number} top
+     *                      {Number} left
+     * @return {String} - 过渡的样式声明
+     *
+     */
+    _getTranslate: function _getTranslate() {
+      switch (this.direction) {
+        case 'south':
+          return 'translateY(-100%) translateY(-' + this.slideOffset + 'px)';
+        case 'north':
+          return 'translateY(100%) translateY(' + this.slideOffset + 'px)';
+        case 'east':
+          return 'translateX(-100%) translateY(-' + this.slideOffset + 'px)';
+        case 'west':
+          return 'translateX(100%) translateY(' + this.slideOffset + 'px)';
+        default:
+          return 'translateY(-100%) translateY(-' + this.slideOffset + 'px)';
+      }
+    },
+
+
+    /**
+     * 设置 offset 属性
+     */
+    setOffset: function setOffset(value) {
+      this.slideOffset = value;
+
+      return this;
+    },
+    beforeEnter: function beforeEnter() {
+      var _this = this;
+
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          code = _ref.code;
+
+      this.$emit('beforeEnter');
+
+      var el = this.$el;
+
+      Object.assign(el.style, {
+        'position': this.positionType,
+        'transition': this.transition,
+        'transform': this._getTranslate()
+      });
+
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          code === _this.code && (el.style.display = '');
+
+          return resolve();
+        }, 78);
+      });
+    },
+    entering: function entering() {
+      var _this2 = this;
+
+      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          code = _ref2.code;
+
+      var el = this.$el;
+      // HACK: trigger browser reflow
+      var height = el.offsetHeight;
+
+      this.$emit('entering');
+
+      Object.assign(el.style, {
+        'transform': ''
+      });
+
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          return resolve();
+        }, _this2.time);
+      });
+    },
+    afterEnter: function afterEnter() {
+      var el = this.$el;
+
+      Object.assign(el.style, {
+        'position': '',
+        'transition': ''
+      });
+
+      this.$emit('afterEnter');
+    },
+    beforeLeave: function beforeLeave() {
+      var el = this.$el;
+
+      this.$emit('beforeLeave');
+
+      return Object.assign(el.style, {
+        'position': this.positionType,
+        'transition': this.transition,
+        'transform': ''
+      });
+    },
+    leaveing: function leaveing() {
+      var _this3 = this;
+
+      var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          code = _ref3.code;
+
+      var el = this.$el;
+
+      this.$emit('leaving');
+
+      Object.assign(el.style, {
+        'transform': this.translate
+      });
+
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          code === _this3.code && (el.style.display = 'none');
+
+          return resolve();
+        }, _this3.time);
+      });
+    },
+    afterLeave: function afterLeave() {
+      var el = this.$el;
+
+      Object.assign(el.style, {
+        'position': '',
+        'transition': '',
+        'transform': ''
+      });
+
+      return this.$emit('afterLeave');
+    }
+  },
+
+  render: function render(h) {
+    return h('transition', this.$slots.default);
+  },
+  created: function created() {
+    this.slideOffset = this.offset;
+  },
+  mounted: function mounted() {
+    if (!this.display) {
+      this.$el.style.display = 'none';
+    }
+  }
+}; /**
+    * slide motion component - 滑动过度效果
+    *
+    * @prop offset - 元素滑动的偏移值,
+    *                direction 为 south：实例顶部距离实例的 offsetParent 的顶部的偏移值
+    *                direction 为 north：实例低部距离实例的 offsetParent 的低部的偏移值
+    *                direction 为 west：实例右边距离实例的 offsetParent 的右边的偏移值
+    *                direction 为 east：实例左边距离实例的 offsetParent 的左边的偏移值
+    * @prop direction - 滑动方向(north | east | west | south)
+    * @prop global - 元素的位置是否是以可视界面的相对定位 (fixed)，默认为否（绝对定位 absolute）
+    * @prop speed - 淡出速度
+    * @prop display - 默认一开始是隐藏（进来之前的状态）
+    * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
+    * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+    *
+    * @event beforeEnter - 进来过渡之前
+    * @event enter - 进来过渡期间
+    * @event afterEnter - 进来过渡完成
+    * @event beforeLeave - 离开过渡之前
+    * @event leave - 离开过渡期间
+    * @event afterLeave - 离开过渡之后
+    */
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+__webpack_require__(6);
+
 __webpack_require__(131);
 
 __webpack_require__(133);
@@ -5090,7 +5123,7 @@ var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
-var _Btn = __webpack_require__(12);
+var _Btn = __webpack_require__(13);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -5102,11 +5135,11 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
@@ -5405,7 +5438,7 @@ var modalComp = {
 exports.default = modalComp;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5423,7 +5456,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _motion = __webpack_require__(14);
+var _motion = __webpack_require__(15);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -5607,7 +5640,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5619,7 +5652,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(162);
 
-var _Btn = __webpack_require__(12);
+var _Btn = __webpack_require__(13);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -5631,11 +5664,11 @@ var _Input = __webpack_require__(18);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
@@ -5925,7 +5958,7 @@ var pageComp = {
 exports.default = pageComp;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5935,35 +5968,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+__webpack_require__(6);
+
 __webpack_require__(168);
 
 var _List = __webpack_require__(170);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _tip = __webpack_require__(9);
-
-var _tip2 = _interopRequireDefault(_tip);
-
 var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Loading = __webpack_require__(13);
+var _Loading = __webpack_require__(14);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Page = __webpack_require__(26);
+var _Page = __webpack_require__(27);
 
 var _Page2 = _interopRequireDefault(_Page);
 
 var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
-
-var _MotionSlide = __webpack_require__(17);
-
-var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
 var _base = __webpack_require__(2);
 
@@ -5979,28 +6006,29 @@ var _list2 = _interopRequireDefault(_list);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PAGE_TYPE_NUM = 'num'; /**
-                            * list 组件
-                            *
-                            * @prop auto - 根据传入的列表数据自动生成分页数据
-                            * @prop autoHideScroller - 是否自动隐藏滚动条
-                            * @prop autoHidePage - 是否自动隐藏分页触发器
-                            * @prop item - 列表数据
-                            * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
-                            * @prop pager - 启动分页功能
-                            * @prop pageSize - 将列表数据（item）分为每页多少条数据
-                            * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
-                            * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
-                            * @prop height - 滚动条高度
-                            *
-                            * @event switchPage - 换页触发事件
-                            * @event scrollerChange - 滚动区域的高度/宽度变化
-                            *
-                            * @slot loadMore - 加载更多的内容
-                            *
-                            * @slotScope - 列表的内容
-                            */
+/**
+ * list 组件
+ *
+ * @prop auto - 根据传入的列表数据自动生成分页数据
+ * @prop autoHideScroller - 是否自动隐藏滚动条
+ * @prop autoHidePage - 是否自动隐藏分页触发器
+ * @prop item - 列表数据
+ * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+ * @prop pager - 启动分页功能
+ * @prop pageSize - 将列表数据（item）分为每页多少条数据
+ * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
+ * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
+ * @prop height - 滚动条高度
+ *
+ * @event switchPage - 换页触发事件
+ * @event scrollerChange - 滚动区域的高度/宽度变化
+ *
+ * @slot loadMore - 加载更多的内容
+ *
+ * @slotScope - 列表的内容
+ */
 
+var PAGE_TYPE_NUM = 'num';
 var PAGE_TYPE_MORE = 'more';
 
 exports.default = {
@@ -6167,7 +6195,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6236,37 +6264,6 @@ var clickParentDirective = {
 };
 
 _vue2.default.directive('clickParent', clickParentDirective);
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(63);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
 
 /***/ }),
 /* 30 */
@@ -6661,7 +6658,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _motion = __webpack_require__(14);
+var _motion = __webpack_require__(15);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -6871,7 +6868,7 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _MotionFold = __webpack_require__(25);
+var _MotionFold = __webpack_require__(26);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
@@ -7161,7 +7158,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(28);
+__webpack_require__(6);
+
+__webpack_require__(29);
 
 __webpack_require__(179);
 
@@ -7169,11 +7168,11 @@ var _Menu = __webpack_require__(181);
 
 var _Menu2 = _interopRequireDefault(_Menu);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _Btn = __webpack_require__(12);
+var _Btn = __webpack_require__(13);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -7193,7 +7192,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _form = __webpack_require__(15);
+var _form = __webpack_require__(16);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -7202,6 +7201,27 @@ var _Menu3 = __webpack_require__(183);
 var _Menu4 = _interopRequireDefault(_Menu3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * menu 组件
+ *
+ * @prop store - 储存实例化的信息
+ * @prop coverTrig - 菜单展开是不遮挡触发器，TODO： pc 上默认是不遮挡的，mobile 是默认遮挡的
+ * @prop noTrig - 不使用组件自带的菜单触发器
+ * @prop height - 菜单高度，默认是 auto
+ *                1、auto：根据菜单内容的高度
+ *                2、数字：输入数字就是自定义的像素高度
+ * @prop width - 菜单宽度，默认是 170
+ *               1、auto：根据 trigger 的宽度
+ *               2、数字：输入数字就是自定义的像素宽度
+ * @prop trigHeight - 菜单触发器的高度，默认是 auto
+ *                    1、auto：根据菜单内容的宽度
+ *                    2、数字：输入数字就是自定义的像素高度
+ *
+ * @event afterSpread - 展开之后的事件
+ * @event afterFold - 折叠之后的事件
+ * @event scrollerChange - 滚动组件发生变化
+ */
 
 exports.default = {
   name: 'Menu',
@@ -7449,26 +7469,7 @@ exports.default = {
       }
     }
   }
-}; /**
-    * menu 组件
-    *
-    * @prop store - 储存实例化的信息
-    * @prop coverTrig - 菜单展开是不遮挡触发器，TODO： pc 上默认是不遮挡的，mobile 是默认遮挡的
-    * @prop noTrig - 不使用组件自带的菜单触发器
-    * @prop height - 菜单高度，默认是 auto
-    *                1、auto：根据菜单内容的高度
-    *                2、数字：输入数字就是自定义的像素高度
-    * @prop width - 菜单宽度，默认是 170
-    *               1、auto：根据 trigger 的宽度
-    *               2、数字：输入数字就是自定义的像素宽度
-    * @prop trigHeight - 菜单触发器的高度，默认是 auto
-    *                    1、auto：根据菜单内容的宽度
-    *                    2、数字：输入数字就是自定义的像素高度
-    *
-    * @event afterSpread - 展开之后的事件
-    * @event afterFold - 折叠之后的事件
-    * @event scrollerChange - 滚动组件发生变化
-    */
+};
 
 /***/ }),
 /* 37 */
@@ -7491,11 +7492,11 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
@@ -7890,7 +7891,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -8233,6 +8234,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+__webpack_require__(6);
+
 __webpack_require__(151);
 
 __webpack_require__(153);
@@ -8257,11 +8260,11 @@ var _FoldContent = __webpack_require__(35);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
-var _MotionFold = __webpack_require__(25);
+var _MotionFold = __webpack_require__(26);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
-var _MotionSlide = __webpack_require__(17);
+var _MotionSlide = __webpack_require__(24);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
@@ -8269,33 +8272,31 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * nav 组件
- *
- * @prop animate - 菜单显示动画()
- * @prop noSwitch - 菜单不要根据设备响应式切换
- * @prop initOpt - 菜单的数据
- * @prop kind - 菜单的种类
- * @prop only - 手风琴模式，一次只能打开一个面板
- * @prop trigger - 2，3 级菜单的触发模式
- * @prop type - 布局类型
- * @prop spreadAll - 打开全部一级菜单
- * @prop title - 菜单标题
- *
- * @event hide - 隐藏 nav - 点击导航链接
- */
-
-var layoutType = ['grid', 'flex', 'flow'];
+var layoutType = ['grid', 'flex', 'flow']; /**
+                                            * nav 组件
+                                            *
+                                            * @prop animate - 菜单显示动画()
+                                            * @prop noSwitch - 菜单不要根据设备响应式切换
+                                            * @prop initOpt - 菜单的数据
+                                            * @prop kind - 菜单的种类
+                                            * @prop only - 手风琴模式，一次只能打开一个面板
+                                            * @prop trigger - 2，3 级菜单的触发模式
+                                            * @prop type - 布局类型
+                                            * @prop spreadAll - 打开全部一级菜单
+                                            * @prop title - 菜单标题
+                                            *
+                                            * @event hide - 隐藏 nav - 点击导航链接
+                                            */
 
 exports.default = {
   name: 'Nav',
@@ -8613,7 +8614,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -8621,7 +8622,7 @@ var _Input = __webpack_require__(18);
 
 var _Input2 = _interopRequireDefault(_Input);
 
-var _List = __webpack_require__(27);
+var _List = __webpack_require__(28);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -8748,11 +8749,11 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Loading = __webpack_require__(13);
+var _Loading = __webpack_require__(14);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
-var _Page = __webpack_require__(26);
+var _Page = __webpack_require__(27);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -8824,6 +8825,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+__webpack_require__(6);
+
 __webpack_require__(172);
 
 __webpack_require__(174);
@@ -8834,7 +8837,7 @@ var _Table = __webpack_require__(178);
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _Loading = __webpack_require__(13);
+var _Loading = __webpack_require__(14);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -8846,7 +8849,7 @@ var _list = __webpack_require__(48);
 
 var _list2 = _interopRequireDefault(_list);
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -9341,9 +9344,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-__webpack_require__(28);
-
 __webpack_require__(29);
+
+__webpack_require__(6);
 
 __webpack_require__(187);
 
@@ -9365,7 +9368,7 @@ var _Select = __webpack_require__(199);
 
 var _Select2 = _interopRequireDefault(_Select);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -9397,7 +9400,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _form = __webpack_require__(15);
+var _form = __webpack_require__(16);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -10288,6 +10291,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+__webpack_require__(6);
+
 __webpack_require__(201);
 
 __webpack_require__(203);
@@ -10302,7 +10307,7 @@ var _Scroller = __webpack_require__(10);
 
 var _Scroller2 = _interopRequireDefault(_Scroller);
 
-var _Btn = __webpack_require__(12);
+var _Btn = __webpack_require__(13);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -10317,6 +10322,18 @@ var _TabRender2 = _interopRequireDefault(_TabRender);
 var _url = __webpack_require__(208);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * tab 组件
+ *
+ * @prop initOpt - tab 的初始选项
+ * @prop initVal - 初始化 tab 的当前 value 值
+ * @prop query - 开启根据网址的 search 参数来选择选项卡
+ *
+ * @event click - 点击 tab
+ *
+ * @slotScope - tab 内容
+ */
 
 exports.default = {
   name: 'Tab',
@@ -10465,17 +10482,7 @@ exports.default = {
       _this3.tabEleWidth = _this3.refTabEle.offsetWidth;
     });
   }
-}; /**
-    * tab 组件
-    *
-    * @prop initOpt - tab 的初始选项
-    * @prop initVal - 初始化 tab 的当前 value 值
-    * @prop query - 开启根据网址的 search 参数来选择选项卡
-    *
-    * @event click - 点击 tab
-    *
-    * @slotScope - tab 内容
-    */
+};
 
 /***/ }),
 /* 57 */
@@ -10529,7 +10536,7 @@ __webpack_require__(59);
 
 __webpack_require__(60);
 
-__webpack_require__(29);
+__webpack_require__(6);
 
 __webpack_require__(64);
 
@@ -10549,7 +10556,7 @@ var _confirm = __webpack_require__(212);
 
 var _confirm2 = _interopRequireDefault(_confirm);
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -10561,7 +10568,7 @@ var _tooltip = __webpack_require__(214);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _Btn = __webpack_require__(12);
+var _Btn = __webpack_require__(13);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -10569,7 +10576,7 @@ var _Bubble = __webpack_require__(30);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
@@ -10601,11 +10608,11 @@ var _Icon = __webpack_require__(4);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _List = __webpack_require__(27);
+var _List = __webpack_require__(28);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Loading = __webpack_require__(13);
+var _Loading = __webpack_require__(14);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -10621,7 +10628,7 @@ var _MenuEle = __webpack_require__(52);
 
 var _MenuEle2 = _interopRequireDefault(_MenuEle);
 
-var _Modal = __webpack_require__(24);
+var _Modal = __webpack_require__(25);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -10633,7 +10640,7 @@ var _Omit = __webpack_require__(46);
 
 var _Omit2 = _interopRequireDefault(_Omit);
 
-var _Page = __webpack_require__(26);
+var _Page = __webpack_require__(27);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -10641,7 +10648,7 @@ var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
@@ -10693,15 +10700,15 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _MotionFold = __webpack_require__(25);
+var _MotionFold = __webpack_require__(26);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
-var _MotionRip = __webpack_require__(16);
+var _MotionRip = __webpack_require__(17);
 
 var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
-var _MotionSlide = __webpack_require__(17);
+var _MotionSlide = __webpack_require__(24);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
@@ -10768,7 +10775,7 @@ __webpack_require__(38);
 
 __webpack_require__(39);
 
-__webpack_require__(28);
+__webpack_require__(29);
 
 /***/ }),
 /* 60 */
@@ -10948,7 +10955,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.install = undefined;
 
-var _Btn = __webpack_require__(12);
+var _Btn = __webpack_require__(13);
 
 var _Btn2 = _interopRequireDefault(_Btn);
 
@@ -10972,7 +10979,7 @@ var _Bubble = __webpack_require__(30);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
-var _Modal = __webpack_require__(24);
+var _Modal = __webpack_require__(25);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -10988,7 +10995,7 @@ var _Code = __webpack_require__(147);
 
 var _Code2 = _interopRequireDefault(_Code);
 
-var _Loading = __webpack_require__(13);
+var _Loading = __webpack_require__(14);
 
 var _Loading2 = _interopRequireDefault(_Loading);
 
@@ -11000,7 +11007,7 @@ var _Omit = __webpack_require__(46);
 
 var _Omit2 = _interopRequireDefault(_Omit);
 
-var _Page = __webpack_require__(26);
+var _Page = __webpack_require__(27);
 
 var _Page2 = _interopRequireDefault(_Page);
 
@@ -11024,7 +11031,7 @@ var _FoldContent = __webpack_require__(35);
 
 var _FoldContent2 = _interopRequireDefault(_FoldContent);
 
-var _List = __webpack_require__(27);
+var _List = __webpack_require__(28);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -11072,11 +11079,11 @@ var _TabEle = __webpack_require__(57);
 
 var _TabEle2 = _interopRequireDefault(_TabEle);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
@@ -11084,15 +11091,15 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _MotionFold = __webpack_require__(25);
+var _MotionFold = __webpack_require__(26);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
-var _MotionRip = __webpack_require__(16);
+var _MotionRip = __webpack_require__(17);
 
 var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
-var _MotionSlide = __webpack_require__(17);
+var _MotionSlide = __webpack_require__(24);
 
 var _MotionSlide2 = _interopRequireDefault(_MotionSlide);
 
@@ -11471,7 +11478,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _getters, _actions, _mutations;
 
-var _type = __webpack_require__(11);
+var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -12627,7 +12634,7 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -13070,9 +13077,7 @@ exports.default = function (h) {
     props: {
       direction: this.popDirection,
       global: !this.part,
-      speed: this.speed,
-      ui: this.ui,
-      theme: this.theme
+      speed: this.speed
     },
     ref: 'transition'
   }, [h('div', {
@@ -13570,7 +13575,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -16650,7 +16655,7 @@ var _base = __webpack_require__(2);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _motion = __webpack_require__(14);
+var _motion = __webpack_require__(15);
 
 var _motion2 = _interopRequireDefault(_motion);
 
@@ -16900,7 +16905,7 @@ var _keyCode = __webpack_require__(32);
 
 var _keyCode2 = _interopRequireDefault(_keyCode);
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -17309,19 +17314,19 @@ var _Check = __webpack_require__(21);
 
 var _Check2 = _interopRequireDefault(_Check);
 
-var _List = __webpack_require__(27);
+var _List = __webpack_require__(28);
 
 var _List2 = _interopRequireDefault(_List);
 
-var _Row = __webpack_require__(8);
+var _Row = __webpack_require__(9);
 
 var _Row2 = _interopRequireDefault(_Row);
 
-var _Col = __webpack_require__(7);
+var _Col = __webpack_require__(8);
 
 var _Col2 = _interopRequireDefault(_Col);
 
-var _MotionRip = __webpack_require__(16);
+var _MotionRip = __webpack_require__(17);
 
 var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
@@ -17930,7 +17935,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _tip = __webpack_require__(9);
+var _tip = __webpack_require__(11);
 
 var _tip2 = _interopRequireDefault(_tip);
 
@@ -18495,15 +18500,15 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Modal = __webpack_require__(24);
+var _Modal = __webpack_require__(25);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(11);
+var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -18613,15 +18618,15 @@ var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Modal = __webpack_require__(24);
+var _Modal = __webpack_require__(25);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(11);
+var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -18744,11 +18749,11 @@ var _Message = __webpack_require__(22);
 
 var _Message2 = _interopRequireDefault(_Message);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(11);
+var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
@@ -18866,11 +18871,11 @@ var _Bubble = __webpack_require__(30);
 
 var _Bubble2 = _interopRequireDefault(_Bubble);
 
-var _store = __webpack_require__(6);
+var _store = __webpack_require__(7);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _type = __webpack_require__(11);
+var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
