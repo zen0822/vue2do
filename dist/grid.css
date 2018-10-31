@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.5-beta.10
+ * vue2do.js v0.4.5-beta.11
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -265,9 +265,9 @@
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center; }
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
   .z-row.z-row-wrap {
     -webkit-flex-wrap: wrap;
         -ms-flex-wrap: wrap;
@@ -284,6 +284,10 @@
     -webkit-align-items: flex-end;
         -ms-flex-align: end;
             align-items: flex-end; }
+  .z-row.z-row-justify-center {
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
   .z-row.z-row-justify-justify {
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;

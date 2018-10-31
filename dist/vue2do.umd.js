@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.5-beta.10
+ * vue2do.js v0.4.5-beta.11
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -555,7 +555,7 @@ var _type = __webpack_require__(12);
 
 var _type2 = _interopRequireDefault(_type);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 var _attr = __webpack_require__(20);
 
@@ -916,6 +916,37 @@ exports.default = {
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(63);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -1023,37 +1054,6 @@ exports.offset = _position.offset;
 exports.position = _position.position;
 exports.prop = prop;
 exports.handleEleDisplay = handleEleDisplay;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(63);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/postcss-loader/lib/index.js!../../../node_modules/sass-loader/lib/loader.js!./main.scss");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
 
 /***/ }),
 /* 7 */
@@ -1285,7 +1285,7 @@ exports.default = {
 
     justify: {
       type: String,
-      default: 'space-between'
+      default: 'justify'
     },
 
     wrap: {
@@ -1341,7 +1341,7 @@ var _keyCode = __webpack_require__(32);
 
 var _keyCode2 = _interopRequireDefault(_keyCode);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 var _MotionFade = __webpack_require__(19);
 
@@ -1975,13 +1975,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+__webpack_require__(5);
+
 __webpack_require__(67);
 
 __webpack_require__(69);
 
 __webpack_require__(71);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 var _Btn = __webpack_require__(74);
 
@@ -2009,25 +2011,24 @@ var _MotionRip2 = _interopRequireDefault(_MotionRip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * btn 组件
- *
- * @prop disabled - 禁止点击
- * @prop block - 按钮的宽度是父元素的宽度, width: 100%
- * @prop link - 链接地址（type = text 的时候才生效链接）
- * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
- * @prop size - 按钮大小（S | M | L）
- * @prop submit - 提交按钮
- * @prop type - 按钮类型 (button | text | float | outline)
- * @prop value - 按钮名字
- *
- * @event click - 点击btn事件
- * @event keyEnter - focus 时敲击 Enter 键
- * @event focus
- * @event blur
- */
+var BTN_TYPE_LINK = 'link'; /**
+                             * btn 组件
+                             *
+                             * @prop disabled - 禁止点击
+                             * @prop block - 按钮的宽度是父元素的宽度, width: 100%
+                             * @prop link - 链接地址（type = text 的时候才生效链接）
+                             * @prop radius - 按钮边角得半径尺寸（none | S | M | L）
+                             * @prop size - 按钮大小（S | M | L）
+                             * @prop submit - 提交按钮
+                             * @prop type - 按钮类型 (button | text | float | outline)
+                             * @prop value - 按钮名字
+                             *
+                             * @event click - 点击btn事件
+                             * @event keyEnter - focus 时敲击 Enter 键
+                             * @event focus
+                             * @event blur
+                             */
 
-var BTN_TYPE_LINK = 'link';
 var BTN_TYPE_BUTTON = 'button';
 
 var SIZE_S = 'S';
@@ -2994,7 +2995,7 @@ Object.defineProperty(exports, "__esModule", {
 
 __webpack_require__(38);
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(119);
 
@@ -4325,7 +4326,7 @@ var _Pop = __webpack_require__(23);
 
 var _Pop2 = _interopRequireDefault(_Pop);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5097,7 +5098,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(131);
 
@@ -5147,7 +5148,7 @@ var _MotionFade = __webpack_require__(19);
 
 var _MotionFade2 = _interopRequireDefault(_MotionFade);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5450,7 +5451,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _attr = __webpack_require__(20);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 var _base = __webpack_require__(2);
 
@@ -5968,7 +5969,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(168);
 
@@ -6298,7 +6299,7 @@ var _MotionZoom = __webpack_require__(31);
 
 var _MotionZoom2 = _interopRequireDefault(_MotionZoom);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6872,7 +6873,7 @@ var _MotionFold = __webpack_require__(26);
 
 var _MotionFold2 = _interopRequireDefault(_MotionFold);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7158,7 +7159,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(29);
 
@@ -8234,7 +8235,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(151);
 
@@ -8825,7 +8826,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(172);
 
@@ -9346,7 +9347,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 __webpack_require__(29);
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(187);
 
@@ -9408,7 +9409,7 @@ var _Select3 = __webpack_require__(200);
 
 var _Select4 = _interopRequireDefault(_Select3);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 var _uid = __webpack_require__(42);
 
@@ -10291,7 +10292,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(201);
 
@@ -10536,7 +10537,7 @@ __webpack_require__(59);
 
 __webpack_require__(60);
 
-__webpack_require__(6);
+__webpack_require__(5);
 
 __webpack_require__(64);
 
@@ -16649,7 +16650,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _attr = __webpack_require__(20);
 
-var _prop = __webpack_require__(5);
+var _prop = __webpack_require__(6);
 
 var _base = __webpack_require__(2);
 
