@@ -4,7 +4,6 @@ const path = require('path')
 const config = require('./config')
 const ora = require('ora')
 const webpack = require('webpack')
-const websiteProject = './zen0822.github.io'
 
 const prodConfig = [{
   spinner: 'development build (Browser)',

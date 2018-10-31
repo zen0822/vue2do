@@ -1,5 +1,4 @@
-import Vue from 'vue'
-
+import '../../scss/common/main.scss'
 import '../Tab/Tab'
 import '../Shift/Shift'
 

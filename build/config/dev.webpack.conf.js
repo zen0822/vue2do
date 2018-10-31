@@ -10,7 +10,6 @@ module.exports = function (opt = {}) {
 
   const config = require(path.resolve(__dirname, `./index`))
   const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
-  const utils = require(path.resolve(__dirname, `./../utils`))
   const port = process.env.PORT || config.dev.port
 
   const baseWebpackConfig = require('./base.webpack.conf')({
@@ -31,7 +30,7 @@ module.exports = function (opt = {}) {
     },
     module: {
       rules: [{
-        test: /grid\.scss$/,
+        test: /(grid|util)\.scss$/,
         use: [
           'style-loader',
           'css-loader',

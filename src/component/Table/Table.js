@@ -16,6 +16,7 @@
  * @event switchPage - 切换分页
  */
 
+import '../../scss/common/main.scss'
 import './Table.scss'
 import './Table.material.scss'
 import './Table.bootstrap.scss'

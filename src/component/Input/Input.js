@@ -40,6 +40,7 @@
  */
 
 import '../../lib/directive/focus'
+import '../../scss/common/main.scss'
 import './Input.scss'
 import './Input.material.scss'
 import './Input.bootstrap.scss'

@@ -10,6 +10,7 @@
  * @slotScope - tab 内容
  */
 
+import '../../scss/common/main.scss'
 import './Tab.scss'
 import './Tab.material.scss'
 import './Tab.bootstrap.scss'

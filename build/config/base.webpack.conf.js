@@ -131,13 +131,13 @@ module.exports = function ({
           'sass-loader'
         ]
       }),
-      exclude: [/grid\.scss$/]
+      exclude: [/(grid|util)\.scss$/]
     })
   } else {
     baseConf.module.rules.push({
       test: /\.(css|scss)$/,
       use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
-      exclude: [/grid\.scss$/]
+      exclude: [/(grid|util)\.scss$/]
     })
   }
 

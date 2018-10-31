@@ -27,6 +27,7 @@
  * @event hide - 隐藏之后事件
  */
 
+import '../../scss/common/main.scss'
 import './Modal.scss'
 import './Modal.m.scss'
 import './Modal.material.scss'

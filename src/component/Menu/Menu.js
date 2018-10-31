@@ -19,6 +19,7 @@
  * @event scrollerChange - 滚动组件发生变化
  */
 
+import '../../scss/common/main.scss'
 import '../../lib/directive/clickParent'
 import './Menu.scss'
 
