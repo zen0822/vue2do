@@ -56,13 +56,10 @@ module.exports = function (opt = {}) {
     filename: `util${opt.compress ? '.min' : ''}.css`
   })
 
-  var env = process.env.NODE_ENV === 'testing' ?
-    require('../config/test.env') :
-    config.build.env
-
   delete baseWebpackConfig.entry
 
   var webpackConfig = merge(baseWebpackConfig, {
+    mode: 'production',
     entry: path.resolve(__dirname, `${config.global.root}/index.js`),
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
@@ -109,9 +106,6 @@ module.exports = function (opt = {}) {
     plugins: [
       extractGridScss,
       extractCssUtil,
-      new webpack.DefinePlugin({
-        'process.env': env
-      }),
       new webpack.BannerPlugin({
         banner: banner,
         raw: true,

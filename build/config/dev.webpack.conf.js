@@ -22,6 +22,30 @@ module.exports = function (opt = {}) {
   delete baseWebpackConfig.entry
 
   const devConf = merge(baseWebpackConfig, {
+    optimization: {
+      splitChunks: {
+        chunks: 'async',
+        minSize: 30000,
+        maxSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 3,
+        automaticNameDelimiter: '~',
+        name: true,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true
+          }
+        }
+      }
+    },
+    mode: 'development',
     entry: {
       app: baseEntryApp.concat([
         `webpack-dev-server/client?http://localhost:${port}/`,
@@ -58,12 +82,8 @@ module.exports = function (opt = {}) {
         'process.env': config.dev.env
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']
-      }),
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template,

@@ -7,7 +7,6 @@ module.exports = function ({
   const path = require('path')
   const config = require(path.resolve(__dirname, `./index`))
   const utils = require(path.resolve(__dirname, `./../utils`))
-  const webpack = require('webpack')
   let extractTextScss = null
 
   if (extractScss) {
@@ -81,9 +80,6 @@ module.exports = function ({
       }, {
         test: /\.(html|tpl)$/,
         loader: 'html-loader'
-      }, {
-        test: /\.json$/,
-        loader: 'json-loader'
       }, {
         test: /\.pug$/,
         loader: 'pug-loader'
