@@ -47,6 +47,12 @@ export default {
     }
   },
 
+  watch: {
+    deviceSize() {
+      this._initComp()
+    }
+  },
+
   methods: {
     _initComp() {
       this.preWidth = this.$refs.article.offsetWidth

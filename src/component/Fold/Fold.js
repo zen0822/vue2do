@@ -7,6 +7,7 @@
  * @prop only - 开启一次只能展开一个面板功能
  * @prop type - 布局类型
  *
+ * @event ready - 组件加载完成的事件
  */
 
 import Vue from 'vue'
@@ -15,10 +16,6 @@ import render from './Fold.render.js'
 import baseMixin from '../../mixin/base'
 import Icon from '../Icon/Icon'
 import MotionFold from '../MotionFold/MotionFold'
-
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
 
 const Fold = {
   name: 'Fold',
@@ -103,7 +100,6 @@ const Fold = {
         }
       })
 
-
       foldChildren.forEach((item, index) => {
         if (this.only) {
           if (this.initIndex) {
@@ -136,6 +132,10 @@ const Fold = {
 
       this.foldChildren = foldChildren
       this.foldData = foldData
+
+      this.$nextTick(() => this.$emit('ready', {
+        emitter: this
+      }))
     },
 
     clickTitle(evt, currentIndex) {

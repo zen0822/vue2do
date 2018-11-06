@@ -130,13 +130,15 @@ export default {
       return this.type === 'float'
     },
     btnClass() {
-      return this.xclass([
+      const className = this.xclass([
         this.themeClass,
         this.uiClass,
         `size-${this.size.toLowerCase()}`,
         `radius-${this.radius.toLowerCase()}`,
         `type-${this.type}`
       ])
+
+      return `${className}`
     }
   },
 

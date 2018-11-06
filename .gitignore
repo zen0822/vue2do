@@ -1,9 +1,11 @@
-node_modules/*
-node_modules/
 *.zip
-.vscode/
 *.log
+
+.vscode
+node_modules
+
 test/coverage/*
 example/dist/*
+
 /test.html
 /dist/webpack-bundle-report.html

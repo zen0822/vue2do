@@ -78,45 +78,45 @@ div
           z-table-col false
           z-table-col 不可选
         z-table-row(slot='5')
-          z-table-col errorText
-          z-table-col String
-          z-table-col ——
-          z-table-col checkbox 没选的时候显示的错误文本
-        z-table-row(slot='6')
           z-table-col multiple
           z-table-col Boolean
           z-table-col false
           z-table-col 是否为多选
-        z-table-row(slot='7')
+        z-table-row(slot='6')
           z-table-col option
           z-table-col Array
           z-table-col ——
           z-table-col 选择框数据, ex: [{ value: 1, text: 'a', disabled: true // 默认是 false }]
-        z-table-row(slot='8')
+        z-table-row(slot='7')
           z-table-col param
           z-table-col String
           z-table-col ——
           z-table-col 表单控件的参数名
-        z-table-row(slot='9')
+        z-table-row(slot='8')
           z-table-col required
           z-table-col String
           z-table-col false
           z-table-col 是否必选
-        z-table-row(slot='10')
+        z-table-row(slot='9')
           z-table-col textName
           z-table-col String
           z-table-col ——
           z-table-col 指定读取 checkboxItems 的 text 值的 key 的名字
-        z-table-row(slot='11')
+        z-table-row(slot='10')
           z-table-col value
           z-table-col Number, Array
           z-table-col ——
           z-table-col 初始化时选中的值，默认为第一项， 是checkbox 則為數組
-        z-table-row(slot='12')
+        z-table-row(slot='11')
           z-table-col valueName
           z-table-col String
           z-table-col ——
           z-table-col 指定读取 checkboxItems 的 value 值的 key 的名字
+        z-table-row(slot='12')
+          z-table-col verifiedHint
+          z-table-col String
+          z-table-col ——
+          z-table-col checkbox 验证时候显示的错误提示（是跟 form 组件搭配使用得）
         z-table-row(slot='13')
           z-table-col vertical
           z-table-col Boolean
@@ -132,10 +132,51 @@ div
             v-for='item in ["名字", "返回值类型", "说明"]')
           z-table-col {{ item }}
         z-table-row(slot='1')
-          z-table-col check
+          z-table-col click
           z-table-col Object
           z-table-col
-            p 以下的为返回值说明
+            p 点击选择事件。
+            p 以下的为返回值说明：
             ul
              li value - 选择框的值
-             li currentIndex - 当前选择框的索引值（从 1 开始）
+             li index - 当前选择框的索引值（从 1 开始）
+             li event
+        z-table-row(slot='2')
+          z-table-col change
+          z-table-col Object
+          z-table-col
+            p 选择框的值变化。
+            p 以下的为返回值说明：
+            ul
+             li value - 选择框的值
+             li index - 当前选择框的索引值（从 1 开始）
+    +section('methods', 'methods 组件方法')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "参数", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col check
+          z-table-col Object
+          z-table-col value：选择框的 value 值
+          z-table-col
+            p 点击选择事件。
+            p 以下的为返回值说明：
+            ul
+             li value - 选择框的值
+             li index - 当前选择框的索引值（从 1 开始）
+             li event
+        z-table-row(slot='2')
+          z-table-col verify
+          z-table-col Object
+          z-table-col ——
+          z-table-col
+            p 选择框的值变化。
+            p 以下的为返回值说明：
+            ul
+             li value - 选择框的值
+             li index - 当前选择框的索引值（从 1 开始）

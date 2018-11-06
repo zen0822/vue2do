@@ -5,7 +5,28 @@
 
 [![vue2do](https://nodei.co/npm/vue2do.png)](https://npmjs.org/package/vue2do)
 
-vue2do 的 [文档网站](https://zen0822.github.io)。
+**访问 [zen0822.github.io](https://zen0822.github.io) 开始使用 vue2do**
+
+---
+
+**The below readme is the documentation for the `canary` (prerelease) branch. To view the documentation for the latest stable Next.js version visit [nextjs.org/docs](https://nextjs.org/docs)**
+
+---
+
+- [开始使用](#开始使用)
+  - [安装](#安装)
+  - [全部加载](#全部加载)
+  - [局部加载](#局部加载)
+  - [加载指定组件](#加载指定组件)
+- [通过 script 标签加载使用](#通过-script-标签加载使用)
+- [构建单页应用（spa）和多页应用（mpa）](#构建单页应用（spa）和多页应用（mpa）)
+  - [全局安装 vue2do](#全局安装-vue2do)
+  - [命令行](#命令行)
+    - [初始化应用项目](#初始化应用项目)
+    - [构建应用](#构建应用)
+  - [例子](#例子)
+    - [在当前目录构建名字为 zenProject 的应用项目](#在当前目录构建名字为-zenProject-的应用项目)
+    - [在当前应用项目构建名字为 zenMpa 的多页应用](#在当前应用项目构建名字为-zenMpa-的多页应用)
 
 ## 开始使用
 
@@ -107,7 +128,7 @@ npm i vue2do -g
 
 #### 初始化应用项目
 
-* projectName: 项目名字
+- projectName: 项目名字
 
 ```shell
 vue2do init project [projectName]
@@ -115,8 +136,8 @@ vue2do init project [projectName]
 
 #### 构建应用
 
-* appType: 应用类型，可选 spa 和 mpa
-* appName: 应用名字
+- appType: 应用类型，可选 spa 和 mpa
+- appName: 应用名字
 
 ```shell
 cd [projectName] // 初始化的项目应用目录下
@@ -138,7 +159,7 @@ cd zenProject
 vue2do build mpa zenMpa
 ```
 
-***
+---
 
 获取更多信息请访问 vue2do 的 [文档网站](https://zen0822.github.io)。
 

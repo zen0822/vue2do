@@ -13,6 +13,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
 .#{$C_PREFIX} {
   .#{$C_PREFIX}-dl {
     margin: 0;
+    -webkit-tap-highlight-color: transparent;
 
     & > .#{$C_PREFIX}-dt {
       position: relative;

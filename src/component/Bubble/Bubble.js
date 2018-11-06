@@ -13,7 +13,6 @@
  *
  * @slot - 主体内容
  */
-import Vue from 'vue'
 
 import './Bubble.scss'
 import Icon from '../Icon/Icon'
@@ -85,12 +84,11 @@ export default {
   },
 
   computed: {
-    // 组件类名的前缀
-    cPrefix() {
+    cPrefix() { // 组件类名的前缀
       return `${this.compPrefix}-bubble`
     },
     compClass() {
-      return [
+      const className = [
         this.cPrefix,
         this.xclass(this.themeClass),
         {
@@ -98,6 +96,8 @@ export default {
           [this.xclass('fixed')]: this.fixed
         }
       ]
+
+      return `${className}`
     }
   },
 

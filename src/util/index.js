@@ -1,24 +1,27 @@
 /**
  * 函数防抖
- * 将延迟函数的执行(真正的执行)，在函数最后一次调用时刻的 wait 毫秒之后
+ * 在一个周期内，调用多次只执行一次
+ * 如果在这个周期又调用重新计算直到周期结束执行一次
+ *
  * ex: 渲染一个Markdown格式的评论预览, 当窗口停止改变大小之后重新计算布局
  *
  * @param {Object} func - 执行函数
- * @param {Number} wait - 间隔时间
+ * @param {Number} wait - 间隔时间，默认 1000 毫秒
  */
-const debounce = (func, wait) => {
-  let timeout, result
-
-  const later = (context, args) => {
-
-  }
+const debounce = (func, wait = 1000) => {
+  let timeout = null
 
   const debounced = (args) => {
+    clearTimeout(timeout)
 
+    timeout = setTimeout(() => {
+      func(args)
+    }, wait)
   }
 
   debounced.cancel = function () {
     clearTimeout(timeout)
+
     timeout = null
   }
 
@@ -27,7 +30,8 @@ const debounce = (func, wait) => {
 
 /**
  * 函数节流
- * 在一段时间内只能执行一次函数
+ * 在一个周期内多次调用只能执行一次，且是周期的开始执行一次
+ * 周期结束重新开始
  *
  * @param {Object} func - 执行函数
  * @param {Number} wait - 间隔时间
