@@ -1,7 +1,6 @@
 const shelljs = require('shelljs')
 shelljs.env.NODE_ENV = 'production'
 const path = require('path')
-const config = require('./config')
 const ora = require('ora')
 const webpack = require('webpack')
 
@@ -30,6 +29,9 @@ const prodConfig = [{
 module.exports = function ({
   appName = 'example'
 } = {}) {
+  const config = require('./config')({
+    appName: appName
+  })
   const assetsPath = path.join(config.build.assetsRoot)
   shelljs.rm('-rf', assetsPath)
   shelljs.mkdir('-p', assetsPath)

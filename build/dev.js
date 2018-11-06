@@ -4,12 +4,15 @@
  */
 
 const webpack = require('webpack')
-const config = require('./config')
 const WebpackDevServer = require('webpack-dev-server')
 
 module.exports = function ({
   appName = 'example'
 } = {}) {
+  const config = require('./config')({
+    appName: appName
+  })
+
   const webpackConfig = process.env.NODE_ENV === 'testing' ?
     require('./config/prod.webpack.conf')({
       appName: appName
@@ -18,7 +21,7 @@ module.exports = function ({
       appName: appName
     })
 
-  const port = process.env.PORT || config.dev.port
+  const port = process.env.PORT || config.dev.hotPort
   const compiler = webpack(webpackConfig)
 
   const server = new WebpackDevServer(compiler, {

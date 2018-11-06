@@ -44,7 +44,9 @@ const externals = {
 module.exports = function (opt = {}) {
   const appName = opt.appName
 
-  const config = require('../config')
+  const config = require(path.resolve(__dirname, `./index`))({
+    appName
+  })
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName
   })
@@ -74,8 +76,7 @@ module.exports = function (opt = {}) {
         test: /grid\.scss$/,
         use: extractGridScss.extract({
           fallback: 'style-loader',
-          use: [
-            {
+          use: [{
               loader: 'css-loader',
               options: {
                 minimize: opt.compress
@@ -89,8 +90,7 @@ module.exports = function (opt = {}) {
         test: /util\.scss$/,
         use: extractCssUtil.extract({
           fallback: 'style-loader',
-          use: [
-            {
+          use: [{
               loader: 'css-loader',
               options: {
                 minimize: opt.compress

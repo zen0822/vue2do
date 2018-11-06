@@ -2,10 +2,9 @@
 var path = require('path')
 
 module.exports = function ({
-  appName,
-  opt = {}
+  appName
 }) {
-  const appConfigPath = path.resolve(__dirname, '../../app/' + appName + '/.apprc.js')
+  const appConfigPath = path.resolve(__dirname, '../../' + appName + '/.apprc.js')
   const appConfig = require(appConfigPath)
   const appConfigDir = path.dirname(appConfigPath)
   const mockPort = appConfig.mockPort || 3000
@@ -49,9 +48,10 @@ module.exports = function ({
       root: '../../',
       appDir: '../../app/'
     },
-    httpsOpt: appConfig.httpsOpt,
+    https: appConfig.https,
+    htmlName: appConfig.htmlName,
     type: 'spa',
-    tpl: appConfig.appTpl,
+    tpl: appConfig.tpl,
     sourceMap: false
   }
 

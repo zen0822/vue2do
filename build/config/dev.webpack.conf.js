@@ -8,20 +8,26 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = function (opt = {}) {
   const appName = opt.appName
 
-  const config = require(path.resolve(__dirname, `./index`))
-  const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
+  const config = require(path.resolve(__dirname, `./index`))({
+    appName
+  })
   const port = process.env.PORT || config.dev.port
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
     disableExtractScss: true
   })
-  const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
 
-  let baseEntryApp = baseWebpackConfig.entry.app.slice()
+  const template = config.appTpl ?
+    path.resolve(__dirname, `${config.global.appDir}/${appName}/index.html`) :
+    path.resolve(__dirname, `../tpl/index.html`)
+
+  let baseEntry = {}
+  baseEntry = baseWebpackConfig.entry.app.slice()
   delete baseWebpackConfig.entry
 
   const devConf = merge(baseWebpackConfig, {
+    mode: 'development',
     optimization: {
       splitChunks: {
         chunks: 'async',
@@ -45,9 +51,8 @@ module.exports = function (opt = {}) {
         }
       }
     },
-    mode: 'development',
     entry: {
-      app: baseEntryApp.concat([
+      app: baseEntry.concat([
         `webpack-dev-server/client?http://localhost:${port}/`,
         'webpack/hot/dev-server'
       ])
@@ -77,9 +82,6 @@ module.exports = function (opt = {}) {
         statsFilename: 'stats.json',
         statsOptions: null,
         logLevel: 'info'
-      }),
-      new webpack.DefinePlugin({
-        'process.env': config.dev.env
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),

@@ -10,7 +10,9 @@ module.exports = function ({
   appName,
   release
 }) {
-  const config = require('../config')
+  const config = require(path.resolve(__dirname, `./index`))({
+    appName
+  })
   const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,

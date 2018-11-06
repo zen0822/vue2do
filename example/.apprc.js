@@ -4,7 +4,7 @@ module.exports = {
   assetPublicPath: './',
   assetSubDirectory: 'static',
   api: '//api-wkmall.lianxiangcloud.com',
-  prodApi: '//api-wkmall.lianxiangcloud.com',
+  apiProd: '//api-wkmall.lianxiangcloud.com',
   tpl: true,
   hotPort: 443,
   mockPort: 5467,
@@ -23,7 +23,7 @@ module.exports = {
       }
     ]
   }],
-  httpsOpt: {
+  https: {
     key: './https/onethingpcs.com.key',
     cert: './https/onethingpcs.com.crt'
   }

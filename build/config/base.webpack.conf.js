@@ -5,8 +5,12 @@ module.exports = function ({
   extractScss = false
 } = {}) {
   const path = require('path')
-  const config = require(path.resolve(__dirname, `./index`))
-  const utils = require(path.resolve(__dirname, `./../utils`))
+  const config = require(path.resolve(__dirname, `./index`))({
+    appName
+  })
+  const utils = require(path.resolve(__dirname, `./../utils`))({
+    appName
+  })
   let extractTextScss = null
 
   if (extractScss) {
@@ -72,11 +76,9 @@ module.exports = function ({
       }, {
         test: /\.(js|jsx)$/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env']
-          }
-        }
+          loader: 'babel-loader'
+        },
+        exclude: [/node_modules/]
       }, {
         test: /\.(html|tpl)$/,
         loader: 'html-loader'
