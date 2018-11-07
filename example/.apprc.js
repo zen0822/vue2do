@@ -6,8 +6,8 @@ module.exports = {
   api: '//api-wkmall.lianxiangcloud.com',
   apiProd: '//api-wkmall.lianxiangcloud.com',
   tpl: true,
-  hotPort: 443,
-  mockPort: 5467,
+  hotPort: 5168,
+  mockPort: 3000,
   proxy: {},
   loaderRule: [{
     test: /protocol-[\w\W]+.html$/,

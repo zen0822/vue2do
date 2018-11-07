@@ -32,9 +32,9 @@ module.exports = function ({
   const config = require('./config')({
     appName: appName
   })
-  const assetsPath = path.join(config.build.assetsRoot)
-  shelljs.rm('-rf', assetsPath)
-  shelljs.mkdir('-p', assetsPath)
+  const assetPath = path.join(config.build.assetRoot)
+  shelljs.rm('-rf', assetPath)
+  shelljs.mkdir('-p', assetPath)
 
   const spinner = ora('building production...')
   spinner.start()

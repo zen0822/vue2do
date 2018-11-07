@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = function ({
   appName,
@@ -14,7 +14,7 @@ module.exports = function ({
   let extractTextScss = null
 
   if (extractScss) {
-    extractTextScss = new ExtractTextPlugin({
+    extractTextScss = new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[hash].css'),
       allChunks: true,
       disable: false
@@ -22,9 +22,9 @@ module.exports = function ({
   }
 
   const baseConf = {
+    mode: 'production',
     entry: {
       app: [
-        'babel-polyfill',
         path.resolve(__dirname, `${config.global.root}/${appName}/app.js`)
       ]
     },
@@ -53,6 +53,15 @@ module.exports = function ({
 
     module: {
       rules: [{
+        test: /\.(css|scss)$/,
+        use: [
+          extractScss ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ],
+        exclude: [/(grid|util)\.scss$/]
+      }, {
         test: /\.vue$/,
         loader: 'vue',
         query: {
@@ -119,24 +128,6 @@ module.exports = function ({
 
   if (extractScss) {
     baseConf.plugins.push(extractTextScss)
-    baseConf.module.rules.push({
-      test: /\.(css|scss)$/,
-      use: extractTextScss.extract({
-        fallback: 'style-loader',
-        use: [
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
-        ]
-      }),
-      exclude: [/(grid|util)\.scss$/]
-    })
-  } else {
-    baseConf.module.rules.push({
-      test: /\.(css|scss)$/,
-      use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
-      exclude: [/(grid|util)\.scss$/]
-    })
   }
 
   return baseConf

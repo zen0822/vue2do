@@ -13,13 +13,9 @@ module.exports = function ({
     appName: appName
   })
 
-  const webpackConfig = process.env.NODE_ENV === 'testing' ?
-    require('./config/prod.webpack.conf')({
-      appName: appName
-    }) :
-    require('./config/dev.webpack.conf')({
-      appName: appName
-    })
+  const webpackConfig = require('./config/dev.webpack.conf')({
+    appName: appName
+  })
 
   const port = process.env.PORT || config.dev.hotPort
   const compiler = webpack(webpackConfig)
@@ -45,12 +41,15 @@ module.exports = function ({
     disableHostCheck: true
   })
 
+  console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+
   server.listen(port, function (err) {
     if (err) {
       console.log(err)
 
       return false
     }
-    console.log(`Listening at http://localhost:${port}\n`)
+
+    console.log(`Frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
   })
 }

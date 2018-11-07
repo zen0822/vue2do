@@ -11,15 +11,16 @@ module.exports = function (opt = {}) {
   const config = require(path.resolve(__dirname, `./index`))({
     appName
   })
-  const port = process.env.PORT || config.dev.port
+
+  const port = process.env.PORT || config.dev.hotPort
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
     disableExtractScss: true
   })
 
-  const template = config.appTpl ?
-    path.resolve(__dirname, `${config.global.appDir}/${appName}/index.html`) :
+  const template = config.tpl ?
+    path.resolve(__dirname, `${config.global.root}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
   let baseEntry = {}
