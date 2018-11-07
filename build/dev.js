@@ -21,6 +21,12 @@ module.exports = function ({
   const compiler = webpack(webpackConfig)
 
   const server = new WebpackDevServer(compiler, {
+    before() {
+      console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+    },
+    after(app) {
+      console.log(`Frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+    },
     hot: true,
     hotOnly: true,
     historyApiFallback: true,
@@ -41,7 +47,6 @@ module.exports = function ({
     disableHostCheck: true
   })
 
-  console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
 
   server.listen(port, function (err) {
     if (err) {
@@ -49,7 +54,5 @@ module.exports = function ({
 
       return false
     }
-
-    console.log(`Frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
   })
 }

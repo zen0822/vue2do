@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.5-beta.11
+ * vue2do.js v0.4.5-beta.13
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
@@ -12021,6 +12021,7 @@ var Omit = __webpack_require__(86);
     this.fontWidthHub = {}; // 存储字体的宽度
 
     return {
+      content: '',
       lineText: [] // 存储原文本处理后每行存储的文本
 
     };
@@ -12072,8 +12073,9 @@ var Omit = __webpack_require__(86);
 
       return false;
     },
-    splite: function splite() {
-      var contentArray = this.$slots.default[0].text.split('');
+    splite: function splite(content) {
+      this.content = content;
+      var contentArray = content.split('');
       var contentArrayLength = contentArray.length;
       var index = 0;
       var lineFont = [];
@@ -12115,8 +12117,19 @@ var Omit = __webpack_require__(86);
     this.$nextTick(function () {
       _this.boxWidth = _this.$el.offsetWidth - 1;
 
-      _this.splite();
+      _this.splite(_this.$slots.default[0].text);
     });
+  },
+  beforeUpdate: function beforeUpdate() {
+    var _this2 = this;
+
+    if (this.$slots.default[0].text !== this.content) {
+      this.$nextTick(function () {
+        _this2.boxWidth = _this2.$el.offsetWidth - 1;
+
+        _this2.splite(_this2.$slots.default[0].text);
+      });
+    }
   }
 });
 // EXTERNAL MODULE: D:/git/vue2do/src/component/Page/Page.scss

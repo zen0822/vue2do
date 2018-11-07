@@ -27,6 +27,7 @@ export default {
     this.fontWidthHub = {} // 存储字体的宽度
 
     return {
+      content: '',
       lineText: [] // 存储原文本处理后每行存储的文本
     }
   },
@@ -84,8 +85,10 @@ export default {
       return false
     },
 
-    splite() {
-      const contentArray = this.$slots.default[0].text.split('')
+    splite(content) {
+      this.content = content
+
+      const contentArray = content.split('')
       const contentArrayLength = contentArray.length
 
       let index = 0
@@ -127,7 +130,16 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.boxWidth = this.$el.offsetWidth - 1
-      this.splite()
+      this.splite(this.$slots.default[0].text)
     })
+  },
+
+  beforeUpdate() {
+    if (this.$slots.default[0].text !== this.content) {
+      this.$nextTick(() => {
+        this.boxWidth = this.$el.offsetWidth - 1
+        this.splite(this.$slots.default[0].text)
+      })
+    }
   }
 }
