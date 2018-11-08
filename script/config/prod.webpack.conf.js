@@ -3,7 +3,8 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 const version = process.env.VERSION || require('../../package.json').version
@@ -44,25 +45,24 @@ const externals = {
 module.exports = function (opt = {}) {
   const appName = opt.appName
 
-  const config = require('../config')
+  const config = require(path.resolve(__dirname, `./index`))({
+    appName
+  })
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName
   })
 
-  const extractGridScss = new ExtractTextPlugin({
+  const extractGridScss = new MiniCssExtractPlugin({
     filename: `grid${opt.compress ? '.min' : ''}.css`
   })
-  const extractCssUtil = new ExtractTextPlugin({
+  const extractCssUtil = new MiniCssExtractPlugin({
     filename: `util${opt.compress ? '.min' : ''}.css`
   })
-
-  var env = process.env.NODE_ENV === 'testing' ?
-    require('../config/test.env') :
-    config.build.env
 
   delete baseWebpackConfig.entry
 
   var webpackConfig = merge(baseWebpackConfig, {
+    mode: 'production',
     entry: path.resolve(__dirname, `${config.global.root}/index.js`),
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
@@ -74,44 +74,27 @@ module.exports = function (opt = {}) {
     },
     module: {
       rules: [{
-        test: /grid\.scss$/,
-        use: extractGridScss.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: opt.compress
-              }
-            },
-            'postcss-loader',
-            'sass-loader'
-          ]
-        })
-      }, {
-        test: /util\.scss$/,
-        use: extractCssUtil.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: opt.compress
-              }
-            },
-            'postcss-loader',
-            'sass-loader'
-          ]
-        })
+        test: /(grid|util)\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: opt.compress
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
       }]
     },
     externals: opt.library === 'var' ? externals : umdExternals,
+    optimization: {
+      minimizer: []
+    },
     plugins: [
       extractGridScss,
       extractCssUtil,
-      new webpack.DefinePlugin({
-        'process.env': env
-      }),
       new webpack.BannerPlugin({
         banner: banner,
         raw: true,
@@ -133,15 +116,19 @@ module.exports = function (opt = {}) {
   }
 
   if (opt.compress) {
-    webpackConfig.plugins.push(
+    webpackConfig.optimization.minimizer.push(
+      new OptimizeCSSAssetsPlugin({}),
       new UglifyJsPlugin({
         uglifyOptions: {
+          compress: true,
+          cache: true,
           ie8: false,
+          parallel: true,
           output: {
             comments: false,
             beautify: false
           },
-          compress: true,
+          sourceMap: config.doc.productionSourceMap || false,
           warnings: false
         }
       })

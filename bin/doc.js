@@ -24,7 +24,7 @@ const argv = require('yargs')
   })
   .argv
 
-require('../build/doc')({
+require('../script/doc')({
   appName: 'example',
   release: argv.release,
   ci: argv.ci

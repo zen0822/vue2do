@@ -1,10 +1,9 @@
-/*
+/**
  * check - 多选框组件
  *
  * @prop checkAll - 全选 checkbox 的选项
  * @prop checkAllLabel - 全选 checkbox 的选项的 label
  * @prop checkAllDisabled - 全选 checkbox 的选项禁用
- * @prop errorText - checkbox 没选的时候显示的错误文本
  * @prop multiple - 是否为多选
  * @prop option - 选择框数据
  *              ex: [{
@@ -18,8 +17,13 @@
  * @prop value - 初始化时选中的值，默认为第一项， 是checkbox 則為數組
  * @prop valueName - 指定读取 checkboxItems 的 value 值的 key 的名字
  * @prop vertical - 选择框是否垂直分布（默认 false，是水平分布）
+ * @prop verifiedHint - checkbox 验证时候显示的错误提示（是跟 form 组件搭配使用得）
  *
- * @event check - 点击选择事件
+ * @event click - 点击选择事件
+ * @event change - 选择框的值变化
+ *
+ * @method check - 选择指定值得选择框
+ * @method verify - 验证选择框
  */
 
 import './Check.scss'
@@ -35,7 +39,7 @@ import MotionRip from '../MotionRip/MotionRip'
 
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
-import apiMixin from './Check.api.js'
+import apiMixin from './Check.method.js'
 
 import {
   isEmpty as isEmptyArray
@@ -68,10 +72,6 @@ let checkCompConfig = {
       type: Boolean,
       default: false
     },
-    errorText: {
-      type: String,
-      default: ''
-    },
     multiple: {
       type: Boolean,
       default: false
@@ -100,6 +100,10 @@ let checkCompConfig = {
       type: String,
       default: 'value'
     },
+    verifiedHint: {
+      type: String,
+      default: ''
+    },
     vertical: {
       type: Boolean,
       default: false
@@ -119,7 +123,6 @@ let checkCompConfig = {
       optionFocus: [], // 选择框组的 focus 状态
       focusedCheckAll: false, // 全选选择框的 focus 状态
       allowFocus: true, // 允许执行 focus 事件
-      dangerTip: '',
       slotItems: []
     }
   },
@@ -182,6 +185,12 @@ let checkCompConfig = {
     option(val) {
       this.stateOption = val
       this._initCheckbox()
+    },
+    stateValue(val) {
+      this.$emit('change', {
+        value: val,
+        index: this.index
+      })
     }
   },
 
@@ -229,8 +238,8 @@ let checkCompConfig = {
      * 初始化checkbox
      **/
     _initCheckbox() {
-      this.setIndex()
-      this.setText()
+      this._setIndex()
+      this._setText()
 
       this.verified = !this.required || (this.isCheckbox ? this.stateValue.length !== 0 : this.stateValue !== 'undefined')
     },
@@ -325,8 +334,8 @@ let checkCompConfig = {
     /**
      * 删除或者增加复选 checkbox 的 value 值
      *
-     * @param {String, Number} - checkbox 的值
      * @param {Number} - checkbox 选项的索引值
+     * @param {String, Number} - checkbox 的值
      */
     _changeCheckbox(index, val) {
       let hasDelflag = false
@@ -353,10 +362,131 @@ let checkCompConfig = {
     },
 
     /**
+     * 执行选择功能
+     *
+     * @param {Object} event
+     * @param {Number} index
+     */
+    async _check(event, index) {
+      let option = this.stateOption[index - 1]
+      let val = option[this.valueName]
+
+      if (this.isCheckbox) {
+        this.oldValue = []
+
+        this.stateValue.forEach((item) => {
+          this.oldValue.push(item)
+        })
+
+        this._changeCheckbox(index - 1, val)
+      } else {
+        this.oldValue = this.stateValue
+
+        this.stateValue = val
+      }
+
+      this._initCheckbox()
+      await this.$nextTick()
+
+      this.$emit('click', {
+        index,
+        event,
+        value: this.value
+      })
+
+      this.UIMaterial && this.$refs[`motionCheck${index}`].enter()
+    },
+
+    /**
+     * 执行全选复选框
+     *
+     * @return {Object} - this - 组件
+     */
+    async _checkAllOption() {
+      let value = []
+
+      this.option.forEach((item) => {
+        value.push(item[this.valueName])
+      })
+
+      if (this.checkedAll) {
+        this.stateValue = []
+      } else {
+        this.stateValue = value
+      }
+
+      this._initCheckbox()
+
+      await this.$nextTick()
+
+      this.UIMaterial && this.$refs.motionCheckAll.enter()
+    },
+
+    /**
+     * 设置checkbox的text值
+     *
+     * @return {Function, String}
+     **/
+    _setText() {
+      if (this.isRadio) {
+        this.oldText = this.text
+
+        this.text = this.index === -1 ?
+          'undefined' :
+          this.stateOption[this.index][this.textName]
+
+        return this
+      } else {
+        this.oldText = this.text.slice()
+        let checkboxText = []
+
+        this.index.forEach((item) => {
+          checkboxText.push(this.stateOption[item][this.textName])
+        })
+
+        this.text = checkboxText
+      }
+    },
+
+    /**
+     * 设置 currentIndex
+     *
+     * @return {Function, Object}
+     **/
+    _setIndex() {
+      if (this.isRadio) {
+        this.oldIndex = this.index
+
+        return this.stateOption.every((item, index) => {
+          if (item[this.valueName] === this.stateValue) {
+            this.index = index
+
+            return false
+          }
+
+          return true
+        })
+      } else {
+        this.oldIndex = this.index.slice()
+        let checkboxIndex = []
+
+        this.stateValue.forEach((item) => {
+          this.stateOption.forEach((ele, index) => {
+            if (item === ele[this.valueName]) {
+              checkboxIndex.push(index)
+            }
+          })
+        })
+
+        this.index = checkboxIndex
+      }
+    },
+
+    /**
      * click 事件句柄
      */
     _handlerClick(event, index) {
-      this.check(event, index)
+      return this._check(event, index)
     },
 
     /**
@@ -386,7 +516,7 @@ let checkCompConfig = {
      */
     _handlerKeyup(event, index) {
       if (event.keyCode === 13) {
-        return this.check(event, index)
+        return this._check(event, index)
       }
     },
 
@@ -449,7 +579,7 @@ let checkCompConfig = {
      */
     _handlerKeyupCheckAll(event) {
       if (event.keyCode === 13) {
-        return this.checkAllOption()
+        return this._checkAllOption()
       }
     }
   },

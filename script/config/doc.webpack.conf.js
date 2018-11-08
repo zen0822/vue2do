@@ -1,5 +1,4 @@
 const path = require('path')
-const utils = require('./../utils')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 
@@ -10,17 +9,24 @@ module.exports = function ({
   appName,
   release
 }) {
-  const config = require('../config')
-  const appConfig = require(path.resolve(__dirname, `${config.global.root}/${appName}/config.json`))
+  const config = require(path.resolve(__dirname, `./index`))({
+    appName
+  })
+
+  const utils = require('./../utils')({
+    appName
+  })
+
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
     extractScss: true
   })
 
-  var env = process.env.NODE_ENV === 'testing' ?
-    require('../config/test.env') :
-    config.doc.env
-  const template = appConfig.template ? '' : path.resolve(__dirname, `../tpl/index.html`)
+  var env = config.doc.env
+
+  const template = config.tpl ?
+    path.resolve(__dirname, `${config.global.root}/${appName}/index.html`) :
+    path.resolve(__dirname, `../tpl/index.html`)
 
   var webpackConfig = merge(baseWebpackConfig, {
     devtool: config.doc.productionSourceMap ? '#source-map' : false,
@@ -41,26 +47,31 @@ module.exports = function ({
         ]
       }]
     },
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            compress: true,
+            cache: true,
+            ie8: false,
+            parallel: true,
+            output: {
+              comments: false,
+              beautify: false
+            },
+            sourceMap: config.doc.productionSourceMap || false,
+            warnings: false
+          }
+        })
+      ]
+    },
     plugins: [
       new webpack.DefinePlugin({
         'process.env': env
       }),
 
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          ie8: false,
-          output: {
-            comments: false,
-            beautify: false
-          },
-          compress: true,
-          warnings: false
-        }
-      }),
-
       new HtmlWebpackPlugin({
-        filename: process.env.NODE_ENV === 'testing' ?
-          'index.html' : config.doc.index,
+        filename: config.doc.htmlName || 'index.html',
         template,
         inject: true,
         minify: {
@@ -69,24 +80,6 @@ module.exports = function ({
           removeAttributeQuotes: true
         },
         chunksSortMode: 'dependency'
-      }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: function (module, count) {
-          return (
-            module.resource &&
-            /\.js$/.test(module.resource) &&
-            module.resource.indexOf(
-              path.join(__dirname, '../node_modules')
-            ) === 0
-          )
-        }
-      }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest'],
-        chunks: ['vendor']
       })
     ]
   })
@@ -96,11 +89,9 @@ module.exports = function ({
 
     webpackConfig.plugins.push(
       new CompressionWebpackPlugin({
-        asset: '[path].gz[query]',
+        filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(`\\.(${config.doc.productionGzipExtensions.join('|')})$`),
-        threshold: 10240,
-        minRatio: 0.8
+        test: new RegExp(`\\.(${config.doc.productionGzipExtensions.join('|')})$`)
       })
     )
   }

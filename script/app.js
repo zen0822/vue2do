@@ -54,7 +54,7 @@ const initProject = (projectName = 'vue-app') => {
     }).catch((error) => {
       logger.fatal(error)
 
-      reject()
+      reject(new Error())
     })
   })
 }

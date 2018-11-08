@@ -32,22 +32,46 @@ export default {
   },
 
   actions: {
-    [nameSpace.alert.add]({ state, commit, rootState }, component) {
+    [nameSpace.alert.add]({
+      state,
+      commit,
+      rootState
+    }, component) {
       return commit(nameSpace.alert.add, component)
     },
-    [nameSpace.confirm.add]({ state, commit, rootState }, component) {
+    [nameSpace.confirm.add]({
+      state,
+      commit,
+      rootState
+    }, component) {
       return commit(nameSpace.confirm.add, component)
     },
-    [nameSpace.tip.add]({ state, commit, rootState }, component) {
+    [nameSpace.tip.add]({
+      state,
+      commit,
+      rootState
+    }, component) {
       return commit(nameSpace.tip.add, component)
     },
-    [nameSpace.toast.add]({ state, commit, rootState }, component) {
+    [nameSpace.toast.add]({
+      state,
+      commit,
+      rootState
+    }, component) {
       return commit(nameSpace.toast.add, component)
     },
-    [nameSpace.tooltip.add]({ state, commit, rootState }, component) {
+    [nameSpace.tooltip.add]({
+      state,
+      commit,
+      rootState
+    }, component) {
       return commit(nameSpace.tooltip.add, component)
     },
-    [nameSpace.deviceSize]({ state, commit, rootState }, sizeName) {
+    [nameSpace.deviceSize]({
+      state,
+      commit,
+      rootState
+    }, sizeName) {
       return commit(nameSpace.deviceSize, sizeName)
     }
   },

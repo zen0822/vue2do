@@ -21,7 +21,9 @@ module.exports = {
     'exit': true
   },
   'rules': {
-    'quotes': ["error", "single", { "allowTemplateLiterals": true }],
+    'quotes': ['error', 'single', {
+      'allowTemplateLiterals': true
+    }],
     'arrow-parens': 0,
     'generator-star-spacing': 0,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
@@ -30,7 +32,9 @@ module.exports = {
     'no-multiple-empty-lines': 0,
     'no-useless-escape': 0,
     'import/no-webpack-loader-syntax': 0,
-    'no-trailing-spaces': ['error', { 'skipBlankLines': true }],
+    'no-trailing-spaces': ['error', {
+      'skipBlankLines': true
+    }],
     'no-template-curly-in-string': 0,
     'operator-linebreak': 0
   }

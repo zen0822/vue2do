@@ -3,7 +3,9 @@
  */
 
 // import 'font-awesome-sass-loader'
-import './common'
+import 'core-js/shim'
+
+import './scss/main.scss'
 
 import Vue from 'vue'
 import {

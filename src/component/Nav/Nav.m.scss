@@ -11,7 +11,7 @@ $C_PREFIX: #{ $COMP_NAV };
 $ICON_PREFIX: #{ $COMP_ICON };
 
 .#{$C_PREFIX} {
-  @include device-type("s") {
+  &.#{$C_PREFIX}-device-s {
     font-size: $h3;
 
     .#{$C_PREFIX}-trigger {
@@ -55,7 +55,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
       }
 
       &.#{$C_PREFIX}-animate-fold {
-        box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
         position: absolute;
         overflow: hidden;
 

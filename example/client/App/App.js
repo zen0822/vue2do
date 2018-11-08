@@ -48,7 +48,7 @@ export default {
   },
 
   watch: {
-    'windowProps' (val) {
+    'windowProps'(val) {
       this.contentHeight = val.innerHeight - this.$refs.header.$el.offsetHeight - this.$refs.footer.$el.offsetHeight
     }
   },

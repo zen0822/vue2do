@@ -1,7 +1,7 @@
 import store from '../../../vuex/store'
 import commonStore from '../../../vuex/module/common/type.json'
 import {
-  throttle
+  debounce
 } from 'vue2do/src/util'
 
 let testOpt = []
@@ -72,7 +72,7 @@ export default {
       }
     }
 
-    window.addEventListener('resize', throttle(updateDeviceSize))
+    window.addEventListener('resize', debounce(updateDeviceSize, 100))
 
     updateDeviceSize()
   }

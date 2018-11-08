@@ -14,7 +14,10 @@ export default function (h) {
   }
 
   return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
+    class: [
+      this.cPrefix,
+      this.xclass(this.themeClass)
+    ]
   }, [
     h('header', {
       class: [
