@@ -33,7 +33,7 @@
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
     "doc:rel:ci": "node bin/doc --release --ci",
-    "rel": "bash build/release.sh",
+    "rel": "bash script/release.sh",
     "test": "karma start test/karma",
     "test:ci": "karma start test/karma.ci",
     "coveralls": "cat test/coverage/lcov/lcov.info | coveralls && rm -rf test/coverage"

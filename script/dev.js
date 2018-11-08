@@ -24,8 +24,8 @@ module.exports = function ({
     before() {
       console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
     },
-    after(app) {
-      console.log(`Frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+    after() {
+      console.log(`Success！`)
     },
     hot: true,
     hotOnly: true,

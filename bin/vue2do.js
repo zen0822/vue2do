@@ -4,7 +4,7 @@ const yargs = require('yargs')
 const {
   buildApp,
   initProject
-} = require('../build/app')
+} = require('../script/app')
 
 return yargs
   .command({

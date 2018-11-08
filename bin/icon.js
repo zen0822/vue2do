@@ -11,6 +11,6 @@ const argv = require('yargs')
   })
   .argv
 
-require('../build/icon').setCompIcon({
+require('../script/icon').setCompIcon({
   code: argv.name
 })

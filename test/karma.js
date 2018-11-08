@@ -5,7 +5,9 @@
 
 const path = require('path')
 const config = require('./config.json')
-const webpackConf = require('../build/config/base.webpack.conf')(config.appName)
+const webpackConf = require('../build/config/base.webpack.conf')({
+  appName: config.appName
+})
 
 delete webpackConf.entry
 
@@ -16,7 +18,8 @@ module.exports = function (config) {
     captureTimeout: 120000,
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),
-      reporters: [{
+      reporters: [
+        {
           type: 'html'
         },
         {
