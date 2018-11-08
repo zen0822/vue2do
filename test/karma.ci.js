@@ -5,7 +5,7 @@
 
 const path = require('path')
 const config = require('./config.json')
-const webpackConf = require('../build/script/base.webpack.conf')({
+const webpackConf = require('../script/config/base.webpack.conf')({
   appName: config.appName
 })
 
