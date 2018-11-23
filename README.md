@@ -9,10 +9,6 @@
 
 ---
 
-**The below readme is the documentation for the `canary` (prerelease) branch. To view the documentation for the latest stable Next.js version visit [nextjs.org/docs](https://nextjs.org/docs)**
-
----
-
 - [开始使用](#开始使用)
   - [安装](#安装)
   - [全部加载](#全部加载)
