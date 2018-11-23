@@ -76,6 +76,9 @@ Vue.component('Input', Input)
 ## 通过 script 标签加载使用
 
 ```html
+
+[从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
+
 ...
   <body>
     <div id='app'></div>
@@ -99,7 +102,6 @@ Vue.component('Input', Input)
         },
         template: '\
           <div>\
-            <z-check :init-opt="initOpt"></z-check>\
             <input-box></input-box>\
           </div>',
         components: {
@@ -110,8 +112,6 @@ Vue.component('Input', Input)
   </body>
 ...
 ```
-
-[从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
 
 ## 构建单页应用（spa）和多页应用（mpa）
 
