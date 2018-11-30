@@ -76,7 +76,7 @@ const ajax = ({
   let param = formatParam(data)
 
   let urlGettenParam = formatParam(gettenData)
-  const timeStamp = cache ? '' : `t=${new Date().getTime()}&${urlGettenParam}`
+  const timeStamp = cache ? '' : `t=${new Date().getTime()}${urlGettenParam ? `&${urlGettenParam}` : ''}`
 
   if (contentType) {
     if (contentType.includes('text/plain') || contentType.includes('application/json')) {

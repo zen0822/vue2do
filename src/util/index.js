@@ -11,11 +11,11 @@
 const debounce = (func, wait = 1000) => {
   let timeout = null
 
-  const debounced = (args) => {
+  const debounced = (...args) => {
     clearTimeout(timeout)
 
     timeout = setTimeout(() => {
-      func(args)
+      func.apply(null, args)
     }, wait)
   }
 
@@ -39,13 +39,13 @@ const debounce = (func, wait = 1000) => {
 const throttle = (func, wait = 1000) => {
   let startTime = Date.now()
 
-  const throttled = () => {
+  const throttled = (...args) => {
     let time = Date.now()
 
     if (startTime + wait - time <= 0) {
       startTime = time
 
-      return func()
+      return func.apply(null, args)
     }
   }
 
