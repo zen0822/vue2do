@@ -1200,7 +1200,7 @@ babel-plugin-syntax-object-rest-spread@7.0.0-beta.3:
   version "7.0.0-beta.3"
   resolved "https://registry.npmjs.org/babel-plugin-syntax-object-rest-spread/-/babel-plugin-syntax-object-rest-spread-7.0.0-beta.3.tgz#7f781c180899dafd88f132f69472397549be48e5"
 
-babel-plugin-transform-object-rest-spread@7.0.0-beta.3:
+babel-plugin-transform-object-rest-spread@^7.0.0-beta.3:
   version "7.0.0-beta.3"
   resolved "https://registry.npmjs.org/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-7.0.0-beta.3.tgz#5c409f3cd70819dbb3382d2056971c5ebe01393a"
   dependencies:
