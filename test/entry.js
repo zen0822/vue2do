@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+import 'core-js'
 import '../src/lib/directive/directive.js'
 import path from 'path'
 
