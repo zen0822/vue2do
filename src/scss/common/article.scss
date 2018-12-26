@@ -1,19 +1,19 @@
-@import "~config.scss";
+@import "../config.scss";
 
 .danger-color {
-  color: $danger-color;
+  color: $color-danger;
 }
 
 .warning-color {
-  color: $warning-color;
+  color: $color-warning;
 }
 
 .success-color {
-  color: $success-color;
+  color: $color-success;
 }
 
 .default-color {
-  color: $default-color;
+  color: $color-success;
 }
 
 .white-color {
@@ -21,21 +21,21 @@
 }
 
 .danger-bg {
-  background-color: $danger-color;
+  background-color: $color-danger;
 }
 
 .warning-bg {
-  background-color: $warning-color;
+  background-color: $color-warning;
 }
 
 .success-bg {
-  background-color: $success-color;
+  background-color: $color-success;
 }
 
 .default-bg {
-  background-color: $default-color;
+  background-color: $color-success;
 }
 
 .orange-bg {
-  background-color: $orange-color;
+  background-color: $color-orange;
 }

@@ -1,5 +1,6 @@
 ### 总原则
 
+* 主要规则已经在 ESLint 配置了，禁止关闭 eslint 检测
 * tab键统一为 <strong>2个空格</strong> 代替
 因为在不同系统中，编辑工具对tab解析不一样，windows下tab键是4个空格位置，而在linux下是8个,常用编辑器都可以将 tab 的缩进转换为空格
 * 文件编码：UTF-8无BOM格式
@@ -56,31 +57,6 @@ css:
 .nav{
   width: 100px
   height: 100px
-}
-
-```
-* 所有字符串、运算符遵循前后空格的规范，json或者类json格式key值只需保留‘：’后空格（建议，不做强制要求）
-
-```
-var str = 'abc',
-    str2 = 'ddd'
-var record = {
-    'id': 123,
-    'name-d': 'test'
-    store,
-    fun () {
-      // TODO
-    }
-}
-fun1 = (d) => {
-    this === window // true
-}
-if (str === 'abc') {
-    // TODO
-} else if {
-    // TODO
-} else {
-    // TODO
 }
 
 ```
@@ -294,7 +270,6 @@ var imageURL
 ```
 * 所有变量需在function 最开始申明，至于是多行还是单行，不做强制要求，建议多行
 * 变量声明必须使用var，避免全局变量的使用，如window.name = '' 或者 name = ''
-* jQuery变量要求首字符为 $， 私有变量:首字符为_， 常量：全大写
 
 ```
 var $name = $('#nameId')
@@ -332,71 +307,7 @@ var sex = '男'
 业务逻辑强相关的代码
 ```
 
-* 对于引用值类型的，最好用字面量声明
-
-```
-<!-- Array -->
-// Bad
-var colors = new Array('red', 'green', 'blue')
-var numbers = new Array(1, 2, 3, 4)
-
-// Good
-var colors = [ 'red', 'green', 'blue' ]
-var numbers = [ 1, 2, 3, 4 ]
-
-<!-- Object -->
-// Bad
-var team = new Team()
-team.title = 'AlloyTeam'
-team.count = 25
-
-// Good
-var team = {
-  title: 'AlloyTeam',
-  count: 25
-}
-```
-* JSON 格式风格：属性名和值添加双引号，值与属性间一个空格，最后一个属性后不要添加逗号
-
-```
-var record = {
-  'id': '1',
-  'name': 'zhangsan',
-  'sex': '男'
-}
-```
-* 空行的使用
-
-```
-1、方法之间添加：
-<!-- 注释信息 -->
-funciton fun1(){
-  ……
-}
-
-<!-- 注释信息 -->
-funciton fun2(){
-  ……
-}
-
-2、单行或多行注释前添加
-function fun1(){
-  var _self = this
-
-  <!-- 注释信息 -->
-  ……
-}
-
-3、逻辑块之间添加空行增加可读性
-function fun1(){
-  var _self = this
-
-  for(var i = 0, len = arr.length i < len i++){
-    ……（这是一块单独的逻辑处理）
-  }
-}
-```
-* 如果是异步编程，回调函数遵循cb(err, data)模式，第一个参数为异常信息，第二个为正常返回值
+* 如果是异步编程，回调函数遵循 nodejs 的 cb(err, data) 规范，第一个参数为异常信息，第二个为正常返回值
 
 ```
 readFile('XXX', function(err, data){
@@ -429,12 +340,9 @@ if(true){
 ### 图片规范
 * 所有页面元素类图片均放入 asset/img 文件夹
 * 图片格式仅限于gif || png || jpg
-* 从UI交付过来的图片，在保证质量的情况下要尽量压缩
 
 ### JQUERY 规范
-* 不允许使用jquery源文件，所有库必须用.min压缩版
-* 同一个项目中不允许多个jquery版本出现
-* 新项目使用最新版本，引入时需要带入版本号，eg: jquery-1.9.0.min.js
+* 不允许使用jquery，用 js 原生方法
 
 ### 编写 vue 组件规范
 * props 命名应该是名词

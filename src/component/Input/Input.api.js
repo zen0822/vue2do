@@ -14,7 +14,7 @@ export default {
      */
     verify(firstVerify) {
       let verified = true
-      let errorTip = ''
+      let verifiedHint = ''
 
       const returnFun = () => {
         if (!verified) {
@@ -22,25 +22,25 @@ export default {
         }
 
         this.verified = verified
-        this.errorTip = errorTip
+        this.verifiedHint = verifiedHint
 
         return verified
       }
 
       if (!this.number) {
-        this.value = this.value.trim()
+        this.stateValue = this.stateValue.trim()
       }
 
-      if (!this.value && this.value !== 0) {
+      if (!this.stateValue && this.stateValue !== 0) {
         let verifyEmpty = this._verifyEmpty()
 
         verified = verifyEmpty.verified
-        errorTip = verifyEmpty.errorTip
+        verifiedHint = verifyEmpty.verifiedHint
 
         return returnFun()
       } else {
-        if (this.number && isNaN(this.value)) {
-          errorTip = `${this.errorMsg}请输入数字类型`
+        if (this.number && isNaN(this.stateValue)) {
+          verifiedHint = `${this.errorMsg}请输入数字类型`
           verified = false
 
           return returnFun()
@@ -48,11 +48,11 @@ export default {
 
         if (this.min) {
           if (this.number) {
-            verified = this.min <= this.value
-            errorTip = verified ? '' : `${this.name}不能小于${this.min}!`
+            verified = this.min <= this.stateValue
+            verifiedHint = verified ? '' : `${this.name}不能小于${this.min}!`
           } else {
-            verified = this.min <= this.value.toString().length
-            errorTip = verified ? '' : `${this.name}长度不能小于${this.min}个字符!`
+            verified = this.min <= this.stateValue.toString().length
+            verifiedHint = verified ? '' : `${this.name}长度不能小于${this.min}个字符!`
           }
 
           if (!verified) {
@@ -61,8 +61,8 @@ export default {
         }
 
         if (this.max) {
-          verified = this.max >= this.value.toString().length
-          errorTip = verified ? '' : `${this.name}长度不能大于${this.max}个字符!`
+          verified = this.max >= this.stateValue.toString().length
+          verifiedHint = verified ? '' : `${this.name}长度不能大于${this.max}个字符!`
 
           if (!verified) {
             return returnFun()
@@ -70,10 +70,10 @@ export default {
         }
 
         if (this.minNum && this.number) {
-          let value = Number(this.value)
+          let value = Number(this.stateValue)
 
           verified = this.minNum <= value
-          errorTip = verified ? '' : `${this.name}不能小于${this.minNum}!`
+          verifiedHint = verified ? '' : `${this.name}不能小于${this.minNum}!`
 
           if (!verified) {
             return returnFun()
@@ -81,23 +81,23 @@ export default {
         }
 
         if (this.maxNum && this.number) {
-          let value = Number(this.value)
+          let value = Number(this.stateValue)
 
           verified = this.maxNum >= value
-          errorTip = verified ? '' : `${this.name}不能大于${this.maxNum}!`
+          verifiedHint = verified ? '' : `${this.name}不能大于${this.maxNum}!`
 
           if (!verified) {
             return returnFun()
           }
         }
 
-        if ((this.regex || this.verifiedType) && !this.regexObj.test(this.value)) {
+        if ((this.regex || this.verifiedType) && !this.regexObj.test(this.stateValue)) {
           verified = false
 
           if (firstVerify) {
-            errorTip = ''
+            verifiedHint = ''
           } else {
-            errorTip = this.formatText ? this.formatText : this._formatMessage
+            verifiedHint = this.formatText ? this.formatText : this._formatMessage
           }
 
           return returnFun()
@@ -116,12 +116,21 @@ export default {
       this.verify()
 
       if (!this.verified) {
-        tip(this.errorTip)
+        tip(this.verifiedHint)
 
         return false
       }
 
       return this
+    },
+
+    /**
+     * 获取当前值
+     *
+     * @return {String, Number} - 输入框的值
+     */
+    val() {
+      return this.stateValue
     }
   }
 }

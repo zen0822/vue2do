@@ -5,7 +5,7 @@
  */
 
 import './Form.scss'
-import template from './Form.tpl'
+import render from './Form.render.js'
 
 import baseMixin from '../../mixin/base'
 import tip from '../Message/tip'
@@ -21,7 +21,7 @@ const formComp = {
 
   mixins: [baseMixin],
 
-  template,
+  render,
 
   props: {
     // TODO
@@ -29,8 +29,8 @@ const formComp = {
 
   data: function () {
     return {
-      queryOpt: {},
-      queryInfo: {}
+      queryOpt: {}, // 存储表单的值，根据表单控件的 param 为 key，值为 value 存储
+      queryInfo: {} // 更加详细的 queryOpt，例如下拉组件的 text 和 value 都会返回
     }
   },
 
@@ -73,7 +73,9 @@ const formComp = {
                 let queryOpt = _self.queryOpt
 
                 if (compParamName in queryOpt) {
-                  _self._query(comp, { toArray: true })
+                  _self._query(comp, {
+                    toArray: true
+                  })
                 } else {
                   _self._query(comp)
                 }
@@ -87,7 +89,9 @@ const formComp = {
         })
       }
 
-      this._query(null, { empty: true })
+      this._query(null, {
+        empty: true
+      })
       deepInit(this)
     },
 
@@ -99,7 +103,10 @@ const formComp = {
      *                   toArray - 是否是需要将 query 值转换成多个
      *                   empty - 清空 query 值
      */
-    _query(comp = {}, {toArray, empty} = {}) {
+    _query(comp = {}, {
+      toArray,
+      empty
+    } = {}) {
       if (empty) {
         this.queryOpt = {}
         this.queryInfo = {}
@@ -150,9 +157,9 @@ const formComp = {
             break
           }
 
-          queryOpt[compParamName] = comp.value
+          queryOpt[compParamName] = comp.val()
           queryInfo[compParamName] = {
-            value: comp.value,
+            value: comp.val(),
             text: comp.text
           }
 
@@ -198,8 +205,8 @@ const formComp = {
             break
           }
 
-          queryOpt[compParamName] = comp.value
-          queryInfo[compParamName] = comp.value
+          queryOpt[compParamName] = comp.val()
+          queryInfo[compParamName] = comp.val()
 
           break
       }
@@ -257,7 +264,7 @@ const formComp = {
           return VERIFY_FORM_CONTROL.every((controlName) => {
             if (comp.compName === controlName) {
               verifitation = false
-              tip(comp.dangerTip)
+              tip(comp.verifiedHint)
 
               return false
             }

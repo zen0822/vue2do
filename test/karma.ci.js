@@ -5,7 +5,9 @@
 
 const path = require('path')
 const config = require('./config.json')
-const webpackConf = require('../build/config/base.webpack.conf')(config.appName)
+const webpackConf = require('../script/config/base.webpack.conf')({
+  appName: config.appName
+})
 
 delete webpackConf.entry
 
@@ -17,13 +19,11 @@ module.exports = function (config) {
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),
       reporters: [{
-          type: 'html'
-        },
-        {
-          type: 'lcov',
-          subdir: 'lcov'
-        }
-      ]
+        type: 'html'
+      }, {
+        type: 'lcov',
+        subdir: 'lcov'
+      }]
     },
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'],

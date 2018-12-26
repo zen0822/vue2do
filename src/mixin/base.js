@@ -18,7 +18,7 @@ import {
   addClass
 } from '../util/dom/attr'
 import {
-  throttle
+  debounce
 } from '../util'
 
 export default {
@@ -56,13 +56,7 @@ export default {
   },
 
   computed: {
-    uiClass() { // UI 的类名
-      return this.ui ? `ui-${this.ui}` : ''
-    },
-    themeClass() { // 主题的类名
-      return `theme-${this.theme}`
-    },
-    compClass() { // 组件比加 class
+    compClass() { // 组件必须加的 class
       return [this.uiClass, this.themeClass]
     },
     compPrefix() { // 组件的统一前缀
@@ -73,6 +67,12 @@ export default {
     },
     deviceRange() { // 设备尺寸范围
       return this._deviceTypeRange()
+    },
+    uiClass() { // UI 的类名
+      return this.ui ? `ui-${this.ui}` : ''
+    },
+    themeClass() { // 主题的类名
+      return `theme-${this.theme}`
     },
     UIMaterial() { // UI 是 material
       return this.ui === 'material'
@@ -233,7 +233,7 @@ export default {
           this.$store.dispatch(commonStore.deviceSize, content)
         }
 
-        window.addEventListener('resize', throttle(updateDeviceSize))
+        window.addEventListener('resize', debounce(updateDeviceSize, 100))
 
         updateDeviceSize()
       }

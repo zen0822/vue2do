@@ -14,6 +14,7 @@
  * @event hide - 隐藏 nav - 点击导航链接
  */
 
+import '../../scss/common/main.scss'
 import './Nav.scss'
 import './Nav.m.scss'
 import render from './Nav.render.js'
@@ -167,6 +168,7 @@ export default {
       }
 
       this.isSmallDevice ? this.hide() : this.show()
+      this.$refs.fold.$on('ready', () => {})
     }
   },
 

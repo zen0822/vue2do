@@ -57,7 +57,7 @@ export default function (h) {
         this.xclass('edit-box-input')
       ],
       domProps: {
-        value: this.value
+        value: this.stateValue
       },
       directives: [{
         name: 'focus',
@@ -78,7 +78,7 @@ export default function (h) {
       class: this.xclass('edit-box-pre')
     }, [h('span', {
       ref: 'pre'
-    }, this.value), h('br')]))
+    }, this.stateValue), h('br')]))
   }
 
   if (this.UIMaterial) {
@@ -201,11 +201,11 @@ export default function (h) {
         props: {
           speed: 'fast'
         },
-        ref: 'errorTip'
+        ref: 'verifiedHint'
       }, [
         h('div', {
           class: [this.xclass('tip-error')]
-        }, this.errorTip)
+        }, this.verifiedHint)
       ])
     ])
   )

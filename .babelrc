@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/env", {
       "modules": false,
       "targets": {
         "browsers": ["last 2 versions", "ie >= 9"]
@@ -9,6 +9,7 @@
   ],
   "plugins": [
     "syntax-dynamic-import",
+    "@babel/plugin-transform-runtime",
     ["transform-object-rest-spread", {
       "useBuiltIns": true
     }],

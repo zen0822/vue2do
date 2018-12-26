@@ -1,4 +1,15 @@
-export default {
+/**
+ * bubble tip 指令
+ *
+ * @params { Object } opt
+ *                    - { Boolean } bubble - 是否是自定义的bubble, true - 是自定义的bubble, false - 则是只显示字符串的 bubble
+ *                    - { Number } parent - vm 指向的是第几个 $parent
+ *                    - { String } text - bubble 的内容
+ */
+
+import Vue from 'vue'
+
+const bubbleDirective = {
   update(el, binding, opt = {}) {
     var bubbleTip = {}
 
@@ -37,3 +48,5 @@ export default {
     })
   }
 }
+
+Vue.directive('bubble', bubbleDirective)

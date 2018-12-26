@@ -20,15 +20,14 @@
  * @slotScope - 列表的内容
  */
 
+import '../../scss/common/main.scss'
 import './List.scss'
 import render from './List.render'
-import tip from '../Message/tip'
 
 import Icon from '../Icon/Icon'
 import Loading from '../Loading/Loading'
 import Pager from '../Page/Page'
 import Scroller from '../Scroller/Scroller'
-import MotionSlide from '../MotionSlide/MotionSlide'
 
 import baseMixin from '../../mixin/base'
 import apiMixin from './List.api'

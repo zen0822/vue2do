@@ -1,15 +1,243 @@
 /*!
- * vue2do.js v0.4.0
+ * vue2do.js v0.4.5-beta.13
  * (c) 2017-2018 Zen Huang
  * Released under the MIT License.
  */
+@charset "UTF-8";
+.danger-color {
+  color: #f44336; }
+
+.warning-color {
+  color: #ffeb3b; }
+
+.success-color {
+  color: #4caf50; }
+
+.default-color {
+  color: #4caf50; }
+
+.white-color {
+  color: #fff; }
+
+.danger-bg {
+  background-color: #f44336; }
+
+.warning-bg {
+  background-color: #ffeb3b; }
+
+.success-bg {
+  background-color: #4caf50; }
+
+.default-bg {
+  background-color: #4caf50; }
+
+.orange-bg {
+  background-color: #ff5722; }
+
+/**
+ * 全局盒子类
+ */
+.z-css-m-t-half {
+  margin-top: 5px; }
+
+.z-css-m-t {
+  margin-top: 10px; }
+
+.z-css-m-t-double {
+  margin-top: 20px; }
+
+.z-css-m-r-half {
+  margin-right: 5px; }
+
+.z-css-m-r {
+  margin-right: 10px; }
+
+.z-css-m-r-double {
+  margin-right: 20px; }
+
+.z-css-m-b-half {
+  margin-bottom: 5px; }
+
+.z-css-m-b {
+  margin-bottom: 10px; }
+
+.z-css-m-b-double {
+  margin-bottom: 20px; }
+
+.z-css-m-l-half {
+  margin-left: 5px; }
+
+.z-css-m-l {
+  margin-left: 10px; }
+
+.z-css-m-l-double {
+  margin-left: 20px; }
+
+.z-css-p-t-half {
+  padding-top: 4px; }
+
+.z-css-p-t {
+  padding-top: 8px; }
+
+.z-css-p-t-double {
+  padding-top: 16px; }
+
+.z-css-p-r-half {
+  padding-right: 4px; }
+
+.z-css-p-r {
+  padding-right: 8px; }
+
+.z-css-p-r-double {
+  padding-right: 16px; }
+
+.z-css-p-b-half {
+  padding-bottom: 4px; }
+
+.z-css-p-b {
+  padding-bottom: 8px; }
+
+.z-css-p-b-double {
+  padding-bottom: 16px; }
+
+.z-css-p-l-half {
+  padding-left: 4px; }
+
+.z-css-p-l {
+  padding-left: 8px; }
+
+.z-css-p-l-double {
+  padding-left: 16px; }
+
+/**
+ * 组件公共类样式
+ */
+.z-css-text-omit {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.z-css-transition {
+  transition: all 500ms ease; }
+
+.z-css-common {
+  -webkit-tap-highlight-color: transparent; }
+
+.z-css-ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+
+.z-css-text-left {
+  text-align: left; }
+
+.z-css-text-center {
+  text-align: center; }
+
+.z-css-text-right {
+  text-align: right; }
+
+.z-css-clear-fix:after {
+  display: block;
+  clear: both;
+  content: ""; }
+
+.z-css-float-left {
+  float: left; }
+
+.z-css-float-right {
+  float: right; }
+
+.z-css-vertical-middle {
+  vertical-align: middle; }
+
+.z-css-display-block {
+  display: block; }
+
+.z-css-display-inline-block {
+  display: inline-block; }
+
+.z-css-cursor-pointer {
+  cursor: pointer; }
+
+.z-css-hide {
+  display: none !important; }
+
+.z-css-invisible {
+  visibility: hidden !important; }
+
+.z-css-device-size {
+  position: absolute;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  visibility: hidden;
+  z-index: -999; }
+  .z-css-device-size::after {
+    content: "xl"; }
+  @media only screen and (max-width: 1911px) {
+    .z-css-device-size::after {
+      content: "l"; } }
+  @media only screen and (max-width: 991px) {
+    .z-css-device-size::after {
+      content: "m"; } }
+  @media only screen and (max-width: 767px) {
+    .z-css-device-size::after {
+      content: "s"; } }
+  @media only screen and (max-width: 575px) {
+    .z-css-device-size::after {
+      content: "xs"; } }
+
+.z-css-motion-rip {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden; }
+  .z-css-motion-rip:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.3);
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 200%;
+    border-radius: 50%;
+    -webkit-transform: translate(-50%, -50%) scaleX(1);
+        -ms-transform: translate(-50%, -50%) scaleX(1);
+            transform: translate(-50%, -50%) scaleX(1);
+    -webkit-animation: z-css-motion-rip 2s infinite ease-in-out;
+            animation: z-css-motion-rip 2s infinite ease-in-out; }
+
+@-webkit-keyframes z-css-motion-rip {
+  0% {
+    -webkit-transform: translate(-50%, -50%) scaleX(1);
+            transform: translate(-50%, -50%) scaleX(1); }
+  50% {
+    -webkit-transform: translate(-50%, -50%) scaleX(0.8);
+            transform: translate(-50%, -50%) scaleX(0.8); }
+  100% {
+    -webkit-transform: translate(-50%, -50%) scaleX(1);
+            transform: translate(-50%, -50%) scaleX(1); } }
+
+@keyframes z-css-motion-rip {
+  0% {
+    -webkit-transform: translate(-50%, -50%) scaleX(1);
+            transform: translate(-50%, -50%) scaleX(1); }
+  50% {
+    -webkit-transform: translate(-50%, -50%) scaleX(0.8);
+            transform: translate(-50%, -50%) scaleX(0.8); }
+  100% {
+    -webkit-transform: translate(-50%, -50%) scaleX(1);
+            transform: translate(-50%, -50%) scaleX(1); } }
+
 @charset "UTF-8";
 /**
  * col 组件样式
  */
 .z-col {
-  display: inline-block;
-  vertical-align: middle;
   box-sizing: border-box; }
   .z-col.z-col-span-1 {
     width: 8.33333%; }
@@ -267,9 +495,9 @@
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center; }
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
   .z-row.z-row-wrap {
     -webkit-flex-wrap: wrap;
         -ms-flex-wrap: wrap;
@@ -286,6 +514,10 @@
     -webkit-align-items: flex-end;
         -ms-flex-align: end;
             align-items: flex-end; }
+  .z-row.z-row-justify-center {
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
   .z-row.z-row-justify-justify {
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
@@ -298,3 +530,6 @@
     -webkit-justify-content: flex-end;
         -ms-flex-pack: end;
             justify-content: flex-end; }
+
+
+/*# sourceMappingURL=grid.css.map*/

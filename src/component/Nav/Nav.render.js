@@ -63,13 +63,14 @@ function foldContent(h, foldList) {
   })
 
   return h('fold', {
+    class: [this.xclass('sub-fold')],
     props: {
       only: this.isSmallDevice ? true : this.only,
       spreadAll: this.isSmallDevice ? false : this.spreadAll,
       ui: this.ui,
       theme: this.theme
     },
-    class: [this.xclass('sub-fold')]
+    ref: 'fold'
   }, foldChildren)
 }
 
@@ -80,7 +81,9 @@ export default function (h) {
     ref: 'motionContent'
   }, [
     h('div', {
-      class: [this.xclass('close-nav')],
+      class: [
+        this.xclass('close-nav')
+      ],
       on: {
         click: this.hide
       }
@@ -141,7 +144,13 @@ export default function (h) {
   }
 
   return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
+    class: [
+      this.cPrefix,
+      this.xclass(this.themeClass),
+      {
+        [this.xclass('device-s')]: this.isSmallDevice
+      }
+    ]
   }, [
     h('div', {
       class: [
@@ -175,7 +184,7 @@ export default function (h) {
               [this.xclass('arrow-spread')]: this.isActive
             }],
             props: {
-              kind: 'arrow-north',
+              kind: 'arrow-south',
               size: 's',
               ui: this.ui,
               theme: this.theme

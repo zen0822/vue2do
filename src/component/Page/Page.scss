@@ -12,6 +12,7 @@ $C_PREFIX: #{ $COMP_PAGE };
 .#{$C_PREFIX} {
   color: $grey-dark;
   text-align: center;
+  -webkit-tap-highlight-color: transparent;
 
   &.#{$C_PREFIX}-type-more {
     display: inline-block;

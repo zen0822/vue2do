@@ -10,6 +10,6 @@ const argv = require('yargs')
   })
   .argv
 
-require('../build/prod')({
+require('../script/prod')({
   appName: argv.app
 })

@@ -9,7 +9,9 @@ module.exports = function ({
   ci = false
 } = {}) {
   const path = require('path')
-  const config = require('./config')
+  const config = require('./config')({
+    appName: appName
+  })
   const ora = require('ora')
   const webpack = require('webpack')
 

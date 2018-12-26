@@ -12,10 +12,9 @@
  * @event changeScroller - 滚动区域的高度/宽度变化
  */
 
+import '../../lib/directive/bubble'
 import './SelectOpt.scss'
-import Vue from 'vue'
 import render from './SelectOpt.render'
-import compEvent from '../../config/event.json'
 
 import iconComp from '../Icon/Icon'
 import checkComp from '../Check/Check'

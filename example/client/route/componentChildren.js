@@ -37,6 +37,12 @@ export default [{
     title: '输入组件'
   }
 }, {
+  path: 'form',
+  component: () => import('../component/page/Component/form/Form/Form'),
+  meta: {
+    title: '表单组件'
+  }
+}, {
   path: 'icon',
   component: () => import('../component/page/Component/style&layout/Icon/Icon'),
   meta: {

@@ -5,7 +5,25 @@
 
 [![vue2do](https://nodei.co/npm/vue2do.png)](https://npmjs.org/package/vue2do)
 
-vue2do 的 [文档网站](https://zen0822.github.io)。
+**访问 [zen0822.github.io](https://zen0822.github.io) 开始使用 vue2do**
+
+---
+
+- [开始使用](#开始使用)
+  - [安装](#安装)
+  - [全部加载](#全部加载)
+  - [局部加载](#局部加载)
+  - [加载指定组件](#加载指定组件)
+- [通过 script 标签加载使用](#通过-script-标签加载使用)
+- [构建单页应用（spa）和多页应用（mpa）](#构建单页应用（spa）和多页应用（mpa）)
+  - [全局安装 vue2do](#全局安装-vue2do)
+  - [命令行](#命令行)
+    - [初始化应用项目](#初始化应用项目)
+    - [构建应用](#构建应用)
+  - [例子](#例子)
+    - [在当前目录构建名字为 zenProject 的应用项目](#在当前目录构建名字为-zenProject-的应用项目)
+    - [在当前应用项目构建名字为 zenMpa 的多页应用](#在当前应用项目构建名字为-zenMpa-的多页应用)
+- [.apprc配置解析](#.apprc配置解析)
 
 ## 开始使用
 
@@ -57,6 +75,9 @@ Vue.component('Input', Input)
 
 ## 通过 script 标签加载使用
 
+[从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
+
+
 ```html
 ...
   <body>
@@ -81,7 +102,6 @@ Vue.component('Input', Input)
         },
         template: '\
           <div>\
-            <z-check :init-opt="initOpt"></z-check>\
             <input-box></input-box>\
           </div>',
         components: {
@@ -92,8 +112,6 @@ Vue.component('Input', Input)
   </body>
 ...
 ```
-
-[从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
 
 ## 构建单页应用（spa）和多页应用（mpa）
 
@@ -107,7 +125,7 @@ npm i vue2do -g
 
 #### 初始化应用项目
 
-* projectName: 项目名字
+- projectName: 项目名字
 
 ```shell
 vue2do init project [projectName]
@@ -115,8 +133,8 @@ vue2do init project [projectName]
 
 #### 构建应用
 
-* appType: 应用类型，可选 spa 和 mpa
-* appName: 应用名字
+- appType: 应用类型，可选 spa 和 mpa
+- appName: 应用名字
 
 ```shell
 cd [projectName] // 初始化的项目应用目录下
@@ -138,7 +156,23 @@ cd zenProject
 vue2do build mpa zenMpa
 ```
 
-***
+## .apprc配置解析
+
+- api：dev 环境的 api 的访问域名
+- apiProd 环境的 api 的访问域名
+- assetRoot：以 .apprc 将文件打包的文件位置，位置相对的文件位置
+- assetPublicPath：打包资源的时候添加在前面的公共访问地址
+- assetSubDirectory：静态资源存放在 assetRoot 的文件夹位置
+- hotPort：dev 环境的访问端口，https 的默认访问端口是 443，http 是 80
+- htmlName：打包生成的 index.html 访问地址 记得加上 html 的文件名，不然 404
+- https：等同于 webpack 的 https 选项配置
+- loaderRule：loader rule
+- mockPort：mock 环境的访问端口，默认是 3000
+- proxy: webpack 的 dev 服务器的代理配置
+- tpl：使用 app 源文件下的 index.html 的模板 html 文件
+- type：app 的类型，spa 单页，mpa 多页
+
+---
 
 获取更多信息请访问 vue2do 的 [文档网站](https://zen0822.github.io)。
 

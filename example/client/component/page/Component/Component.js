@@ -52,7 +52,9 @@ export default {
   computed: {
     componentStyle() {
       if (!this.appContent || this.deviceSize === 'xs') {
-        return {}
+        return {
+          height: ''
+        }
       }
 
       return {

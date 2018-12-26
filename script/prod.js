@@ -1,10 +1,8 @@
 const shelljs = require('shelljs')
 shelljs.env.NODE_ENV = 'production'
 const path = require('path')
-const config = require('./config')
 const ora = require('ora')
 const webpack = require('webpack')
-const websiteProject = './zen0822.github.io'
 
 const prodConfig = [{
   spinner: 'development build (Browser)',
@@ -31,9 +29,12 @@ const prodConfig = [{
 module.exports = function ({
   appName = 'example'
 } = {}) {
-  const assetsPath = path.join(config.build.assetsRoot)
-  shelljs.rm('-rf', assetsPath)
-  shelljs.mkdir('-p', assetsPath)
+  const config = require('./config')({
+    appName: appName
+  })
+  const assetPath = path.join(config.build.assetRoot)
+  shelljs.rm('-rf', assetPath)
+  shelljs.mkdir('-p', assetPath)
 
   const spinner = ora('building production...')
   spinner.start()

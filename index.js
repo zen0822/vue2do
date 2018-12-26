@@ -1,8 +1,7 @@
 import './src/lib/directive/directive.js'
-import './src/scss/common/box.scss'
 import './src/scss/transition.scss'
 import './src/scss/common/main.scss'
-import './src/scss/common/common.scss'
+import './src/scss/util.scss'
 import './src/scss/grid.scss'
 
 import pluginInstall from './src'

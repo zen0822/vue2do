@@ -69,7 +69,7 @@ export default function (h) {
       this.cPrefix,
       this.xclass([this.uiClass]),
       this.xclass([this.themeClass]),
-      this.xclass(`size-${this.size}`),
+      this.xclass(`size-${this.size.toLowerCase()}`),
       this.xclass(`type-${this.type}`),
       {
         [this.xclass('no-header')]: !this.modalHeaderDisplay

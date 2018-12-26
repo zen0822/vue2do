@@ -12,6 +12,7 @@
  * @event hide - 隐藏 panel
  */
 
+import '../../scss/common/main.scss'
 import './Panel.scss'
 import render from './Panel.render.js'
 import baseMixin from '../../mixin/base'

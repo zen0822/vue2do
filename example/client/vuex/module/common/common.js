@@ -67,13 +67,20 @@ export default {
     }, value) {
       return commit(nameSpace.typeUI.add, value)
     },
-    [nameSpace.deviceSize]({ state, commit, rootState }, sizeName) {
+    [nameSpace.deviceSize]({
+      state,
+      commit,
+      rootState
+    }, sizeName) {
       return commit(nameSpace.deviceSize, sizeName)
     }
   },
 
   mutations: {
-    [nameSpace.window.add](state, {prop, value}) {
+    [nameSpace.window.add](state, {
+      prop,
+      value
+    }) {
       state.window = {
         ...state.window,
         [prop]: value

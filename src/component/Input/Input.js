@@ -3,7 +3,7 @@
  *
  * @prop block - 将宽度设置为和父元素一样
  * @prop hidden - 设置为隐藏域
- * @prop initVal - 设置当前输入框的值
+ * @prop value - 设置当前输入框的值
  * @prop label - 输入框的标签
  * @prop multiline - 可以输入多行文本（自适应文本高度）
  * @prop number - 输入框的数字指定为 nmuber 类型
@@ -39,6 +39,8 @@
  * @slot footer
  */
 
+import '../../lib/directive/focus'
+import '../../scss/common/main.scss'
 import './Input.scss'
 import './Input.material.scss'
 import './Input.bootstrap.scss'
@@ -55,14 +57,6 @@ import apiMixin from './Input.api'
 import Row from '../Row/Row'
 import Col from '../Col/Col'
 import MotionFade from '../MotionFade/MotionFade'
-
-import {
-  dataType
-} from '../../util/data/data'
-import {
-  hasScroller
-} from '../../util/dom'
-import tip from '../Message/tip'
 
 const TYPE_TEXT_AREA = 'area'
 const TYPE_TEXT = 'field'
@@ -102,7 +96,7 @@ export default {
       type: String,
       default: ''
     },
-    initVal: {
+    value: {
       type: [String, Number],
       default: ''
     },
@@ -181,10 +175,10 @@ export default {
     this.compName = 'input' // 组件名字
 
     return {
-      value: this.number ? this._switchNum(this.initVal) : this.initVal, // 输入框的当前的值
+      stateValue: this.number ? this._switchNum(this.value) : this.value, // 输入框的当前的值
       focusing: false, // 输入框是否处于 focus 状态
       keyuping: false, // 是否处于 keyup 状态
-      errorTip: '', // 错误信息提示信息
+      verifiedHint: '', // 错误信息提示信息
       dataTypeName: '', // 数据类型的名称
       verified: true, // 是否验证通过
       inputTextLength: 0, // 当前输入框值的长度
@@ -206,7 +200,7 @@ export default {
       }
     },
     placeholderDisplay() { // 输入框占位符的显示状态
-      const empty = this.value === '' || this.value === undefined
+      const empty = this.stateValue === '' || this.stateValue === undefined
 
       if (this.UIMaterial) {
         if (this.label) {
@@ -225,14 +219,14 @@ export default {
       if (this.focusing) {
         return true
       } else {
-        return !(this.value === '' || this.value === undefined)
+        return !(this.stateValue === '' || this.stateValue === undefined)
       }
     },
     errorTextDisplay() { // 错误提示的显示状态
-      return !!this.errorTip && this.errorTipType === 'bottom'
+      return !!this.verifiedHint && this.errorTipType === 'bottom'
     },
     errorBorderDisplay() { // 错误提示框的显示状态
-      return this.ui === 'bootstrap' && !!this.errorTip
+      return this.ui === 'bootstrap' && !!this.verifiedHint
     },
     isTextarea() {
       return this.type === TYPE_TEXT_AREA
@@ -286,10 +280,10 @@ export default {
   },
 
   watch: {
-    initVal(val, oldVal) {
-      this.value = val
-    },
     value(val, oldVal) {
+      this.stateValue = val
+    },
+    stateValue(val, oldVal) {
       const valueLength = String(val).length
 
       if (this.textLengthTip) {
@@ -297,7 +291,7 @@ export default {
           this._dispatchChange()
           this.inputTextLength = valueLength
         } else {
-          this.value = val.substr(0, this.max)
+          this.stateValue = val.substr(0, this.max)
         }
       } else {
         this._dispatchChange()
@@ -309,7 +303,7 @@ export default {
     },
     errorTextDisplay(val) {
       if (this.tipDisplay) {
-        val ? this.$refs.helperTip.leave() : this.$refs.errorTip.leave()
+        val ? this.$refs.helperTip.leave() : this.$refs.verifiedHint.leave()
       }
     },
     placeholderDisplay(val) {
@@ -326,12 +320,12 @@ export default {
   methods: {
     _binder() {
       if (this.tipDisplay) {
-        this.$refs.errorTip.$on('afterLeave', () => {
+        this.$refs.verifiedHint.$on('afterLeave', () => {
           this.$refs.helperTip.enter()
         })
 
         this.$refs.helperTip.$on('afterLeave', () => {
-          this.$refs.errorTip.enter()
+          this.$refs.verifiedHint.enter()
         })
       }
     },
@@ -364,7 +358,7 @@ export default {
     _dispatchChange() {
       return this.$emit('change', {
         emitter: this,
-        value: this.value
+        value: this.stateValue
       })
     },
 
@@ -373,23 +367,23 @@ export default {
      *
      * @return {Object} -
      *                  verified - 验证情况
-     *                  errorTip - 错误提示
+     *                  verifiedHint - 错误提示
      */
     _verifyEmpty(firstVerify) {
-      let errorTip = ''
+      let verifiedHint = ''
 
       if (this.required) {
-        errorTip = `${this.name}不能为空`
+        verifiedHint = `${this.name}不能为空`
 
         return {
           verified: false,
-          errorTip
+          verifiedHint
         }
       }
 
       return {
         verified: true,
-        errorTip
+        verifiedHint
       }
     },
 
@@ -441,7 +435,7 @@ export default {
 
       return this.$emit('focus', {
         emitter: this,
-        valeu: this.value,
+        valeu: this.stateValue,
         event: evt
       })
     },
@@ -454,7 +448,7 @@ export default {
       this.focusing = false
 
       if (this.number) {
-        this.value = this._switchNum(this.value)
+        this.stateValue = this._switchNum(this.stateValue)
       }
 
       if (this.activeVerify) {
@@ -467,7 +461,7 @@ export default {
 
       return this.$emit('blur', {
         emitter: this,
-        valeu: this.value,
+        valeu: this.stateValue,
         event: evt
       })
     },
@@ -495,8 +489,8 @@ export default {
     _handlerInput(event) {
       const refInput = this.$refs.input
 
-      this.value = event.currentTarget.value
-      this.multiline && (this.$refs.pre.innerText = this.value)
+      this.stateValue = event.currentTarget.value
+      this.multiline && (this.$refs.pre.innerText = this.stateValue)
 
       if (this.focusing && this.errorTextDisplay) {
         this.verify()
