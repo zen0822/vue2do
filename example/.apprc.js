@@ -1,10 +1,10 @@
 module.exports = {
   type: 'spa',
-  assetRoot: '../../dist/linktokenMall',
+  assetRoot: '../../dist',
   assetPublicPath: './',
   assetSubDirectory: 'static',
-  api: '//api-wkmall.lianxiangcloud.com',
-  apiProd: '//api-wkmall.lianxiangcloud.com',
+  api: '',
+  apiProd: '',
   tpl: true,
   hotPort: 5168,
   mockPort: 3000,
@@ -23,8 +23,5 @@ module.exports = {
       }
     ]
   }],
-  https: {
-    key: './https/onethingpcs.com.key',
-    cert: './https/onethingpcs.com.crt'
-  }
+  https: true
 }
