@@ -8,14 +8,14 @@
  * @param {Object} func - 执行函数
  * @param {Number} wait - 间隔时间，默认 1000 毫秒
  */
-const debounce = (func, wait = 1000) => {
+const debounce = function (func, wait = 1000) {
   let timeout = null
 
-  const debounced = (args) => {
+  const debounced = function () {
     clearTimeout(timeout)
 
     timeout = setTimeout(() => {
-      func(args)
+      func(...arguments)
     }, wait)
   }
 
@@ -36,17 +36,21 @@ const debounce = (func, wait = 1000) => {
  * @param {Object} func - 执行函数
  * @param {Number} wait - 间隔时间
  */
-const throttle = (func, wait = 1000) => {
+const throttle = function (func, wait = 1000) {
   let startTime = Date.now()
 
-  const throttled = () => {
+  const throttled = function () {
     let time = Date.now()
 
     if (startTime + wait - time <= 0) {
       startTime = time
 
-      return func()
+      func(...arguments)
+
+      return true
     }
+
+    return false
   }
 
   throttled.cancel = () => {

@@ -31,7 +31,7 @@ function getResponseType(type) {
 }
 
 /**
- * 打开 xhr之后做的操作
+ * 打开 xhr 之后做的操作
  */
 function afterOpenXHR({
   timeout,
@@ -76,11 +76,13 @@ const ajax = ({
   let param = formatParam(data)
 
   let urlGettenParam = formatParam(gettenData)
-  const timeStamp = cache ? '' : `t=${new Date().getTime()}&${urlGettenParam}`
+  const timeStamp = cache ? '' : `t=${new Date().getTime()}${urlGettenParam ? `&${urlGettenParam}` : ''}`
 
   if (contentType) {
     if (contentType.includes('text/plain') || contentType.includes('application/json')) {
       param = JSON.stringify(data)
+    } else if (contentType.includes('multipart/form-data')) {
+      param = data
     }
   } else {
     param = data
@@ -152,7 +154,7 @@ const ajax = ({
     }
 
     if (type === 'GET') {
-      xhr.open('GET', `${url}?${timeStamp}&${param}`, async)
+      xhr.open('GET', `${url}?${timeStamp}${param ? `&${param}` : ''}`, async)
 
       afterOpenXHR({
         header,
