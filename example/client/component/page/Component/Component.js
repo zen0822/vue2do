@@ -3,12 +3,13 @@ import template from './Component.pug'
 import menuOpt from './menuOpt.json'
 import mixin from './mixin'
 import commonStore from '../../../vuex/module/common/type.json'
+import hmr from 'ex/client/util/hmr'
 
 import {
   alert
 } from 'vue2do/index.js'
 
-export default {
+const PageComponent = {
   name: 'PageComponent',
 
   template: template(),
@@ -168,3 +169,5 @@ export default {
     })
   }
 }
+
+export default PageComponent

@@ -1,8 +1,9 @@
 import './Btn.scss'
 import pug from './Btn.pug'
 import mixin from '../../mixin'
+import hmr from 'ex/client/util/hmr'
 
-export default {
+const PageCompBtn = {
   name: 'PageCompBtn',
 
   template: pug(),
@@ -32,3 +33,8 @@ export default {
     }) => (this.btnType = value))
   }
 }
+
+export default hmr({
+  module,
+  comp: PageCompBtn
+})

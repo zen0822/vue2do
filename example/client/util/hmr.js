@@ -1,4 +1,8 @@
-export default function wrapToHMR(componentOption) {
+export default function wrapToHMR({
+  module,
+  comp: componentOption,
+  cb = Function.prototype
+} = {}) {
   if (module.hot) {
     const api = require('vue-hot-reload-api')
     const Vue = require('vue')
@@ -11,6 +15,8 @@ export default function wrapToHMR(componentOption) {
 
     module.hot.accept()
 
+    cb()
+
     if (!module.hot.data) {
       api.createRecord('very-unique-id', componentOption)
     } else {
@@ -18,4 +24,6 @@ export default function wrapToHMR(componentOption) {
       api.reload('very-unique-id', componentOption)
     }
   }
+
+  return componentOption
 }

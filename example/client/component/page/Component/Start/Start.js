@@ -1,8 +1,9 @@
 import './Start.scss'
 import pug from './Start.pug'
 import mixin from '../mixin'
+import hmr from 'ex/client/util/hmr'
 
-export default {
+const PageCompStart = {
   name: 'PageCompStart',
 
   template: pug(),
@@ -15,3 +16,8 @@ export default {
     }
   }
 }
+
+export default hmr({
+  module,
+  comp: PageCompStart
+})
