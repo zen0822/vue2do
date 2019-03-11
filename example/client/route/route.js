@@ -25,7 +25,7 @@ export default [{
     title: '构建'
   }
 }, {
-  path: '/blog/:id',
+  path: '/blog',
   component: () => import('../component/page/Blog/Blog'),
   meta: {
     title: '文章'
