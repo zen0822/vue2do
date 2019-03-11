@@ -11,6 +11,7 @@ module.exports = function ({
   const assetSubDirectory = appConfig.assetSubDirectory || 'static'
 
   const config = {
+    ...appConfig,
     api: appConfig.api,
     apiProd: appConfig.apiProd,
     build: {

@@ -10,7 +10,7 @@ module.exports = {
   mockPort: 3000,
   proxy: {},
   loaderRule: [{
-    test: /protocol-[\w\W]+.html$/,
+    test: /blog-[\w\W]+.html$/,
     use: [
       'extract-loader',
       'html-loader',

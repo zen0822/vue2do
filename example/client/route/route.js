@@ -25,6 +25,12 @@ export default [{
     title: '构建'
   }
 }, {
+  path: '/blog/:id',
+  component: () => import('../component/page/Blog/Blog'),
+  meta: {
+    title: '文章'
+  }
+}, {
   path: '/component',
   component: () => import('../component/page/Component/Component'),
   children: componentChildren
