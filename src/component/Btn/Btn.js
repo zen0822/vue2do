@@ -108,8 +108,7 @@ export default {
       mousePoi: { // 点击按钮的鼠标位置
         top: 0,
         left: 0
-      },
-      inTouch: false // 判断是否在触摸屏
+      }
     }
   },
 
@@ -148,10 +147,6 @@ export default {
     },
 
     _handlerMouseup(event) {
-      if (this.inTouch) {
-        return false
-      }
-
       if (this.stateDisabled) {
         return false
       }
@@ -206,10 +201,6 @@ export default {
         event,
         emitter: this
       })
-
-      if (this.inTouch) {
-        return false
-      }
 
       if (this.allowFocus) {
         this.motion = true
