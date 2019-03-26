@@ -28,7 +28,7 @@ else
     git commit -m "[build] $VERSION"
     git pull
 
-    npm version $VERSION --allow-same-version --message "[release] $VERSION"
+    npm version $VERSION --message "[release] $VERSION" --allow-same-version
 
     # publish
     git tag -a "v$VERSION" -m "[release] $VERSION"
