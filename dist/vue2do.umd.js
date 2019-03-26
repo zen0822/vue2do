@@ -1,6 +1,6 @@
 /*!
- * vue2do.js v0.4.5-beta.13
- * (c) 2017-2018 Zen Huang
+ * vue2do.js v0.4.6
+ * (c) 2017-2019 Zen Huang
  * Released under the MIT License.
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -12,7 +12,7 @@
 		exports["Vue2do"] = factory(require("vue"), require("vuex"), require("vue-i18n"));
 	else
 		root["Vue2do"] = factory(root["Vue"], root["Vuex"], root["VueI18n"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE__4__, __WEBPACK_EXTERNAL_MODULE__12__, __WEBPACK_EXTERNAL_MODULE__14__) {
+})(window, function(__WEBPACK_EXTERNAL_MODULE__4__, __WEBPACK_EXTERNAL_MODULE__13__, __WEBPACK_EXTERNAL_MODULE__14__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -712,18 +712,6 @@ module.exports = {"common":{"add":"comp/common/add","delete":"comp/common/delete
 
 /***/ }),
 /* 11 */
-/***/ (function(module) {
-
-module.exports = {"prefix":"z","defaultTheme":"primary","defaultUI":"material","language":"zh-CN"};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__12__;
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithoutHoles = __webpack_require__(28);
@@ -737,6 +725,18 @@ function _toConsumableArray(arr) {
 }
 
 module.exports = _toConsumableArray;
+
+/***/ }),
+/* 12 */
+/***/ (function(module) {
+
+module.exports = {"prefix":"z","defaultTheme":"primary","defaultUI":"material","language":"zh-CN"};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__13__;
 
 /***/ }),
 /* 14 */
@@ -4062,10 +4062,10 @@ var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
   }, btnEleChildren)]);
 });
 // EXTERNAL MODULE: D:/git/vue2do/src/config/index.json
-var config = __webpack_require__(11);
+var config = __webpack_require__(12);
 
 // EXTERNAL MODULE: external {"root":"Vuex","commonjs2":"vuex","amd":"vuex","commonjs":"vuex"}
-var external_root_Vuex_commonjs2_vuex_amd_vuex_commonjs_vuex_ = __webpack_require__(12);
+var external_root_Vuex_commonjs2_vuex_amd_vuex_commonjs_vuex_ = __webpack_require__(13);
 var external_root_Vuex_commonjs2_vuex_amd_vuex_commonjs_vuex_default = /*#__PURE__*/__webpack_require__.n(external_root_Vuex_commonjs2_vuex_amd_vuex_commonjs_vuex_);
 
 // EXTERNAL MODULE: D:/git/vue2do/src/vuex/module/common/type.json
@@ -4228,7 +4228,7 @@ var commonStore = new external_root_Vuex_commonjs2_vuex_amd_vuex_commonjs_vuex_d
 /* harmony default export */ var store = (commonStore);
 
 // EXTERNAL MODULE: D:/git/vue2do/node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(13);
+var toConsumableArray = __webpack_require__(11);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: D:/git/vue2do/src/util/dom/attr.js
@@ -4284,6 +4284,8 @@ var attr_childrenHeight = function childrenHeight(el) {
 
 
 // CONCATENATED MODULE: D:/git/vue2do/src/util/index.js
+
+
 /**
  * 函数防抖
  * 在一个周期内，调用多次只执行一次
@@ -4294,14 +4296,15 @@ var attr_childrenHeight = function childrenHeight(el) {
  * @param {Object} func - 执行函数
  * @param {Number} wait - 间隔时间，默认 1000 毫秒
  */
-var debounce = function debounce(func) {
+var util_debounce = function debounce(func) {
   var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1000;
   var timeout = null;
 
-  var debounced = function debounced(args) {
+  var debounced = function debounced() {
+    var _arguments = arguments;
     clearTimeout(timeout);
     timeout = setTimeout(function () {
-      func(args);
+      func.apply(void 0, toConsumableArray_default()(_arguments));
     }, wait);
   };
 
@@ -4331,8 +4334,11 @@ var throttle = function throttle(func) {
 
     if (startTime + wait - time <= 0) {
       startTime = time;
-      return func();
+      func.apply(void 0, arguments);
+      return true;
     }
+
+    return false;
   };
 
   throttled.cancel = function () {
@@ -4570,7 +4576,7 @@ var throttle = function throttle(func) {
           _this2.$store.dispatch(type.deviceSize, content);
         };
 
-        window.addEventListener('resize', debounce(updateDeviceSize, 100));
+        window.addEventListener('resize', util_debounce(updateDeviceSize, 100));
         updateDeviceSize();
       }
     }
@@ -7445,9 +7451,11 @@ var checkCompConfig = {
         }, _callee, this);
       }));
 
-      return function _check(_x, _x2) {
+      function _check(_x, _x2) {
         return _check2.apply(this, arguments);
-      };
+      }
+
+      return _check;
     }(),
 
     /**
@@ -7493,9 +7501,11 @@ var checkCompConfig = {
         }, _callee2, this);
       }));
 
-      return function _checkAllOption() {
+      function _checkAllOption() {
         return _checkAllOption2.apply(this, arguments);
-      };
+      }
+
+      return _checkAllOption;
     }(),
 
     /**
@@ -9392,9 +9402,11 @@ var ARROW_HEIGHT = 20;
         }, _callee, this);
       }));
 
-      return function show() {
+      function show() {
         return _show.apply(this, arguments);
-      };
+      }
+
+      return show;
     }(),
 
     /**
@@ -9426,9 +9438,11 @@ var ARROW_HEIGHT = 20;
         }, _callee2, this);
       }));
 
-      return function hide() {
+      function hide() {
         return _hide.apply(this, arguments);
-      };
+      }
+
+      return hide;
     }(),
 
     /**
