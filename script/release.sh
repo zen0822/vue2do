@@ -31,6 +31,7 @@ else
     git pull
 
     # publish
+    git push origin refs/tags/v"$VERSION"
     git push
     if [[ -z $RELEASE_TAG ]]; then
       npm publish
