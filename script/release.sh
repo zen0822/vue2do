@@ -28,10 +28,10 @@ else
     git commit -m "[build] $VERSION"
     git pull
 
-    npm version $VERSION --message "[release] $VERSION" --allow-same-version
+    npm version $VERSION --message "[release] $VERSION"
 
     # publish
-    git tag -a "v$VERSION" -m "[release] $VERSION"
+    git push origin refs/tags/v"$VERSION"
     git push
     if [[ -z $RELEASE_TAG ]]; then
       npm publish
