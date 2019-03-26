@@ -36,7 +36,7 @@ else
     if [[ -z $RELEASE_TAG ]]; then
       npm publish
     else
-      npm publish --tag $RELEASE_TAG
+      npm publish --tag $RELEASE_TAG --allow-same-version
     fi
   fi
 fi
