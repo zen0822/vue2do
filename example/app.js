@@ -3,3 +3,4 @@
  */
 
 import './client/main'
+import './server/main'

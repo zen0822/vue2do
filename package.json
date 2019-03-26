@@ -28,7 +28,7 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
-    "start": "node bin/dev",
+    "start": "nodemon --watch ./script/* bin/dev.js",
     "prod": "node bin/prod",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
@@ -52,6 +52,7 @@
     "babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
     "babel-plugin-transform-vue-jsx": "^3.5.0",
     "chalk": "^2.3.0",
+    "chokidar": "^2.1.5",
     "compression-webpack-plugin": "^2.0.0",
     "connect-history-api-fallback": "^1.5.0",
     "core-js": "^2.5.7",
@@ -89,6 +90,7 @@
     "ora": "^3.0.0",
     "postcss-loader": "^3.0.0",
     "prerender-spa-plugin": "^3.0.0",
+    "progress-bar-webpack-plugin": "^1.12.1",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
     "sass-loader": "^7.1.0",
@@ -131,8 +133,10 @@
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^3.0.5",
     "mocha": "^5.2.0",
+    "nodemon": "^1.18.10",
     "sinon": "^7.1.1",
-    "sinon-chai": "^3.2.0"
+    "sinon-chai": "^3.2.0",
+    "workbox-webpack-plugin": "^4.1.1"
   },
   "engines": {
     "node": ">=8.0.0"

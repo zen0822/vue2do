@@ -20,13 +20,10 @@ module.exports = function ({
   const port = process.env.PORT || config.dev.hotPort
   const compiler = webpack(webpackConfig)
 
+  console.log('')
+  console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+
   const server = new WebpackDevServer(compiler, {
-    before() {
-      console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
-    },
-    after() {
-      console.log(`Success！`)
-    },
     hot: true,
     hotOnly: true,
     historyApiFallback: true,
@@ -46,7 +43,6 @@ module.exports = function ({
     inline: true,
     disableHostCheck: true
   })
-
 
   server.listen(port, function (err) {
     if (err) {

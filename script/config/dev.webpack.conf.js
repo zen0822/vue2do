@@ -4,6 +4,9 @@ const merge = require('webpack-merge')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const chalk = require('chalk')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 
 module.exports = function (opt = {}) {
   const appName = opt.appName
@@ -83,6 +86,14 @@ module.exports = function (opt = {}) {
         statsFilename: 'stats.json',
         statsOptions: null,
         logLevel: 'info'
+      }),
+      new ProgressBarPlugin({
+        format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
+        complete: '-',
+        clear: false
+      }),
+      new WorkboxPlugin.InjectManifest({
+        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw.js`)
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
