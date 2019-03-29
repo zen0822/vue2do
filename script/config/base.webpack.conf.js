@@ -1,4 +1,9 @@
+const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const {
+  Linter,
+  Configuration
+} = require('tslint')
 
 module.exports = function ({
   appName,
@@ -13,6 +18,33 @@ module.exports = function ({
   })
   let extractTextScss = null
 
+  // {
+  //   const program = Linter.createProgram('tsconfig.json', path.resolve(__dirname, `${config.global.root}/`))
+  //   const linter = new Linter({
+  //     fix: false,
+  //     formatter: 'json'
+  //     // rulesDirectory: 'customRules/',
+  //     // formattersDirectory: 'customFormatters/'
+  //   }, program)
+
+  //   const files = Linter.getFileNames(program)
+  //   files.forEach(file => {
+  //     const fileContents = program.getSourceFile(file).getFullText()
+  //     const configuration = Configuration.findConfiguration(path.resolve(__dirname, `${config.global.root}/tslint.json`), file).results
+  //     linter.lint(file, fileContents, configuration)
+  //   })
+
+  //   const results = linter.getResult()
+
+  //   console.log(results)
+
+  //   if (results.errorCount === 0) {
+  //     // done()
+  //   } else {
+  //     // throw new gutil.PluginError('tslint', new Error(results.output))
+  //   }
+  // }
+
   if (extractScss) {
     extractTextScss = new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[hash].css'),
@@ -22,15 +54,6 @@ module.exports = function ({
   }
 
   let configRule = [{
-    test: /\.(css|scss)$/,
-    use: [
-      extractScss ? MiniCssExtractPlugin.loader : 'style-loader',
-      'css-loader',
-      'postcss-loader',
-      'sass-loader'
-    ],
-    exclude: [/(grid|util)\.scss$/]
-  }, {
     test: /\.vue$/,
     loader: 'vue',
     query: {
@@ -43,8 +66,8 @@ module.exports = function ({
       esModule: true
     }
   }, {
-    enforce: 'pre',
     test: /\.(js|jsx)$/,
+    enforce: 'pre',
     loader: 'eslint-loader',
     query: {
       configFile: '.eslintrc.js',
@@ -57,6 +80,36 @@ module.exports = function ({
       loader: 'babel-loader'
     },
     exclude: [/node_modules/]
+  }, {
+    test: /\.tsx?$/,
+    enforce: 'pre',
+    exclude: /node_modules/,
+    loader: 'tslint-loader',
+    options: {
+      typeCheck: true
+    }
+  }, {
+    test: /\.tsx?$/,
+    exclude: [/node_modules/],
+    use: [
+      'babel-loader',
+      {
+        loader: 'ts-loader',
+        options: {
+          appendTsxSuffixTo: [/\.vue$/],
+          transpileOnly: true
+        }
+      }
+    ]
+  }, {
+    test: /\.(css|scss)$/,
+    use: [
+      extractScss ? MiniCssExtractPlugin.loader : 'style-loader',
+      'css-loader',
+      'postcss-loader',
+      'sass-loader'
+    ],
+    exclude: [/(grid|util)\.scss$/]
   }, {
     test: /\.(tpl)$/,
     loader: 'html-loader'
@@ -76,13 +129,6 @@ module.exports = function ({
     options: {
       limit: 10000,
       name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-    }
-  }, {
-    test: /\.ts$/,
-    exclude: /node_modules|vue\/src/,
-    loader: 'ts-loader',
-    options: {
-      appendTsSuffixTo: [/\.vue$/]
     }
   }]
 
@@ -110,7 +156,7 @@ module.exports = function ({
 
     resolve: {
       modules: ['node_modules', path.resolve(__dirname, `${config.global.root}/src/scss`)],
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', 'ts', '.tsx'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
         'vue2do': path.resolve(__dirname, `${config.global.root}`),

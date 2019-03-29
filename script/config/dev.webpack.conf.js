@@ -93,7 +93,8 @@ module.exports = function (opt = {}) {
         clear: false
       }),
       new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw.js`)
+        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.ts`),
+        swDest: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.js`)
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),

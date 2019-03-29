@@ -1,0 +1,13 @@
+{
+  "extends": "tslint-config-standard",
+  "globals": {
+    "require": true
+  },
+  "rules": {
+    "no-floating-promises": true,
+    "await-promise": true,
+    "space-before-function-paren": false,
+    "no-var-requires": false,
+    "no-unnecessary-type-assertion": true
+  }
+}
