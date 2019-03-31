@@ -1,15 +1,10 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const {
-  Linter,
-  Configuration
-} = require('tslint')
 
 module.exports = function ({
   appName,
   extractScss = false
 } = {}) {
-  const path = require('path')
   const config = require(path.resolve(__dirname, `./index`))({
     appName
   })
@@ -17,33 +12,6 @@ module.exports = function ({
     appName
   })
   let extractTextScss = null
-
-  // {
-  //   const program = Linter.createProgram('tsconfig.json', path.resolve(__dirname, `${config.global.root}/`))
-  //   const linter = new Linter({
-  //     fix: false,
-  //     formatter: 'json'
-  //     // rulesDirectory: 'customRules/',
-  //     // formattersDirectory: 'customFormatters/'
-  //   }, program)
-
-  //   const files = Linter.getFileNames(program)
-  //   files.forEach(file => {
-  //     const fileContents = program.getSourceFile(file).getFullText()
-  //     const configuration = Configuration.findConfiguration(path.resolve(__dirname, `${config.global.root}/tslint.json`), file).results
-  //     linter.lint(file, fileContents, configuration)
-  //   })
-
-  //   const results = linter.getResult()
-
-  //   console.log(results)
-
-  //   if (results.errorCount === 0) {
-  //     // done()
-  //   } else {
-  //     // throw new gutil.PluginError('tslint', new Error(results.output))
-  //   }
-  // }
 
   if (extractScss) {
     extractTextScss = new MiniCssExtractPlugin({
@@ -97,7 +65,9 @@ module.exports = function ({
         loader: 'ts-loader',
         options: {
           appendTsxSuffixTo: [/\.vue$/],
-          transpileOnly: true
+          transpileOnly: true,
+          transpileOnly: true,
+          experimentalWatchApi: true
         }
       }
     ]
@@ -144,10 +114,25 @@ module.exports = function ({
       ]
     },
 
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all'
+          }
+        }
+      }
+    },
+
     output: {
-      publicPath: config.dev.assetsPublicPath,
-      path: config.build.assetsRoot,
-      filename: '[name].[hash].js'
+      publicPath: config.dev.assetPublicPath,
+      path: config.build.assetRoot,
+      filename: '[name].[hash].js',
+      pathinfo: false
     },
 
     stats: 'verbose',
@@ -163,7 +148,8 @@ module.exports = function ({
         'src': path.resolve(__dirname, `${config.global.root}/src`),
         'ex': path.resolve(__dirname, `${config.global.root}/example`),
         'exAsset': path.resolve(__dirname, `${config.global.root}/example/client/asset`)
-      }
+      },
+      symlinks: false
     },
 
     module: {

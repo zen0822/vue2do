@@ -38,9 +38,9 @@ module.exports = function ({
     doc: {
       env: require('./prod.env'),
       htmlName: path.resolve(__dirname, '../../example/dist/index.html'),
-      assetsRoot: path.resolve(__dirname, '../../example/dist'),
-      assetsSubDirectory: 'static',
-      assetsPublicPath: './',
+      assetRoot: path.resolve(__dirname, '../../example/dist'),
+      assetSubDirectory: 'static',
+      assetPublicPath: './',
       productionSourceMap: true,
       productionGzip: true,
       productionGzipExtensions: ['js', 'css']

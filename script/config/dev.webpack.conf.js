@@ -33,27 +33,7 @@ module.exports = function (opt = {}) {
   const devConf = merge(baseWebpackConfig, {
     mode: 'development',
     optimization: {
-      splitChunks: {
-        chunks: 'async',
-        minSize: 30000,
-        maxSize: 0,
-        minChunks: 1,
-        maxAsyncRequests: 5,
-        maxInitialRequests: 3,
-        automaticNameDelimiter: '~',
-        name: true,
-        cacheGroups: {
-          vendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true
-          }
-        }
-      }
+      usedExports: true
     },
     entry: {
       app: baseEntry.concat([
@@ -93,8 +73,8 @@ module.exports = function (opt = {}) {
         clear: false
       }),
       new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.ts`),
-        swDest: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.js`)
+        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.js`),
+        importWorkboxFrom: 'disabled'
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
@@ -103,6 +83,9 @@ module.exports = function (opt = {}) {
         filename: 'index.html',
         template,
         inject: true
+      }),
+      new webpack.ProvidePlugin({
+        workbox: 'workbox-sw'
       })
     ]
   })

@@ -5,7 +5,6 @@
   },
   "rules": {
     "no-floating-promises": true,
-    "await-promise": true,
     "space-before-function-paren": false,
     "no-var-requires": false,
     "no-unnecessary-type-assertion": true

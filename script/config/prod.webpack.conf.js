@@ -66,8 +66,8 @@ module.exports = function (opt = {}) {
     entry: path.resolve(__dirname, `${config.global.root}/index.js`),
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     output: {
-      path: config.build.assetsRoot,
-      publicPath: config.build.assetsPublicPath,
+      path: config.build.assetRoot,
+      publicPath: config.build.assetPublicPath,
       library: 'Vue2do',
       libraryTarget: opt.library,
       filename: opt.filename

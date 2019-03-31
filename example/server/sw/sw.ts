@@ -1,10 +1,10 @@
 import workbox from 'workbox-sw'
 
-declare const self: ServiceWorkerGlobalScope
+const self2 = self as any
 const {
   addEventListener,
   registration
-} = self
+} = self2
 
 class ServiceWorkerMain {
   init() {
@@ -24,7 +24,7 @@ class ServiceWorkerMain {
       event.waitUntil(registration.showNotification(title, options))
     })
 
-    workbox.precaching.precacheAndRoute(self.__precacheManifest)
+    workbox.precaching.precacheAndRoute(self2.__precacheManifest)
   }
 }
 
