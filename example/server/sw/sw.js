@@ -1,20 +1,14 @@
-// import workbox from 'workbox-sw'
-// import * as precaching from 'workbox-precaching'
-// importScripts('https://unpkg.com/workbox-sw@4.1.1/build/importScripts/workbox-sw.dev.v4.1.1.js')
-// const workbox = new WorkboxSW()
-importScripts('https://github.com/zen0822/vue2do/lib/js/workbox/workbox-v4.1.1/workbox-sw.js')
-workbox.setConfig({modulePathPrefix: 'https://github.com/zen0822/vue2do/lib/js/workbox/workbox-v4.1.1'})
-// const workbox = new WorkboxSW({
-//   clientsClaim: true,
-//   skipWaiting: true
-// })
+importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
+workbox.setConfig({
+  modulePathPrefix: 'https://zen0822.github.io/lib/workbox'
+})
 
-workbox.skipWaiting()
-workbox.clientsClaim()
+workbox.core.skipWaiting()
+workbox.core.clientsClaim()
 
 workbox.routing.registerRoute(
   new RegExp('http://localhost:5168/#/'),
-  workbox.strategies.staleWhileRevalidate()
+  new workbox.strategies.StaleWhileRevalidate()
 )
 
 self.addEventListener('push', (event) => {
