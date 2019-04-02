@@ -34,7 +34,7 @@ module.exports = function ({
       esModule: true
     }
   }, {
-    test: /\.(js|jsx)$/,
+    test: /\.jsx?$/,
     enforce: 'pre',
     loader: 'eslint-loader',
     query: {
@@ -43,7 +43,7 @@ module.exports = function ({
     },
     exclude: [/node_modules/]
   }, {
-    test: /\.(js|jsx)$/,
+    test: /\.jsx?$/,
     use: {
       loader: 'babel-loader'
     },
@@ -65,7 +65,6 @@ module.exports = function ({
         loader: 'ts-loader',
         options: {
           appendTsxSuffixTo: [/\.vue$/],
-          transpileOnly: true,
           transpileOnly: true,
           experimentalWatchApi: true
         }
@@ -137,7 +136,7 @@ module.exports = function ({
 
     stats: 'verbose',
 
-    context: path.resolve(__dirname, 'app'),
+    context: path.resolve(__dirname, `${config.global.root}`),
 
     resolve: {
       modules: ['node_modules', path.resolve(__dirname, `${config.global.root}/src/scss`)],

@@ -11,8 +11,7 @@ const inquirer = require('inquirer')
 const exists = require('fs').existsSync
 const path = require('path')
 const ora = require('ora')
-
-const logger = require('../lib/logger')
+const logger = require('../lib/js/logger')
 
 const tplPath = 'https://github.com/zen0822/vue-app.git'
 const vueAppTmpDir = 'VUE2DO_APP_GIT_REPO_DIR'

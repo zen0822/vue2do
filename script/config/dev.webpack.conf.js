@@ -26,8 +26,14 @@ module.exports = function (opt = {}) {
     path.resolve(__dirname, `${config.global.root}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
-  let baseEntry = {}
-  baseEntry = baseWebpackConfig.entry.app.slice()
+  let newEntry = {
+    ...baseWebpackConfig.entry,
+    app: baseWebpackConfig.entry.app.slice().concat([
+      `webpack-dev-server/client?http://localhost:${port}/`,
+      'webpack/hot/dev-server'
+    ])
+  }
+
   delete baseWebpackConfig.entry
 
   const devConf = merge(baseWebpackConfig, {
@@ -35,12 +41,7 @@ module.exports = function (opt = {}) {
     optimization: {
       usedExports: true
     },
-    entry: {
-      app: baseEntry.concat([
-        `webpack-dev-server/client?http://localhost:${port}/`,
-        'webpack/hot/dev-server'
-      ])
-    },
+    entry: newEntry,
     module: {
       rules: [{
         test: /(grid|util)\.scss$/,
@@ -83,9 +84,6 @@ module.exports = function (opt = {}) {
         filename: 'index.html',
         template,
         inject: true
-      }),
-      new webpack.ProvidePlugin({
-        workbox: 'workbox-sw'
       })
     ]
   })
