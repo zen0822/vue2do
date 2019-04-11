@@ -1,6 +1,13 @@
 importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
+
 workbox.setConfig({
-  modulePathPrefix: 'https://zen0822.github.io/lib/workbox'
+  modulePathPrefix: 'https://zen0822.github.io/lib/workbox',
+  debug: process.env.NODE_ENV === 'development'
+})
+
+workbox.core.setCacheNameDetails({
+  prefix: 'vue2do-doc',
+  suffix: 'v1'
 })
 
 workbox.core.skipWaiting()

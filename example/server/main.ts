@@ -7,11 +7,11 @@ class ServerMain {
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', async () => {
-        navigator.serviceWorker.register('/sw.js').then(async (registration: any) => {
+        navigator.serviceWorker.register('/sw.js').then((registration: any) => {
           console.log('SW registered: ', registration)
-          registration.pushManager.subscribe({
-            userVisibleOnly: true
-          })
+          // registration.pushManager.subscribe({
+          //   userVisibleOnly: true
+          // }).then().catch()
         }).catch((registrationError: any) => {
           console.log('SW registration failed: ', registrationError)
         })

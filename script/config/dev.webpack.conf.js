@@ -75,7 +75,7 @@ module.exports = function (opt = {}) {
       }),
       new WorkboxPlugin.InjectManifest({
         swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.js`),
-        importWorkboxFrom: 'cdn'
+        importWorkboxFrom: 'disabled'
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
