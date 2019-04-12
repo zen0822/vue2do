@@ -32,7 +32,7 @@ module.exports = function (config) {
     },
     port: 9877,
     reporters: ['spec', 'coverage'],
-    singleRun: true,
+    singleRun: false,
     webpack: webpackConf,
     webpackMiddleware: {
       noInfo: true
