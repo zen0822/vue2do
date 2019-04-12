@@ -3,6 +3,9 @@
  * @param opt { Object } - the options that start the development project
  */
 
+const fs = require('fs')
+const url = require('url')
+const path = require('path')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 
@@ -13,12 +16,13 @@ module.exports = function ({
     appName: appName
   })
 
-  const webpackConfig = require('./config/dev.webpack.conf')({
+  const webpackConfig = require('./config/sw.dev.webpack.conf')({
     appName: appName
   })
 
-  const port = process.env.PORT || config.dev.hotPort
+  const port = config.sw.hotPort
   const compiler = webpack(webpackConfig)
+  const releaseDir = webpackConfig.output.path
 
   console.log('')
   console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
@@ -28,7 +32,6 @@ module.exports = function ({
     hot: true,
     hotOnly: true,
     historyApiFallback: true,
-    proxy: config.dev.proxyTable,
     clientLogLevel: 'info',
     watchOptions: {
       aggregateTimeout: 300,
@@ -42,7 +45,23 @@ module.exports = function ({
       colors: true
     },
     inline: true,
-    disableHostCheck: true
+    disableHostCheck: true,
+    after: (app) => {
+      // 监听文件请求，并查找对应文件进行响应
+      app.get('*.*', (req, res) => {
+        const urlJson = url.URL(req.url, true)
+        const pathname = urlJson['pathname']
+        const filePath = path.join(releaseDir, pathname)
+
+        fs.readFile(filePath, (error, fileData) => {
+          if (error) {
+            return false
+          }
+
+          res.end(fileData)
+        })
+      })
+    }
   })
 
   server.listen(port, function (err) {

@@ -74,7 +74,7 @@ module.exports = function (opt = {}) {
         clear: false
       }),
       new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.js`),
+        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/dist/sw/sw.js`),
         importWorkboxFrom: 'disabled'
       }),
       new webpack.HotModuleReplacementPlugin(),

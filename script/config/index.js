@@ -31,6 +31,7 @@ module.exports = function ({
       assetSubDirectory: assetSubDirectory,
       proxyTable: {
         '/api/**': `http://localhost:${mockPort}`,
+        '/sw.js': `http://localhost:5169`,
         ...appConfig.proxy
       },
       cssSourceMap: false
@@ -44,6 +45,14 @@ module.exports = function ({
       productionSourceMap: true,
       productionGzip: true,
       productionGzipExtensions: ['js', 'css']
+    },
+    sw: {
+      env: require('./dev.env'),
+      hotPort: 5169,
+      assetRoot: path.resolve(appConfigDir, appConfig.assetRoot, './sw'),
+      assetPublicPath: '/',
+      assetSubDirectory: assetSubDirectory,
+      cssSourceMap: false
     },
     global: {
       root: '../../',

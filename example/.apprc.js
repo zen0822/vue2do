@@ -1,6 +1,6 @@
 module.exports = {
   type: 'spa',
-  assetRoot: '../../dist',
+  assetRoot: './dist',
   assetPublicPath: './',
   assetSubDirectory: 'static',
   api: '',

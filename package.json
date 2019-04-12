@@ -28,8 +28,9 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
-    "start": "nodemon --watch ./script/* bin/dev.js",
+    "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "prod": "node bin/prod",
+    "mock": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
     "doc:rel:ci": "node bin/doc --release --ci",
@@ -122,6 +123,8 @@
     "webpack-dev-server": "^3.1.11",
     "webpack-hot-middleware": "^2.24.3",
     "webpack-merge": "^4.1.1",
+    "workbox-window": "^4.2.0",
+    "worker-loader": "^2.0.0",
     "yargs": "^12.0.2"
   },
   "devDependencies": {
