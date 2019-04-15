@@ -10,6 +10,7 @@ const webpackConf = require('../script/config/base.webpack.conf')({
 })
 
 delete webpackConf.entry
+delete webpackConf.optimization
 
 module.exports = function (config) {
   config.set({
