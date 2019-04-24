@@ -91,7 +91,7 @@ module.exports = function ({
     mode: 'development',
     devtool: '#eval-source-map',
     entry: {
-      sw: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.worker.js`)
+      sw: path.resolve(__dirname, `${config.global.root}/${appName}/server/sw/sw.worker.ts`)
     },
 
     output: {

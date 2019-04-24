@@ -1,8 +1,16 @@
-import * as workbox from 'workbox-sw'
-import * as workboxCore from 'workbox-core'
-import * as workboxRouting from 'workbox-routing'
-import * as workboxStrategies from 'workbox-strategies'
-import * as workboxPrecaching from 'workbox-precaching'
+importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
+
+workbox.setConfig({
+  modulePathPrefix: 'https://zen0822.github.io/lib/workbox',
+  debug: process.env.NODE_ENV === 'development'
+})
+
+const {
+  core: workboxCore,
+  routing: workboxRouting,
+  strategies: workboxStrategies,
+  precaching: workboxPrecaching
+} = workbox
 
 const self2 = self as any
 const {
@@ -11,14 +19,23 @@ const {
 } = self2
 
 class ServiceWorkerMain {
-  init() {
+  constructor() {
+    workboxCore.setCacheNameDetails({
+      precache: 'precache',
+      prefix: 'vue2do-doc',
+      suffix: 'v1'
+    })
     workboxCore.skipWaiting()
     workboxCore.clientsClaim()
+  }
 
+  init() {
     workboxRouting.registerRoute(
-      new RegExp('http://localhost:5168/'),
+      new RegExp('http://localhost:5168/#/'),
       new workboxStrategies.StaleWhileRevalidate()
     )
+
+    workboxPrecaching.precacheAndRoute(self2.__precacheManifest)
 
     addEventListener('push', (event: any) => {
       const title = 'Get Started With Workbox'
@@ -27,8 +44,6 @@ class ServiceWorkerMain {
       }
       event.waitUntil(registration.showNotification(title, options))
     })
-
-    workboxPrecaching.precacheAndRoute(self2.__precacheManifest)
   }
 }
 

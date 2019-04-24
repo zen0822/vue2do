@@ -10,7 +10,7 @@ import LayoutFooter from 'ex/client/component/layout/LayoutFooter/LayoutFooter'
 require('file-loader?name=favicon.ico!exAsset/img/favicon.ico')
 
 export default {
-  name: 'app',
+  name: 'App',
 
   store,
 
