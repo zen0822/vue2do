@@ -10,12 +10,12 @@ class ServerMain {
 
       window.addEventListener('load', async () => {
         wb.register().then((registration: any) => {
-          console.log('SW registered: ', registration)
+          // console.log('SW registered: ', registration)
           // registration.pushManager.subscribe({
           //   userVisibleOnly: true
           // }).then().catch()
         }).catch((registrationError: any) => {
-          console.log('SW registration failed: ', registrationError)
+          // console.log('SW registration failed: ', registrationError)
         })
 
         try {

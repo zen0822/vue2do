@@ -1,3 +1,5 @@
+import DBMock, { IMock } from './db'
+
 importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
 
 workbox.setConfig({
@@ -18,8 +20,16 @@ const {
   registration
 } = self2
 
-class ServiceWorkerMain {
-  constructor() {
+class ServiceWorkerMain implements IMock {
+  id: number | undefined
+  api: string
+  data: string
+
+  constructor(api: string, data: string, id?:number) {
+    this.api = api
+    this.data = data
+    if (id) this.id = id
+
     workboxCore.setCacheNameDetails({
       precache: 'precache',
       prefix: 'vue2do-doc',
@@ -30,9 +40,35 @@ class ServiceWorkerMain {
   }
 
   init() {
+    const db = new DBMock()
+    db.mock.put({ data: 'First name', api: '/api/ex' })
+
     workboxRouting.registerRoute(
       new RegExp('http://localhost:5168/#/'),
       new workboxStrategies.StaleWhileRevalidate()
+    )
+
+    type C = { url: string, event: any, params: { type: string, name: string } }
+    workbox.routing.registerRoute(
+      ({ url, event }: { url: { href: string }, event: any }): any => {
+        if (/\/api\/ex/.test(url.href)) {
+          console.log(url, event)
+
+          return {
+            type: 'test',
+            name: '/api/ex'
+          }
+        }
+
+        return false
+      },
+      ({ url, event, params }: C): object => {
+        console.log(event)
+
+        return new Response(
+          `url: ${url}，param: ${params.type} on ${params.name}`
+        )
+      }
     )
 
     workboxPrecaching.precacheAndRoute(self2.__precacheManifest)

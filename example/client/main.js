@@ -7,7 +7,6 @@ import 'core-js/shim'
 
 import './scss/main.scss'
 
-import Vue from 'vue'
 import {
   createApp
 } from './app'
@@ -28,4 +27,10 @@ const {
 
 router.onReady(() => {
   app.$mount('#app')
+})
+
+fetch(new Request('/api/ex')).then((response) => {
+  return response.text()
+}).then((data) => {
+  console.log(data)
 })

@@ -77,7 +77,6 @@ Vue.component('Input', Input)
 
 [从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
 
-
 ```html
 ...
   <body>
