@@ -32,7 +32,7 @@ module.exports = function ({
   const config = require('./config')({
     appName: appName
   })
-  const assetPath = path.join(config.build.assetRoot)
+  const assetPath = path.join(config.prod.assetRoot)
   shelljs.rm('-rf', assetPath)
   shelljs.mkdir('-p', assetPath)
 

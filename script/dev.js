@@ -3,6 +3,7 @@
  * @param opt { Object } - the options that start the development project
  */
 
+const path = require('path')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 
@@ -32,8 +33,10 @@ module.exports = function ({
     clientLogLevel: 'info',
     watchOptions: {
       aggregateTimeout: 300,
-      poll: 1000
+      ignored: [/node_modules/]
     },
+    watchContentBase: true,
+    contentBase: [path.resolve(config.prod.assetRoot, './sw')],
     publicPath: webpackConfig.output.publicPath,
     headers: {
       'X-Custom-Header': 'yes'

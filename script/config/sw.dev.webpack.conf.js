@@ -108,7 +108,7 @@ module.exports = function ({
 
     resolve: {
       modules: ['node_modules'],
-      extensions: ['.js', '.jsx', 'ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
         'src': path.resolve(__dirname, `${config.global.root}/src`)
       },

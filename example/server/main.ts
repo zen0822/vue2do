@@ -3,19 +3,22 @@
  */
 
 class ServerMain {
-  async init() {
+  constructor() {
+    this.init()
+  }
+
+  private async init() {
     if ('serviceWorker' in navigator) {
       const { Workbox } = await import('workbox-window')
       const wb = new Workbox('/sw.js')
 
       window.addEventListener('load', async () => {
         wb.register().then((registration: any) => {
-          // console.log('SW registered: ', registration)
-          // registration.pushManager.subscribe({
-          //   userVisibleOnly: true
-          // }).then().catch()
+          registration.pushManager.subscribe({
+            userVisibleOnly: true
+          })
         }).catch((registrationError: any) => {
-          // console.log('SW registration failed: ', registrationError)
+          console.warn('SW of mock registration failed: ', registrationError)
         })
 
         try {
@@ -28,8 +31,4 @@ class ServerMain {
   }
 }
 
-const serverMain = new ServerMain()
-
-serverMain.init()
-
-export default ServerMain
+export const serverMain = new ServerMain()

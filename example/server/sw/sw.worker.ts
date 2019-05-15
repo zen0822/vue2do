@@ -1,4 +1,5 @@
-import DBMock, { IMock } from './db'
+import db from './mock.db'
+import mockrc from '../../.mockrc.js'
 
 importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
 
@@ -20,16 +21,8 @@ const {
   registration
 } = self2
 
-class ServiceWorkerMain implements IMock {
-  id: number | undefined
-  api: string
-  data: string
-
-  constructor(api: string, data: string, id?:number) {
-    this.api = api
-    this.data = data
-    if (id) this.id = id
-
+class ServiceWorkerMain {
+  constructor() {
     workboxCore.setCacheNameDetails({
       precache: 'precache',
       prefix: 'vue2do-doc',
@@ -37,40 +30,16 @@ class ServiceWorkerMain implements IMock {
     })
     workboxCore.skipWaiting()
     workboxCore.clientsClaim()
+
+    this.init()
+    this.registerRoute()
   }
 
-  init() {
-    const db = new DBMock()
-    db.mock.put({ data: 'First name', api: '/api/ex' })
-
+  private async init() {
     workboxRouting.registerRoute(
       new RegExp('http://localhost:5168/#/'),
       new workboxStrategies.StaleWhileRevalidate()
     )
-
-    type C = { url: string, event: any, params: { type: string, name: string } }
-    workbox.routing.registerRoute(
-      ({ url, event }: { url: { href: string }, event: any }): any => {
-        if (/\/api\/ex/.test(url.href)) {
-          console.log(url, event)
-
-          return {
-            type: 'test',
-            name: '/api/ex'
-          }
-        }
-
-        return false
-      },
-      ({ url, event, params }: C): object => {
-        console.log(event)
-
-        return new Response(
-          `url: ${url}，param: ${params.type} on ${params.name}`
-        )
-      }
-    )
-
     workboxPrecaching.precacheAndRoute(self2.__precacheManifest)
 
     addEventListener('push', (event: any) => {
@@ -81,10 +50,56 @@ class ServiceWorkerMain implements IMock {
       event.waitUntil(registration.showNotification(title, options))
     })
   }
+
+  private registerRoute() {
+    // try {
+    //   await this.createDbData()
+    // } catch (error) {
+    //   console.warn(error)
+    // }
+
+    type C = { url: string, params: { data: object, name: string } }
+
+    mockrc.api.forEach(async (item) => {
+      try {
+        await db.mock.put({
+          data: item.data,
+          api: item.path,
+          name: item.name
+        })
+      } catch (error) {
+        console.warn(error)
+      }
+
+      workboxRouting.registerRoute(
+        ({ url }: { url: { href: string } }): any => {
+          if (url.href.includes(item.path)) {
+            return {
+              name: item.name,
+              data: item.data
+            }
+          }
+
+          return false
+        },
+        ({ url, params }: C): object => {
+          return new Response(
+            JSON.stringify({
+              url,
+              data: params.data
+            }), {
+              status: 200,
+              headers: new Headers({
+                'Accept-Charset': 'utf-8',
+                'Content-Type': 'application/json',
+                'Cache-Control': 'max-age=3600'
+              })
+            }
+          )
+        }
+      )
+    })
+  }
 }
 
-const serviceWorkerMain = new ServiceWorkerMain()
-
-serviceWorkerMain.init()
-
-export default ServiceWorkerMain
+export const serviceWorkerMain = new ServiceWorkerMain()

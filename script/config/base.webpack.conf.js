@@ -129,7 +129,7 @@ module.exports = function ({
 
     output: {
       publicPath: config.dev.assetPublicPath,
-      path: config.build.assetRoot,
+      path: config.prod.assetRoot,
       filename: '[name].[hash].js',
       pathinfo: false
     },
@@ -140,7 +140,7 @@ module.exports = function ({
 
     resolve: {
       modules: ['node_modules', path.resolve(__dirname, `${config.global.root}/src/scss`)],
-      extensions: ['.js', '.jsx', 'ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
         'vue2do': path.resolve(__dirname, `${config.global.root}`),
