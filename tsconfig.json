@@ -3,21 +3,15 @@
     "example/server/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "example/.mockrc.js"
   ],
   "compilerOptions": {
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "jsx": "preserve",
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "allowJs": true,
-    "module": "esnext",
-    "target": "es5",
-    "moduleResolution": "node",
     "isolatedModules": true,
-    "strictNullChecks": true,
+    "jsx": "preserve",
     "lib": [
       "webworker",
       "dom",
@@ -27,7 +21,16 @@
       "es2015.promise",
       "es2017"
     ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noEmit": true,
+    "noUnusedParameters": true,
+    "outDir": "./build/",
+    "pretty": true,
     "sourceMap": true,
-    "pretty": true
+    "strictNullChecks": true,
+    "strict": true,
+    "target": "es5"
   }
 }

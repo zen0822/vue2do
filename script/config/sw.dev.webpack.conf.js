@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const File2DistWebpackPlugin = require('../../lib/webpack/File2DistWebpackPlugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = function ({
   appName
@@ -48,39 +49,6 @@ module.exports = function ({
         }
       }
     ]
-  }, {
-    test: /\.worker\.js$/,
-    exclude: [/node_modules/],
-    use: [
-      'babel-loader',
-      {
-        loader: 'ts-loader',
-        options: {
-          transpileOnly: true,
-          experimentalWatchApi: true
-        }
-      }
-    ]
-  }, {
-    test: /\.worker\.ts$/,
-    exclude: [/node_modules/],
-    use: [
-      //   {
-      //   loader: 'worker-loader',
-      //   options: {
-      //     fallback: false,
-      //     inline: true
-      //   }
-      // },
-      'babel-loader',
-      {
-        loader: 'ts-loader',
-        options: {
-          transpileOnly: true,
-          experimentalWatchApi: true
-        }
-      }
-    ]
   }]
 
   if (Array.isArray(config.loaderRule)) {
@@ -98,7 +66,7 @@ module.exports = function ({
       publicPath: config.sw.assetPublicPath,
       path: config.sw.assetRoot,
       filename: '[name].js',
-      pathinfo: true,
+      pathinfo: false,
       globalObject: 'this'
     },
 
@@ -125,6 +93,12 @@ module.exports = function ({
     },
 
     plugins: [
+      new ForkTsCheckerWebpackPlugin({
+        tslint: true,
+        async: true,
+        watch: [path.resolve(__dirname, `${config.global.root}/example/server`)],
+        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/server`)]
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new File2DistWebpackPlugin({
         dir: config.sw.assetRoot

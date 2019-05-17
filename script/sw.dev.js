@@ -30,7 +30,7 @@ module.exports = function ({
     clientLogLevel: 'info',
     watchOptions: {
       aggregateTimeout: 300,
-      ignored: [/node_modules/, 'src/client/**']
+      ignored: [/node_modules/, 'example/client/**']
     },
     publicPath: webpackConfig.output.publicPath,
     headers: {

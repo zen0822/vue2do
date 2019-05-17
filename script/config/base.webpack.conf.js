@@ -1,5 +1,6 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = function ({
   appName,
@@ -160,7 +161,14 @@ module.exports = function ({
       maxAssetSize: 10485760
     },
 
-    plugins: []
+    plugins: [
+      new ForkTsCheckerWebpackPlugin({
+        tslint: true,
+        async: true,
+        watch: [path.resolve(__dirname, `${config.global.root}/example/server`)],
+        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/server`)]
+      })
+    ]
   }
 
   if (extractScss) {

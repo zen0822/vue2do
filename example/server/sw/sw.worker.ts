@@ -52,12 +52,6 @@ class ServiceWorkerMain {
   }
 
   private registerRoute() {
-    // try {
-    //   await this.createDbData()
-    // } catch (error) {
-    //   console.warn(error)
-    // }
-
     type C = { url: string, params: { data: object, name: string } }
 
     mockrc.api.forEach(async (item) => {

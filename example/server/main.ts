@@ -16,7 +16,7 @@ class ServerMain {
         wb.register().then((registration: any) => {
           registration.pushManager.subscribe({
             userVisibleOnly: true
-          })
+          }).catch((error: any) => { console.warn(error) })
         }).catch((registrationError: any) => {
           console.warn('SW of mock registration failed: ', registrationError)
         })
