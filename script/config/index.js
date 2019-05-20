@@ -51,7 +51,7 @@ module.exports = function ({
       assetRoot: path.resolve(appConfigDir, appConfig.assetRoot, './sw'),
       assetPublicPath: '/',
       assetSubDirectory: assetSubDirectory,
-      cssSourceMap: false
+      prodSourceMap: false
     },
     global: {
       root: '../../',

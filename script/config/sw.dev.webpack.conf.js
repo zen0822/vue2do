@@ -48,10 +48,6 @@ module.exports = function ({
     ]
   }]
 
-  if (Array.isArray(config.loaderRule)) {
-    configRule = configRule.concat(config.loaderRule)
-  }
-
   const baseConf = {
     mode: 'development',
     devtool: '#eval-source-map',

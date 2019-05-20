@@ -3,44 +3,8 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
-
-const version = process.env.VERSION || require('../../package.json').version
-const banner =
-  '/*!\n' +
-  ' * vue2do.js v' + version + '\n' +
-  ' * (c) 2017-' + new Date().getFullYear() + ' Zen Huang\n' +
-  ' * Released under the MIT License.\n' +
-  ' */'
-
-const umdExternals = {
-  vue: {
-    root: 'Vue',
-    commonjs2: 'vue',
-    amd: 'vue',
-    commonjs: 'vue'
-  },
-  'vuex': {
-    root: 'Vuex',
-    commonjs2: 'vuex',
-    amd: 'vuex',
-    commonjs: 'vuex'
-  },
-  'vue-i18n': {
-    root: 'VueI18n',
-    commonjs2: 'vue-i18n',
-    amd: 'vue-i18n',
-    commonjs: 'vue-i18n'
-  }
-}
-
-const externals = {
-  'vue': 'Vue',
-  'vuex': 'Vuex',
-  'vue-i18n': 'VueI18n'
-}
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = function (opt = {}) {
   const appName = opt.appName
@@ -51,40 +15,72 @@ module.exports = function (opt = {}) {
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName
   })
+  const globalRoot = config.global.root
+  const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/server/sw/sw.worker.ts`)
+
+  let configRule = [{
+    test: /\.jsx?$/,
+    enforce: 'pre',
+    loader: 'eslint-loader',
+    query: {
+      configFile: '.eslintrc.js',
+      formatter: require('eslint-friendly-formatter')
+    },
+    exclude: [/node_modules/]
+  }, {
+    test: /\.jsx?$/,
+    use: {
+      loader: 'babel-loader'
+    },
+    exclude: [/node_modules/]
+  }, {
+    test: /\.tsx?$/,
+    enforce: 'pre',
+    exclude: /node_modules/,
+    loader: 'tslint-loader',
+    options: {
+      typeCheck: true
+    }
+  }, {
+    test: /\.tsx?$/,
+    exclude: [/node_modules/],
+    use: [
+      'babel-loader',
+      {
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          experimentalWatchApi: true
+        }
+      }
+    ]
+  }]
 
   delete baseWebpackConfig.entry
+  delete baseWebpackConfig.optimization
 
-  var webpackConfig = merge(baseWebpackConfig, {
+  let webpackConfig = merge(baseWebpackConfig, {
     mode: 'production',
-    entry: path.resolve(__dirname, `${config.global.root}/index.js`),
-    devtool: config.sw.sourceMap ? '#source-map' : false,
+    entry: swPath,
+    devtool: config.sw.prodSourceMap ? '#source-map' : false,
     output: {
-      path: config.assetRoot,
-      publicPath: config.assetPublicPath,
-      library: 'Vue2do',
-      libraryTarget: opt.library,
-      filename: opt.filename
+      publicPath: config.sw.assetPublicPath,
+      path: config.sw.assetRoot,
+      filename: '[name].js',
+      globalObject: 'this'
     },
     module: {
-      rules: [{
-        test: /(grid|util)\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: opt.compress
-            }
-          },
-          'postcss-loader',
-          'sass-loader'
-        ]
-      }]
+      rules: configRule
     },
     optimization: {
       minimizer: []
     },
-    plugins: []
+    plugins: [
+      new CleanWebpackPlugin([`${config.sw.assetRoot}/*`], {
+        root: path.resolve(__dirname, `${globalRoot}/${appName}/dist`),
+        verbose: true
+      })
+    ]
   })
 
   if (config.gzip) {
@@ -101,7 +97,6 @@ module.exports = function (opt = {}) {
 
   if (opt.compress) {
     webpackConfig.optimization.minimizer.push(
-      new OptimizeCSSAssetsPlugin({}),
       new UglifyJsPlugin({
         uglifyOptions: {
           compress: true,

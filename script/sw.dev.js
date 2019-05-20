@@ -12,7 +12,6 @@ module.exports = function ({
   const config = require('./config')({
     appName: appName
   })
-
   const webpackConfig = require('./config/sw.dev.webpack.conf')({
     appName: appName
   })

@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 
@@ -17,6 +18,7 @@ module.exports = function (opt = {}) {
 
   const port = process.env.PORT || config.dev.hotPort
   const globalRoot = config.global.root
+  const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/dist/sw/sw.js`)
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
@@ -71,12 +73,9 @@ module.exports = function (opt = {}) {
       }),
       new ProgressBarPlugin({
         format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
-        complete: '-',
+        complete: '>',
+        incomplete: '-',
         clear: false
-      }),
-      new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, `${globalRoot}/${appName}/dist/sw/sw.js`),
-        importWorkboxFrom: 'disabled'
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
@@ -88,6 +87,19 @@ module.exports = function (opt = {}) {
       })
     ]
   })
+
+  try {
+    fs.accessSync(swPath, fs.constants.F_OK)
+
+    devConf.plugins.push(
+      new WorkboxPlugin.InjectManifest({
+        swSrc: swPath,
+        importWorkboxFrom: 'disabled'
+      })
+    )
+  } catch (error) {
+    console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run mock 生成对应文件。\n`)
+  }
 
   return devConf
 }
