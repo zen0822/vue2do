@@ -20,10 +20,10 @@ module.exports = function ({
     release
   })
 
-  var spinner = ora('building for documention website...')
+  const spinner = ora('building for documention website...')
   spinner.start()
 
-  var assetsPath = path.join(config.doc.assetsRoot, config.doc.assetsSubDirectory)
+  const assetsPath = path.join(config.doc.assetRoot, config.doc.assetSubDirectory)
   shelljs.rm('-rf', assetsPath)
   shelljs.mkdir('-p', assetsPath)
 

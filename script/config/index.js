@@ -1,4 +1,3 @@
-// see http://vuejs-templates.github.io/webpack for documentation.
 const path = require('path')
 
 module.exports = function ({
@@ -16,12 +15,12 @@ module.exports = function ({
     apiProd: appConfig.apiProd,
     prod: {
       env: require('./prod.env'),
-      assetRoot: path.resolve(appConfigDir, appConfig.assetRoot),
-      assetPublicPath: appConfig.assetPublicPath || './',
+      assetRoot: path.resolve(__dirname, '../../dist'),
+      assetPublicPath: './',
       assetSubDirectory: assetSubDirectory,
-      productionSourceMap: true,
-      productionGzip: appConfig.gzip || false,
-      productionGzipExtensions: ['js', 'css']
+      sourceMap: false,
+      gzip: appConfig.gzip || false,
+      gzipExt: ['js', 'css']
     },
     dev: {
       env: require('./dev.env'),
@@ -39,12 +38,12 @@ module.exports = function ({
     doc: {
       env: require('./prod.env'),
       htmlName: path.resolve(__dirname, '../../example/dist/index.html'),
-      assetRoot: path.resolve(__dirname, '../../example/dist'),
+      assetRoot: path.resolve(appConfigDir, appConfig.assetRoot),
       assetSubDirectory: 'static',
       assetPublicPath: './',
-      productionSourceMap: true,
-      productionGzip: true,
-      productionGzipExtensions: ['js', 'css']
+      sourceMap: true,
+      gzip: true,
+      gzipExt: ['js', 'css']
     },
     sw: {
       env: require('./dev.env'),
@@ -61,8 +60,7 @@ module.exports = function ({
     https: appConfig.https,
     htmlName: appConfig.htmlName,
     type: 'spa',
-    tpl: appConfig.tpl,
-    sourceMap: false
+    tpl: appConfig.tpl
   }
 
   return config

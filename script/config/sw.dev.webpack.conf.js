@@ -9,9 +9,6 @@ module.exports = function ({
   const config = require(path.resolve(__dirname, `./index`))({
     appName
   })
-  const utils = require(path.resolve(__dirname, `./../utils`))({
-    appName
-  })
 
   let configRule = [{
     test: /\.jsx?$/,

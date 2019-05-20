@@ -12,6 +12,7 @@ module.exports = function ({
   const utils = require(path.resolve(__dirname, `./../utils`))({
     appName
   })
+  const globalRoot = config.global.root
   let extractTextScss = null
 
   if (extractScss) {
@@ -110,7 +111,7 @@ module.exports = function ({
     mode: 'production',
     entry: {
       app: [
-        path.resolve(__dirname, `${config.global.root}/${appName}/app.js`)
+        path.resolve(__dirname, `${globalRoot}/${appName}/app.js`)
       ]
     },
 
@@ -137,17 +138,17 @@ module.exports = function ({
 
     stats: 'verbose',
 
-    context: path.resolve(__dirname, `${config.global.root}`),
+    context: path.resolve(__dirname, `${globalRoot}`),
 
     resolve: {
-      modules: ['node_modules', path.resolve(__dirname, `${config.global.root}/src/scss`)],
+      modules: ['node_modules', path.resolve(__dirname, `${globalRoot}/src/scss`)],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js',
-        'vue2do': path.resolve(__dirname, `${config.global.root}`),
-        'src': path.resolve(__dirname, `${config.global.root}/src`),
-        'ex': path.resolve(__dirname, `${config.global.root}/example`),
-        'exAsset': path.resolve(__dirname, `${config.global.root}/example/client/asset`)
+        'vue2do': path.resolve(__dirname, `${globalRoot}`),
+        'src': path.resolve(__dirname, `${globalRoot}/src`),
+        'ex': path.resolve(__dirname, `${globalRoot}/example`),
+        'exAsset': path.resolve(__dirname, `${globalRoot}/example/client/asset`)
       },
       symlinks: false
     },
@@ -165,8 +166,8 @@ module.exports = function ({
       new ForkTsCheckerWebpackPlugin({
         tslint: true,
         async: true,
-        watch: [path.resolve(__dirname, `${config.global.root}/example/server`)],
-        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/server`)]
+        watch: [path.resolve(__dirname, `${globalRoot}/example/server`)],
+        reportFiles: [path.resolve(__dirname, `${globalRoot}/example/server`)]
       })
     ]
   }

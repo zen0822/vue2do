@@ -16,6 +16,7 @@ module.exports = function (opt = {}) {
   })
 
   const port = process.env.PORT || config.dev.hotPort
+  const globalRoot = config.global.root
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
@@ -23,7 +24,7 @@ module.exports = function (opt = {}) {
   })
 
   const template = config.tpl ?
-    path.resolve(__dirname, `${config.global.root}/${appName}/index.html`) :
+    path.resolve(__dirname, `${globalRoot}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
   let newEntry = {
@@ -74,7 +75,7 @@ module.exports = function (opt = {}) {
         clear: false
       }),
       new WorkboxPlugin.InjectManifest({
-        swSrc: path.resolve(__dirname, `${config.global.root}/${appName}/dist/sw/sw.js`),
+        swSrc: path.resolve(__dirname, `${globalRoot}/${appName}/dist/sw/sw.js`),
         importWorkboxFrom: 'disabled'
       }),
       new webpack.HotModuleReplacementPlugin(),
