@@ -1,6 +1,6 @@
 {
   "include": [
-    "example/server/**/*"
+    "example/client/sw/*"
   ],
   "exclude": [
     "node_modules",

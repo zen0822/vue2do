@@ -53,6 +53,9 @@ module.exports = function ({
       assetSubDirectory: assetSubDirectory,
       prodSourceMap: false
     },
+    gql: {
+      port: 5170
+    },
     global: {
       root: '../../',
       appDir: '../../app/'

@@ -3,4 +3,4 @@
  */
 
 import './client/main'
-import './server/main.ts'
+import './client/sw/main.ts'

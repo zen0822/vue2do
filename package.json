@@ -31,7 +31,7 @@
     "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "prod": "node bin/prod",
     "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
-    "mock:gql": "nodemon --watch ./script/ bin/gql.js --app ex",
+    "mock:gql": "nodemon --watch ./script/gql.js bin/gql.js",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
     "doc:rel:ci": "node bin/doc --release --ci",

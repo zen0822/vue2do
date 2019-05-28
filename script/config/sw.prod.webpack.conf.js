@@ -15,7 +15,7 @@ module.exports = function (opt = {}) {
     appName
   })
   const globalRoot = config.global.root
-  const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/server/sw/sw.worker.ts`)
+  const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/client/sw/sw.worker.ts`)
 
   let configRule = [{
     test: /\.jsx?$/,

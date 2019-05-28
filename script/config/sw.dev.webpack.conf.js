@@ -89,8 +89,8 @@ module.exports = function ({
       new ForkTsCheckerWebpackPlugin({
         tslint: true,
         async: true,
-        watch: [path.resolve(__dirname, `${config.global.root}/example/server`)],
-        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/server`)]
+        watch: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)],
+        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)]
       }),
       new webpack.HotModuleReplacementPlugin(),
       new File2DistWebpackPlugin({
