@@ -17,9 +17,7 @@ module.exports = function ({
 
   if (extractScss) {
     extractTextScss = new MiniCssExtractPlugin({
-      filename: utils.assetsPath('css/[name].[hash].css'),
-      allChunks: true,
-      disable: false
+      filename: utils.assetsPath('css/[name].[hash].css')
     })
   }
 

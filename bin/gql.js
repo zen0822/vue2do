@@ -2,7 +2,7 @@
 
 const argv = require('yargs')
   .usage('Usage: $0 --app [string]')
-  .example('$0 --app example', 'Lunch dev server of the service worker.')
+  .example('$0 --app example', 'Lunch dev server')
   .option('app', {
     alias: 'a',
     describe: 'App name',
@@ -10,6 +10,6 @@ const argv = require('yargs')
   })
   .argv
 
-require('../script/sw.dev')({
+require('../script/gql')({
   appName: argv.app || 'example'
 })

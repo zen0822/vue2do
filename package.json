@@ -30,7 +30,8 @@
   "scripts": {
     "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "prod": "node bin/prod",
-    "mock": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
+    "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
+    "mock:gql": "nodemon --watch ./script/ bin/gql.js --app ex",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
     "doc:rel:ci": "node bin/doc --release --ci",
@@ -78,6 +79,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^1.3.2",
+    "graphql-yoga": "^1.17.4",
     "hoek": "^4.2.1",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^3.2.0",
