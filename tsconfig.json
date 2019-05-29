@@ -1,6 +1,8 @@
 {
   "include": [
-    "example/client/sw/*"
+    "example/client/sw/*",
+    "example/server/gql/*",
+    "script/gql.ts"
   ],
   "exclude": [
     "node_modules",
@@ -26,7 +28,7 @@
     "noUnusedLocals": true,
     "noEmit": true,
     "noUnusedParameters": true,
-    "outDir": "./build/",
+    "outDir": "./tsDist/",
     "pretty": true,
     "sourceMap": true,
     "strictNullChecks": true,
