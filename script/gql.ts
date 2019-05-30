@@ -25,7 +25,8 @@
 //   }, () => console.log(`GraphQL playground server is running on http://localhost:${config.gql.port}`))
 // }
 
-import * as path from 'path'
+import path from 'path'
+
 import {
   GraphQLServer
 } from 'graphql-yoga'
@@ -40,11 +41,21 @@ class GqlServer {
   }
 
   async init() {
-    const configFun = await import('./config')
+    const configFun = await import('./config/index.js')
 
-    this.config = configFun({
+    this.config = configFun.default({
       appName: this.appName
     })
+  }
+
+  async start() {
+    const config = this.config
+    const gqlFun = await import(path.resolve(__dirname, '../' + this.appName + '/server/gql/gql.js'))
+
+    const {
+      typeDefs,
+      resolvers
+    } = gqlFun()
 
     const server = new GraphQLServer({
       typeDefs,
@@ -55,14 +66,10 @@ class GqlServer {
       port: config.gql.port
     }, () => console.log(`GraphQL playground server is running on http://localhost:${config.gql.port}`))
   }
-
-  start() {
-
-  }
 }
 
-export default function ({ appName } = { appName: string }) {
-  const gqlServer = new GqlServer()
+export default function ({ appName }: { appName: string }) {
+  const gqlServer = new GqlServer(appName)
 
   return gqlServer.start()
 }

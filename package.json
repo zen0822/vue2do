@@ -28,17 +28,18 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
-    "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
-    "prod": "node bin/prod",
-    "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
-    "mock:gql": "nodemon --watch ./script/gql.js --watch ./example/server/gql bin/gql.js",
+    "build:ts": "tsc",
+    "coveralls": "cat test/coverage/lcov/lcov.info | coveralls && rm -rf test/coverage",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
     "doc:rel:ci": "node bin/doc --release --ci",
+    "mock:gql": "npm run build:ts && nodemon --watch ./script/gql.js --watch ./example/server/gql bin/gql.js",
+    "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
+    "prod": "node bin/prod",
     "rel": "bash script/release.sh",
+    "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "test": "karma start test/karma",
-    "test:ci": "karma start test/karma.ci",
-    "coveralls": "cat test/coverage/lcov/lcov.info | coveralls && rm -rf test/coverage"
+    "test:ci": "karma start test/karma.ci"
   },
   "dependencies": {
     "@babel/core": "^7.1.2",
@@ -46,6 +47,7 @@
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/runtime": "^7.1.2",
+    "@types/aws-lambda": "^8.10.26",
     "@types/webpack": "^4.4.26",
     "autoprefixer": "^9.3.1",
     "babel-eslint": "^10.0.1",
@@ -79,7 +81,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
     "fork-ts-checker-webpack-plugin": "^1.3.2",
-    "graphql-yoga": "^1.17.4",
+    "graphql": "^14.3.1",
     "hoek": "^4.2.1",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^3.2.0",
@@ -131,9 +133,14 @@
     "yargs": "^12.0.2"
   },
   "devDependencies": {
+    "@types/node": "^12.0.3",
+    "@types/webpack": "^4.4.26",
     "@types/workbox-sw": "^3.2.1",
+    "@types/ws": "^6.0.1",
+    "apollo-server-express": "^2.5.0",
     "chai": "^4.2.0",
     "dexie": "^2.0.4",
+    "graphql-yoga": "^1.17.4",
     "karma": "^3.1.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
