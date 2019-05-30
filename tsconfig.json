@@ -1,6 +1,6 @@
 {
   "include": [
-    "example/client/sw/*",
+    "example/client/**/*",
     "example/server/gql/**/*",
     "script/gql.ts"
   ],
@@ -37,6 +37,7 @@
     "noUnusedParameters": true,
     "outDir": "./tsDist",
     "pretty": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "strictNullChecks": true,
     "strict": true,

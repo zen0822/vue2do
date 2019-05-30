@@ -31,6 +31,12 @@ export default [{
     title: '文章'
   }
 }, {
+  path: '/gql',
+  component: () => import('../component/page/Gql/Gql'),
+  meta: {
+    title: 'GraphQL'
+  }
+}, {
   path: '/component',
   component: () => import('../component/page/Component/Component'),
   children: componentChildren
