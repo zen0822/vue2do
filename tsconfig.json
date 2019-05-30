@@ -1,21 +1,24 @@
 {
   "include": [
-    // "example/client/sw/*",
-    "example/server/gql/*",
+    "example/client/sw/*",
+    "example/server/gql/**/*",
     "script/gql.ts"
   ],
   "exclude": [
-    "node_modules"
-    // "example/.mockrc.js"
+    "node_modules",
+    "example/.mockrc.js"
+  ],
+  "files": [
+    "example/.apprc.js"
   ],
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "jsx": "preserve",
     "lib": [
-      "webworker",
       "dom",
       "es5",
       "es6",
@@ -23,14 +26,16 @@
       "es2015.promise",
       "es2017",
       "es2018",
-      "esnext"
+      "esnext",
+      "esnext.asynciterable",
+      "scripthost"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
+    "noImplicitAny": true,
     "noUnusedLocals": true,
-    "noEmit": true,
     "noUnusedParameters": true,
-    "outDir": "tsDist",
+    "outDir": "./tsDist",
     "pretty": true,
     "sourceMap": true,
     "strictNullChecks": true,

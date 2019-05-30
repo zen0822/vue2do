@@ -26,6 +26,7 @@
 // }
 
 import path from 'path'
+import gqlFun from './config/index.js'
 
 import {
   GraphQLServer
@@ -37,25 +38,26 @@ class GqlServer {
 
   constructor(appName: string) {
     this.appName = appName
+
     this.init()
   }
 
   async init() {
-    const configFun = await import('./config/index.js')
-
-    this.config = configFun.default({
+    this.config = gqlFun({
       appName: this.appName
     })
   }
 
   async start() {
     const config = this.config
-    const gqlFun = await import(path.resolve(__dirname, '../' + this.appName + '/server/gql/gql.js'))
+    const apprcPath = path.resolve(__dirname, '../' + this.appName + '/server/gql/gql.js')
+
+    const gqlFun = await import(apprcPath)
 
     const {
       typeDefs,
       resolvers
-    } = gqlFun()
+    } = gqlFun.default()
 
     const server = new GraphQLServer({
       typeDefs,
@@ -68,8 +70,8 @@ class GqlServer {
   }
 }
 
-export default function ({ appName }: { appName: string }) {
-  const gqlServer = new GqlServer(appName)
+export default function (opt: { appName: string } = { appName: '' }) {
+  const gqlServer = new GqlServer(opt.appName)
 
   return gqlServer.start()
 }

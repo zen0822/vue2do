@@ -4,8 +4,9 @@
 .vscode
 node_modules
 
-test/coverage/*
-example/dist/*
+test/coverage/**
+example/dist/**
+tsDist/**
 
 /test.html
 /dist/webpack-bundle-report.html

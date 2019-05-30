@@ -1,4 +1,4 @@
-import path from 'path'
+import gqlSchema from './schema.gql'
 
 class ServerMain {
   links: Array<Object>
@@ -63,7 +63,7 @@ class ServerMain {
 
   gql() {
     return {
-      typeDefs: path.resolve(__dirname, './schema.graphql'),
+      typeDefs: gqlSchema,
       resolvers: this.resolvers
     }
   }

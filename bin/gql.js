@@ -10,6 +10,6 @@ const argv = require('yargs')
   })
   .argv
 
-require('../tsDist/script/gql')({
+require('../tsDist/script/gql.js').default({
   appName: argv.app || 'example'
 })
