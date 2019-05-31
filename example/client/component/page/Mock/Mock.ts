@@ -52,8 +52,35 @@ class PageMock extends mixins(MixinPageComponent) {
     })
   }
 
+  queryLinks() {
+    return this.$apollo.queries.links.start()
+  }
+
+  async addLink() {
+    this.$apollo
+      .mutate({
+        mutation: gql`
+          mutation ($msg: String!, $description: String!) {
+            postLink(
+              url: $msg,
+              description: $description
+            ) {
+              id,
+              url
+            }
+          }
+        `,
+        variables: {
+          msg: 'vue2do.com',
+          description: 'vue2do'
+        }
+      })
+
+    this.queryLinks()
+  }
+
   mounted() {
-    // TODO
+    this.addLink()
   }
 }
 

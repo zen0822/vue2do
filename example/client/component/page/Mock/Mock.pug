@@ -1,3 +1,4 @@
 div.p-mock-p
-  ol(v-for='item in links')
-    li id: {{ item.id }} url: {{ item.url }}
+  ol
+    li(v-for='item in links')
+      p id: {{ item.id }} url: {{ item.url }}
