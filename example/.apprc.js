@@ -8,7 +8,9 @@ module.exports = {
   tpl: true,
   hotPort: 5168,
   mockPort: 3000,
-  proxy: {},
+  proxy: {
+    '/api/**': `http://localhost:5170`
+  },
   loaderRule: [{
     test: /blog-[\w\W]+.html$/,
     use: [

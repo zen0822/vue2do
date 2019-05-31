@@ -28,13 +28,3 @@ const {
 router.onReady(() => {
   app.$mount('#app')
 })
-
-fetch(new Request('/api/ex', {
-  headers: new Headers({
-    'Accept': 'application/json'
-  })
-})).then((response) => {
-  return response.json()
-}).then((data) => {
-  console.log(data)
-})

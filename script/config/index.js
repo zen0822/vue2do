@@ -7,6 +7,7 @@ module.exports = function ({
   const appConfig = require(appConfigPath)
   const appConfigDir = path.dirname(appConfigPath)
   const mockPort = appConfig.mockPort || 3000
+  const gqlMock = appConfig.gqlMock || mockPort
   const assetSubDirectory = appConfig.assetSubDirectory || 'static'
 
   const config = {
@@ -29,6 +30,12 @@ module.exports = function ({
       assetPublicPath: '/',
       assetSubDirectory: assetSubDirectory,
       proxyTable: {
+        '/gql': {
+          target: `http://localhost:${gqlMock}`,
+          pathRewrite: {
+            '^/gql': ''
+          }
+        },
         '/api/**': `http://localhost:${mockPort}`,
         '/sw.js': `http://localhost:5169`,
         ...appConfig.proxy
@@ -54,7 +61,7 @@ module.exports = function ({
       prodSourceMap: false
     },
     gql: {
-      port: 5170
+      port: gqlMock
     },
     global: {
       root: '../../',

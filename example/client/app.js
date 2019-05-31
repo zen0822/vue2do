@@ -25,7 +25,7 @@ const vue2doLang = new VueI18n({
 })
 const apolloProvider = new VueApollo({
   defaultClient: new ApolloClient({
-    uri: 'http://localhost:5168/api'
+    uri: 'http://localhost:5168/gql'
   })
 })
 

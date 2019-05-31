@@ -66,7 +66,10 @@ module.exports = function ({
         options: {
           appendTsxSuffixTo: [/\.vue$/],
           transpileOnly: true,
-          experimentalWatchApi: true
+          experimentalWatchApi: true,
+          compilerOptions: {
+            module: 'es6'
+          }
         }
       }
     ]

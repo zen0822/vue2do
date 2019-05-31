@@ -3,22 +3,18 @@ import commonStore from '../../../vuex/module/common/type.json'
 import Component from 'vue-class-component'
 
 import {
-  State,
   Getter,
-  Action,
-  Mutation,
   namespace
 } from 'vuex-class'
 import {
   debounce
 } from '../../../../../src/util'
 
-// import store from '../../../vuex/store'
-const vuexStore = namespace('../../../vuex/store')
+namespace('../../../vuex/store')
 
 let testOpt: Array<object> = []
 
-for (let i = 0, len = 33; i < len; i++) {
+for (let i = 0; i < 33; i++) {
   testOpt.push({
     text: 'test-' + i,
     name: 'name-' + i,
@@ -30,9 +26,11 @@ for (let i = 0, len = 33; i < len; i++) {
 
 @Component
 export default class MixinPageComponent extends Vue {
-  mixinValue = 'Hello'
-
-  @Getter(commonStore.appContent.get) getterAppContent: string = ''
+  @Getter(commonStore.appContent.get) getterAppContent: object | undefined
+  @Getter(commonStore.compStage.get) getterCompStage: { scrollTop: number } | undefined
+  @Getter(commonStore.typeUI.get) getterTypeUI: string | undefined
+  @Getter(commonStore.typeTheme.get) getterTypeTheme: string | undefined
+  @Getter(commonStore.deviceSize) getterDeviceSize: string | undefined
 
   get varPrefix() {
     return 'VUE2DO'
@@ -43,38 +41,40 @@ export default class MixinPageComponent extends Vue {
   }
 
   get appContent() {
-    return this.$store.getters[commonStore.appContent.get]
+    return this.getterAppContent
   }
 
-  // get compStage() {
-  //   return this.$store.getters[commonStore.compStage.get]
-  // }
+  get compStage() {
+    return this.getterCompStage
+  }
 
-  // get typeUI() {
-  //   return this.$store.getters[commonStore.typeUI.get]
-  // }
+  get typeUI() {
+    return this.getterTypeUI
+  }
 
-  // get typeTheme() {
-  //   return this.$store.getters[commonStore.typeTheme.get]
-  // }
+  get typeTheme() {
+    return this.getterTypeTheme
+  }
 
-  // get deviceSize() {
-  //   return this.$store.getters[commonStore.deviceSize]
-  // }
+  get deviceSize() {
+    return this.getterDeviceSize
+  }
 
   private _initComp() {
-    console.log(this.getterAppContent)
+    // console.log(this.typeUI)
   }
 
   anchorLink(name: string) {
     return this.$route.path + '#' + name
   }
 
-  // goAnchor(evt: { currentTarget: object }) {
-  //   let anchor:any = evt.currentTarget
+  goAnchor(evt: { currentTarget: object }) {
+    let anchor: any = evt.currentTarget
 
-  //   this.compStage.scrollTop = anchor.offsetTop
-  // }
+    if (this.compStage) {
+      this.compStage.scrollTop = anchor.offsetTop
+    }
+  }
 
   mounted() {
     this._initComp()

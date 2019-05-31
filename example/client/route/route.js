@@ -31,10 +31,10 @@ export default [{
     title: '文章'
   }
 }, {
-  path: '/gql',
-  component: () => import('../component/page/Gql/Gql'),
+  path: '/mock',
+  component: () => import('../component/page/Mock/Mock'),
   meta: {
-    title: 'GraphQL'
+    title: 'Mock'
   }
 }, {
   path: '/component',
