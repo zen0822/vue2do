@@ -1,6 +1,7 @@
 import './Mock.scss'
 import 'vue-router'
 
+import { CreateElement, VNode } from 'vue'
 import gql from 'graphql-tag'
 import Component, { mixins } from 'vue-class-component'
 import { Watch } from 'vue-property-decorator'
@@ -81,6 +82,18 @@ class PageMock extends mixins(MixinPageComponent) {
 
   mounted() {
     this.addLink()
+  }
+
+  render(h: CreateElement): VNode {
+    return (
+      <div class='p-mock-p'>
+        <ol>
+          {this.links.map((item: any) => (
+            <li>{item.id} {item.url}</li>
+          ))}
+        </ol>
+      </div>
+    )
   }
 }
 

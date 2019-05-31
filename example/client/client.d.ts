@@ -5,13 +5,13 @@ declare module '*.vue' {
 }
 
 declare module '*.json' {
-  const content:any
+  const content: any
 
   export default content
 }
 
 declare module '*.pug' {
-  const content:any
+  const content: any
 
   export default content
 }

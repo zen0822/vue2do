@@ -1,5 +1,6 @@
 {
   "include": [
+    "global.d.ts",
     "example/client/**/*",
     "example/server/gql/**/*",
     "script/gql.ts"
@@ -18,6 +19,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "jsx": "preserve",
+    "jsxFactory": "h",
     "lib": [
       "dom",
       "es5",

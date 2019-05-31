@@ -68,7 +68,8 @@ module.exports = function ({
           transpileOnly: true,
           experimentalWatchApi: true,
           compilerOptions: {
-            module: 'es6'
+            module: 'es6',
+            noEmit: true
           }
         }
       }
