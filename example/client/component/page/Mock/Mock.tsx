@@ -4,7 +4,6 @@ import 'vue-router'
 import { CreateElement, VNode } from 'vue'
 import gql from 'graphql-tag'
 import Component, { mixins } from 'vue-class-component'
-import { Watch } from 'vue-property-decorator'
 import pug from './Mock.pug'
 import MixinPageComponent from '../Component/MixinPageComponent'
 
@@ -16,29 +15,31 @@ import MixinPageComponent from '../Component/MixinPageComponent'
           id,
           url
         }
-      }`
-      // prefetch: ({ route }) => ({ id: route.params.id }),
-      // variables (): Car.Variables {
-      //   return { id: this.$route.params.id }
-      // }
+      }`,
+      prefetch: ({ route }) => ({ id: route.params.id }),
+      variables() {
+        return {
+          id: this.$route.params.id
+        }
+      }
     }
   },
   template: pug()
 })
 
 class PageMock extends mixins(MixinPageComponent) {
-  // articleId: string
+  articleId: string
+  testData: string = ''
   links: Array<object> = []
-
-  @Watch('links')
-  onLinksChanged() {
-    // val.length
-  }
 
   constructor() {
     super()
 
-    // this.articleId = this.$route.params.id
+    this.articleId = this.$route.params.id
+  }
+
+  text() {
+    return this.testData
   }
 
   fetchSWMock(): void {

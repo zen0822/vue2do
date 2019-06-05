@@ -8,5 +8,6 @@ test/coverage/**
 example/dist/**
 tsDist/**
 
+coverage
 /test.html
 /dist/webpack-bundle-report.html

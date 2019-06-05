@@ -60,10 +60,6 @@ export default class MixinPageComponent extends Vue {
     return this.getterDeviceSize
   }
 
-  private _initComp() {
-    // console.log(this.typeUI)
-  }
-
   anchorLink(name: string) {
     return this.$route.path + '#' + name
   }
@@ -77,8 +73,6 @@ export default class MixinPageComponent extends Vue {
   }
 
   mounted() {
-    this._initComp()
-
     const updateDeviceSize = () => {
       const deviceSizeEle = document.querySelector('.z-css-device-size')
       let deviceType = ''
