@@ -28,6 +28,7 @@ delete webpackConf.optimization
 
 module.exports = function (config) {
   config.set({
+    basePath: '../',
     browsers: ['Chrome'],
     captureTimeout: 120000,
     colors: true,
@@ -37,9 +38,11 @@ module.exports = function (config) {
       dir: path.join(__dirname, 'coverage')
     },
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    files: ['./entry.js'],
+    files: [
+      './test/unit/**/*.test.js'
+    ],
     preprocessors: {
-      './entry.js': ['webpack', 'sourcemap']
+      './test/unit/**/*.test.js': ['webpack', 'sourcemap']
     },
     port: 9877,
     reporters: ['spec', 'coverage-istanbul'],

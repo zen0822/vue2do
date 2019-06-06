@@ -29,6 +29,7 @@ delete webpackConf.optimization
 module.exports = function (config) {
   config.set({
     autoWatch: true,
+    basePath: '../',
     browsers: ['Chrome'], // 可以使用模拟 IE\firefox 浏览器的 PhantomJS
     captureTimeout: 120000,
     colors: true,
@@ -44,9 +45,11 @@ module.exports = function (config) {
       }
     },
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
-    files: ['./entry.js'],
+    files: [
+      './test/unit/**/*.test.js'
+    ],
     preprocessors: {
-      './entry.js': ['webpack', 'sourcemap']
+      './test/unit/**/*.test.js': ['webpack', 'sourcemap']
     },
     port: 9877,
     reporters: ['spec', 'coverage-istanbul'],
