@@ -30,7 +30,7 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:watch": "tsc -w",
-    "coveralls": "cat test/coverage/lcov.info | coveralls && rm -rf test/coverage",
+    "coveralls": "cat test/coverage/lcov.info | coveralls",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release",
     "doc:rel:ci": "node bin/doc --release --ci",
@@ -40,7 +40,7 @@
     "rel": "bash script/release.sh",
     "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "test": "cross-env BABEL_ENV=testing karma start test/karma",
-    "test:ci": "karma start test/karma.ci",
+    "test:ci": "cross-env BABEL_ENV=testing karma start test/karma.ci",
     "test:unit": "cross-env NODE_ENV=testing jest"
   },
   "dependencies": {
