@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import Mock from '../Mock'
 
-describe('/EX/Page/Mock', () => {
+describe('/example/page/mock', () => {
   test('renders props.msg when passed', () => {
     const testData = 'new message'
 

@@ -5,8 +5,22 @@
 
 const path = require('path')
 const config = require('./config.json')
-const webpackConf = require('../script/config/base.webpack.conf')({
+const merge = require('webpack-merge')
+const webpackBaseConf = require('../script/config/base.webpack.conf')({
   appName: config.appName
+})
+
+const webpackConf = merge(webpackBaseConf, {
+  module: {
+    rules: [{
+      test: /\.js$|\.jsx$/,
+      use: {
+        loader: 'istanbul-instrumenter-loader'
+      },
+      include: path.resolve('./unit/'),
+      exclude: /node_modules|\.spec\.js$/
+    }]
+  }
 })
 
 delete webpackConf.entry
@@ -17,22 +31,18 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     captureTimeout: 120000,
     colors: true,
-    coverageReporter: {
-      dir: path.join(__dirname, 'coverage'),
-      reporters: [{
-        type: 'html'
-      }, {
-        type: 'lcov',
-        subdir: 'lcov'
-      }]
+    coverageIstanbulReporter: {
+      reports: ['html', 'lcovonly', 'text-summary'],
+      fixWebpackSourcePaths: true,
+      dir: path.join(__dirname, 'coverage')
     },
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
     files: ['./entry.js'],
     preprocessors: {
-      './entry.js': ['webpack', 'sourcemap', 'coverage']
+      './entry.js': ['webpack', 'sourcemap']
     },
     port: 9877,
-    reporters: ['spec', 'coverage'],
+    reporters: ['spec', 'coverage-istanbul'],
     singleRun: true,
     webpack: webpackConf,
     webpackMiddleware: {
