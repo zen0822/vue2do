@@ -28,14 +28,12 @@ import MixinPageComponent from '../Component/MixinPageComponent'
 })
 
 class PageMock extends mixins(MixinPageComponent) {
-  articleId: string
+  articleId: string = ''
   testData: string = ''
   links: Array<object> = []
 
   constructor() {
     super()
-
-    this.articleId = this.$route.params.id
   }
 
   text() {
@@ -82,6 +80,8 @@ class PageMock extends mixins(MixinPageComponent) {
   }
 
   mounted() {
+    this.articleId = this.$route.params.id
+
     this.addLink()
   }
 
