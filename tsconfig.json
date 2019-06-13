@@ -46,8 +46,7 @@
     "target": "es5",
     "types": [
       "node",
-      "jest",
-      "mocha"
+      "jest"
     ]
   }
 }
