@@ -54,6 +54,7 @@ class ServerMain {
       Link: {
         id: (parent: { id: string }) => parent.id,
         description: (parent: { description: string }) => parent.description,
+        desc: (parent: { description: string }) => `new: ${parent.description}`,
         url: (parent: { url: string }) => parent.url
       }
     }

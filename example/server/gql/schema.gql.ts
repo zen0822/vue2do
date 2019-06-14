@@ -12,7 +12,8 @@ export default `
 
   type Link {
     id: ID!
-    description: String!
+    description: String! @deprecated
+    desc: String!
     url: String!
   }
 `

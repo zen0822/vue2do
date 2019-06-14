@@ -5,6 +5,7 @@
 // import 'font-awesome-sass-loader'
 import 'core-js/shim'
 
+import 'vue2do/dist/util.css'
 import './scss/main.scss'
 
 import {
