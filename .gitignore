@@ -3,6 +3,7 @@
 
 .vscode
 node_modules
+zen0822.github.io
 
 test/coverage/**
 example/dist/**
