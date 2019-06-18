@@ -1,5 +1,6 @@
 import path from 'path'
 import gqlFun from './config/index.js'
+import { express as voyagerMiddleware } from 'graphql-voyager/middleware'
 
 import {
   GraphQLServer
@@ -36,6 +37,8 @@ class GqlServer {
       typeDefs,
       resolvers
     })
+
+    server.express.use('/voyager', voyagerMiddleware({ endpointUrl: '/' }))
 
     server.start({
       port: config.gql.port

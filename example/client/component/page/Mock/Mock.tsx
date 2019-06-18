@@ -5,7 +5,6 @@ import { CreateElement, VNode } from 'vue'
 import gql from 'graphql-tag'
 import Component, { mixins } from 'vue-class-component'
 import { Watch } from 'vue-property-decorator'
-import pug from './Mock.pug'
 import MixinPageComponent from '../Component/MixinPageComponent'
 
 @Component({
@@ -24,8 +23,7 @@ import MixinPageComponent from '../Component/MixinPageComponent'
         }
       }
     }
-  },
-  template: pug()
+  }
 })
 
 /**
@@ -105,6 +103,7 @@ class PageMock extends mixins(MixinPageComponent) {
 
   /**
    * dom 渲染
+   *
    * @param h
    */
   render(h: CreateElement): VNode {

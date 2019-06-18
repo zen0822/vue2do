@@ -1,7 +1,4 @@
-require('jsdom-global')()
 const karmaConf = require('./karma.config')
-
-// require('jsdom-global')()
 
 module.exports = function (config) {
   config.set({

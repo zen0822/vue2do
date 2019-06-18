@@ -16,16 +16,17 @@ before_install:
   - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   - sudo apt-get update -qq
   - sudo apt-get install -y -qq yarn=1.9.4-1
+  - sudo yarn global add apollo
 before_script:
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 script:
-  - npm run test:ci
+  - yarn run test:ci
 after_script:
-  - npm run coveralls
+  - yarn run coveralls
 deploy:
   - provider: script
-    script: npm run doc:rel:ci
+    script: yarn run doc:rel:ci
     skip_cleanup: true
     on:
       branch: master
@@ -42,6 +43,6 @@ deploy:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: npm run doc
+    script: yarn run doc
     on:
       branch: dev
