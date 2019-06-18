@@ -2,8 +2,8 @@
  * 测试 form 组件
  */
 
-import FormComp from '../../../src/component/Form/Form'
-import InputComp from '../../../src/component/Input/Input'
+import FormComp from '../Form'
+import InputComp from '../../Input/Input'
 
 export default {
   render() {

@@ -31,6 +31,12 @@ export default [{
     title: '文章'
   }
 }, {
+  path: '/mock',
+  component: () => import('../component/page/Mock/Mock'),
+  meta: {
+    title: 'Mock'
+  }
+}, {
   path: '/component',
   component: () => import('../component/page/Component/Component'),
   children: componentChildren

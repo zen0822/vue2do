@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import ApolloClient from 'apollo-boost'
+import VueApollo from 'vue-apollo'
 
 import {
   createRouter
@@ -11,14 +13,20 @@ import vue2do, {
 } from 'vue2do'
 import enLang from 'src/language/en-US.json'
 
+Vue.use(VueI18n)
+Vue.use(VueApollo)
 Vue.use(vue2do, {
   prefix: 'z'
 })
-Vue.use(VueI18n)
 
 const vue2doLang = new VueI18n({
   locale: Object.keys(enLang)[0],
   messages: enLang
+})
+const apolloProvider = new VueApollo({
+  defaultClient: new ApolloClient({
+    uri: 'http://localhost:5168/gql'
+  })
 })
 
 export function createApp() {
@@ -31,6 +39,7 @@ export function createApp() {
 
   const app = new Vue({
     ...App,
+    apolloProvider,
     i18n: vue2doLang,
     router
   })

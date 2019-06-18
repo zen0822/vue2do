@@ -17,7 +17,7 @@ module.exports = function (opt = {}) {
 
     assetsPath(_path) {
       var assetSubDirectory = process.env.NODE_ENV === 'production' ?
-        config.build.assetSubDirectory :
+        config.prod.assetSubDirectory :
         config.dev.assetSubDirectory
 
       return path.posix.join(assetSubDirectory, _path)

@@ -22,17 +22,15 @@ module.exports = function ({
     extractScss: true
   })
 
-  var env = config.doc.env
-
   const template = config.tpl ?
     path.resolve(__dirname, `${config.global.root}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
   var webpackConfig = merge(baseWebpackConfig, {
-    devtool: config.doc.productionSourceMap ? '#source-map' : false,
+    devtool: config.doc.sourceMap ? '#source-map' : false,
     output: {
-      path: config.doc.assetsRoot,
-      publicPath: release ? '/' : config.doc.assetsPublicPath,
+      path: config.doc.assetRoot,
+      publicPath: release ? '/' : config.doc.assetPublicPath,
       filename: utils.assetsPath('js/[name].[chunkhash].js'),
       chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
     },
@@ -59,7 +57,7 @@ module.exports = function ({
               comments: false,
               beautify: false
             },
-            sourceMap: config.doc.productionSourceMap || false,
+            sourceMap: config.doc.sourceMap || false,
             warnings: false
           }
         })
@@ -67,7 +65,7 @@ module.exports = function ({
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env': env
+        'process.env': config.doc.env
       }),
 
       new HtmlWebpackPlugin({
@@ -84,14 +82,14 @@ module.exports = function ({
     ]
   })
 
-  if (config.doc.productionGzip) {
+  if (config.doc.gzip) {
     var CompressionWebpackPlugin = require('compression-webpack-plugin')
 
     webpackConfig.plugins.push(
       new CompressionWebpackPlugin({
         filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(`\\.(${config.doc.productionGzipExtensions.join('|')})$`)
+        test: new RegExp(`\\.(${config.doc.gzipExt.join('|')})$`)
       })
     )
   }

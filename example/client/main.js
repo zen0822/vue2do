@@ -5,9 +5,9 @@
 // import 'font-awesome-sass-loader'
 import 'core-js/shim'
 
+import 'vue2do/dist/util.css'
 import './scss/main.scss'
 
-import Vue from 'vue'
 import {
   createApp
 } from './app'

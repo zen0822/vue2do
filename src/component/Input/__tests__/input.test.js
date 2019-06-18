@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import compConfig from '../../../src/component/Input/Input'
+import compConfig from '../Input'
 
 describe('input 组件的相关测试', () => {
   const Ctor = Vue.extend(compConfig)
