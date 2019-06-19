@@ -1,4 +1,6 @@
-export default `
+import gql from 'graphql-tag'
+
+const schema = gql`
   type Query {
     info: String!
     links: [Link!]!,
@@ -16,4 +18,10 @@ export default `
     desc: String!
     url: String!
   }
+
+  type Subscription {
+    newLink: Link
+  }
 `
+
+export default schema

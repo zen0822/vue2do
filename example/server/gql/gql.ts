@@ -1,4 +1,5 @@
 import gqlSchema from './schema.gql'
+import Subscription from './Subscription'
 
 class ServerMain {
   links: Array<Object>
@@ -56,7 +57,8 @@ class ServerMain {
         description: (parent: { description: string }) => parent.description,
         desc: (parent: { description: string }) => `new: ${parent.description}`,
         url: (parent: { url: string }) => parent.url
-      }
+      },
+      Subscription
     }
 
     return

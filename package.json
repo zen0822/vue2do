@@ -34,7 +34,8 @@
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release && apollo service:push",
     "doc:rel:ci": "node bin/doc --release --ci && apollo service:push",
-    "mock:gql": "npm run tsc && nodemon --watch ./tsDist/example/server/gql bin/gql.js",
+    "gql": "npm run tsc && nodemon --watch ./tsDist/example/server/gql bin/gql.js",
+    "gql:gen": "graphql-codegen --config codegen.yml",
     "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
     "prod": "node bin/prod",
     "rel": "bash script/release.sh",
@@ -152,6 +153,8 @@
     "yargs": "^12.0.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.1",
+    "@graphql-codegen/typescript": "1.2.1",
     "@types/node": "^12.0.3",
     "@types/webpack": "^4.4.26",
     "@types/workbox-sw": "^3.2.1",
