@@ -36,14 +36,16 @@ module.exports = {
   exclude: ['./tsDist/**'],
   frameworks: ['mocha', 'sinon-chai', 'source-map-support'],
   files: [
-    './**/__tests__/*.test.js'
+    './src/**/__tests__/*.test.js',
+    './example/**/__tests__/*.test.js'
   ],
   output: {
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
   },
   preprocessors: {
-    './**/__tests__/*.test.js': ['webpack', 'sourcemap']
+    './src/**/__tests__/*.test.js': ['webpack', 'sourcemap'],
+    './example/**/__tests__/*.test.js': ['webpack', 'sourcemap']
   },
   port: 9877,
   reporters: ['spec', 'coverage-istanbul'],

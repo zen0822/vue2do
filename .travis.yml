@@ -4,7 +4,7 @@ dist: trusty
 node_js:
   - 8.12.0
 cache:
-  directories: node_modules
+  directories: [node_modules]
   yarn: true
 addons:
   chrome: stable
