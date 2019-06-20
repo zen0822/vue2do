@@ -25,18 +25,9 @@ class GqlServer {
   async start() {
     const config = this.config
     const apprcPath = path.resolve(__dirname, '../' + this.appName + '/server/gql/gql.js')
-
     const gqlFun = await import(apprcPath)
-
-    const {
-      typeDefs,
-      resolvers
-    } = gqlFun.default()
-
-    const server = new GraphQLServer({
-      typeDefs,
-      resolvers
-    })
+    const gqlConfig = gqlFun.default()
+    const server = new GraphQLServer(gqlConfig)
 
     server.express.use('/voyager', voyagerMiddleware({ endpointUrl: '/' }))
 
