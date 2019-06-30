@@ -22,7 +22,8 @@
     "vue2",
     "component",
     "ui",
-    "base"
+    "base",
+    "typescript"
   ],
   "bin": {
     "vue2do": "bin/vue2do.js"
