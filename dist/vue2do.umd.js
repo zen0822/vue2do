@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.13
+ * vue2do.js v0.4.14
  * (c) 2017-2019 Zen Huang
  * Released under the MIT License.
  */
