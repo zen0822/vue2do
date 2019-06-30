@@ -22,7 +22,6 @@
     "vue2",
     "component",
     "ui",
-    "base",
     "typescript"
   ],
   "bin": {
