@@ -1,7 +1,7 @@
 {
   "name": "vue2do",
   "version": "0.4.11",
-  "description": "base component on vuejs2",
+  "description": "Base component on vuejs2",
   "main": "index.js",
   "module": "index.js",
   "author": "zheng (Zen) Huang <zenhuangzheng@126.com>",
