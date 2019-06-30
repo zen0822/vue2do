@@ -4,7 +4,7 @@
   "description": "Base component on vuejs2",
   "main": "index.js",
   "module": "index.js",
-  "author": "zheng (Zen) Huang <zenhuangzheng@126.com>",
+  "author": "Zheng (Zen) Huang <zenhuangzheng@126.com>",
   "private": false,
   "files": [
     "bin",
