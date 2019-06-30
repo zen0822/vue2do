@@ -34,7 +34,7 @@ else
     git push origin refs/tags/v"$VERSION"
     git push
     if [[ -z $RELEASE_TAG ]]; then
-      npm publish
+      npm publish --allow-same-version
     else
       npm publish --tag $RELEASE_TAG --allow-same-version
     fi
