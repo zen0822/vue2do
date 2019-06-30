@@ -28,14 +28,17 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
+    "apollo": "apollo",
+    "apollo:engine": "apollo service:push",
     "coveralls": "cat test/coverage/lcov.info | coveralls",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release && apollo service:push",
     "doc:rel:ci": "node bin/doc --release --ci && apollo service:push",
-    "gql": "npm run tsc && nodemon --watch ./tsDist/example/server/gql bin/gql.js",
+    "gql": "npm run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw nodemon --watch ./script/gql.ts --watch ./tsDist/example/server/gql bin/gql.js",
     "gql:gen": "graphql-codegen --config codegen.yml",
     "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
-    "prisma": "prisma",
+    "prisma:db": "docker-compose up -d",
+    "prisma:start": "prisma deploy",
     "prod": "node bin/prod",
     "rel": "bash script/release.sh",
     "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
@@ -57,6 +60,7 @@
     "@types/pug": "^2.0.4",
     "@types/webpack": "^4.4.26",
     "@vue/test-utils": "^1.0.0-beta.29",
+    "apollo": "^2.13.1",
     "apollo-boost": "^0.4.0",
     "autoprefixer": "^9.3.1",
     "babel-eslint": "^10.0.1",
@@ -164,6 +168,7 @@
     "@types/webpack": "^4.4.26",
     "@types/workbox-sw": "^3.2.1",
     "@types/ws": "^6.0.1",
+    "apollo-engine": "^1.1.2",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "dexie": "^2.0.4",
@@ -189,5 +194,8 @@
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "resolutions": {
+    "apollo/**/graphql": "^14.3.1"
   }
 }

@@ -5,7 +5,7 @@ const schema = gql`
     info: String!
     links: [Link!]!
     link(id: ID!): Link
-    feed: [Link!]!
+    feed(filter: String, skip: Int, first: Int): [Link!]!
   }
 
   type Mutation {

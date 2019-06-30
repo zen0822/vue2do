@@ -7,7 +7,7 @@ export function getUserId(context: any) {
 
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
-    const { userId } = jwt.verify(token, APP_SECRET)
+    const { userId }: any = jwt.verify(token, APP_SECRET)
 
     return userId
   }

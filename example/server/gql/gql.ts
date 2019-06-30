@@ -1,9 +1,7 @@
 import gqlSchema from './schema.gql'
-import Subscription from './Subscription'
+import Subscription from './resolver/Subscription'
+import Mutation from './resolver/Mutation'
 import { prisma } from '../prisma'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
-import { APP_SECRET, getUserId } from './util'
 
 class ServerMain {
   links: Array<Object>
@@ -30,23 +28,25 @@ class ServerMain {
             return item.id === args.id
           })
         },
-        links: (parent: any, _args: any, context: any) => {
-          return context.prisma.user({ id: parent.id }).links()
-        },
-        feed: (_root: any, _args: any, context: any, _info: any) => {
-          return context.prisma.links()
+        links: () => this.links,
+        feed: async (_root: any, args: any, context: any, _info: any) => {
+          const where = args.filter ? {
+            OR: [
+              { description_contains: args.filter },
+              { url_contains: args.filter }
+            ]
+          } : {}
+
+          const links = await context.prisma.links({
+            where,
+            skip: args.skip,
+            first: args.first
+          })
+          return links
         }
       },
       Mutation: {
-        post: (_root: any, args: any, context: any) => {
-          const userId = getUserId(context)
-
-          return context.prisma.createLink({
-            url: args.url,
-            description: args.description,
-            postedBy: { connect: { id: userId } },
-          })
-        },
+        ...Mutation,
         postLink: (_parent: Object, args: { url: string, description: string }) => {
           const link = {
             id: `link-${this.idCount++}`,
@@ -68,34 +68,11 @@ class ServerMain {
           }
 
           return links[linkIndex]
-        },
-        signup: async (_parent: any, args: any, context: any, _info: any) => {
-          const password = await bcrypt.hash(args.password, 10)
-          const user = await context.prisma.createUser({ ...args, password })
-          const token = jwt.sign({ userId: user.id }, APP_SECRET)
-
-          return {
-            token,
-            user
-          }
-        },
-        login: async (_parent: any, args: any, context: any, _info: any) => {
-          const user = await context.prisma.user({ email: args.email })
-          if (!user) {
-            throw new Error('No such user found')
-          }
-
-          const valid = await bcrypt.compare(args.password, user.password)
-          if (!valid) {
-            throw new Error('Invalid password')
-          }
-
-          const token = jwt.sign({ userId: user.id }, APP_SECRET)
-
-          return {
-            token,
-            user
-          }
+        }
+      },
+      User: {
+        links: (parent: any, _args: any, context: any) => {
+          return context.prisma.user({ id: parent.id }).links()
         }
       },
       Link: {
