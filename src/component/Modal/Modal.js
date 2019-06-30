@@ -17,7 +17,7 @@
  * @prop footerDisplay - 是否显示弹窗底部
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
- * @prop type - 弹窗类型（full | alert | confirm | simple | long）
+ * @prop type - 弹窗类型（full | alert | confirm | simple | long | pure）
  *
  * @slot - 弹窗的主体内容
  *
@@ -80,7 +80,10 @@ const modalComp = {
     },
     type: {
       type: String,
-      default: 'simple'
+      default: 'simple',
+      validator(val) {
+        return ['simple', 'alert', 'confirm', 'long', 'pure', 'full'].includes(val)
+      }
     },
     size: {
       type: String,
@@ -201,8 +204,8 @@ const modalComp = {
       }
 
       switch (this.type) {
+        case 'pure':
         case 'full':
-          return true
         case 'simple':
           return false
         default:
@@ -221,6 +224,7 @@ const modalComp = {
         case 'full':
           return this.isBiggerFull
         case 'simple':
+        case 'pure':
           return false
         default:
           return true

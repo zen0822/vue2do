@@ -44,7 +44,7 @@ export default {
       type: String,
       default: compConfig.defaultUI,
       validator(val) {
-        return ['material', 'bootstrap', 'metro', 'apple'].includes(val)
+        return ['material', 'bootstrap', 'metro', 'apple', 'pure'].includes(val)
       }
     }
   },

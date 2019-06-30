@@ -95,6 +95,32 @@ div
         #{'<z-btn type="text" link="//zen0822.github.io/#/component/btn">'}
           链接按钮
         #{'</z-btn>'}
+    +section('style', '自定义样式')
+      z-btn(
+        ui='pure'
+        :theme='typeTheme'
+        :fontSize='14'
+        fontColor='#fff'
+        color='#FF6801'
+        height='43px'
+        width='115px'
+        type='text'
+      ) 自定义样式
+
+      p 可以自定义几个重要的样式
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn'}
+          ui='pure'
+          :fontSize='14'
+          fontColor='#fff'
+          color='#FF6801'
+          height='43px'
+          width='115px'
+          type='text'
+        #{'>'}
+          链接按钮
+        #{'</z-btn>'}
     +section('props', 'props 数据类型')
       z-table(
           border='row'
