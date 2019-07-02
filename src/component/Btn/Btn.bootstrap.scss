@@ -79,7 +79,9 @@ $C_PREFIX: #{$COMP_BTN};
   &.#{$C_PREFIX}-type-text {
     &:hover {
       & > .#{$C_PREFIX}-ele {
-        color: $type-color-dark;
+        & > a {
+          color: $type-color-dark;
+        }
       }
     }
   }
@@ -134,7 +136,10 @@ $C_PREFIX: #{$COMP_BTN};
   &.#{$C_PREFIX}-type-text {
     &:hover {
       & > .#{$C_PREFIX}-ele {
-        color: $color-primary-dark;
+        & > a {
+          color: $color-primary-dark;
+        }
+
         text-decoration: underline;
       }
     }

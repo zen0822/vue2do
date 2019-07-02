@@ -1,14 +1,14 @@
 {
   "name": "vue2do",
-  "version": "0.4.10",
-  "description": "base component on vuejs2",
+  "version": "0.4.16",
+  "description": "Base component on vuejs2",
   "main": "index.js",
   "module": "index.js",
-  "author": "zheng (Zen) Huang <zenhuangzheng@126.com>",
+  "author": "Zheng (Zen) Huang <zenhuangzheng@126.com>",
   "private": false,
   "files": [
     "bin",
-    "build",
+    "script",
     "comp",
     "dist",
     "lib",
@@ -22,7 +22,7 @@
     "vue2",
     "component",
     "ui",
-    "base"
+    "typescript"
   ],
   "bin": {
     "vue2do": "bin/vue2do.js"

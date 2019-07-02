@@ -4,3 +4,4 @@ src/lib/*/**/*.js
 dist
 tsDist
 example/server/sw
+test/coverage

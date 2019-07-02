@@ -22,7 +22,7 @@ module.exports = function ({
   const compiler = webpack(webpackConfig)
 
   console.log('')
-  console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+  console.log(`Starting frontend build server listening at ${config.https ? 'https' : 'http'}://localhost:${port}\n`)
 
   const server = new WebpackDevServer(compiler, {
     compress: true,
