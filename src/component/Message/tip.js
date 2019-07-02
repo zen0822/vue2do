@@ -24,18 +24,13 @@ const createTip = () => {
         return `${this.compPrefix}-tip`
       }
     },
-    components: {
-      message: Message
-    },
     store,
     render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [
-        h('message', {
-          ref: 'tip'
-        })
-      ])
+      return (
+        <div class={[this.cPrefix]}>
+          <Message align='center' ref='tip' />
+        </div>
+      )
     },
     mounted() {
       this.$store.dispatch(commonStore.tip.add, this)
@@ -51,6 +46,10 @@ const commonVuex = new Vue({
 
 /**
  * 调用 tip
+ *
+ * @param {string, object} option -
+ *                                 message - 信息
+ *                                 align - 信息的两边对齐方式 （left, center, right)
  **/
 const tip = (opt = '') => {
   if (tiping) {
@@ -68,7 +67,10 @@ const tip = (opt = '') => {
       message: opt.toString()
     }
   } else {
-    option = opt
+    option = {
+      ...option,
+      ...opt
+    }
   }
 
   return commonVuex
@@ -79,6 +81,7 @@ const tip = (opt = '') => {
     .set({
       message: option.message,
       type: option.type,
+      align: option.align,
       hideCb: () => {
         tiping = false
         option.cb && option.cb()

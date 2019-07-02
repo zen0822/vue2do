@@ -36,7 +36,7 @@ module.exports = function ({
       ignored: [/node_modules/]
     },
     watchContentBase: true,
-    contentBase: [path.resolve(config.prod.assetRoot, './sw')],
+    contentBase: ['/', path.resolve(config.prod.assetRoot, './sw')],
     publicPath: webpackConfig.output.publicPath,
     headers: {
       'X-Custom-Header': 'yes'

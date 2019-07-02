@@ -37,6 +37,12 @@ export default [{
     title: '输入组件'
   }
 }, {
+  path: 'upload',
+  component: () => import('../component/page/Component/form/Upload/Upload'),
+  meta: {
+    title: '上传组件'
+  }
+}, {
   path: 'form',
   component: () => import('../component/page/Component/form/Form/Form'),
   meta: {

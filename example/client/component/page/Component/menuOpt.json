@@ -23,6 +23,10 @@
       {
         "name": "表单组件",
         "route": "/component/form"
+      },
+      {
+        "name": "上传组件",
+        "route": "/component/upload"
       }
     ]
   },

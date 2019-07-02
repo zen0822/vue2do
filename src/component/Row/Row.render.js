@@ -6,7 +6,7 @@ export default function (h) {
   let classOpt = []
   let $slots = this.$slots.default
 
-  $slots = $slots.filter((item) => {
+  $slots = !Array.isArray($slots) ? null : $slots.filter((item) => {
     return !item.text
   })
 

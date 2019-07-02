@@ -45,6 +45,7 @@ import TabEle from './src/component/Tab/TabEle'
 import Table from './src/component/Table/Table'
 import TableRow from './src/component/Table/TableRow'
 import TableCol from './src/component/Table/TableCol'
+import Upload from './src/component/Upload/Upload'
 
 import MotionFade from './src/component/MotionFade/MotionFade'
 import MotionFold from './src/component/MotionFold/MotionFold'
@@ -93,6 +94,7 @@ export {
   Table,
   TableCol,
   TableRow,
+  Upload,
 
   MotionFade,
   MotionFold,

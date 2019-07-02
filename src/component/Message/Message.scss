@@ -22,4 +22,14 @@ $C_PREFIX: #{ $COMP_MESSAGE };
     padding: $gap-v-triple / 2;
     border-radius: $border-radius;
   }
+
+  &-align {
+    &-center {
+      text-align: center;
+    }
+
+    &-right {
+      text-align: right;
+    }
+  }
 }

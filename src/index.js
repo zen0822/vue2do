@@ -3,6 +3,7 @@ import Check from './component/Check/Check'
 import Form from './component/Form/Form'
 import Input from './component/Input/Input'
 import Icon from './component/Icon/Icon'
+import Upload from './component/Upload/Upload'
 
 import Bubble from './component/Bubble/Bubble'
 import Modal from './component/Modal/Modal'
@@ -87,7 +88,8 @@ const compHub = [
   Row,
   Table,
   TableRow,
-  TableCol
+  TableCol,
+  Upload
 ]
 
 const install = (Vue, {

@@ -122,6 +122,12 @@ $gap-h-half: $gap-v / 2 !default;
 $gap-h-double: $gap-v * 2 !default;
 $gap-h-triple: $gap-v * 3 !default;
 
+// padding 空隙值
+$gap: $gap-base !default;
+$gap-half: $gap-v / 2 !default;
+$gap-double: $gap-v * 2 !default;
+$gap-triple: $gap-v * 3 !default;
+
 //---------------- gutter margin 间隔参数 ----------------
 
 $gutter-base: 10px !default;
@@ -137,6 +143,12 @@ $gutter-h: $gutter-base !default;
 $gutter-h-half: $gutter-v / 2 !default;
 $gutter-h-double: $gutter-v * 2 !default;
 $gutter-h-triple: $gutter-v * 3 !default;
+
+// margin 空隙值
+$gutter: $gutter-base !default;
+$gutter-half: $gutter-v / 2 !default;
+$gutter-double: $gutter-v * 2 !default;
+$gutter-triple: $gutter-v * 3 !default;
 
 //---------------- border ----------------
 

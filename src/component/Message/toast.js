@@ -29,16 +29,11 @@ const createToast = () => {
     },
     store,
     render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [
-        h('message', {
-          props: {
-            position: 'bottom'
-          },
-          ref: 'toast'
-        })
-      ])
+      return (
+        <div class={[this.cPrefix]}>
+          <Message position='bottom' align='center' ref='toast' />
+        </div>
+      )
     },
     mounted() {
       this.$store.dispatch(commonStore.toast.add, this)
@@ -54,8 +49,12 @@ const commonVuex = new Vue({
 
 /**
  * 调用 toast
+ *
+ * @param {string, object} option -
+ *                                 message - 信息
+ *                                 align - 信息的两边对齐方式 （left, center, right)
  **/
-const toast = (opt = {}) => {
+const toast = (opt = '') => {
   if (toasting) {
     toastHub.push(opt)
 
@@ -71,7 +70,10 @@ const toast = (opt = {}) => {
       message: opt.toString()
     }
   } else {
-    option = opt
+    option = {
+      ...option,
+      ...opt
+    }
   }
 
   return commonVuex
@@ -82,6 +84,7 @@ const toast = (opt = {}) => {
     .set({
       message: option.message,
       type: option.type,
+      align: option.align,
       hideCb: () => {
         toasting = false
 
