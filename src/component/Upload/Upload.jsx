@@ -222,8 +222,11 @@ export default {
           const self = this
 
           return function () {
-            item.width = this.width
-            item.height = this.height
+            self.stateItem.splice(currentIndex, 1, {
+              ...item,
+              height: this.height,
+              width: this.width
+            })
 
             // self._checkImgSize(this.height, this.width)
             self.$emit('change', {
@@ -283,8 +286,24 @@ export default {
     /**
      * 完成裁剪
      */
-    finishCrop() {
-      return this.crop
+    async finishCrop() {
+      const itemLength = this.stateItem.length
+      const item = this.stateItem[itemLength - 1]
+      const imgData = await this.crop.getData()
+
+      this.stateItem.splice(itemLength - 1, 1, {
+        ...item,
+        src: imgData
+      })
+
+      this.cropDisplay = false
+    },
+
+    /**
+     * 隐藏裁剪
+     */
+    hideCrop() {
+      this.cropDisplay = false
     }
   },
 
@@ -388,7 +407,7 @@ export default {
 
             <Row class={this.xclass('crop-operation')}>
               <Col>
-                <div onClick={() => (this.cropDisplay = false)}>
+                <div onClick={() => this.hideCrop()}>
                   <Btn
                     type='text'
                     value='取消'
@@ -397,7 +416,7 @@ export default {
                 </div>
               </Col>
               <Col>
-                <div onClick={() => (this.cropDisplay = false)}>
+                <div onClick={() => this.finishCrop()}>
                   <Btn
                     type='text'
                     value='确定'

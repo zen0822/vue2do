@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -73,6 +74,9 @@ module.exports = function ({
       minimizer: []
     },
     plugins: [
+      new webpack.DefinePlugin({
+        'process.env.SW_ENV': JSON.stringify(process.env.SW_ENV)
+      }),
       new ForkTsCheckerWebpackPlugin({
         tslint: true,
         async: true,

@@ -16,6 +16,7 @@ $C_PREFIX: #{$COMP_UPLOAD};
     height: $upload-img-width;
     border: $divider;
     margin: 0 $gutter $gutter 0;
+    box-sizing: border-box;
 
     &-plus {
       @extend %center-position;

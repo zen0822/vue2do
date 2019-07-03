@@ -7,6 +7,8 @@
  * @prop fixClip - 手势改变截图框大小
  * @prop fixClipScale - 固定截图框长宽的比例
  * @prop hidden - 隐藏
+ * @prop clipHeight - 裁图框高度
+ * @prop clipWidth - 裁图框宽度
  *
  * @event change - 截图发生变化
  */
@@ -29,6 +31,14 @@ export default {
   mixins: [baseMixin],
 
   props: {
+    clipHeight: {
+      type: Number,
+      default: 100
+    },
+    clipWidth: {
+      type: Number,
+      default: 100
+    },
     img: null,
     drag: {
       type: Boolean,
@@ -72,7 +82,7 @@ export default {
         }
       })
     },
-    getDate() {
+    getData() {
       return new Promise((resolve, reject) => {
         try {
           this.$refs.crop.getCropData(data => {
@@ -93,9 +103,7 @@ export default {
 
   render() {
     return (
-      <div
-        class={this.cPrefix}
-      >
+      <div class={this.cPrefix}>
         <VueCropper
           vOn:realTime={(data) => this.change(data)}
           autoCrop
@@ -104,9 +112,9 @@ export default {
           fixedBox={this.fixClip}
           fixed={this.fixClipScale}
           img={this.img}
-          height='100'
+          height={this.clipHeight}
           ref='crop'
-          width='100'
+          width={this.clipWidth}
         />
       </div>
     )
