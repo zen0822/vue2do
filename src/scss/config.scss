@@ -175,8 +175,9 @@ $z-index-lower: 998 !default;
 $z-index: 999 !default;
 $z-index-higher: 1000 !default;
 
-$z-index-modal: $z-index-higher !default;
-$z-index-message: 1001 !default;
+$z-index-modal: $z-index !default;
+$z-index-message: $z-index-higher !default;
+$z-index-upload-preview: $z-index !default;
 
 $shadow-lower:
     0 2px 2px 0 rgba(0,0,0,0.14),

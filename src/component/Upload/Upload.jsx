@@ -2,19 +2,24 @@
  * upload 组件
  * 目前只支持上传图片
  *
+ * @prop crop - crop 组件
  * @prop hidden - 隐藏
  * @prop hint - 上传说明文字
  * @prop item - 已上传文件的信息 (src, title, alt)
  * @prop max - 最大上传数量
  * @prop min - 至少上传数量
  * @prop param - 上传图片参数名
+ * @prop preview - 开启预览功能
  * @prop regex - 用正则过滤上传的文件类型, 不传就默认用本组件的过滤原则
  * @prop space - 文件大小（M）
  * @prop size - 图片尺寸（像素）：宽 * 高（300*200）
  * @prop theme - 主题
  * @prop type - 上传类型 (img | doc)
+ * @prop ui - UI 规范
  *
  * @event change - 已上传文件的数量变化
+ *
+ * @slot crop - 开启图片裁剪
  */
 
 import './Upload.scss'
@@ -22,6 +27,7 @@ import './Upload.scss'
 import tip from '../Message/tip'
 import toast from '../Message/toast'
 import Loading from '../Loading/Loading'
+import Btn from '../Btn/Btn'
 import Icon from '../Icon/Icon'
 import Row from '../Row/Row'
 import Col from '../Col/Col'
@@ -38,6 +44,7 @@ export default {
   mixins: [baseMixin, formMixin],
 
   props: {
+    crop: Object,
     errorMessage: {
       type: String
     },
@@ -52,6 +59,10 @@ export default {
     },
     min: Number,
     param: String,
+    preview: {
+      type: Boolean,
+      default: false
+    },
     regex: Object,
     size: String,
     space: Number,
@@ -63,14 +74,15 @@ export default {
 
   data() {
     return {
-      stateItem: [],
-      loadingUpload: true,
+      cropEnable: false,
+      cropDisplay: false,
+      dangerHint: '',
       fileTypeHint: '',
-      dangerTip: '',
-      width: null,
-      height: null,
-      inputVal: '',
-      typeRegex: ''
+      loading: true,
+      previewSrc: '',
+      stateItem: [],
+      typeRegex: '', // 文件类型正则
+      value: []
     }
   },
 
@@ -101,13 +113,10 @@ export default {
 
   watch: {
     'item'(val) {
-      this.stateItem = [...val]
-
-      this.$emit('change', {
-        item: this.stateItem,
-        store: this.store,
-        emitter: this
-      })
+      this.stateItem = val
+    },
+    'stateItem'(val) {
+      this.value = val.map((item) => item.src)
     }
   },
 
@@ -144,8 +153,40 @@ export default {
       }
     },
 
+    _initCrop() {
+
+    },
+
     _rebuildInput() {
+      if (!this.$refs.input) {
+        return false
+      }
+
       this.$refs.input.value = ''
+    },
+
+    /**
+     * 检查图片尺寸
+     *
+     * @return {Object} - this - 组件
+     */
+    _checkImgSize(height, width) {
+      return new Promise((resolve, reject) => {
+        if (!this.size) {
+          return reject(new Error('No set props size!'))
+        }
+
+        var maxWidth = this.size.split('*')[0]
+        var maxHeight = this.size.split('*')[1]
+
+        if (height > maxHeight || width > maxWidth) {
+          tip(`图片尺寸应小于${this.size}`)
+
+          return reject(new Error('Oversize!'))
+        }
+
+        resolve('Passed!')
+      })
     },
 
     _changeHandler(event) {
@@ -166,26 +207,40 @@ export default {
           return tip(`上传图片应小于 ${this.space} M`)
         }
 
+        const eleImage = new Image()
+        const reader = new FileReader()
         let currentIndex = this.stateItem.push({
           src: '',
           file,
           index,
-          title: file.name
+          title: file.name,
+          imgEle: eleImage
         }) - 1
 
-        // this.checkImgSize(item.picPath, () => {
-        //   this.item.push({
-        //     url: item.picPath,
-        //     id: item.picId,
-        //     width: this.width,
-        //     height: this.height
-        //   })
-        // })
+        eleImage.onload = (() => {
+          const item = this.stateItem[currentIndex]
+          const self = this
 
-        const reader = new FileReader()
+          return function () {
+            item.width = this.width
+            item.height = this.height
+
+            // self._checkImgSize(this.height, this.width)
+            self.$emit('change', {
+              item: self.stateItem,
+              emitter: self
+            })
+          }
+        })()
 
         reader.onload = (event) => {
-          this.stateItem[currentIndex].src = event.target.result
+          const src = event.target.result
+          const item = this.stateItem[currentIndex]
+
+          item.src = src
+          item.imgEle.src = src
+
+          this.cropDisplay = true
         }
 
         reader.readAsDataURL(file)
@@ -198,57 +253,9 @@ export default {
      * @return {Boolean}
      */
     verify() {
-      this.dangerTip = this.errorMessage || `至少上传 ${this.min} 张图片`
+      this.dangerHint = this.errorMessage || `至少上传 ${this.min} 张图片`
 
       return this.item.length >= this.min
-    },
-
-    /**
-     * 检查图片尺寸
-     *
-     * @return {Object} - this - 组件
-     */
-    checkImgSize(url, cb) {
-      if (!this.size) {
-        return false
-      }
-
-      var maxWidth = this.size.split('*')[0]
-      var maxHeight = this.size.split('*')[1]
-
-      var img = new Image()
-      img.src = url
-      img.style.visibility = 'hidden'
-
-      const imgComplete = () => {
-        $(this.$refs.imgPreview).html(img)
-
-        if (img.offsetHeight > maxHeight || img.offsetWidth > maxWidth) {
-          tip(`图片尺寸应小于${this.size}`)
-          this.$refs.imgPreview.innerHTML = ''
-
-          return false
-        }
-        this.width = img.offsetWidth
-        this.height = img.offsetHeight
-
-        cb && cb()
-      }
-
-      // 判断图片是否已经下载过
-      if (!img.complete) {
-        img.onload = () => {
-          imgComplete()
-        }
-
-        img.onerror = () => {
-          tip('图片下载失败')
-        }
-      } else {
-        imgComplete()
-      }
-
-      return this
     },
 
     /**
@@ -257,26 +264,51 @@ export default {
      * @return {Object} - this - 组件
      */
     delete(index) {
-      this.inputVal = ''
-      this.item.splice(index, 1)
+      this.stateItem.splice(index, 1)
+      this._rebuildInput()
 
-      return this
+      return this.$emit('change', {
+        item: this.stateItem,
+        emitter: this
+      })
+    },
+
+    /**
+     * 预览文件
+     */
+    previewFile(index) {
+      this.previewSrc = this.stateItem[index].src
+    },
+
+    /**
+     * 完成裁剪
+     */
+    finishCrop() {
+      return this.crop
     }
+  },
+
+  mounted() {
+    this.cropEnable = !!this.$slots.crop
+  },
+
+  update() {
+    this.cropEnable = !!this.$slots.crop
   },
 
   render() {
     const pickEle = this.selectFileDisplay ? (
-      <div class={this.xclass('img-pick')}>
+      <div class={this.xclass('pick')}>
         <Loading ref='loading' />
 
-        {this.loadingUpload && (
+        {this.loading && (
           <div>
             <Icon
-              class={this.xclass('img-pick-plus')}
+              class={this.xclass('pick-plus')}
               kind='plus'
             />
             <input
-              class={this.xclass('img-pick-input')}
+              class={this.xclass('pick-input')}
               type='file'
               ref='input'
               accept={this.uploadAccept}
@@ -294,30 +326,85 @@ export default {
           visibility: this.hidden ? 'hidden' : 'visible'
         }}
       >
-        {this.isImg && (
-          <div class={this.xclass('img')}>
-            <Row justify='start' class={this.xclass('showcase')}>
-              {this.stateItem.map((item, index) => (
-                <Col class={this.xclass('img-showcase-ele')}>
-                  <Icon
-                    class={this.xclass('img-showcase-delete')}
-                    kind='circle-close'
-                    onClick={() => this.delete(index)}
+        <Row justify='start' class={this.xclass('showcase')}>
+          {this.stateItem.map((item, index) => (
+            <Col class={this.xclass('showcase-ele')}>
+              <div onClick={() => this.delete(index)}>
+                <Icon
+                  class={this.xclass('showcase-delete')}
+                  kind='circle-close-o'
+                />
+              </div>
+              <div
+                class={this.xclass('showcase-content')}
+                onClick={() => this.previewFile(index)}
+              >
+                {this.isImg && (
+                  <img
+                    src={item.src}
+                    title={item.name}
+                    style={{
+                      width: item.width >= item.height ? '100%' : 'auto',
+                      height: item.width >= item.height ? 'auto' : '100%'
+                    }}
                   />
-                  <div class={this.xclass('img-showcase-content')}>
-                    <img src={item.src} title={item.name} />
-                  </div>
-                </Col>
-              ))}
+                )}
+              </div>
+            </Col>
+          ))}
+
+          {this.max !== this.stateItem.length && (
+            <Col>
+              {pickEle}
+            </Col>
+          )}
+        </Row>
+
+        <div class={this.xclass('hint')}>{this.hint}</div>
+
+        {this.preview && this.previewSrc && (
+          <div
+            ref='imgPreview'
+            class={this.xclass('preview')}
+          >
+            <div class={this.xclass('preview-layover')} />
+            <div
+              class={this.xclass('preview-close')}
+              onClick={() => (this.previewSrc = '')}
+            >
+              <Icon
+                color='#fff'
+                kind='circle-close-o'
+                fontSize={40}
+              />
+            </div>
+            <img src={this.previewSrc} />
+          </div>
+        )}
+
+        {this.cropEnable && this.cropDisplay && (
+          <div class={this.xclass('crop')}>
+            <div>{this.$slots.crop}</div>
+
+            <Row class={this.xclass('crop-operation')}>
               <Col>
-                {pickEle}
+                <div onClick={() => (this.cropDisplay = false)}>
+                  <Btn
+                    type='text'
+                    value='取消'
+                    theme='grey'
+                  />
+                </div>
+              </Col>
+              <Col>
+                <div onClick={() => (this.cropDisplay = false)}>
+                  <Btn
+                    type='text'
+                    value='确定'
+                  />
+                </div>
               </Col>
             </Row>
-
-            <div class={this.xclass('img-hint')}>{this.hint}</div>
-            <div
-              ref='imgPreview'
-              class={this.xclass('img-preview')}></div>
           </div>
         )}
       </div>

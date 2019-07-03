@@ -2,6 +2,7 @@
  * icon 组件
  *
  * @prop theme - 主题
+ * @prop fontSize - 自定义字体图标大小
  * @prop size - 大小(xs, s, m, l, xl), 默认 s
  * @prop color - 颜色 16 进制
  * @prop type - 字符图标类型 (字符图标的 class 名的前缀，用户自己引入的字符图标的前缀)
@@ -15,6 +16,7 @@ import './Icon.scss'
 import Vue from 'vue'
 import render from './Icon.render.js'
 import baseMixin from '../../mixin/base'
+import { dataType } from '../../util/data/data'
 
 const TYPE_ALI = 'ali'
 const TYPE_FA = 'fa'
@@ -31,7 +33,9 @@ export default {
       type: String,
       default: ''
     },
-
+    fontSize: {
+      type: Number
+    },
     size: {
       type: String,
       default: 's',
@@ -39,12 +43,10 @@ export default {
         return ['xs', 's', 'm', 'l', 'xl'].includes(val.toLowerCase())
       }
     },
-
     type: {
       type: String,
       default: TYPE_ALI
     },
-
     kind: {
       type: String,
       require: true

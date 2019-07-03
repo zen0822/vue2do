@@ -15,8 +15,9 @@ import tooltip from './src/component/Bubble/tooltip'
 
 import Btn from './src/component/Btn/Btn'
 import Bubble from './src/component/Bubble/Bubble'
-import Col from './src/component/Col/Col'
 import Check from './src/component/Check/Check'
+import Col from './src/component/Col/Col'
+import Crop from './src/component/Crop/Crop'
 import Form from './src/component/Form/Form'
 import Fold from './src/component/Fold/Fold'
 import FoldTitle from './src/component/Fold/FoldTitle'
@@ -66,6 +67,7 @@ export {
   Btn,
   Check,
   Col,
+  Crop,
   Form,
   FoldTitle,
   FoldContent,

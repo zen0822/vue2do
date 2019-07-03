@@ -7,5 +7,25 @@ export default {
 
   template: pug(),
 
-  mixins: [mixin]
+  mixins: [mixin],
+
+  data() {
+    return {
+      image: {},
+      uploadItem: []
+    }
+  },
+
+  methods: {
+    cropRealtime({ data }) {
+      // console.log(data)
+    },
+    uploadChange({ item }) {
+      this.uploadItem = item
+
+      if (item.length > 0) {
+        this.image = item[0]
+      }
+    }
+  }
 }

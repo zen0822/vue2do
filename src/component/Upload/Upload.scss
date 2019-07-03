@@ -6,97 +6,137 @@
 $C_PREFIX: #{$COMP_UPLOAD};
 
 .#{$C_PREFIX} {
-  &-img {
-    $upload-img-width: 60px;
+  $upload-img-width: 60px;
 
-    .input-label {
-      line-height: 1.2;
+  &-pick {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    width: $upload-img-width;
+    height: $upload-img-width;
+    border: $divider;
+    margin: 0 $gutter $gutter 0;
+
+    &-plus {
+      @extend %center-position;
+
+      text-align: center;
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
     }
 
-    &-pick {
+    &-input {
+      position: absolute;
+      cursor: default;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+  }
+
+  &-showcase {
+    display: inline-block;
+    vertical-align: middle;
+
+    &-ele {
       position: relative;
-      overflow: hidden;
-      cursor: pointer;
       width: $upload-img-width;
       height: $upload-img-width;
       border: $divider;
       margin: 0 $gutter $gutter 0;
+    }
 
-      &-plus {
-				@extend %center-position;
+    &-delete {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      cursor: pointer;
+      z-index: 1;
 
-        text-align: center;
-        width: 30px;
-        height: 30px;
-        font-size: 30px;
-      }
-
-      &-input {
-        position: absolute;
-        cursor: default;
-        opacity: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
+      .fa-times-circle {
+        font-size: 18px;
       }
     }
 
-    &-showcase {
-      display: inline-block;
-      vertical-align: middle;
+    &-content {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      &-ele {
-        position: relative;
-        width: $upload-img-width;
-        height: $upload-img-width;
-        border: $divider;
-        margin: 0 $gutter $gutter 0;
-      }
-
-      &-delete {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        cursor: pointer;
-        z-index: 1;
-
-        .fa-times-circle {
-          font-size: 18px;
-        }
-      }
-
-      &-content {
-        overflow: hidden;
+      & > img {
         width: 100%;
-        height: 100%;
-
-        &::before {
-          content: '';
-          display: inline-block;
-          height: 100%;
-          width: 0;
-          vertical-align: middle;
-        }
-
-        & > img {
-          width: 100%;
-          display: inline-block;
-          vertical-align: middle;
-        }
+        display: inline-block;
+        vertical-align: middle;
       }
     }
   }
 
-  &-label {
+  &-preview {
+    @extend %center-position;
+
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    padding: $gutter;
+    box-sizing: border-box;
+    z-index: $z-index-upload-preview;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > img {
+      width: 100%;
+      vertical-align: middle;
+    }
+
+    &-layover {
+      @extend %center-position;
+
+      background-color: rgba(#000, 0.6);
+      position: fixed;
+      z-index: -1;
+    }
+
+    &-close {
+      position: absolute;
+      bottom: 30px;
+    }
+
+    &-delete {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+  }
+
+  &-hint {
     display: inline-block;
     vertical-align: middle;
     max-width: 150px;
     margin-left: $gap-h;
   }
 
-  &-preview {
-    overflow: hidden;
-    width: 0;
-    height: 0;
+  &-crop {
+    @extend %center-position;
+
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: $z-index-upload-preview;
+
+    &-operation {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+    }
   }
 }

@@ -10,20 +10,9 @@ import Modal from './component/Modal/Modal'
 import Pop from './component/Pop/Pop'
 import Message from './component/Message/Message'
 
-import Code from './component/Code/Code'
-import Loading from './component/Loading/Loading'
-import Nav from './component/Nav/Nav'
-
-import Omit from './component/Omit/Omit'
-import Page from './component/Page/Page'
-import Scroller from './component/Scroller/Scroller'
-import Search from './component/Search/Search'
-
 import Fold from './component/Fold/Fold'
 import FoldTitle from './component/Fold/FoldTitle'
 import FoldContent from './component/Fold/FoldContent'
-
-import List from './component/List/List'
 
 import Table from './component/Table/Table'
 import TableRow from './component/Table/TableRow'
@@ -44,6 +33,16 @@ import TabEle from './component/Tab/TabEle'
 import Col from './component/Col/Col'
 import Row from './component/Row/Row'
 
+import Code from './component/Code/Code'
+import Crop from './component/Crop/Crop'
+import Loading from './component/Loading/Loading'
+import List from './component/List/List'
+import Nav from './component/Nav/Nav'
+import Omit from './component/Omit/Omit'
+import Page from './component/Page/Page'
+import Scroller from './component/Scroller/Scroller'
+import Search from './component/Search/Search'
+
 import MotionFade from './component/MotionFade/MotionFade'
 import MotionFold from './component/MotionFold/MotionFold'
 import MotionRip from './component/MotionRip/MotionRip'
@@ -55,6 +54,7 @@ const compHub = [
   Bubble,
   Check,
   Code,
+  Crop,
   Form,
   Fold,
   FoldTitle,
