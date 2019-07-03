@@ -1,5 +1,4 @@
 const shelljs = require('shelljs')
-shelljs.env.NODE_ENV = 'production'
 
 const websiteProject = './zen0822.github.io'
 

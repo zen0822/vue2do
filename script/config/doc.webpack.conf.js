@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -64,10 +63,6 @@ module.exports = function ({
       ]
     },
     plugins: [
-      new webpack.DefinePlugin({
-        'process.env': config.doc.env
-      }),
-
       new HtmlWebpackPlugin({
         filename: config.doc.htmlName || 'index.html',
         template,

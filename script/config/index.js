@@ -15,7 +15,6 @@ module.exports = function ({
     api: appConfig.api,
     apiProd: appConfig.apiProd,
     prod: {
-      env: require('./prod.env'),
       assetRoot: path.resolve(__dirname, '../../dist'),
       assetPublicPath: './',
       assetSubDirectory: assetSubDirectory,
@@ -24,7 +23,6 @@ module.exports = function ({
       gzipExt: ['js', 'css']
     },
     dev: {
-      env: require('./dev.env'),
       mockPort: mockPort || 3000,
       hotPort: appConfig.hotPort || 80,
       assetPublicPath: '/',
@@ -43,7 +41,6 @@ module.exports = function ({
       cssSourceMap: false
     },
     doc: {
-      env: require('./prod.env'),
       htmlName: path.resolve(__dirname, '../../example/dist/index.html'),
       assetRoot: path.resolve(appConfigDir, appConfig.assetRoot),
       assetSubDirectory: 'static',
@@ -53,7 +50,6 @@ module.exports = function ({
       gzipExt: ['js', 'css']
     },
     sw: {
-      env: require('./dev.env'),
       hotPort: 5169,
       assetRoot: path.resolve(appConfigDir, appConfig.assetRoot, './sw'),
       assetPublicPath: '/',
