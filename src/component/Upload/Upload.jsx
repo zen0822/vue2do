@@ -264,10 +264,6 @@ export default {
     }
   },
 
-  mounted() {
-    this._initComp()
-  },
-
   render() {
     const pickEle = this.selectFileDisplay ? (
       <div class={this.xclass('img-pick')}>
@@ -319,7 +315,9 @@ export default {
             </Row>
 
             <div class={this.xclass('img-hint')}>{this.hint}</div>
-            <div ref='imgPreview' class={this.xclass('img-preview')}></div>
+            <div
+              ref='imgPreview'
+              class={this.xclass('img-preview')}></div>
           </div>
         )}
       </div>
