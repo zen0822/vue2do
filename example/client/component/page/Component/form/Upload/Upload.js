@@ -11,21 +11,13 @@ export default {
 
   data() {
     return {
-      image: {},
       uploadItem: []
     }
   },
 
   methods: {
-    cropRealtime({ data }) {
-      // console.log(data)
-    },
     uploadChange({ item }) {
       this.uploadItem = item
-
-      if (item.length > 0) {
-        this.image = item[0]
-      }
     }
   }
 }

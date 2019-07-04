@@ -13,12 +13,11 @@ div
         preview
       )
         z-crop(
-          :img='image.src'
+          :img='uploadItem.length > 0 ? uploadItem[0].src : ""'
           dragClip
           fixClipScale
           ref='crop'
-          slot='crop',
-          style={height: '100vh'}
+          slot='crop'
         )
 
       z-code(:theme='typeTheme').
