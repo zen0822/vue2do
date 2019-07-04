@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.15
+ * vue2do.js v0.4.16
  * (c) 2017-2019 Zen Huang
  * Released under the MIT License.
  */
@@ -96,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 122);
+/******/ 	return __webpack_require__(__webpack_require__.s = 124);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -272,7 +272,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(18);
+var	fixUrls = __webpack_require__(19);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -622,17 +622,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(43);
 
 
 /***/ }),
 /* 6 */
-/***/ (function(module) {
-
-module.exports = {"backspace":8,"ctrl":17,"enter":13,"tab":9,"shift":16,"up":38,"down":40,"left":37,"right":39};
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -674,6 +668,12 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator;
 
 /***/ }),
+/* 7 */
+/***/ (function(module) {
+
+module.exports = {"backspace":8,"ctrl":17,"enter":13,"tab":9,"shift":16,"up":38,"down":40,"left":37,"right":39};
+
+/***/ }),
 /* 8 */
 /***/ (function(module) {
 
@@ -684,7 +684,7 @@ module.exports = {"input":{"add":"hub/input/add","delete":"hub/input/delete","ge
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(19);
+var content = __webpack_require__(20);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -706,25 +706,25 @@ if(false) {}
 
 /***/ }),
 /* 10 */
-/***/ (function(module) {
-
-module.exports = {"common":{"add":"comp/common/add","delete":"comp/common/delete","get":"comp/common/get"},"input":{"add":"comp/input/add","delete":"comp/input/delete","get":"comp/input/get"},"menu":{"add":"comp/menu/add","delete":"comp/menu/delete"},"select":{"add":"comp/select/add","delete":"comp/select/delete"}};
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(30);
+var arrayWithoutHoles = __webpack_require__(31);
 
-var iterableToArray = __webpack_require__(31);
+var iterableToArray = __webpack_require__(32);
 
-var nonIterableSpread = __webpack_require__(32);
+var nonIterableSpread = __webpack_require__(33);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
 }
 
 module.exports = _toConsumableArray;
+
+/***/ }),
+/* 11 */
+/***/ (function(module) {
+
+module.exports = {"common":{"add":"comp/common/add","delete":"comp/common/delete","get":"comp/common/get"},"input":{"add":"comp/input/add","delete":"comp/input/delete","get":"comp/input/get"},"menu":{"add":"comp/menu/add","delete":"comp/menu/delete"},"select":{"add":"comp/select/add","delete":"comp/select/delete"}};
 
 /***/ }),
 /* 12 */
@@ -770,8 +770,15 @@ module.exports = _typeof;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
+!function(t,e){ true?module.exports=e():undefined}(window,function(){return function(t){var e={};function o(n){if(e[n])return e[n].exports;var r=e[n]={i:n,l:!1,exports:{}};return t[n].call(r.exports,r,r.exports,o),r.l=!0,r.exports}return o.m=t,o.c=e,o.d=function(t,e,n){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:n})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)o.d(n,r,function(e){return t[e]}.bind(null,r));return n},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o(o.s=6)}([function(t,e,o){var n=o(2);"string"==typeof n&&(n=[[t.i,n,""]]);var r={hmr:!0,transform:void 0,insertInto:void 0};o(4)(n,r);n.locals&&(t.exports=n.locals)},function(t,e,o){"use strict";var n=o(0);o.n(n).a},function(t,e,o){(t.exports=o(3)(!1)).push([t.i,'\n.vue-cropper[data-v-6dae58fd] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  box-sizing: border-box;\n  user-select: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  direction: ltr;\n  touch-action: none;\n  text-align: left;\n  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC");\n}\n.cropper-box[data-v-6dae58fd],\n.cropper-box-canvas[data-v-6dae58fd],\n.cropper-drag-box[data-v-6dae58fd],\n.cropper-crop-box[data-v-6dae58fd],\n.cropper-face[data-v-6dae58fd] {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  user-select: none;\n}\n.cropper-box-canvas img[data-v-6dae58fd] {\n  position: relative;\n  text-align: left;\n  user-select: none;\n  transform: none;\n  max-width: none;\n  max-height: none;\n}\n.cropper-box[data-v-6dae58fd] {\n  overflow: hidden;\n}\n.cropper-move[data-v-6dae58fd] {\n  cursor: move;\n}\n.cropper-crop[data-v-6dae58fd] {\n  cursor: crosshair;\n}\n.cropper-modal[data-v-6dae58fd] {\n  background: rgba(0, 0, 0, 0.5);\n}\n.cropper-crop-box[data-v-6dae58fd] {\n  /*border: 2px solid #39f;*/\n}\n.cropper-view-box[data-v-6dae58fd] {\n  display: block;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  outline: 1px solid #39f;\n  outline-color: rgba(51, 153, 255, 0.75);\n  user-select: none;\n}\n.cropper-view-box img[data-v-6dae58fd] {\n  user-select: none;\n  text-align: left;\n  max-width: none;\n  max-height: none;\n}\n.cropper-face[data-v-6dae58fd] {\n  top: 0;\n  left: 0;\n  background-color: #fff;\n  opacity: 0.1;\n}\n.crop-info[data-v-6dae58fd] {\n  position: absolute;\n  left: 0px;\n  min-width: 65px;\n  text-align: center;\n  color: white;\n  line-height: 20px;\n  background-color: rgba(0, 0, 0, 0.8);\n  font-size: 12px;\n}\n.crop-line[data-v-6dae58fd] {\n  position: absolute;\n  display: block;\n  width: 100%;\n  height: 100%;\n  opacity: 0.1;\n}\n.line-w[data-v-6dae58fd] {\n  top: -3px;\n  left: 0;\n  height: 5px;\n  cursor: n-resize;\n}\n.line-a[data-v-6dae58fd] {\n  top: 0;\n  left: -3px;\n  width: 5px;\n  cursor: w-resize;\n}\n.line-s[data-v-6dae58fd] {\n  bottom: -3px;\n  left: 0;\n  height: 5px;\n  cursor: s-resize;\n}\n.line-d[data-v-6dae58fd] {\n  top: 0;\n  right: -3px;\n  width: 5px;\n  cursor: e-resize;\n}\n.crop-point[data-v-6dae58fd] {\n  position: absolute;\n  width: 8px;\n  height: 8px;\n  opacity: 0.75;\n  background-color: #39f;\n  border-radius: 100%;\n}\n.point1[data-v-6dae58fd] {\n  top: -4px;\n  left: -4px;\n  cursor: nw-resize;\n}\n.point2[data-v-6dae58fd] {\n  top: -5px;\n  left: 50%;\n  margin-left: -3px;\n  cursor: n-resize;\n}\n.point3[data-v-6dae58fd] {\n  top: -4px;\n  right: -4px;\n  cursor: ne-resize;\n}\n.point4[data-v-6dae58fd] {\n  top: 50%;\n  left: -4px;\n  margin-top: -3px;\n  cursor: w-resize;\n}\n.point5[data-v-6dae58fd] {\n  top: 50%;\n  right: -4px;\n  margin-top: -3px;\n  cursor: e-resize;\n}\n.point6[data-v-6dae58fd] {\n  bottom: -5px;\n  left: -4px;\n  cursor: sw-resize;\n}\n.point7[data-v-6dae58fd] {\n  bottom: -5px;\n  left: 50%;\n  margin-left: -3px;\n  cursor: s-resize;\n}\n.point8[data-v-6dae58fd] {\n  bottom: -5px;\n  right: -4px;\n  cursor: se-resize;\n}\n@media screen and (max-width: 500px) {\n.crop-point[data-v-6dae58fd] {\n    position: absolute;\n    width: 20px;\n    height: 20px;\n    opacity: 0.45;\n    background-color: #39f;\n    border-radius: 100%;\n}\n.point1[data-v-6dae58fd] {\n    top: -10px;\n    left: -10px;\n}\n.point2[data-v-6dae58fd],\n  .point4[data-v-6dae58fd],\n  .point5[data-v-6dae58fd],\n  .point7[data-v-6dae58fd] {\n    display: none;\n}\n.point3[data-v-6dae58fd] {\n    top: -10px;\n    right: -10px;\n}\n.point4[data-v-6dae58fd] {\n    top: 0;\n    left: 0;\n}\n.point6[data-v-6dae58fd] {\n    bottom: -10px;\n    left: -10px;\n}\n.point8[data-v-6dae58fd] {\n    bottom: -10px;\n    right: -10px;\n}\n}\n',""])},function(t,e){t.exports=function(t){var e=[];return e.toString=function(){return this.map(function(e){var o=function(t,e){var o=t[1]||"",n=t[3];if(!n)return o;if(e&&"function"==typeof btoa){var r=function(t){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t))))+" */"}(n),i=n.sources.map(function(t){return"/*# sourceURL="+n.sourceRoot+t+" */"});return[o].concat(i).concat([r]).join("\n")}return[o].join("\n")}(e,t);return e[2]?"@media "+e[2]+"{"+o+"}":o}).join("")},e.i=function(t,o){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},r=0;r<this.length;r++){var i=this[r][0];"number"==typeof i&&(n[i]=!0)}for(r=0;r<t.length;r++){var s=t[r];"number"==typeof s[0]&&n[s[0]]||(o&&!s[2]?s[2]=o:o&&(s[2]="("+s[2]+") and ("+o+")"),e.push(s))}},e}},function(t,e,o){var n={},r=function(t){var e;return function(){return void 0===e&&(e=t.apply(this,arguments)),e}}(function(){return window&&document&&document.all&&!window.atob}),i=function(t){var e={};return function(t,o){if("function"==typeof t)return t();if(void 0===e[t]){var n=function(t,e){return e?e.querySelector(t):document.querySelector(t)}.call(this,t,o);if(window.HTMLIFrameElement&&n instanceof window.HTMLIFrameElement)try{n=n.contentDocument.head}catch(t){n=null}e[t]=n}return e[t]}}(),s=null,a=0,c=[],h=o(5);function p(t,e){for(var o=0;o<t.length;o++){var r=t[o],i=n[r.id];if(i){i.refs++;for(var s=0;s<i.parts.length;s++)i.parts[s](r.parts[s]);for(;s<r.parts.length;s++)i.parts.push(v(r.parts[s],e))}else{var a=[];for(s=0;s<r.parts.length;s++)a.push(v(r.parts[s],e));n[r.id]={id:r.id,refs:1,parts:a}}}}function u(t,e){for(var o=[],n={},r=0;r<t.length;r++){var i=t[r],s=e.base?i[0]+e.base:i[0],a={css:i[1],media:i[2],sourceMap:i[3]};n[s]?n[s].parts.push(a):o.push(n[s]={id:s,parts:[a]})}return o}function d(t,e){var o=i(t.insertInto);if(!o)throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");var n=c[c.length-1];if("top"===t.insertAt)n?n.nextSibling?o.insertBefore(e,n.nextSibling):o.appendChild(e):o.insertBefore(e,o.firstChild),c.push(e);else if("bottom"===t.insertAt)o.appendChild(e);else{if("object"!=typeof t.insertAt||!t.insertAt.before)throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");var r=i(t.insertAt.before,o);o.insertBefore(e,r)}}function l(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t);var e=c.indexOf(t);e>=0&&c.splice(e,1)}function f(t){var e=document.createElement("style");if(void 0===t.attrs.type&&(t.attrs.type="text/css"),void 0===t.attrs.nonce){var n=function(){0;return o.nc}();n&&(t.attrs.nonce=n)}return g(e,t.attrs),d(t,e),e}function g(t,e){Object.keys(e).forEach(function(o){t.setAttribute(o,e[o])})}function v(t,e){var o,n,r,i;if(e.transform&&t.css){if(!(i="function"==typeof e.transform?e.transform(t.css):e.transform.default(t.css)))return function(){};t.css=i}if(e.singleton){var c=a++;o=s||(s=f(e)),n=w.bind(null,o,c,!1),r=w.bind(null,o,c,!0)}else t.sourceMap&&"function"==typeof URL&&"function"==typeof URL.createObjectURL&&"function"==typeof URL.revokeObjectURL&&"function"==typeof Blob&&"function"==typeof btoa?(o=function(t){var e=document.createElement("link");return void 0===t.attrs.type&&(t.attrs.type="text/css"),t.attrs.rel="stylesheet",g(e,t.attrs),d(t,e),e}(e),n=function(t,e,o){var n=o.css,r=o.sourceMap,i=void 0===e.convertToAbsoluteUrls&&r;(e.convertToAbsoluteUrls||i)&&(n=h(n));r&&(n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(r))))+" */");var s=new Blob([n],{type:"text/css"}),a=t.href;t.href=URL.createObjectURL(s),a&&URL.revokeObjectURL(a)}.bind(null,o,e),r=function(){l(o),o.href&&URL.revokeObjectURL(o.href)}):(o=f(e),n=function(t,e){var o=e.css,n=e.media;n&&t.setAttribute("media",n);if(t.styleSheet)t.styleSheet.cssText=o;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(o))}}.bind(null,o),r=function(){l(o)});return n(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;n(t=e)}else r()}}t.exports=function(t,e){if("undefined"!=typeof DEBUG&&DEBUG&&"object"!=typeof document)throw new Error("The style-loader cannot be used in a non-browser environment");(e=e||{}).attrs="object"==typeof e.attrs?e.attrs:{},e.singleton||"boolean"==typeof e.singleton||(e.singleton=r()),e.insertInto||(e.insertInto="head"),e.insertAt||(e.insertAt="bottom");var o=u(t,e);return p(o,e),function(t){for(var r=[],i=0;i<o.length;i++){var s=o[i];(a=n[s.id]).refs--,r.push(a)}t&&p(u(t,e),e);for(i=0;i<r.length;i++){var a;if(0===(a=r[i]).refs){for(var c=0;c<a.parts.length;c++)a.parts[c]();delete n[a.id]}}}};var m=function(){var t=[];return function(e,o){return t[e]=o,t.filter(Boolean).join("\n")}}();function w(t,e,o,n){var r=o?"":n.css;if(t.styleSheet)t.styleSheet.cssText=m(e,r);else{var i=document.createTextNode(r),s=t.childNodes;s[e]&&t.removeChild(s[e]),s.length?t.insertBefore(i,s[e]):t.appendChild(i)}}},function(t,e){t.exports=function(t){var e="undefined"!=typeof window&&window.location;if(!e)throw new Error("fixUrls requires window.location");if(!t||"string"!=typeof t)return t;var o=e.protocol+"//"+e.host,n=o+e.pathname.replace(/\/[^\/]*$/,"/");return t.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi,function(t,e){var r,i=e.trim().replace(/^"(.*)"$/,function(t,e){return e}).replace(/^'(.*)'$/,function(t,e){return e});return/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(i)?t:(r=0===i.indexOf("//")?i:0===i.indexOf("/")?o+i:n+i.replace(/^\.\//,""),"url("+JSON.stringify(r)+")")})}},function(t,e,o){"use strict";o.r(e);var n=function(){var t=this,e=t.$createElement,o=t._self._c||e;return o("div",{ref:"cropper",staticClass:"vue-cropper",on:{mouseover:t.scaleImg,mouseout:t.cancelScale}},[o("div",{staticClass:"cropper-box"},[o("div",{directives:[{name:"show",rawName:"v-show",value:!t.loading,expression:"!loading"}],staticClass:"cropper-box-canvas",style:{width:t.trueWidth+"px",height:t.trueHeight+"px",transform:"scale("+t.scale+","+t.scale+") translate3d("+t.x/t.scale+"px,"+t.y/t.scale+"px,0)rotateZ("+90*t.rotate+"deg)"}},[o("img",{ref:"cropperImg",attrs:{src:t.imgs,alt:"cropper-img"}})])]),t._v(" "),o("div",{staticClass:"cropper-drag-box",class:{"cropper-move":t.move&&!t.crop,"cropper-crop":t.crop,"cropper-modal":t.cropping},on:{mousedown:t.startMove,touchstart:t.startMove}}),t._v(" "),o("div",{directives:[{name:"show",rawName:"v-show",value:t.cropping,expression:"cropping"}],staticClass:"cropper-crop-box",style:{width:t.cropW+"px",height:t.cropH+"px",transform:"translate3d("+t.cropOffsertX+"px,"+t.cropOffsertY+"px,0)"}},[o("span",{staticClass:"cropper-view-box"},[o("img",{style:{width:t.trueWidth+"px",height:t.trueHeight+"px",transform:"scale("+t.scale+","+t.scale+") translate3d("+(t.x-t.cropOffsertX)/t.scale+"px,"+(t.y-t.cropOffsertY)/t.scale+"px,0)rotateZ("+90*t.rotate+"deg)"},attrs:{src:t.imgs,alt:"cropper-img"}})]),t._v(" "),o("span",{staticClass:"cropper-face cropper-move",on:{mousedown:t.cropMove,touchstart:t.cropMove}}),t._v(" "),t.info?o("span",{staticClass:"crop-info",style:{top:t.cropInfo.top}},[t._v(t._s(this.cropInfo.width)+" × "+t._s(this.cropInfo.height))]):t._e(),t._v(" "),t.fixedBox?t._e():o("span",[o("span",{staticClass:"crop-line line-w",on:{mousedown:function(e){t.changeCropSize(e,!1,!0,0,1)},touchstart:function(e){t.changeCropSize(e,!1,!0,0,1)}}}),t._v(" "),o("span",{staticClass:"crop-line line-a",on:{mousedown:function(e){t.changeCropSize(e,!0,!1,1,0)},touchstart:function(e){t.changeCropSize(e,!0,!1,1,0)}}}),t._v(" "),o("span",{staticClass:"crop-line line-s",on:{mousedown:function(e){t.changeCropSize(e,!1,!0,0,2)},touchstart:function(e){t.changeCropSize(e,!1,!0,0,2)}}}),t._v(" "),o("span",{staticClass:"crop-line line-d",on:{mousedown:function(e){t.changeCropSize(e,!0,!1,2,0)},touchstart:function(e){t.changeCropSize(e,!0,!1,2,0)}}}),t._v(" "),o("span",{staticClass:"crop-point point1",on:{mousedown:function(e){t.changeCropSize(e,!0,!0,1,1)},touchstart:function(e){t.changeCropSize(e,!0,!0,1,1)}}}),t._v(" "),o("span",{staticClass:"crop-point point2",on:{mousedown:function(e){t.changeCropSize(e,!1,!0,0,1)},touchstart:function(e){t.changeCropSize(e,!1,!0,0,1)}}}),t._v(" "),o("span",{staticClass:"crop-point point3",on:{mousedown:function(e){t.changeCropSize(e,!0,!0,2,1)},touchstart:function(e){t.changeCropSize(e,!0,!0,2,1)}}}),t._v(" "),o("span",{staticClass:"crop-point point4",on:{mousedown:function(e){t.changeCropSize(e,!0,!1,1,0)},touchstart:function(e){t.changeCropSize(e,!0,!1,1,0)}}}),t._v(" "),o("span",{staticClass:"crop-point point5",on:{mousedown:function(e){t.changeCropSize(e,!0,!1,2,0)},touchstart:function(e){t.changeCropSize(e,!0,!1,2,0)}}}),t._v(" "),o("span",{staticClass:"crop-point point6",on:{mousedown:function(e){t.changeCropSize(e,!0,!0,1,2)},touchstart:function(e){t.changeCropSize(e,!0,!0,1,2)}}}),t._v(" "),o("span",{staticClass:"crop-point point7",on:{mousedown:function(e){t.changeCropSize(e,!1,!0,0,2)},touchstart:function(e){t.changeCropSize(e,!1,!0,0,2)}}}),t._v(" "),o("span",{staticClass:"crop-point point8",on:{mousedown:function(e){t.changeCropSize(e,!0,!0,2,2)},touchstart:function(e){t.changeCropSize(e,!0,!0,2,2)}}})])])])};n._withStripped=!0;var r={};r.getData=function(t){return new Promise(function(e,o){var n={};(function(t){var e=null;return new Promise(function(o,n){if(t.src)if(/^data\:/i.test(t.src))e=function(t){t=t.replace(/^data\:([^\;]+)\;base64,/gim,"");for(var e=atob(t),o=e.length,n=new ArrayBuffer(o),r=new Uint8Array(n),i=0;i<o;i++)r[i]=e.charCodeAt(i);return n}(t.src),o(e);else if(/^blob\:/i.test(t.src)){var r=new FileReader;r.onload=function(t){e=t.target.result,o(e)},function(t,e){var o=new XMLHttpRequest;o.open("GET",t,!0),o.responseType="blob",o.onload=function(t){200!=this.status&&0!==this.status||e(this.response)},o.send()}(t.src,function(t){r.readAsArrayBuffer(t)})}else{var i=new XMLHttpRequest;i.onload=function(){if(200!=this.status&&0!==this.status)throw"Could not load image";e=i.response,o(e),i=null},i.open("GET",t.src,!0),i.responseType="arraybuffer",i.send(null)}else n("img error")})})(t).then(function(t){n.arrayBuffer=t,n.orientation=function(t){var e,o,n,r,i,s,a,c,h,p=new DataView(t),u=p.byteLength;if(255===p.getUint8(0)&&216===p.getUint8(1))for(c=2;c<u;){if(255===p.getUint8(c)&&225===p.getUint8(c+1)){s=c;break}c++}s&&(o=s+10,"Exif"===function(t,e,o){var n,r="";for(n=e,o+=e;n<o;n++)r+=String.fromCharCode(t.getUint8(n));return r}(p,s+4,4)&&(i=p.getUint16(o),((r=18761===i)||19789===i)&&42===p.getUint16(o+2,r)&&(n=p.getUint32(o+4,r))>=8&&(a=o+n)));if(a)for(u=p.getUint16(a,r),h=0;h<u;h++)if(c=a+12*h+2,274===p.getUint16(c,r)){c+=8,e=p.getUint16(c,r);break}return e}(t),e(n)}).catch(function(t){o(t)})})};var i=r,s={data:function(){return{w:0,h:0,scale:1,x:0,y:0,loading:!0,trueWidth:0,trueHeight:0,move:!0,moveX:0,moveY:0,crop:!1,cropping:!1,cropW:0,cropH:0,cropOldW:0,cropOldH:0,canChangeX:!1,canChangeY:!1,changeCropTypeX:1,changeCropTypeY:1,cropX:0,cropY:0,cropChangeX:0,cropChangeY:0,cropOffsertX:0,cropOffsertY:0,support:"",touches:[],touchNow:!1,rotate:0,isIos:!1,orientation:0,imgs:"",coe:.2,scaling:!1,scalingSet:"",coeStatus:"",isCanShow:!0}},props:{img:{type:[String,Blob,null,File],default:""},outputSize:{type:Number,default:1},outputType:{type:String,default:"jpeg"},info:{type:Boolean,default:!0},canScale:{type:Boolean,default:!0},autoCrop:{type:Boolean,default:!1},autoCropWidth:{type:[Number,String],default:0},autoCropHeight:{type:[Number,String],default:0},fixed:{type:Boolean,default:!1},fixedNumber:{type:Array,default:function(){return[1,1]}},fixedBox:{type:Boolean,default:!1},full:{type:Boolean,default:!1},canMove:{type:Boolean,default:!0},canMoveBox:{type:Boolean,default:!0},original:{type:Boolean,default:!1},centerBox:{type:Boolean,default:!1},high:{type:Boolean,default:!0},infoTrue:{type:Boolean,default:!1},maxImgSize:{type:Number,default:2e3},enlarge:{type:[Number,String],default:1},preW:{type:[Number,String],default:0},mode:{type:String,default:"contain"}},computed:{cropInfo:function(){var t={};if(t.top=this.cropOffsertY>21?"-21px":"0px",t.width=this.cropW>0?this.cropW:0,t.height=this.cropH>0?this.cropH:0,this.infoTrue){var e=1;this.high&&!this.full&&(e=window.devicePixelRatio),1!==this.enlarge&!this.full&&(e=Math.abs(Number(this.enlarge))),t.width=t.width*e,t.height=t.height*e,this.full&&(t.width=t.width/this.scale,t.height=t.height/this.scale)}return t.width=t.width.toFixed(0),t.height=t.height.toFixed(0),t},isIE:function(){var t=navigator.userAgent,e=t.indexOf("compatible")>-1&&t.indexOf("MSIE")>-1;return e}},watch:{img:function(){this.checkedImg()},imgs:function(t){""!==t&&this.reload()},cropW:function(){this.showPreview()},cropH:function(){this.showPreview()},cropOffsertX:function(){this.showPreview()},cropOffsertY:function(){this.showPreview()},scale:function(t,e){this.showPreview()},x:function(){this.showPreview()},y:function(){this.showPreview()},autoCrop:function(t){t&&this.goAutoCrop()},autoCropWidth:function(){this.autoCrop&&this.goAutoCrop()},autoCropHeight:function(){this.autoCrop&&this.goAutoCrop()},mode:function(){this.checkedImg()},rotate:function(){this.showPreview(),this.autoCrop?this.goAutoCrop(this.cropW,this.cropH):(this.cropW>0||this.cropH>0)&&this.goAutoCrop(this.cropW,this.cropH)}},methods:{checkOrientationImage:function(t,e,o,n){var r=this,i=document.createElement("canvas"),s=i.getContext("2d");switch(s.save(),e){case 2:i.width=o,i.height=n,s.translate(o,0),s.scale(-1,1);break;case 3:i.width=o,i.height=n,s.translate(o/2,n/2),s.rotate(180*Math.PI/180),s.translate(-o/2,-n/2);break;case 4:i.width=o,i.height=n,s.translate(0,n),s.scale(1,-1);break;case 5:i.height=o,i.width=n,s.rotate(.5*Math.PI),s.scale(1,-1);break;case 6:i.width=n,i.height=o,s.translate(n/2,o/2),s.rotate(90*Math.PI/180),s.translate(-o/2,-n/2);break;case 7:i.height=o,i.width=n,s.rotate(.5*Math.PI),s.translate(o,-n),s.scale(-1,1);break;case 8:i.height=o,i.width=n,s.translate(n/2,o/2),s.rotate(-90*Math.PI/180),s.translate(-o/2,-n/2);break;default:i.width=o,i.height=n}s.drawImage(t,0,0,o,n),s.restore(),i.toBlob(function(t){var e=URL.createObjectURL(t);r.imgs=e},"image/"+this.outputType,1)},checkedImg:function(){var t=this;if(""!==this.img){this.loading=!0,this.scale=1,this.rotate=0,this.clearCrop();var e=new Image;if(e.onload=function(){if(""===t.img)return t.$emit("imgLoad","error"),t.$emit("img-load","error"),!1;var o=e.width,n=e.height;i.getData(e).then(function(r){t.orientation=r.orientation||1;var i=t.maxImgSize;!t.orientation&&o<i&n<i?t.imgs=t.img:(o>i&&(n=n/o*i,o=i),n>i&&(o=o/n*i,n=i),t.checkOrientationImage(e,t.orientation,o,n))})},e.onerror=function(){t.$emit("imgLoad","error"),t.$emit("img-load","error")},"data"!==this.img.substr(0,4)&&(e.crossOrigin=""),this.isIE){var o=new XMLHttpRequest;o.onload=function(){var t=URL.createObjectURL(this.response);e.src=t},o.open("GET",this.img,!0),o.responseType="blob",o.send()}else e.src=this.img}},startMove:function(t){if(t.preventDefault(),this.move&&!this.crop){if(!this.canMove)return!1;this.moveX=(t.clientX?t.clientX:t.touches[0].clientX)-this.x,this.moveY=(t.clientY?t.clientY:t.touches[0].clientY)-this.y,t.touches?(window.addEventListener("touchmove",this.moveImg),window.addEventListener("touchend",this.leaveImg),2==t.touches.length&&(this.touches=t.touches,window.addEventListener("touchmove",this.touchScale),window.addEventListener("touchend",this.cancelTouchScale))):(window.addEventListener("mousemove",this.moveImg),window.addEventListener("mouseup",this.leaveImg)),this.$emit("imgMoving",{moving:!0,axis:this.getImgAxis()}),this.$emit("img-moving",{moving:!0,axis:this.getImgAxis()})}else this.cropping=!0,window.addEventListener("mousemove",this.createCrop),window.addEventListener("mouseup",this.endCrop),window.addEventListener("touchmove",this.createCrop),window.addEventListener("touchend",this.endCrop),this.cropOffsertX=t.offsetX?t.offsetX:t.touches[0].pageX-this.$refs.cropper.offsetLeft,this.cropOffsertY=t.offsetY?t.offsetY:t.touches[0].pageY-this.$refs.cropper.offsetTop,this.cropX=t.clientX?t.clientX:t.touches[0].clientX,this.cropY=t.clientY?t.clientY:t.touches[0].clientY,this.cropChangeX=this.cropOffsertX,this.cropChangeY=this.cropOffsertY,this.cropW=0,this.cropH=0},touchScale:function(t){var e=this;t.preventDefault();var o=this.scale,n=this.touches[0].clientX,r=this.touches[0].clientY,i=t.touches[0].clientX,s=t.touches[0].clientY,a=this.touches[1].clientX,c=this.touches[1].clientY,h=t.touches[1].clientX,p=t.touches[1].clientY,u=Math.sqrt(Math.pow(n-a,2)+Math.pow(r-c,2)),d=Math.sqrt(Math.pow(i-h,2)+Math.pow(s-p,2))-u,l=1,f=(l=(l=l/this.trueWidth>l/this.trueHeight?l/this.trueHeight:l/this.trueWidth)>.1?.1:l)*d;if(!this.touchNow){if(this.touchNow=!0,d>0?o+=Math.abs(f):d<0&&o>Math.abs(f)&&(o-=Math.abs(f)),this.touches=t.touches,setTimeout(function(){e.touchNow=!1},8),!this.checkoutImgAxis(this.x,this.y,o))return!1;this.scale=o}},cancelTouchScale:function(t){window.removeEventListener("touchmove",this.touchScale)},moveImg:function(t){var e=this;if(t.preventDefault(),t.touches&&2===t.touches.length)return this.touches=t.touches,window.addEventListener("touchmove",this.touchScale),window.addEventListener("touchend",this.cancelTouchScale),window.removeEventListener("touchmove",this.moveImg),!1;var o,n,r=t.clientX?t.clientX:t.touches[0].clientX,i=t.clientY?t.clientY:t.touches[0].clientY;o=r-this.moveX,n=i-this.moveY,this.$nextTick(function(){if(e.centerBox){var t,r,i,s,a=e.getImgAxis(o,n,e.scale),c=e.getCropAxis(),h=e.trueHeight*e.scale,p=e.trueWidth*e.scale;switch(e.rotate){case 1:case-1:case 3:case-3:t=e.cropOffsertX-e.trueWidth*(1-e.scale)/2+(h-p)/2,r=e.cropOffsertY-e.trueHeight*(1-e.scale)/2+(p-h)/2,i=t-h+e.cropW,s=r-p+e.cropH;break;default:t=e.cropOffsertX-e.trueWidth*(1-e.scale)/2,r=e.cropOffsertY-e.trueHeight*(1-e.scale)/2,i=t-p+e.cropW,s=r-h+e.cropH}a.x1>=c.x1&&(o=t),a.y1>=c.y1&&(n=r),a.x2<=c.x2&&(o=i),a.y2<=c.y2&&(n=s)}e.x=o,e.y=n,e.$emit("imgMoving",{moving:!0,axis:e.getImgAxis()}),e.$emit("img-moving",{moving:!0,axis:e.getImgAxis()})})},leaveImg:function(t){window.removeEventListener("mousemove",this.moveImg),window.removeEventListener("touchmove",this.moveImg),window.removeEventListener("mouseup",this.leaveImg),window.removeEventListener("touchend",this.leaveImg),this.$emit("imgMoving",{moving:!1,axis:this.getImgAxis()}),this.$emit("img-moving",{moving:!1,axis:this.getImgAxis()})},scaleImg:function(){this.canScale&&window.addEventListener(this.support,this.changeSize,{passive:!1})},cancelScale:function(){this.canScale&&window.removeEventListener(this.support,this.changeSize)},changeSize:function(t){var e=this;t.preventDefault();var o=this.scale,n=t.deltaY||t.wheelDelta;n=navigator.userAgent.indexOf("Firefox")>0?30*n:n,this.isIE&&(n=-n);var r=this.coe,i=(r=r/this.trueWidth>r/this.trueHeight?r/this.trueHeight:r/this.trueWidth)*n;i<0?o+=Math.abs(i):o>Math.abs(i)&&(o-=Math.abs(i));var s=i<0?"add":"reduce";if(s!==this.coeStatus&&(this.coeStatus=s,this.coe=.2),this.scaling||(this.scalingSet=setTimeout(function(){e.scaling=!1,e.coe=e.coe+=.01},50)),this.scaling=!0,!this.checkoutImgAxis(this.x,this.y,o))return!1;this.scale=o},changeScale:function(t){var e=this.scale;t=t||1;var o=20;if((t*=o=o/this.trueWidth>o/this.trueHeight?o/this.trueHeight:o/this.trueWidth)>0?e+=Math.abs(t):e>Math.abs(t)&&(e-=Math.abs(t)),!this.checkoutImgAxis(this.x,this.y,e))return!1;this.scale=e},createCrop:function(t){var e=this;t.preventDefault();var o=t.clientX?t.clientX:t.touches?t.touches[0].clientX:0,n=t.clientY?t.clientY:t.touches?t.touches[0].clientY:0;this.$nextTick(function(){var t=o-e.cropX,r=n-e.cropY;if(t>0?(e.cropW=t+e.cropChangeX>e.w?e.w-e.cropChangeX:t,e.cropOffsertX=e.cropChangeX):(e.cropW=e.w-e.cropChangeX+Math.abs(t)>e.w?e.cropChangeX:Math.abs(t),e.cropOffsertX=e.cropChangeX+t>0?e.cropChangeX+t:0),e.fixed){var i=e.cropW/e.fixedNumber[0]*e.fixedNumber[1];i+e.cropOffsertY>e.h?(e.cropH=e.h-e.cropOffsertY,e.cropW=e.cropH/e.fixedNumber[1]*e.fixedNumber[0],e.cropOffsertX=t>0?e.cropChangeX:e.cropChangeX-e.cropW):e.cropH=i,e.cropOffsertY=e.cropOffsertY}else r>0?(e.cropH=r+e.cropChangeY>e.h?e.h-e.cropChangeY:r,e.cropOffsertY=e.cropChangeY):(e.cropH=e.h-e.cropChangeY+Math.abs(r)>e.h?e.cropChangeY:Math.abs(r),e.cropOffsertY=e.cropChangeY+r>0?e.cropChangeY+r:0)})},changeCropSize:function(t,e,o,n,r){t.preventDefault(),window.addEventListener("mousemove",this.changeCropNow),window.addEventListener("mouseup",this.changeCropEnd),window.addEventListener("touchmove",this.changeCropNow),window.addEventListener("touchend",this.changeCropEnd),this.canChangeX=e,this.canChangeY=o,this.changeCropTypeX=n,this.changeCropTypeY=r,this.cropX=t.clientX?t.clientX:t.touches[0].clientX,this.cropY=t.clientY?t.clientY:t.touches[0].clientY,this.cropOldW=this.cropW,this.cropOldH=this.cropH,this.cropChangeX=this.cropOffsertX,this.cropChangeY=this.cropOffsertY,this.fixed&&this.canChangeX&&this.canChangeY&&(this.canChangeY=0)},changeCropNow:function(t){var e=this;t.preventDefault();var o=t.clientX?t.clientX:t.touches?t.touches[0].clientX:0,n=t.clientY?t.clientY:t.touches?t.touches[0].clientY:0,r=this.w,i=this.h,s=0,a=0;if(this.centerBox){var c=this.getImgAxis(),h=c.x2,p=c.y2;s=c.x1>0?c.x1:0,a=c.y1>0?c.y1:0,r>h&&(r=h),i>p&&(i=p)}this.$nextTick(function(){var t=o-e.cropX,c=n-e.cropY;if(e.canChangeX&&(1===e.changeCropTypeX?e.cropOldW-t>0?(e.cropW=r-e.cropChangeX-t<=r-s?e.cropOldW-t:e.cropOldW+e.cropChangeX-s,e.cropOffsertX=r-e.cropChangeX-t<=r-s?e.cropChangeX+t:s):(e.cropW=Math.abs(t)+e.cropChangeX<=r?Math.abs(t)-e.cropOldW:r-e.cropOldW-e.cropChangeX,e.cropOffsertX=e.cropChangeX+e.cropOldW):2===e.changeCropTypeX&&(e.cropOldW+t>0?(e.cropW=e.cropOldW+t+e.cropOffsertX<=r?e.cropOldW+t:r-e.cropOffsertX,e.cropOffsertX=e.cropChangeX):(e.cropW=r-e.cropChangeX+Math.abs(t+e.cropOldW)<=r-s?Math.abs(t+e.cropOldW):e.cropChangeX-s,e.cropOffsertX=r-e.cropChangeX+Math.abs(t+e.cropOldW)<=r-s?e.cropChangeX-Math.abs(t+e.cropOldW):s))),e.canChangeY&&(1===e.changeCropTypeY?e.cropOldH-c>0?(e.cropH=i-e.cropChangeY-c<=i-a?e.cropOldH-c:e.cropOldH+e.cropChangeY-a,e.cropOffsertY=i-e.cropChangeY-c<=i-a?e.cropChangeY+c:a):(e.cropH=Math.abs(c)+e.cropChangeY<=i?Math.abs(c)-e.cropOldH:i-e.cropOldH-e.cropChangeY,e.cropOffsertY=e.cropChangeY+e.cropOldH):2===e.changeCropTypeY&&(e.cropOldH+c>0?(e.cropH=e.cropOldH+c+e.cropOffsertY<=i?e.cropOldH+c:i-e.cropOffsertY,e.cropOffsertY=e.cropChangeY):(e.cropH=i-e.cropChangeY+Math.abs(c+e.cropOldH)<=i-a?Math.abs(c+e.cropOldH):e.cropChangeY-a,e.cropOffsertY=i-e.cropChangeY+Math.abs(c+e.cropOldH)<=i-a?e.cropChangeY-Math.abs(c+e.cropOldH):a))),e.canChangeX&&e.fixed){var h=e.cropW/e.fixedNumber[0]*e.fixedNumber[1];h+e.cropOffsertY>i?(e.cropH=i-e.cropOffsertY,e.cropW=e.cropH/e.fixedNumber[1]*e.fixedNumber[0]):e.cropH=h}if(e.canChangeY&&e.fixed){var p=e.cropH/e.fixedNumber[1]*e.fixedNumber[0];p+e.cropOffsertX>r?(e.cropW=r-e.cropOffsertX,e.cropH=e.cropW/e.fixedNumber[0]*e.fixedNumber[1]):e.cropW=p}})},changeCropEnd:function(t){window.removeEventListener("mousemove",this.changeCropNow),window.removeEventListener("mouseup",this.changeCropEnd),window.removeEventListener("touchmove",this.changeCropNow),window.removeEventListener("touchend",this.changeCropEnd)},endCrop:function(){0===this.cropW&&0===this.cropH&&(this.cropping=!1),window.removeEventListener("mousemove",this.createCrop),window.removeEventListener("mouseup",this.endCrop),window.removeEventListener("touchmove",this.createCrop),window.removeEventListener("touchend",this.endCrop)},startCrop:function(){this.crop=!0},stopCrop:function(){this.crop=!1},clearCrop:function(){this.cropping=!1,this.cropW=0,this.cropH=0},cropMove:function(t){if(t.preventDefault(),!this.canMoveBox)return this.crop=!1,this.startMove(t),!1;if(t.touches&&2===t.touches.length)return this.crop=!1,this.startMove(t),this.leaveCrop(),!1;window.addEventListener("mousemove",this.moveCrop),window.addEventListener("mouseup",this.leaveCrop),window.addEventListener("touchmove",this.moveCrop),window.addEventListener("touchend",this.leaveCrop);var e,o,n=t.clientX?t.clientX:t.touches[0].clientX,r=t.clientY?t.clientY:t.touches[0].clientY;e=n-this.cropOffsertX,o=r-this.cropOffsertY,this.cropX=e,this.cropY=o,this.$emit("cropMoving",{moving:!0,axis:this.getCropAxis()}),this.$emit("crop-moving",{moving:!0,axis:this.getCropAxis()})},moveCrop:function(t,e){var o=this,n=0,r=0;t&&(t.preventDefault(),n=t.clientX?t.clientX:t.touches[0].clientX,r=t.clientY?t.clientY:t.touches[0].clientY),this.$nextTick(function(){var t,i,s=n-o.cropX,a=r-o.cropY;if(e&&(s=o.cropOffsertX,a=o.cropOffsertY),t=s<=0?0:s+o.cropW>o.w?o.w-o.cropW:s,i=a<=0?0:a+o.cropH>o.h?o.h-o.cropH:a,o.centerBox){var c=o.getImgAxis();t<=c.x1&&(t=c.x1),t+o.cropW>c.x2&&(t=c.x2-o.cropW),i<=c.y1&&(i=c.y1),i+o.cropH>c.y2&&(i=c.y2-o.cropH)}o.cropOffsertX=t,o.cropOffsertY=i,o.$emit("cropMoving",{moving:!0,axis:o.getCropAxis()}),o.$emit("crop-moving",{moving:!0,axis:o.getCropAxis()})})},getImgAxis:function(t,e,o){t=t||this.x,e=e||this.y,o=o||this.scale;var n={x1:0,x2:0,y1:0,y2:0},r=this.trueWidth*o,i=this.trueHeight*o;switch(this.rotate){case 0:n.x1=t+this.trueWidth*(1-o)/2,n.x2=n.x1+this.trueWidth*o,n.y1=e+this.trueHeight*(1-o)/2,n.y2=n.y1+this.trueHeight*o;break;case 1:case-1:case 3:case-3:n.x1=t+this.trueWidth*(1-o)/2+(r-i)/2,n.x2=n.x1+this.trueHeight*o,n.y1=e+this.trueHeight*(1-o)/2+(i-r)/2,n.y2=n.y1+this.trueWidth*o;break;default:n.x1=t+this.trueWidth*(1-o)/2,n.x2=n.x1+this.trueWidth*o,n.y1=e+this.trueHeight*(1-o)/2,n.y2=n.y1+this.trueHeight*o}return n},getCropAxis:function(){var t={x1:0,x2:0,y1:0,y2:0};return t.x1=this.cropOffsertX,t.x2=t.x1+this.cropW,t.y1=this.cropOffsertY,t.y2=t.y1+this.cropH,t},leaveCrop:function(t){window.removeEventListener("mousemove",this.moveCrop),window.removeEventListener("mouseup",this.leaveCrop),window.removeEventListener("touchmove",this.moveCrop),window.removeEventListener("touchend",this.leaveCrop),this.$emit("cropMoving",{moving:!1,axis:this.getCropAxis()}),this.$emit("crop-moving",{moving:!1,axis:this.getCropAxis()})},getCropChecked:function(t){var e=this,o=document.createElement("canvas"),n=new Image,r=this.rotate,i=this.trueWidth,s=this.trueHeight,a=this.cropOffsertX,c=this.cropOffsertY;function h(t,e){o.width=Math.round(t),o.height=Math.round(e)}n.onload=function(){if(0!==e.cropW){var p=o.getContext("2d"),u=1;e.high&!e.full&&(u=window.devicePixelRatio),1!==e.enlarge&!e.full&&(u=Math.abs(Number(e.enlarge)),console.log(u));var d=e.cropW*u,l=e.cropH*u,f=i*e.scale*u,g=s*e.scale*u,v=(e.x-a+e.trueWidth*(1-e.scale)/2)*u,m=(e.y-c+e.trueHeight*(1-e.scale)/2)*u;switch(h(d,l),p.save(),r){case 0:e.full?(h(d/e.scale,l/e.scale),p.drawImage(n,v/e.scale,m/e.scale,f/e.scale,g/e.scale)):p.drawImage(n,v,m,f,g);break;case 1:case-3:e.full?(h(d/e.scale,l/e.scale),v=v/e.scale+(f/e.scale-g/e.scale)/2,m=m/e.scale+(g/e.scale-f/e.scale)/2,p.rotate(90*r*Math.PI/180),p.drawImage(n,m,-v-g/e.scale,f/e.scale,g/e.scale)):(v+=(f-g)/2,m+=(g-f)/2,p.rotate(90*r*Math.PI/180),p.drawImage(n,m,-v-g,f,g));break;case 2:case-2:e.full?(h(d/e.scale,l/e.scale),p.rotate(90*r*Math.PI/180),v/=e.scale,m/=e.scale,p.drawImage(n,-v-f/e.scale,-m-g/e.scale,f/e.scale,g/e.scale)):(p.rotate(90*r*Math.PI/180),p.drawImage(n,-v-f,-m-g,f,g));break;case 3:case-1:e.full?(h(d/e.scale,l/e.scale),v=v/e.scale+(f/e.scale-g/e.scale)/2,m=m/e.scale+(g/e.scale-f/e.scale)/2,p.rotate(90*r*Math.PI/180),p.drawImage(n,-m-f/e.scale,v,f/e.scale,g/e.scale)):(v+=(f-g)/2,m+=(g-f)/2,p.rotate(90*r*Math.PI/180),p.drawImage(n,-m-f,v,f,g));break;default:e.full?(h(d/e.scale,l/e.scale),p.drawImage(n,v/e.scale,m/e.scale,f/e.scale,g/e.scale)):p.drawImage(n,v,m,f,g)}p.restore()}else{var w=i*e.scale,x=s*e.scale,C=o.getContext("2d");switch(C.save(),r){case 0:h(w,x),C.drawImage(n,0,0,w,x);break;case 1:case-3:h(x,w),C.rotate(90*r*Math.PI/180),C.drawImage(n,0,-x,w,x);break;case 2:case-2:h(w,x),C.rotate(90*r*Math.PI/180),C.drawImage(n,-w,-x,w,x);break;case 3:case-1:h(x,w),C.rotate(90*r*Math.PI/180),C.drawImage(n,-w,0,w,x);break;default:h(w,x),C.drawImage(n,0,0,w,x)}C.restore()}t(o)},"data"!==this.img.substr(0,4)&&(n.crossOrigin="Anonymous"),n.src=this.imgs},getCropData:function(t){var e=this;this.getCropChecked(function(o){t(o.toDataURL("image/"+e.outputType,e.outputSize))})},getCropBlob:function(t){var e=this;this.getCropChecked(function(o){o.toBlob(function(e){return t(e)},"image/"+e.outputType,e.outputSize)})},showPreview:function(){var t=this;if(!this.isCanShow)return!1;this.isCanShow=!1,setTimeout(function(){t.isCanShow=!0},16);var e=this.cropW,o=this.cropH,n=this.scale,r={};r.div={width:"".concat(e,"px"),height:"".concat(o,"px")};var i=(this.x-this.cropOffsertX)/n,s=(this.y-this.cropOffsertY)/n;r.w=e,r.h=o,r.url=this.imgs,r.img={width:"".concat(this.trueWidth,"px"),height:"".concat(this.trueHeight,"px"),transform:"scale(".concat(n,")translate3d(").concat(i,"px, ").concat(s,"px, ").concat(0,"px)rotateZ(").concat(90*this.rotate,"deg)")},r.html='\n      <div class="show-preview" style="width: '.concat(r.w,"px; height: ").concat(r.h,'px,; overflow: hidden">\n        <div style="width: ').concat(e,"px; height: ").concat(o,'px">\n          <img src=').concat(r.url,' style="width: ').concat(this.trueWidth,"px; height: ").concat(this.trueHeight,"px; transform:\n          scale(").concat(n,")translate3d(").concat(i,"px, ").concat(s,"px, ").concat(0,"px)rotateZ(").concat(90*this.rotate,'deg)">\n        </div>\n      </div>'),this.$emit("realTime",r),this.$emit("real-time",r)},reload:function(){var t=this,e=new Image;e.onload=function(){t.w=parseFloat(window.getComputedStyle(t.$refs.cropper).width),t.h=parseFloat(window.getComputedStyle(t.$refs.cropper).height),t.trueWidth=e.width,t.trueHeight=e.height,t.original?t.scale=1:t.scale=t.checkedMode(),t.$nextTick(function(){t.x=-(t.trueWidth-t.trueWidth*t.scale)/2+(t.w-t.trueWidth*t.scale)/2,t.y=-(t.trueHeight-t.trueHeight*t.scale)/2+(t.h-t.trueHeight*t.scale)/2,t.loading=!1,t.autoCrop&&t.goAutoCrop(),t.$emit("img-load","success"),t.$emit("imgLoad","success"),setTimeout(function(){t.showPreview()},20)})},e.onerror=function(){t.$emit("imgLoad","error"),t.$emit("img-load","error")},e.src=this.imgs},checkedMode:function(){var t=1,e=(this.trueWidth,this.trueHeight),o=this.mode.split(" ");switch(o[0]){case"contain":this.trueWidth>this.w&&(t=this.w/this.trueWidth),this.trueHeight*t>this.h&&(t=this.h/this.trueHeight);break;case"cover":(e*=t=this.w/this.trueWidth)<this.h&&(t=(e=this.h)/this.trueHeight);break;default:try{var n=o[0];if(-1!==n.search("px")&&(n=n.replace("px",""),t=parseFloat(n)/this.trueWidth),-1!==n.search("%")&&(n=n.replace("%",""),t=parseFloat(n)/100*this.w/this.trueWidth),2===o.length&&"auto"===n){var r=o[1];-1!==r.search("px")&&(r=r.replace("px",""),t=(e=parseFloat(r))/this.trueHeight),-1!==r.search("%")&&(r=r.replace("%",""),t=(e=parseFloat(r)/100*this.h)/this.trueHeight)}}catch(e){t=1}}return t},goAutoCrop:function(t,e){this.clearCrop(),this.cropping=!0;var o=this.w,n=this.h;if(this.centerBox){var r=this.trueWidth*this.scale,i=this.trueHeight*this.scale;o=r<o?r:o,n=i<n?i:n}var s=t||parseFloat(this.autoCropWidth),a=e||parseFloat(this.autoCropHeight);0!==s&&0!==a||(s=.8*o,a=.8*n),s=s>o?o:s,a=a>n?n:a,this.fixed&&(a=s/this.fixedNumber[0]*this.fixedNumber[1]),a>this.h&&(s=(a=this.h)/this.fixedNumber[1]*this.fixedNumber[0]),this.changeCrop(s,a)},changeCrop:function(t,e){var o=this;if(this.centerBox){var n=this.getImgAxis();t>n.x2-n.x1&&(e=(t=n.x2-n.x1)/this.fixedNumber[0]*this.fixedNumber[1]),e>n.y2-n.y1&&(t=(e=n.y2-n.y1)/this.fixedNumber[1]*this.fixedNumber[0])}this.cropW=t,this.cropH=e,this.cropOffsertX=(this.w-t)/2,this.cropOffsertY=(this.h-e)/2,this.centerBox&&this.$nextTick(function(){o.moveCrop(null,!0)})},refresh:function(){var t=this;this.img;this.imgs="",this.scale=1,this.crop=!1,this.rotate=0,this.w=0,this.h=0,this.trueWidth=0,this.trueHeight=0,this.clearCrop(),this.$nextTick(function(){t.checkedImg()})},rotateLeft:function(){this.rotate=this.rotate<=-3?0:this.rotate-1},rotateRight:function(){this.rotate=this.rotate>=3?0:this.rotate+1},rotateClear:function(){this.rotate=0},checkoutImgAxis:function(t,e,o){t=t||this.x,e=e||this.y,o=o||this.scale;var n=!0;if(this.centerBox){var r=this.getImgAxis(t,e,o),i=this.getCropAxis();r.x1>=i.x1&&(n=!1),r.x2<=i.x2&&(n=!1),r.y1>=i.y1&&(n=!1),r.y2<=i.y2&&(n=!1)}return n}},mounted:function(){this.support="onwheel"in document.createElement("div")?"wheel":void 0!==document.onmousewheel?"mousewheel":"DOMMouseScroll";var t=this,e=navigator.userAgent;this.isIOS=!!e.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),HTMLCanvasElement.prototype.toBlob||Object.defineProperty(HTMLCanvasElement.prototype,"toBlob",{value:function(e,o,n){for(var r=atob(this.toDataURL(o,n).split(",")[1]),i=r.length,s=new Uint8Array(i),a=0;a<i;a++)s[a]=r.charCodeAt(a);e(new Blob([s],{type:t.type||"image/png"}))}}),this.showPreview(),this.checkedImg()},destroyed:function(){window.removeEventListener("mousemove",this.moveCrop),window.removeEventListener("mouseup",this.leaveCrop),window.removeEventListener("touchmove",this.moveCrop),window.removeEventListener("touchend",this.leaveCrop)}};o(1);var a=function(t,e,o,n,r,i,s,a){var c,h="function"==typeof t?t.options:t;if(e&&(h.render=e,h.staticRenderFns=o,h._compiled=!0),n&&(h.functional=!0),i&&(h._scopeId="data-v-"+i),s?(c=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),r&&r.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(s)},h._ssrRegister=c):r&&(c=a?function(){r.call(this,this.$root.$options.shadowRoot)}:r),c)if(h.functional){h._injectStyles=c;var p=h.render;h.render=function(t,e){return c.call(e),p(t,e)}}else{var u=h.beforeCreate;h.beforeCreate=u?[].concat(u,c):[c]}return{exports:t,options:h}}(s,n,[],!1,null,"6dae58fd",null);a.options.__file="src/vue-cropper.vue";var c=a.exports;o.d(e,"VueCropper",function(){return c});var h=function(t){t.component("VueCropper",c)};"undefined"!=typeof window&&window.Vue&&h(window.Vue);e.default={version:"0.4.8",install:h,VueCropper:c,vueCropper:c}}])});
+//# sourceMappingURL=index.js.map
 
-var content = __webpack_require__(17);
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(18);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -792,7 +799,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -806,7 +813,7 @@ exports.push([module.i, "/**\r\n * transition.scss\r\n */\n/**\r\n * slide trans
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 
@@ -901,7 +908,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -915,12 +922,6 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 主要样式\r\n */\n.z-
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -930,8 +931,14 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 主要样式\r\n */\n.z-
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// extracted by mini-css-extract-plugin
 
-var content = __webpack_require__(23);
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(24);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -952,7 +959,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -966,11 +973,11 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件样式\r\n */\
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(25);
+var content = __webpack_require__(26);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -991,7 +998,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1005,11 +1012,11 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 material U
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(27);
+var content = __webpack_require__(28);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1030,7 +1037,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1044,11 +1051,11 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 bootstrap 
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(29);
+var content = __webpack_require__(30);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1069,7 +1076,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1083,7 +1090,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * btn 组件的 bootstrap 
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
@@ -1099,7 +1106,7 @@ function _arrayWithoutHoles(arr) {
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
@@ -1109,7 +1116,7 @@ function _iterableToArray(iter) {
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -1119,11 +1126,11 @@ function _nonIterableSpread() {
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(34);
+var content = __webpack_require__(35);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1144,7 +1151,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1158,11 +1165,11 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * loading 组件样式\r\n
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(36);
+var content = __webpack_require__(37);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1183,7 +1190,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1197,11 +1204,11 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * loading 组件的 bootst
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(38);
+var content = __webpack_require__(39);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1222,7 +1229,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1236,115 +1243,66 @@ exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * loading 组件的 materi
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports) {
 
-(function (window) {
-  var svgSprite = '<svg><symbol id="ali-icon-danger" viewBox="0 0 1024 1024"><path d="M942.656 769.376 602.112 159.584c-22.144-39.712-55.104-62.496-90.304-62.496-35.232 0-68.16 22.784-90.368 62.528L81.312 769.344c-22.016 39.456-24.256 79.456-6.112 110.4C93.344 910.624 129.664 928 174.88 928l674.24 0c45.184 0 81.536-17.376 99.648-48.256C966.944 848.8 964.672 808.832 942.656 769.376zM480 320c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288c0 17.696-14.336 32-32 32s-32-14.304-32-32L480 320zM512 832.128c-26.528 0-48-21.504-48-48s21.472-48 48-48 48 21.504 48 48S538.528 832.128 512 832.128z"  ></path></symbol><symbol id="ali-icon-danger-o" viewBox="0 0 1024 1024"><path d="M849.12 928.704 174.88 928.704c-45.216 0-81.536-17.728-99.68-48.64-18.144-30.912-15.936-71.296 6.08-110.752L421.472 159.648c22.144-39.744 55.072-62.528 90.304-62.528s68.128 22.752 90.336 62.464l340.544 609.792c22.016 39.456 24.288 79.808 6.112 110.72C930.656 911.008 894.304 928.704 849.12 928.704zM511.808 161.12c-11.2 0-24.032 11.104-34.432 29.696L137.184 800.544c-10.656 19.136-13.152 36.32-6.784 47.168 6.368 10.816 22.592 17.024 44.48 17.024l674.24 0c21.92 0 38.112-6.176 44.48-17.024 6.336-10.816 3.872-28-6.816-47.136L546.24 190.816C535.872 172.224 522.976 161.12 511.808 161.12z"  ></path><path d="M512 640c-17.664 0-32-14.304-32-32l0-288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288C544 625.696 529.664 640 512 640z"  ></path><path d="M512 752.128m-48 0a1.5 1.5 0 1 0 96 0 1.5 1.5 0 1 0-96 0Z"  ></path></symbol><symbol id="ali-icon-search" viewBox="0 0 1024 1024"><path d="M83.064 62.638v0z"  ></path><path d="M103.49 62.638v0z"  ></path><path d="M123.914 62.638v0z"  ></path><path d="M144.341 62.638v0z"  ></path><path d="M164.766 62.638v0z"  ></path><path d="M185.192 62.638v0z"  ></path><path d="M205.617 62.638v0z"  ></path><path d="M226.043 62.638v0z"  ></path><path d="M246.468 62.638v0z"  ></path><path d="M266.893 62.638v0z"  ></path><path d="M287.319 62.638v0z"  ></path><path d="M307.745 62.638v0z"  ></path><path d="M328.17 62.638v0z"  ></path><path d="M348.596 62.638v0z"  ></path><path d="M369.021 62.638v0z"  ></path><path d="M389.447 62.638v0z"  ></path><path d="M409.872 62.638v0z"  ></path><path d="M430.298 62.638v0z"  ></path><path d="M450.723 62.638v0z"  ></path><path d="M471.149 62.638v0z"  ></path><path d="M491.575 62.638v0z"  ></path><path d="M512 62.638v0z"  ></path><path d="M532.425 62.638v0z"  ></path><path d="M552.851 62.638v0z"  ></path><path d="M573.277 62.638v0z"  ></path><path d="M593.702 62.638v0z"  ></path><path d="M614.128 62.638v0z"  ></path><path d="M634.553 62.638v0z"  ></path><path d="M654.979 62.638v0z"  ></path><path d="M675.404 62.638v0z"  ></path><path d="M695.83 62.638v0z"  ></path><path d="M716.255 62.638v0z"  ></path><path d="M736.681 62.638v0z"  ></path><path d="M757.107 62.638v0z"  ></path><path d="M777.532 62.638v0z"  ></path><path d="M797.957 62.638v0z"  ></path><path d="M818.383 62.638v0z"  ></path><path d="M838.808 62.638v0z"  ></path><path d="M859.234 62.638v0z"  ></path><path d="M879.659 62.638v0z"  ></path><path d="M900.086 62.638v0z"  ></path><path d="M920.51 62.638v0z"  ></path><path d="M940.936 62.638v0z"  ></path><path d="M62.638 83.064v0z"  ></path><path d="M62.638 103.49v0z"  ></path><path d="M62.638 123.914v0z"  ></path><path d="M62.638 144.341v0z"  ></path><path d="M62.638 164.766v0z"  ></path><path d="M62.638 185.192v0z"  ></path><path d="M62.638 205.617v0z"  ></path><path d="M62.638 226.043v0z"  ></path><path d="M62.638 246.468v0z"  ></path><path d="M62.638 266.893v0z"  ></path><path d="M62.638 287.319v0z"  ></path><path d="M62.638 307.745v0z"  ></path><path d="M62.638 328.17v0z"  ></path><path d="M62.638 348.596v0z"  ></path><path d="M62.638 369.021v0z"  ></path><path d="M62.638 389.447v0z"  ></path><path d="M62.638 409.872v0z"  ></path><path d="M62.638 430.298v0z"  ></path><path d="M62.638 450.723v0z"  ></path><path d="M62.638 471.149v0z"  ></path><path d="M62.638 491.575v0z"  ></path><path d="M62.638 512v0z"  ></path><path d="M62.638 532.425v0z"  ></path><path d="M62.638 552.851v0z"  ></path><path d="M62.638 573.277v0z"  ></path><path d="M62.638 593.702v0z"  ></path><path d="M62.638 614.128v0z"  ></path><path d="M62.638 634.553v0z"  ></path><path d="M62.638 654.979v0z"  ></path><path d="M62.638 675.404v0z"  ></path><path d="M62.638 695.83v0z"  ></path><path d="M62.638 716.255v0z"  ></path><path d="M62.638 736.681v0z"  ></path><path d="M62.638 757.107v0z"  ></path><path d="M62.638 777.532v0z"  ></path><path d="M62.638 797.957v0z"  ></path><path d="M62.638 818.383v0z"  ></path><path d="M62.638 838.808v0z"  ></path><path d="M62.638 859.234v0z"  ></path><path d="M62.638 879.659v0z"  ></path><path d="M62.638 900.086v0z"  ></path><path d="M62.638 920.51v0z"  ></path><path d="M62.638 940.936v0z"  ></path><path d="M961.362 879.659c0 81.702-81.702 81.702-81.702 81.702l-233.75-233.709c-60.582 44.037-134.932 70.305-215.612 70.305-203.070 0-367.659-164.589-367.659-367.659s164.589-367.659 367.659-367.659 367.659 164.589 367.659 367.659c0 80.681-26.308 155.030-70.346 215.653l233.75 233.709zM430.298 144.341c-157.929 0-285.957 128.028-285.957 285.957s128.028 285.957 285.957 285.957 285.957-128.028 285.957-285.957-128.028-285.957-285.957-285.957z"  ></path></symbol><symbol id="ali-icon-sort" viewBox="0 0 1024 1024"><path d="M384 320l512 0c17.696 0 32-14.336 32-32s-14.304-32-32-32L384 256c-17.664 0-32 14.336-32 32S366.336 320 384 320z"  ></path><path d="M896 480 384 480c-17.664 0-32 14.336-32 32s14.336 32 32 32l512 0c17.696 0 32-14.336 32-32S913.696 480 896 480z"  ></path><path d="M896 704 384 704c-17.664 0-32 14.304-32 32s14.336 32 32 32l512 0c17.696 0 32-14.304 32-32S913.696 704 896 704z"  ></path><path d="M192 288m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 512m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 736m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path></symbol><symbol id="ali-icon-spinner" viewBox="0 0 1024 1024"><path d="M392 173.333c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM646.559 278.774c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM812 533.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM706.559 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM452.002 893.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM197.442 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM167.442 278.774c0 49.705 40.295 90 90 90s90-40.295 90-90c0-49.705-40.295-90-90-90-49.705 0-90 40.295-90 90zM84.5 533.333c0 37.28 30.22 67.5 67.5 67.5s67.5-30.22 67.5-67.5c0-37.28-30.22-67.5-67.5-67.5-37.28 0-67.5 30.22-67.5 67.5z"  ></path></symbol><symbol id="ali-icon-circle" viewBox="0 0 1024 1024"><path d="M511.317455 510.805802m-448.208115 0a438 438 0 1 0 896.41623 0 438 438 0 1 0-896.41623 0Z"  ></path></symbol><symbol id="ali-icon-arrow-down-thick" viewBox="0 0 1024 1024"><path d="M306.2375 116.16875h423.309375l-8.184375 410.7375 183.5015625 1.0828125-386.690625 384.525-390.54375-392.709375 182.4328125-2.1796875z"  ></path></symbol><symbol id="ali-icon-circle-check" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM512 672.00086c-88.223841 0-160.00086-71.775299-160.00086-160.00086s71.775299-159.99914 160.00086-159.99914 160.00086 71.775299 160.00086 159.99914S600.223841 672.00086 512 672.00086z"  ></path></symbol><symbol id="ali-icon-warning" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.952318 0-446.016611 200.064292-446.016611 446.016611S266.047682 958.016611 512 958.016611 958.016611 757.952318 958.016611 512 757.952318 65.983389 512 65.983389zM544.00086 736.00086c0 17.695686-14.303454 32.00086-32.00086 32.00086s-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.695686 14.303454-32.00086 32.00086-32.00086 17.695686 0 32.00086 14.303454 32.00086 32.00086L544.00086 736.00086zM512 352.00086c-26.496224 0-48.00043-21.53689-48.00043-48.00043 0-26.527187 21.504206-48.00043 48.00043-48.00043s48.00043 21.471523 48.00043 48.00043C560.00043 330.46397 538.496224 352.00086 512 352.00086z"  ></path></symbol><symbol id="ali-icon-warning-o" viewBox="0 0 1024 1024"><path d="M512 958.016611c-245.919634 0-446.016611-200.064292-446.016611-446.016611 0-245.919634 200.095256-446.016611 446.016611-446.016611 245.952318 0 446.016611 200.064292 446.016611 446.016611S757.952318 958.016611 512 958.016611zM512 129.983389c-210.655557 0-382.016611 171.359333-382.016611 382.016611 0 210.624593 171.359333 382.016611 382.016611 382.016611 210.624593 0 382.016611-171.359333 382.016611-382.016611S722.624593 129.983389 512 129.983389z"  ></path><path d="M463.99957 304.00043c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043-21.490445-48.00043-48.00043-48.00043S463.99957 277.490445 463.99957 304.00043z"  ></path><path d="M512 768c-17.664722 0-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.664722 14.336138-32.00086 32.00086-32.00086s32.00086 14.336138 32.00086 32.00086l0 287.99914C544.00086 753.696546 529.664722 768 512 768z"  ></path></symbol><symbol id="ali-icon-question" viewBox="0 0 1024 1024"><path d="M512 64c-247.039484 0-448 200.960516-448 448S264.960516 960 512 960 960 759.039484 960 512 759.039484 64 512 64zM512 832.352641c-26.496224 0-48.00043-21.504206-48.00043-48.00043 0-26.496224 21.504206-48.00043 48.00043-48.00043s48.00043 21.504206 48.00043 48.00043S538.496224 832.352641 512 832.352641zM600.576482 505.184572c-27.839699 27.808735-56.575622 56.544658-56.575622 82.368284l0 54.112297c0 17.664722-14.336138 32.00086-32.00086 32.00086s-32.00086-14.336138-32.00086-32.00086l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.887273 52.67249-52.639806 52.67249-73.984034 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385C672.00086 433.791157 635.680581 470.080473 600.576482 505.184572z"  ></path></symbol><symbol id="ali-icon-question-o" viewBox="0 0 1024 1024"><path d="M463.99957 784.352211c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043c0-26.509985-21.490445-48.00043-48.00043-48.00043S463.99957 757.842226 463.99957 784.352211z"  ></path><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M512 673.695256c-17.664722 0-32.00086-14.336138-32.00086-31.99914l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.919957 52.67249-52.67249 52.67249-74.016718 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385c0 47.904099-36.32028 84.191695-71.424378 119.295794-27.839699 27.776052-56.575622 56.511974-56.575622 82.3356l0 54.112297C544.00086 659.328155 529.664722 673.695256 512 673.695256z"  ></path></symbol><symbol id="ali-icon-success" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM727.231286 438.432254 471.00766 697.439161c-0.063647 0.063647-0.192662 0.096331-0.25631 0.192662-0.096331 0.063647-0.096331 0.192662-0.192662 0.25631-2.048757 1.983389-4.575729 3.19957-6.944443 4.544765-1.183497 0.672598-2.143368 1.696116-3.392232 2.176052-3.839484 1.536138-7.904314 2.33603-11.967424 2.33603-4.095794 0-8.224271-0.799892-12.096439-2.399677-1.279828-0.543583-2.303346-1.632469-3.519527-2.303346-2.368714-1.343475-4.832039-2.528692-6.880796-4.544765-0.063647-0.063647-0.096331-0.192662-0.159978-0.25631-0.063647-0.096331-0.192662-0.096331-0.25631-0.192662l-126.016611-129.503454c-12.320065-12.672705-12.032791-32.928047 0.639914-45.248112 12.672705-12.287381 32.895364-12.063755 45.248112 0.639914l103.26354 106.112189 233.279613-235.839269c12.416396-12.576374 32.704421-12.703669 45.248112-0.25631C739.520387 405.600538 739.647682 425.85588 727.231286 438.432254z"  ></path></symbol><symbol id="ali-icon-success-o" viewBox="0 0 1024 1024"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M726.976697 393.184142c-12.54369-12.447359-32.831716-12.320065-45.248112 0.25631l-233.279613 235.839269-103.26354-106.112189c-12.352748-12.703669-32.60809-12.927295-45.248112-0.639914-12.672705 12.320065-12.959978 32.60809-0.639914 45.248112l126.016611 129.503454c0.063647 0.096331 0.192662 0.096331 0.25631 0.192662 0.063647 0.063647 0.096331 0.192662 0.159978 0.25631 2.016073 1.983389 4.512082 3.19957 6.880796 4.544765 1.247144 0.672598 2.239699 1.792447 3.519527 2.303346 3.872168 1.599785 8.000645 2.399677 12.096439 2.399677 4.06483 0 8.12794-0.799892 11.967424-2.33603 1.247144-0.512619 2.208735-1.536138 3.392232-2.176052 2.399677-1.343475 4.895686-2.528692 6.944443-4.544765 0.063647-0.063647 0.096331-0.192662 0.192662-0.25631 0.063647-0.096331 0.159978-0.127295 0.25631-0.192662l256.223626-259.008628C739.647682 425.85588 739.520387 405.600538 726.976697 393.184142z"  ></path></symbol><symbol id="ali-icon-triangle-up" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M839.57855094 724.55691406c39.00443531 0 61.15629656-51.52855781 32.74559906-79.92957937L544.87945156 317.17941125c-18.77812125-18.77973375-46.70823844-18.77973375-65.48797218 0L151.95807031 644.62733469c-29.14285687 29.13156844-4.81548187 79.92957938 33.22617938 79.92957937L839.57855094 724.55691406 839.57855094 724.55691406z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-triangle-down" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M185.18424969 303.09582031c-38.04166125 0-62.36742375 50.79801094-33.22617938 79.92957938L479.39147938 710.47332313c18.77973375 18.77973375 46.70985094 18.77973375 65.48797218-1e-8l327.44469844-327.44792343c28.4106975-28.40102156 6.26044875-79.92957938-32.74559906-79.92957938L185.18424969 303.09582031 185.18424969 303.09582031z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-arrow-down-thick-moving" viewBox="0 0 1024 1024"><path d="M512 965.334l373.333-533.333h-160v-106.667h-426.667v106.667h-160l373.333 533.333zM725.334 165.333h-426.667v106.667h426.667v-106.667zM725.334 58.666h-426.667v53.334h426.667v-53.334z"  ></path></symbol><symbol id="ali-icon-square-bs" viewBox="0 0 1024 1024"><path d="M962 763.465625C962 873.125 873.125 962 763.465625 962L260.534375 962C150.875 962 62 873.125 62 763.465625L62 260.534375C62 150.875 150.875 62 260.534375 62l502.93125 0C873.125 62 962 150.875 962 260.534375L962 763.465625z"  ></path></symbol><symbol id="ali-icon-close" viewBox="0 0 1024 1024"><path d="M590.13853558 518.6416597c0.00082974-1.7870386-0.0862825-3.57407639-0.24640218-5.35530679l303.83382622-309.09372501c22.61424682-23.00251685 22.61424682-60.25819758 0-83.28145551-11.29799707-11.46973233-26.1061886-17.23570972-40.92018831-17.23570972-14.81068076 0-29.61638305 5.76597739-40.92350647 17.23570972L516.99939261 420.93281582 217.17188337 121.02732068c-11.57924433-11.54688848-26.73754267-17.35185882-41.90413761-17.35185883-15.16410571 0-30.33070066 5.80497034-41.89833024 17.35185883-23.15931839 23.17425127-23.15931839 60.68546054 0 83.84726816L447.06015997 518.61925913 133.36858662 832.37969287c-23.15931839 23.15931839-23.15931839 60.66472027-1e-8 83.80910496 23.14770282 23.1684439 60.65227579 23.1684439 83.80246784 0l302.58024527-302.62504561 292.13096675 297.18843393c22.60760971 23.01413159 59.23525535 23.01413159 81.8436948 0 22.61424682-22.9933905 22.61424682-60.24907205 0-83.25158807L590.13853558 518.6416597z"  ></path></symbol><symbol id="ali-icon-github" viewBox="0 0 1024 1024"><path d="M512 62c-248.484375 0-450 206.71875-450 461.446875 0 203.90625 128.98125 376.678125 307.771875 437.7375 2.8125 0.590625 5.23125 0.815625 7.621875 0.815625 16.678125 0 23.090625-12.2625 23.090625-22.89375 0-11.053125-0.39375-39.965625-0.590625-78.553125-16.875 3.825-31.95 5.428125-45.39375 5.428125-86.596875 0-106.25625-67.303125-106.25625-67.303125-20.503125-53.240625-50.034375-67.5-50.034375-67.5-39.178125-27.534375-0.196875-28.321875 2.8125-28.321875 0.196875 0 0.196875 0 0.196875 0 45.196875 4.021875 68.90625 47.8125 68.90625 47.8125 22.5 39.375 52.621875 50.428125 79.565625 50.428125 21.09375 0 40.190625-6.834375 51.440625-12.065625 4.021875-29.728125 15.665625-50.034375 28.51875-61.678125-99.84375-11.64375-204.91875-51.215625-204.91875-228.009375 0-50.428125 17.465625-91.603125 46.209375-123.75-4.6125-11.64375-20.08125-58.66875 4.415625-122.146875 0 0 3.20625-1.0125 10.040625-1.0125 16.284375 0 53.04375 6.215625 113.709375 48.403125 35.971875-10.2375 74.334375-15.271875 112.696875-15.46875 38.165625 0.196875 76.753125 5.23125 112.696875 15.46875 60.665625-42.1875 97.425-48.403125 113.709375-48.403125 6.834375 0 10.040625 1.0125 10.040625 1.0125 24.496875 63.478125 9.028125 110.475 4.415625 122.146875 28.715625 32.34375 46.209375 73.51875 46.209375 123.75 0 177.1875-105.271875 216.16875-205.509375 227.615625 16.059375 14.259375 30.54375 42.384375 30.54375 85.3875 0 61.678125-0.590625 111.4875-0.590625 126.5625 0 10.85625 6.215625 23.090625 22.89375 23.090625 2.41875 0 5.23125-0.196875 8.04375-0.815625 178.9875-61.059375 307.771875-234.028125 307.771875-437.7375 0-254.728125-201.4875-461.446875-450-461.446875z"  ></path></symbol><symbol id="ali-icon-square-check-bs" viewBox="0 0 1024 1024"><path d="M787.22383 63.960731 236.188792 63.960731c-95.112218 0-172.197874 77.086679-172.197874 172.198897l0 551.035038c0 95.112218 77.085656 172.21527 172.197874 172.21527l551.035038 0c95.079472 0 172.197874-77.103052 172.197874-172.21527L959.421704 236.159628C959.421704 141.046387 882.303302 63.960731 787.22383 63.960731zM746.225067 427.76348 479.485981 711.319581c-5.684466 5.717212-35.449373 5.918803-40.897456 0.436952L277.590737 534.681582c-6.962575-6.996344-6.962575-18.295692 0-25.258267l25.223474-25.224498c6.996344-6.961552 18.296715-6.961552 25.25929 0L461.627241 617.753579l237.310847-237.310847c6.5246-6.5246 17.08512-6.5246 23.64349 0l23.642466 23.677259C752.78446 410.644591 752.78446 421.23888 746.225067 427.76348z"  ></path></symbol><symbol id="ali-icon-square-o" viewBox="0 0 1024 1024"><path d="M810.666667 128H213.333333c-47.36 0-85.333333 37.973333-85.333333 85.333333v597.333334a85.333333 85.333333 0 0 0 85.333333 85.333333h597.333334a85.333333 85.333333 0 0 0 85.333333-85.333333V213.333333a85.333333 85.333333 0 0 0-85.333333-85.333333m0 85.333333v597.333334H213.333333V213.333333h597.333334z"  ></path></symbol><symbol id="ali-icon-square-check" viewBox="0 0 1024 1024"><path d="M386.31280025 847.55133347l-314.2180016-314.21800014 88.60947616-89.23791267L386.31280025 669.70394609l476.98292494-476.98292496L951.90520135 281.95893234m0-314.21800013H72.09479865c-69.75639613 0-125.68719975 55.93080361-125.68719977 125.68719977v879.8104027a125.68719975 125.68719975 0 0 0 125.68719977 125.68719977h879.8104027a125.68719975 125.68719975 0 0 0 125.68719977-125.68719977V93.42813198a125.68719975 125.68719975 0 0 0-125.68719977-125.68719977z"  ></path></symbol><symbol id="ali-icon-arrow-south-fast" viewBox="0 0 1024 1024"><path d="M800.45212457 109.17252369L889.06160075 197.78199986l-377.06160075 377.06160075-377.06160075-377.06160075 88.60947618-88.60947617L512 396.99621177l288.45212457-287.82368808m0 377.06160075L889.06160075 574.84360061l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-88.60947617L512 774.05781251l288.45212457-287.82368807z"  ></path></symbol><symbol id="ali-icon-arrow-west-fast" viewBox="0 0 1024 1024"><path d="M914.82747631 223.54787543L826.21800014 134.93839925l-377.06160075 377.06160075 377.06160075 377.06160075 88.60947617-88.60947618L627.00378823 512l287.82368808-288.45212457m-377.06160075 0L449.15639939 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947617-88.60947618L249.94218749 512l287.82368807-288.45212457z"  ></path></symbol><symbol id="ali-icon-arrow-east-fast" viewBox="0 0 1024 1024"><path d="M109.17252369 223.54787543L197.78199986 134.93839925l377.06160075 377.06160075-377.06160075 377.06160075-88.60947617-88.60947618L396.99621177 512 109.17252369 223.54787543m377.06160075 0L574.84360061 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947617-88.60947618L774.05781251 512l-287.82368807-288.45212457z"  ></path></symbol><symbol id="ali-icon-arrow-north-fast" viewBox="0 0 1024 1024"><path d="M223.54787543 914.82747631L134.93839925 826.21800014l377.06160075-377.06160075 377.06160075 377.06160075-88.60947618 88.60947617L512 627.00378823l-288.45212457 287.82368808m0-377.06160075L134.93839925 449.15639939l377.06160075-377.06160074 377.06160075 377.06160074-88.60947618 88.60947617L512 249.94218749l-288.45212457 287.82368807z"  ></path></symbol><symbol id="ali-icon-arrow-south" viewBox="0 0 1024 1024"><path d="M223.54787543 297.07488757L512 585.52701215l288.45212457-288.45212458L889.06160075 386.31280025l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-west" viewBox="0 0 1024 1024"><path d="M726.29667594 799.82368807L438.47298785 512l287.82368809-288.45212457L637.68719975 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947619-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-east" viewBox="0 0 1024 1024"><path d="M297.70332406 799.82368807L585.52701215 512 297.70332406 223.54787543 386.31280025 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947619-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-north" viewBox="0 0 1024 1024"><path d="M223.54787543 726.29667594L512 438.47298785l288.45212457 287.82368809L889.06160075 637.68719975l-377.06160075-377.06160074-377.06160075 377.06160074 88.60947618 88.60947619z"  ></path></symbol><symbol id="ali-icon-circle-check-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971m0 187.50000058a187.49999971 187.49999971 0 0 0-187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971-187.49999971 187.49999971 187.49999971 0 0 0-187.49999971-187.49999971z"  ></path></symbol><symbol id="ali-icon-circle-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971z"  ></path></symbol><symbol id="ali-icon-menu" viewBox="0 0 1024 1024"><path d="M128 170.666667h768v170.666666H128V170.666667m0 256h768v170.666666H128v-170.666666m0 256h768v170.666666H128v-170.666666z"  ></path></symbol><symbol id="ali-icon-checked" viewBox="0 0 1024 1024"><path d="M356.65540741 727.9289837L140.7264237 512l-73.27086576 73.27086577L356.65540741 874.47071645l621.37837037-621.37837037-73.27086577-73.27086698z"  ></path></symbol><symbol id="ali-icon-download" viewBox="0 0 1024 1024"><path d="M494.933333 782.933333c2.133333 2.133333 4.266667 4.266667 8.533334 6.4h8.533333c6.4 0 10.666667-2.133333 14.933333-6.4l2.133334-2.133333 275.2-275.2c8.533333-8.533333 8.533333-21.333333 0-29.866667-8.533333-8.533333-21.333333-8.533333-29.866667 0L533.333333 716.8V128c0-12.8-8.533333-21.333333-21.333333-21.333333s-21.333333 8.533333-21.333333 21.333333v588.8L249.6 475.733333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.533333 21.333333 0 29.866667l275.2 277.333333zM853.333333 874.666667H172.8c-12.8 0-21.333333 8.533333-21.333333 21.333333s8.533333 21.333333 21.333333 21.333333H853.333333c12.8 0 21.333333-8.533333 21.333334-21.333333s-10.666667-21.333333-21.333334-21.333333z"  ></path></symbol><symbol id="ali-icon-arrow-right" viewBox="0 0 1024 1024"><path d="M522.002 180.667c-13.347 13.347-13.347 34.917 0 48.266l248.934 248.934h-600.27c-18.843 0-34.133 15.292-34.134 34.134s15.292 34.133 34.134 34.134h600.27l-248.934 248.934c-13.347 13.347-13.347 34.917 0 48.266s34.917 13.347 48.266 0l307.166-307.201c3.174-3.139 5.666-6.928 7.407-11.126 1.741-4.13 2.627-8.567 2.627-13.006 0-4.436-0.889-8.876-2.628-13.039-1.742-4.198-4.233-7.952-7.407-11.126l-307.166-307.201c-13.347-13.312-34.918-13.312-48.265 0.033z"  ></path></symbol><symbol id="ali-icon-arrow-down" viewBox="0 0 1024 1024"><path d="M843.333 522.002c-13.347-13.347-34.917-13.347-48.265 0l-248.934 248.934v-600.27c0-18.843-15.292-34.134-34.134-34.134s-34.134 15.292-34.134 34.134v600.27l-248.934-248.934c-13.347-13.347-34.917-13.347-48.265 0s-13.347 34.917 0 48.265l307.201 307.166c3.139 3.174 6.928 5.666 11.126 7.407 4.13 1.741 8.567 2.627 13.006 2.627 4.436 0 8.876-0.889 13.039-2.627 4.198-1.741 7.952-4.233 11.126-7.407l307.201-307.166c13.312-13.347 13.312-34.919-0.033-48.265z"  ></path></symbol><symbol id="ali-icon-arrow-left" viewBox="0 0 1024 1024"><path d="M501.998 843.333c13.347-13.347 13.347-34.917 0-48.266l-248.934-248.934h600.27c18.843 0 34.133-15.292 34.134-34.134s-15.292-34.133-34.134-34.134h-600.27l248.934-248.934c13.347-13.347 13.347-34.917 0-48.266s-34.917-13.347-48.266 0l-307.166 307.201c-3.174 3.139-5.666 6.928-7.407 11.126-1.741 4.13-2.627 8.567-2.627 13.006 0 4.436 0.889 8.876 2.628 13.039 1.742 4.198 4.233 7.952 7.407 11.126l307.166 307.201c13.347 13.312 34.918 13.312 48.265-0.033z"  ></path></symbol><symbol id="ali-icon-arrow-up" viewBox="0 0 1024 1024"><path d="M180.667 501.998c13.347 13.347 34.917 13.347 48.266 0l248.934-248.934v600.27c0 18.843 15.292 34.133 34.134 34.134s34.133-15.292 34.134-34.134v-600.27l248.934 248.934c13.347 13.347 34.917 13.347 48.266 0s13.347-34.917 0-48.266l-307.201-307.166c-3.139-3.174-6.928-5.666-11.126-7.407-4.13-1.741-8.567-2.627-13.006-2.627-4.436 0-8.876 0.889-13.039 2.628-4.198 1.742-7.952 4.233-11.126 7.407l-307.201 307.166c-13.312 13.347-13.312 34.918 0.033 48.265z"  ></path></symbol><symbol id="ali-icon-square-indeterminate-bs" viewBox="0 0 1024 1024"><path d="M787.87381572 62.80348203c95.34234023 0 172.67715878 77.29972119 172.67715879 172.67590547v552.57116924c0 95.37618427-77.33481856 172.69596123-172.67715878 172.69596123H235.30389981C139.92646221 960.74651797 62.62674102 883.42674102 62.62674102 788.05055674V235.4793875C62.62674102 140.10320323 139.92646221 62.80348203 235.30389981 62.80348203h552.56991592zM260.67687998 464.36768809v100.27855107h505.15320322v-100.27855109H260.67687998z"  ></path></symbol></svg>';
+!function (i) {
+  var a,
+      h = '<svg><symbol id="ali-icon-danger" viewBox="0 0 1024 1024"><path d="M942.656 769.376 602.112 159.584c-22.144-39.712-55.104-62.496-90.304-62.496-35.232 0-68.16 22.784-90.368 62.528L81.312 769.344c-22.016 39.456-24.256 79.456-6.112 110.4C93.344 910.624 129.664 928 174.88 928l674.24 0c45.184 0 81.536-17.376 99.648-48.256C966.944 848.8 964.672 808.832 942.656 769.376zM480 320c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288c0 17.696-14.336 32-32 32s-32-14.304-32-32L480 320zM512 832.128c-26.528 0-48-21.504-48-48s21.472-48 48-48 48 21.504 48 48S538.528 832.128 512 832.128z"  ></path></symbol><symbol id="ali-icon-danger-o" viewBox="0 0 1024 1024"><path d="M849.12 928.704 174.88 928.704c-45.216 0-81.536-17.728-99.68-48.64-18.144-30.912-15.936-71.296 6.08-110.752L421.472 159.648c22.144-39.744 55.072-62.528 90.304-62.528s68.128 22.752 90.336 62.464l340.544 609.792c22.016 39.456 24.288 79.808 6.112 110.72C930.656 911.008 894.304 928.704 849.12 928.704zM511.808 161.12c-11.2 0-24.032 11.104-34.432 29.696L137.184 800.544c-10.656 19.136-13.152 36.32-6.784 47.168 6.368 10.816 22.592 17.024 44.48 17.024l674.24 0c21.92 0 38.112-6.176 44.48-17.024 6.336-10.816 3.872-28-6.816-47.136L546.24 190.816C535.872 172.224 522.976 161.12 511.808 161.12z"  ></path><path d="M512 640c-17.664 0-32-14.304-32-32l0-288c0-17.664 14.336-32 32-32s32 14.336 32 32l0 288C544 625.696 529.664 640 512 640z"  ></path><path d="M512 752.128m-48 0a1.5 1.5 0 1 0 96 0 1.5 1.5 0 1 0-96 0Z"  ></path></symbol><symbol id="ali-icon-search" viewBox="0 0 1024 1024"><path d="M83.064 62.638v0z"  ></path><path d="M103.49 62.638v0z"  ></path><path d="M123.914 62.638v0z"  ></path><path d="M144.341 62.638v0z"  ></path><path d="M164.766 62.638v0z"  ></path><path d="M185.192 62.638v0z"  ></path><path d="M205.617 62.638v0z"  ></path><path d="M226.043 62.638v0z"  ></path><path d="M246.468 62.638v0z"  ></path><path d="M266.893 62.638v0z"  ></path><path d="M287.319 62.638v0z"  ></path><path d="M307.745 62.638v0z"  ></path><path d="M328.17 62.638v0z"  ></path><path d="M348.596 62.638v0z"  ></path><path d="M369.021 62.638v0z"  ></path><path d="M389.447 62.638v0z"  ></path><path d="M409.872 62.638v0z"  ></path><path d="M430.298 62.638v0z"  ></path><path d="M450.723 62.638v0z"  ></path><path d="M471.149 62.638v0z"  ></path><path d="M491.575 62.638v0z"  ></path><path d="M512 62.638v0z"  ></path><path d="M532.425 62.638v0z"  ></path><path d="M552.851 62.638v0z"  ></path><path d="M573.277 62.638v0z"  ></path><path d="M593.702 62.638v0z"  ></path><path d="M614.128 62.638v0z"  ></path><path d="M634.553 62.638v0z"  ></path><path d="M654.979 62.638v0z"  ></path><path d="M675.404 62.638v0z"  ></path><path d="M695.83 62.638v0z"  ></path><path d="M716.255 62.638v0z"  ></path><path d="M736.681 62.638v0z"  ></path><path d="M757.107 62.638v0z"  ></path><path d="M777.532 62.638v0z"  ></path><path d="M797.957 62.638v0z"  ></path><path d="M818.383 62.638v0z"  ></path><path d="M838.808 62.638v0z"  ></path><path d="M859.234 62.638v0z"  ></path><path d="M879.659 62.638v0z"  ></path><path d="M900.086 62.638v0z"  ></path><path d="M920.51 62.638v0z"  ></path><path d="M940.936 62.638v0z"  ></path><path d="M62.638 83.064v0z"  ></path><path d="M62.638 103.49v0z"  ></path><path d="M62.638 123.914v0z"  ></path><path d="M62.638 144.341v0z"  ></path><path d="M62.638 164.766v0z"  ></path><path d="M62.638 185.192v0z"  ></path><path d="M62.638 205.617v0z"  ></path><path d="M62.638 226.043v0z"  ></path><path d="M62.638 246.468v0z"  ></path><path d="M62.638 266.893v0z"  ></path><path d="M62.638 287.319v0z"  ></path><path d="M62.638 307.745v0z"  ></path><path d="M62.638 328.17v0z"  ></path><path d="M62.638 348.596v0z"  ></path><path d="M62.638 369.021v0z"  ></path><path d="M62.638 389.447v0z"  ></path><path d="M62.638 409.872v0z"  ></path><path d="M62.638 430.298v0z"  ></path><path d="M62.638 450.723v0z"  ></path><path d="M62.638 471.149v0z"  ></path><path d="M62.638 491.575v0z"  ></path><path d="M62.638 512v0z"  ></path><path d="M62.638 532.425v0z"  ></path><path d="M62.638 552.851v0z"  ></path><path d="M62.638 573.277v0z"  ></path><path d="M62.638 593.702v0z"  ></path><path d="M62.638 614.128v0z"  ></path><path d="M62.638 634.553v0z"  ></path><path d="M62.638 654.979v0z"  ></path><path d="M62.638 675.404v0z"  ></path><path d="M62.638 695.83v0z"  ></path><path d="M62.638 716.255v0z"  ></path><path d="M62.638 736.681v0z"  ></path><path d="M62.638 757.107v0z"  ></path><path d="M62.638 777.532v0z"  ></path><path d="M62.638 797.957v0z"  ></path><path d="M62.638 818.383v0z"  ></path><path d="M62.638 838.808v0z"  ></path><path d="M62.638 859.234v0z"  ></path><path d="M62.638 879.659v0z"  ></path><path d="M62.638 900.086v0z"  ></path><path d="M62.638 920.51v0z"  ></path><path d="M62.638 940.936v0z"  ></path><path d="M961.362 879.659c0 81.702-81.702 81.702-81.702 81.702l-233.75-233.709c-60.582 44.037-134.932 70.305-215.612 70.305-203.070 0-367.659-164.589-367.659-367.659s164.589-367.659 367.659-367.659 367.659 164.589 367.659 367.659c0 80.681-26.308 155.030-70.346 215.653l233.75 233.709zM430.298 144.341c-157.929 0-285.957 128.028-285.957 285.957s128.028 285.957 285.957 285.957 285.957-128.028 285.957-285.957-128.028-285.957-285.957-285.957z"  ></path></symbol><symbol id="ali-icon-sort" viewBox="0 0 1024 1024"><path d="M384 320l512 0c17.696 0 32-14.336 32-32s-14.304-32-32-32L384 256c-17.664 0-32 14.336-32 32S366.336 320 384 320z"  ></path><path d="M896 480 384 480c-17.664 0-32 14.336-32 32s14.336 32 32 32l512 0c17.696 0 32-14.336 32-32S913.696 480 896 480z"  ></path><path d="M896 704 384 704c-17.664 0-32 14.304-32 32s14.336 32 32 32l512 0c17.696 0 32-14.304 32-32S913.696 704 896 704z"  ></path><path d="M192 288m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 512m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path><path d="M192 736m-64 0a2 2 0 1 0 128 0 2 2 0 1 0-128 0Z"  ></path></symbol><symbol id="ali-icon-spinner" viewBox="0 0 1024 1024"><path d="M392 173.333c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM646.559 278.774c0 66.274 53.726 120 120 120s120-53.726 120-120c0-66.274-53.726-120-120-120-66.274 0-120 53.726-120 120zM812 533.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM706.559 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM452.002 893.333c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM197.442 787.892c0 33.137 26.863 60 60 60s60-26.863 60-60c0-33.137-26.863-60-60-60-33.137 0-60 26.863-60 60zM167.442 278.774c0 49.705 40.295 90 90 90s90-40.295 90-90c0-49.705-40.295-90-90-90-49.705 0-90 40.295-90 90zM84.5 533.333c0 37.28 30.22 67.5 67.5 67.5s67.5-30.22 67.5-67.5c0-37.28-30.22-67.5-67.5-67.5-37.28 0-67.5 30.22-67.5 67.5z"  ></path></symbol><symbol id="ali-icon-circle" viewBox="0 0 1024 1024"><path d="M511.317455 510.805802m-448.208115 0a438 438 0 1 0 896.41623 0 438 438 0 1 0-896.41623 0Z"  ></path></symbol><symbol id="ali-icon-arrow-down-thick" viewBox="0 0 1024 1024"><path d="M306.2375 116.16875h423.309375l-8.184375 410.7375 183.5015625 1.0828125-386.690625 384.525-390.54375-392.709375 182.4328125-2.1796875z"  ></path></symbol><symbol id="ali-icon-circle-check" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM512 672.00086c-88.223841 0-160.00086-71.775299-160.00086-160.00086s71.775299-159.99914 160.00086-159.99914 160.00086 71.775299 160.00086 159.99914S600.223841 672.00086 512 672.00086z"  ></path></symbol><symbol id="ali-icon-warning" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.952318 0-446.016611 200.064292-446.016611 446.016611S266.047682 958.016611 512 958.016611 958.016611 757.952318 958.016611 512 757.952318 65.983389 512 65.983389zM544.00086 736.00086c0 17.695686-14.303454 32.00086-32.00086 32.00086s-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.695686 14.303454-32.00086 32.00086-32.00086 17.695686 0 32.00086 14.303454 32.00086 32.00086L544.00086 736.00086zM512 352.00086c-26.496224 0-48.00043-21.53689-48.00043-48.00043 0-26.527187 21.504206-48.00043 48.00043-48.00043s48.00043 21.471523 48.00043 48.00043C560.00043 330.46397 538.496224 352.00086 512 352.00086z"  ></path></symbol><symbol id="ali-icon-warning-o" viewBox="0 0 1024 1024"><path d="M512 958.016611c-245.919634 0-446.016611-200.064292-446.016611-446.016611 0-245.919634 200.095256-446.016611 446.016611-446.016611 245.952318 0 446.016611 200.064292 446.016611 446.016611S757.952318 958.016611 512 958.016611zM512 129.983389c-210.655557 0-382.016611 171.359333-382.016611 382.016611 0 210.624593 171.359333 382.016611 382.016611 382.016611 210.624593 0 382.016611-171.359333 382.016611-382.016611S722.624593 129.983389 512 129.983389z"  ></path><path d="M463.99957 304.00043c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043-21.490445-48.00043-48.00043-48.00043S463.99957 277.490445 463.99957 304.00043z"  ></path><path d="M512 768c-17.664722 0-32.00086-14.303454-32.00086-32.00086L479.99914 448c0-17.664722 14.336138-32.00086 32.00086-32.00086s32.00086 14.336138 32.00086 32.00086l0 287.99914C544.00086 753.696546 529.664722 768 512 768z"  ></path></symbol><symbol id="ali-icon-question" viewBox="0 0 1024 1024"><path d="M512 64c-247.039484 0-448 200.960516-448 448S264.960516 960 512 960 960 759.039484 960 512 759.039484 64 512 64zM512 832.352641c-26.496224 0-48.00043-21.504206-48.00043-48.00043 0-26.496224 21.504206-48.00043 48.00043-48.00043s48.00043 21.504206 48.00043 48.00043S538.496224 832.352641 512 832.352641zM600.576482 505.184572c-27.839699 27.808735-56.575622 56.544658-56.575622 82.368284l0 54.112297c0 17.664722-14.336138 32.00086-32.00086 32.00086s-32.00086-14.336138-32.00086-32.00086l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.887273 52.67249-52.639806 52.67249-73.984034 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385C672.00086 433.791157 635.680581 470.080473 600.576482 505.184572z"  ></path></symbol><symbol id="ali-icon-question-o" viewBox="0 0 1024 1024"><path d="M463.99957 784.352211c0 26.509985 21.490445 48.00043 48.00043 48.00043s48.00043-21.490445 48.00043-48.00043c0-26.509985-21.490445-48.00043-48.00043-48.00043S463.99957 757.842226 463.99957 784.352211z"  ></path><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M512 673.695256c-17.664722 0-32.00086-14.336138-32.00086-31.99914l0-54.112297c0-52.352533 39.999785-92.352318 75.32751-127.647359 25.887273-25.919957 52.67249-52.67249 52.67249-74.016718 0-53.343368-43.07206-96.735385-95.99914-96.735385-53.823303 0-95.99914 41.535923-95.99914 94.559333 0 17.664722-14.336138 31.99914-32.00086 31.99914s-32.00086-14.336138-32.00086-31.99914c0-87.423948 71.775299-158.559333 160.00086-158.559333s160.00086 72.095256 160.00086 160.735385c0 47.904099-36.32028 84.191695-71.424378 119.295794-27.839699 27.776052-56.575622 56.511974-56.575622 82.3356l0 54.112297C544.00086 659.328155 529.664722 673.695256 512 673.695256z"  ></path></symbol><symbol id="ali-icon-success" viewBox="0 0 1024 1024"><path d="M512 65.983389c-245.919634 0-446.016611 200.095256-446.016611 446.016611 0 245.952318 200.064292 446.016611 446.016611 446.016611S958.016611 757.952318 958.016611 512C958.016611 266.080366 757.952318 65.983389 512 65.983389zM727.231286 438.432254 471.00766 697.439161c-0.063647 0.063647-0.192662 0.096331-0.25631 0.192662-0.096331 0.063647-0.096331 0.192662-0.192662 0.25631-2.048757 1.983389-4.575729 3.19957-6.944443 4.544765-1.183497 0.672598-2.143368 1.696116-3.392232 2.176052-3.839484 1.536138-7.904314 2.33603-11.967424 2.33603-4.095794 0-8.224271-0.799892-12.096439-2.399677-1.279828-0.543583-2.303346-1.632469-3.519527-2.303346-2.368714-1.343475-4.832039-2.528692-6.880796-4.544765-0.063647-0.063647-0.096331-0.192662-0.159978-0.25631-0.063647-0.096331-0.192662-0.096331-0.25631-0.192662l-126.016611-129.503454c-12.320065-12.672705-12.032791-32.928047 0.639914-45.248112 12.672705-12.287381 32.895364-12.063755 45.248112 0.639914l103.26354 106.112189 233.279613-235.839269c12.416396-12.576374 32.704421-12.703669 45.248112-0.25631C739.520387 405.600538 739.647682 425.85588 727.231286 438.432254z"  ></path></symbol><symbol id="ali-icon-success-o" viewBox="0 0 1024 1024"><path d="M512 960c-247.039484 0-448-200.960516-448-448S264.960516 64 512 64 960 264.960516 960 512 759.039484 960 512 960zM512 128.287273c-211.584464 0-383.712727 172.128262-383.712727 383.712727 0 211.551781 172.128262 383.712727 383.712727 383.712727 211.551781 0 383.712727-172.159226 383.712727-383.712727C895.712727 300.415536 723.551781 128.287273 512 128.287273z"  ></path><path d="M726.976697 393.184142c-12.54369-12.447359-32.831716-12.320065-45.248112 0.25631l-233.279613 235.839269-103.26354-106.112189c-12.352748-12.703669-32.60809-12.927295-45.248112-0.639914-12.672705 12.320065-12.959978 32.60809-0.639914 45.248112l126.016611 129.503454c0.063647 0.096331 0.192662 0.096331 0.25631 0.192662 0.063647 0.063647 0.096331 0.192662 0.159978 0.25631 2.016073 1.983389 4.512082 3.19957 6.880796 4.544765 1.247144 0.672598 2.239699 1.792447 3.519527 2.303346 3.872168 1.599785 8.000645 2.399677 12.096439 2.399677 4.06483 0 8.12794-0.799892 11.967424-2.33603 1.247144-0.512619 2.208735-1.536138 3.392232-2.176052 2.399677-1.343475 4.895686-2.528692 6.944443-4.544765 0.063647-0.063647 0.096331-0.192662 0.192662-0.25631 0.063647-0.096331 0.159978-0.127295 0.25631-0.192662l256.223626-259.008628C739.647682 425.85588 739.520387 405.600538 726.976697 393.184142z"  ></path></symbol><symbol id="ali-icon-triangle-up" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M839.57855094 724.55691406c39.00443531 0 61.15629656-51.52855781 32.74559906-79.92957937L544.87945156 317.17941125c-18.77812125-18.77973375-46.70823844-18.77973375-65.48797218 0L151.95807031 644.62733469c-29.14285687 29.13156844-4.81548187 79.92957938 33.22617938 79.92957937L839.57855094 724.55691406 839.57855094 724.55691406z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-triangle-down" viewBox="0 0 1024 1024"><path d="M337.11544156 840.38811969"  ></path><path d="M858.92917625 840.38811969"  ></path><path d="M253.27671031 854.33785813"  ></path><path d="M932.12417656 854.33785813"  ></path><path d="M91.70326531 771.44093563"  ></path><path d="M930.56470906 771.44093563"  ></path><path d="M92.72893437 837.11759188"  ></path><path d="M185.18424969 303.09582031c-38.04166125 0-62.36742375 50.79801094-33.22617938 79.92957938L479.39147938 710.47332313c18.77973375 18.77973375 46.70985094 18.77973375 65.48797218-1e-8l327.44469844-327.44792343c28.4106975-28.40102156 6.26044875-79.92957938-32.74559906-79.92957938L185.18424969 303.09582031 185.18424969 303.09582031z"  ></path><path d="M931.55328594 837.11759188"  ></path></symbol><symbol id="ali-icon-arrow-down-thick-moving" viewBox="0 0 1024 1024"><path d="M512 965.334l373.333-533.333h-160v-106.667h-426.667v106.667h-160l373.333 533.333zM725.334 165.333h-426.667v106.667h426.667v-106.667zM725.334 58.666h-426.667v53.334h426.667v-53.334z"  ></path></symbol><symbol id="ali-icon-square-bs" viewBox="0 0 1024 1024"><path d="M962 763.465625C962 873.125 873.125 962 763.465625 962L260.534375 962C150.875 962 62 873.125 62 763.465625L62 260.534375C62 150.875 150.875 62 260.534375 62l502.93125 0C873.125 62 962 150.875 962 260.534375L962 763.465625z"  ></path></symbol><symbol id="ali-icon-close" viewBox="0 0 1024 1024"><path d="M590.13853558 518.6416597c0.00082974-1.7870386-0.0862825-3.57407639-0.24640218-5.35530679l303.83382622-309.09372501c22.61424682-23.00251685 22.61424682-60.25819758 0-83.28145551-11.29799707-11.46973233-26.1061886-17.23570972-40.92018831-17.23570972-14.81068076 0-29.61638305 5.76597739-40.92350647 17.23570972L516.99939261 420.93281582 217.17188337 121.02732068c-11.57924433-11.54688848-26.73754267-17.35185882-41.90413761-17.35185883-15.16410571 0-30.33070066 5.80497034-41.89833024 17.35185883-23.15931839 23.17425127-23.15931839 60.68546054 0 83.84726816L447.06015997 518.61925913 133.36858662 832.37969287c-23.15931839 23.15931839-23.15931839 60.66472027-1e-8 83.80910496 23.14770282 23.1684439 60.65227579 23.1684439 83.80246784 0l302.58024527-302.62504561 292.13096675 297.18843393c22.60760971 23.01413159 59.23525535 23.01413159 81.8436948 0 22.61424682-22.9933905 22.61424682-60.24907205 0-83.25158807L590.13853558 518.6416597z"  ></path></symbol><symbol id="ali-icon-github" viewBox="0 0 1024 1024"><path d="M512 62c-248.484375 0-450 206.71875-450 461.446875 0 203.90625 128.98125 376.678125 307.771875 437.7375 2.8125 0.590625 5.23125 0.815625 7.621875 0.815625 16.678125 0 23.090625-12.2625 23.090625-22.89375 0-11.053125-0.39375-39.965625-0.590625-78.553125-16.875 3.825-31.95 5.428125-45.39375 5.428125-86.596875 0-106.25625-67.303125-106.25625-67.303125-20.503125-53.240625-50.034375-67.5-50.034375-67.5-39.178125-27.534375-0.196875-28.321875 2.8125-28.321875 0.196875 0 0.196875 0 0.196875 0 45.196875 4.021875 68.90625 47.8125 68.90625 47.8125 22.5 39.375 52.621875 50.428125 79.565625 50.428125 21.09375 0 40.190625-6.834375 51.440625-12.065625 4.021875-29.728125 15.665625-50.034375 28.51875-61.678125-99.84375-11.64375-204.91875-51.215625-204.91875-228.009375 0-50.428125 17.465625-91.603125 46.209375-123.75-4.6125-11.64375-20.08125-58.66875 4.415625-122.146875 0 0 3.20625-1.0125 10.040625-1.0125 16.284375 0 53.04375 6.215625 113.709375 48.403125 35.971875-10.2375 74.334375-15.271875 112.696875-15.46875 38.165625 0.196875 76.753125 5.23125 112.696875 15.46875 60.665625-42.1875 97.425-48.403125 113.709375-48.403125 6.834375 0 10.040625 1.0125 10.040625 1.0125 24.496875 63.478125 9.028125 110.475 4.415625 122.146875 28.715625 32.34375 46.209375 73.51875 46.209375 123.75 0 177.1875-105.271875 216.16875-205.509375 227.615625 16.059375 14.259375 30.54375 42.384375 30.54375 85.3875 0 61.678125-0.590625 111.4875-0.590625 126.5625 0 10.85625 6.215625 23.090625 22.89375 23.090625 2.41875 0 5.23125-0.196875 8.04375-0.815625 178.9875-61.059375 307.771875-234.028125 307.771875-437.7375 0-254.728125-201.4875-461.446875-450-461.446875z"  ></path></symbol><symbol id="ali-icon-square-check-bs" viewBox="0 0 1024 1024"><path d="M787.22383 63.960731 236.188792 63.960731c-95.112218 0-172.197874 77.086679-172.197874 172.198897l0 551.035038c0 95.112218 77.085656 172.21527 172.197874 172.21527l551.035038 0c95.079472 0 172.197874-77.103052 172.197874-172.21527L959.421704 236.159628C959.421704 141.046387 882.303302 63.960731 787.22383 63.960731zM746.225067 427.76348 479.485981 711.319581c-5.684466 5.717212-35.449373 5.918803-40.897456 0.436952L277.590737 534.681582c-6.962575-6.996344-6.962575-18.295692 0-25.258267l25.223474-25.224498c6.996344-6.961552 18.296715-6.961552 25.25929 0L461.627241 617.753579l237.310847-237.310847c6.5246-6.5246 17.08512-6.5246 23.64349 0l23.642466 23.677259C752.78446 410.644591 752.78446 421.23888 746.225067 427.76348z"  ></path></symbol><symbol id="ali-icon-square-o" viewBox="0 0 1024 1024"><path d="M810.666667 128H213.333333c-47.36 0-85.333333 37.973333-85.333333 85.333333v597.333334a85.333333 85.333333 0 0 0 85.333333 85.333333h597.333334a85.333333 85.333333 0 0 0 85.333333-85.333333V213.333333a85.333333 85.333333 0 0 0-85.333333-85.333333m0 85.333333v597.333334H213.333333V213.333333h597.333334z"  ></path></symbol><symbol id="ali-icon-square-check" viewBox="0 0 1024 1024"><path d="M386.31280025 847.55133347l-314.2180016-314.21800014 88.60947616-89.23791267L386.31280025 669.70394609l476.98292494-476.98292496L951.90520135 281.95893234m0-314.21800013H72.09479865c-69.75639613 0-125.68719975 55.93080361-125.68719977 125.68719977v879.8104027a125.68719975 125.68719975 0 0 0 125.68719977 125.68719977h879.8104027a125.68719975 125.68719975 0 0 0 125.68719977-125.68719977V93.42813198a125.68719975 125.68719975 0 0 0-125.68719977-125.68719977z"  ></path></symbol><symbol id="ali-icon-arrow-south-fast" viewBox="0 0 1024 1024"><path d="M800.45212457 109.17252369L889.06160075 197.78199986l-377.06160075 377.06160075-377.06160075-377.06160075 88.60947618-88.60947617L512 396.99621177l288.45212457-287.82368808m0 377.06160075L889.06160075 574.84360061l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-88.60947617L512 774.05781251l288.45212457-287.82368807z"  ></path></symbol><symbol id="ali-icon-arrow-west-fast" viewBox="0 0 1024 1024"><path d="M914.82747631 223.54787543L826.21800014 134.93839925l-377.06160075 377.06160075 377.06160075 377.06160075 88.60947617-88.60947618L627.00378823 512l287.82368808-288.45212457m-377.06160075 0L449.15639939 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947617-88.60947618L249.94218749 512l287.82368807-288.45212457z"  ></path></symbol><symbol id="ali-icon-arrow-east-fast" viewBox="0 0 1024 1024"><path d="M109.17252369 223.54787543L197.78199986 134.93839925l377.06160075 377.06160075-377.06160075 377.06160075-88.60947617-88.60947618L396.99621177 512 109.17252369 223.54787543m377.06160075 0L574.84360061 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947617-88.60947618L774.05781251 512l-287.82368807-288.45212457z"  ></path></symbol><symbol id="ali-icon-arrow-north-fast" viewBox="0 0 1024 1024"><path d="M223.54787543 914.82747631L134.93839925 826.21800014l377.06160075-377.06160075 377.06160075 377.06160075-88.60947618 88.60947617L512 627.00378823l-288.45212457 287.82368808m0-377.06160075L134.93839925 449.15639939l377.06160075-377.06160074 377.06160075 377.06160074-88.60947618 88.60947617L512 249.94218749l-288.45212457 287.82368807z"  ></path></symbol><symbol id="ali-icon-arrow-south" viewBox="0 0 1024 1024"><path d="M223.54787543 297.07488757L512 585.52701215l288.45212457-288.45212458L889.06160075 386.31280025l-377.06160075 377.06160074-377.06160075-377.06160074 88.60947618-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-west" viewBox="0 0 1024 1024"><path d="M726.29667594 799.82368807L438.47298785 512l287.82368809-288.45212457L637.68719975 134.93839925l-377.06160074 377.06160075 377.06160074 377.06160075 88.60947619-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-east" viewBox="0 0 1024 1024"><path d="M297.70332406 799.82368807L585.52701215 512 297.70332406 223.54787543 386.31280025 134.93839925l377.06160074 377.06160075-377.06160074 377.06160075-88.60947619-89.23791268z"  ></path></symbol><symbol id="ali-icon-arrow-north" viewBox="0 0 1024 1024"><path d="M223.54787543 726.29667594L512 438.47298785l288.45212457 287.82368809L889.06160075 637.68719975l-377.06160075-377.06160074-377.06160075 377.06160074 88.60947618 88.60947619z"  ></path></symbol><symbol id="ali-icon-circle-check-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971m0 187.50000058a187.49999971 187.49999971 0 0 0-187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971 187.49999971 187.49999971 187.49999971 0 0 0 187.49999971-187.49999971 187.49999971 187.49999971 0 0 0-187.49999971-187.49999971z"  ></path></symbol><symbol id="ali-icon-circle-o" viewBox="0 0 1024 1024"><path d="M512 811.99999971a299.99999971 299.99999971 0 0 1-299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971-299.99999971 299.99999971 299.99999971 0 0 1 299.99999971 299.99999971 299.99999971 299.99999971 0 0 1-299.99999971 299.99999971m0-675A375.00000029 375.00000029 0 0 0 136.99999971 512a375.00000029 375.00000029 0 0 0 375.00000029 375.00000029 375.00000029 375.00000029 0 0 0 375.00000029-375.00000029A375.00000029 375.00000029 0 0 0 512 136.99999971z"  ></path></symbol><symbol id="ali-icon-menu" viewBox="0 0 1024 1024"><path d="M128 170.666667h768v170.666666H128V170.666667m0 256h768v170.666666H128v-170.666666m0 256h768v170.666666H128v-170.666666z"  ></path></symbol><symbol id="ali-icon-checked" viewBox="0 0 1024 1024"><path d="M356.65540741 727.9289837L140.7264237 512l-73.27086576 73.27086577L356.65540741 874.47071645l621.37837037-621.37837037-73.27086577-73.27086698z"  ></path></symbol><symbol id="ali-icon-download" viewBox="0 0 1024 1024"><path d="M494.933333 782.933333c2.133333 2.133333 4.266667 4.266667 8.533334 6.4h8.533333c6.4 0 10.666667-2.133333 14.933333-6.4l2.133334-2.133333 275.2-275.2c8.533333-8.533333 8.533333-21.333333 0-29.866667-8.533333-8.533333-21.333333-8.533333-29.866667 0L533.333333 716.8V128c0-12.8-8.533333-21.333333-21.333333-21.333333s-21.333333 8.533333-21.333333 21.333333v588.8L249.6 475.733333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.533333 21.333333 0 29.866667l275.2 277.333333zM853.333333 874.666667H172.8c-12.8 0-21.333333 8.533333-21.333333 21.333333s8.533333 21.333333 21.333333 21.333333H853.333333c12.8 0 21.333333-8.533333 21.333334-21.333333s-10.666667-21.333333-21.333334-21.333333z"  ></path></symbol><symbol id="ali-icon-arrow-right" viewBox="0 0 1024 1024"><path d="M522.002 180.667c-13.347 13.347-13.347 34.917 0 48.266l248.934 248.934h-600.27c-18.843 0-34.133 15.292-34.134 34.134s15.292 34.133 34.134 34.134h600.27l-248.934 248.934c-13.347 13.347-13.347 34.917 0 48.266s34.917 13.347 48.266 0l307.166-307.201c3.174-3.139 5.666-6.928 7.407-11.126 1.741-4.13 2.627-8.567 2.627-13.006 0-4.436-0.889-8.876-2.628-13.039-1.742-4.198-4.233-7.952-7.407-11.126l-307.166-307.201c-13.347-13.312-34.918-13.312-48.265 0.033z"  ></path></symbol><symbol id="ali-icon-arrow-down" viewBox="0 0 1024 1024"><path d="M843.333 522.002c-13.347-13.347-34.917-13.347-48.265 0l-248.934 248.934v-600.27c0-18.843-15.292-34.134-34.134-34.134s-34.134 15.292-34.134 34.134v600.27l-248.934-248.934c-13.347-13.347-34.917-13.347-48.265 0s-13.347 34.917 0 48.265l307.201 307.166c3.139 3.174 6.928 5.666 11.126 7.407 4.13 1.741 8.567 2.627 13.006 2.627 4.436 0 8.876-0.889 13.039-2.627 4.198-1.741 7.952-4.233 11.126-7.407l307.201-307.166c13.312-13.347 13.312-34.919-0.033-48.265z"  ></path></symbol><symbol id="ali-icon-arrow-left" viewBox="0 0 1024 1024"><path d="M501.998 843.333c13.347-13.347 13.347-34.917 0-48.266l-248.934-248.934h600.27c18.843 0 34.133-15.292 34.134-34.134s-15.292-34.133-34.134-34.134h-600.27l248.934-248.934c13.347-13.347 13.347-34.917 0-48.266s-34.917-13.347-48.266 0l-307.166 307.201c-3.174 3.139-5.666 6.928-7.407 11.126-1.741 4.13-2.627 8.567-2.627 13.006 0 4.436 0.889 8.876 2.628 13.039 1.742 4.198 4.233 7.952 7.407 11.126l307.166 307.201c13.347 13.312 34.918 13.312 48.265-0.033z"  ></path></symbol><symbol id="ali-icon-arrow-up" viewBox="0 0 1024 1024"><path d="M180.667 501.998c13.347 13.347 34.917 13.347 48.266 0l248.934-248.934v600.27c0 18.843 15.292 34.133 34.134 34.134s34.133-15.292 34.134-34.134v-600.27l248.934 248.934c13.347 13.347 34.917 13.347 48.266 0s13.347-34.917 0-48.266l-307.201-307.166c-3.139-3.174-6.928-5.666-11.126-7.407-4.13-1.741-8.567-2.627-13.006-2.627-4.436 0-8.876 0.889-13.039 2.628-4.198 1.742-7.952 4.233-11.126 7.407l-307.201 307.166c-13.312 13.347-13.312 34.918 0.033 48.265z"  ></path></symbol><symbol id="ali-icon-square-indeterminate-bs" viewBox="0 0 1024 1024"><path d="M787.87381572 62.80348203c95.34234023 0 172.67715878 77.29972119 172.67715879 172.67590547v552.57116924c0 95.37618427-77.33481856 172.69596123-172.67715878 172.69596123H235.30389981C139.92646221 960.74651797 62.62674102 883.42674102 62.62674102 788.05055674V235.4793875C62.62674102 140.10320323 139.92646221 62.80348203 235.30389981 62.80348203h552.56991592zM260.67687998 464.36768809v100.27855107h505.15320322v-100.27855109H260.67687998z"  ></path></symbol><symbol id="ali-icon-circle-minus-o" viewBox="0 0 1024 1024"><path d="M696 480H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"  ></path><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"  ></path></symbol><symbol id="ali-icon-circle-plus-o" viewBox="0 0 1024 1024"><path d="M696 480H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"  ></path><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"  ></path></symbol><symbol id="ali-icon-minus" viewBox="0 0 1024 1024"><path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"  ></path></symbol><symbol id="ali-icon-circle-minus" viewBox="0 0 1024 1024"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m192 472c0 4.4-3.6 8-8 8H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h368c4.4 0 8 3.6 8 8v48z"  ></path></symbol><symbol id="ali-icon-circle-close" viewBox="0 0 1024 1024"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m165.4 618.2l-66-0.3L512 563.4l-99.3 118.4-66.1 0.3c-4.4 0-8-3.5-8-8 0-1.9 0.7-3.7 1.9-5.2l130.1-155L340.5 359c-1.2-1.5-1.9-3.3-1.9-5.2 0-4.4 3.6-8 8-8l66.1 0.3L512 464.6l99.3-118.4 66-0.3c4.4 0 8 3.5 8 8 0 1.9-0.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"  ></path></symbol><symbol id="ali-icon-plus-circle-fill" viewBox="0 0 1024 1024"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64z m192 472c0 4.4-3.6 8-8 8H544v152c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V544H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h152V328c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v152h152c4.4 0 8 3.6 8 8v48z"  ></path></symbol><symbol id="ali-icon-plus" viewBox="0 0 1024 1024"><path d="M474 152m8 0l60 0q8 0 8 8l0 704q0 8-8 8l-60 0q-8 0-8-8l0-704q0-8 8-8Z"  ></path><path d="M168 474m8 0l672 0q8 0 8 8l0 60q0 8-8 8l-672 0q-8 0-8-8l0-60q0-8 8-8Z"  ></path></symbol><symbol id="ali-icon-circle-close-o" viewBox="0 0 1024 1024"><path d="M664.73506474 619.48023074L557.254834 512 664.73506474 404.51976926c3.11126984-3.11126984 3.11126984-8.20243866 0-11.3137085l-33.9411255-33.9411255c-3.11126984-3.11126984-8.20243866-3.11126984-11.3137085 0l-107.48023074 107.48023074L404.51976926 359.26493526c-3.11126984-3.11126984-8.20243866-3.11126984-11.3137085 0l-33.9411255 33.9411255c-3.11126984 3.11126984-3.11126984 8.20243866 0 11.3137085l107.48023074 107.48023074-107.48023074 107.48023074c-3.11126984 3.11126984-3.11126984 8.20243866 0 11.3137085l33.9411255 33.9411255c3.11126984 3.11126984 8.20243866 3.11126984 11.3137085 0L512 557.254834l107.48023074 107.48023074c3.11126984 3.11126984 8.20243866 3.11126984 11.3137085 0l33.9411255-33.9411255c3.11126984-3.11126984 3.11126984-8.20243866 0-11.3137085z"  ></path><path d="M828.78383797 195.21616203C653.84562031 20.27794436 370.15437969 20.27794436 195.21616203 195.21616203s-174.93821767 458.62945828 0 633.56767594 458.62945828 174.93821767 633.56767594 0S1003.72205564 370.15437969 828.78383797 195.21616203z m-579.82756057 579.82756057c-145.23973286-145.23973286-145.23973286-380.84771235 0-526.0874452s380.84771235-145.23973286 526.0874452 0 145.23973286 380.84771235 0 526.0874452-380.84771235 145.23973286-526.0874452 0z"  ></path></symbol></svg>',
+      t = (a = document.getElementsByTagName("script"))[a.length - 1].getAttribute("data-injectcss");
 
-  var script = function () {
-    var scripts = document.getElementsByTagName("script");
-    return scripts[scripts.length - 1];
-  }();
-
-  var shouldInjectCss = script.getAttribute("data-injectcss");
-
-  var ready = function ready(fn) {
-    if (document.addEventListener) {
-      if (~["complete", "loaded", "interactive"].indexOf(document.readyState)) {
-        setTimeout(fn, 0);
-      } else {
-        var loadFn = function loadFn() {
-          document.removeEventListener("DOMContentLoaded", loadFn, false);
-          fn();
-        };
-
-        document.addEventListener("DOMContentLoaded", loadFn, false);
-      }
-    } else if (document.attachEvent) {
-      IEContentLoaded(window, fn);
-    }
-
-    function IEContentLoaded(w, fn) {
-      var d = w.document,
-          done = false,
-          init = function init() {
-        if (!done) {
-          done = true;
-          fn();
-        }
-      };
-
-      var polling = function polling() {
-        try {
-          d.documentElement.doScroll("left");
-        } catch (e) {
-          setTimeout(polling, 50);
-          return;
-        }
-
-        init();
-      };
-
-      polling();
-
-      d.onreadystatechange = function () {
-        if (d.readyState == "complete") {
-          d.onreadystatechange = null;
-          init();
-        }
-      };
-    }
-  };
-
-  var before = function before(el, target) {
-    target.parentNode.insertBefore(el, target);
-  };
-
-  var prepend = function prepend(el, target) {
-    if (target.firstChild) {
-      before(el, target.firstChild);
-    } else {
-      target.appendChild(el);
-    }
-  };
-
-  function appendSvg() {
-    var div, svg;
-    div = document.createElement("div");
-    div.innerHTML = svgSprite;
-    svgSprite = null;
-    svg = div.getElementsByTagName("svg")[0];
-
-    if (svg) {
-      svg.setAttribute("aria-hidden", "true");
-      svg.style.position = "absolute";
-      svg.style.width = 0;
-      svg.style.height = 0;
-      svg.style.overflow = "hidden";
-      prepend(svg, document.body);
-    }
-  }
-
-  if (shouldInjectCss && !window.__iconfont__svg__cssinject__) {
-    window.__iconfont__svg__cssinject__ = true;
+  if (t && !i.__iconfont__svg__cssinject__) {
+    i.__iconfont__svg__cssinject__ = !0;
 
     try {
       document.write("<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>");
-    } catch (e) {
-      console && console.log(e);
+    } catch (a) {
+      console && console.log(a);
     }
   }
 
-  ready(appendSvg);
-})(window);
+  !function (a) {
+    if (document.addEventListener) {
+      if (~["complete", "loaded", "interactive"].indexOf(document.readyState)) setTimeout(a, 0);else {
+        var t = function t() {
+          document.removeEventListener("DOMContentLoaded", t, !1), a();
+        };
+
+        document.addEventListener("DOMContentLoaded", t, !1);
+      }
+    } else document.attachEvent && (p = a, l = i.document, c = !1, (_o = function o() {
+      try {
+        l.documentElement.doScroll("left");
+      } catch (a) {
+        return void setTimeout(_o, 50);
+      }
+
+      h();
+    })(), l.onreadystatechange = function () {
+      "complete" == l.readyState && (l.onreadystatechange = null, h());
+    });
+
+    function h() {
+      c || (c = !0, p());
+    }
+
+    var p, l, c, _o;
+  }(function () {
+    var a, t;
+    (a = document.createElement("div")).innerHTML = h, h = null, (t = a.getElementsByTagName("svg")[0]) && (t.setAttribute("aria-hidden", "true"), t.style.position = "absolute", t.style.width = 0, t.style.height = 0, t.style.overflow = "hidden", function (a, t) {
+      t.firstChild ? function (a, t) {
+        t.parentNode.insertBefore(a, t);
+      }(a, t.firstChild) : t.appendChild(a);
+    }(t, document.body));
+  });
+}(window);
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(41);
+var content = __webpack_require__(42);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1365,7 +1323,7 @@ if(content.locals) module.exports = content.locals;
 if(false) {}
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -1379,7 +1337,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n* icon 组件样式\r\n*/\n.
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -1389,50 +1347,7 @@ exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n* icon 组件样式\r\n*/\n.
  * LICENSE file in the root directory of this source tree.
  */
 
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() {
-  return this || (typeof self === "object" && self);
-})() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(43);
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-!(function(global) {
+var runtime = (function (exports) {
   "use strict";
 
   var Op = Object.prototype;
@@ -1442,23 +1357,6 @@ if (hadRuntime) {
   var iteratorSymbol = $Symbol.iterator || "@@iterator";
   var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
   var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
 
   function wrap(innerFn, outerFn, self, tryLocsList) {
     // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
@@ -1472,7 +1370,7 @@ if (hadRuntime) {
 
     return generator;
   }
-  runtime.wrap = wrap;
+  exports.wrap = wrap;
 
   // Try/catch helper to minimize deoptimizations. Returns a completion
   // record like context.tryEntries[i].completion. This interface could
@@ -1543,7 +1441,7 @@ if (hadRuntime) {
     });
   }
 
-  runtime.isGeneratorFunction = function(genFun) {
+  exports.isGeneratorFunction = function(genFun) {
     var ctor = typeof genFun === "function" && genFun.constructor;
     return ctor
       ? ctor === GeneratorFunction ||
@@ -1553,7 +1451,7 @@ if (hadRuntime) {
       : false;
   };
 
-  runtime.mark = function(genFun) {
+  exports.mark = function(genFun) {
     if (Object.setPrototypeOf) {
       Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
     } else {
@@ -1570,7 +1468,7 @@ if (hadRuntime) {
   // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
   // `hasOwn.call(value, "__await")` to determine if the yielded value is
   // meant to be awaited.
-  runtime.awrap = function(arg) {
+  exports.awrap = function(arg) {
     return { __await: arg };
   };
 
@@ -1645,17 +1543,17 @@ if (hadRuntime) {
   AsyncIterator.prototype[asyncIteratorSymbol] = function () {
     return this;
   };
-  runtime.AsyncIterator = AsyncIterator;
+  exports.AsyncIterator = AsyncIterator;
 
   // Note that simple async functions are implemented on top of
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
     var iter = new AsyncIterator(
       wrap(innerFn, outerFn, self, tryLocsList)
     );
 
-    return runtime.isGeneratorFunction(outerFn)
+    return exports.isGeneratorFunction(outerFn)
       ? iter // If outerFn is a generator, return the full iterator.
       : iter.next().then(function(result) {
           return result.done ? result.value : iter.next();
@@ -1752,7 +1650,8 @@ if (hadRuntime) {
       context.delegate = null;
 
       if (context.method === "throw") {
-        if (delegate.iterator.return) {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
           // If the delegate iterator has a return method, give it a
           // chance to clean up.
           context.method = "return";
@@ -1872,7 +1771,7 @@ if (hadRuntime) {
     this.reset(true);
   }
 
-  runtime.keys = function(object) {
+  exports.keys = function(object) {
     var keys = [];
     for (var key in object) {
       keys.push(key);
@@ -1933,7 +1832,7 @@ if (hadRuntime) {
     // Return an iterator with no values.
     return { next: doneResult };
   }
-  runtime.values = values;
+  exports.values = values;
 
   function doneResult() {
     return { value: undefined, done: true };
@@ -2138,14 +2037,35 @@ if (hadRuntime) {
       return ContinueSentinel;
     }
   };
-})(
-  // In sloppy mode, unbound `this` refers to the global object, fallback to
-  // Function constructor if we're in global strict mode. That is sadly a form
-  // of indirect eval which violates Content Security Policy.
-  (function() {
-    return this || (typeof self === "object" && self);
-  })() || Function("return this")()
-);
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
 
 
 /***/ }),
@@ -2338,7 +2258,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n.z-message {\n  position: absolute;\n  z-index: 1001; }\n  .z-message > .z-message-pop {\n    max-width: 100px;\n    background: #fff;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n    padding: 12px;\n    border-radius: 3px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n.z-message {\n  position: absolute;\n  z-index: 1000; }\n  .z-message > .z-message-pop {\n    max-width: 100px;\n    background: #fff;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n    padding: 12px;\n    border-radius: 3px; }\n  .z-message-align-center {\n    text-align: center; }\n  .z-message-align-right {\n    text-align: right; }\n", ""]);
 
 // exports
 
@@ -2650,7 +2570,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * bubble 组件样式\r\n */\n.z-bubble-slot .z-bubble-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-bubble {\n  position: absolute;\n  left: 0;\n  top: 0;\n  z-index: 999;\n  background: #fff;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  border-radius: 3px;\n  padding: 8px; }\n  .z-bubble.z-bubble-fixed {\n    position: fixed; }\n  .z-bubble-slot {\n    max-width: 300px; }\n    .z-bubble-slot .z-bubble-text {\n      width: 100%;\n      display: inline-block; }\n  .z-bubble.z-bubble-custom .z-bubble-slot {\n    max-width: none; }\n  .z-bubble .z-bubble-arrow {\n    position: absolute;\n    top: -10px;\n    left: 0;\n    right: 0;\n    height: 15px;\n    width: 16px;\n    margin: auto;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0); }\n    .z-bubble .z-bubble-arrow .z-icon {\n      position: absolute;\n      top: 0;\n      left: 0; }\n      .z-bubble .z-bubble-arrow .z-icon .z-icon-triangle-up {\n        font-size: 16px; }\n    .z-bubble .z-bubble-arrow .z-bubble-border {\n      top: -1px;\n      color: #d6d6d6; }\n    .z-bubble .z-bubble-arrow .z-bubble-body {\n      color: #fff; }\n", ""]);
+exports.push([module.i, ".z-upload-pick-plus, .z-upload-preview, .z-upload-preview-layover, .z-upload-crop {\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  margin: auto; }\n\n.z-upload-pick {\n  position: relative;\n  overflow: hidden;\n  cursor: pointer;\n  width: 60px;\n  height: 60px;\n  border: #d6d6d6 1px solid;\n  margin: 0 10px 10px 0;\n  box-sizing: border-box; }\n  .z-upload-pick-plus {\n    text-align: center;\n    width: 30px;\n    height: 30px;\n    font-size: 30px; }\n  .z-upload-pick-input {\n    position: absolute;\n    cursor: default;\n    opacity: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 1; }\n\n.z-upload-showcase {\n  display: inline-block;\n  vertical-align: middle; }\n  .z-upload-showcase-ele {\n    position: relative;\n    width: 60px;\n    height: 60px;\n    border: #d6d6d6 1px solid;\n    margin: 0 10px 10px 0; }\n  .z-upload-showcase-delete {\n    position: absolute;\n    top: -10px;\n    right: -10px;\n    cursor: pointer;\n    z-index: 1; }\n    .z-upload-showcase-delete .fa-times-circle {\n      font-size: 18px; }\n  .z-upload-showcase-content {\n    overflow: hidden;\n    width: 100%;\n    height: 100%;\n    display: -webkit-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-align-items: center;\n        -ms-flex-align: center;\n            align-items: center;\n    -webkit-justify-content: center;\n        -ms-flex-pack: center;\n            justify-content: center; }\n    .z-upload-showcase-content > img {\n      width: 100%;\n      display: inline-block;\n      vertical-align: middle; }\n\n.z-upload-preview {\n  position: fixed;\n  overflow: hidden;\n  width: 100%;\n  height: 100vh;\n  padding: 10px;\n  box-sizing: border-box;\n  z-index: 999;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-align-items: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-justify-content: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n  .z-upload-preview > img {\n    width: 100%;\n    vertical-align: middle; }\n  .z-upload-preview-layover {\n    background-color: rgba(0, 0, 0, 0.6);\n    position: fixed;\n    z-index: -1; }\n  .z-upload-preview-close {\n    position: absolute;\n    bottom: 30px; }\n  .z-upload-preview-delete {\n    position: absolute;\n    right: 20px;\n    top: 20px; }\n\n.z-upload-hint {\n  display: inline-block;\n  vertical-align: middle;\n  max-width: 150px;\n  margin-left: 8px; }\n\n.z-upload-crop {\n  position: fixed;\n  width: 100%;\n  height: 100vh;\n  z-index: 999; }\n  .z-upload-crop-operation {\n    position: absolute;\n    bottom: 10px;\n    left: 0;\n    width: 100%;\n    box-sizing: border-box;\n    padding: 10px; }\n", ""]);
 
 // exports
 
@@ -2689,7 +2609,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n.z-modal {\n  position: fixed;\n  left: 0;\n  top: 0;\n  height: 100%;\n  width: 100%;\n  z-index: 1000; }\n  .z-modal.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n    padding-top: 16px; }\n  .z-modal > .z-modal-bg {\n    background: rgba(0, 0, 0, 0.12);\n    height: 100%;\n    width: 100%;\n    position: fixed;\n    left: 0;\n    top: 0; }\n  .z-modal > .z-modal-pop {\n    position: absolute;\n    background: #fff;\n    border-radius: 3px;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n    .z-modal > .z-modal-pop > header {\n      cursor: move;\n      padding: 16px;\n      box-sizing: border-box;\n      width: 100%; }\n      .z-modal > .z-modal-pop > header .z-modal-header-title {\n        font-size: 16px;\n        line-height: 1;\n        font-weight: bold; }\n    .z-modal > .z-modal-pop > article {\n      box-sizing: border-box;\n      max-width: 100%;\n      min-width: 280px; }\n      .z-modal > .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n        padding: 16px;\n        box-sizing: border-box; }\n    .z-modal > .z-modal-pop > footer {\n      padding: 16px;\n      box-sizing: border-box;\n      line-height: normal;\n      text-align: right;\n      height: auto;\n      width: 100%; }\n      .z-modal > .z-modal-pop > footer > .z-btn {\n        margin: 0 4px; }\n  .z-modal.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n    border-bottom: #d6d6d6 1px solid;\n    border-color: #2196f3; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 530px;\n    padding-top: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      color: #fff;\n      padding-top: 12px;\n      padding-bottom: 12px;\n      background-color: #2196f3;\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n      .z-modal.z-modal-type-full .z-modal-pop > header > div {\n        min-height: 36px; }\n      .z-modal.z-modal-type-full .z-modal-pop > header .z-modal-header-nav {\n        line-height: 1; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      height: 300px; }\n    .z-modal.z-modal-type-full .z-modal-pop > footer {\n      border-top: #d6d6d6 1px solid;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-modal.z-modal-type-pure > .z-modal-pop {\n    background-color: transparent;\n    box-shadow: none; }\n  .z-modal.z-modal-size-m > .z-modal-pop > article {\n    min-width: 500px; }\n  .z-modal.z-modal-size-l > .z-modal-pop > article {\n    min-width: 800px; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #4caf50; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full .z-modal-pop > header {\n  background-color: #4caf50; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f44336; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full .z-modal-pop > header {\n  background-color: #f44336; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ffeb3b; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full .z-modal-pop > header {\n  background-color: #ffeb3b; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ff5722; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full .z-modal-pop > header {\n  background-color: #ff5722; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #2196f3; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full .z-modal-pop > header {\n  background-color: #2196f3; }\n\n.z-modal.z-modal-theme-light.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f5f5f5; }\n\n.z-modal.z-modal-theme-light.z-modal-type-full .z-modal-pop > header {\n  background-color: #f5f5f5; }\n\n.z-modal.z-modal-theme-dark.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #424242; }\n\n.z-modal.z-modal-theme-dark.z-modal-type-full .z-modal-pop > header {\n  background-color: #424242; }\n\n.z-modal.z-modal-theme-grey.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-grey.z-modal-type-full .z-modal-pop > header {\n  background-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-black.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #000; }\n\n.z-modal.z-modal-theme-black.z-modal-type-full .z-modal-pop > header {\n  background-color: #000; }\n\n.z-modal.z-modal-theme-white.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #fff; }\n\n.z-modal.z-modal-theme-white.z-modal-type-full .z-modal-pop > header {\n  background-color: #fff; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * bubble 组件样式\r\n */\n.z-bubble-slot .z-bubble-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-bubble {\n  position: absolute;\n  left: 0;\n  top: 0;\n  z-index: 999;\n  background: #fff;\n  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  border-radius: 3px;\n  padding: 8px; }\n  .z-bubble.z-bubble-fixed {\n    position: fixed; }\n  .z-bubble-slot {\n    max-width: 300px; }\n    .z-bubble-slot .z-bubble-text {\n      width: 100%;\n      display: inline-block; }\n  .z-bubble.z-bubble-custom .z-bubble-slot {\n    max-width: none; }\n  .z-bubble .z-bubble-arrow {\n    position: absolute;\n    top: -10px;\n    left: 0;\n    right: 0;\n    height: 15px;\n    width: 16px;\n    margin: auto;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0); }\n    .z-bubble .z-bubble-arrow .z-icon {\n      position: absolute;\n      top: 0;\n      left: 0; }\n      .z-bubble .z-bubble-arrow .z-icon .z-icon-triangle-up {\n        font-size: 16px; }\n    .z-bubble .z-bubble-arrow .z-bubble-border {\n      top: -1px;\n      color: #d6d6d6; }\n    .z-bubble .z-bubble-arrow .z-bubble-body {\n      color: #fff; }\n", ""]);
 
 // exports
 
@@ -2728,7 +2648,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n@media only screen and (max-width: 767px) {\n  .z-modal .z-modal-bg {\n    background: rgba(0, 0, 0, 0.5); }\n  .z-modal .z-modal-pop {\n    width: 96%; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 100%;\n    height: 100%;\n    position: relative;\n    border-radius: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      position: absolute;\n      top: 0;\n      left: 0;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      min-height: auto;\n      width: 100%;\n      height: 100%;\n      padding-top: 60px; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n.z-modal {\n  position: fixed;\n  left: 0;\n  top: 0;\n  height: 100%;\n  width: 100%;\n  z-index: 999; }\n  .z-modal.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n    padding-top: 16px; }\n  .z-modal > .z-modal-bg {\n    background: rgba(0, 0, 0, 0.12);\n    height: 100%;\n    width: 100%;\n    position: fixed;\n    left: 0;\n    top: 0; }\n  .z-modal > .z-modal-pop {\n    position: absolute;\n    background: #fff;\n    border-radius: 3px;\n    overflow: hidden;\n    -webkit-transform: rotate(0);\n        -ms-transform: rotate(0);\n            transform: rotate(0);\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n    .z-modal > .z-modal-pop > header {\n      cursor: move;\n      padding: 16px;\n      box-sizing: border-box;\n      width: 100%; }\n      .z-modal > .z-modal-pop > header .z-modal-header-title {\n        font-size: 16px;\n        line-height: 1;\n        font-weight: bold; }\n    .z-modal > .z-modal-pop > article {\n      box-sizing: border-box;\n      max-width: 100%;\n      min-width: 280px; }\n      .z-modal > .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n        padding: 16px;\n        box-sizing: border-box; }\n    .z-modal > .z-modal-pop > footer {\n      padding: 16px;\n      box-sizing: border-box;\n      line-height: normal;\n      text-align: right;\n      height: auto;\n      width: 100%; }\n      .z-modal > .z-modal-pop > footer > .z-btn {\n        margin: 0 4px; }\n  .z-modal.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n    border-bottom: #d6d6d6 1px solid;\n    border-color: #2196f3; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 530px;\n    padding-top: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      color: #fff;\n      padding-top: 12px;\n      padding-bottom: 12px;\n      background-color: #2196f3;\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n      .z-modal.z-modal-type-full .z-modal-pop > header > div {\n        min-height: 36px; }\n      .z-modal.z-modal-type-full .z-modal-pop > header .z-modal-header-nav {\n        line-height: 1; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      height: 300px; }\n    .z-modal.z-modal-type-full .z-modal-pop > footer {\n      border-top: #d6d6d6 1px solid;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n  .z-modal.z-modal-type-pure > .z-modal-pop {\n    background-color: transparent;\n    box-shadow: none; }\n  .z-modal.z-modal-size-m > .z-modal-pop > article {\n    min-width: 500px; }\n  .z-modal.z-modal-size-l > .z-modal-pop > article {\n    min-width: 800px; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #4caf50; }\n\n.z-modal.z-modal-theme-success.z-modal-type-full .z-modal-pop > header {\n  background-color: #4caf50; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f44336; }\n\n.z-modal.z-modal-theme-danger.z-modal-type-full .z-modal-pop > header {\n  background-color: #f44336; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ffeb3b; }\n\n.z-modal.z-modal-theme-warning.z-modal-type-full .z-modal-pop > header {\n  background-color: #ffeb3b; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #ff5722; }\n\n.z-modal.z-modal-theme-orange.z-modal-type-full .z-modal-pop > header {\n  background-color: #ff5722; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #2196f3; }\n\n.z-modal.z-modal-theme-blue.z-modal-type-full .z-modal-pop > header {\n  background-color: #2196f3; }\n\n.z-modal.z-modal-theme-light.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #f5f5f5; }\n\n.z-modal.z-modal-theme-light.z-modal-type-full .z-modal-pop > header {\n  background-color: #f5f5f5; }\n\n.z-modal.z-modal-theme-dark.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #424242; }\n\n.z-modal.z-modal-theme-dark.z-modal-type-full .z-modal-pop > header {\n  background-color: #424242; }\n\n.z-modal.z-modal-theme-grey.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-grey.z-modal-type-full .z-modal-pop > header {\n  background-color: #9e9e9e; }\n\n.z-modal.z-modal-theme-black.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #000; }\n\n.z-modal.z-modal-theme-black.z-modal-type-full .z-modal-pop > header {\n  background-color: #000; }\n\n.z-modal.z-modal-theme-white.z-modal-type-full.z-modal-has-scroller .z-modal-pop > header {\n  border-color: #fff; }\n\n.z-modal.z-modal-theme-white.z-modal-type-full .z-modal-pop > header {\n  background-color: #fff; }\n", ""]);
 
 // exports
 
@@ -2767,7 +2687,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 material 样式\r\n */\n.z-modal.z-modal-ui-material.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding-top: 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > header {\n  padding: 24px 24px 20px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > header .z-modal-header-title {\n    font-size: 16px;\n    line-height: 1; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding: 0 24px 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > footer {\n  padding: 8px 8px 8px 24px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > footer > .z-btn {\n    margin: 0 4px; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > article {\n  padding-top: 0;\n  padding-bottom: 0; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > footer {\n  border-top: #d6d6d6 1px solid; }\n\n@media only screen and (max-width: 767px) {\n  .z-modal.z-modal-ui-material.z-modal-type-full .z-modal-pop > article {\n    padding-top: 80px; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件样式\r\n */\n@media only screen and (max-width: 767px) {\n  .z-modal .z-modal-bg {\n    background: rgba(0, 0, 0, 0.5); }\n  .z-modal .z-modal-pop {\n    width: 96%; }\n  .z-modal.z-modal-type-full .z-modal-pop {\n    width: 100%;\n    height: 100%;\n    position: relative;\n    border-radius: 0; }\n    .z-modal.z-modal-type-full .z-modal-pop > header {\n      position: absolute;\n      top: 0;\n      left: 0;\n      padding-top: 12px;\n      padding-bottom: 12px; }\n    .z-modal.z-modal-type-full .z-modal-pop > article {\n      min-height: auto;\n      width: 100%;\n      height: 100%;\n      padding-top: 60px; } }\n", ""]);
 
 // exports
 
@@ -2806,7 +2726,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 bootstrap 样式\r\n */\n.z-modal.z-modal-ui-bootstrap.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding-top: 16px; }\n\n.z-modal.z-modal-ui-bootstrap .z-modal-pop > header {\n  padding: 16px; }\n  .z-modal.z-modal-ui-bootstrap .z-modal-pop > header .z-modal-header-title {\n    font-size: 16px;\n    line-height: 24px;\n    font-weight: 500; }\n\n.z-modal.z-modal-ui-bootstrap .z-modal-pop > article {\n  padding: 16px;\n  border-top: #d6d6d6 1px solid;\n  border-bottom: #d6d6d6 1px solid; }\n\n.z-modal.z-modal-ui-bootstrap .z-modal-pop > footer {\n  padding: 16px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 material 样式\r\n */\n.z-modal.z-modal-ui-material.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding-top: 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > header {\n  padding: 24px 24px 20px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > header .z-modal-header-title {\n    font-size: 16px;\n    line-height: 1; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding: 0 24px 24px; }\n\n.z-modal.z-modal-ui-material .z-modal-pop > footer {\n  padding: 8px 8px 8px 24px; }\n  .z-modal.z-modal-ui-material .z-modal-pop > footer > .z-btn {\n    margin: 0 4px; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > article {\n  padding-top: 0;\n  padding-bottom: 0; }\n\n.z-modal.z-modal-ui-material.z-modal-has-scroller .z-modal-pop > footer {\n  border-top: #d6d6d6 1px solid; }\n\n@media only screen and (max-width: 767px) {\n  .z-modal.z-modal-ui-material.z-modal-type-full .z-modal-pop > article {\n    padding-top: 80px; } }\n", ""]);
 
 // exports
 
@@ -2845,7 +2765,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * scroller 组件样式\r\n */\n.z-scroller {\n  overflow: hidden;\n  position: relative; }\n  .z-scroller .z-scroller-box {\n    position: absolute;\n    top: 0;\n    left: 0;\n    -webkit-transform: translateX(0) translateY(0);\n        -ms-transform: translateX(0) translateY(0);\n            transform: translateX(0) translateY(0); }\n  .z-scroller .z-scroller-bar {\n    position: absolute;\n    border-radius: 4px;\n    background-color: #9e9e9e;\n    opacity: .6;\n    transition: opacity 150ms ease-out;\n    z-index: 1; }\n    .z-scroller .z-scroller-bar:hover {\n      opacity: .8; }\n    .z-scroller .z-scroller-bar.z-scroller-x-bar {\n      bottom: 0;\n      left: 0;\n      height: 5px; }\n    .z-scroller .z-scroller-bar.z-scroller-y-bar {\n      right: 0;\n      top: 0;\n      width: 5px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * pop 组件 bootstrap 样式\r\n */\n.z-modal.z-modal-ui-bootstrap.z-modal-no-header .z-modal-pop > article > .z-modal-scroller > .z-scroller-box {\n  padding-top: 16px; }\n\n.z-modal.z-modal-ui-bootstrap .z-modal-pop > header {\n  padding: 16px; }\n  .z-modal.z-modal-ui-bootstrap .z-modal-pop > header .z-modal-header-title {\n    font-size: 16px;\n    line-height: 24px;\n    font-weight: 500; }\n\n.z-modal.z-modal-ui-bootstrap .z-modal-pop > article {\n  padding: 16px;\n  border-top: #d6d6d6 1px solid;\n  border-bottom: #d6d6d6 1px solid; }\n\n.z-modal.z-modal-ui-bootstrap .z-modal-pop > footer {\n  padding: 16px; }\n", ""]);
 
 // exports
 
@@ -2884,7 +2804,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * code 组件样式\r\n */\n.z-code {\n  font-size: 14px;\n  background-color: #fff;\n  border: #6ec6ff 1px solid;\n  border-radius: 3px;\n  position: relative;\n  padding: 8px 16px; }\n  .z-code .z-code-header {\n    color: #d6d6d6;\n    font-weight: bold;\n    text-align: right;\n    margin-bottom: 5px; }\n  .z-code .z-code-article .z-code-pre {\n    width: 100%;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    font-size: 1em;\n    line-height: 16px;\n    -webkit-font-smoothing: initial;\n    -moz-osx-font-smoothing: initial; }\n    .z-code .z-code-article .z-code-pre .z-code-content {\n      position: relative;\n      padding: 0 0 0 50px; }\n  .z-code .z-code-line-num {\n    border-right: 2px #2196f3 solid;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    line-height: 16px;\n    text-align: right;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-right: 5px;\n    width: 24px; }\n\n.z-code.z-code-theme-success {\n  border: #80e27e 1px solid; }\n  .z-code.z-code-theme-success .z-code-line-num {\n    border-right: 2px #4caf50 solid; }\n\n.z-code.z-code-theme-danger {\n  border: #ff7961 1px solid; }\n  .z-code.z-code-theme-danger .z-code-line-num {\n    border-right: 2px #f44336 solid; }\n\n.z-code.z-code-theme-blue {\n  border: #6ec6ff 1px solid; }\n  .z-code.z-code-theme-blue .z-code-line-num {\n    border-right: 2px #2196f3 solid; }\n\n.z-code.z-code-theme-warning {\n  border: #ffff72 1px solid; }\n  .z-code.z-code-theme-warning .z-code-line-num {\n    border-right: 2px #ffeb3b solid; }\n\n.z-code.z-code-theme-orange {\n  border: #ff8a50 1px solid; }\n  .z-code.z-code-theme-orange .z-code-line-num {\n    border-right: 2px #ff5722 solid; }\n\n.z-code.z-code-theme-grey {\n  border: #cfcfcf 1px solid; }\n  .z-code.z-code-theme-grey .z-code-line-num {\n    border-right: 2px #9e9e9e solid; }\n\n.z-code.z-code-theme-light {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-light .z-code-line-num {\n    border-right: 2px #f5f5f5 solid; }\n\n.z-code.z-code-theme-dark {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-dark .z-code-line-num {\n    border-right: 2px #424242 solid; }\n\n.z-code.z-code-theme-black {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-black .z-code-line-num {\n    border-right: 2px #000 solid; }\n\n.z-code.z-code-theme-white {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-white .z-code-line-num {\n    border-right: 2px #fff solid; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * scroller 组件样式\r\n */\n.z-scroller {\n  overflow: hidden;\n  position: relative; }\n  .z-scroller .z-scroller-box {\n    position: absolute;\n    top: 0;\n    left: 0;\n    -webkit-transform: translateX(0) translateY(0);\n        -ms-transform: translateX(0) translateY(0);\n            transform: translateX(0) translateY(0); }\n  .z-scroller .z-scroller-bar {\n    position: absolute;\n    border-radius: 4px;\n    background-color: #9e9e9e;\n    opacity: .6;\n    transition: opacity 150ms ease-out;\n    z-index: 1; }\n    .z-scroller .z-scroller-bar:hover {\n      opacity: .8; }\n    .z-scroller .z-scroller-bar.z-scroller-x-bar {\n      bottom: 0;\n      left: 0;\n      height: 5px; }\n    .z-scroller .z-scroller-bar.z-scroller-y-bar {\n      right: 0;\n      top: 0;\n      width: 5px; }\n", ""]);
 
 // exports
 
@@ -2923,7 +2843,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n.z-nav {\n  position: relative;\n  -webkit-tap-highlight-color: transparent; }\n  .z-nav-arrow {\n    text-align: right; }\n    .z-nav-arrow-fold {\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n    .z-nav-arrow-spread {\n      -webkit-transform: rotate(-180deg);\n          -ms-transform: rotate(-180deg);\n              transform: rotate(-180deg); }\n  .z-nav .z-nav-trigger {\n    display: none;\n    background-color: #f5f5f5;\n    padding: 8px;\n    border-bottom: #d6d6d6 1px solid;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-sub-fold {\n    margin-left: 0; }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl {\n    cursor: pointer; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl .z-fold-dt {\n      cursor: pointer;\n      padding: 8px 0; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt {\n      background-color: rgba(238, 238, 238, 0);\n      transition: background-color 300ms;\n      padding: 12px 32px 12px 16px;\n      color: rgba(0, 0, 0, 0.87);\n      font-weight: bold; }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt:hover {\n        background-color: rgba(238, 238, 238, 0.8); }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt .z-nav-icon {\n        right: 16px; }\n  .z-nav .z-nav-stage .z-nav-sub-fold {\n    margin-left: 32px; }\n    .z-nav .z-nav-stage .z-nav-sub-fold a {\n      display: block; }\n  .z-nav .z-nav-close-nav {\n    display: none; }\n\n.z-nav.z-nav-theme-success .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #4caf50; }\n\n.z-nav.z-nav-theme-danger .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f44336; }\n\n.z-nav.z-nav-theme-blue .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #2196f3; }\n\n.z-nav.z-nav-theme-warning .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ffeb3b; }\n\n.z-nav.z-nav-theme-orange .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ff5722; }\n\n.z-nav.z-nav-theme-grey .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #9e9e9e; }\n\n.z-nav.z-nav-theme-light .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f5f5f5; }\n\n.z-nav.z-nav-theme-dark .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #424242; }\n\n.z-nav.z-nav-theme-black .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #000; }\n\n.z-nav.z-nav-theme-white .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #fff; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * fold 组件样式\r\n */\n.z-fold .z-fold-dl {\n  margin: 0;\n  -webkit-tap-highlight-color: transparent; }\n  .z-fold .z-fold-dl > .z-fold-dt {\n    position: relative;\n    padding-right: 16px;\n    cursor: default; }\n    .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon {\n      position: absolute;\n      height: 14px;\n      margin: auto;\n      right: 12px;\n      top: 0;\n      bottom: 0;\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      -webkit-transform-origin: center center;\n          -ms-transform-origin: center center;\n              transform-origin: center center;\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n      .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon-fold {\n        -webkit-transform: rotate(180deg);\n            -ms-transform: rotate(180deg);\n                transform: rotate(180deg); }\n  .z-fold .z-fold-dl > .z-fold-dd {\n    margin-left: 0;\n    overflow: hidden; }\n    .z-fold .z-fold-dl > .z-fold-dd > .z-fold-transition {\n      will-change: height;\n      transition: height 500ms ease; }\n\n.z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt {\n  padding: 4px 16px 4px 0; }\n  .z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt .z-fold-icon {\n    position: absolute;\n    right: 8px; }\n", ""]);
 
 // exports
 
@@ -2962,7 +2882,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n.z-nav.z-nav-device-s {\n  font-size: 16px; }\n  .z-nav.z-nav-device-s .z-nav-trigger {\n    display: block;\n    font-size: 21px; }\n  .z-nav.z-nav-device-s .z-nav-stage {\n    box-sizing: border-box;\n    width: 100%;\n    z-index: 999; }\n    .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-slide {\n      position: fixed;\n      margin: auto;\n      bottom: 0;\n      top: 0;\n      left: 0; }\n      .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-slide > .z-nav-motion-content {\n        background-color: #fff;\n        box-sizing: border-box;\n        padding: 15% 10% 10%;\n        width: 80%;\n        height: 100%;\n        position: absolute;\n        left: 0;\n        top: 0; }\n      .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-slide > .z-nav-motion-empty {\n        background: rgba(0, 0, 0, 0.8);\n        width: 20%;\n        height: 100%;\n        position: absolute;\n        right: 0;\n        top: 0; }\n    .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold {\n      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);\n      position: absolute;\n      overflow: hidden; }\n      .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content {\n        background-color: #fff; }\n        .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-close-nav {\n          display: none; }\n        .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-sub-fold {\n          padding: 24px 24px 40px; }\n    .z-nav.z-nav-device-s .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav {\n      position: absolute;\n      display: block;\n      right: 16px;\n      top: 16px;\n      cursor: pointer; }\n      .z-nav.z-nav-device-s .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav .z-icon-close {\n        font-size: 20px; }\n    .z-nav.z-nav-device-s .z-nav-stage .z-icon-ali {\n      font-size: 20px; }\n    .z-nav.z-nav-device-s .z-nav-stage .z-nav-sub-fold a {\n      color: rgba(0, 0, 0, 0.87);\n      text-decoration: none; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件样式\r\n */\n.z-table {\n  position: relative; }\n  .z-table.z-table-stripe .z-table-header-group {\n    background: #f5f5f5; }\n  .z-table.z-table-stripe .z-table-row:hover {\n    background-color: transparent; }\n  .z-table.z-table-stripe .z-table-row:nth-child(2n) {\n    background: #f5f5f5; }\n  .z-table-page {\n    border-top: #d6d6d6 1px solid; }\n  .z-table .z-table-row:hover {\n    background-color: #f5f5f5; }\n  .z-table .z-table-col {\n    text-align: left; }\n  .z-table .z-table-col > div {\n    display: inline-block; }\n  .z-table.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-border-all .z-table-header-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n  .z-table.z-table-border-row .z-table-row-group .z-table-row, .z-table.z-table-border-all .z-table-row-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n    .z-table.z-table-border-row .z-table-row-group .z-table-row:last-child, .z-table.z-table-border-all .z-table-row-group .z-table-row:last-child {\n      border-bottom: none; }\n  .z-table.z-table-border-col .z-table-row .z-table-col, .z-table.z-table-border-all .z-table-row .z-table-col {\n    border-right: #d6d6d6 1px solid; }\n    .z-table.z-table-border-col .z-table-row .z-table-col:last-child, .z-table.z-table-border-all .z-table-row .z-table-col:last-child {\n      border-right: none; }\n  .z-table .z-table-empty-data {\n    color: #f44336;\n    text-align: center;\n    padding: 8px 0; }\n  .z-table .z-table-wrap {\n    background: #fff;\n    border-collapse: collapse;\n    width: 100%; }\n  .z-table .z-table-header {\n    padding: 16px 24px; }\n  .z-table .z-table-col {\n    padding: 16px 24px; }\n", ""]);
 
 // exports
 
@@ -3001,7 +2921,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * fold 组件样式\r\n */\n.z-fold .z-fold-dl {\n  margin: 0;\n  -webkit-tap-highlight-color: transparent; }\n  .z-fold .z-fold-dl > .z-fold-dt {\n    position: relative;\n    padding-right: 16px;\n    cursor: default; }\n    .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon {\n      position: absolute;\n      height: 14px;\n      margin: auto;\n      right: 12px;\n      top: 0;\n      bottom: 0;\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      -webkit-transform-origin: center center;\n          -ms-transform-origin: center center;\n              transform-origin: center center;\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n      .z-fold .z-fold-dl > .z-fold-dt .z-fold-icon-fold {\n        -webkit-transform: rotate(180deg);\n            -ms-transform: rotate(180deg);\n                transform: rotate(180deg); }\n  .z-fold .z-fold-dl > .z-fold-dd {\n    margin-left: 0;\n    overflow: hidden; }\n    .z-fold .z-fold-dl > .z-fold-dd > .z-fold-transition {\n      will-change: height;\n      transition: height 500ms ease; }\n\n.z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt {\n  padding: 4px 16px 4px 0; }\n  .z-fold.z-fold-ui-material .z-fold-dl > .z-fold-dt .z-fold-icon {\n    position: absolute;\n    right: 8px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 material UI 样式\r\n */\n.z-table.z-table-ui-material {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n", ""]);
 
 // exports
 
@@ -3040,7 +2960,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n * omit 组件样式\r\n */\n.z-omit-line-last {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-omit {\n  width: 100%; }\n  .z-omit-font-width {\n    visibility: hidden;\n    position: absolute;\n    z-index: -1; }\n  .z-omit-line {\n    width: 100%; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 bootstrap UI 样式\r\n */\n.z-table.z-table-ui-bootstrap.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-ui-bootstrap.z-table-border-all .z-table-header-group .z-table-row {\n  border-top: #d6d6d6 1px solid;\n  border-bottom: #d6d6d6 2px solid; }\n", ""]);
 
 // exports
 
@@ -3118,7 +3038,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n.z-search .z-search-match .z-search-list-content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n/**\r\n * search 组件样式\r\n */\n.z-search .z-search-match {\n  position: absolute;\n  top: 32px;\n  left: -1px;\n  z-index: 1;\n  width: 170px;\n  background: #fff;\n  border: #707070 1px solid;\n  box-sizing: border-box;\n  border-bottom-left-radius: 3px;\n  border-bottom-right-radius: 3px;\n  overflow: hidden; }\n  .z-search .z-search-match .z-search-list-content {\n    cursor: default;\n    width: 100%;\n    text-align: left;\n    padding: 8px;\n    box-sizing: border-box; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * menu 组件样式\r\n */\n.z-menu {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  line-height: 0; }\n  .z-menu > .z-menu-ban {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-menu > .z-menu-trigger {\n    position: relative;\n    display: inline-block;\n    line-height: 0; }\n  .z-menu > .z-menu-panel {\n    position: absolute;\n    top: 0;\n    left: 0;\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    line-height: 1;\n    z-index: 2;\n    transition: top 300ms ease, height 300ms ease;\n    will-change: top, height; }\n    .z-menu > .z-menu-panel .z-menu-container > .z-menu-ele {\n      background-color: #fff;\n      padding: 8px; }\n\n.z-menu.z-menu-ui-material.z-menu-theme-primary {\n  vertical-align: middle;\n  border-radius: 3px; }\n  @media only screen and (max-width: 767px) {\n    .z-menu.z-menu-ui-material.z-menu-theme-primary {\n      width: 100%; } }\n", ""]);
 
 // exports
 
@@ -3157,7 +3077,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * list 组件样式\r\n */\n.z-list {\n  position: relative;\n  background-color: #fff;\n  overflow: hidden; }\n  .z-list .z-list-page {\n    background-color: #fff;\n    margin: 0 auto;\n    width: 100%; }\n  .z-list .z-list-ul {\n    list-style-type: none; }\n    .z-list .z-list-ul > .z-list-li:last-child {\n      border: none; }\n  .z-list .z-list-empty-data {\n    padding: 8px 0;\n    text-align: center; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * shift 组件样式\r\n */\n.z-shift .z-shift-before-display {\n  display: none; }\n\n.z-shift .z-shift-before-move {\n  display: none; }\n\n.z-shift .z-shift-before-opacity {\n  display: none; }\n", ""]);
 
 // exports
 
@@ -3196,7 +3116,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件样式\r\n */\n.z-table {\n  position: relative; }\n  .z-table.z-table-stripe .z-table-header-group {\n    background: #f5f5f5; }\n  .z-table.z-table-stripe .z-table-row:hover {\n    background-color: transparent; }\n  .z-table.z-table-stripe .z-table-row:nth-child(2n) {\n    background: #f5f5f5; }\n  .z-table-page {\n    border-top: #d6d6d6 1px solid; }\n  .z-table .z-table-row:hover {\n    background-color: #f5f5f5; }\n  .z-table .z-table-col {\n    text-align: left; }\n  .z-table .z-table-col > div {\n    display: inline-block; }\n  .z-table.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-border-all .z-table-header-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n  .z-table.z-table-border-row .z-table-row-group .z-table-row, .z-table.z-table-border-all .z-table-row-group .z-table-row {\n    border-bottom: #d6d6d6 1px solid; }\n    .z-table.z-table-border-row .z-table-row-group .z-table-row:last-child, .z-table.z-table-border-all .z-table-row-group .z-table-row:last-child {\n      border-bottom: none; }\n  .z-table.z-table-border-col .z-table-row .z-table-col, .z-table.z-table-border-all .z-table-row .z-table-col {\n    border-right: #d6d6d6 1px solid; }\n    .z-table.z-table-border-col .z-table-row .z-table-col:last-child, .z-table.z-table-border-all .z-table-row .z-table-col:last-child {\n      border-right: none; }\n  .z-table .z-table-empty-data {\n    color: #f44336;\n    text-align: center;\n    padding: 8px 0; }\n  .z-table .z-table-wrap {\n    background: #fff;\n    border-collapse: collapse;\n    width: 100%; }\n  .z-table .z-table-header {\n    padding: 16px 24px; }\n  .z-table .z-table-col {\n    padding: 16px 24px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 全局盒子类\r\n */\n.z-css-m-t-half {\n  margin-top: 5px; }\n\n.z-css-m-t {\n  margin-top: 10px; }\n\n.z-css-m-t-double {\n  margin-top: 20px; }\n\n.z-css-m-r-half {\n  margin-right: 5px; }\n\n.z-css-m-r {\n  margin-right: 10px; }\n\n.z-css-m-r-double {\n  margin-right: 20px; }\n\n.z-css-m-b-half {\n  margin-bottom: 5px; }\n\n.z-css-m-b {\n  margin-bottom: 10px; }\n\n.z-css-m-b-double {\n  margin-bottom: 20px; }\n\n.z-css-m-l-half {\n  margin-left: 5px; }\n\n.z-css-m-l {\n  margin-left: 10px; }\n\n.z-css-m-l-double {\n  margin-left: 20px; }\n\n.z-css-p-t-half {\n  padding-top: 4px; }\n\n.z-css-p-t {\n  padding-top: 8px; }\n\n.z-css-p-t-double {\n  padding-top: 16px; }\n\n.z-css-p-r-half {\n  padding-right: 4px; }\n\n.z-css-p-r {\n  padding-right: 8px; }\n\n.z-css-p-r-double {\n  padding-right: 16px; }\n\n.z-css-p-b-half {\n  padding-bottom: 4px; }\n\n.z-css-p-b {\n  padding-bottom: 8px; }\n\n.z-css-p-b-double {\n  padding-bottom: 16px; }\n\n.z-css-p-l-half {\n  padding-left: 4px; }\n\n.z-css-p-l {\n  padding-left: 8px; }\n\n.z-css-p-l-double {\n  padding-left: 16px; }\n", ""]);
 
 // exports
 
@@ -3235,7 +3155,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 material UI 样式\r\n */\n.z-table.z-table-ui-material {\n  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select 组件样式\r\n */\n.z-select > .z-select-selected-box > .z-select-init-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  -webkit-tap-highlight-color: transparent; }\n  .z-select > .z-select-read-only {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-select > .z-select-selected-box {\n    display: inline-block;\n    position: relative;\n    padding: 8px 30px 8px 16px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    width: 100%;\n    box-sizing: border-box;\n    vertical-align: middle; }\n    .z-select > .z-select-selected-box > .z-select-init-text {\n      width: 100%;\n      outline: none;\n      border: none;\n      cursor: default;\n      font-size: 14px; }\n      .z-select > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n        color: #999; }\n    .z-select > .z-select-selected-box > .z-select-caret-down-icon {\n      position: absolute;\n      right: 10px;\n      top: 11px;\n      height: 13px; }\n  .z-select > .z-select-menu {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%; }\n  .z-select .z-select-panel {\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    z-index: 2; }\n    .z-select .z-select-panel .z-select-tag-opt > .z-select-ele {\n      background-color: #fff;\n      padding: 8px; }\n    .z-select .z-select-panel .z-select-opt-comp {\n      position: static;\n      display: block; }\n    .z-select .z-select-panel .z-select-search-input {\n      box-sizing: border-box;\n      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      border-bottom: 1px solid #d6d6d6;\n      display: inline-block;\n      width: 100%; }\n  .z-select.z-select-multiple {\n    position: relative;\n    height: auto;\n    min-height: 36px; }\n    .z-select.z-select-multiple > .z-select-selected-box {\n      box-sizing: border-box;\n      opacity: 1; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text {\n        transition-property: opacity;\n        transition-duration: 150ms; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text.z-select-opacity {\n          opacity: 0;\n          position: absolute;\n          top: 0;\n          left: 0;\n          height: 0;\n          padding: 0; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller {\n        transition: height 300ms ease;\n        will-change: height; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller > .z-scroller-box > .z-select-multiple {\n          margin-right: 24px; }\n      .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li {\n        background-color: #f5f5f5;\n        display: inline-block;\n        margin: 4.5px 3px;\n        padding: 3px; }\n        .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li:hover {\n          background-color: #d6d6d6; }\n    .z-select.z-select-multiple .z-select-panel,\n    .z-select.z-select-multiple .z-select-opt-comp {\n      width: 100%; }\n", ""]);
 
 // exports
 
@@ -3274,7 +3194,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * table 组件的 bootstrap UI 样式\r\n */\n.z-table.z-table-ui-bootstrap.z-table-border-row .z-table-header-group .z-table-row, .z-table.z-table-ui-bootstrap.z-table-border-all .z-table-header-group .z-table-row {\n  border-top: #d6d6d6 1px solid;\n  border-bottom: #d6d6d6 2px solid; }\n", ""]);
+exports.push([module.i, ".z-select.z-select-ui-bootstrap {\n  width: 170px;\n  height: 36px;\n  background-color: #fff;\n  border-width: 1px;\n  border-style: solid;\n  border-color: #2196f3;\n  border-radius: 3px;\n  transition: background-color 150ms ease-out; }\n  .z-select.z-select-ui-bootstrap:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    outline: none; }\n  .z-select.z-select-ui-bootstrap.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n    color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-caret-down-icon {\n    color: #9e9e9e; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-success {\n  border-color: #4caf50; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success:hover {\n    border-color: rgba(8, 127, 35, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);\n    border-color: #087f23; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-danger {\n  border-color: #f44336; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger:hover {\n    border-color: rgba(186, 0, 13, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3);\n    border-color: #ba000d; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-blue {\n  border-color: #2196f3; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-warning {\n  border-color: #ffeb3b; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning:hover {\n    border-color: rgba(200, 185, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning:focus {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3);\n    border-color: #c8b900; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-orange {\n  border-color: #ff5722; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange:hover {\n    border-color: rgba(196, 28, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3);\n    border-color: #c41c00; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-grey {\n  border-color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey:hover {\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3);\n    border-color: #707070; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-light {\n  border-color: #f5f5f5; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3);\n    border-color: #e0e0e0; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-dark {\n  border-color: #424242; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark:hover {\n    border-color: rgba(27, 27, 27, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3);\n    border-color: #1b1b1b; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-black {\n  border-color: #000; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black:hover {\n    border-color: rgba(0, 0, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black:focus {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3);\n    border-color: #000; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-white {\n  border-color: #fff; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white:focus {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);\n    border-color: #e0e0e0; }\n", ""]);
 
 // exports
 
@@ -3313,7 +3233,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * menu 组件样式\r\n */\n.z-menu {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  line-height: 0; }\n  .z-menu > .z-menu-ban {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-menu > .z-menu-trigger {\n    position: relative;\n    display: inline-block;\n    line-height: 0; }\n  .z-menu > .z-menu-panel {\n    position: absolute;\n    top: 0;\n    left: 0;\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    line-height: 1;\n    z-index: 2;\n    transition: top 300ms ease, height 300ms ease;\n    will-change: top, height; }\n    .z-menu > .z-menu-panel .z-menu-container > .z-menu-ele {\n      background-color: #fff;\n      padding: 8px; }\n\n.z-menu.z-menu-ui-material.z-menu-theme-primary {\n  vertical-align: middle;\n  border-radius: 3px; }\n  @media only screen and (max-width: 767px) {\n    .z-menu.z-menu-ui-material.z-menu-theme-primary {\n      width: 100%; } }\n", ""]);
+exports.push([module.i, ".z-select.z-select-ui-material {\n  height: 36px;\n  vertical-align: middle;\n  border-radius: 3px; }\n  .z-select.z-select-ui-material:focus {\n    outline: none; }\n  .z-select.z-select-ui-material.z-select-multiple {\n    width: 250px;\n    height: auto; }\n  .z-select.z-select-ui-material.z-select-selecting {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n    .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box {\n      border-bottom-right-radius: 0;\n      border-bottom-left-radius: 0; }\n      .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box::after {\n        border-bottom-right-radius: 0;\n        border-bottom-left-radius: 0;\n        opacity: 1; }\n  .z-select.z-select-ui-material.z-select-focusing .z-select-selected-box::after {\n    opacity: 1; }\n  .z-select.z-select-ui-material > .z-select-selected-box {\n    border-radius: 3px; }\n    .z-select.z-select-ui-material > .z-select-selected-box::after {\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n      border-radius: 3px;\n      content: '';\n      opacity: 0;\n      transition: opacity 300ms ease-out;\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n      z-index: 1; }\n  .z-select.z-select-ui-material .z-select-opt-comp {\n    border-top: none;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0;\n    border: none; }\n    .z-select.z-select-ui-material .z-select-opt-comp > .z-select-opt-li:first-child {\n      border-top: #e5e5e5 1px solid; }\n", ""]);
 
 // exports
 
@@ -3352,7 +3272,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * shift 组件样式\r\n */\n.z-shift .z-shift-before-display {\n  display: none; }\n\n.z-shift .z-shift-before-move {\n  display: none; }\n\n.z-shift .z-shift-before-opacity {\n  display: none; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select-opt 组件样式\r\n */\n.z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select-opt-ul {\n  display: none;\n  background-color: #fff; }\n  .z-select-opt-ul .z-select-opt-li {\n    position: relative;\n    padding: 8px 16px;\n    box-sizing: border-box;\n    width: 100%;\n    text-align: left;\n    cursor: default;\n    background-color: rgba(245, 245, 245, 0); }\n    .z-select-opt-ul .z-select-opt-li:first-child {\n      padding-top: 8px; }\n    .z-select-opt-ul .z-select-opt-li:last-child {\n      padding-bottom: 8px; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-default-txt {\n      color: #999; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-classify-title {\n      font-weight: bold; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-li-focus {\n      background-color: whitesmoke; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-check {\n      line-height: 1; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n      display: inline-block;\n      vertical-align: middle;\n      width: 100%;\n      box-sizing: border-box;\n      line-height: normal; }\n\n@media only screen and (max-width: 767px) {\n  .z-select-opt-ul {\n    width: 100%; } }\n", ""]);
 
 // exports
 
@@ -3391,7 +3311,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * 全局盒子类\r\n */\n.z-css-m-t-half {\n  margin-top: 5px; }\n\n.z-css-m-t {\n  margin-top: 10px; }\n\n.z-css-m-t-double {\n  margin-top: 20px; }\n\n.z-css-m-r-half {\n  margin-right: 5px; }\n\n.z-css-m-r {\n  margin-right: 10px; }\n\n.z-css-m-r-double {\n  margin-right: 20px; }\n\n.z-css-m-b-half {\n  margin-bottom: 5px; }\n\n.z-css-m-b {\n  margin-bottom: 10px; }\n\n.z-css-m-b-double {\n  margin-bottom: 20px; }\n\n.z-css-m-l-half {\n  margin-left: 5px; }\n\n.z-css-m-l {\n  margin-left: 10px; }\n\n.z-css-m-l-double {\n  margin-left: 20px; }\n\n.z-css-p-t-half {\n  padding-top: 4px; }\n\n.z-css-p-t {\n  padding-top: 8px; }\n\n.z-css-p-t-double {\n  padding-top: 16px; }\n\n.z-css-p-r-half {\n  padding-right: 4px; }\n\n.z-css-p-r {\n  padding-right: 8px; }\n\n.z-css-p-r-double {\n  padding-right: 16px; }\n\n.z-css-p-b-half {\n  padding-bottom: 4px; }\n\n.z-css-p-b {\n  padding-bottom: 8px; }\n\n.z-css-p-b-double {\n  padding-bottom: 16px; }\n\n.z-css-p-l-half {\n  padding-left: 4px; }\n\n.z-css-p-l {\n  padding-left: 8px; }\n\n.z-css-p-l-double {\n  padding-left: 16px; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * list 组件样式\r\n */\n.z-list {\n  position: relative;\n  background-color: #fff;\n  overflow: hidden; }\n  .z-list .z-list-page {\n    background-color: #fff;\n    margin: 0 auto;\n    width: 100%; }\n  .z-list .z-list-ul {\n    list-style-type: none; }\n    .z-list .z-list-ul > .z-list-li:last-child {\n      border: none; }\n  .z-list .z-list-empty-data {\n    padding: 8px 0;\n    text-align: center; }\n", ""]);
 
 // exports
 
@@ -3430,7 +3350,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select 组件样式\r\n */\n.z-select > .z-select-selected-box > .z-select-init-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select {\n  display: inline-block;\n  position: relative;\n  box-sizing: border-box;\n  background-color: #fff;\n  cursor: default;\n  -webkit-tap-highlight-color: transparent; }\n  .z-select > .z-select-read-only {\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    z-index: 5;\n    opacity: 0; }\n  .z-select > .z-select-selected-box {\n    display: inline-block;\n    position: relative;\n    padding: 8px 30px 8px 16px;\n    border-bottom-left-radius: 0;\n    border-bottom-right-radius: 0;\n    width: 100%;\n    box-sizing: border-box;\n    vertical-align: middle; }\n    .z-select > .z-select-selected-box > .z-select-init-text {\n      width: 100%;\n      outline: none;\n      border: none;\n      cursor: default;\n      font-size: 14px; }\n      .z-select > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n        color: #999; }\n    .z-select > .z-select-selected-box > .z-select-caret-down-icon {\n      position: absolute;\n      right: 10px;\n      top: 11px;\n      height: 13px; }\n  .z-select > .z-select-menu {\n    position: absolute;\n    left: 0;\n    top: 0;\n    width: 100%; }\n  .z-select .z-select-panel {\n    overflow: hidden;\n    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n    border-bottom-right-radius: 3px;\n    border-bottom-left-radius: 3px;\n    z-index: 2; }\n    .z-select .z-select-panel .z-select-tag-opt > .z-select-ele {\n      background-color: #fff;\n      padding: 8px; }\n    .z-select .z-select-panel .z-select-opt-comp {\n      position: static;\n      display: block; }\n    .z-select .z-select-panel .z-select-search-input {\n      box-sizing: border-box;\n      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);\n      background-color: #fff;\n      border-bottom: 1px solid #d6d6d6;\n      display: inline-block;\n      width: 100%; }\n  .z-select.z-select-multiple {\n    position: relative;\n    height: auto;\n    min-height: 36px; }\n    .z-select.z-select-multiple > .z-select-selected-box {\n      box-sizing: border-box;\n      opacity: 1; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text {\n        transition-property: opacity;\n        transition-duration: 150ms; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-init-text.z-select-opacity {\n          opacity: 0;\n          position: absolute;\n          top: 0;\n          left: 0;\n          height: 0;\n          padding: 0; }\n      .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller {\n        transition: height 300ms ease;\n        will-change: height; }\n        .z-select.z-select-multiple > .z-select-selected-box > .z-select-scroller > .z-scroller-box > .z-select-multiple {\n          margin-right: 24px; }\n      .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li {\n        background-color: #f5f5f5;\n        display: inline-block;\n        margin: 4.5px 3px;\n        padding: 3px; }\n        .z-select.z-select-multiple > .z-select-selected-box .z-select-multiple-selected-ul > li:hover {\n          background-color: #d6d6d6; }\n    .z-select.z-select-multiple .z-select-panel,\n    .z-select.z-select-multiple .z-select-opt-comp {\n      width: 100%; }\n", ""]);
+exports.push([module.i, ".z-tab {\n  cursor: pointer;\n  width: 100%;\n  -webkit-tap-highlight-color: transparent; }\n  @media only screen and (max-width: 767px) {\n    .z-tab .z-tab-shift > .z-shift-row > .z-shift-col {\n      -webkit-flex-grow: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1; } }\n  .z-tab .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-bottom: #d6d6d6 1px solid; }\n", ""]);
 
 // exports
 
@@ -3469,7 +3389,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".z-select.z-select-ui-bootstrap {\n  width: 170px;\n  height: 36px;\n  background-color: #fff;\n  border-width: 1px;\n  border-style: solid;\n  border-color: #2196f3;\n  border-radius: 3px;\n  transition: background-color 150ms ease-out; }\n  .z-select.z-select-ui-bootstrap:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    outline: none; }\n  .z-select.z-select-ui-bootstrap.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-init-text.z-select-default-text {\n    color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap > .z-select-selected-box > .z-select-caret-down-icon {\n    color: #9e9e9e; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-success {\n  border-color: #4caf50; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success:hover {\n    border-color: rgba(8, 127, 35, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success:focus {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-success.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);\n    border-color: #087f23; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-danger {\n  border-color: #f44336; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger:hover {\n    border-color: rgba(186, 0, 13, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger:focus {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-danger.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(244, 67, 54, 0.3);\n    border-color: #ba000d; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-blue {\n  border-color: #2196f3; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue:hover {\n    border-color: rgba(0, 105, 192, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue:focus {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-blue.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.3);\n    border-color: #0069c0; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-warning {\n  border-color: #ffeb3b; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning:hover {\n    border-color: rgba(200, 185, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning:focus {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-warning.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 235, 59, 0.3);\n    border-color: #c8b900; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-orange {\n  border-color: #ff5722; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange:hover {\n    border-color: rgba(196, 28, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange:focus {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-orange.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.3);\n    border-color: #c41c00; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-grey {\n  border-color: #9e9e9e; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey:hover {\n    border-color: rgba(112, 112, 112, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey:focus {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-grey.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(158, 158, 158, 0.3);\n    border-color: #707070; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-light {\n  border-color: #f5f5f5; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light:focus {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-light.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(245, 245, 245, 0.3);\n    border-color: #e0e0e0; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-dark {\n  border-color: #424242; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark:hover {\n    border-color: rgba(27, 27, 27, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark:focus {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-dark.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(66, 66, 66, 0.3);\n    border-color: #1b1b1b; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-black {\n  border-color: #000; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black:hover {\n    border-color: rgba(0, 0, 0, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black:focus {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-black.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.3);\n    border-color: #000; }\n\n.z-select.z-select-ui-bootstrap.z-select-theme-white {\n  border-color: #fff; }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white:hover {\n    border-color: rgba(224, 224, 224, 0.9); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white:focus {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }\n  .z-select.z-select-ui-bootstrap.z-select-theme-white.z-select-selecting {\n    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);\n    border-color: #e0e0e0; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 material UI 样式\r\n */\n.z-tab.z-tab-ui-material {\n  border-bottom: 1px solid #d6d6d6;\n  position: relative; }\n  .z-tab.z-tab-ui-material .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-material .z-tab-btn > .z-btn-ele {\n      padding: 5px 0; }\n  .z-tab.z-tab-ui-material .z-tab-bar {\n    background-color: #2196f3;\n    height: 2px;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    transition: left 300ms; }\n  .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col {\n    min-width: 72px;\n    text-align: center; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n      color: #2196f3; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-bottom: none; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n      color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-bar {\n  background-color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-bar {\n  background-color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-bar {\n  background-color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-bar {\n  background-color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-bar {\n  background-color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-bar {\n  background-color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-bar {\n  background-color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-bar {\n  background-color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-bar {\n  background-color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n", ""]);
 
 // exports
 
@@ -3508,7 +3428,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".z-select.z-select-ui-material {\n  height: 36px;\n  vertical-align: middle;\n  border-radius: 3px; }\n  .z-select.z-select-ui-material:focus {\n    outline: none; }\n  .z-select.z-select-ui-material.z-select-multiple {\n    width: 250px;\n    height: auto; }\n  .z-select.z-select-ui-material.z-select-selecting {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0; }\n    .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box {\n      border-bottom-right-radius: 0;\n      border-bottom-left-radius: 0; }\n      .z-select.z-select-ui-material.z-select-selecting .z-select-selected-box::after {\n        border-bottom-right-radius: 0;\n        border-bottom-left-radius: 0;\n        opacity: 1; }\n  .z-select.z-select-ui-material.z-select-focusing .z-select-selected-box::after {\n    opacity: 1; }\n  .z-select.z-select-ui-material > .z-select-selected-box {\n    border-radius: 3px; }\n    .z-select.z-select-ui-material > .z-select-selected-box::after {\n      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n      border-radius: 3px;\n      content: '';\n      opacity: 0;\n      transition: opacity 300ms ease-out;\n      width: 100%;\n      height: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n      z-index: 1; }\n  .z-select.z-select-ui-material .z-select-opt-comp {\n    border-top: none;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0;\n    border: none; }\n    .z-select.z-select-ui-material .z-select-opt-comp > .z-select-opt-li:first-child {\n      border-top: #e5e5e5 1px solid; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 bootstrap UI 样式\r\n */\n.z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col {\n  border-top-left-radius: 6px;\n  border-top-right-radius: 6px;\n  border-bottom: 1px solid #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n      color: #2196f3;\n      padding: 5px 0;\n      border-top-left-radius: 6px;\n      border-top-right-radius: 6px; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-ele {\n    min-width: 100px;\n    background-color: #fff;\n    text-align: center;\n    border: transparent 1px solid;\n    border-bottom: none;\n    border-top-left-radius: 6px;\n    border-top-right-radius: 6px; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-color: #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n    color: #0069c0; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active {\n    border-bottom-color: transparent; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n      color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #087f23; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #ba000d; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c8b900; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #0069c0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c41c00; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #1b1b1b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #fff; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n", ""]);
 
 // exports
 
@@ -3547,7 +3467,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * select-opt 组件样式\r\n */\n.z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-select-opt-ul {\n  display: none;\n  background-color: #fff; }\n  .z-select-opt-ul .z-select-opt-li {\n    position: relative;\n    padding: 8px 16px;\n    box-sizing: border-box;\n    width: 100%;\n    text-align: left;\n    cursor: default;\n    background-color: rgba(245, 245, 245, 0); }\n    .z-select-opt-ul .z-select-opt-li:first-child {\n      padding-top: 8px; }\n    .z-select-opt-ul .z-select-opt-li:last-child {\n      padding-bottom: 8px; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-default-txt {\n      color: #999; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-classify-title {\n      font-weight: bold; }\n    .z-select-opt-ul .z-select-opt-li.z-select-opt-li-focus {\n      background-color: whitesmoke; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-check {\n      line-height: 1; }\n    .z-select-opt-ul .z-select-opt-li .z-select-opt-li-text {\n      display: inline-block;\n      vertical-align: middle;\n      width: 100%;\n      box-sizing: border-box;\n      line-height: normal; }\n\n@media only screen and (max-width: 767px) {\n  .z-select-opt-ul {\n    width: 100%; } }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * code 组件样式\r\n */\n.z-code {\n  font-size: 14px;\n  background-color: #fff;\n  border: #6ec6ff 1px solid;\n  border-radius: 3px;\n  position: relative;\n  padding: 8px 16px; }\n  .z-code .z-code-header {\n    color: #d6d6d6;\n    font-weight: bold;\n    text-align: right;\n    margin-bottom: 5px; }\n  .z-code .z-code-article .z-code-pre {\n    width: 100%;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    font-size: 1em;\n    line-height: 16px;\n    -webkit-font-smoothing: initial;\n    -moz-osx-font-smoothing: initial; }\n    .z-code .z-code-article .z-code-pre .z-code-content {\n      position: relative;\n      padding: 0 0 0 50px; }\n  .z-code .z-code-line-num {\n    border-right: 2px #2196f3 solid;\n    font-family: 'Roboto Mono', Monaco, courier, monospace;\n    line-height: 16px;\n    text-align: right;\n    position: absolute;\n    top: 0;\n    left: 0;\n    padding-right: 5px;\n    width: 24px; }\n\n.z-code.z-code-theme-success {\n  border: #80e27e 1px solid; }\n  .z-code.z-code-theme-success .z-code-line-num {\n    border-right: 2px #4caf50 solid; }\n\n.z-code.z-code-theme-danger {\n  border: #ff7961 1px solid; }\n  .z-code.z-code-theme-danger .z-code-line-num {\n    border-right: 2px #f44336 solid; }\n\n.z-code.z-code-theme-blue {\n  border: #6ec6ff 1px solid; }\n  .z-code.z-code-theme-blue .z-code-line-num {\n    border-right: 2px #2196f3 solid; }\n\n.z-code.z-code-theme-warning {\n  border: #ffff72 1px solid; }\n  .z-code.z-code-theme-warning .z-code-line-num {\n    border-right: 2px #ffeb3b solid; }\n\n.z-code.z-code-theme-orange {\n  border: #ff8a50 1px solid; }\n  .z-code.z-code-theme-orange .z-code-line-num {\n    border-right: 2px #ff5722 solid; }\n\n.z-code.z-code-theme-grey {\n  border: #cfcfcf 1px solid; }\n  .z-code.z-code-theme-grey .z-code-line-num {\n    border-right: 2px #9e9e9e solid; }\n\n.z-code.z-code-theme-light {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-light .z-code-line-num {\n    border-right: 2px #f5f5f5 solid; }\n\n.z-code.z-code-theme-dark {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-dark .z-code-line-num {\n    border-right: 2px #424242 solid; }\n\n.z-code.z-code-theme-black {\n  border: #6d6d6d 1px solid; }\n  .z-code.z-code-theme-black .z-code-line-num {\n    border-right: 2px #000 solid; }\n\n.z-code.z-code-theme-white {\n  border: #fff 1px solid; }\n  .z-code.z-code-theme-white .z-code-line-num {\n    border-right: 2px #fff solid; }\n", ""]);
 
 // exports
 
@@ -3586,7 +3506,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".z-tab {\n  cursor: pointer;\n  width: 100%;\n  -webkit-tap-highlight-color: transparent; }\n  @media only screen and (max-width: 767px) {\n    .z-tab .z-tab-shift > .z-shift-row > .z-shift-col {\n      -webkit-flex-grow: 1;\n          -ms-flex-positive: 1;\n              flex-grow: 1; } }\n  .z-tab .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-bottom: #d6d6d6 1px solid; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n.z-nav {\n  position: relative;\n  -webkit-tap-highlight-color: transparent; }\n  .z-nav-arrow {\n    text-align: right; }\n    .z-nav-arrow-fold {\n      -webkit-transform: rotate(0);\n          -ms-transform: rotate(0);\n              transform: rotate(0);\n      transition: -webkit-transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out;\n      transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out; }\n    .z-nav-arrow-spread {\n      -webkit-transform: rotate(-180deg);\n          -ms-transform: rotate(-180deg);\n              transform: rotate(-180deg); }\n  .z-nav .z-nav-trigger {\n    display: none;\n    background-color: #f5f5f5;\n    padding: 8px;\n    border-bottom: #d6d6d6 1px solid;\n    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-nav-sub-fold {\n    margin-left: 0; }\n  .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl {\n    cursor: pointer; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl .z-fold-dt {\n      cursor: pointer;\n      padding: 8px 0; }\n    .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt {\n      background-color: rgba(238, 238, 238, 0);\n      transition: background-color 300ms;\n      padding: 12px 32px 12px 16px;\n      color: rgba(0, 0, 0, 0.87);\n      font-weight: bold; }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt:hover {\n        background-color: rgba(238, 238, 238, 0.8); }\n      .z-nav .z-nav-stage > .z-nav-motion-content > .z-fold > .z-fold-dl > .z-fold-dt .z-nav-icon {\n        right: 16px; }\n  .z-nav .z-nav-stage .z-nav-sub-fold {\n    margin-left: 32px; }\n    .z-nav .z-nav-stage .z-nav-sub-fold a {\n      display: block; }\n  .z-nav .z-nav-close-nav {\n    display: none; }\n\n.z-nav.z-nav-theme-success .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #4caf50; }\n\n.z-nav.z-nav-theme-danger .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f44336; }\n\n.z-nav.z-nav-theme-blue .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #2196f3; }\n\n.z-nav.z-nav-theme-warning .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ffeb3b; }\n\n.z-nav.z-nav-theme-orange .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #ff5722; }\n\n.z-nav.z-nav-theme-grey .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #9e9e9e; }\n\n.z-nav.z-nav-theme-light .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #f5f5f5; }\n\n.z-nav.z-nav-theme-dark .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #424242; }\n\n.z-nav.z-nav-theme-black .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #000; }\n\n.z-nav.z-nav-theme-white .z-nav-stage .z-nav-motion-content .router-link-active {\n  color: #fff; }\n", ""]);
 
 // exports
 
@@ -3625,7 +3545,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 material UI 样式\r\n */\n.z-tab.z-tab-ui-material {\n  border-bottom: 1px solid #d6d6d6;\n  position: relative; }\n  .z-tab.z-tab-ui-material .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-material .z-tab-btn > .z-btn-ele {\n      padding: 5px 0; }\n  .z-tab.z-tab-ui-material .z-tab-bar {\n    background-color: #2196f3;\n    height: 2px;\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    transition: left 300ms; }\n  .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col {\n    min-width: 72px;\n    text-align: center; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n      color: #2196f3; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n      border-bottom: none; }\n    .z-tab.z-tab-ui-material .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n      color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-bar {\n  background-color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-bar {\n  background-color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-bar {\n  background-color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-bar {\n  background-color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-bar {\n  background-color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-bar {\n  background-color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-bar {\n  background-color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-bar {\n  background-color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-bar {\n  background-color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #fff; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-bar {\n  background-color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-material.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-btn-ele {\n  color: #9e9e9e; }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * nav 组件样式\r\n */\n.z-nav.z-nav-device-s {\n  font-size: 16px; }\n  .z-nav.z-nav-device-s .z-nav-trigger {\n    display: block;\n    font-size: 21px; }\n  .z-nav.z-nav-device-s .z-nav-stage {\n    box-sizing: border-box;\n    width: 100%;\n    z-index: 999; }\n    .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-slide {\n      position: fixed;\n      margin: auto;\n      bottom: 0;\n      top: 0;\n      left: 0; }\n      .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-slide > .z-nav-motion-content {\n        background-color: #fff;\n        box-sizing: border-box;\n        padding: 15% 10% 10%;\n        width: 80%;\n        height: 100%;\n        position: absolute;\n        left: 0;\n        top: 0; }\n      .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-slide > .z-nav-motion-empty {\n        background: rgba(0, 0, 0, 0.8);\n        width: 20%;\n        height: 100%;\n        position: absolute;\n        right: 0;\n        top: 0; }\n    .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold {\n      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);\n      position: absolute;\n      overflow: hidden; }\n      .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content {\n        background-color: #fff; }\n        .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-close-nav {\n          display: none; }\n        .z-nav.z-nav-device-s .z-nav-stage.z-nav-animate-fold > .z-nav-motion-content > .z-nav-sub-fold {\n          padding: 24px 24px 40px; }\n    .z-nav.z-nav-device-s .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav {\n      position: absolute;\n      display: block;\n      right: 16px;\n      top: 16px;\n      cursor: pointer; }\n      .z-nav.z-nav-device-s .z-nav-stage > .z-nav-motion-content > .z-nav-close-nav .z-icon-close {\n        font-size: 20px; }\n    .z-nav.z-nav-device-s .z-nav-stage .z-icon-ali {\n      font-size: 20px; }\n    .z-nav.z-nav-device-s .z-nav-stage .z-nav-sub-fold a {\n      color: rgba(0, 0, 0, 0.87);\n      text-decoration: none; }\n", ""]);
 
 // exports
 
@@ -3664,13 +3584,52 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\n/**\r\n * tab 组件的 bootstrap UI 样式\r\n */\n.z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col {\n  border-top-left-radius: 6px;\n  border-top-right-radius: 6px;\n  border-bottom: 1px solid #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn {\n    width: 100%;\n    height: 100%; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n      color: #2196f3;\n      padding: 5px 0;\n      border-top-left-radius: 6px;\n      border-top-right-radius: 6px; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-ele {\n    min-width: 100px;\n    background-color: #fff;\n    text-align: center;\n    border: transparent 1px solid;\n    border-bottom: none;\n    border-top-left-radius: 6px;\n    border-top-right-radius: 6px; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-ele {\n    border-color: #d6d6d6; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n    color: #0069c0; }\n  .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active {\n    border-bottom-color: transparent; }\n    .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n      color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #4caf50; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #087f23; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-success .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f44336; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #ba000d; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-danger .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ffeb3b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c8b900; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-warning .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #2196f3; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #0069c0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-blue .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #ff5722; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #c41c00; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-orange .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #f5f5f5; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-light .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #424242; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #1b1b1b; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-dark .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #9e9e9e; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #707070; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-grey .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #000; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-black .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col .z-tab-btn > .z-btn-ele {\n  color: #fff; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col:hover .z-tab-btn > .z-btn-ele {\n  color: #e0e0e0; }\n\n.z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active:hover .z-tab-btn > .z-btn-ele, .z-tab.z-tab-ui-bootstrap.z-tab-theme-white .z-tab-shift > .z-shift-row > .z-shift-col.z-tab-active .z-tab-btn > .z-btn-ele {\n  color: rgba(0, 0, 0, 0.87); }\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\n/*\r\n * omit 组件样式\r\n */\n.z-omit-line-last {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n.z-omit {\n  width: 100%; }\n  .z-omit-font-width {\n    visibility: hidden;\n    position: absolute;\n    z-index: -1; }\n  .z-omit-line {\n    width: 100%; }\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(123);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(2)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "@charset \"UTF-8\";\n.z-search .z-search-match .z-search-list-content {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis; }\n\n/**\r\n * search 组件样式\r\n */\n.z-search .z-search-match {\n  position: absolute;\n  top: 32px;\n  left: -1px;\n  z-index: 1;\n  width: 170px;\n  background: #fff;\n  border: #707070 1px solid;\n  box-sizing: border-box;\n  border-bottom-left-radius: 3px;\n  border-bottom-right-radius: 3px;\n  overflow: hidden; }\n  .z-search .z-search-match .z-search-list-content {\n    cursor: default;\n    width: 100%;\n    text-align: left;\n    padding: 8px;\n    box-sizing: border-box; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3820,28 +3779,28 @@ external_root_Vue_commonjs2_vue_amd_vue_commonjs_vue_default.a.directive('clickP
 
 
 // EXTERNAL MODULE: ./src/scss/transition.scss
-var transition = __webpack_require__(16);
+var transition = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./src/scss/common/main.scss
 var main = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./src/scss/util.scss
-var util = __webpack_require__(20);
+var util = __webpack_require__(21);
 
 // EXTERNAL MODULE: ./src/scss/grid.scss
-var grid = __webpack_require__(21);
+var grid = __webpack_require__(22);
 
 // EXTERNAL MODULE: ./src/component/Btn/Btn.scss
-var Btn = __webpack_require__(22);
+var Btn = __webpack_require__(23);
 
 // EXTERNAL MODULE: ./src/component/Btn/Btn.material.scss
-var Btn_material = __webpack_require__(24);
+var Btn_material = __webpack_require__(25);
 
 // EXTERNAL MODULE: ./src/component/Btn/Btn.bootstrap.scss
-var Btn_bootstrap = __webpack_require__(26);
+var Btn_bootstrap = __webpack_require__(27);
 
 // EXTERNAL MODULE: ./src/component/Btn/Btn.pure.scss
-var Btn_pure = __webpack_require__(28);
+var Btn_pure = __webpack_require__(29);
 
 // CONCATENATED MODULE: ./src/util/dom/position.js
 /**
@@ -4230,7 +4189,7 @@ var hub_actions, hub_mutations;
   }), hub_mutations)
 });
 // EXTERNAL MODULE: ./src/vuex/module/comp/type.json
-var comp_type = __webpack_require__(10);
+var comp_type = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./src/vuex/module/comp/comp.js
 
@@ -4279,7 +4238,7 @@ var commonStore = new external_root_Vuex_commonjs2_vuex_amd_vuex_commonjs_vuex_d
 /* harmony default export */ var store = (commonStore);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(11);
+var toConsumableArray = __webpack_require__(10);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: ./src/util/dom/attr.js
@@ -4702,19 +4661,19 @@ var throttle = function throttle(func) {
   }
 });
 // EXTERNAL MODULE: ./src/component/Loading/Loading.scss
-var Loading = __webpack_require__(33);
+var Loading = __webpack_require__(34);
 
 // EXTERNAL MODULE: ./src/component/Loading/Loading.bootstrap.scss
-var Loading_bootstrap = __webpack_require__(35);
+var Loading_bootstrap = __webpack_require__(36);
 
 // EXTERNAL MODULE: ./src/component/Loading/Loading.material.scss
-var Loading_material = __webpack_require__(37);
+var Loading_material = __webpack_require__(38);
 
 // EXTERNAL MODULE: ./src/asset/icon/iconfont.svg.js
-var iconfont_svg = __webpack_require__(39);
+var iconfont_svg = __webpack_require__(40);
 
 // EXTERNAL MODULE: ./src/component/Icon/Icon.scss
-var Icon = __webpack_require__(40);
+var Icon = __webpack_require__(41);
 
 // CONCATENATED MODULE: ./src/component/Icon/Icon.render.js
 /**
@@ -4740,17 +4699,41 @@ var Icon = __webpack_require__(40);
   return h('div', {
     class: [this.cPrefix, this.sizeClass, this.xclass(this.themeClass)],
     style: {
-      color: this.color
+      color: this.color,
+      'font-size': "".concat(this.fontSize, "px")
     }
   }, [h('div', {
     class: this.xclass('stage')
   }, iconChildren)]);
 });
+// CONCATENATED MODULE: ./src/util/data/data.js
+/**
+ * analyzing data types
+ *
+ * @param variable
+ * @return {String} - data type.
+ *
+ * @example
+ * type({}) // "object"
+ * type([]) // "array"
+ * type(5) // "number"
+ * type(null) // "null"
+ * type() // "undefined"
+ * type(/abcd/) // "regex"
+ * type(new Date()) // "date"
+ */
+var dataType = function dataType(variable) {
+  var str = Object.prototype.toString.call(variable);
+  return str.match(/\[object (.*?)\]/)[1].toLowerCase();
+};
+
+
 // CONCATENATED MODULE: ./src/component/Icon/Icon.js
 /**
  * icon 组件
  *
  * @prop theme - 主题
+ * @prop fontSize - 自定义字体图标大小
  * @prop size - 大小(xs, s, m, l, xl), 默认 s
  * @prop color - 颜色 16 进制
  * @prop type - 字符图标类型 (字符图标的 class 名的前缀，用户自己引入的字符图标的前缀)
@@ -4758,6 +4741,7 @@ var Icon = __webpack_require__(40);
  *
  */
  // iconfont 的 svg 图标文件
+
 
 
 
@@ -4773,6 +4757,9 @@ var TYPE_FA = 'fa';
     color: {
       type: String,
       default: ''
+    },
+    fontSize: {
+      type: Number
     },
     size: {
       type: String,
@@ -5005,7 +4992,7 @@ var regenerator = __webpack_require__(5);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(7);
+var asyncToGenerator = __webpack_require__(6);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // CONCATENATED MODULE: ./src/util/uid.js
@@ -5170,7 +5157,7 @@ function uid() {
                   return _context.stop();
               }
             }
-          }, _callee, this, [[0, 18]]);
+          }, _callee, null, [[0, 18]]);
         }));
 
         return function (_x, _x2) {
@@ -5265,7 +5252,7 @@ function uid() {
                   return _context2.stop();
               }
             }
-          }, _callee2, this, [[0, 18]]);
+          }, _callee2, null, [[0, 18]]);
         }));
 
         return function (_x3, _x4) {
@@ -6128,7 +6115,7 @@ var Check_render_checkAllEle = function checkAllEle(h) {
 /* harmony default export */ var Row_render = (function (h) {
   var classOpt = [];
   var $slots = this.$slots.default;
-  $slots = $slots.filter(function (item) {
+  $slots = !Array.isArray($slots) ? null : $slots.filter(function (item) {
     return !item.text;
   });
   return h('div', {
@@ -6201,7 +6188,7 @@ var Message_m = __webpack_require__(54);
  */
 /* harmony default export */ var Message_render = (function (h) {
   return h('div', {
-    class: [this.cPrefix, this.xclass([this.themeClass, 'type-' + this.messageType])],
+    class: [this.cPrefix, this.xclass([this.themeClass, 'type-' + this.messageType, 'align-' + this.stateAlign])],
     directives: [{
       name: 'show',
       value: this.messageDisplay
@@ -6215,7 +6202,7 @@ var Message_m = __webpack_require__(54);
       theme: this.theme
     },
     ref: 'pop'
-  }, this.$slots.default ? this.$slots.default : this.infoMessage)]);
+  }, this.$slots.default ? this.$slots.default : this.stateMessage)]);
 });
 // EXTERNAL MODULE: ./src/component/Pop/Pop.scss
 var Pop = __webpack_require__(56);
@@ -6778,6 +6765,7 @@ var popComp = {
 /**
  * message 提示组件
  *
+ * @prop align - 信息的两边对齐方式 （left, center, right)
  * @prop message - 信息
  * @prop direction - 信息出现方向
  * @prop position - 信息展示的位置
@@ -6799,6 +6787,11 @@ var messageComp = {
   name: 'Message',
   render: Message_render,
   mixins: [base],
+  watch: {
+    'align': function align(val) {
+      this.stateAlign = val;
+    }
+  },
   components: {
     pop: Pop_Pop
   },
@@ -6819,6 +6812,10 @@ var messageComp = {
     }
   },
   props: {
+    align: {
+      type: String,
+      default: 'left'
+    },
     type: {
       type: String,
       default: 'pop'
@@ -6844,7 +6841,8 @@ var messageComp = {
   },
   data: function data() {
     return {
-      infoMessage: '',
+      stateAlign: 'left',
+      stateMessage: '',
       // 需要展示的信息
       messageType: '',
       // 信息类型
@@ -6868,7 +6866,8 @@ var messageComp = {
      * 设置数据
      */
     _setDataOpt: function _setDataOpt() {
-      this.infoMessage = this.message;
+      this.stateMessage = this.message;
+      this.stateAlign = this.align;
     },
 
     /**
@@ -6932,7 +6931,7 @@ var messageComp = {
      */
     info: function info(text) {
       if (text === '' || text) {
-        this.infoMessage = text;
+        this.stateMessage = text;
       }
 
       return this;
@@ -6952,11 +6951,13 @@ var messageComp = {
           _ref5$type = _ref5.type,
           type = _ref5$type === void 0 ? 'pop' : _ref5$type,
           _ref5$message = _ref5.message,
-          message = _ref5$message === void 0 ? '' : _ref5$message;
+          message = _ref5$message === void 0 ? '' : _ref5$message,
+          align = _ref5.align;
 
-      this.infoMessage = message;
+      this.stateMessage = message;
       this.hideCb = hideCb;
       this.messageType = type;
+      align && (this.stateAlign = align);
       return this;
     }
   }
@@ -6987,15 +6988,15 @@ var tip_createTip = function createTip() {
         return "".concat(this.compPrefix, "-tip");
       }
     },
-    components: {
-      message: Message_Message
-    },
     store: store,
     render: function render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [h('message', {
-        ref: 'tip'
+      return h("div", {
+        "class": [this.cPrefix]
+      }, [h(Message_Message, {
+        "attrs": {
+          "align": 'center'
+        },
+        "ref": 'tip'
       })]);
     },
     mounted: function mounted() {
@@ -7010,6 +7011,10 @@ var commonVuex = new external_root_Vue_commonjs2_vue_amd_vue_commonjs_vue_defaul
 });
 /**
  * 调用 tip
+ *
+ * @param {string, object} option -
+ *                                 message - 信息
+ *                                 align - 信息的两边对齐方式 （left, center, right)
  **/
 
 var tip_tip = function tip() {
@@ -7028,12 +7033,13 @@ var tip_tip = function tip() {
       message: opt.toString()
     };
   } else {
-    option = opt;
+    option = Object.assign({}, option, opt);
   }
 
   return commonVuex.$store.getters[type.tip.get].$refs.tip.set({
     message: option.message,
     type: option.type,
+    align: option.align,
     hideCb: function hideCb() {
       tiping = false;
       option.cb && option.cb();
@@ -9054,8 +9060,558 @@ var KEYUP_INTERVAL_TIME = 100;
     this.$store.dispatch(hub_type.input.add, this);
   }
 });
+// EXTERNAL MODULE: ./src/component/Upload/Upload.scss
+var Upload = __webpack_require__(68);
+
+// CONCATENATED MODULE: ./src/component/Message/toast.js
+/**
+ * toast 底部提示组件
+ */
+
+
+
+
+
+var toasting = false;
+var toastHub = [];
+/**
+ * 创建 toast 组件的实例
+ **/
+
+var toast_createToast = function createToast() {
+  var toastCompVm = new external_root_Vue_commonjs2_vue_amd_vue_commonjs_vue_default.a({
+    name: 'toast',
+    mixins: [base],
+    computed: {
+      cPrefix: function cPrefix() {
+        return "".concat(this.compPrefix, "-toast");
+      }
+    },
+    components: {
+      message: Message_Message
+    },
+    store: store,
+    render: function render(h) {
+      return h("div", {
+        "class": [this.cPrefix]
+      }, [h(Message_Message, {
+        "attrs": {
+          "position": 'bottom',
+          "align": 'center'
+        },
+        "ref": 'toast'
+      })]);
+    },
+    mounted: function mounted() {
+      this.$store.dispatch(type.toast.add, this);
+    }
+  }).$mount();
+  document.body.appendChild(toastCompVm.$el);
+};
+
+var toast_commonVuex = new external_root_Vue_commonjs2_vue_amd_vue_commonjs_vue_default.a({
+  store: store
+});
+/**
+ * 调用 toast
+ *
+ * @param {string, object} option -
+ *                                 message - 信息
+ *                                 align - 信息的两边对齐方式 （left, center, right)
+ **/
+
+var toast_toast = function toast() {
+  var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+  if (toasting) {
+    toastHub.push(opt);
+    return false;
+  }
+
+  toasting = true;
+  var option = {};
+
+  if (typeof opt === 'string') {
+    option = {
+      message: opt.toString()
+    };
+  } else {
+    option = Object.assign({}, option, opt);
+  }
+
+  return toast_commonVuex.$store.getters[type.toast.get].$refs.toast.set({
+    message: option.message,
+    type: option.type,
+    align: option.align,
+    hideCb: function hideCb() {
+      toasting = false;
+      option.cb && option.cb();
+
+      if (toastHub.length > 0) {
+        return toast(toastHub.shift());
+      }
+    }
+  }).show();
+};
+
+window.addEventListener('load', function () {
+  toast_createToast();
+});
+/* harmony default export */ var Message_toast = (toast_toast);
+// CONCATENATED MODULE: ./src/component/Upload/Upload.jsx
+
+
+
+
+/**
+ * upload 组件
+ * 目前只支持上传图片
+ *
+ * @prop crop - crop 组件
+ * @prop hidden - 隐藏
+ * @prop hint - 上传说明文字
+ * @prop item - 已上传文件的信息 (src, title, alt)
+ * @prop max - 最大上传数量
+ * @prop min - 至少上传数量
+ * @prop param - 上传图片参数名
+ * @prop preview - 开启预览功能
+ * @prop regex - 用正则过滤上传的文件类型, 不传就默认用本组件的过滤原则
+ * @prop space - 文件大小（M）
+ * @prop size - 图片尺寸（像素）：宽 * 高（300*200）
+ * @prop theme - 主题
+ * @prop type - 上传类型 (img | doc)
+ * @prop ui - UI 规范
+ *
+ * @event change - 已上传文件的数量变化
+ *
+ * @slot crop - 开启图片裁剪
+ */
+
+
+
+
+
+
+
+
+
+
+var TYPE_IMG = 'img';
+var TYPE_DOC = 'doc';
+/* harmony default export */ var Upload_Upload = ({
+  name: 'Upload',
+  mixins: [base, mixin_form],
+  props: {
+    crop: Object,
+    errorMessage: {
+      type: String
+    },
+    hint: String,
+    item: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    max: {
+      type: Number,
+      default: 1
+    },
+    min: Number,
+    param: String,
+    preview: {
+      type: Boolean,
+      default: false
+    },
+    regex: Object,
+    size: String,
+    space: Number,
+    type: {
+      type: String,
+      default: TYPE_IMG
+    }
+  },
+  data: function data() {
+    return {
+      cropEnable: false,
+      cropDisplay: false,
+      dangerHint: '',
+      fileTypeHint: '',
+      loading: true,
+      previewSrc: '',
+      stateItem: [],
+      typeRegex: '',
+      // 文件类型正则
+      value: []
+    };
+  },
+  computed: {
+    cPrefix: function cPrefix() {
+      // 组件类名的前缀
+      return "".concat(this.compPrefix, "-upload");
+    },
+    isImg: function isImg() {
+      return this.type === TYPE_IMG;
+    },
+    isDoc: function isDoc() {
+      return this.type === TYPE_DOC;
+    },
+    uploadAccept: function uploadAccept() {
+      switch (this.type) {
+        case TYPE_IMG:
+          return 'image/gif,image/jpeg,image/jpg,image/png';
+
+        case TYPE_DOC:
+          return 'application/pdf, application/msword';
+
+        default:
+          return '';
+      }
+    },
+    selectFileDisplay: function selectFileDisplay() {
+      return this.item.length < this.max;
+    }
+  },
+  watch: {
+    'item': function item(val) {
+      this.stateItem = val;
+    },
+    'stateItem': function stateItem(val) {
+      this.value = val.map(function (item) {
+        return item.src;
+      });
+    }
+  },
+  methods: {
+    _initComp: function _initComp() {
+      this._initRegex();
+    },
+
+    /**
+     * 初始化文件类型的正则
+     *
+     * @return {Object} - this - 组件
+     */
+    _initRegex: function _initRegex() {
+      if (this.regex) {
+        this.typeRegex = this.regex;
+        return true;
+      }
+
+      switch (this.type) {
+        case TYPE_IMG:
+          this.typeRegex = /(.jpe?g|.png|.gif)$/i;
+          this.fileTypeHint = '仅支持jpg, png, gif 格式图片!';
+          break;
+
+        case TYPE_DOC:
+          this.typeRegex = /(.pdf|.doc|.txt)$/i;
+          this.fileTypeHint = '仅支持doc, pdf, txt 格式文档!';
+          break;
+
+        default:
+          break;
+      }
+    },
+    _initCrop: function _initCrop() {},
+    _rebuildInput: function _rebuildInput() {
+      if (!this.$refs.input) {
+        return false;
+      }
+
+      this.$refs.input.value = '';
+    },
+
+    /**
+     * 检查图片尺寸
+     *
+     * @return {Object} - this - 组件
+     */
+    _checkImgSize: function _checkImgSize(height, width) {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        if (!_this.size) {
+          return reject(new Error('No set props size!'));
+        }
+
+        var maxWidth = _this.size.split('*')[0];
+
+        var maxHeight = _this.size.split('*')[1];
+
+        if (height > maxHeight || width > maxWidth) {
+          Message_tip("\u56FE\u7247\u5C3A\u5BF8\u5E94\u5C0F\u4E8E".concat(_this.size));
+          return reject(new Error('Oversize!'));
+        }
+
+        resolve('Passed!');
+      });
+    },
+    _changeHandler: function _changeHandler(event) {
+      var _this2 = this;
+
+      var files = Array.of.apply(Array, toConsumableArray_default()(event.target.files));
+      files.forEach(function (item, index) {
+        var file = item;
+
+        if (!_this2.typeRegex.test(file.name)) {
+          _this2._rebuildInput();
+
+          return Message_tip(_this2.fileTypeHint);
+        }
+
+        if (_this2.space && _this2.isImg && file.size > 1024 * 1024 * _this2.space) {
+          _this2._rebuildInput();
+
+          return Message_tip("\u4E0A\u4F20\u56FE\u7247\u5E94\u5C0F\u4E8E ".concat(_this2.space, " M"));
+        }
+
+        var eleImage = new Image();
+        var reader = new FileReader();
+        var currentIndex = _this2.stateItem.push({
+          src: '',
+          file: file,
+          index: index,
+          title: file.name,
+          imgEle: eleImage
+        }) - 1;
+
+        eleImage.onload = function () {
+          var item = _this2.stateItem[currentIndex];
+          var self = _this2;
+          return function () {
+            self.stateItem.splice(currentIndex, 1, Object.assign({}, item, {
+              height: this.height,
+              width: this.width
+            })); // self._checkImgSize(this.height, this.width)
+
+            self.$emit('change', {
+              item: self.stateItem,
+              emitter: self
+            });
+          };
+        }();
+
+        reader.onload = function (event) {
+          var src = event.target.result;
+          var item = _this2.stateItem[currentIndex];
+          item.src = src;
+          item.imgEle.src = src;
+          _this2.cropDisplay = true;
+        };
+
+        reader.readAsDataURL(file);
+      });
+    },
+
+    /**
+     * 验证已上传的文件是否达到要求
+     *
+     * @return {Boolean}
+     */
+    verify: function verify() {
+      this.dangerHint = this.errorMessage || "\u81F3\u5C11\u4E0A\u4F20 ".concat(this.min, " \u5F20\u56FE\u7247");
+      return this.item.length >= this.min;
+    },
+
+    /**
+     * 删除上传的文件
+     *
+     * @return {Object} - this - 组件
+     */
+    delete: function _delete(index) {
+      this.stateItem.splice(index, 1);
+
+      this._rebuildInput();
+
+      return this.$emit('change', {
+        item: this.stateItem,
+        emitter: this
+      });
+    },
+
+    /**
+     * 预览文件
+     */
+    previewFile: function previewFile(index) {
+      this.previewSrc = this.stateItem[index].src;
+    },
+
+    /**
+     * 完成裁剪
+     */
+    finishCrop: function () {
+      var _finishCrop = asyncToGenerator_default()(
+      /*#__PURE__*/
+      regenerator_default.a.mark(function _callee() {
+        var itemLength, item, imgData;
+        return regenerator_default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                itemLength = this.stateItem.length;
+                item = this.stateItem[itemLength - 1];
+                _context.next = 4;
+                return this.crop.getData();
+
+              case 4:
+                imgData = _context.sent;
+                this.stateItem.splice(itemLength - 1, 1, Object.assign({}, item, {
+                  src: imgData
+                }));
+                this.cropDisplay = false;
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function finishCrop() {
+        return _finishCrop.apply(this, arguments);
+      }
+
+      return finishCrop;
+    }(),
+
+    /**
+     * 隐藏裁剪
+     */
+    hideCrop: function hideCrop() {
+      this.cropDisplay = false;
+    }
+  },
+  mounted: function mounted() {
+    this.cropEnable = !!this.$slots.crop;
+  },
+  update: function update() {
+    this.cropEnable = !!this.$slots.crop;
+  },
+  render: function render() {
+    var _this3 = this;
+
+    var h = arguments[0];
+    var pickEle = this.selectFileDisplay ? h("div", {
+      "class": this.xclass('pick')
+    }, [h(Loading_Loading, {
+      "ref": 'loading'
+    }), this.loading && h("div", [h(Icon_Icon, {
+      "class": this.xclass('pick-plus'),
+      "attrs": {
+        "kind": 'plus'
+      }
+    }), h("input", {
+      "class": this.xclass('pick-input'),
+      "attrs": {
+        "type": 'file',
+        "accept": this.uploadAccept
+      },
+      "ref": 'input',
+      "on": {
+        "change": function change(event) {
+          return _this3._changeHandler(event);
+        }
+      }
+    })])]) : null;
+    return h("div", {
+      "class": this.cPrefix,
+      "style": {
+        visibility: this.hidden ? 'hidden' : 'visible'
+      }
+    }, [h(Row, {
+      "attrs": {
+        "justify": 'start'
+      },
+      "class": this.xclass('showcase')
+    }, [this.stateItem.map(function (item, index) {
+      return h(Col, {
+        "class": _this3.xclass('showcase-ele')
+      }, [h("div", {
+        "on": {
+          "click": function click() {
+            return _this3.delete(index);
+          }
+        }
+      }, [h(Icon_Icon, {
+        "class": _this3.xclass('showcase-delete'),
+        "attrs": {
+          "kind": 'circle-close-o'
+        }
+      })]), h("div", {
+        "class": _this3.xclass('showcase-content'),
+        "on": {
+          "click": function click() {
+            return _this3.previewFile(index);
+          }
+        }
+      }, [_this3.isImg && h("img", {
+        "attrs": {
+          "src": item.src,
+          "title": item.name
+        },
+        "style": {
+          width: item.width >= item.height ? '100%' : 'auto',
+          height: item.width >= item.height ? 'auto' : '100%'
+        }
+      })])]);
+    }), this.max !== this.stateItem.length && h(Col, [pickEle])]), h("div", {
+      "class": this.xclass('hint')
+    }, [this.hint]), this.preview && this.previewSrc && h("div", {
+      "ref": 'imgPreview',
+      "class": this.xclass('preview')
+    }, [h("div", {
+      "class": this.xclass('preview-layover')
+    }), h("div", {
+      "class": this.xclass('preview-close'),
+      "on": {
+        "click": function click() {
+          return _this3.previewSrc = '';
+        }
+      }
+    }, [h(Icon_Icon, {
+      "attrs": {
+        "color": '#fff',
+        "kind": 'circle-close-o',
+        "fontSize": 40
+      }
+    })]), h("img", {
+      "attrs": {
+        "src": this.previewSrc
+      }
+    })]), this.cropEnable && this.cropDisplay && h("div", {
+      "class": this.xclass('crop')
+    }, [h("div", [this.$slots.crop]), h(Row, {
+      "class": this.xclass('crop-operation')
+    }, [h(Col, [h("div", {
+      "on": {
+        "click": function click() {
+          return _this3.hideCrop();
+        }
+      }
+    }, [h(Btn_Btn, {
+      "attrs": {
+        "type": 'text',
+        "value": '取消',
+        "theme": 'grey'
+      }
+    })])]), h(Col, [h("div", {
+      "on": {
+        "click": function click() {
+          return _this3.finishCrop();
+        }
+      }
+    }, [h(Btn_Btn, {
+      "attrs": {
+        "type": 'text',
+        "value": '确定'
+      }
+    })])])])])]);
+  }
+});
 // EXTERNAL MODULE: ./src/component/Bubble/Bubble.scss
-var Bubble = __webpack_require__(68);
+var Bubble = __webpack_require__(70);
 
 // CONCATENATED MODULE: ./src/component/Bubble/Bubble.render.js
 /**
@@ -9583,16 +10139,16 @@ var ARROW_HEIGHT = 20;
   }
 });
 // EXTERNAL MODULE: ./src/component/Modal/Modal.scss
-var Modal = __webpack_require__(70);
+var Modal = __webpack_require__(72);
 
 // EXTERNAL MODULE: ./src/component/Modal/Modal.m.scss
-var Modal_m = __webpack_require__(72);
+var Modal_m = __webpack_require__(74);
 
 // EXTERNAL MODULE: ./src/component/Modal/Modal.material.scss
-var Modal_material = __webpack_require__(74);
+var Modal_material = __webpack_require__(76);
 
 // EXTERNAL MODULE: ./src/component/Modal/Modal.bootstrap.scss
-var Modal_bootstrap = __webpack_require__(76);
+var Modal_bootstrap = __webpack_require__(78);
 
 // CONCATENATED MODULE: ./src/component/Modal/Modal.header.render.js
 /* harmony default export */ var Modal_header_render = (function (h) {
@@ -9974,7 +10530,7 @@ var Modal_bootstrap = __webpack_require__(76);
   }
 });
 // EXTERNAL MODULE: ./src/component/Scroller/Scroller.scss
-var Scroller = __webpack_require__(78);
+var Scroller = __webpack_require__(80);
 
 // CONCATENATED MODULE: ./src/component/Scroller/Scroller.api.js
 /**
@@ -10372,7 +10928,7 @@ var SCROLL_PIXEL = 10;
   })]);
 });
 // EXTERNAL MODULE: ./src/config/keyCode.json
-var keyCode = __webpack_require__(6);
+var keyCode = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/component/Scroller/Scroller.js
 /**
@@ -11181,261 +11737,8 @@ var modalComp = {
   }
 };
 /* harmony default export */ var Modal_Modal = (modalComp);
-// EXTERNAL MODULE: ./src/component/Code/Code.scss
-var Code = __webpack_require__(80);
-
-// CONCATENATED MODULE: ./src/component/Code/Code.render.js
-/**
- * code.render.js
- */
-/* harmony default export */ var Code_render = (function (h) {
-  var $slots = this.$slots || {};
-  var codeStr = $slots.default ? $slots.default[0].text : this.code;
-  var lineNumEle = [];
-  var matches = codeStr ? codeStr.match(/\n/g) : [];
-  this.lineNum = matches ? matches.length + 1 : 1;
-
-  for (var i = 1, len = this.lineNum; i <= len; i++) {
-    lineNumEle.push(h('li', i));
-  }
-
-  return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
-  }, [h('header', {
-    class: [this.xclass('header')]
-  }, this.type), h('article', {
-    class: [this.xclass('article')],
-    ref: 'article'
-  }, [h('pre', {
-    class: [this.xclass('pre')],
-    style: {
-      width: this.preWidth + 'px'
-    }
-  }, [h('scroller', {
-    props: {
-      height: 200,
-      width: '100%'
-    },
-    ref: 'scroller'
-  }, [h('div', {
-    class: [this.xclass('content')]
-  }, [$slots.default || this.code, h('aside', {
-    class: [this.xclass('line-num')]
-  }, [h('ul', {
-    class: [this.prefix('css-ul')]
-  }, lineNumEle)])])])])]), h('footer', {
-    class: [this.xclass('footer')]
-  }, $slots.footer || this.footer)]);
-});
-// CONCATENATED MODULE: ./src/component/Code/Code.js
-/**
- * code 组件
- *
- * @prop code - 代码
- * @prop type - 语言类型
- *
- */
-
-
-
-
-/* harmony default export */ var Code_Code = ({
-  name: 'Code',
-  mixins: [base],
-  render: Code_render,
-  components: {
-    scroller: Scroller_Scroller
-  },
-  props: {
-    code: {
-      type: String,
-      default: ''
-    },
-    type: {
-      type: String,
-      default: 'text'
-    }
-  },
-  data: function data() {
-    return {
-      lineNum: 3,
-      preWidth: 0 // pre 的宽度
-
-    };
-  },
-  computed: {
-    // 组件类名的前缀
-    cPrefix: function cPrefix() {
-      return "".concat(this.compPrefix, "-code");
-    }
-  },
-  watch: {
-    deviceSize: function deviceSize() {
-      this._initComp();
-    }
-  },
-  methods: {
-    _initComp: function _initComp() {
-      this.preWidth = this.$refs.article.offsetWidth;
-    },
-    _binder: function _binder() {
-      var _this = this;
-
-      this.$refs.scroller.$on('change', function () {
-        _this.preWidth = _this.$refs.article.offsetWidth;
-      });
-    }
-  }
-});
-// EXTERNAL MODULE: ./src/component/Nav/Nav.scss
-var Nav = __webpack_require__(82);
-
-// EXTERNAL MODULE: ./src/component/Nav/Nav.m.scss
-var Nav_m = __webpack_require__(84);
-
-// CONCATENATED MODULE: ./src/component/Nav/Nav.render.js
-
-
-/**
- * nav.render.js
- */
-function foldContent(h, foldList) {
-  var _this = this;
-
-  if (!Array.isArray(foldList) || foldList.length === 0) {
-    return false;
-  }
-
-  var foldChildren = [];
-  foldList.forEach(function (item, index) {
-    var subNav = item.sub;
-    var flodNum = index + 1;
-    var contentChildren = [];
-
-    if (Array.isArray(subNav) && subNav.length > 0) {
-      contentChildren = foldContent.call(_this, h, subNav);
-      foldChildren.push(h('fold-title', {
-        props: {
-          ui: _this.ui,
-          theme: _this.theme
-        },
-        slot: 'title-' + flodNum
-      }, item.name));
-      foldChildren.push(h('fold-content', {
-        props: {
-          ui: _this.ui,
-          theme: _this.theme
-        },
-        slot: 'content-' + flodNum
-      }, [contentChildren]));
-    } else {
-      foldChildren.push(h('fold-title', {
-        props: {
-          ui: _this.ui,
-          theme: _this.theme
-        },
-        slot: 'title-' + flodNum
-      }, [h('router-link', {
-        props: {
-          to: item.route
-        },
-        nativeOn: {
-          click: function click() {
-            if (_this.isSmallDevice) {
-              _this.hide();
-            }
-          }
-        }
-      }, item.name)]));
-    }
-  });
-  return h('fold', {
-    class: [this.xclass('sub-fold')],
-    props: {
-      only: this.isSmallDevice ? true : this.only,
-      spreadAll: this.isSmallDevice ? false : this.spreadAll,
-      ui: this.ui,
-      theme: this.theme
-    },
-    ref: 'fold'
-  }, foldChildren);
-}
-
-/* harmony default export */ var Nav_render = (function (h) {
-  var navStage = [];
-  var contentEle = h('div', {
-    class: [this.xclass('motion-content')],
-    ref: 'motionContent'
-  }, [h('div', {
-    class: [this.xclass('close-nav')],
-    on: {
-      click: this.hide
-    }
-  }, [h('icon', {
-    props: {
-      kind: 'close',
-      size: 'xs',
-      ui: this.ui,
-      theme: this.theme
-    }
-  })]), this.$slots.start, foldContent.call(this, h, this.initOpt), this.$slots.end]);
-
-  if (this.isVerticalType) {
-    navStage.push(h('motion-fold', {
-      ref: 'motion'
-    }, [h('div', {
-      class: [this.xclass('stage'), this.xclass("animate-".concat(this.navAnimate))]
-    }, [contentEle])]));
-  } else {
-    navStage.push(h('motion-slide', {
-      props: {
-        direction: 'east',
-        global: true,
-        offset: 0
-      },
-      ref: 'motion'
-    }, [h('div', {
-      class: [this.xclass('stage'), this.xclass("animate-".concat(this.navAnimate))]
-    }, [contentEle, h('div', {
-      class: [this.xclass('motion-empty')],
-      on: {
-        click: this.hide
-      }
-    })])]));
-  }
-
-  return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass), defineProperty_default()({}, this.xclass('device-s'), this.isSmallDevice)]
-  }, [h('div', {
-    class: [this.xclass('trigger'), defineProperty_default()({}, this.xclass('active'), this.isActive)],
-    directives: [{
-      name: 'show',
-      value: this.trigger === 'show'
-    }],
-    on: {
-      click: this.toggle
-    }
-  }, [h('row', [h('column', {
-    props: {
-      span: 6
-    }
-  }, this.title), h('column', {
-    class: [this.xclass('arrow')],
-    props: {
-      span: 6
-    }
-  }, [h('icon', {
-    class: [this.xclass('arrow-fold'), defineProperty_default()({}, this.xclass('arrow-spread'), this.isActive)],
-    props: {
-      kind: 'arrow-south',
-      size: 's',
-      ui: this.ui,
-      theme: this.theme
-    }
-  })])])]), navStage]);
-});
 // EXTERNAL MODULE: ./src/component/Fold/Fold.scss
-var Fold = __webpack_require__(86);
+var Fold = __webpack_require__(82);
 
 // CONCATENATED MODULE: ./src/component/Fold/Fold.render.js
 
@@ -11897,330 +12200,132 @@ var Fold_Fold = {
     }, this.$slots.default);
   }
 });
-// CONCATENATED MODULE: ./src/component/Nav/Nav.js
+// EXTERNAL MODULE: ./src/component/Table/Table.scss
+var Table = __webpack_require__(84);
+
+// EXTERNAL MODULE: ./src/component/Table/Table.material.scss
+var Table_material = __webpack_require__(86);
+
+// EXTERNAL MODULE: ./src/component/Table/Table.bootstrap.scss
+var Table_bootstrap = __webpack_require__(88);
+
+// CONCATENATED MODULE: ./src/component/Table/Table.render.js
 /**
- * nav 组件
- *
- * @prop animate - 菜单显示动画()
- * @prop noSwitch - 菜单不要根据设备响应式切换
- * @prop initOpt - 菜单的数据
- * @prop kind - 菜单的种类
- * @prop only - 手风琴模式，一次只能打开一个面板
- * @prop trigger - 2，3 级菜单的触发模式
- * @prop type - 布局类型
- * @prop spreadAll - 打开全部一级菜单
- * @prop title - 菜单标题
- *
- * @event hide - 隐藏 nav - 点击导航链接
+ * table.render
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-var Nav_layoutType = ['grid', 'flex', 'flow'];
-/* harmony default export */ var Nav_Nav = ({
-  name: 'Nav',
-  mixins: [base],
-  render: Nav_render,
-  components: {
-    fold: component_Fold_Fold,
-    'fold-title': FoldTitle,
-    'fold-content': FoldContent,
-    'motion-fold': MotionFold,
-    'motion-slide': MotionSlide,
-    row: Row,
-    column: Col,
-    icon: Icon_Icon
-  },
-  props: {
-    animate: String,
-    noSwitch: {
-      type: Boolean,
-      default: false
-    },
-    initOpt: Array,
-    gap: {
-      type: Number,
-      default: 0
-    },
-    kind: {
-      type: String,
-      default: 'center'
-    },
-    only: {
-      type: Boolean,
-      default: false
-    },
-    spreadAll: {
-      type: Boolean,
-      default: false
-    },
-    type: {
-      type: String,
-      default: 'horizontal'
-    },
-    trigger: {
-      type: String,
-      default: 'no'
-    },
-    title: {
-      type: String,
-      default: ''
-    }
-  },
-  data: function data() {
-    return {
-      isActive: false,
-      navAnimate: ''
-    };
-  },
-  computed: {
-    cPrefix: function cPrefix() {
-      // 组件类名的前缀
-      return "".concat(this.compPrefix, "-nav");
-    },
-    isSmallDevice: function isSmallDevice() {
-      // 判断设备是否小于 s 尺寸
-      return this.deviceSize === 's' || this.deviceSize === 'xs';
-    },
-    isVerticalType: function isVerticalType() {
-      return this.type === 'vertical';
-    },
-    isFoldAnimate: function isFoldAnimate() {
-      return this.navAnimate === 'fold';
-    }
-  },
-  watch: {
-    deviceSize: function deviceSize(val) {
-      if (!val) {
-        return false;
-      }
-
-      this.changeByDeviceSize(val);
-    }
-  },
-  methods: {
-    _setDataOpt: function _setDataOpt() {
-      if (this.type === 'vertical') {
-        this.navAnimate = this.animate ? this.animate : 'fold';
-      } else if (this.type === 'horizontal') {
-        this.navAnimate = this.animate ? this.animate : 'slide';
-      }
-    },
-    show: function show() {
-      var transitionRef = this.$refs.motion;
-      this.isActive = true;
-
-      if (this.isFoldAnimate) {
-        // TODO: 离开时 height 还是等于零如果这时候取值就会是不正确的
-        // 所以要先置为空
-        transitionRef.$el.style.height = '';
-        var transitionHeight = this.elementProp(transitionRef.$el).offsetHeight;
-        transitionRef.setHeight(transitionHeight);
-      }
-
-      transitionRef.enter();
-      this.$emit('show');
-    },
-    hide: function hide() {
-      this.$refs.motion.leave();
-      this.isActive = false;
-      this.$emit('hide');
-    },
-    toggle: function toggle() {
-      this.isActive = !this.isActive;
-
-      if (this.isActive) {
-        return this.show();
-      } else {
-        return this.hide();
-      }
-    },
-    changeByDeviceSize: function changeByDeviceSize() {
-      if (this.noSwitch) {
-        return false;
-      }
-
-      this.isSmallDevice ? this.hide() : this.show();
-      this.$refs.fold.$on('ready', function () {});
-    }
-  },
-  mounted: function mounted() {
-    this.changeByDeviceSize();
-  }
-});
-// EXTERNAL MODULE: ./src/component/Omit/Omit.scss
-var Omit = __webpack_require__(88);
-
-// CONCATENATED MODULE: ./src/component/Omit/Omit.render.js
-
-
-/**
- * omit.render.js
- */
-/* harmony default export */ var Omit_render = (function (h) {
+/* harmony default export */ var Table_render = (function (h) {
   var _this = this;
 
-  var linetextlength = this.lineText.length;
-  return h('div', {
-    class: [this.cPrefix]
-  }, [h('span', {
-    class: [this.xclass('font-width')],
-    ref: 'font'
-  }), this.lineText.map(function (item, index) {
-    if (item !== undefined && item !== '') {
-      return h('div', {
-        class: [_this.xclass('line'), defineProperty_default()({}, _this.xclass('line-last'), index + 1 === linetextlength)]
+  var scrollerChildren = [];
+  var colCompOption = [];
+  var tableEle = {};
+  var tableChildren = [];
+  var theadRowChildren = [];
+  var tbodyRowChildren = [];
+  var headLength = 0;
+
+  if (this.theadItem.length > 0) {
+    headLength = this.theadItem.length;
+    theadRowChildren = this.theadItem.map(function (item) {
+      return h('th', {
+        class: [_this.xclass('col')]
       }, item);
-    } else {
-      return null;
-    }
-  })]);
-});
-// CONCATENATED MODULE: ./src/component/Omit/Omit.js
-
-
-/**
- * omit 省略组件
- *
- * @prop line - 多行省略规定的行数，默认是 1 行
- */
-
-
-
-/* harmony default export */ var Omit_Omit = ({
-  name: 'Omit',
-  mixins: [base],
-  render: Omit_render,
-  props: {
-    line: {
-      type: Number,
-      default: 1
-    }
-  },
-  data: function data() {
-    this.fontWidthHub = {}; // 存储字体的宽度
-
-    return {
-      content: '',
-      lineText: [] // 存储原文本处理后每行存储的文本
-
-    };
-  },
-  computed: {
-    cPrefix: function cPrefix() {
-      // 组件类名的前缀
-      return "".concat(this.compPrefix, "-omit");
-    }
-  },
-  methods: {
-    textWidth: function textWidth(text, fontSize) {
-      if (text === ' ') {
-        return 4;
-      }
-
-      if (this.fontWidthHub[text] !== undefined) {
-        return this.fontWidthHub[text];
-      }
-
-      var span = this.$refs.font;
-      var width = 0;
-
-      if (typeof span.textContent !== 'undefined') {
-        span.textContent = text;
-      } else {
-        span.innerText = text;
-      }
-
-      width = span.offsetWidth;
-
-      if (this.isDoubleByte(text)) {
-        this.fontWidthHub = Object.assign({}, this.fontWidthHub, {
-          doubleByte: width
-        });
-      } else {
-        this.fontWidthHub = Object.assign({}, this.fontWidthHub, defineProperty_default()({}, text, width));
-      }
-
-      return width;
-    },
-    // 匹配汉字
-    isDoubleByte: function isDoubleByte(text) {
-      var regex = /[^\u4e00-\u9fa5]/;
-
-      if (regex.test(text)) {
-        return true;
-      }
-
-      return false;
-    },
-    splite: function splite(content) {
-      this.content = content;
-      var contentArray = content.split('');
-      var contentArrayLength = contentArray.length;
-      var index = 0;
-      var lineFont = [];
-
-      for (var i = 0, lineLength = this.line; i < lineLength; i++) {
-        if (contentArray[index] === undefined) {
-          break;
-        }
-
-        var lineWidth = 0; // 这一行的宽度
-
-        var j = index;
-        var char = '';
-        var lastFontWidthOver = false; // 最后一行的文字宽度是否小于容器宽度
-
-        for (; j < contentArrayLength; j++) {
-          var fontWidth = this.textWidth(contentArray[j]);
-
-          if (contentArray[j] === undefined || fontWidth + lineWidth >= this.boxWidth) {
-            // 最后一行并且文字总宽度大于容器宽度时
-            lastFontWidthOver = i === lineLength - 1 && fontWidth + lineWidth >= this.boxWidth;
-            break;
-          }
-
-          lineWidth = lineWidth + fontWidth;
-          char = char + contentArray[j];
-        }
-
-        lineFont.push(lastFontWidthOver && i === lineLength - 1 ? char + '....' : char);
-        index = j;
-      }
-
-      this.lineText = lineFont;
-    }
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.$nextTick(function () {
-      _this.boxWidth = _this.$el.offsetWidth - 1;
-
-      _this.splite(_this.$slots.default[0].text);
     });
-  },
-  beforeUpdate: function beforeUpdate() {
-    var _this2 = this;
-
-    if (this.$slots.default[0].text !== this.content) {
-      this.$nextTick(function () {
-        _this2.boxWidth = _this2.$el.offsetWidth - 1;
-
-        _this2.splite(_this2.$slots.default[0].text);
+  } else {
+    theadRowChildren = this.$slots.thead;
+    headLength = theadRowChildren.length;
+    theadRowChildren.forEach(function (item) {
+      return colCompOption.push({
+        maxWidth: item.componentOptions.propsData.maxWidth,
+        minWidth: item.componentOptions.propsData.minWidth,
+        width: item.componentOptions.propsData.width,
+        omit: item.componentOptions.propsData.omit
       });
-    }
+    });
   }
+
+  if (!this.list) {
+    this.$slotKey.forEach(function (item, index) {
+      if (item === 'thead') {
+        return false;
+      }
+
+      var rowSlot = _this.$slots[item];
+      rowSlot[0].componentOptions && rowSlot[0].componentOptions.children.forEach(function (rowSlotItem, rowSlotItemIndex) {
+        if (rowSlotItem.componentOptions === undefined) {
+          rowSlotItem.componentOptions = {};
+          rowSlotItem.componentOptions.propsData = {};
+        }
+
+        Object.assign(rowSlotItem.componentOptions.propsData, colCompOption[rowSlotItemIndex]);
+      });
+      tbodyRowChildren.push(rowSlot);
+    });
+  } else if (this.tbody.length > 0 && this.tbodyItem.length > 0) {
+    tbodyRowChildren = this.tbodyItem.map(function (item, index) {
+      return h('tr', {
+        class: [_this.xclass('row')]
+      }, _this.$scopedSlots.tbody({
+        index: index,
+        item: item
+      }));
+    });
+  } else {
+    tbodyRowChildren = [h('tr', [h('td', {
+      attrs: {
+        colspan: headLength
+      },
+      class: [this.xclass('empty-data')]
+    }, this.emptyDataText)])];
+  }
+
+  tableChildren.push(h('thead', {
+    class: [this.xclass('header-group')]
+  }, [h('tr', {
+    class: [this.xclass('row')]
+  }, theadRowChildren)]));
+  tableChildren.push(h('tbody', {
+    class: [this.xclass('row-group')]
+  }, tbodyRowChildren));
+  tableEle = h('table', {
+    class: [this.xclass('wrap')],
+    style: {
+      'min-width': "".concat(this.scrollerWidth, "px")
+    }
+  }, tableChildren);
+  return h('div', {
+    class: this.compClass
+  }, [h('scroller', {
+    class: [this.xclass('scroller')],
+    props: {
+      autoHide: this.scrollerAutoHide,
+      height: 300,
+      width: '100%'
+    },
+    on: {
+      scrollY: this.scroll
+    },
+    ref: 'scroller'
+  }, [tableEle]), h('page', {
+    class: [this.xclass('page'), "".concat(this.compPrefix, "-m-t-double")],
+    directives: [{
+      name: 'show',
+      value: this.pagerDisplay
+    }],
+    props: {
+      data: this.pageData
+    },
+    on: {
+      'switch': this.switchPage
+    },
+    ref: 'pager'
+  }), h('loading', {
+    props: {
+      ui: this.ui,
+      theme: this.theme
+    },
+    ref: 'loading'
+  })]);
 });
 // EXTERNAL MODULE: ./src/component/Page/Page.scss
 var Page = __webpack_require__(90);
@@ -12602,335 +12707,6 @@ var pageComp = {
   }
 };
 /* harmony default export */ var Page_Page = (pageComp);
-// EXTERNAL MODULE: ./src/component/Search/Search.scss
-var Search = __webpack_require__(92);
-
-// CONCATENATED MODULE: ./src/component/Search/Search.render.js
-/**
- * complete.render.js
- */
-/* harmony default export */ var Search_render = (function (h) {
-  var _this = this;
-
-  return h('div', {
-    class: [this.cPrefix]
-  }, [function () {
-    if (_this.input) {
-      return h('input-box', {
-        props: {
-          ui: _this.ui,
-          theme: _this.theme
-        },
-        class: [_this.xclass('input')]
-      });
-    } else {
-      return null;
-    }
-  }(), h('div', {
-    class: [this.xclass('match')],
-    directives: [{
-      name: 'show',
-      value: this.matchDisplay
-    }]
-  }, [h('list', {
-    props: {
-      item: this.matchOpt,
-      pageSize: 6,
-      auto: true,
-      pageType: 'more',
-      pager: true,
-      height: 150,
-      ui: this.ui,
-      theme: this.theme
-    },
-    scopedSlots: {
-      default: function _default(props) {
-        return h('div', {
-          class: [_this.xclass('list-content')],
-          on: {
-            click: function click(event) {
-              return _this._clickMatchOpt(event, props.index);
-            }
-          }
-        }, [h('span', props.item.text)]);
-      }
-    }
-  })])]);
-});
-// EXTERNAL MODULE: ./src/component/List/List.scss
-var List = __webpack_require__(94);
-
-// CONCATENATED MODULE: ./src/component/List/List.render.js
-/**
- * list.render
- */
-/* harmony default export */ var List_render = (function (h) {
-  var _this = this;
-
-  var listChildren = [];
-  var scrollerChildren = [];
-  var loadingOfNum = [];
-
-  if (this.stateItem.length > 0) {
-    var listItems = [];
-    this.stateItem.forEach(function (item, index) {
-      var $scopedSlots = [_this.$scopedSlots.default({
-        index: index + 1,
-        item: item
-      })];
-      var $slot = _this.$scopedSlots ? $scopedSlots : _this.$slots.default;
-      listItems.push(h('li', {
-        class: [_this.xclass('li')]
-      }, $slot));
-    });
-    scrollerChildren = [h('ul', {
-      attrs: {
-        class: "".concat(this.compPrefix, "-ul")
-      },
-      class: [this.xclass('ul')]
-    }, listItems)];
-  } else {
-    scrollerChildren = [h('div', {
-      class: [this.xclass('empty-data')]
-    }, '暂无数据')];
-  }
-
-  scrollerChildren.push(h('page', {
-    class: [this.xclass('page')],
-    directives: [{
-      name: 'show',
-      value: this.pagerDisplay
-    }],
-    props: {
-      data: this.pageData,
-      type: this.pageType,
-      loadMoreText: this.loadMoreText,
-      ui: this.ui,
-      theme: this.theme
-    },
-    on: {
-      'switch': this.switchPage
-    },
-    ref: 'page'
-  }, function () {
-    if (_this.isPageTypeMore) {
-      return [h('div', {
-        slot: 'loadMore'
-      }, [h('loading', {
-        class: ["".concat(_this.compPrefix, "-m-r-half")].concat(_this.xclass(['loading', 'loading-more'])),
-        props: {
-          display: true,
-          ui: _this.ui,
-          theme: _this.theme
-        },
-        ref: 'loadingOfMore'
-      })])];
-    }
-
-    return null;
-  }()));
-
-  if (!this.isPageTypeMore) {
-    loadingOfNum.push(h('loading', {
-      class: this.xclass(['loading', 'loading-num']),
-      props: {
-        bgDisplay: true,
-        ui: this.ui,
-        theme: this.theme
-      },
-      ref: 'loading'
-    }));
-  }
-
-  listChildren.push(h('scroller', {
-    class: [this.xclass('scroller')],
-    props: {
-      autoHide: this.autoHideScroller,
-      height: this.height,
-      width: '100%'
-    },
-    ref: 'scroller'
-  }, scrollerChildren));
-  listChildren.push(loadingOfNum);
-  return h('div', {
-    class: [this.cPrefix, this.xclass(this.themeClass)]
-  }, listChildren);
-});
-// CONCATENATED MODULE: ./src/component/List/List.api.js
-/**
- * list.api
- */
-var PAGE_TYPE_NUM = 'num';
-var PAGE_TYPE_MORE = 'more';
-/* harmony default export */ var List_api = ({
-  methods: {
-    /**
-     * 更新列表数据
-     *
-     * @param {Array} listItem - 列表数据
-     */
-    update: function update(listItem) {
-      if (this.auto) {
-        this.pageData = this.getPageData();
-      }
-
-      this.stateItem = this.getListData({
-        pageNum: this.pageData.current,
-        stateItem: listItem
-      });
-    },
-
-    /**
-     * 设置分页数据
-     */
-    setPageData: function setPageData(pageData) {
-      this.pageData = Object.assign({}, this.pageData, pageData);
-    },
-
-    /**
-     * 初始化分页数据
-     */
-    initPageData: function initPageData(data) {
-      var pageData = null;
-
-      if (this.auto) {
-        pageData = Object.assign({
-          size: this.pageSize,
-          length: this.item.length,
-          total: Math.ceil(this.item.length / this.pageSize),
-          current: 1
-        }, data);
-      } else {
-        pageData = this.page;
-      }
-
-      this.pageData = Object.assign({}, pageData);
-    },
-
-    /**
-     * 获取列表数据
-     */
-    setListItem: function setListItem() {
-      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-          pageNum = _ref.pageNum,
-          pageSize = _ref.pageSize,
-          _ref$listItem = _ref.listItem,
-          listItem = _ref$listItem === void 0 ? [] : _ref$listItem;
-
-      var listItemTemp = null;
-
-      if (this.auto) {
-        var startSlice = 0;
-        var endSlice = 0;
-
-        if (this.isPageTypeMore) {
-          endSlice = pageNum * this.pageSize;
-        } else {
-          startSlice = (pageNum - 1) * this.pageSize;
-          endSlice = startSlice + this.pageSize;
-        }
-
-        listItemTemp = this.getListItemByPage({
-          listItem: this.item,
-          pageNum: pageNum,
-          pageSize: pageSize,
-          pageType: this.pageType
-        });
-      } else {
-        listItemTemp = listItem;
-      }
-
-      this.stateItem = listItemTemp;
-    },
-
-    /**
-     * 切换页数
-     */
-    switchPage: function switchPage(_ref2) {
-      var _this = this;
-
-      var currentPage = _ref2.currentPage;
-
-      if (this.pageData.current > this.pageData.total) {
-        return false;
-      }
-
-      if (this.loadingListData) {
-        return false;
-      }
-
-      this.$emit('switchPage', {
-        currentPage: currentPage,
-        emitter: this
-      });
-
-      if (this.auto) {
-        this.showLoading();
-        this.loadingListData = true;
-        setTimeout(function () {
-          _this.loadingListData = false;
-
-          _this.setListItem({
-            pageSize: _this.pageData.size,
-            pageNum: currentPage,
-            listItem: _this.item
-          });
-
-          _this.setPageData({
-            current: currentPage
-          });
-
-          _this.hideLoading();
-        }, 500);
-      } else {
-        this.initPage({
-          current: currentPage
-        });
-      }
-    },
-
-    /**
-     * 显示 loading
-     *
-     * @return { Object }
-     */
-    showLoading: function showLoading() {
-      if (this.isPageTypeMore) {
-        this.$refs.loadingOfMore.show();
-      } else {
-        this.$refs.loading.show();
-      }
-
-      this.arrowOfMoreDisplay = false;
-      return this;
-    },
-
-    /**
-     * 隐藏 loading
-     *
-     * @return { Object }
-     */
-    hideLoading: function hideLoading() {
-      if (this.isPageTypeMore) {
-        this.$refs.loadingOfMore.hide();
-      } else {
-        this.$refs.loading.hide();
-      }
-
-      this.arrowOfMoreDisplay = true;
-      return this;
-    },
-
-    /**
-     * 列表滚动到指定高度
-     *
-     * @param {Number} top - 滚动内容的滚动距离
-     */
-    scrollTop: function scrollTop(top) {
-      return this.$refs.scroller.scrollTop(top);
-    }
-  }
-});
 // CONCATENATED MODULE: ./src/mixin/list.js
 /**
  * list 混入
@@ -12938,8 +12714,8 @@ var PAGE_TYPE_MORE = 'more';
 
 
 
-var list_PAGE_TYPE_NUM = 'num';
-var list_PAGE_TYPE_MORE = 'more';
+var PAGE_TYPE_NUM = 'num';
+var PAGE_TYPE_MORE = 'more';
 /* harmony default export */ var list = ({
   components: {
     loading: Loading_Loading,
@@ -12963,7 +12739,7 @@ var list_PAGE_TYPE_MORE = 'more';
           _ref$pageSize = _ref.pageSize,
           pageSize = _ref$pageSize === void 0 ? 0 : _ref$pageSize,
           _ref$pageType = _ref.pageType,
-          pageType = _ref$pageType === void 0 ? list_PAGE_TYPE_NUM : _ref$pageType;
+          pageType = _ref$pageType === void 0 ? PAGE_TYPE_NUM : _ref$pageType;
 
       if (listItem === undefined) {
         return false;
@@ -12976,7 +12752,7 @@ var list_PAGE_TYPE_MORE = 'more';
       var startSlice = 0;
       var endSlice = 0;
 
-      if (pageType === list_PAGE_TYPE_NUM) {
+      if (pageType === PAGE_TYPE_NUM) {
         startSlice = (pageNum - 1) * pageSize;
         endSlice = startSlice + pageSize;
       } else {
@@ -12986,416 +12762,6 @@ var list_PAGE_TYPE_MORE = 'more';
       return listItem.slice(startSlice, endSlice);
     }
   }
-});
-// CONCATENATED MODULE: ./src/component/List/List.js
-/**
- * list 组件
- *
- * @prop auto - 根据传入的列表数据自动生成分页数据
- * @prop autoHideScroller - 是否自动隐藏滚动条
- * @prop autoHidePage - 是否自动隐藏分页触发器
- * @prop item - 列表数据
- * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
- * @prop pager - 启动分页功能
- * @prop pageSize - 将列表数据（item）分为每页多少条数据
- * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
- * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
- * @prop height - 滚动条高度
- *
- * @event switchPage - 换页触发事件
- * @event scrollerChange - 滚动区域的高度/宽度变化
- *
- * @slot loadMore - 加载更多的内容
- *
- * @slotScope - 列表的内容
- */
-
-
-
-
-
-
-
-
-
-
-var List_PAGE_TYPE_NUM = 'num';
-var List_PAGE_TYPE_MORE = 'more';
-/* harmony default export */ var List_List = ({
-  name: 'List',
-  render: List_render,
-  mixins: [base, list, List_api],
-  components: {
-    icon: Icon_Icon,
-    loading: Loading_Loading,
-    page: Page_Page,
-    scroller: Scroller_Scroller
-  },
-  props: {
-    auto: {
-      type: Boolean,
-      default: false
-    },
-    item: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    page: Object,
-    pager: {
-      type: Boolean,
-      default: false
-    },
-    pageSize: {
-      type: Number,
-      default: 5
-    },
-    pageType: {
-      type: String,
-      default: 'num',
-      validator: function validator(val) {
-        return ['num', 'more'].includes(val);
-      }
-    },
-    pageTrigger: {
-      type: String,
-      default: 'scroll',
-      validator: function validator(val) {
-        return ['click', 'scroll'].includes(val);
-      }
-    },
-    autoHideScroller: {
-      type: Boolean,
-      default: false
-    },
-    autoHidePage: {
-      type: Boolean,
-      default: false
-    },
-    height: {
-      type: [String, Number],
-      default: 'auto'
-    }
-  },
-  data: function data() {
-    this.pageHeight = 44; // TODO: 动态计算分页高度
-
-    return {
-      stateItem: [],
-      pageData: {
-        size: 0,
-        length: 0,
-        current: 1,
-        total: 0
-      },
-      arrowOfMoreDisplay: true,
-      // 滚动加载更多时的图标显示状态
-      loadingListData: false,
-      // 是否正在加载列表数据
-      pageDetail: {
-        // 分页的相关信息
-        top: 0,
-        left: 0,
-        bottom: 0
-      }
-    };
-  },
-  computed: {
-    cPrefix: function cPrefix() {
-      // 组件类名的前缀
-      return "".concat(this.compPrefix, "-list");
-    },
-    pagerDisplay: function pagerDisplay() {
-      // 分页的显示状态
-      return this.pageData.total !== 0 && this.pageData.current !== this.pageData.total;
-    },
-    isPageTypeMore: function isPageTypeMore() {
-      // 是否是加载更多的触发方式
-      return this.pageType === List_PAGE_TYPE_MORE;
-    }
-  },
-  watch: {
-    item: function item(val) {
-      if (this.auto) {
-        this.setPageData({
-          current: this.pageData.current
-        });
-      }
-
-      this.setListItem({
-        pageNum: this.pageData.current,
-        pageSize: this.pageData.size,
-        listItem: this.item
-      });
-    }
-  },
-  methods: {
-    _setDataOpt: function _setDataOpt() {
-      this.pageData = Object.assign({}, this.page);
-    },
-    _binder: function _binder() {
-      var _this = this;
-
-      var refScroller = this.$refs.scroller;
-      refScroller.$on('scrollY', function (_ref) {
-        var box = _ref.box;
-
-        if (_this.pageTrigger === 'scroll') {
-          if (box.position.top - box.offset.top < _this.pageHeight && _this.pageData.current + 1 <= _this.pageData.total) {
-            return _this.switchPage({
-              currentPage: _this.pageData.current + 1
-            });
-          }
-        }
-      });
-      refScroller.$on('change', function (opt) {
-        return _this.$emit('scrollerChange', Object.assign({}, opt, {
-          emitter: _this
-        }));
-      });
-      refScroller.$on('yBarChange', function (_ref2) {
-        var isBottom = _ref2.isBottom;
-
-        if (!_this.$el.offsetHeight) {
-          return false;
-        }
-      });
-    }
-  },
-  created: function created() {
-    this.initPageData();
-    this.setListItem({
-      pageNum: this.pageData.current,
-      pageSize: this.pageData.size,
-      listItem: this.item
-    });
-  }
-});
-// CONCATENATED MODULE: ./src/component/Search/Search.js
-/**
- * search 组件
- *
- * @prop input - 显示输入框，默认显示
- * @prop option - 搜索选项数据
- * @prop keyword - 搜索关键字
- *
- * @event change - 搜索结果改变
- */
-
-
-
-
-
-
-var searchComp = {
-  name: 'Search',
-  render: Search_render,
-  mixins: [base],
-  components: {
-    list: List_List,
-    'input-box': Input_Input
-  },
-  props: {
-    input: {
-      type: Boolean,
-      default: true
-    },
-    option: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    keyword: {
-      type: [String, Number],
-      default: ''
-    }
-  },
-  data: function data() {
-    return {
-      // 组件名字
-      compName: 'search',
-      // 搜索结果的显示状态
-      matchDisplay: false,
-      // 匹配的补全值
-      matchOpt: []
-    };
-  },
-  computed: {
-    // 组件类名的前缀
-    cPrefix: function cPrefix() {
-      return "".concat(this.compPrefix, "-search");
-    }
-  },
-  watch: {
-    keyword: function keyword(val) {
-      this.search(val);
-    }
-  },
-  methods: {
-    _setDataOpt: function _setDataOpt() {
-      this.matchOpt = this.option.slice();
-    },
-    _initComp: function _initComp() {
-      this.search(this.keyword);
-    },
-
-    /**
-     * 点击匹配的搜索选项
-     */
-    _clickMatchOpt: function _clickMatchOpt(event, index) {
-      Message_tip('功能未完成');
-    },
-
-    /**
-     * 获取搜索补全的数据
-     * @return {Object} this - 组件
-     */
-    search: function search(keyword) {
-      if (keyword === 0 || !keyword || !(Array.isArray(this.option) && this.option.length > 0)) {
-        this.matchOpt = [];
-      } else {
-        this.matchOpt = this.option.filter(function (item) {
-          return item.text.indexOf(keyword) > -1;
-        });
-      }
-
-      this.$emit('change', {
-        emitter: this,
-        matchOpt: this.matchOpt
-      });
-      this.matchDisplay = this.matchOpt.length !== 0;
-    }
-  }
-};
-/* harmony default export */ var Search_Search = (searchComp);
-// EXTERNAL MODULE: ./src/component/Table/Table.scss
-var Table = __webpack_require__(96);
-
-// EXTERNAL MODULE: ./src/component/Table/Table.material.scss
-var Table_material = __webpack_require__(98);
-
-// EXTERNAL MODULE: ./src/component/Table/Table.bootstrap.scss
-var Table_bootstrap = __webpack_require__(100);
-
-// CONCATENATED MODULE: ./src/component/Table/Table.render.js
-/**
- * table.render
- */
-/* harmony default export */ var Table_render = (function (h) {
-  var _this = this;
-
-  var scrollerChildren = [];
-  var colCompOption = [];
-  var tableEle = {};
-  var tableChildren = [];
-  var theadRowChildren = [];
-  var tbodyRowChildren = [];
-  var headLength = 0;
-
-  if (this.theadItem.length > 0) {
-    headLength = this.theadItem.length;
-    theadRowChildren = this.theadItem.map(function (item) {
-      return h('th', {
-        class: [_this.xclass('col')]
-      }, item);
-    });
-  } else {
-    theadRowChildren = this.$slots.thead;
-    headLength = theadRowChildren.length;
-    theadRowChildren.forEach(function (item) {
-      return colCompOption.push({
-        maxWidth: item.componentOptions.propsData.maxWidth,
-        minWidth: item.componentOptions.propsData.minWidth,
-        width: item.componentOptions.propsData.width,
-        omit: item.componentOptions.propsData.omit
-      });
-    });
-  }
-
-  if (!this.list) {
-    this.$slotKey.forEach(function (item, index) {
-      if (item === 'thead') {
-        return false;
-      }
-
-      var rowSlot = _this.$slots[item];
-      rowSlot[0].componentOptions && rowSlot[0].componentOptions.children.forEach(function (rowSlotItem, rowSlotItemIndex) {
-        if (rowSlotItem.componentOptions === undefined) {
-          rowSlotItem.componentOptions = {};
-          rowSlotItem.componentOptions.propsData = {};
-        }
-
-        Object.assign(rowSlotItem.componentOptions.propsData, colCompOption[rowSlotItemIndex]);
-      });
-      tbodyRowChildren.push(rowSlot);
-    });
-  } else if (this.tbody.length > 0 && this.tbodyItem.length > 0) {
-    tbodyRowChildren = this.tbodyItem.map(function (item, index) {
-      return h('tr', {
-        class: [_this.xclass('row')]
-      }, _this.$scopedSlots.tbody({
-        index: index,
-        item: item
-      }));
-    });
-  } else {
-    tbodyRowChildren = [h('tr', [h('td', {
-      attrs: {
-        colspan: headLength
-      },
-      class: [this.xclass('empty-data')]
-    }, this.emptyDataText)])];
-  }
-
-  tableChildren.push(h('thead', {
-    class: [this.xclass('header-group')]
-  }, [h('tr', {
-    class: [this.xclass('row')]
-  }, theadRowChildren)]));
-  tableChildren.push(h('tbody', {
-    class: [this.xclass('row-group')]
-  }, tbodyRowChildren));
-  tableEle = h('table', {
-    class: [this.xclass('wrap')],
-    style: {
-      'min-width': "".concat(this.scrollerWidth, "px")
-    }
-  }, tableChildren);
-  return h('div', {
-    class: this.compClass
-  }, [h('scroller', {
-    class: [this.xclass('scroller')],
-    props: {
-      autoHide: this.scrollerAutoHide,
-      height: 300,
-      width: '100%'
-    },
-    on: {
-      scrollY: this.scroll
-    },
-    ref: 'scroller'
-  }, [tableEle]), h('page', {
-    class: [this.xclass('page'), "".concat(this.compPrefix, "-m-t-double")],
-    directives: [{
-      name: 'show',
-      value: this.pagerDisplay
-    }],
-    props: {
-      data: this.pageData
-    },
-    on: {
-      'switch': this.switchPage
-    },
-    ref: 'pager'
-  }), h('loading', {
-    props: {
-      ui: this.ui,
-      theme: this.theme
-    },
-    ref: 'loading'
-  })]);
 });
 // CONCATENATED MODULE: ./src/component/Table/Table.js
 
@@ -13748,7 +13114,7 @@ var tableColComp = {
 };
 /* harmony default export */ var TableCol = (tableColComp);
 // EXTERNAL MODULE: ./src/component/Menu/Menu.scss
-var Menu = __webpack_require__(102);
+var Menu = __webpack_require__(92);
 
 // CONCATENATED MODULE: ./src/component/Menu/Menu.render.js
 /**
@@ -13950,7 +13316,7 @@ var Menu = __webpack_require__(102);
                   return _context.stop();
               }
             }
-          }, _callee, this);
+          }, _callee);
         }));
 
         return function (_x, _x2) {
@@ -14448,7 +13814,7 @@ var Menu = __webpack_require__(102);
   }
 });
 // EXTERNAL MODULE: ./src/component/Shift/Shift.scss
-var Shift = __webpack_require__(104);
+var Shift = __webpack_require__(94);
 
 // CONCATENATED MODULE: ./src/component/Shift/Shift.render.js
 
@@ -14647,19 +14013,19 @@ var helpers_typeof = __webpack_require__(15);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./src/scss/common/box.scss
-var box = __webpack_require__(106);
+var box = __webpack_require__(96);
 
 // EXTERNAL MODULE: ./src/component/Select/Select.scss
-var Select = __webpack_require__(108);
+var Select = __webpack_require__(98);
 
 // EXTERNAL MODULE: ./src/component/Select/Select.bootstrap.scss
-var Select_bootstrap = __webpack_require__(110);
+var Select_bootstrap = __webpack_require__(100);
 
 // EXTERNAL MODULE: ./src/component/Select/Select.material.scss
-var Select_material = __webpack_require__(112);
+var Select_material = __webpack_require__(102);
 
 // EXTERNAL MODULE: ./src/component/Select/SelectOpt.scss
-var SelectOpt = __webpack_require__(114);
+var SelectOpt = __webpack_require__(104);
 
 // CONCATENATED MODULE: ./src/component/Select/SelectOpt.render.js
 
@@ -14822,6 +14188,465 @@ var SelectOpt = __webpack_require__(114);
   return h('div', {
     class: [defineProperty_default()({}, this.xclass('search-option-wrap'), this.$parent.searchFilter), this.xclass('ul'), this.xclass(this.compClass)]
   }, selectOptEle);
+});
+// EXTERNAL MODULE: ./src/component/List/List.scss
+var List = __webpack_require__(106);
+
+// CONCATENATED MODULE: ./src/component/List/List.render.js
+/**
+ * list.render
+ */
+/* harmony default export */ var List_render = (function (h) {
+  var _this = this;
+
+  var listChildren = [];
+  var scrollerChildren = [];
+  var loadingOfNum = [];
+
+  if (this.stateItem.length > 0) {
+    var listItems = [];
+    this.stateItem.forEach(function (item, index) {
+      var $scopedSlots = [_this.$scopedSlots.default({
+        index: index + 1,
+        item: item
+      })];
+      var $slot = _this.$scopedSlots ? $scopedSlots : _this.$slots.default;
+      listItems.push(h('li', {
+        class: [_this.xclass('li')]
+      }, $slot));
+    });
+    scrollerChildren = [h('ul', {
+      attrs: {
+        class: "".concat(this.compPrefix, "-ul")
+      },
+      class: [this.xclass('ul')]
+    }, listItems)];
+  } else {
+    scrollerChildren = [h('div', {
+      class: [this.xclass('empty-data')]
+    }, '暂无数据')];
+  }
+
+  scrollerChildren.push(h('page', {
+    class: [this.xclass('page')],
+    directives: [{
+      name: 'show',
+      value: this.pagerDisplay
+    }],
+    props: {
+      data: this.pageData,
+      type: this.pageType,
+      loadMoreText: this.loadMoreText,
+      ui: this.ui,
+      theme: this.theme
+    },
+    on: {
+      'switch': this.switchPage
+    },
+    ref: 'page'
+  }, function () {
+    if (_this.isPageTypeMore) {
+      return [h('div', {
+        slot: 'loadMore'
+      }, [h('loading', {
+        class: ["".concat(_this.compPrefix, "-m-r-half")].concat(_this.xclass(['loading', 'loading-more'])),
+        props: {
+          display: true,
+          ui: _this.ui,
+          theme: _this.theme
+        },
+        ref: 'loadingOfMore'
+      })])];
+    }
+
+    return null;
+  }()));
+
+  if (!this.isPageTypeMore) {
+    loadingOfNum.push(h('loading', {
+      class: this.xclass(['loading', 'loading-num']),
+      props: {
+        bgDisplay: true,
+        ui: this.ui,
+        theme: this.theme
+      },
+      ref: 'loading'
+    }));
+  }
+
+  listChildren.push(h('scroller', {
+    class: [this.xclass('scroller')],
+    props: {
+      autoHide: this.autoHideScroller,
+      height: this.height,
+      width: '100%'
+    },
+    ref: 'scroller'
+  }, scrollerChildren));
+  listChildren.push(loadingOfNum);
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass)]
+  }, listChildren);
+});
+// CONCATENATED MODULE: ./src/component/List/List.api.js
+/**
+ * list.api
+ */
+var List_api_PAGE_TYPE_NUM = 'num';
+var List_api_PAGE_TYPE_MORE = 'more';
+/* harmony default export */ var List_api = ({
+  methods: {
+    /**
+     * 更新列表数据
+     *
+     * @param {Array} listItem - 列表数据
+     */
+    update: function update(listItem) {
+      if (this.auto) {
+        this.pageData = this.getPageData();
+      }
+
+      this.stateItem = this.getListData({
+        pageNum: this.pageData.current,
+        stateItem: listItem
+      });
+    },
+
+    /**
+     * 设置分页数据
+     */
+    setPageData: function setPageData(pageData) {
+      this.pageData = Object.assign({}, this.pageData, pageData);
+    },
+
+    /**
+     * 初始化分页数据
+     */
+    initPageData: function initPageData(data) {
+      var pageData = null;
+
+      if (this.auto) {
+        pageData = Object.assign({
+          size: this.pageSize,
+          length: this.item.length,
+          total: Math.ceil(this.item.length / this.pageSize),
+          current: 1
+        }, data);
+      } else {
+        pageData = this.page;
+      }
+
+      this.pageData = Object.assign({}, pageData);
+    },
+
+    /**
+     * 获取列表数据
+     */
+    setListItem: function setListItem() {
+      var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          pageNum = _ref.pageNum,
+          pageSize = _ref.pageSize,
+          _ref$listItem = _ref.listItem,
+          listItem = _ref$listItem === void 0 ? [] : _ref$listItem;
+
+      var listItemTemp = null;
+
+      if (this.auto) {
+        var startSlice = 0;
+        var endSlice = 0;
+
+        if (this.isPageTypeMore) {
+          endSlice = pageNum * this.pageSize;
+        } else {
+          startSlice = (pageNum - 1) * this.pageSize;
+          endSlice = startSlice + this.pageSize;
+        }
+
+        listItemTemp = this.getListItemByPage({
+          listItem: this.item,
+          pageNum: pageNum,
+          pageSize: pageSize,
+          pageType: this.pageType
+        });
+      } else {
+        listItemTemp = listItem;
+      }
+
+      this.stateItem = listItemTemp;
+    },
+
+    /**
+     * 切换页数
+     */
+    switchPage: function switchPage(_ref2) {
+      var _this = this;
+
+      var currentPage = _ref2.currentPage;
+
+      if (this.pageData.current > this.pageData.total) {
+        return false;
+      }
+
+      if (this.loadingListData) {
+        return false;
+      }
+
+      this.$emit('switchPage', {
+        currentPage: currentPage,
+        emitter: this
+      });
+
+      if (this.auto) {
+        this.showLoading();
+        this.loadingListData = true;
+        setTimeout(function () {
+          _this.loadingListData = false;
+
+          _this.setListItem({
+            pageSize: _this.pageData.size,
+            pageNum: currentPage,
+            listItem: _this.item
+          });
+
+          _this.setPageData({
+            current: currentPage
+          });
+
+          _this.hideLoading();
+        }, 500);
+      } else {
+        this.initPage({
+          current: currentPage
+        });
+      }
+    },
+
+    /**
+     * 显示 loading
+     *
+     * @return { Object }
+     */
+    showLoading: function showLoading() {
+      if (this.isPageTypeMore) {
+        this.$refs.loadingOfMore.show();
+      } else {
+        this.$refs.loading.show();
+      }
+
+      this.arrowOfMoreDisplay = false;
+      return this;
+    },
+
+    /**
+     * 隐藏 loading
+     *
+     * @return { Object }
+     */
+    hideLoading: function hideLoading() {
+      if (this.isPageTypeMore) {
+        this.$refs.loadingOfMore.hide();
+      } else {
+        this.$refs.loading.hide();
+      }
+
+      this.arrowOfMoreDisplay = true;
+      return this;
+    },
+
+    /**
+     * 列表滚动到指定高度
+     *
+     * @param {Number} top - 滚动内容的滚动距离
+     */
+    scrollTop: function scrollTop(top) {
+      return this.$refs.scroller.scrollTop(top);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/component/List/List.js
+/**
+ * list 组件
+ *
+ * @prop auto - 根据传入的列表数据自动生成分页数据
+ * @prop autoHideScroller - 是否自动隐藏滚动条
+ * @prop autoHidePage - 是否自动隐藏分页触发器
+ * @prop item - 列表数据
+ * @prop page - 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+ * @prop pager - 启动分页功能
+ * @prop pageSize - 将列表数据（item）分为每页多少条数据
+ * @prop pageType - 列表分页类型（加载更多：more | 数字标注（默认）：num）
+ * @prop pageTrigger - 加载更多的触发模式（滚动到底部自动触发（默认）：scroll | 点击：click）
+ * @prop height - 滚动条高度
+ *
+ * @event switchPage - 换页触发事件
+ * @event scrollerChange - 滚动区域的高度/宽度变化
+ *
+ * @slot loadMore - 加载更多的内容
+ *
+ * @slotScope - 列表的内容
+ */
+
+
+
+
+
+
+
+
+
+
+var List_PAGE_TYPE_NUM = 'num';
+var List_PAGE_TYPE_MORE = 'more';
+/* harmony default export */ var List_List = ({
+  name: 'List',
+  render: List_render,
+  mixins: [base, list, List_api],
+  components: {
+    icon: Icon_Icon,
+    loading: Loading_Loading,
+    page: Page_Page,
+    scroller: Scroller_Scroller
+  },
+  props: {
+    auto: {
+      type: Boolean,
+      default: false
+    },
+    item: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    page: Object,
+    pager: {
+      type: Boolean,
+      default: false
+    },
+    pageSize: {
+      type: Number,
+      default: 5
+    },
+    pageType: {
+      type: String,
+      default: 'num',
+      validator: function validator(val) {
+        return ['num', 'more'].includes(val);
+      }
+    },
+    pageTrigger: {
+      type: String,
+      default: 'scroll',
+      validator: function validator(val) {
+        return ['click', 'scroll'].includes(val);
+      }
+    },
+    autoHideScroller: {
+      type: Boolean,
+      default: false
+    },
+    autoHidePage: {
+      type: Boolean,
+      default: false
+    },
+    height: {
+      type: [String, Number],
+      default: 'auto'
+    }
+  },
+  data: function data() {
+    this.pageHeight = 44; // TODO: 动态计算分页高度
+
+    return {
+      stateItem: [],
+      pageData: {
+        size: 0,
+        length: 0,
+        current: 1,
+        total: 0
+      },
+      arrowOfMoreDisplay: true,
+      // 滚动加载更多时的图标显示状态
+      loadingListData: false,
+      // 是否正在加载列表数据
+      pageDetail: {
+        // 分页的相关信息
+        top: 0,
+        left: 0,
+        bottom: 0
+      }
+    };
+  },
+  computed: {
+    cPrefix: function cPrefix() {
+      // 组件类名的前缀
+      return "".concat(this.compPrefix, "-list");
+    },
+    pagerDisplay: function pagerDisplay() {
+      // 分页的显示状态
+      return this.pageData.total !== 0 && this.pageData.current !== this.pageData.total;
+    },
+    isPageTypeMore: function isPageTypeMore() {
+      // 是否是加载更多的触发方式
+      return this.pageType === List_PAGE_TYPE_MORE;
+    }
+  },
+  watch: {
+    item: function item(val) {
+      if (this.auto) {
+        this.setPageData({
+          current: this.pageData.current
+        });
+      }
+
+      this.setListItem({
+        pageNum: this.pageData.current,
+        pageSize: this.pageData.size,
+        listItem: this.item
+      });
+    }
+  },
+  methods: {
+    _setDataOpt: function _setDataOpt() {
+      this.pageData = Object.assign({}, this.page);
+    },
+    _binder: function _binder() {
+      var _this = this;
+
+      var refScroller = this.$refs.scroller;
+      refScroller.$on('scrollY', function (_ref) {
+        var box = _ref.box;
+
+        if (_this.pageTrigger === 'scroll') {
+          if (box.position.top - box.offset.top < _this.pageHeight && _this.pageData.current + 1 <= _this.pageData.total) {
+            return _this.switchPage({
+              currentPage: _this.pageData.current + 1
+            });
+          }
+        }
+      });
+      refScroller.$on('change', function (opt) {
+        return _this.$emit('scrollerChange', Object.assign({}, opt, {
+          emitter: _this
+        }));
+      });
+      refScroller.$on('yBarChange', function (_ref2) {
+        var isBottom = _ref2.isBottom;
+
+        if (!_this.$el.offsetHeight) {
+          return false;
+        }
+      });
+    }
+  },
+  created: function created() {
+    this.initPageData();
+    this.setListItem({
+      pageNum: this.pageData.current,
+      pageSize: this.pageData.size,
+      listItem: this.item
+    });
+  }
 });
 // CONCATENATED MODULE: ./src/component/Select/SelectOpt.js
 
@@ -16196,13 +16021,13 @@ var MENU_WIDTH = 170;
   }
 });
 // EXTERNAL MODULE: ./src/component/Tab/Tab.scss
-var Tab = __webpack_require__(116);
+var Tab = __webpack_require__(108);
 
 // EXTERNAL MODULE: ./src/component/Tab/Tab.material.scss
-var Tab_material = __webpack_require__(118);
+var Tab_material = __webpack_require__(110);
 
 // EXTERNAL MODULE: ./src/component/Tab/Tab.bootstrap.scss
-var Tab_bootstrap = __webpack_require__(120);
+var Tab_bootstrap = __webpack_require__(112);
 
 // CONCATENATED MODULE: ./src/component/Tab/Tab.render.js
 /**
@@ -16503,6 +16328,871 @@ var url_search = function search(urlSearch) {
     }, this.$slots.default);
   }
 });
+// EXTERNAL MODULE: ./src/component/Code/Code.scss
+var Code = __webpack_require__(114);
+
+// CONCATENATED MODULE: ./src/component/Code/Code.render.js
+/**
+ * code.render.js
+ */
+/* harmony default export */ var Code_render = (function (h) {
+  var $slots = this.$slots || {};
+  var codeStr = $slots.default ? $slots.default[0].text : this.code;
+  var lineNumEle = [];
+  var matches = codeStr ? codeStr.match(/\n/g) : [];
+  this.lineNum = matches ? matches.length + 1 : 1;
+
+  for (var i = 1, len = this.lineNum; i <= len; i++) {
+    lineNumEle.push(h('li', i));
+  }
+
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass)]
+  }, [h('header', {
+    class: [this.xclass('header')]
+  }, this.type), h('article', {
+    class: [this.xclass('article')],
+    ref: 'article'
+  }, [h('pre', {
+    class: [this.xclass('pre')],
+    style: {
+      width: this.preWidth + 'px'
+    }
+  }, [h('scroller', {
+    props: {
+      height: 200,
+      width: '100%'
+    },
+    ref: 'scroller'
+  }, [h('div', {
+    class: [this.xclass('content')]
+  }, [$slots.default || this.code, h('aside', {
+    class: [this.xclass('line-num')]
+  }, [h('ul', {
+    class: [this.prefix('css-ul')]
+  }, lineNumEle)])])])])]), h('footer', {
+    class: [this.xclass('footer')]
+  }, $slots.footer || this.footer)]);
+});
+// CONCATENATED MODULE: ./src/component/Code/Code.js
+/**
+ * code 组件
+ *
+ * @prop code - 代码
+ * @prop type - 语言类型
+ *
+ */
+
+
+
+
+/* harmony default export */ var Code_Code = ({
+  name: 'Code',
+  mixins: [base],
+  render: Code_render,
+  components: {
+    scroller: Scroller_Scroller
+  },
+  props: {
+    code: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: 'text'
+    }
+  },
+  data: function data() {
+    return {
+      lineNum: 3,
+      preWidth: 0 // pre 的宽度
+
+    };
+  },
+  computed: {
+    // 组件类名的前缀
+    cPrefix: function cPrefix() {
+      return "".concat(this.compPrefix, "-code");
+    }
+  },
+  watch: {
+    deviceSize: function deviceSize() {
+      this._initComp();
+    }
+  },
+  methods: {
+    _initComp: function _initComp() {
+      this.preWidth = this.$refs.article.offsetWidth;
+    },
+    _binder: function _binder() {
+      var _this = this;
+
+      this.$refs.scroller.$on('change', function () {
+        _this.preWidth = _this.$refs.article.offsetWidth;
+      });
+    }
+  }
+});
+// EXTERNAL MODULE: ./node_modules/vue-cropper/dist/index.js
+var dist = __webpack_require__(16);
+
+// CONCATENATED MODULE: ./src/component/Crop/Crop.jsx
+/**
+ * Crop 组件
+ * 裁剪图片
+ *
+ * @prop clip - 显示裁剪框
+ * @prop drag - 拖动图片
+ * @prop dragClip - 拖动截图框
+ * @prop fixClip - 手势改变截图框大小
+ * @prop fixClipScale - 固定截图框长宽的比例
+ * @prop height - 高度
+ * @prop clipHeight - 裁图框高度
+ * @prop clipWidth - 裁图框宽度
+ *
+ * @event change - 截图发生变化
+ */
+
+
+
+/* harmony default export */ var Crop = ({
+  name: 'Crop',
+  mixins: [base],
+  props: {
+    clip: {
+      type: Boolean,
+      default: true
+    },
+    clipHeight: {
+      type: Number,
+      default: 100
+    },
+    clipWidth: {
+      type: Number,
+      default: 100
+    },
+    height: {
+      type: Number,
+      default: 200
+    },
+    img: null,
+    drag: {
+      type: Boolean,
+      default: false
+    },
+    dragClip: {
+      type: Boolean,
+      default: false
+    },
+    fixClip: {
+      type: Boolean,
+      default: false
+    },
+    fixClipScale: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function data() {
+    return {
+      dangerHint: ''
+    };
+  },
+  computed: {
+    cPrefix: function cPrefix() {
+      // 组件类名的前缀
+      return "".concat(this.compPrefix, "-crop");
+    }
+  },
+  methods: {
+    getBlob: function getBlob() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        try {
+          _this.$refs.crop.getCropBlob(function (data) {
+            resolve(data);
+          });
+        } catch (error) {
+          reject(error);
+        }
+      });
+    },
+    getData: function getData() {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        try {
+          _this2.$refs.crop.getCropData(function (data) {
+            resolve(data);
+          });
+        } catch (error) {
+          reject(error);
+        }
+      });
+    },
+    change: function change(data) {
+      return this.$emit('change', {
+        emitter: this,
+        data: data
+      });
+    }
+  },
+  render: function render() {
+    var _this3 = this;
+
+    var h = arguments[0];
+    return h("div", {
+      "class": this.cPrefix,
+      "style": {
+        height: "".concat(this.height, "px")
+      }
+    }, [h(dist["VueCropper"], {
+      "attrs": {
+        "autoCropHeight": this.clipHeight,
+        "autoCropWidth": this.clipWidth,
+        "autoCrop": this.clip,
+        "canMove": this.drag,
+        "canMoveBox": this.dragClip,
+        "fixedBox": this.fixClip,
+        "fixed": this.fixClipScale,
+        "img": this.img
+      },
+      "ref": 'crop',
+      "on": {
+        "realTime": function realTime(data) {
+          return _this3.change(data);
+        }
+      }
+    })]);
+  }
+});
+// EXTERNAL MODULE: ./src/component/Nav/Nav.scss
+var Nav = __webpack_require__(116);
+
+// EXTERNAL MODULE: ./src/component/Nav/Nav.m.scss
+var Nav_m = __webpack_require__(118);
+
+// CONCATENATED MODULE: ./src/component/Nav/Nav.render.js
+
+
+/**
+ * nav.render.js
+ */
+function foldContent(h, foldList) {
+  var _this = this;
+
+  if (!Array.isArray(foldList) || foldList.length === 0) {
+    return false;
+  }
+
+  var foldChildren = [];
+  foldList.forEach(function (item, index) {
+    var subNav = item.sub;
+    var flodNum = index + 1;
+    var contentChildren = [];
+
+    if (Array.isArray(subNav) && subNav.length > 0) {
+      contentChildren = foldContent.call(_this, h, subNav);
+      foldChildren.push(h('fold-title', {
+        props: {
+          ui: _this.ui,
+          theme: _this.theme
+        },
+        slot: 'title-' + flodNum
+      }, item.name));
+      foldChildren.push(h('fold-content', {
+        props: {
+          ui: _this.ui,
+          theme: _this.theme
+        },
+        slot: 'content-' + flodNum
+      }, [contentChildren]));
+    } else {
+      foldChildren.push(h('fold-title', {
+        props: {
+          ui: _this.ui,
+          theme: _this.theme
+        },
+        slot: 'title-' + flodNum
+      }, [h('router-link', {
+        props: {
+          to: item.route
+        },
+        nativeOn: {
+          click: function click() {
+            if (_this.isSmallDevice) {
+              _this.hide();
+            }
+          }
+        }
+      }, item.name)]));
+    }
+  });
+  return h('fold', {
+    class: [this.xclass('sub-fold')],
+    props: {
+      only: this.isSmallDevice ? true : this.only,
+      spreadAll: this.isSmallDevice ? false : this.spreadAll,
+      ui: this.ui,
+      theme: this.theme
+    },
+    ref: 'fold'
+  }, foldChildren);
+}
+
+/* harmony default export */ var Nav_render = (function (h) {
+  var navStage = [];
+  var contentEle = h('div', {
+    class: [this.xclass('motion-content')],
+    ref: 'motionContent'
+  }, [h('div', {
+    class: [this.xclass('close-nav')],
+    on: {
+      click: this.hide
+    }
+  }, [h('icon', {
+    props: {
+      kind: 'close',
+      size: 'xs',
+      ui: this.ui,
+      theme: this.theme
+    }
+  })]), this.$slots.start, foldContent.call(this, h, this.initOpt), this.$slots.end]);
+
+  if (this.isVerticalType) {
+    navStage.push(h('motion-fold', {
+      ref: 'motion'
+    }, [h('div', {
+      class: [this.xclass('stage'), this.xclass("animate-".concat(this.navAnimate))]
+    }, [contentEle])]));
+  } else {
+    navStage.push(h('motion-slide', {
+      props: {
+        direction: 'east',
+        global: true,
+        offset: 0
+      },
+      ref: 'motion'
+    }, [h('div', {
+      class: [this.xclass('stage'), this.xclass("animate-".concat(this.navAnimate))]
+    }, [contentEle, h('div', {
+      class: [this.xclass('motion-empty')],
+      on: {
+        click: this.hide
+      }
+    })])]));
+  }
+
+  return h('div', {
+    class: [this.cPrefix, this.xclass(this.themeClass), defineProperty_default()({}, this.xclass('device-s'), this.isSmallDevice)]
+  }, [h('div', {
+    class: [this.xclass('trigger'), defineProperty_default()({}, this.xclass('active'), this.isActive)],
+    directives: [{
+      name: 'show',
+      value: this.trigger === 'show'
+    }],
+    on: {
+      click: this.toggle
+    }
+  }, [h('row', [h('column', {
+    props: {
+      span: 6
+    }
+  }, this.title), h('column', {
+    class: [this.xclass('arrow')],
+    props: {
+      span: 6
+    }
+  }, [h('icon', {
+    class: [this.xclass('arrow-fold'), defineProperty_default()({}, this.xclass('arrow-spread'), this.isActive)],
+    props: {
+      kind: 'arrow-south',
+      size: 's',
+      ui: this.ui,
+      theme: this.theme
+    }
+  })])])]), navStage]);
+});
+// CONCATENATED MODULE: ./src/component/Nav/Nav.js
+/**
+ * nav 组件
+ *
+ * @prop animate - 菜单显示动画()
+ * @prop noSwitch - 菜单不要根据设备响应式切换
+ * @prop initOpt - 菜单的数据
+ * @prop kind - 菜单的种类
+ * @prop only - 手风琴模式，一次只能打开一个面板
+ * @prop trigger - 2，3 级菜单的触发模式
+ * @prop type - 布局类型
+ * @prop spreadAll - 打开全部一级菜单
+ * @prop title - 菜单标题
+ *
+ * @event hide - 隐藏 nav - 点击导航链接
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Nav_layoutType = ['grid', 'flex', 'flow'];
+/* harmony default export */ var Nav_Nav = ({
+  name: 'Nav',
+  mixins: [base],
+  render: Nav_render,
+  components: {
+    fold: component_Fold_Fold,
+    'fold-title': FoldTitle,
+    'fold-content': FoldContent,
+    'motion-fold': MotionFold,
+    'motion-slide': MotionSlide,
+    row: Row,
+    column: Col,
+    icon: Icon_Icon
+  },
+  props: {
+    animate: String,
+    noSwitch: {
+      type: Boolean,
+      default: false
+    },
+    initOpt: Array,
+    gap: {
+      type: Number,
+      default: 0
+    },
+    kind: {
+      type: String,
+      default: 'center'
+    },
+    only: {
+      type: Boolean,
+      default: false
+    },
+    spreadAll: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'horizontal'
+    },
+    trigger: {
+      type: String,
+      default: 'no'
+    },
+    title: {
+      type: String,
+      default: ''
+    }
+  },
+  data: function data() {
+    return {
+      isActive: false,
+      navAnimate: ''
+    };
+  },
+  computed: {
+    cPrefix: function cPrefix() {
+      // 组件类名的前缀
+      return "".concat(this.compPrefix, "-nav");
+    },
+    isSmallDevice: function isSmallDevice() {
+      // 判断设备是否小于 s 尺寸
+      return this.deviceSize === 's' || this.deviceSize === 'xs';
+    },
+    isVerticalType: function isVerticalType() {
+      return this.type === 'vertical';
+    },
+    isFoldAnimate: function isFoldAnimate() {
+      return this.navAnimate === 'fold';
+    }
+  },
+  watch: {
+    deviceSize: function deviceSize(val) {
+      if (!val) {
+        return false;
+      }
+
+      this.changeByDeviceSize(val);
+    }
+  },
+  methods: {
+    _setDataOpt: function _setDataOpt() {
+      if (this.type === 'vertical') {
+        this.navAnimate = this.animate ? this.animate : 'fold';
+      } else if (this.type === 'horizontal') {
+        this.navAnimate = this.animate ? this.animate : 'slide';
+      }
+    },
+    show: function show() {
+      var transitionRef = this.$refs.motion;
+      this.isActive = true;
+
+      if (this.isFoldAnimate) {
+        // TODO: 离开时 height 还是等于零如果这时候取值就会是不正确的
+        // 所以要先置为空
+        transitionRef.$el.style.height = '';
+        var transitionHeight = this.elementProp(transitionRef.$el).offsetHeight;
+        transitionRef.setHeight(transitionHeight);
+      }
+
+      transitionRef.enter();
+      this.$emit('show');
+    },
+    hide: function hide() {
+      this.$refs.motion.leave();
+      this.isActive = false;
+      this.$emit('hide');
+    },
+    toggle: function toggle() {
+      this.isActive = !this.isActive;
+
+      if (this.isActive) {
+        return this.show();
+      } else {
+        return this.hide();
+      }
+    },
+    changeByDeviceSize: function changeByDeviceSize() {
+      if (this.noSwitch) {
+        return false;
+      }
+
+      this.isSmallDevice ? this.hide() : this.show();
+      this.$refs.fold.$on('ready', function () {});
+    }
+  },
+  mounted: function mounted() {
+    this.changeByDeviceSize();
+  }
+});
+// EXTERNAL MODULE: ./src/component/Omit/Omit.scss
+var Omit = __webpack_require__(120);
+
+// CONCATENATED MODULE: ./src/component/Omit/Omit.render.js
+
+
+/**
+ * omit.render.js
+ */
+/* harmony default export */ var Omit_render = (function (h) {
+  var _this = this;
+
+  var linetextlength = this.lineText.length;
+  return h('div', {
+    class: [this.cPrefix]
+  }, [h('span', {
+    class: [this.xclass('font-width')],
+    ref: 'font'
+  }), this.lineText.map(function (item, index) {
+    if (item !== undefined && item !== '') {
+      return h('div', {
+        class: [_this.xclass('line'), defineProperty_default()({}, _this.xclass('line-last'), index + 1 === linetextlength)]
+      }, item);
+    } else {
+      return null;
+    }
+  })]);
+});
+// CONCATENATED MODULE: ./src/component/Omit/Omit.js
+
+
+/**
+ * omit 省略组件
+ *
+ * @prop line - 多行省略规定的行数，默认是 1 行
+ */
+
+
+
+/* harmony default export */ var Omit_Omit = ({
+  name: 'Omit',
+  mixins: [base],
+  render: Omit_render,
+  props: {
+    line: {
+      type: Number,
+      default: 1
+    }
+  },
+  data: function data() {
+    this.fontWidthHub = {}; // 存储字体的宽度
+
+    return {
+      content: '',
+      lineText: [] // 存储原文本处理后每行存储的文本
+
+    };
+  },
+  computed: {
+    cPrefix: function cPrefix() {
+      // 组件类名的前缀
+      return "".concat(this.compPrefix, "-omit");
+    }
+  },
+  methods: {
+    textWidth: function textWidth(text, fontSize) {
+      if (text === ' ') {
+        return 4;
+      }
+
+      if (this.fontWidthHub[text] !== undefined) {
+        return this.fontWidthHub[text];
+      }
+
+      var span = this.$refs.font;
+      var width = 0;
+
+      if (typeof span.textContent !== 'undefined') {
+        span.textContent = text;
+      } else {
+        span.innerText = text;
+      }
+
+      width = span.offsetWidth;
+
+      if (this.isDoubleByte(text)) {
+        this.fontWidthHub = Object.assign({}, this.fontWidthHub, {
+          doubleByte: width
+        });
+      } else {
+        this.fontWidthHub = Object.assign({}, this.fontWidthHub, defineProperty_default()({}, text, width));
+      }
+
+      return width;
+    },
+    // 匹配汉字
+    isDoubleByte: function isDoubleByte(text) {
+      var regex = /[^\u4e00-\u9fa5]/;
+
+      if (regex.test(text)) {
+        return true;
+      }
+
+      return false;
+    },
+    splite: function splite(content) {
+      this.content = content;
+      var contentArray = content.split('');
+      var contentArrayLength = contentArray.length;
+      var index = 0;
+      var lineFont = [];
+
+      for (var i = 0, lineLength = this.line; i < lineLength; i++) {
+        if (contentArray[index] === undefined) {
+          break;
+        }
+
+        var lineWidth = 0; // 这一行的宽度
+
+        var j = index;
+        var char = '';
+        var lastFontWidthOver = false; // 最后一行的文字宽度是否小于容器宽度
+
+        for (; j < contentArrayLength; j++) {
+          var fontWidth = this.textWidth(contentArray[j]);
+
+          if (contentArray[j] === undefined || fontWidth + lineWidth >= this.boxWidth) {
+            // 最后一行并且文字总宽度大于容器宽度时
+            lastFontWidthOver = i === lineLength - 1 && fontWidth + lineWidth >= this.boxWidth;
+            break;
+          }
+
+          lineWidth = lineWidth + fontWidth;
+          char = char + contentArray[j];
+        }
+
+        lineFont.push(lastFontWidthOver && i === lineLength - 1 ? char + '....' : char);
+        index = j;
+      }
+
+      this.lineText = lineFont;
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$nextTick(function () {
+      _this.boxWidth = _this.$el.offsetWidth - 1;
+
+      _this.splite(_this.$slots.default[0].text);
+    });
+  },
+  beforeUpdate: function beforeUpdate() {
+    var _this2 = this;
+
+    if (this.$slots.default[0].text !== this.content) {
+      this.$nextTick(function () {
+        _this2.boxWidth = _this2.$el.offsetWidth - 1;
+
+        _this2.splite(_this2.$slots.default[0].text);
+      });
+    }
+  }
+});
+// EXTERNAL MODULE: ./src/component/Search/Search.scss
+var Search = __webpack_require__(122);
+
+// CONCATENATED MODULE: ./src/component/Search/Search.render.js
+/**
+ * complete.render.js
+ */
+/* harmony default export */ var Search_render = (function (h) {
+  var _this = this;
+
+  return h('div', {
+    class: [this.cPrefix]
+  }, [function () {
+    if (_this.input) {
+      return h('input-box', {
+        props: {
+          ui: _this.ui,
+          theme: _this.theme
+        },
+        class: [_this.xclass('input')]
+      });
+    } else {
+      return null;
+    }
+  }(), h('div', {
+    class: [this.xclass('match')],
+    directives: [{
+      name: 'show',
+      value: this.matchDisplay
+    }]
+  }, [h('list', {
+    props: {
+      item: this.matchOpt,
+      pageSize: 6,
+      auto: true,
+      pageType: 'more',
+      pager: true,
+      height: 150,
+      ui: this.ui,
+      theme: this.theme
+    },
+    scopedSlots: {
+      default: function _default(props) {
+        return h('div', {
+          class: [_this.xclass('list-content')],
+          on: {
+            click: function click(event) {
+              return _this._clickMatchOpt(event, props.index);
+            }
+          }
+        }, [h('span', props.item.text)]);
+      }
+    }
+  })])]);
+});
+// CONCATENATED MODULE: ./src/component/Search/Search.js
+/**
+ * search 组件
+ *
+ * @prop input - 显示输入框，默认显示
+ * @prop option - 搜索选项数据
+ * @prop keyword - 搜索关键字
+ *
+ * @event change - 搜索结果改变
+ */
+
+
+
+
+
+
+var searchComp = {
+  name: 'Search',
+  render: Search_render,
+  mixins: [base],
+  components: {
+    list: List_List,
+    'input-box': Input_Input
+  },
+  props: {
+    input: {
+      type: Boolean,
+      default: true
+    },
+    option: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    keyword: {
+      type: [String, Number],
+      default: ''
+    }
+  },
+  data: function data() {
+    return {
+      // 组件名字
+      compName: 'search',
+      // 搜索结果的显示状态
+      matchDisplay: false,
+      // 匹配的补全值
+      matchOpt: []
+    };
+  },
+  computed: {
+    // 组件类名的前缀
+    cPrefix: function cPrefix() {
+      return "".concat(this.compPrefix, "-search");
+    }
+  },
+  watch: {
+    keyword: function keyword(val) {
+      this.search(val);
+    }
+  },
+  methods: {
+    _setDataOpt: function _setDataOpt() {
+      this.matchOpt = this.option.slice();
+    },
+    _initComp: function _initComp() {
+      this.search(this.keyword);
+    },
+
+    /**
+     * 点击匹配的搜索选项
+     */
+    _clickMatchOpt: function _clickMatchOpt(event, index) {
+      Message_tip('功能未完成');
+    },
+
+    /**
+     * 获取搜索补全的数据
+     * @return {Object} this - 组件
+     */
+    search: function search(keyword) {
+      if (keyword === 0 || !keyword || !(Array.isArray(this.option) && this.option.length > 0)) {
+        this.matchOpt = [];
+      } else {
+        this.matchOpt = this.option.filter(function (item) {
+          return item.text.indexOf(keyword) > -1;
+        });
+      }
+
+      this.$emit('change', {
+        emitter: this,
+        matchOpt: this.matchOpt
+      });
+      this.matchDisplay = this.matchOpt.length !== 0;
+    }
+  }
+};
+/* harmony default export */ var Search_Search = (searchComp);
 // CONCATENATED MODULE: ./src/index.js
 
 
@@ -16542,7 +17232,9 @@ var url_search = function search(urlSearch) {
 
 
 
-var compHub = [Btn_Btn, Bubble_Bubble, Check_Check, Code_Code, Form_Form, component_Fold_Fold, FoldTitle, FoldContent, Input_Input, Icon_Icon, List_List, Loading_Loading, Omit_Omit, Pop_Pop, Page_Page, Message_Message, Menu_Menu, Modal_Modal, MenuEle, MotionFade, MotionFold, MotionRip_MotionRip, MotionSlide, MotionZoom, Nav_Nav, Scroller_Scroller, Search_Search, Select_Select, SelectEle, Shift_Shift, ShiftEle, Tab_Tab, TabEle, Col, Row, component_Table_Table, TableRow, TableCol];
+
+
+var compHub = [Btn_Btn, Bubble_Bubble, Check_Check, Code_Code, Crop, Form_Form, component_Fold_Fold, FoldTitle, FoldContent, Input_Input, Icon_Icon, List_List, Loading_Loading, Omit_Omit, Pop_Pop, Page_Page, Message_Message, Menu_Menu, Modal_Modal, MenuEle, MotionFade, MotionFold, MotionRip_MotionRip, MotionSlide, MotionZoom, Nav_Nav, Scroller_Scroller, Search_Search, Select_Select, SelectEle, Shift_Shift, ShiftEle, Tab_Tab, TabEle, Col, Row, component_Table_Table, TableRow, TableCol, Upload_Upload];
 
 var install = function install(Vue) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -16770,95 +17462,6 @@ window.addEventListener('load', function () {
   confirm_createConfirm();
 });
 /* harmony default export */ var Modal_confirm = (confirm_confirm);
-// CONCATENATED MODULE: ./src/component/Message/toast.js
-/**
- * toast 底部提示组件
- */
-
-
-
-
-
-var toasting = false;
-var toastHub = [];
-/**
- * 创建 toast 组件的实例
- **/
-
-var toast_createToast = function createToast() {
-  var toastCompVm = new external_root_Vue_commonjs2_vue_amd_vue_commonjs_vue_default.a({
-    name: 'toast',
-    mixins: [base],
-    computed: {
-      cPrefix: function cPrefix() {
-        return "".concat(this.compPrefix, "-toast");
-      }
-    },
-    components: {
-      message: Message_Message
-    },
-    store: store,
-    render: function render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [h('message', {
-        props: {
-          position: 'bottom'
-        },
-        ref: 'toast'
-      })]);
-    },
-    mounted: function mounted() {
-      this.$store.dispatch(type.toast.add, this);
-    }
-  }).$mount();
-  document.body.appendChild(toastCompVm.$el);
-};
-
-var toast_commonVuex = new external_root_Vue_commonjs2_vue_amd_vue_commonjs_vue_default.a({
-  store: store
-});
-/**
- * 调用 toast
- **/
-
-var toast_toast = function toast() {
-  var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  if (toasting) {
-    toastHub.push(opt);
-    return false;
-  }
-
-  toasting = true;
-  var option = {};
-
-  if (typeof opt === 'string') {
-    option = {
-      message: opt.toString()
-    };
-  } else {
-    option = opt;
-  }
-
-  return toast_commonVuex.$store.getters[type.toast.get].$refs.toast.set({
-    message: option.message,
-    type: option.type,
-    hideCb: function hideCb() {
-      toasting = false;
-      option.cb && option.cb();
-
-      if (toastHub.length > 0) {
-        return toast(toastHub.shift());
-      }
-    }
-  }).show();
-};
-
-window.addEventListener('load', function () {
-  toast_createToast();
-});
-/* harmony default export */ var Message_toast = (toast_toast);
 // CONCATENATED MODULE: ./src/component/Bubble/tooltip.js
 /**
  * 冒泡样式的 tooltip 组件
@@ -16941,6 +17544,7 @@ window.addEventListener('load', function () {
 /* concated harmony reexport Btn */__webpack_require__.d(__webpack_exports__, "Btn", function() { return Btn_Btn; });
 /* concated harmony reexport Check */__webpack_require__.d(__webpack_exports__, "Check", function() { return Check_Check; });
 /* concated harmony reexport Col */__webpack_require__.d(__webpack_exports__, "Col", function() { return Col; });
+/* concated harmony reexport Crop */__webpack_require__.d(__webpack_exports__, "Crop", function() { return Crop; });
 /* concated harmony reexport Form */__webpack_require__.d(__webpack_exports__, "Form", function() { return Form_Form; });
 /* concated harmony reexport FoldTitle */__webpack_require__.d(__webpack_exports__, "FoldTitle", function() { return FoldTitle; });
 /* concated harmony reexport FoldContent */__webpack_require__.d(__webpack_exports__, "FoldContent", function() { return FoldContent; });
@@ -16969,6 +17573,7 @@ window.addEventListener('load', function () {
 /* concated harmony reexport Table */__webpack_require__.d(__webpack_exports__, "Table", function() { return component_Table_Table; });
 /* concated harmony reexport TableCol */__webpack_require__.d(__webpack_exports__, "TableCol", function() { return TableCol; });
 /* concated harmony reexport TableRow */__webpack_require__.d(__webpack_exports__, "TableRow", function() { return TableRow; });
+/* concated harmony reexport Upload */__webpack_require__.d(__webpack_exports__, "Upload", function() { return Upload_Upload; });
 /* concated harmony reexport MotionFade */__webpack_require__.d(__webpack_exports__, "MotionFade", function() { return MotionFade; });
 /* concated harmony reexport MotionFold */__webpack_require__.d(__webpack_exports__, "MotionFold", function() { return MotionFold; });
 /* concated harmony reexport MotionRip */__webpack_require__.d(__webpack_exports__, "MotionRip", function() { return MotionRip_MotionRip; });
@@ -16976,6 +17581,8 @@ window.addEventListener('load', function () {
 /* concated harmony reexport MotionZoom */__webpack_require__.d(__webpack_exports__, "MotionZoom", function() { return MotionZoom; });
 /* concated harmony reexport set */__webpack_require__.d(__webpack_exports__, "set", function() { return set; });
 /* concated harmony reexport install */__webpack_require__.d(__webpack_exports__, "install", function() { return src; });
+
+
 
 
 
