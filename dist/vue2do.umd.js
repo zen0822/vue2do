@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.16
+ * vue2do.js v0.4.17
  * (c) 2017-2019 Zen Huang
  * Released under the MIT License.
  */
@@ -9168,8 +9168,8 @@ window.addEventListener('load', function () {
  * 目前只支持上传图片
  *
  * @prop crop - crop 组件
- * @prop hidden - 隐藏
  * @prop hint - 上传说明文字
+ * @prop invisible - 隐藏
  * @prop item - 已上传文件的信息 (src, title, alt)
  * @prop max - 最大上传数量
  * @prop min - 至少上传数量
@@ -9207,6 +9207,10 @@ var TYPE_DOC = 'doc';
       type: String
     },
     hint: String,
+    invisible: {
+      type: Boolean,
+      default: false
+    },
     item: {
       type: Array,
       default: function _default() {
@@ -9518,7 +9522,7 @@ var TYPE_DOC = 'doc';
     return h("div", {
       "class": this.cPrefix,
       "style": {
-        visibility: this.hidden ? 'hidden' : 'visible'
+        visibility: this.invisible ? 'hidden' : 'visible'
       }
     }, [h(Row, {
       "attrs": {
