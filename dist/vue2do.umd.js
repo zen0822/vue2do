@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.17
+ * vue2do.js v0.4.18
  * (c) 2017-2019 Zen Huang
  * Released under the MIT License.
  */
@@ -9169,7 +9169,6 @@ window.addEventListener('load', function () {
  *
  * @prop crop - crop 组件
  * @prop hint - 上传说明文字
- * @prop invisible - 隐藏
  * @prop item - 已上传文件的信息 (src, title, alt)
  * @prop max - 最大上传数量
  * @prop min - 至少上传数量
@@ -9207,10 +9206,6 @@ var TYPE_DOC = 'doc';
       type: String
     },
     hint: String,
-    invisible: {
-      type: Boolean,
-      default: false
-    },
     item: {
       type: Array,
       default: function _default() {
@@ -9520,10 +9515,7 @@ var TYPE_DOC = 'doc';
       }
     })])]) : null;
     return h("div", {
-      "class": this.cPrefix,
-      "style": {
-        visibility: this.invisible ? 'hidden' : 'visible'
-      }
+      "class": this.cPrefix
     }, [h(Row, {
       "attrs": {
         "justify": 'start'
@@ -16449,8 +16441,8 @@ var dist = __webpack_require__(16);
  * @prop clip - 显示裁剪框
  * @prop drag - 拖动图片
  * @prop dragClip - 拖动截图框
- * @prop fixClip - 手势改变截图框大小
- * @prop fixClipScale - 固定截图框长宽的比例
+ * @prop changeClip - 允许手势改变截图框大小
+ * @prop fixClip - 固定截图框长宽的比例
  * @prop height - 高度
  * @prop clipHeight - 裁图框高度
  * @prop clipWidth - 裁图框宽度
@@ -16464,6 +16456,10 @@ var dist = __webpack_require__(16);
   name: 'Crop',
   mixins: [base],
   props: {
+    changeClip: {
+      type: Boolean,
+      default: false
+    },
     clip: {
       type: Boolean,
       default: true
@@ -16477,7 +16473,7 @@ var dist = __webpack_require__(16);
       default: 100
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 200
     },
     img: null,
@@ -16490,10 +16486,6 @@ var dist = __webpack_require__(16);
       default: false
     },
     fixClip: {
-      type: Boolean,
-      default: false
-    },
-    fixClipScale: {
       type: Boolean,
       default: false
     }
@@ -16544,8 +16536,6 @@ var dist = __webpack_require__(16);
     }
   },
   render: function render() {
-    var _this3 = this;
-
     var h = arguments[0];
     return h("div", {
       "class": this.cPrefix,
@@ -16559,16 +16549,14 @@ var dist = __webpack_require__(16);
         "autoCrop": this.clip,
         "canMove": this.drag,
         "canMoveBox": this.dragClip,
-        "fixedBox": this.fixClip,
-        "fixed": this.fixClipScale,
+        "fixedBox": !this.changeClip,
+        "fixed": this.fixClip,
         "img": this.img
       },
       "ref": 'crop',
-      "on": {
-        "realTime": function realTime(data) {
-          return _this3.change(data);
-        }
-      }
+      "on": Object.assign({
+        realTime: this.change
+      })
     })]);
   }
 });
