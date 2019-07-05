@@ -3,7 +3,8 @@
 const yargs = require('yargs')
 const {
   buildApp,
-  initProject
+  initProject,
+  buildTheme
 } = require('../script/app')
 
 return yargs
@@ -53,6 +54,28 @@ return yargs
     },
     handler(argv) {
       buildApp(argv.projectName, argv.name, argv.type)
+    }
+  })
+  .command({
+    command: 'theme <type> [path]',
+    desc: 'Build a custom theme',
+    builder(yargs) {
+      yargs.options({
+        'type': {
+          default: 'build',
+          describe: '构建自定义的主题变量',
+          type: 'string',
+          choices: ['build']
+        },
+        'path': {
+          demandOption: true,
+          describe: '变量文件位置',
+          type: 'string'
+        }
+      })
+    },
+    handler(argv) {
+      buildTheme(argv.type, argv.path)
     }
   })
   .help()
