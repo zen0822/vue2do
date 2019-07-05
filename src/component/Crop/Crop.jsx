@@ -5,8 +5,8 @@
  * @prop clip - 显示裁剪框
  * @prop drag - 拖动图片
  * @prop dragClip - 拖动截图框
- * @prop fixClip - 手势改变截图框大小
- * @prop fixClipScale - 固定截图框长宽的比例
+ * @prop changeClip - 允许手势改变截图框大小
+ * @prop fixClip - 固定截图框长宽的比例
  * @prop height - 高度
  * @prop clipHeight - 裁图框高度
  * @prop clipWidth - 裁图框宽度
@@ -25,6 +25,10 @@ export default {
   mixins: [baseMixin],
 
   props: {
+    changeClip: {
+      type: Boolean,
+      default: false
+    },
     clip: {
       type: Boolean,
       default: true
@@ -38,7 +42,7 @@ export default {
       default: 100
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 200
     },
     img: null,
@@ -51,10 +55,6 @@ export default {
       default: false
     },
     fixClip: {
-      type: Boolean,
-      default: false
-    },
-    fixClipScale: {
       type: Boolean,
       default: false
     }
@@ -115,11 +115,11 @@ export default {
           autoCrop={this.clip}
           canMove={this.drag}
           canMoveBox={this.dragClip}
-          fixedBox={this.fixClip}
-          fixed={this.fixClipScale}
+          fixedBox={!this.changeClip}
+          fixed={this.fixClip}
           img={this.img}
           ref='crop'
-          vOn:realTime={(data) => this.change(data)}
+          {...{ on: { realTime: this.change } }}
         />
       </div>
     )
