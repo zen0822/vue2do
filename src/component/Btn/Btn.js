@@ -9,6 +9,7 @@
  * @prop submit - 提交按钮
  * @prop type - 按钮类型 (button | text | float | outline)
  * @prop value - 按钮名字
+ * @prop transparent - 当 outline 按钮时背景为透明
  *
  * @prop fontSize - 按钮字体大小
  * @prop fontColor - 按钮字体颜色
@@ -152,15 +153,19 @@ export default {
       return this.type === 'float'
     },
     btnClass() {
-      const className = this.xclass([
+      const className = [
         this.themeClass,
         this.uiClass,
         `size-${this.size.toLowerCase()}`,
         `radius-${this.radius.toLowerCase()}`,
         `type-${this.type}`
-      ])
+      ]
 
-      return `${className}`
+      if (this.transparent) {
+        className.push('transparent')
+      }
+
+      return `${this.xclass(className)}`
     }
   },
 
