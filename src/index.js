@@ -1,3 +1,17 @@
+import './src/lib/directive/directive.js'
+import './src/scss/transition.scss'
+import './src/scss/common/main.scss'
+import './src/scss/util.scss'
+import './src/scss/grid.scss'
+
+import { set as setConfig } from './src/config'
+
+import alert from './src/component/Modal/alert'
+import confirm from './src/component/Modal/confirm'
+import tip from './src/component/Message/tip'
+import toast from './src/component/Message/toast'
+import tooltip from './src/component/Bubble/tooltip'
+
 import Btn from './component/Btn/Btn'
 import Check from './component/Check/Check'
 import Form from './component/Form/Form'
@@ -108,6 +122,54 @@ const install = (Vue, {
 }
 
 export {
+  alert,
+  confirm,
+  tip,
+  toast,
+  tooltip,
+
+  Bubble,
+  Btn,
+  Check,
+  Col,
+  Crop,
+  Form,
+  FoldTitle,
+  FoldContent,
+  Input,
+  Icon,
+  Loading,
+  List,
+  Message,
+  Menu,
+  MenuEle,
+  Modal,
+  Nav,
+  Omit,
+  Page,
+  Pop,
+  Fold,
+  Row,
+  Scroller,
+  Search,
+  Select,
+  SelectEle,
+  Shift,
+  ShiftEle,
+  Tab,
+  TabEle,
+  Table,
+  TableCol,
+  TableRow,
+  Upload,
+
+  MotionFade,
+  MotionFold,
+  MotionRip,
+  MotionSlide,
+  MotionZoom,
+
+  setConfig as set,
   install
 }
 
