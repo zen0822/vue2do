@@ -3,8 +3,8 @@
  * 目前只支持上传图片
  *
  * @prop crop - crop 组件
- * @prop hidden - 隐藏
  * @prop hint - 上传说明文字
+ * @prop invisible - 隐藏
  * @prop item - 已上传文件的信息 (src, title, alt)
  * @prop max - 最大上传数量
  * @prop min - 至少上传数量
@@ -49,6 +49,10 @@ export default {
       type: String
     },
     hint: String,
+    invisible: {
+      type: Boolean,
+      default: false
+    },
     item: {
       type: Array,
       default: () => []
@@ -342,7 +346,7 @@ export default {
       <div
         class={this.cPrefix}
         style={{
-          visibility: this.hidden ? 'hidden' : 'visible'
+          visibility: this.invisible ? 'hidden' : 'visible'
         }}
       >
         <Row justify='start' class={this.xclass('showcase')}>
