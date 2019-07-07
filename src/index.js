@@ -1,16 +1,16 @@
-import './src/lib/directive/directive.js'
-import './src/scss/transition.scss'
-import './src/scss/common/main.scss'
-import './src/scss/util.scss'
-import './src/scss/grid.scss'
+import './lib/directive/directive.js'
+import './scss/transition.scss'
+import './scss/common/main.scss'
+import './scss/util.scss'
+import './scss/grid.scss'
 
-import { set as setConfig } from './src/config'
+import { set as setConfig } from './config'
 
-import alert from './src/component/Modal/alert'
-import confirm from './src/component/Modal/confirm'
-import tip from './src/component/Message/tip'
-import toast from './src/component/Message/toast'
-import tooltip from './src/component/Bubble/tooltip'
+import alert from './component/Modal/alert'
+import confirm from './component/Modal/confirm'
+import tip from './component/Message/tip'
+import toast from './component/Message/toast'
+import tooltip from './component/Bubble/tooltip'
 
 import Btn from './component/Btn/Btn'
 import Check from './component/Check/Check'
@@ -47,6 +47,7 @@ import TabEle from './component/Tab/TabEle'
 import Col from './component/Col/Col'
 import Row from './component/Row/Row'
 
+import Capture from './component/Capture/Capture'
 import Code from './component/Code/Code'
 import Crop from './component/Crop/Crop'
 import Loading from './component/Loading/Loading'
@@ -66,6 +67,7 @@ import MotionZoom from './component/MotionZoom/MotionZoom'
 const compHub = [
   Btn,
   Bubble,
+  Capture,
   Check,
   Code,
   Crop,
@@ -130,6 +132,7 @@ export {
 
   Bubble,
   Btn,
+  Capture,
   Check,
   Col,
   Crop,

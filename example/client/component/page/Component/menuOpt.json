@@ -145,6 +145,10 @@
       {
         "name": "菜单",
         "route": "/component/menu"
+      },
+      {
+        "name": "拍照",
+        "route": "/component/capture"
       }
     ]
   }

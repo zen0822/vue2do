@@ -164,10 +164,11 @@ $border-radius: 3px !default;
 $font-base: 14px !default;
 
 $h1: 28px !default;
-$h2: 21px !default;
-$h3: 16px !default;
-$h4: $font-base !default;
-$h5: 12px;
+$h2: 24px !default;
+$h3: 18px !default;
+$h4: 16px !default;
+$h5: $font-base !default;
+$h6: 12px;
 
 //---------------- other ----------------
 
@@ -178,6 +179,7 @@ $z-index-higher: 1000 !default;
 $z-index-modal: $z-index !default;
 $z-index-message: $z-index-higher !default;
 $z-index-upload-preview: $z-index !default;
+$z-index-capture: $z-index !default;
 
 $shadow-lower:
     0 2px 2px 0 rgba(0,0,0,0.14),

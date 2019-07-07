@@ -127,6 +127,12 @@ export default [{
     title: '加载组件'
   }
 }, {
+  path: 'capture',
+  component: () => import('../component/page/Component/other/Capture/Capture'),
+  meta: {
+    title: '拍照组件'
+  }
+}, {
   path: 'motion',
   component: () => import('../component/page/Component/Motion/Motion'),
   children: motionChildren
