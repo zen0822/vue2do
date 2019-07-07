@@ -1,5 +1,5 @@
 /*!
- * vue2do.js v0.4.21
+ * vue2do.js v0.4.22
  * (c) 2017-2019 Zen Huang
  * Released under the MIT License.
  */
@@ -60,15 +60,15 @@
 
 .z-css-h4 {
   font-weight: 700;
-  font-size: 28px; }
+  font-size: 16px; }
 
 .z-css-h5 {
   font-weight: 700;
-  font-size: 28px; }
+  font-size: 14px; }
 
 .z-css-h6 {
   font-weight: 700;
-  font-size: 28px; }
+  font-size: 12px; }
 
 .z-css-f12 {
   font-size: 12px; }
