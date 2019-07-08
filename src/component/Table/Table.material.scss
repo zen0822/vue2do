@@ -2,12 +2,12 @@
  * table 组件的 material UI 样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
 
-$C_PREFIX: #{ $COMP_TABLE };
-$COL_PREFIX: #{ $COMP_TABLE_COL };
+$C_PREFIX: #{$COMP_TABLE};
+$COL_PREFIX: #{$COMP_TABLE_COL};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
   box-shadow: $shadow-lower;

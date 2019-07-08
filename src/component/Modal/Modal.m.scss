@@ -1,17 +1,17 @@
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 /**
  * pop 组件样式
  */
 
-$C_PREFIX: #{ $COMP_MODAL };
+$C_PREFIX: #{$COMP_MODAL};
 
 .#{$C_PREFIX} {
-  @include device-type("s") {
+  @include device-type('s') {
     .#{$C_PREFIX}-bg {
-      background: rgba(0, 0, 0, .5);
+      background: rgba(0, 0, 0, 0.5);
     }
     .#{$C_PREFIX}-pop {
       width: 96%;

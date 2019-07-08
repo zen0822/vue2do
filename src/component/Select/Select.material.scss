@@ -1,13 +1,13 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_SELECT };
-$C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
-$C_ELE_PREFIX: #{ $COMP_SELECT_ELE };
-$INPUT_PREFIX: #{ $COMP_INPUT };
-$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+$C_PREFIX: #{$COMP_SELECT};
+$C_OPT_PREFIX: #{$COMP_SELECT_OPT};
+$C_ELE_PREFIX: #{$COMP_SELECT_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
 
 $MENU_WIDTH: 170px;
 $MULTI_MENU_WIDTH: 170px + 80px;

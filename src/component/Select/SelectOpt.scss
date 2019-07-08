@@ -2,12 +2,12 @@
  * select-opt 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_SELECT_OPT };
+$C_PREFIX: #{$COMP_SELECT_OPT};
 $OPTION_UI_PADDING_WIDTH: $gap-v;
 
 .#{$C_PREFIX}-ul {
@@ -58,7 +58,7 @@ $OPTION_UI_PADDING_WIDTH: $gap-v;
   }
 }
 
-@include device-type("s") {
+@include device-type('s') {
   .#{$C_PREFIX}-ul {
     width: 100%;
   }

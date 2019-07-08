@@ -14,9 +14,9 @@
  * @event change - 截图发生变化
  */
 
-import { VueCropper } from 'vue-cropper'
-import Loading from '../Loading/Loading'
+import './Crop.scss'
 
+import { VueCropper } from 'vue-cropper'
 import baseMixin from '../../mixin/base'
 
 export default {
@@ -43,7 +43,7 @@ export default {
     },
     height: {
       type: [Number, String],
-      default: 200
+      default: ''
     },
     img: null,
     drag: {
@@ -107,20 +107,24 @@ export default {
     return (
       <div
         class={this.cPrefix}
-        style={{ height: `${this.height}px` }}
+        style={{ height: !isNaN(this.height) ? `${this.height}px` : this.height }}
       >
-        <VueCropper
-          autoCropHeight={this.clipHeight}
-          autoCropWidth={this.clipWidth}
-          autoCrop={this.clip}
-          canMove={this.drag}
-          canMoveBox={this.dragClip}
-          fixedBox={!this.changeClip}
-          fixed={this.fixClip}
-          img={this.img}
-          ref='crop'
-          {...{ on: { realTime: this.change } }}
-        />
+        <div class={this.xclass('layover')} />
+
+        <div class={this.xclass('main')}>
+          <VueCropper
+            autoCropHeight={this.clipHeight}
+            autoCropWidth={this.clipWidth}
+            autoCrop={this.clip}
+            canMove={this.drag}
+            canMoveBox={this.dragClip}
+            fixedBox={!this.changeClip}
+            fixed={this.fixClip}
+            img={this.img}
+            ref='crop'
+            {...{ on: { realTime: this.change } }}
+          />
+        </div>
       </div>
     )
   }
