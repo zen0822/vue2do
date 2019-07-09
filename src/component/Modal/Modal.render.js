@@ -132,7 +132,10 @@ export default function (h) {
           h(
             'div',
             {
-              class: [this.xclass('content')]
+              class: [this.xclass('content')],
+              style: {
+                width: this.width
+              }
             },
             [modalChildren])
         ]

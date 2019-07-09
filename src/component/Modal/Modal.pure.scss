@@ -13,6 +13,8 @@ $C_PREFIX: #{$COMP_MODAL};
   .#{$C_PREFIX}-pop {
     .#{$C_PREFIX}-content {
       width: auto;
+      background-color: transparent;
+      box-shadow: none;
     }
   }
 }

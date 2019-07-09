@@ -144,13 +144,6 @@ $POP_CONTAINER_PADDING: 24px;
     }
   }
 
-  &.#{$C_PREFIX}-type-pure {
-    & > .#{$C_PREFIX}-pop {
-      background-color: transparent;
-      box-shadow: none;
-    }
-  }
-
   &.#{$C_PREFIX}-size-m {
     & > .#{$C_PREFIX}-pop {
       .#{$C_PREFIX}-content {

@@ -17,6 +17,7 @@
  * @prop footerDisplay - 是否显示弹窗底部
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
+ * @prop width - 弹窗内容的宽度 (Number | String)
  * @prop type - 弹窗类型（full | alert | confirm | simple | long）
  *
  * @slot - 弹窗的主体内容
@@ -137,7 +138,8 @@ const modalComp = {
         return undefined
       }
     },
-    height: [Number, String]
+    height: [Number, String],
+    width: [Number, String]
   },
 
   data: () => {
