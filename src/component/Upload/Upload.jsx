@@ -303,6 +303,19 @@ export default {
      */
     hideCrop() {
       this.cropDisplay = false
+    },
+
+    /**
+     * 触发上传
+     */
+    trigger() {
+      const refInput = this.$refs.input
+
+      if (!refInput) {
+        return false
+      }
+
+      return refInput.click()
     }
   },
 
