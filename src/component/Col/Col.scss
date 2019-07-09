@@ -2,10 +2,10 @@
  * col 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 $gap-hub: (5, 10, 20, 30, 40, 50);
 $device-type: span, xl, l, m, s, xs;
@@ -18,14 +18,14 @@ $device-type: span, xl, l, m, s, xs;
   }
 }
 
-$C_PREFIX: #{ $COMP_COL };
+$C_PREFIX: #{$COMP_COL};
 
 .#{$C_PREFIX} {
   box-sizing: border-box;
 
   @each $type in $device-type {
     @if $type != span {
-      @include device-type ($type) {
+      @include device-type($type) {
         @include device-style($type);
       }
     } @else {

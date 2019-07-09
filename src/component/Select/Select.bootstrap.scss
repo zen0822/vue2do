@@ -1,26 +1,26 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_SELECT };
-$C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
-$C_ELE_PREFIX: #{ $COMP_SELECT_ELE };
-$INPUT_PREFIX: #{ $COMP_INPUT };
-$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+$C_PREFIX: #{$COMP_SELECT};
+$C_OPT_PREFIX: #{$COMP_SELECT_OPT};
+$C_ELE_PREFIX: #{$COMP_SELECT_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
 
 $MENU_WIDTH: 170px;
 $MENU_HEIGHT: 36px;
 
 @mixin btn-box-shadow($color) {
-  box-shadow: 0 0 0 4px rgba($color, .3);
+  box-shadow: 0 0 0 4px rgba($color, 0.3);
 }
 
 @mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   border-color: $type-color;
 
   &:hover {
-    border-color: rgba($type-color-dark, .9);
+    border-color: rgba($type-color-dark, 0.9);
   }
 
   &:focus {
@@ -45,7 +45,7 @@ $MENU_HEIGHT: 36px;
   transition: background-color 150ms ease-out;
 
   &:hover {
-    border-color: rgba($color-primary-dark, .9);
+    border-color: rgba($color-primary-dark, 0.9);
   }
 
   &:focus {

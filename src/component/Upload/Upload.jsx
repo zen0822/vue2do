@@ -418,7 +418,7 @@ export default {
                   <Btn
                     type='text'
                     value='取消'
-                    theme='grey'
+                    theme='white'
                   />
                 </div>
               </Col>

@@ -1,17 +1,17 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 /**
  * menu 组件样式
  */
 
-$C_PREFIX: #{ $COMP_MENU };
-$C_OPT_PREFIX: #{ $COMP_MENU_OPT };
-$C_ELE_PREFIX: #{ $COMP_MENU_ELE };
-$INPUT_PREFIX: #{ $COMP_INPUT };
-$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+$C_PREFIX: #{$COMP_MENU};
+$C_OPT_PREFIX: #{$COMP_MENU_OPT};
+$C_ELE_PREFIX: #{$COMP_MENU_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
 
 $MENU_HEIGHT: 36px;
 $MENU_WIDTH: 170px;
@@ -63,4 +63,4 @@ $MULTI_MENU_WIDTH: 170px + 80px;
   }
 }
 
-@import "./scss/Menu.material.scss"
+@import './scss/Menu.material.scss';

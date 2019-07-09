@@ -2,12 +2,12 @@
  * page 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_PAGE };
+$C_PREFIX: #{$COMP_PAGE};
 
 .#{$C_PREFIX} {
   color: $grey-dark;
@@ -42,7 +42,7 @@ $C_PREFIX: #{ $COMP_PAGE };
       display: inline-block;
       vertical-align: middle;
 
-      &>.#{$C_PREFIX}-li {
+      & > .#{$C_PREFIX}-li {
         display: inline-block;
         color: $grey-light;
         padding: $gap-v-half 0;
@@ -65,7 +65,7 @@ $C_PREFIX: #{ $COMP_PAGE };
       }
     }
 
-    .#{$C_PREFIX}-total{
+    .#{$C_PREFIX}-total {
       color: $grey-light;
       margin: 0 $gap-h-double;
     }
@@ -87,14 +87,14 @@ $C_PREFIX: #{ $COMP_PAGE };
     }
   }
 
-  @include device-type("s") {
+  @include device-type('s') {
     &.#{$C_PREFIX}-type-more {
       width: 100%;
     }
 
     .#{$C_PREFIX}-num {
       .#{$C_PREFIX}-search,
-      .#{$C_PREFIX}-length{
+      .#{$C_PREFIX}-length {
         display: none;
       }
     }

@@ -1,13 +1,13 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 /**
  * search 组件样式
  */
 
-$C_PREFIX: #{ $COMP_SEARCH };
+$C_PREFIX: #{$COMP_SEARCH};
 
 $INPUT_HEIGHT: 36px;
 $INPUT_WIDTH: 170px;

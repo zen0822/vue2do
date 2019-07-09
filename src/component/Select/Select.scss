@@ -2,16 +2,16 @@
  * select 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_SELECT };
-$C_OPT_PREFIX: #{ $COMP_SELECT_OPT };
-$C_ELE_PREFIX: #{ $COMP_SELECT_ELE };
-$INPUT_PREFIX: #{ $COMP_INPUT };
-$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+$C_PREFIX: #{$COMP_SELECT};
+$C_OPT_PREFIX: #{$COMP_SELECT_OPT};
+$C_ELE_PREFIX: #{$COMP_SELECT_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
 
 $MENU_HEIGHT: 36px;
 
@@ -90,7 +90,7 @@ $MENU_HEIGHT: 36px;
 
     .#{$C_PREFIX}-search-input {
       box-sizing: border-box;
-      box-shadow: 0px 1px 3px rgba(0, 0, 0, .1);
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
       background-color: #fff;
       border-bottom: 1px solid $color-border;
 

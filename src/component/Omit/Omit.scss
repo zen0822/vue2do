@@ -3,25 +3,25 @@
  */
 
 @import '../../scss/config.scss';
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
 
-$C_PREFIX: #{ $COMP_OMIT };
+$C_PREFIX: #{$COMP_OMIT};
 
 .#{$C_PREFIX} {
+  width: 100%;
+
+  &-font-width {
+    visibility: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &-line {
     width: 100%;
 
-    &-font-width {
-        visibility: hidden;
-        position: absolute;
-        z-index: -1;
+    &-last {
+      @extend %text-omit;
     }
-
-    &-line {
-        width: 100%;
-
-        &-last {
-            @extend %text-omit;
-        }
-    }
+  }
 }

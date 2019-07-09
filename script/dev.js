@@ -29,6 +29,7 @@ module.exports = function ({
     hot: true,
     hotOnly: true,
     historyApiFallback: true,
+    https: config.https,
     proxy: config.dev.proxyTable,
     clientLogLevel: 'info',
     watchOptions: {

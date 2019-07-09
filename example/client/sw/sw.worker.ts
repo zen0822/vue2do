@@ -37,7 +37,7 @@ class ServiceWorkerMain {
 
   private async init() {
     workboxRouting.registerRoute(
-      new RegExp('http://localhost:5168/#/'),
+      new RegExp('https://localhost/#/'),
       process.env.SW_ENV === 'development'
         ? new workboxStrategies.NetworkFirst()
         : new workboxStrategies.StaleWhileRevalidate()
