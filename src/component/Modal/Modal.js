@@ -17,7 +17,7 @@
  * @prop footerDisplay - 是否显示弹窗底部
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
- * @prop type - 弹窗类型（full | alert | confirm | simple | long | pure）
+ * @prop type - 弹窗类型（full | alert | confirm | simple | long）
  *
  * @slot - 弹窗的主体内容
  *
@@ -32,6 +32,7 @@ import './Modal.scss'
 import './Modal.m.scss'
 import './Modal.material.scss'
 import './Modal.bootstrap.scss'
+import './Modal.pure.scss'
 
 import render from './Modal.render'
 import baseMixin from '../../mixin/base'
@@ -82,7 +83,7 @@ const modalComp = {
       type: String,
       default: 'simple',
       validator(val) {
-        return ['simple', 'alert', 'confirm', 'long', 'pure', 'full'].includes(val)
+        return ['simple', 'alert', 'confirm', 'long', 'full'].includes(val)
       }
     },
     size: {
@@ -118,7 +119,7 @@ const modalComp = {
     },
     headerDisplay: {
       type: Boolean,
-      default () {
+      default() {
         return undefined
       }
     },
@@ -132,7 +133,7 @@ const modalComp = {
     },
     footerDisplay: {
       type: Boolean,
-      default () {
+      default() {
         return undefined
       }
     },
@@ -180,6 +181,7 @@ const modalComp = {
     },
     footerClass() { // 组件的 footer 的 class 名字
       return {
+        [`${this.cPrefix}-footer`]: true,
         [`${this.cPrefix}-no-footer`]: !this.modalFooterDisplay
       }
     },
@@ -199,20 +201,28 @@ const modalComp = {
       ) || !this.isFull
     },
     modalHeaderDisplay() { // 模态框的头部显示状态
+      if (this.UIPure) {
+        return false
+      }
+
       if (this.headerDisplay !== undefined) {
         return this.headerDisplay
       }
 
       switch (this.type) {
-        case 'pure':
-        case 'full':
         case 'simple':
           return false
+        case 'full':
+          return true
         default:
           return !!this.stateHeader
       }
     },
     modalFooterDisplay() { // 模态框的尾部显示状态
+      if (this.UIPure) {
+        return false
+      }
+
       if (this.footerDisplay !== undefined) {
         return this.footerDisplay
       }
@@ -224,7 +234,6 @@ const modalComp = {
         case 'full':
           return this.isBiggerFull
         case 'simple':
-        case 'pure':
           return false
         default:
           return true

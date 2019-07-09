@@ -79,6 +79,9 @@ export default {
     },
     UIBootstrap() { // UI 是 bootstrap
       return this.ui === 'bootstrap'
+    },
+    UIPure() { // UI 是 pure
+      return this.ui === 'pure'
     }
   },
 

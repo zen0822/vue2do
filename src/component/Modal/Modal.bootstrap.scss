@@ -16,7 +16,7 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   &.#{$C_PREFIX}-no-header {
-    .#{$C_PREFIX}-pop > article {
+    .#{$C_PREFIX}-pop .#{$C_PREFIX}-article {
       & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
         padding-top: $gap-v-double;
       }
@@ -24,7 +24,7 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
   }
 
   .#{$C_PREFIX}-pop {
-    > header {
+    .#{$C_PREFIX}-header {
       padding: $gap-v-double;
 
       .#{$C_PREFIX}-header-title {
@@ -34,13 +34,13 @@ $POP_CONTAINER_PADDING: $gap-v-triple;
       }
     }
 
-    > article {
+    .#{$C_PREFIX}-article {
       padding: $gap-v-double;
       border-top: $divider;
       border-bottom: $divider;
     }
 
-    > footer {
+    .#{$C_PREFIX}-footer {
       padding: $gap-v-double;
     }
   }

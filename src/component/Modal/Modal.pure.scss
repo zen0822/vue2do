@@ -1,0 +1,18 @@
+/**
+ * pop 组件 bootstrap 样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_MODAL};
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-pure {
+  .#{$C_PREFIX}-pop {
+    .#{$C_PREFIX}-content {
+      width: auto;
+    }
+  }
+}
