@@ -179,5 +179,5 @@ vue2do build mpa zenMpa
 
 <details>
     <summary></summary>
-    引用 Jay 的话，希望十年之后看到我的代码还是像现在一样佩服自己。
+    <div style="color: white;">引用 Jay 的话，希望十年之后看到我的代码还是像现在一样佩服自己。</div>
 </details>
