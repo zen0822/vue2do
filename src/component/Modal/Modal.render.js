@@ -110,6 +110,9 @@ export default function (h) {
             'div',
             {
               class: this.xclass('bg'),
+              style: {
+                'background-color': this.hideLayover ? 'transparent' : ''
+              },
               on: {
                 click: this._handlerClickBg
               }
@@ -124,7 +127,8 @@ export default function (h) {
           class: [this.xclass('pop')],
           props: {
             ui: this.stateUI,
-            theme: this.stateTheme
+            theme: this.stateTheme,
+            type: this.motion
           },
           ref: 'pop'
         },

@@ -17,6 +17,8 @@
  * @prop footerDisplay - 是否显示弹窗底部
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
+ * @prop hideLayover - 隐藏遮罩层
+ * @prop motion - 动画 (slide* | none)
  * @prop width - 弹窗内容的宽度 (Number | String)
  * @prop type - 弹窗类型（full | alert | confirm | simple | long）
  *
@@ -47,16 +49,6 @@ import Row from '../Row/Row'
 import Col from '../Col/Col'
 
 import MotionFade from '../MotionFade/MotionFade'
-
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
-
-const TYPE_ALERT = 'alert'
-const TYPE_CONFIRM = 'confirm'
-const TYPE_TIP = 'tip'
-
-const TIP_SHOW_TIME = 1500
 
 const modalComp = {
   name: 'Modal',
@@ -118,6 +110,13 @@ const modalComp = {
       type: String,
       default: ''
     },
+    motion: {
+      type: String,
+      default: 'slide',
+      validator(val) {
+        return ['slide', 'none'].includes(val)
+      }
+    },
     headerDisplay: {
       type: Boolean,
       default() {
@@ -125,6 +124,10 @@ const modalComp = {
       }
     },
     headerNoBtnDisplay: {
+      type: Boolean,
+      default: false
+    },
+    hideLayover: {
       type: Boolean,
       default: false
     },

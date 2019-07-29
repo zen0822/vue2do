@@ -5,7 +5,7 @@
  * @prop part - 在一个父类元素弹出，默认为否即在当前文档之外弹窗
  * @prop position - 弹出层最终的所在位置 (top | right | bottom | left | center)
  * @prop speed - 弹出速度(slow|normal|fast)
- * @prop type - 弹出类型
+ * @prop type - 弹出类型(none | slide* | fade)
  *
  * @slot - 弹出层的主体内容
  *
@@ -22,6 +22,7 @@ import render from './Pop.render'
 import baseMixin from '../../mixin/base'
 
 import MotionSlide from '../MotionSlide/MotionSlide'
+import MotionFade from '../MotionFade/MotionFade'
 import {
   hasScroller
 } from '../../util/dom'
@@ -37,13 +38,17 @@ const popComp = {
   mixins: [baseMixin],
 
   components: {
-    'slide-transition': MotionSlide
+    'motion-slide': MotionSlide,
+    'motion-fade': MotionFade
   },
 
   props: {
     type: {
       type: String,
-      default: 'slide'
+      default: 'slide',
+      validator(val) {
+        return ['none', 'slide', 'fade'].includes(val)
+      }
     },
     direction: {
       type: String,

@@ -11,7 +11,9 @@ div.component-modal
       z-modal(
         :ui='typeUI'
         :theme='typeTheme'
-        ref='simple'
+        ref='simple',
+        motion='none'
+        hideLayover
       )
         p 这是一个简单
         p 的小弹窗
@@ -19,7 +21,7 @@ div.component-modal
         #{'<z-btn @click="simple">'}
           确认
         #{'</z-btn>'}
-        #{'<z-modal ref="simple">'}
+        #{'<z-modal ref="simple" motion="none" hideLayover>'}
           #{'<p> 这是一个简单</p>'}
           #{'<p> 的小弹窗</p>'}
         #{'</z-modal>'}

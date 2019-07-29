@@ -6,7 +6,7 @@ module.exports = {
   api: '',
   apiProd: '',
   tpl: true,
-  hotPort: 443,
+  hotPort: 5168,
   mockPort: 3000,
   proxy: {
     '/api/**': `http://localhost:5170`
@@ -25,5 +25,5 @@ module.exports = {
       }
     ]
   }],
-  https: true
+  https: false
 }

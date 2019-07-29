@@ -10,6 +10,7 @@
  * @prop height - 高度
  * @prop clipHeight - 裁图框高度
  * @prop clipWidth - 裁图框宽度
+ * @prop overClip - 裁图框可以超出图片
  *
  * @event change - 截图发生变化
  */
@@ -55,6 +56,10 @@ export default {
       default: false
     },
     fixClip: {
+      type: Boolean,
+      default: false
+    },
+    overClip: {
       type: Boolean,
       default: false
     }
@@ -118,6 +123,7 @@ export default {
             autoCrop={this.clip}
             canMove={this.drag}
             canMoveBox={this.dragClip}
+            centerBox={!this.overClip}
             fixedBox={!this.changeClip}
             fixed={this.fixClip}
             img={this.img}

@@ -14,7 +14,11 @@ div.component-pop
         @click='hidePop'
         class='z-css-m-l'
       ) 隐藏弹出层
-      z-pop(ref='pop' direction='north' position='left')
+      z-pop(
+        ref='pop'
+        direction='north'
+        position='left'
+      )
         p 这是一个简单
         p {{testName}}
       z-code(:theme='typeTheme').
