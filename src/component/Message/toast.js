@@ -98,8 +98,6 @@ const toast = (opt = '') => {
     .show()
 }
 
-window.addEventListener('load', () => {
-  createToast()
-})
+createToast()
 
 export default toast

@@ -94,8 +94,6 @@ const tip = (opt = '') => {
     .show()
 }
 
-window.addEventListener('load', () => {
-  createTip()
-})
+createTip()
 
 export default tip

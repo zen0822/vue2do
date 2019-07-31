@@ -95,8 +95,6 @@ const alert = (opt = '') => {
     .show()
 }
 
-window.addEventListener('load', () => {
-  createAlert()
-})
+createAlert()
 
 export default alert
