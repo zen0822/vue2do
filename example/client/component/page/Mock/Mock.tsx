@@ -8,22 +8,22 @@ import { Watch } from 'vue-property-decorator'
 import MixinPageComponent from '../Component/MixinPageComponent'
 
 @Component({
-  apollo: {
-    links: {
-      query: gql`{
-        links {
-          id,
-          url
-        }
-      }`,
-      prefetch: ({ route }) => ({ id: route.params.id }),
-      variables() {
-        return {
-          id: this.$route.params.id
-        }
-      }
-    }
-  }
+  // apollo: {
+  //   links: {
+  //     query: gql`{
+  //       links {
+  //         id,
+  //         url
+  //       }
+  //     }`,
+  //     prefetch: ({ route }) => ({ id: route.params.id }),
+  //     variables() {
+  //       return {
+  //         id: this.$route.params.id
+  //       }
+  //     }
+  //   }
+  // }
 })
 
 /**

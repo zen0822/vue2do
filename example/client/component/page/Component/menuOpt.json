@@ -67,6 +67,10 @@
       {
         "name": "列表数据",
         "route": "/component/list"
+      },
+      {
+        "name": "图像组件",
+        "route": "/component/img"
       }
     ]
   },

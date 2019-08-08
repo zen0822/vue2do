@@ -133,6 +133,12 @@ export default [{
     title: '拍照组件'
   }
 }, {
+  path: 'img',
+  component: () => import('../component/page/Component/data/Img/Img'),
+  meta: {
+    title: '图像组件'
+  }
+}, {
   path: 'motion',
   component: () => import('../component/page/Component/Motion/Motion'),
   children: motionChildren

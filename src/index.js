@@ -17,6 +17,7 @@ import Check from './component/Check/Check'
 import Form from './component/Form/Form'
 import Input from './component/Input/Input'
 import Icon from './component/Icon/Icon'
+import Img from './component/Img/Img'
 import Upload from './component/Upload/Upload'
 
 import Bubble from './component/Bubble/Bubble'
@@ -75,8 +76,9 @@ const compHub = [
   Fold,
   FoldTitle,
   FoldContent,
-  Input,
   Icon,
+  Img,
+  Input,
   List,
   Loading,
   Omit,

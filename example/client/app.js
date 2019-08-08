@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
+import { plugin as VueFunctional } from 'vue-function-api'
 
 import {
   createRouter
@@ -15,6 +16,7 @@ import enLang from 'src/language/en-US.json'
 
 Vue.use(VueI18n)
 Vue.use(VueApollo)
+Vue.use(VueFunctional)
 Vue.use(vue2do, {
   prefix: 'z'
 })

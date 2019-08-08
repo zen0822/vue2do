@@ -24,10 +24,10 @@ div
           z-table-col 布尔值
           z-table-col true
           z-table-col 撒旦发
-      z-code(:theme='typeTheme', v-pre).
+      z-code(:theme='typeTheme').
         #{'<z-table ui="bootstrap">'}
           #{'<'}template slot="thead" v-for="item in ['名字', '类型', '可选值', '说明']"#{'>'}
-            #{'<z-table-col>{{ item }}</z-table-col>'}
+            #{'<z-table-col>\\{\\{ item }}</z-table-col>'}
           #{'</template>'}
           #{'<z-table-row slot="1">'}
             #{'<z-table-col>display</z-table-col>'}
@@ -64,7 +64,7 @@ div
           z-table-col {{ props.item.text }}
           z-table-col {{ props.item.name }}
           z-table-col {{ props.item.en }}
-      z-code(v-pre).
+      z-code().
         #{'<z-table'}
             auto
             list
@@ -78,9 +78,9 @@ div
             #{'<z-table-col max-width="100px">en</z-table-col>'}
           #{'</template>'}
           #{'<template slot="tbody" slot-scope="props">'}
-            #{'<z-table-col>{{ props.item.text }}</z-table-col>'}
-            #{'<z-table-col>{{ props.item.name }}</z-table-col>'}
-            #{'<z-table-col>{{ props.item.en }}</z-table-col>'}
+            #{'<z-table-col>\\{\\{ props.item.text }}</z-table-col>'}
+            #{'<z-table-col>\\{\\{ props.item.name }}</z-table-col>'}
+            #{'<z-table-col>\\{\\{ props.item.en }}</z-table-col>'}
           #{'</template>'}
         #{'</z-table>'}
     +section('props', 'props 数据类型')

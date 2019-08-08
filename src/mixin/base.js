@@ -12,6 +12,12 @@ import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
 
 import {
+  value,
+  computed,
+  watch
+} from 'vue-function-api'
+
+import {
   prop as eleProp
 } from '../util/dom/prop'
 import {
@@ -20,6 +26,69 @@ import {
 import {
   debounce
 } from '../util'
+
+const props = {
+  id: [String, Number],
+  name: {
+    type: String,
+    default: ''
+  },
+  theme: {
+    type: String,
+    default: compConfig.defaultTheme,
+    validator(val) {
+      return [
+        'primary', 'grey', 'warning', 'success',
+        'danger', 'blue', 'orange', 'light', 'dark', 'white', 'black'
+      ].includes(val)
+    }
+  },
+  ui: {
+    type: String,
+    default: compConfig.defaultUI,
+    validator(val) {
+      return ['material', 'bootstrap', 'metro', 'apple', 'pure'].includes(val)
+    }
+  }
+}
+
+// computed
+const uiClass = (ui) => (
+  computed(() => ui.value ? `ui-${ui.value}` : '')
+)
+const theme = (theme) => (
+  computed(() => `theme-${theme.value}`)
+)
+const compClass = (uiClass, themeClass) => (
+  computed(() => [uiClass.value, themeClass.value])
+)
+const compPrefix = compConfig.prefix
+const deviceSize = (store) => store.getters[commonStore.deviceSize]
+
+// methods
+const xclass = (cPrefix, className) => {
+  if (Array.isArray(className)) {
+    let classArr = className.map((item) => {
+      return `${cPrefix}-${item}`
+    })
+
+    return classArr.join(' ')
+  } else if (className === '' || className === undefined) {
+    return cPrefix
+  } else {
+    return `${cPrefix}-${className}`
+  }
+}
+
+export {
+  compClass,
+  compPrefix,
+  deviceSize,
+  props,
+  xclass,
+  uiClass,
+  theme
+}
 
 export default {
   store,
@@ -50,7 +119,7 @@ export default {
   },
 
   directives: {
-    'xclass' (el, binding) {
+    'xclass'(el, binding) {
       addClass(el, binding.value)
     }
   },

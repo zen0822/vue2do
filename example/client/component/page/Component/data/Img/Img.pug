@@ -1,25 +1,14 @@
 include ../../mixin.pug
 
-div.component-list
+div.p-comp-img-p
   article.example-article
     +section('start', '开始使用')
-      z-list(
-          :ui='typeUI'
-          :theme='typeTheme'
-          auto
-          class='z-css-m-t'
-          :page-size='7'
-          page-type='more'
-          page-trigger='click'
-          pager
-          ref='list'
-          style={
-            height: '133px'
-          }
-          :item='testOpt'
-        )
-        template(slot-scope='props')
-          div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi
+      z-img(
+        :theme='typeTheme'
+        :src='exImg'
+        :width='200'
+        :height='200'
+      )
       z-code(:theme='typeTheme').
         #{'<z-list'}
             auto
