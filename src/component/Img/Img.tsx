@@ -138,9 +138,8 @@ export default createComponent({
         ref='me'
       >
         {imgState === 1 && (
-          <img
-            {...imgProps}
-            src={''}
+          <div
+            class={xclass('skeleton')}
             style={{
               ...imageBoxStyle
             }}
@@ -154,7 +153,6 @@ export default createComponent({
           onError={() => this.imageLoadError()}
           style={{
             display: imgState === 2 ? '' : 'none',
-            ...imageBoxStyle
           }}
         />
 

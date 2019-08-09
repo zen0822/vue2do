@@ -16,4 +16,8 @@ $C_PREFIX: #{$COMP_IMG};
     width: 100%;
     vertical-align: middle;
   }
+
+  &-skeleton {
+    background-color: $color-grey-light;
+  }
 }
