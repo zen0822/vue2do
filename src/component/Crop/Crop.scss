@@ -1,0 +1,36 @@
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_CROP};
+
+.#{$C_PREFIX} {
+  position: relative;
+  z-index: 0;
+
+  &-layover {
+    @extend %center-position;
+
+    background-color: rgba(#000, 0.6);
+    position: fixed;
+  }
+
+  &-main {
+    width: 80%;
+    height: calc(100vh * 0.8);
+
+    @extend %center-position;
+    position: fixed;
+    z-index: $z-index-upload-preview;
+  }
+}
+
+@include device-type('xs') {
+  .#{$C_PREFIX} {
+    &-main {
+      width: 100%;
+      height: 100vh;
+    }
+  }
+}

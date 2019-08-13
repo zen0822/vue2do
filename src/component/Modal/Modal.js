@@ -17,6 +17,9 @@
  * @prop footerDisplay - 是否显示弹窗底部
  *
  * @prop height - 弹窗内容的高度 (Number | 'auto' | '100%')
+ * @prop hideLayover - 隐藏遮罩层
+ * @prop motion - 动画 (slide* | none)
+ * @prop width - 弹窗内容的宽度 (Number | String)
  * @prop type - 弹窗类型（full | alert | confirm | simple | long）
  *
  * @slot - 弹窗的主体内容
@@ -32,6 +35,7 @@ import './Modal.scss'
 import './Modal.m.scss'
 import './Modal.material.scss'
 import './Modal.bootstrap.scss'
+import './Modal.pure.scss'
 
 import render from './Modal.render'
 import baseMixin from '../../mixin/base'
@@ -45,16 +49,6 @@ import Row from '../Row/Row'
 import Col from '../Col/Col'
 
 import MotionFade from '../MotionFade/MotionFade'
-
-import {
-  handleEleDisplay
-} from '../../util/dom/prop'
-
-const TYPE_ALERT = 'alert'
-const TYPE_CONFIRM = 'confirm'
-const TYPE_TIP = 'tip'
-
-const TIP_SHOW_TIME = 1500
 
 const modalComp = {
   name: 'Modal',
@@ -80,7 +74,10 @@ const modalComp = {
     },
     type: {
       type: String,
-      default: 'simple'
+      default: 'simple',
+      validator(val) {
+        return ['simple', 'alert', 'confirm', 'long', 'full'].includes(val)
+      }
     },
     size: {
       type: String,
@@ -113,13 +110,24 @@ const modalComp = {
       type: String,
       default: ''
     },
+    motion: {
+      type: String,
+      default: 'slide',
+      validator(val) {
+        return ['slide', 'none'].includes(val)
+      }
+    },
     headerDisplay: {
       type: Boolean,
-      default () {
+      default() {
         return undefined
       }
     },
     headerNoBtnDisplay: {
+      type: Boolean,
+      default: false
+    },
+    hideLayover: {
       type: Boolean,
       default: false
     },
@@ -129,11 +137,12 @@ const modalComp = {
     },
     footerDisplay: {
       type: Boolean,
-      default () {
+      default() {
         return undefined
       }
     },
-    height: [Number, String]
+    height: [Number, String],
+    width: [Number, String]
   },
 
   data: () => {
@@ -177,6 +186,7 @@ const modalComp = {
     },
     footerClass() { // 组件的 footer 的 class 名字
       return {
+        [`${this.cPrefix}-footer`]: true,
         [`${this.cPrefix}-no-footer`]: !this.modalFooterDisplay
       }
     },
@@ -196,20 +206,28 @@ const modalComp = {
       ) || !this.isFull
     },
     modalHeaderDisplay() { // 模态框的头部显示状态
+      if (this.UIPure) {
+        return false
+      }
+
       if (this.headerDisplay !== undefined) {
         return this.headerDisplay
       }
 
       switch (this.type) {
-        case 'full':
-          return true
         case 'simple':
           return false
+        case 'full':
+          return true
         default:
           return !!this.stateHeader
       }
     },
     modalFooterDisplay() { // 模态框的尾部显示状态
+      if (this.UIPure) {
+        return false
+      }
+
       if (this.footerDisplay !== undefined) {
         return this.footerDisplay
       }

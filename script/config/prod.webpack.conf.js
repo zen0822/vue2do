@@ -60,14 +60,15 @@ module.exports = function (opt = {}) {
   })
 
   delete baseWebpackConfig.entry
+  delete baseWebpackConfig.optimization
 
   var webpackConfig = merge(baseWebpackConfig, {
     mode: 'production',
     entry: path.resolve(__dirname, `${config.global.root}/index.js`),
-    devtool: config.build.productionSourceMap ? '#source-map' : false,
+    devtool: config.prod.sourceMap ? '#source-map' : false,
     output: {
-      path: config.build.assetsRoot,
-      publicPath: config.build.assetsPublicPath,
+      path: config.prod.assetRoot,
+      publicPath: config.prod.assetPublicPath,
       library: 'Vue2do',
       libraryTarget: opt.library,
       filename: opt.filename
@@ -103,12 +104,12 @@ module.exports = function (opt = {}) {
     ]
   })
 
-  if (config.build.productionGzip) {
+  if (config.prod.gzip) {
     webpackConfig.plugins.push(
       new CompressionWebpackPlugin({
         asset: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(`\\.(${config.build.productionGzipExtensions.join('|')})$`),
+        test: new RegExp(`\\.(${config.prod.gzipExt.join('|')})$`),
         threshold: 10240,
         minRatio: 0.8
       })
@@ -128,7 +129,7 @@ module.exports = function (opt = {}) {
             comments: false,
             beautify: false
           },
-          sourceMap: config.doc.productionSourceMap || false,
+          sourceMap: config.prod.sourceMap,
           warnings: false
         }
       })

@@ -2,26 +2,26 @@
  * pop 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_MODAL };
-$ICON_PREFIX: #{ $COMP_ICON };
-$BTN_PREFIX: #{ $COMP_BTN };
-$SCROLLER_PREFIX: #{ $COMP_SCROLLER };
+$C_PREFIX: #{$COMP_MODAL};
+$ICON_PREFIX: #{$COMP_ICON};
+$BTN_PREFIX: #{$COMP_BTN};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
 
 $POP_CONTAINER_PADDING: 24px;
 
 @mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   &.#{$C_PREFIX}-type-full {
-    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop > header {
+    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop .#{$C_PREFIX}-header {
       border-color: $type-color;
     }
 
     .#{$C_PREFIX}-pop {
-      & > header {
+      .#{$C_PREFIX}-header {
         background-color: $type-color;
       }
     }
@@ -45,7 +45,7 @@ $POP_CONTAINER_PADDING: 24px;
   }
 
   & > .#{$C_PREFIX}-bg {
-    background: rgba(0, 0, 0, .12);
+    background: rgba(0, 0, 0, 0.12);
     height: 100%;
     width: 100%;
     position: fixed;
@@ -55,14 +55,19 @@ $POP_CONTAINER_PADDING: 24px;
 
   & > .#{$C_PREFIX}-pop {
     position: absolute;
-    background: #fff;
-    border-radius: $border-radius;
-    overflow: hidden;
     transform: rotate(0);
-    box-shadow: $shadow;
 
-    & > header {
-      cursor: move;
+    .#{$C_PREFIX}-content {
+      margin: 0 auto;
+      background: #fff;
+      border-radius: $border-radius;
+      overflow: hidden;
+      width: 280px;
+      box-shadow: $shadow;
+    }
+
+    .#{$C_PREFIX}-header {
+      cursor: default;
       padding: $gap-v-double;
       box-sizing: border-box;
       width: 100%;
@@ -74,10 +79,9 @@ $POP_CONTAINER_PADDING: 24px;
       }
     }
 
-    & > article {
+    .#{$C_PREFIX}-article {
       box-sizing: border-box;
-      max-width: 100%;
-      min-width: 280px;
+      width: 100%;
 
       & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
         padding: $gap-v-double;
@@ -85,7 +89,7 @@ $POP_CONTAINER_PADDING: 24px;
       }
     }
 
-    & > footer {
+    .#{$C_PREFIX}-footer {
       padding: $gap-v-double;
       box-sizing: border-box;
       line-height: normal;
@@ -100,16 +104,19 @@ $POP_CONTAINER_PADDING: 24px;
   }
 
   &.#{$C_PREFIX}-type-full {
-    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop > header {
+    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop .#{$C_PREFIX}-header {
       border-bottom: $divider;
       border-color: $color-primary;
     }
 
     .#{$C_PREFIX}-pop {
-      width: 530px;
       padding-top: 0;
 
-      & > header {
+      .#{$C_PREFIX}-content {
+        width: 530px;
+      }
+
+      .#{$C_PREFIX}-header {
         color: #fff;
         padding-top: 12px;
         padding-bottom: 12px;
@@ -125,11 +132,11 @@ $POP_CONTAINER_PADDING: 24px;
         }
       }
 
-      & > article {
+      .#{$C_PREFIX}-article {
         height: 300px;
       }
 
-      & > footer {
+      .#{$C_PREFIX}-footer {
         border-top: $divider;
         padding-top: 12px;
         padding-bottom: 12px;
@@ -139,16 +146,16 @@ $POP_CONTAINER_PADDING: 24px;
 
   &.#{$C_PREFIX}-size-m {
     & > .#{$C_PREFIX}-pop {
-      & > article {
-        min-width: 500px;
+      .#{$C_PREFIX}-content {
+        width: 500px;
       }
     }
   }
 
   &.#{$C_PREFIX}-size-l {
     & > .#{$C_PREFIX}-pop {
-      & > article {
-        min-width: 800px;
+      .#{$C_PREFIX}-content {
+        width: 800px;
       }
     }
   }

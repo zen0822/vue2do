@@ -167,7 +167,7 @@ $C_PREFIX: #{$COMP_BTN};
 
     &-text {
       & > .#{$C_PREFIX}-ele {
-        background-color: #fff;
+        background-color: transparent;
 
         @include btn-text($color-primary);
       }
@@ -200,6 +200,16 @@ $C_PREFIX: #{$COMP_BTN};
 
   .#{$C_PREFIX}-value-show {
     display: inline-block;
+  }
+
+  &-transparent {
+    &.#{$C_PREFIX}-type {
+      &-outline {
+        & > .#{$C_PREFIX}-ele {
+          background-color: transparent;
+        }
+      }
+    }
   }
 }
 

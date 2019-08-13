@@ -1,0 +1,57 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('custom', '自定义按钮内容')
+      z-upload(
+        :crop='$refs.crop'
+        :item='uploadItem'
+        :max='1'
+        :ui='typeUI'
+        :theme='typeTheme'
+        @change='uploadChange'
+        preview
+      )
+        z-crop(
+          :img='uploadItem.length > 0 ? uploadItem[0].src : ""'
+          dragClip
+          fixClipScale
+          ref='crop'
+          slot='crop'
+        )
+
+      z-code(:theme='typeTheme').
+        #{'<z-upload>'}
+          #{'<p>custom content</p>'}
+        #{'</z-upload>'}
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col block
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 按钮的宽度是父元素的宽度, width: 100%
+    +section('props', 'events 组件事件')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col click
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
+          z-table-col 点击btn事件

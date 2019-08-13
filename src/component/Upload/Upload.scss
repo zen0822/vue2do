@@ -1,103 +1,152 @@
-@import '~config.scss';
-@import '~extend.scss';
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-.upload-box-stage {
-	.input-label {
-		display: inline-block;
-		vertical-align: middle;
-		max-width: 150px;
-		margin-left: $gap-h;
-	}
+$C_PREFIX: #{$COMP_UPLOAD};
 
-	.upload-img {
-		$upload-img-width: 60px;
-		.input-label{
-			line-height: 1.2;
-		}
-		.select-file {
-			position: relative;
-			display: inline-block;
-			overflow: hidden;
-			vertical-align: middle;
-			cursor: default;
-			width: $upload-img-width;
-			height: $upload-img-width;
-			border: $divider;
-			.select-file-input{
-				position: absolute;
-				cursor: default;
-				opacity: 0;
-				width: 100%;
-				height: 100%;
-				z-index: 1;
-			}
+.#{$C_PREFIX} {
+  $upload-img-width: 60px;
 
-			.icon-plus {
-				@extend %center-position;
-				text-align: center;
-				width: 30px;
-				height: 30px;
+  &-pick {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    width: $upload-img-width;
+    height: $upload-img-width;
+    border: $divider;
+    margin: 0 $gutter $gutter 0;
+    box-sizing: border-box;
 
-				.fa-plus {
-					font-size: 30px;
-				}
-			}
-		}
+    &-plus {
+      @extend %center-position;
 
-		.img-showcase-ul {
-			display: inline-block;
-			vertical-align: middle;
+      text-align: center;
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
+    }
 
-			li {
-				position: relative;
-				width: $upload-img-width;
-				height: $upload-img-width;
-				border: $divider;
-				display: inline-block;
-				vertical-align: middle;
-				margin-right: 12px;
-				/* hack: 保证 inline-block 之间没有空格 */
-				/* 若一定要写文字，需要手动加上 line-height */
-				font-size: 0;
+    &-input {
+      position: absolute;
+      cursor: default;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+  }
 
-				.del-upload-item {
-					position: absolute;
-					top: -9px;
-					right: -13px;
-					cursor: pointer;
-					z-index: 1;
+  &-showcase {
+    display: inline-block;
+    vertical-align: middle;
 
-					.fa-times-circle {
-						font-size: 18px;
-					}
-				}
+    &-ele {
+      position: relative;
+      width: $upload-img-width;
+      height: $upload-img-width;
+      border: $divider;
+      margin: 0 $gutter $gutter 0;
+    }
 
-				.show-img {
-					overflow: hidden;
-					width: 100%;
-					height: 100%;
+    &-delete {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      cursor: pointer;
+      z-index: 1;
 
-					&::before {
-						content:'';
-						display: inline-block;
-						height: 100%;
-						width: 0;
-						vertical-align:middle;
-					}
+      .fa-times-circle {
+        font-size: 18px;
+      }
+    }
 
-					img {
-						width: 100%;
-						display: inline-block;
-						vertical-align: middle;
-					}
-				}
-			}
-		}
+    &-content {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-		.img-preview {
-			overflow: hidden;
-			width: 0;
-			height: 0;
-		}
-	}
+      & > img {
+        width: 100%;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &-preview {
+    @extend %center-position;
+
+    position: fixed;
+    overflow: hidden;
+    width: 80%;
+    height: calc(100vh * 80%);
+    padding: $gutter;
+    box-sizing: border-box;
+    z-index: $z-index-upload-preview;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > img {
+      width: 100%;
+      vertical-align: middle;
+    }
+
+    &-layover {
+      @extend %center-position;
+
+      background-color: rgba(#000, 0.6);
+      position: fixed;
+      z-index: -1;
+    }
+
+    &-close {
+      position: absolute;
+      bottom: 30px;
+    }
+
+    &-delete {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+  }
+
+  &-hint {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 150px;
+    margin-left: $gap-h;
+  }
+
+  &-crop {
+    @extend %center-position;
+
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: $z-index-upload-preview;
+
+    &-operation {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+  }
+}
+
+@include device-type('xs') {
+  .#{$C_PREFIX} {
+    &-crop {
+      width: 100%;
+      height: 100vh;
+    }
+  }
 }

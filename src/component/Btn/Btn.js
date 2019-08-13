@@ -9,6 +9,13 @@
  * @prop submit - 提交按钮
  * @prop type - 按钮类型 (button | text | float | outline)
  * @prop value - 按钮名字
+ * @prop transparent - 当 outline 按钮时背景为透明
+ *
+ * @prop fontSize - 按钮字体大小
+ * @prop fontColor - 按钮字体颜色
+ * @prop color - 按钮颜色
+ * @prop height - 按钮高度
+ * @prop width - 按钮宽度
  *
  * @event click - 点击btn事件
  * @event keyEnter - focus 时敲击 Enter 键
@@ -20,6 +27,7 @@ import '../../scss/common/main.scss'
 import './Btn.scss'
 import './Btn.material.scss'
 import './Btn.bootstrap.scss'
+import './Btn.pure.scss'
 
 import {
   offset as propOffset
@@ -57,9 +65,21 @@ export default {
       type: Boolean,
       default: false
     },
+    color: {
+      type: String
+    },
     disabled: {
       type: Boolean,
       default: false
+    },
+    fontSize: {
+      type: Number
+    },
+    fontColor: {
+      type: String
+    },
+    height: {
+      type: String
     },
     link: String,
     radius: {
@@ -94,6 +114,9 @@ export default {
     value: {
       type: String,
       require: true
+    },
+    width: {
+      type: String
     }
   },
 
@@ -130,15 +153,19 @@ export default {
       return this.type === 'float'
     },
     btnClass() {
-      const className = this.xclass([
+      const className = [
         this.themeClass,
         this.uiClass,
         `size-${this.size.toLowerCase()}`,
         `radius-${this.radius.toLowerCase()}`,
         `type-${this.type}`
-      ])
+      ]
 
-      return `${className}`
+      if (this.transparent) {
+        className.push('transparent')
+      }
+
+      return `${this.xclass(className)}`
     }
   },
 

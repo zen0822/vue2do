@@ -99,6 +99,9 @@ export default function (h) {
           [this.xclass('focus')]: !this.stateDisabled && this.focusing
         }
       ],
+      style: {
+        'width': this.width
+      },
       on: {
         mousedown: this._handlerMousedown,
         mouseup: this._handlerMouseup,
@@ -111,7 +114,13 @@ export default function (h) {
       }
     }, [
       h('div', {
-        class: [this.xclass('ele')]
+        class: [this.xclass('ele')],
+        style: {
+          'background-color': this.color,
+          'color': this.fontColor,
+          'font-size': this.fontSize ? `${this.fontSize}px` : '',
+          'height': this.height
+        }
       }, btnEleChildren)
     ]
   )

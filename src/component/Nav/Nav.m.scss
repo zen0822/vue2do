@@ -2,13 +2,13 @@
  * nav 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_NAV };
-$ICON_PREFIX: #{ $COMP_ICON };
+$C_PREFIX: #{$COMP_NAV};
+$ICON_PREFIX: #{$COMP_ICON};
 
 .#{$C_PREFIX} {
   &.#{$C_PREFIX}-device-s {
@@ -44,7 +44,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
         }
 
         & > .#{$C_PREFIX}-motion-empty {
-          background: rgba(0, 0, 0, .8);
+          background: rgba(0, 0, 0, 0.8);
           width: 20%;
           height: 100%;
 

@@ -1,13 +1,13 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 /**
  * row 组件样式
  */
 
-$C_PREFIX: #{ $COMP_ROW };
+$C_PREFIX: #{$COMP_ROW};
 
 .#{$C_PREFIX} {
   display: flex;

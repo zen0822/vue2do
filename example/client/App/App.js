@@ -7,10 +7,10 @@ import commonStore from '../vuex/module/common/type.json'
 import LayoutHeader from 'ex/client/component/layout/LayoutHeader/LayoutHeader'
 import LayoutFooter from 'ex/client/component/layout/LayoutFooter/LayoutFooter'
 
-require('file-loader?name=favicon.ico!src/asset/img/favicon.ico')
+require('file-loader?name=favicon.ico!exAsset/img/favicon.ico')
 
 export default {
-  name: 'app',
+  name: 'App',
 
   store,
 

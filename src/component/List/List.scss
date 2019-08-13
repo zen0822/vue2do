@@ -2,12 +2,12 @@
  * list 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_LIST };
+$C_PREFIX: #{$COMP_LIST};
 
 .#{$C_PREFIX} {
   position: relative;

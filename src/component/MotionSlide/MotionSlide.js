@@ -12,6 +12,7 @@
  * @prop display - 默认一开始是隐藏（进来之前的状态）
  * @prop sync - 当处于进来动画，再次调用进来动画是否执行，同离开动画
  * @prop once - 当处于进来的状态时不可以再触发进来的动画，同离开动画
+ * @prop type - none: 没动画，opacity：淡进淡入，默认是 transform
  *
  * @event beforeEnter - 进来过渡之前
  * @event enter - 进来过渡期间
@@ -43,6 +44,13 @@ export default {
     offset: {
       type: Number,
       default: 0
+    },
+    type: {
+      type: String,
+      default: 'transform',
+      validator(val) {
+        return ['transform', 'opacity', 'none'].includes(val)
+      }
     }
   },
 
@@ -62,7 +70,13 @@ export default {
       return this._getTranslate()
     },
     transition() {
-      return `transform ${this.transitionTime} ease-out`
+      if (this.type === 'none') {
+        return ''
+      } else if (this.type === 'transform') {
+        return `transform ${this.transitionTime} ease-out`
+      } else {
+        return `opacity ${this.transitionTime} ease-out`
+      }
     },
     positionType() {
       return this.global ? 'fixed' : 'absolute'

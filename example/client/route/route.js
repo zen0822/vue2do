@@ -25,6 +25,18 @@ export default [{
     title: '构建'
   }
 }, {
+  path: '/blog',
+  component: () => import('../component/page/Blog/Blog'),
+  meta: {
+    title: '文章'
+  }
+}, {
+  path: '/mock',
+  component: () => import('../component/page/Mock/Mock'),
+  meta: {
+    title: 'Mock'
+  }
+}, {
   path: '/component',
   component: () => import('../component/page/Component/Component'),
   children: componentChildren

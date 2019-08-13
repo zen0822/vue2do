@@ -1,14 +1,14 @@
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 /**
  * pop 组件样式
  */
 
-$C_PREFIX: #{ $COMP_POP };
+$C_PREFIX: #{$COMP_POP};
 
-@include device-type("s") {
+@include device-type('s') {
   .#{$C_PREFIX} {
     & > .#{$C_PREFIX}-pop {
       max-width: 100px;

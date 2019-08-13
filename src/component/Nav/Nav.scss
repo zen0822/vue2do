@@ -2,14 +2,14 @@
  * nav 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_NAV };
-$ICON_PREFIX: #{ $COMP_ICON };
-$FOLD_PREFIX: #{ $COMP_FOLD };
+$C_PREFIX: #{$COMP_NAV};
+$ICON_PREFIX: #{$COMP_ICON};
+$FOLD_PREFIX: #{$COMP_FOLD};
 
 @mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-stage {
@@ -38,7 +38,6 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
     }
   }
 
-
   .#{$C_PREFIX}-trigger {
     display: none;
     background-color: $color-bg;
@@ -66,7 +65,7 @@ $FOLD_PREFIX: #{ $COMP_FOLD };
           transition: background-color 300ms;
 
           &:hover {
-            background-color: rgba($color-grey-lighter, .8);
+            background-color: rgba($color-grey-lighter, 0.8);
           }
 
           .#{$C_PREFIX}-icon {

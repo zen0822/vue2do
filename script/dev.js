@@ -3,6 +3,7 @@
  * @param opt { Object } - the options that start the development project
  */
 
+const path = require('path')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 
@@ -20,22 +21,23 @@ module.exports = function ({
   const port = process.env.PORT || config.dev.hotPort
   const compiler = webpack(webpackConfig)
 
+  console.log('')
+  console.log(`Starting frontend build server listening at ${config.https ? 'https' : 'http'}://localhost:${port}\n`)
+
   const server = new WebpackDevServer(compiler, {
-    before() {
-      console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
-    },
-    after() {
-      console.log(`Success！`)
-    },
+    compress: true,
     hot: true,
     hotOnly: true,
     historyApiFallback: true,
+    https: config.https,
     proxy: config.dev.proxyTable,
     clientLogLevel: 'info',
     watchOptions: {
       aggregateTimeout: 300,
-      poll: 1000
+      ignored: [/node_modules/]
     },
+    watchContentBase: true,
+    contentBase: [path.resolve(config.prod.assetRoot)],
     publicPath: webpackConfig.output.publicPath,
     headers: {
       'X-Custom-Header': 'yes'
@@ -46,7 +48,6 @@ module.exports = function ({
     inline: true,
     disableHostCheck: true
   })
-
 
   server.listen(port, function (err) {
     if (err) {

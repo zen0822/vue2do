@@ -1,6 +1,6 @@
 module.exports = {
   type: 'spa',
-  assetRoot: '../../dist',
+  assetRoot: './dist',
   assetPublicPath: './',
   assetSubDirectory: 'static',
   api: '',
@@ -8,9 +8,11 @@ module.exports = {
   tpl: true,
   hotPort: 5168,
   mockPort: 3000,
-  proxy: {},
+  proxy: {
+    '/api/**': `http://localhost:5170`
+  },
   loaderRule: [{
-    test: /protocol-[\w\W]+.html$/,
+    test: /blog-[\w\W]+.html$/,
     use: [
       'extract-loader',
       'html-loader',
@@ -23,5 +25,5 @@ module.exports = {
       }
     ]
   }],
-  https: true
+  https: false
 }

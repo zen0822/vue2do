@@ -18,7 +18,8 @@ module.exports = {
     'document': true,
     'window': true,
     '$': true,
-    'exit': true
+    'exit': true,
+    'workbox': true
   },
   'rules': {
     'quotes': ['error', 'single', {

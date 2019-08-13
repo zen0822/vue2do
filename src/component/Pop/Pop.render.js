@@ -3,11 +3,12 @@
  */
 
 export default function (h) {
-  return h(`${this.type}-transition`, {
+  return h(`motion-slide`, {
     props: {
       direction: this.popDirection,
       global: !this.part,
-      speed: this.speed
+      speed: this.speed,
+      type: this.type === 'none' ? 'none' : 'transform'
     },
     ref: 'transition'
   }, [

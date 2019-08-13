@@ -25,7 +25,8 @@ export default function (h) {
     'div', {
       class: [this.cPrefix, this.sizeClass, this.xclass(this.themeClass)],
       style: {
-        color: this.color
+        color: this.color,
+        'font-size': `${this.fontSize}px`
       }
     }, [
       h('div', {

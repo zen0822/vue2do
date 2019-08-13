@@ -16,10 +16,11 @@ div.component-list
           style={
             height: '133px'
           }
-          :item='testOpt')
+          :item='testOpt'
+        )
         template(slot-scope='props')
           div {{ props.item.text }}asdfkj 打发士大夫 asdfasdi
-      z-code(:theme='typeTheme', v-pre).
+      z-code(:theme='typeTheme').
         #{'<z-list'}
             auto
             class="z-css-m-t"
@@ -31,7 +32,7 @@ div.component-list
             :item="testOpt"#{'>'}
           #{'<template slot-scope="props">'}
             #{'<div>'}
-              #{'{{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf'}
+              #{'\\{\\{ props.item.text }}asdfkj 打发士大夫 asdfasdi  sdf 士大夫 asdf dafdf打发士大夫asdsf sadf'}
             #{'</div>'}
           #{'</template>'}
         #{'</z-list>'}

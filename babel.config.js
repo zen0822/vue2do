@@ -1,5 +1,11 @@
 module.exports = {
+  'env': {
+    'testing': {
+      'plugins': ['istanbul']
+    }
+  },
   presets: [
+    '@vue/babel-preset-jsx',
     ['@babel/env', {
       modules: false,
       targets: {
@@ -12,7 +18,6 @@ module.exports = {
     '@babel/plugin-transform-runtime',
     ['transform-object-rest-spread', {
       useBuiltIns: true
-    }],
-    ['transform-vue-jsx']
+    }]
   ]
 }
