@@ -1,147 +1,138 @@
-//// VARIABLES ////
+@import './var.config.scss';
+@import './util/var.scss';
 
-// global map to be filled via variables
-$css-vars: ();
+$css-vars-use-native: true;
+$css-vars-debug-log: true;
+$--prefix: z !default;
 
-// the variable may be set to "true" anywhere in the code,
-// so native CSS custom properties will be used instead of the Sass global map
-$css-vars-use-native: false !default;
+// 暴露全局变量
+@include css-vars(
+  (
+    // --#{$--prefix}-aaaaa: $--aaaaa,
+    --#{$--prefix}: $--prefix,
 
-// enables the output of debug messages
-$css-vars-debug-log: false !default;
+    --#{$--prefix}-color-blue-lighter: $--color-blue-lighter,
+    --#{$--prefix}-color-blue-light: $--color-blue-light,
+    --#{$--prefix}-color-blue: $--color-blue,
+    --#{$--prefix}-color-blue-dark: $--color-blue-dark,
+    --#{$--prefix}-color-blue-darker: $--color-blue-darker,
 
-//// FUNCTIONS ////
+    --#{$--prefix}-color-danger-lighter: $--color-danger-lighter,
+    --#{$--prefix}-color-danger-light: $--color-danger-light,
+    --#{$--prefix}-color-danger: $--color-danger,
+    --#{$--prefix}-color-danger-dark: $--color-danger-dark,
+    --#{$--prefix}-color-danger-darker: $--color-danger-darker,
 
-///
-// Assigns a variable to the global map
-///
-@function _cssVarAssign($varName: null, $varValue: null) {
+    --#{$--prefix}-color-success-lighter: $--color-success-lighter,
+    --#{$--prefix}-color-success-light: $--color-success-light,
+    --#{$--prefix}-color-success: $--color-success,
+    --#{$--prefix}-color-success-dark: $--color-success-dark,
+    --#{$--prefix}-color-success-darker: $--color-success-darker,
 
-  // CHECK PARAMS
-  @if ($varName==null) {
-    @error "Variable name is expected, instead got: null";
-  }
+    --#{$--prefix}-color-warning-lighter: $--color-warning-lighter,
+    --#{$--prefix}-color-warning-light: $--color-warning-light,
+    --#{$--prefix}-color-warning: $--color-warning,
+    --#{$--prefix}-color-warning-dark: $--color-warning-dark,
+    --#{$--prefix}-color-warning-darker: $--color-warning-darker,
 
-  @if ($varValue==null) {
-    @error "Variable value is expected, instead got: null";
-  }
+    --#{$--prefix}-color-orange-lighter: $--color-orange-lighter,
+    --#{$--prefix}-color-orange-light: $--color-orange-light,
+    --#{$--prefix}-color-orange: $--color-orange,
+    --#{$--prefix}-color-orange-dark: $--color-orange-dark,
+    --#{$--prefix}-color-orange-darker: $--color-orange-darker,
 
-  // assign to the global map
-  @if ($css-vars-debug-log and map-get($css-vars, $varName)) {
-    @debug "'#{$varName}' variable is reassigned";
-  }
+    --#{$--prefix}-color-light-lighter: $--color-light-lighter,
+    --#{$--prefix}-color-light-light: $--color-light-light,
+    --#{$--prefix}-color-light: $--color-light,
+    --#{$--prefix}-color-light-dark: $--color-light-dark,
+    --#{$--prefix}-color-light-darker: $--color-light-darker,
 
-  @return map-merge($css-vars, ($varName: $varValue));
-}
+    --#{$--prefix}-color-dark-lighter: $--color-dark-lighter,
+    --#{$--prefix}-color-dark-light: $--color-dark-light,
+    --#{$--prefix}-color-dark: $--color-dark,
+    --#{$--prefix}-color-dark-dark: $--color-dark-dark,
+    --#{$--prefix}-color-dark-darker: $--color-dark-darker,
 
-///
-// Emulates var() CSS native function behavior
-//
-// $args[0] {String} "--" + variable name
-// [$args[1]] Optional default value if variable is not assigned yet
-//
-// E.G.:
-// color: var(--main-color);
-// background: var(--main-bg, green);
-///
-@function var($args...) {
+    --#{$--prefix}-color-white-lighter: $--color-white-lighter,
+    --#{$--prefix}-color-white-light: $--color-white-light,
+    --#{$--prefix}-color-white: $--color-white,
+    --#{$--prefix}-color-white-dark: $--color-white-dark,
+    --#{$--prefix}-color-white-darker: $--color-white-darker,
 
-  // CHECK PARAMS
-  @if (length($args)==0) {
-    @error "Variable name is expected to be passed to the var() function";
-  }
+    --#{$--prefix}-color-black-lighter: $--color-black-lighter,
+    --#{$--prefix}-color-black-light: $--color-black-light,
+    --#{$--prefix}-color-black: $--color-black,
+    --#{$--prefix}-color-black-dark: $--color-black-dark,
+    --#{$--prefix}-color-black-darker: $--color-black-darker,
 
-  @if (str-length(nth($args, 1)) < 2 or str-slice(nth($args, 1), 0, 2) !='--') {
-    @error "Variable name is expected to start from '--'";
-  }
+    --#{$--prefix}-color-grey-lighter: $--color-grey-lighter,
+    --#{$--prefix}-color-grey-light: $--color-grey-light,
+    --#{$--prefix}-color-grey: $--color-grey,
+    --#{$--prefix}-color-grey-dark: $--color-grey-dark,
+    --#{$--prefix}-color-grey-darker: $--color-grey-darker,
 
-  // PROCESS
-  $varName: nth($args, 1);
-  $varValue: map-get($css-vars, $varName);
+    --#{$--prefix}-color-primary-lighter: $--color-primary-lighter,
+    --#{$--prefix}-color-primary-light: $--color-primary-light,
+    --#{$--prefix}-color-primary: $--color-primary,
+    --#{$--prefix}-color-primary-dark: $--color-primary-dark,
+    --#{$--prefix}-color-primary-darker: $--color-primary-darker,
 
-  @if ($css-vars-debug-log or not $css-vars-use-native) {
+    --#{$--prefix}-color-secondary-lighter: $--color-secondary-lighter,
+    --#{$--prefix}-color-secondary-light: $--color-secondary-light,
+    --#{$--prefix}-color-secondary: $--color-secondary,
+    --#{$--prefix}-color-secondary-dark: $--color-secondary-dark,
+    --#{$--prefix}-color-secondary-darker: $--color-secondary-darker,
 
-    // Sass or debug
-    @if ($varValue==null) {
+    --#{$--prefix}-color-text-light-primary: $--color-text-light-primary,
+    --#{$--prefix}-color-text-light-secondary: $--color-text-light-secondary,
+    --#{$--prefix}-color-text-light-hint: $--color-text-light-hint,
+    --#{$--prefix}-color-text-light-divider: $--color-text-light-divider,
 
-      // variable is not provided so far
-      @if (length($args)==2) {
+    --#{$--prefix}-color-text-dark-primary: $--color-text-dark-primary,
+    --#{$--prefix}-color-text-dark-secondary: $--color-text-dark-secondary,
+    --#{$--prefix}-color-text-dark-hint: $--color-text-dark-hint,
+    --#{$--prefix}-color-text-dark-divider: $--color-text-dark-divider,
 
-        // the default value is passed
-        @if ($css-vars-debug-log) {
-          @debug "Provided default value is used for the variable: '#{$varName}'";
-        }
+    --#{$--prefix}-color-bg: $--color-bg,
+    --#{$--prefix}-color-link: $--color-link,
 
-        $varValue: nth($args, 2);
-      }
+    --#{$--prefix}-color-border: $--color-border,
+    --#{$--prefix}-color-border-light: $--color-border-light,
+    --#{$--prefix}-color-border-dark: $--color-border-dark,
 
-      @else if ($css-vars-debug-log) {
-        @debug "Variable '#{$varName}' is not assigned";
+    --#{$--prefix}-gap: $--gap,
+    --#{$--prefix}-gap-half: $--gap-v-half,
+    --#{$--prefix}-gap-double: $--gap-v-double,
+    --#{$--prefix}-gap-triple: $--gap-v-triple,
 
-        @if (not $css-vars-use-native) {
-          @debug "The 'var(#{$varName}...)' usage will be skipped in the output CSS";
-        }
-      }
-    }
-  }
+    --#{$--prefix}-gutter: $--gutter,
+    --#{$--prefix}-gutter-half: $--gutter-v-half,
+    --#{$--prefix}-gutter-double: $--gutter-v-double,
+    --#{$--prefix}-gutter-triple: $--gutter-v-triple,
 
-  @if ($css-vars-use-native) {
-    // CSS variables
-    // Native CSS: don't process function in case of native
-    @return unquote('var('+ $args + ')');
-  }
+    --#{$--prefix}-border-thin: $--border-thin,
+    --#{$--prefix}-border-thick: $--border-thick,
 
-  @else {
-    // Sass: return value from the map
-    @return $varValue;
-  }
-}
+    --#{$--prefix}-border: $--border,
 
-//// MIXIN ////
-///
-// CSS mixin to provide variables
-// E.G.:
-// @include css-vars((
-//    --color: rebeccapurple,
-//    --height: 68px,
-//    --margin-top: calc(2vh + 20px)
-// ));
-///
-@mixin css-vars($varMap: null) {
+    --#{$--prefix}-border-radius: $--border-radius,
+    --#{$--prefix}-border-radius-m: $--border-radius-m,
+    --#{$--prefix}-border-radius-l: $--border-radius-l,
 
-  // CHECK PARAMS
-  @if ($varMap==null) {
-    @error "Map of variables is expected, instead got: null";
-  }
+    --#{$--prefix}-font-base: $--font-base,
+    --#{$--prefix}-h1: $--h1,
+    --#{$--prefix}-h2: $--h2,
+    --#{$--prefix}-h3: $--h3,
+    --#{$--prefix}-h4: $--h4,
+    --#{$--prefix}-h5: $--h5,
+    --#{$--prefix}-h6: $--h6,
 
-  @if (type_of($varMap) !=map) {
-    @error "Map of variables is expected, instead got another type passed: #{type_of($varMap)}";
-  }
+    --#{$--prefix}-z-index-lower: $--z-index-lower,
+    --#{$--prefix}-z-index: $--z-index,
+    --#{$--prefix}-z-index-higher: $--z-index-higher,
 
-  // PROCESS
-  @if ($css-vars-debug-log or not $css-vars-use-native) {
-
-    // Sass or debug
-    // merge variables and values to the global map (provides no output)
-    @each $varName, $varValue in $varMap {
-      $css-vars: _cssVarAssign($varName, $varValue) !global; // store in global variable
-    }
-  }
-
-  @if ($css-vars-use-native) {
-
-    // CSS variables
-    // Native CSS: assign CSS custom properties to the global scope
-    @at-root :root {
-      @each $varName, $varValue in $varMap {
-        @if (type_of($varValue)==string) {
-          #{$varName}: $varValue // to prevent quotes interpolation
-        }
-
-        @else {
-          #{$varName}: #{$varValue}
-        }
-      }
-    }
-  }
-}
+    --#{$--prefix}-shadow-lower: $--shadow-lower,
+    --#{$--prefix}-shadow: $--shadow,
+    --#{$--prefix}-shadow-higher: $--shadow-higher
+  )
+);

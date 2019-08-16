@@ -10,11 +10,14 @@ $C_PREFIX: #{$COMP_OMIT};
 
 .#{$C_PREFIX} {
   width: 100%;
+  position: relative;
 
   &-font-width {
     visibility: hidden;
     position: absolute;
     z-index: -1;
+    top: 0;
+    left: 0;
   }
 
   &-line {

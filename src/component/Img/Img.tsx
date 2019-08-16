@@ -15,11 +15,9 @@
  */
 
 import './Img.scss'
+import './Img.var.scss'
 import {
   value,
-  computed,
-  watch,
-  onMounted,
   createComponent
 } from 'vue-function-api'
 import { CreateElement, VNode } from 'vue'
@@ -152,7 +150,7 @@ export default createComponent({
           onLoad={(event: any) => this.imageLoadSuccess(event)}
           onError={() => this.imageLoadError()}
           style={{
-            display: imgState === 2 ? '' : 'none',
+            display: imgState === 2 ? '' : 'none'
           }}
         />
 
