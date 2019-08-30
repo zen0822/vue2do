@@ -15,21 +15,21 @@ export default {
         length: {
           max: 1,
           min: 2
-        },
+        }
       }, {
         name: 'lastName',
         type: 'english',
         length: {
           max: 1,
           min: 2
-        },
+        }
       }]
     }, {
       name: 'age',
       type: 'number',
       length: {
         min: 2
-      },
+      }
     }, {
       name: 'famliy',
       type: 'chinese',

@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = function ({
   appName
 }) {
-  const appConfigPath = path.resolve(__dirname, '../../' + appName + '/.apprc.js')
+  const appConfigPath = path.resolve(__dirname, '../../' + appName + '/app.config.js')
   const appConfig = require(appConfigPath)
   const appConfigDir = path.dirname(appConfigPath)
   const mockPort = appConfig.mockPort || 3000
