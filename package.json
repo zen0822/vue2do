@@ -37,7 +37,7 @@
     "mock:gql": "npm run tsc && nodemon --watch ./tsDist/example/server/gql bin/gql.js",
     "prod": "node bin/prod",
     "rel": "bash script/release.sh",
-    "start": "cross-env SW_ENV=development SW_DEBUG=false npm run sw:prod && nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
+    "start": "cross-env npm run sw:prod && nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "start:sw": "cross-env SW_ENV=development SW_DEBUG=true nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "sw:dev": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
     "sw:prod": "node bin/sw.prod",

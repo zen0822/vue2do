@@ -36,7 +36,7 @@ module.exports = function ({
       aggregateTimeout: 300,
       ignored: [/node_modules/]
     },
-    watchContentBase: true,
+    watchContentBase: process.env.SW_ENV === 'development',
     contentBase: [path.resolve(config.prod.assetRoot)],
     publicPath: webpackConfig.output.publicPath,
     headers: {

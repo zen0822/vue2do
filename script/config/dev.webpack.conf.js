@@ -88,17 +88,19 @@ module.exports = function (opt = {}) {
     ]
   })
 
-  try {
-    fs.accessSync(swPath, fs.constants.F_OK)
+  if (process.env.SW_ENV === 'development') {
+    try {
+      fs.accessSync(swPath, fs.constants.F_OK)
 
-    devConf.plugins.push(
-      new WorkboxPlugin.InjectManifest({
-        swSrc: swPath,
-        importWorkboxFrom: 'disabled'
-      })
-    )
-  } catch (error) {
-    console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
+      devConf.plugins.push(
+        new WorkboxPlugin.InjectManifest({
+          swSrc: swPath,
+          importWorkboxFrom: 'disabled'
+        })
+      )
+    } catch (error) {
+      console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
+    }
   }
 
   return devConf
