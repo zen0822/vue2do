@@ -22,7 +22,7 @@ module.exports = function (opt = {}) {
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
-    extractScss: true
+    extractScss: false
   })
 
   const template = config.tpl ?

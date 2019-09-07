@@ -6,11 +6,13 @@
 @import '../../scss/extend.scss';
 @import '../../scss/name.scss';
 @import '../../scss/mixin.scss';
+@import '../../scss/var.scss';
 
 $C_PREFIX: #{$COMP_IMG};
 
 .#{$C_PREFIX} {
   display: inline-block;
+  color: var(--z-color-grey-light);
 
   &-content {
     width: 100%;

@@ -1,8 +1,8 @@
 @import './var.config.scss';
 @import './util/var.scss';
 
-$css-vars-use-native: true;
-$css-vars-debug-log: true;
+$css-vars-use-native: false;
+$css-vars-debug-log: false;
 $--prefix: z !default;
 
 // 暴露全局变量

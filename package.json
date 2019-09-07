@@ -28,22 +28,23 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
-    "tsc": "tsc",
-    "tsc:watch": "tsc -w",
     "coveralls": "cat test/coverage/lcov.info | coveralls",
+    "debug": "node --inspect-brk=5858 bin/dev.js",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release && apollo service:push",
     "doc:rel:ci": "node bin/doc --release --ci && apollo service:push",
     "mock:gql": "npm run tsc && nodemon --watch ./tsDist/example/server/gql bin/gql.js",
     "prod": "node bin/prod",
     "rel": "bash script/release.sh",
-    "start": "cross-env npm run sw:prod && nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
+    "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "start:sw": "cross-env SW_ENV=development SW_DEBUG=true nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "sw:dev": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
     "sw:prod": "node bin/sw.prod",
     "test": "cross-env BABEL_ENV=testing karma start test/karma",
     "test:ci": "cross-env BABEL_ENV=testing karma start test/karma.ci",
-    "test:unit": "cross-env NODE_ENV=testing jest"
+    "test:unit": "cross-env NODE_ENV=testing jest",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w"
   },
   "dependencies": {
     "@babel/core": "^7.1.2",
@@ -107,6 +108,7 @@
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
     "latest": "^0.2.0",
+    "loader-utils": "^1.2.3",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.10.0",
     "npm": "^6.9.0",

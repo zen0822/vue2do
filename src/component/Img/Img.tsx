@@ -14,8 +14,6 @@
  * @event error - 图片加载失败
  */
 
-import './Img.scss'
-import './Img.var.scss'
 import {
   value,
   createComponent
@@ -23,9 +21,12 @@ import {
 import { CreateElement, VNode } from 'vue'
 import {
   compPrefix,
+  css4,
   props,
   xclass
 } from '../../mixin/base'
+
+css4 ? import('./Img.var.scss') : import('./Img.scss')
 
 export default createComponent({
   name: 'Img',

@@ -8,10 +8,11 @@
 @import '../../scss/mixin.scss';
 @import '../../scss/var.scss';
 
+$css-vars-use-native: true;
 $C_PREFIX: #{$COMP_IMG};
 
 .#{$C_PREFIX} {
-  display: inline-block;
+  display: block;
   color: var(--z-color-grey-light);
 
   &-content {

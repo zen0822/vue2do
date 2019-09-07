@@ -64,6 +64,7 @@ const compClass = (uiClass, themeClass) => (
 )
 const compPrefix = compConfig.prefix
 const deviceSize = (store) => store.getters[commonStore.deviceSize]
+const css4 = window.CSS && window.CSS.supports && window.CSS.supports('--a', 0)
 
 // methods
 const xclass = (cPrefix, className) => {
@@ -83,6 +84,7 @@ const xclass = (cPrefix, className) => {
 export {
   compClass,
   compPrefix,
+  css4,
   deviceSize,
   props,
   xclass,
