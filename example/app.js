@@ -3,4 +3,8 @@
  */
 
 import './client/main'
-import './client/sw/main.ts'
+
+if (process.env.SW_ENV === 'development') {
+  console.log('zen')
+  import('./client/sw/main.ts')
+}

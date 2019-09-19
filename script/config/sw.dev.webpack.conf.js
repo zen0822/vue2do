@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const File2DistWebpackPlugin = require('../../lib/webpack/File2DistWebpackPlugin')
+const FileToDistWebpackPlugin = require('../../lib/webpack/FileToDistWebpackPlugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = function ({
@@ -77,7 +77,7 @@ module.exports = function ({
         reportFiles: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)]
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new File2DistWebpackPlugin({
+      new FileToDistWebpackPlugin({
         dir: config.sw.assetRoot
       })
     ],

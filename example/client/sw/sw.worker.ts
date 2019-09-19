@@ -1,5 +1,5 @@
 import db from './mock.db'
-import mockrc from '../../.mockrc.js'
+import mockrc from '../../mock.config.js'
 
 importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
 

@@ -7,7 +7,7 @@
 @import '../../scss/name.scss';
 @import '../../scss/mixin.scss';
 
-$css-vars-use-native: false;
+$css-vars-use-native: true;
 @import '../../scss/var.scss';
 
 $C_PREFIX: #{$COMP_IMG};
