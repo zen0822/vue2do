@@ -56,7 +56,7 @@ const props = {
 const uiClass = (ui) => (
   computed(() => ui.value ? `ui-${ui.value}` : '')
 )
-const theme = (theme) => (
+const themeClass = (theme) => (
   computed(() => `theme-${theme.value}`)
 )
 const compClass = (uiClass, themeClass) => (
@@ -89,7 +89,7 @@ export {
   props,
   xclass,
   uiClass,
-  theme
+  themeClass
 }
 
 export default {

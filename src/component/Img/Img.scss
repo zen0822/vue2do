@@ -1,18 +1,19 @@
-/*
-* img 组件样式
-*/
+/**
+ * img 组件样式
+ */
 
 @import '../../scss/config.scss';
 @import '../../scss/extend.scss';
 @import '../../scss/name.scss';
 @import '../../scss/mixin.scss';
+
+$css-vars-use-native: false;
 @import '../../scss/var.scss';
 
 $C_PREFIX: #{$COMP_IMG};
 
 .#{$C_PREFIX} {
-  display: inline-block;
-  color: var(--z-color-grey-light);
+  display: block;
 
   &-content {
     width: 100%;
@@ -20,6 +21,6 @@ $C_PREFIX: #{$COMP_IMG};
   }
 
   &-skeleton {
-    background-color: $color-grey-light;
+    background-color: var(--z-color-grey-light);
   }
 }

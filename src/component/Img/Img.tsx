@@ -26,7 +26,7 @@ import {
   xclass
 } from '../../mixin/base'
 
-css4 ? import('./Img.var.scss') : import('./Img.scss')
+css4 ? import(`./Img.var.scss`) : import(`./Img.scss`)
 
 export default createComponent({
   name: 'Img',

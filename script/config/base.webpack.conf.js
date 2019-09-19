@@ -83,16 +83,7 @@ module.exports = function ({
       'postcss-loader',
       'sass-loader'
     ],
-    exclude: [/(grid|util)\.scss$/, /\.var\.scss$/]
-  }, {
-    test: /\.var\.scss$/,
-    use: [
-      extractScss ? MiniCssExtractPlugin.loader : 'style-loader',
-      'css-loader',
-      'postcss-loader',
-      'sass-loader'
-      // BuildCSS4WebpackPlugin.loader
-    ]
+    exclude: [/(grid|util)\.scss$/]
   }, {
     test: /\.(tpl)$/,
     loader: 'html-loader'
@@ -180,8 +171,7 @@ module.exports = function ({
         async: true,
         watch: [path.resolve(__dirname, `${globalRoot}/example/server`)],
         reportFiles: [path.resolve(__dirname, `${globalRoot}/example/server`)]
-      }),
-      new BuildCSS4WebpackPlugin()
+      })
     ]
   }
 

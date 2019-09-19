@@ -1,14 +1,13 @@
 @import './var.config.scss';
 @import './util/var.scss';
 
-$css-vars-use-native: false;
-$css-vars-debug-log: false;
+$css-vars-use-native: false !default;
+$css-vars-debug-log: false !default;
 $--prefix: z !default;
 
 // 暴露全局变量
 @include css-vars(
   (
-    // --#{$--prefix}-aaaaa: $--aaaaa,
     --#{$--prefix}: $--prefix,
 
     --#{$--prefix}-color-blue-lighter: $--color-blue-lighter,
