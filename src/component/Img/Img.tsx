@@ -15,9 +15,9 @@
  */
 
 import {
-  value,
+  ref,
   createComponent
-} from 'vue-function-api'
+} from '@vue/composition-api'
 import { CreateElement, VNode } from 'vue'
 import {
   compPrefix,
@@ -53,22 +53,22 @@ export default createComponent({
       default: '',
       type: [String, Number]
     }
-  } as const,
+  },
 
   setup({
     contain,
     height,
     width
   }) {
-    const imgState = value(1) // 1：图片加载前，2：图片加载成功，3：图片加载失败
+    const imgState = ref(1) // 1：图片加载前，2：图片加载成功，3：图片加载失败
     const _xclass = (className: string) => xclass(`${compPrefix}-img`, className)
 
-    const _width = value(
+    const _width = ref(
       Number.isNaN(Number(width))
         ? width
         : (width && `${width}px`)
     )
-    const _height = value(
+    const _height = ref(
       Number.isNaN(Number(height))
         ? width
         : (height && `${height}px`)

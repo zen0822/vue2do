@@ -1192,6 +1192,13 @@
     source-map "~0.6.1"
     vue-template-es2015-compiler "^1.9.0"
 
+"@vue/composition-api@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-0.3.2.tgz#2d797028e489bf7812f08c7bb33ffd03ef23c617"
+  integrity sha512-fD4dn9cJX62QSP2TMFLXCOQOa+Bu2o7kWDjrU/FNLkNqPPcCKBLxCH/Lc+gNCRBKdEUGyI3arjAw7j0Yz1hnvw==
+  dependencies:
+    tslib "^1.9.3"
+
 "@vue/test-utils@^1.0.0-beta.29":
   version "1.0.0-beta.29"
   resolved "https://registry.npmjs.org/@vue/test-utils/-/test-utils-1.0.0-beta.29.tgz#c942cf25e891cf081b6a03332b4ae1ef430726f0"
@@ -12639,12 +12646,6 @@ vue-class-component@^7.0.1, vue-class-component@^7.1.0:
 vue-cropper@^0.4.9:
   version "0.4.9"
   resolved "https://registry.npmjs.org/vue-cropper/-/vue-cropper-0.4.9.tgz#fe650f32516ecf29014bbd4a9079191c8dc5a5ae"
-
-vue-function-api@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/vue-function-api/-/vue-function-api-2.1.1.tgz#754915018375deaca16eb2ee00be9d99680e22ae"
-  dependencies:
-    tslib "^1.9.3"
 
 vue-hot-reload-api@^2.3.0, vue-hot-reload-api@^2.3.1:
   version "2.3.3"

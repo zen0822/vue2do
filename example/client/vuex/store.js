@@ -1,7 +1,7 @@
 // 组装不同的 store 并暴露出来
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { computed } from 'vue-function-api'
+import { computed } from '@vue/composition-api'
 import common from './module/common/common'
 
 Vue.use(Vuex)

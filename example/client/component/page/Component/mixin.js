@@ -7,10 +7,10 @@ import {
   debounce
 } from 'vue2do/src/util'
 import {
-  value,
+  ref,
   computed,
   watch
-} from 'vue-function-api'
+} from '@vue/composition-api'
 
 const store = useStore()
 
@@ -26,8 +26,8 @@ for (let i = 0, len = 33; i < len; i++) {
   })
 }
 
-const varPrefix = value('VUE2DO')
-const testOpt = value(testOptTemp)
+const varPrefix = ref('VUE2DO')
+const testOpt = ref(testOptTemp)
 const appContent = useState(commonStore.appContent.get)
 const compStage = useState(commonStore.compStage.get)
 const deviceSize = useState(commonStore.deviceSize.get)

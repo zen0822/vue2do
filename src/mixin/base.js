@@ -12,10 +12,10 @@ import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
 
 import {
-  value,
+  ref,
   computed,
   watch
-} from 'vue-function-api'
+} from '@vue/composition-api'
 
 import {
   prop as eleProp

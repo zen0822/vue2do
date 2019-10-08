@@ -2,7 +2,7 @@ import pug from './Img.pug'
 import {
   onMounted,
   createComponent
-} from 'vue-function-api'
+} from '@vue/composition-api'
 
 import {
   mounted,
@@ -18,7 +18,7 @@ import exImg from './static/exImg.jpg'
 export default createComponent({
   name: 'PageCompImg',
   template: pug(),
-  setup(_props) {
+  setup() {
     onMounted(function () {
       mounted()
     })
