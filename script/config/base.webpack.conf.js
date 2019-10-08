@@ -1,7 +1,6 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const BuildCSS4WebpackPlugin = require('../../lib/webpack/BuildCSS4WebpackPlugin')
 
 module.exports = function ({
   appName,

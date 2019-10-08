@@ -1,18 +1,28 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   env: {
     'browser': true,
     'node': true,
     'jasmine': true,
     'es6': true
   },
+  extends: [
+    'standard',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended'
+  ],
   parserOptions: {
     sourceType: 'module'
   },
-  extends: 'standard',
   plugins: [
-    'html'
+    '@typescript-eslint',
+    'html',
+    'json',
+    'promise',
+    'import',
+    'node',
   ],
   globals: {
     'document': true,
@@ -22,6 +32,11 @@ module.exports = {
     'workbox': true
   },
   'rules': {
+    '@typescript-eslint/member-delimiter-style': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/no-explicit-any': 0,
     'quotes': ['error', 'single', {
       'allowTemplateLiterals': true
     }],
@@ -33,6 +48,9 @@ module.exports = {
     'no-multiple-empty-lines': 0,
     'no-useless-escape': 0,
     'import/no-webpack-loader-syntax': 0,
+    indent: ['error', 2, {
+      SwitchCase: 1
+    }],
     'no-trailing-spaces': ['error', {
       'skipBlankLines': true
     }],
