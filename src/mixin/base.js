@@ -12,9 +12,7 @@ import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
 
 import {
-  ref,
-  computed,
-  watch
+  computed
 } from '@vue/composition-api'
 
 import {
@@ -69,7 +67,7 @@ const css4 = window.CSS && window.CSS.supports && window.CSS.supports('--a', 0)
 // methods
 const xclass = (cPrefix, className) => {
   if (Array.isArray(className)) {
-    let classArr = className.map((item) => {
+    const classArr = className.map((item) => {
       return `${cPrefix}-${item}`
     })
 
@@ -223,7 +221,7 @@ export default {
      **/
     xclass(className) {
       if (Array.isArray(className)) {
-        let classArr = className.map((item) => {
+        const classArr = className.map((item) => {
           return `${this.cPrefix}-${item}`
         })
 
@@ -247,7 +245,7 @@ export default {
         return false
       }
 
-      let option = []
+      const option = []
 
       $defaultSlotContent.forEach((item) => {
         if (!item.elm) {
@@ -256,13 +254,12 @@ export default {
 
         if (item.elm.className === opt.compClass) {
           const el = item.elm
-          const $el = $(el)
           const elAttr = el.attributes
           const attrKeys = Object.keys(elAttr)
-          let attrs = {}
+          const attrs = {}
 
           attrKeys.forEach((item) => {
-            let attr = elAttr[item]
+            const attr = elAttr[item]
 
             Object.assign(attrs, {
               [attr.name]: attr.value
@@ -292,17 +289,17 @@ export default {
       this._initComp()
     })
 
-    let deviceSizeClass = `${compConfig.prefix}-css-device-size`
+    const deviceSizeClass = `${compConfig.prefix}-css-device-size`
 
     if (document.getElementsByClassName(deviceSizeClass).length === 0) {
       if (!document.querySelector('.' + deviceSizeClass)) {
         // 添加存储设备尺寸的 dom 到页面上
-        let deviceSizeEle = document.createElement('div')
+        const deviceSizeEle = document.createElement('div')
         deviceSizeEle.className = deviceSizeClass
         document.body.appendChild(deviceSizeEle)
 
         const updateDeviceSize = () => {
-          let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+          const content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
 
           this.$store.dispatch(commonStore.deviceSize, content)
         }

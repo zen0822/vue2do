@@ -41,12 +41,9 @@ import methodMixin from './Btn.method.js'
 import Loading from '../Loading/Loading'
 import MotionRip from '../MotionRip/MotionRip'
 
-const BTN_TYPE_LINK = 'link'
 const BTN_TYPE_BUTTON = 'button'
 
 const SIZE_S = 'S'
-const SIZE_M = 'M'
-const SIZE_L = 'L'
 
 export default {
   name: 'Btn',
@@ -202,7 +199,7 @@ export default {
         return false
       }
 
-      let el = event.currentTarget
+      const el = event.currentTarget
 
       this.allowFocus = false
 

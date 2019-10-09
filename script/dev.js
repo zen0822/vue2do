@@ -27,10 +27,10 @@ module.exports = function ({
   const server = new WebpackDevServer(compiler, {
     compress: true,
     hot: true,
-    hotOnly: true,
     historyApiFallback: true,
     https: config.https,
     proxy: config.dev.proxyTable,
+    quiet: true,
     clientLogLevel: 'info',
     watchOptions: {
       aggregateTimeout: 300,

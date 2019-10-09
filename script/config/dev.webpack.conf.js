@@ -16,7 +16,6 @@ module.exports = function (opt = {}) {
     appName
   })
 
-  const port = process.env.PORT || config.dev.hotPort
   const globalRoot = config.global.root
   const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/dist/sw/sw.js`)
 
@@ -29,12 +28,9 @@ module.exports = function (opt = {}) {
     path.resolve(__dirname, `${globalRoot}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
-  let newEntry = {
+  const newEntry = {
     ...baseWebpackConfig.entry,
-    app: baseWebpackConfig.entry.app.slice().concat([
-      `webpack-dev-server/client?http://localhost:${port}/`,
-      'webpack/hot/dev-server'
-    ])
+    app: baseWebpackConfig.entry.app.slice()
   }
 
   delete baseWebpackConfig.entry

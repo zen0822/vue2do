@@ -7,9 +7,10 @@ require('./src/scss/util.scss')
 require('./src/scss/grid.scss')
 
 module.exports = {
-  cssLoader: function (content, map, meta) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  cssLoader: function (_content, _map, _meta) {
     function someSyncOperation() {
-
+      // TODO
     }
 
     // this.callback(null, someSyncOperation(content), map, meta)

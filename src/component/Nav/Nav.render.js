@@ -7,11 +7,11 @@ function foldContent(h, foldList) {
     return false
   }
 
-  let foldChildren = []
+  const foldChildren = []
 
   foldList.forEach((item, index) => {
-    let subNav = item.sub
-    let flodNum = index + 1
+    const subNav = item.sub
+    const flodNum = index + 1
     let contentChildren = []
 
     if (Array.isArray(subNav) && subNav.length > 0) {
@@ -75,8 +75,8 @@ function foldContent(h, foldList) {
 }
 
 export default function (h) {
-  let navStage = []
-  let contentEle = h('div', {
+  const navStage = []
+  const contentEle = h('div', {
     class: [this.xclass('motion-content')],
     ref: 'motionContent'
   }, [

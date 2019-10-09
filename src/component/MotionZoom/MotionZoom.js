@@ -49,7 +49,7 @@ export default {
       code
     } = {}) {
       this.$emit('beforeEnter')
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         position: this.positionType,
@@ -59,20 +59,23 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = '')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = '')
 
-          return resolve()
-        }, 78)
+            resolve()
+          }, 78)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
-    entering({
-      code
-    } = {}) {
-      let el = this.$el
+    entering() {
+      const el = this.$el
       // HACK: trigger browser reflow
-      let height = el.offsetHeight
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       Object.assign(el.style, {
         transform: ''
@@ -81,16 +84,18 @@ export default {
       this.$emit('entering')
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          return resolve()
-        }, this.time)
+        try {
+          setTimeout(() => {
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
-    afterEnter({
-      code
-    } = {}) {
-      let el = this.$el
+    afterEnter() {
+      const el = this.$el
 
       Object.assign(el.style, {
         position: '',
@@ -101,10 +106,8 @@ export default {
       this.$emit('afterEnter')
     },
 
-    beforeLeave({
-      code
-    } = {}) {
-      let el = this.$el
+    beforeLeave() {
+      const el = this.$el
 
       this.$emit('beforeLeave')
 
@@ -118,10 +121,8 @@ export default {
       return this.leaveing()
     },
 
-    leaveing({
-      code
-    } = {}) {
-      let el = this.$el
+    leaveing({ code } = {}) {
+      const el = this.$el
 
       this.$emit('leaving')
 
@@ -130,18 +131,20 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = 'none')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = 'none')
 
-          return resolve()
-        }, this.time)
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
-    afterLeave({
-      code
-    } = {}) {
-      let el = this.$el
+    afterLeave() {
+      const el = this.$el
 
       Object.assign(el.style, {
         position: '',

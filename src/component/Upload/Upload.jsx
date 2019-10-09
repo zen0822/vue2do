@@ -24,12 +24,9 @@
 import './Upload.scss'
 
 import tip from '../Message/tip'
-import toast from '../Message/toast'
 import Loading from '../Loading/Loading'
-import Btn from '../Btn/Btn'
 import Icon from '../Icon/Icon'
 import Row from '../Row/Row'
-import Col from '../Col/Col'
 
 import baseMixin from '../../mixin/base'
 import formMixin from '../../mixin/form'
@@ -41,6 +38,12 @@ export default {
   name: 'Upload',
 
   mixins: [baseMixin, formMixin],
+
+  components: {
+    Loading,
+    Icon,
+    Row
+  },
 
   props: {
     crop: Object,
@@ -153,7 +156,7 @@ export default {
     },
 
     _initCrop() {
-
+      // TODO
     },
 
     _rebuildInput() {
@@ -175,8 +178,8 @@ export default {
           return reject(new Error('No set props size!'))
         }
 
-        var maxWidth = this.size.split('*')[0]
-        var maxHeight = this.size.split('*')[1]
+        const maxWidth = this.size.split('*')[0]
+        const maxHeight = this.size.split('*')[1]
 
         if (height > maxHeight || width > maxWidth) {
           tip(`图片尺寸应小于${this.size}`)
@@ -208,7 +211,7 @@ export default {
 
         const eleImage = new Image()
         const reader = new FileReader()
-        let currentIndex = this.stateItem.push({
+        const currentIndex = this.stateItem.push({
           src: '',
           file,
           index,

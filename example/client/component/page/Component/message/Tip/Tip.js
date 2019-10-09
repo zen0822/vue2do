@@ -42,7 +42,7 @@ export default {
     async bubble({
       event
     }) {
-      let target = event.currentTarget
+      const target = event.currentTarget
 
       event.stopPropagation()
 

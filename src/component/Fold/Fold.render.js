@@ -3,12 +3,12 @@
  */
 
 export default function (h) {
-  let foldChildren = []
+  const foldChildren = []
 
   if (this.foldChildren.length > 0) {
     this.foldChildren.forEach((item, index) => {
-      let contentIndex = index + 1
-      let foldTitle = []
+      const contentIndex = index + 1
+      const foldTitle = []
 
       const slotEle = item.content
 

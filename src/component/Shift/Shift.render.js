@@ -3,7 +3,7 @@
  */
 
 export default function (h) {
-  let shiftOption = []
+  const shiftOption = []
 
   this.$slotKey.forEach((item, index) => {
     if (item === 'default') {

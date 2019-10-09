@@ -13,13 +13,10 @@
 import '../../asset/icon/iconfont.svg.js' // iconfont 的 svg 图标文件
 import './Icon.scss'
 
-import Vue from 'vue'
 import render from './Icon.render.js'
 import baseMixin from '../../mixin/base'
-import { dataType } from '../../util/data/data'
 
 const TYPE_ALI = 'ali'
-const TYPE_FA = 'fa'
 
 export default {
   name: 'Icon',

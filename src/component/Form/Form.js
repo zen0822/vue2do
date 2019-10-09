@@ -13,9 +13,6 @@ import tip from '../Message/tip'
 const INIT_FORM_CONTROL = ['select', 'input', 'check', 'data', 'upload']
 const VERIFY_FORM_CONTROL = ['select', 'input', 'check', 'data', 'upload']
 
-const TYPE_POST = 'post'
-const TYPE_GET = 'get'
-
 const formComp = {
   name: 'Form',
 
@@ -62,15 +59,15 @@ const formComp = {
      * @return {Object}
      */
     _initFormData() {
-      var _self = this
+      const _self = this
 
-      var deepInit = function (comp) {
-        comp.$children.forEach((comp, index) => {
+      const deepInit = function (comp) {
+        comp.$children.forEach((comp) => {
           if (comp.param && comp.value !== 'undefined') {
             INIT_FORM_CONTROL.forEach((controlName) => {
               if (comp.compName === controlName) {
-                let compParamName = comp.param
-                let queryOpt = _self.queryOpt
+                const compParamName = comp.param
+                const queryOpt = _self.queryOpt
 
                 if (compParamName in queryOpt) {
                   _self._query(comp, {
@@ -114,11 +111,11 @@ const formComp = {
         return true
       }
 
-      var compParamName = comp.param
-      var queryOpt = this.queryOpt
-      var queryInfo = this.queryInfo
+      const compParamName = comp.param
+      const queryOpt = this.queryOpt
+      const queryInfo = this.queryInfo
 
-      var setQueryOpt = (comp, change, couple) => {
+      const setQueryOpt = (comp, change, couple) => {
         if (change) {
           queryOpt[compParamName] = [queryOpt[compParamName]]
           queryInfo[compParamName] = [queryInfo[compParamName]]
@@ -166,8 +163,8 @@ const formComp = {
           break
         case 'upload':
           if (comp.isImg) {
-            var uploadVal = comp.value
-            var uploadItems = comp.uploadItems
+            const uploadVal = comp.value
+            const uploadItems = comp.uploadItems
 
             if (uploadVal.length === 0) {
               return false
@@ -246,7 +243,7 @@ const formComp = {
       let verifitation = true
 
       const deepVerify = function (comp) {
-        comp.$children.every((comp, index) => {
+        comp.$children.every((comp) => {
           if (comp.$children.length > 0) {
             deepVerify(comp)
 
@@ -286,7 +283,7 @@ const formComp = {
      * @return {Object}
      */
     reset() {
-      this.$children.forEach((comp, index) => {
+      this.$children.forEach((comp) => {
         INIT_FORM_CONTROL.forEach((controlName) => {
           if (comp.constructor.name === controlName) {
             switch (controlName) {

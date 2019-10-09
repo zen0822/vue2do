@@ -177,11 +177,11 @@ const popComp = {
      * 初始化弹出层
      */
     initPop() {
-      let ele = this.elementProp(this.$el)
-      let parentWidth = window.innerWidth
-      let parentHeight = window.innerHeight
-      let height = ele.offsetHeight
-      let width = ele.offsetWidth
+      const ele = this.elementProp(this.$el)
+      const parentWidth = window.innerWidth
+      const parentHeight = window.innerHeight
+      const height = ele.offsetHeight
+      const width = ele.offsetWidth
       let slideOffset = 0
       let popStyle = {}
 
@@ -225,8 +225,8 @@ const popComp = {
 
         slideOffset = 0
       } else {
-        let top = (parentHeight - height) / 2
-        let left = (parentWidth - width) / 2
+        const top = (parentHeight - height) / 2
+        const left = (parentWidth - width) / 2
 
         switch (this.popDirection) {
           case 'north':

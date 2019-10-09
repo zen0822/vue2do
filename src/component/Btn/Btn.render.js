@@ -3,7 +3,7 @@
  */
 
 export default function (h) {
-  let btnEleChildren = []
+  const btnEleChildren = []
 
   if (this.stateDisabled) {
     btnEleChildren.push(h('div', {
@@ -32,7 +32,7 @@ export default function (h) {
       }, [ele])
     )
   } else {
-    let buttonChildren = []
+    const buttonChildren = []
 
     if (this.createdLoading) {
       buttonChildren.push(h('loading', {

@@ -13,6 +13,16 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended'
   ],
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 2,
+        '@typescript-eslint/no-var-requires': 2,
+        '@typescript-eslint/no-this-alias': 2
+      }
+    }
+  ],
   parserOptions: {
     sourceType: 'module'
   },
@@ -37,6 +47,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-this-alias': 0,
     'quotes': ['error', 'single', {
       'allowTemplateLiterals': true
     }],
@@ -44,9 +55,9 @@ module.exports = {
     'generator-star-spacing': 0,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'space-before-function-paren': 0,
-    'no-unused-vars': 0,
     'no-multiple-empty-lines': 0,
     'no-useless-escape': 0,
+    'no-async-promise-executor': 0,
     'import/no-webpack-loader-syntax': 0,
     indent: ['error', 2, {
       SwitchCase: 1

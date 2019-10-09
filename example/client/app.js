@@ -9,9 +9,7 @@ import {
 } from './router'
 import App from './App/App'
 
-import vue2do, {
-  set as setVue2do
-} from 'vue2do'
+import vue2do from 'vue2do'
 import enLang from 'src/language/en-US.json'
 
 Vue.use(VueI18n)

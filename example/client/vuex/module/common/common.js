@@ -33,44 +33,32 @@ export default {
 
   actions: {
     [nameSpace.window.add]({
-      state,
-      commit,
-      rootState
+      commit
     }, item) {
       return commit(nameSpace.window.add, item)
     },
     [nameSpace.appContent.add]({
-      state,
-      commit,
-      rootState
+      commit
     }, item) {
       return commit(nameSpace.appContent.add, item)
     },
     [nameSpace.compStage.add]({
-      state,
-      commit,
-      rootState
+      commit
     }, item) {
       return commit(nameSpace.compStage.add, item)
     },
     [nameSpace.typeTheme.add]({
-      state,
-      commit,
-      rootState
+      commit
     }, value) {
       return commit(nameSpace.typeTheme.add, value)
     },
     [nameSpace.typeUI.add]({
-      state,
-      commit,
-      rootState
+      commit
     }, value) {
       return commit(nameSpace.typeUI.add, value)
     },
     [nameSpace.deviceSize]({
-      state,
-      commit,
-      rootState
+      commit
     }, sizeName) {
       return commit(nameSpace.deviceSize, sizeName)
     }

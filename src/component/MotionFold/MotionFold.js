@@ -17,11 +17,6 @@
  */
 
 import {
-  addClass,
-  delClass
-} from '../../util/dom/attr'
-
-import {
   prop as elementProp
 } from '../../util/dom/prop'
 
@@ -81,7 +76,7 @@ export default {
       code
     } = {}) {
       this.$emit('beforeEnter')
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         height: 0,
@@ -90,32 +85,41 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = '')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = '')
 
-          return resolve()
-        }, 218)
+            resolve()
+          }, 218)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     entering() {
-      let el = this.$el
+      const el = this.$el
       // HACK: trigger browser reflow
-      let height = el.offsetHeight
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       el.style.height = `${this.motionHeight}px`
 
       this.$emit('entering')
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          return resolve()
-        }, this.time)
+        try {
+          setTimeout(() => {
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterEnter() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         height: '',
@@ -127,7 +131,7 @@ export default {
     },
 
     beforeLeave() {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('beforeLeave')
 
@@ -143,8 +147,9 @@ export default {
     leaveing({
       code
     } = {}) {
-      let el = this.$el
-      let height = el.offsetHeight
+      const el = this.$el
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       this.$emit('leaving')
 
@@ -153,16 +158,20 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = 'none')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = 'none')
 
-          return resolve()
-        }, this.time)
+            return resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterLeave() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         transition: '',

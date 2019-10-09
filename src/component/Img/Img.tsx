@@ -61,7 +61,7 @@ export default createComponent({
     width
   }) {
     const imgState = ref(1) // 1：图片加载前，2：图片加载成功，3：图片加载失败
-    const _xclass = (className: string) => xclass(`${compPrefix}-img`, className)
+    const _xclass = (className: string): string => xclass(`${compPrefix}-img`, className)
 
     const _width = ref(
       Number.isNaN(Number(width))
@@ -74,7 +74,7 @@ export default createComponent({
         : (height && `${height}px`)
     )
 
-    const imageLoadSuccess = (event: any) => {
+    const imageLoadSuccess = (event: any): void => {
       const image = event.currentTarget
 
       if (contain) {
@@ -94,7 +94,7 @@ export default createComponent({
       imgState.value = 2
     }
 
-    const imageLoadError = () => {
+    const imageLoadError = (): void => {
       imgState.value = 3
     }
 
@@ -108,6 +108,7 @@ export default createComponent({
     }
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   render(this: any, h: CreateElement): VNode {
     const {
       imgState,
@@ -148,8 +149,8 @@ export default createComponent({
         <img
           {...imgProps}
           src={src}
-          onLoad={(event: any) => this.imageLoadSuccess(event)}
-          onError={() => this.imageLoadError()}
+          onLoad={(event: any): Function => this.imageLoadSuccess(event)}
+          onError={(): Function => this.imageLoadError()}
           style={{
             display: imgState === 2 ? '' : 'none'
           }}

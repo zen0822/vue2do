@@ -3,7 +3,6 @@
  */
 
 import keyCode from '../../config/keyCode.json'
-import tip from '../Message/tip'
 
 export default {
   methods: {

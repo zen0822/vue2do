@@ -7,14 +7,12 @@ import {
   debounce
 } from 'vue2do/src/util'
 import {
-  ref,
-  computed,
-  watch
+  ref
 } from '@vue/composition-api'
 
 const store = useStore()
 
-let testOptTemp = []
+const testOptTemp = []
 
 for (let i = 0, len = 33; i < len; i++) {
   testOptTemp.push({
@@ -35,7 +33,7 @@ const typeUI = useState(commonStore.typeUI.get)
 const typeTheme = useState(commonStore.typeTheme.get)
 
 const goAnchor = function (evt) {
-  let anchor = evt.currentTarget
+  const anchor = evt.currentTarget
   compStage.scrollTop = anchor.offsetTop
 }
 
@@ -65,7 +63,7 @@ export const mixinConf = {
 
   methods: {
     _initComp() {
-
+      // TODO
     },
 
     anchorLink(name) {
@@ -73,14 +71,14 @@ export const mixinConf = {
     },
 
     goAnchor(evt) {
-      let anchor = evt.currentTarget
+      const anchor = evt.currentTarget
       this.compStage.scrollTop = anchor.offsetTop
     }
   },
 
   computed: {
     varPrefix() {
-      return 'VUE2DO'
+      return varPrefix
     },
     testOpt() {
       return testOptTemp

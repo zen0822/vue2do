@@ -3,19 +3,19 @@
  */
 
 export default function (h) {
-  let listChildren = []
+  const listChildren = []
   let scrollerChildren = []
-  let loadingOfNum = []
+  const loadingOfNum = []
 
   if (this.stateItem.length > 0) {
-    let listItems = []
+    const listItems = []
 
     this.stateItem.forEach((item, index) => {
-      let $scopedSlots = [this.$scopedSlots.default({
+      const $scopedSlots = [this.$scopedSlots.default({
         index: index + 1,
         item
       })]
-      let $slot = this.$scopedSlots ? $scopedSlots : this.$slots.default
+      const $slot = this.$scopedSlots ? $scopedSlots : this.$slots.default
 
       listItems.push(
         h('li', {

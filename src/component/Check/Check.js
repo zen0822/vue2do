@@ -45,7 +45,7 @@ import {
   isEmpty as isEmptyArray
 } from '../../util/data/array'
 
-let checkCompConfig = {
+const checkCompConfig = {
   name: 'Check',
 
   mixins: [baseMixin, formMixin, apiMixin],
@@ -255,8 +255,8 @@ let checkCompConfig = {
       }
 
       let $checkboxSlot = {}
-      let optionContent = this.$options._content ? this.$options._content.innerHTML : ''
-      let $checkboxItemSlot = $(this.$el).find('.checkbox-items-slot')
+      const optionContent = this.$options._content ? this.$options._content.innerHTML : ''
+      const $checkboxItemSlot = $(this.$el).find('.checkbox-items-slot')
 
       if (optionContent) {
         $checkboxSlot = $checkboxItemSlot.html(optionContent)
@@ -265,17 +265,17 @@ let checkCompConfig = {
         $checkboxSlot = $checkboxItemSlot.html(this._slotContents.default)
       }
 
-      let $checkEles = $checkboxSlot.find('check-ele')
+      const $checkEles = $checkboxSlot.find('check-ele')
 
       if ($checkEles.length === 0) {
         return this
       }
 
-      let items = []
-      let checkboxItemsEmpty = isEmptyArray(this.stateOption)
+      const items = []
+      const checkboxItemsEmpty = isEmptyArray(this.stateOption)
 
       $checkEles.each((index, el) => {
-        let $el = $(el)
+        const $el = $(el)
         let val = $el.attr('value')
         let txt = ''
 
@@ -322,7 +322,7 @@ let checkCompConfig = {
 
       $(this.$el).find(`.${this.cPrefix}-opt-slot .item`).each((index, el) => {
         if (this.slotItems[index]) {
-          let dom = document.createElement('div')
+          const dom = document.createElement('div')
 
           dom.innerHTML = this.slotItems[index]
           this.compileVm.$compile(dom)
@@ -368,8 +368,8 @@ let checkCompConfig = {
      * @param {Number} index
      */
     async _check(event, index) {
-      let option = this.stateOption[index - 1]
-      let val = option[this.valueName]
+      const option = this.stateOption[index - 1]
+      const val = option[this.valueName]
 
       if (this.isCheckbox) {
         this.oldValue = []
@@ -403,7 +403,7 @@ let checkCompConfig = {
      * @return {Object} - this - 组件
      */
     async _checkAllOption() {
-      let value = []
+      const value = []
 
       this.option.forEach((item) => {
         value.push(item[this.valueName])
@@ -438,7 +438,7 @@ let checkCompConfig = {
         return this
       } else {
         this.oldText = this.text.slice()
-        let checkboxText = []
+        const checkboxText = []
 
         this.index.forEach((item) => {
           checkboxText.push(this.stateOption[item][this.textName])
@@ -468,7 +468,7 @@ let checkCompConfig = {
         })
       } else {
         this.oldIndex = this.index.slice()
-        let checkboxIndex = []
+        const checkboxIndex = []
 
         this.stateValue.forEach((item) => {
           this.stateOption.forEach((ele, index) => {
@@ -492,7 +492,7 @@ let checkCompConfig = {
     /**
      * Mousedown 事件句柄
      */
-    _handlerMousedown(event, index) {
+    _handlerMousedown() {
       if (this.inTouch) {
         return false
       }
@@ -503,7 +503,7 @@ let checkCompConfig = {
     /**
      * Mouseup 事件句柄
      */
-    _handlerMouseup(event, index) {
+    _handlerMouseup() {
       if (this.inTouch) {
         return false
       }
@@ -539,7 +539,7 @@ let checkCompConfig = {
     /**
      * 全选 Mousedown 事件句柄
      */
-    _handlerMousedownCheckAll(event) {
+    _handlerMousedownCheckAll() {
       if (this.inTouch) {
         return false
       }
@@ -550,7 +550,7 @@ let checkCompConfig = {
     /**
      * 全选 Mouseup 事件句柄
      */
-    _handlerMouseupCheckAll(event) {
+    _handlerMouseupCheckAll() {
       if (this.inTouch) {
         return false
       }
@@ -561,7 +561,7 @@ let checkCompConfig = {
     /**
      * 全选 focus 事件句柄
      */
-    _handlerFocusCheckAll(event) {
+    _handlerFocusCheckAll() {
       if (this.allowFocus) {
         this.focusedCheckAll = true
       }
@@ -570,7 +570,7 @@ let checkCompConfig = {
     /**
      * 全选 blur 事件句柄
      */
-    _handlerBlurCheckAll(event) {
+    _handlerBlurCheckAll() {
       this.focusedCheckAll = false
     },
 

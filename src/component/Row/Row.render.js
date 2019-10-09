@@ -3,7 +3,6 @@
  */
 
 export default function (h) {
-  let classOpt = []
   let $slots = this.$slots.default
 
   $slots = !Array.isArray($slots) ? null : $slots.filter((item) => {

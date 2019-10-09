@@ -12,7 +12,7 @@ import {
 
 namespace('../../../vuex/store')
 
-let testOpt: Array<object> = []
+const testOpt: Array<object> = []
 
 for (let i = 0; i < 33; i++) {
   testOpt.push({
@@ -32,48 +32,48 @@ export default class MixinPageComponent extends Vue {
   @Getter(commonStore.typeTheme.get) getterTypeTheme: string | undefined
   @Getter(commonStore.deviceSize) getterDeviceSize: string | undefined
 
-  get varPrefix() {
+  get varPrefix(): string {
     return 'VUE2DO'
   }
 
-  get testOpt() {
+  get testOpt(): Array<any> {
     return testOpt
   }
 
-  get appContent() {
+  get appContent(): any {
     return this.getterAppContent
   }
 
-  get compStage() {
+  get compStage(): any {
     return this.getterCompStage
   }
 
-  get typeUI() {
+  get typeUI(): any {
     return this.getterTypeUI
   }
 
-  get typeTheme() {
+  get typeTheme(): any {
     return this.getterTypeTheme
   }
 
-  get deviceSize() {
+  get deviceSize(): any {
     return this.getterDeviceSize
   }
 
-  anchorLink(name: string) {
+  anchorLink(name: string): string {
     return this.$route.path + '#' + name
   }
 
-  goAnchor(evt: { currentTarget: object }) {
-    let anchor: any = evt.currentTarget
+  goAnchor(evt: { currentTarget: object }): void {
+    const anchor: any = evt.currentTarget
 
     if (this.compStage) {
       this.compStage.scrollTop = anchor.offsetTop
     }
   }
 
-  mounted() {
-    const updateDeviceSize = () => {
+  mounted(): void {
+    const updateDeviceSize = (): void => {
       const deviceSizeEle = document.querySelector('.z-css-device-size')
       let deviceType = ''
 

@@ -79,7 +79,7 @@ const searchComp = {
     /**
      * 点击匹配的搜索选项
      */
-    _clickMatchOpt(event, index) {
+    _clickMatchOpt() {
       tip('功能未完成')
     },
 

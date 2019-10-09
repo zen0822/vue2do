@@ -33,7 +33,6 @@ import baseMixin from '../../mixin/base'
 import apiMixin from './List.api'
 import listMixin from '../../mixin/list'
 
-const PAGE_TYPE_NUM = 'num'
 const PAGE_TYPE_MORE = 'more'
 
 export default {
@@ -131,7 +130,7 @@ export default {
   },
 
   watch: {
-    item(val) {
+    item() {
       if (this.auto) {
         this.setPageData({
           current: this.pageData.current
@@ -175,9 +174,7 @@ export default {
         })
       })
 
-      refScroller.$on('yBarChange', ({
-        isBottom
-      }) => {
+      refScroller.$on('yBarChange', () => {
         if (!this.$el.offsetHeight) {
           return false
         }

@@ -73,7 +73,9 @@ export default {
       return option
     },
 
-    clickIcon() {},
+    clickIcon() {
+      // TODO
+    },
 
     submit() {
       this.$refs.submit.openLoading()
@@ -90,7 +92,7 @@ export default {
         return false
       }
 
-      let anchor = document.getElementById(hash)
+      const anchor = document.getElementById(hash)
 
       anchor && (this.compStage.scrollTop = anchor.offsetTop)
     },
@@ -113,8 +115,8 @@ export default {
   },
 
   beforeMount() {
-    let localStorageTheme = window.localStorage.getItem(`${this.varPrefix}_THEME`)
-    let localStorageUI = window.localStorage.getItem(`${this.varPrefix}_UI`)
+    const localStorageTheme = window.localStorage.getItem(`${this.varPrefix}_THEME`)
+    const localStorageUI = window.localStorage.getItem(`${this.varPrefix}_UI`)
 
     if (localStorageTheme) {
       this.$store.dispatch(commonStore.typeTheme.add, localStorageTheme)

@@ -10,19 +10,22 @@
  * @event change - 照片变化
  */
 import './Capture.scss'
-import { VueCropper } from 'vue-cropper'
 import alert from '../Modal/alert'
-import tip from '../Message/tip'
 import Btn from '../Btn/Btn'
 import Row from '../Row/Row'
 import Col from '../Col/Col'
-
 import baseMixin from '../../mixin/base'
 
 export default {
   name: 'Capture',
 
   mixins: [baseMixin],
+
+  components: {
+    Btn,
+    Row,
+    Col
+  },
 
   props: {
     height: {
@@ -67,7 +70,7 @@ export default {
   methods: {
     _initComp() {
       navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-        .then((stream) => {
+        .then(() => {
           this.support = true
         })
         .catch((error) => {

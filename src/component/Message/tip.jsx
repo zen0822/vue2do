@@ -1,46 +1,45 @@
 /**
- * toast 底部提示组件
+ * tip 组件
  */
 
 import Vue from 'vue'
 import Message from './Message'
-
 import store from '../../vuex/store'
 import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
 
-let toasting = false
-let toastHub = []
+let tiping = false
+const tipHub = []
 
 /**
- * 创建 toast 组件的实例
+ * 创建 tip 组件的实例
  **/
-const createToast = () => {
-  const toastCompVm = new Vue({
-    name: 'toast',
+const createTip = () => {
+  const tipCompVm = new Vue({
+    name: 'tip',
     mixins: [baseMixin],
     computed: {
       cPrefix() {
-        return `${this.compPrefix}-toast`
+        return `${this.compPrefix}-tip`
       }
     },
     components: {
       message: Message
     },
     store,
-    render(h) {
+    render() {
       return (
         <div class={[this.cPrefix]}>
-          <Message position='bottom' align='center' ref='toast' />
+          <Message align='center' ref='tip' />
         </div>
       )
     },
     mounted() {
-      this.$store.dispatch(commonStore.toast.add, this)
+      this.$store.dispatch(commonStore.tip.add, this)
     }
   }).$mount()
 
-  document.body.appendChild(toastCompVm.$el)
+  document.body.appendChild(tipCompVm.$el)
 }
 
 const commonVuex = new Vue({
@@ -48,20 +47,20 @@ const commonVuex = new Vue({
 })
 
 /**
- * 调用 toast
+ * 调用 tip
  *
  * @param {string, object} option -
  *                                 message - 信息
  *                                 align - 信息的两边对齐方式 （left, center, right)
  **/
-const toast = (opt = '') => {
-  if (toasting) {
-    toastHub.push(opt)
+const tip = (opt = '') => {
+  if (tiping) {
+    tipHub.push(opt)
 
     return false
   }
 
-  toasting = true
+  tiping = true
 
   let option = {}
 
@@ -78,26 +77,25 @@ const toast = (opt = '') => {
 
   return commonVuex
     .$store
-    .getters[commonStore.toast.get]
+    .getters[commonStore.tip.get]
     .$refs
-    .toast
+    .tip
     .set({
       message: option.message,
       type: option.type,
       align: option.align,
       hideCb: () => {
-        toasting = false
-
+        tiping = false
         option.cb && option.cb()
 
-        if (toastHub.length > 0) {
-          return toast(toastHub.shift())
+        if (tipHub.length > 0) {
+          return tip(tipHub.shift())
         }
       }
     })
     .show()
 }
 
-createToast()
+createTip()
 
-export default toast
+export default tip

@@ -6,8 +6,5 @@
     "./**/*.jsx",
     "./**/*.ts",
     "./**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }

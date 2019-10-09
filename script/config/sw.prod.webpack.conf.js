@@ -13,33 +13,18 @@ module.exports = function ({
   const config = require(path.resolve(__dirname, `./index`))({
     appName
   })
-  const baseWebpackConfig = require('./base.webpack.conf')({
-    appName
-  })
 
-  let configRule = [{
-    test: /\.jsx?$/,
+  const configRule = [{
+    test: /\.(j|t)sx?$/,
     enforce: 'pre',
-    loader: 'eslint-loader',
-    query: {
-      configFile: '.eslintrc.js',
-      formatter: require('eslint-friendly-formatter')
-    },
-    exclude: [/node_modules/]
+    exclude: [/node_modules/],
+    loader: 'eslint-loader'
   }, {
     test: /\.jsx?$/,
     use: {
       loader: 'babel-loader'
     },
     exclude: [/node_modules/]
-  }, {
-    test: /\.tsx?$/,
-    enforce: 'pre',
-    exclude: /node_modules/,
-    loader: 'tslint-loader',
-    options: {
-      typeCheck: true
-    }
   }, {
     test: /\.tsx?$/,
     exclude: [/node_modules/],
@@ -55,7 +40,7 @@ module.exports = function ({
     ]
   }]
 
-  let webpackConfig = {
+  const webpackConfig = {
     devtool: config.sw.prodSourceMap ? '#source-map' : false,
     entry: {
       sw: path.resolve(__dirname, `${config.global.root}/${appName}/client/sw/sw.worker.ts`)

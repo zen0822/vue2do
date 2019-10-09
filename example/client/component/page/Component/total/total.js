@@ -1,7 +1,5 @@
 import './total.scss'
 import template from './total.tpl'
-import { alert, confirm, tip } from 'vue2do/index.js'
-
 
 export default {
   template,
@@ -42,6 +40,7 @@ export default {
     },
 
     clickIcon() {
+      // TODO
     },
 
     submit() {

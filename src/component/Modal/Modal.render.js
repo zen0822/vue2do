@@ -6,14 +6,14 @@ import headerChildrenRender from './Modal.header.render'
 import footerChildrenRender from './Modal.footer.render'
 
 export default function (h) {
-  let modalChildren = []
-  let articleEle = this.$slots.default ? this.$slots.default : [
+  const modalChildren = []
+  const articleEle = this.$slots.default ? this.$slots.default : [
     h('div', {
       class: this.xclass('alert-message')
     }, this.stateMessage)
   ]
-  let headerChildren = headerChildrenRender.call(this, h)
-  let footerChildren = footerChildrenRender.call(this, h)
+  const headerChildren = headerChildrenRender.call(this, h)
+  const footerChildren = footerChildrenRender.call(this, h)
 
   if (this.modalHeaderDisplay) {
     modalChildren.push(

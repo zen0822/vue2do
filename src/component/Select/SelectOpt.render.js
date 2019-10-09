@@ -2,16 +2,16 @@
  * menu.render.js
  */
 export default function (h) {
-  let selectOptEle = []
+  const selectOptEle = []
 
   const scopedSlots = ({
     item,
     index
   }) => {
-    let element = []
-    let optTxt = item[this.textName]
-    let optVal = item[this.valueName]
-    let rowEle = []
+    const element = []
+    const optTxt = item[this.textName]
+    const optVal = item[this.valueName]
+    const rowEle = []
 
     if (this.multiple && !item.classify) {
       rowEle.push(
@@ -53,7 +53,7 @@ export default function (h) {
         ])
       )
     } else {
-      let attrs = {}
+      const attrs = {}
       const omitTxt = false // TODO: 计算字符是否被省略了
 
       if (omitTxt) {

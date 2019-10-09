@@ -9,7 +9,7 @@ import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
 
 let alerting = false
-let alertHub = []
+const alertHub = []
 
 /**
  * 创建 alert 组件的实例

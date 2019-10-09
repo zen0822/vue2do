@@ -10,29 +10,17 @@ module.exports = function ({
     appName
   })
 
-  let configRule = [{
-    test: /\.jsx?$/,
+  const configRule = [{
+    test: /\.(j|t)sx?$/,
     enforce: 'pre',
-    loader: 'eslint-loader',
-    query: {
-      configFile: '.eslintrc.js',
-      formatter: require('eslint-friendly-formatter')
-    },
-    exclude: [/node_modules/]
+    exclude: [/node_modules/],
+    loader: 'eslint-loader'
   }, {
     test: /\.jsx?$/,
     use: {
       loader: 'babel-loader'
     },
     exclude: [/node_modules/]
-  }, {
-    test: /\.tsx?$/,
-    enforce: 'pre',
-    exclude: /node_modules/,
-    loader: 'tslint-loader',
-    options: {
-      typeCheck: true
-    }
   }, {
     test: /\.tsx?$/,
     exclude: [/node_modules/],
@@ -71,7 +59,6 @@ module.exports = function ({
     },
     plugins: [
       new ForkTsCheckerWebpackPlugin({
-        tslint: true,
         async: true,
         watch: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)],
         reportFiles: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)]

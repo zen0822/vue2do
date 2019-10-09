@@ -7,7 +7,7 @@ class ServerMain {
     this.init()
   }
 
-  private async init() {
+  private async init(): Promise<any> {
     if ('serviceWorker' in navigator) {
       const { Workbox } = await import('workbox-window')
       const wb = new Workbox('/sw.js')

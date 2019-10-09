@@ -121,7 +121,7 @@ export default {
     } = {}) {
       this.$emit('beforeEnter')
 
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         'position': this.positionType,
@@ -130,20 +130,23 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = '')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = '')
 
-          return resolve()
-        }, 78)
+            resolve()
+          }, 78)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
-    entering({
-      code
-    } = {}) {
-      let el = this.$el
+    entering() {
+      const el = this.$el
       // HACK: trigger browser reflow
-      let height = el.offsetHeight
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       this.$emit('entering')
 
@@ -152,14 +155,18 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          return resolve()
-        }, this.time)
+        try {
+          setTimeout(() => {
+            return resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterEnter() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         'position': '',
@@ -170,7 +177,7 @@ export default {
     },
 
     beforeLeave() {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('beforeLeave')
 
@@ -184,7 +191,7 @@ export default {
     leaveing({
       code
     } = {}) {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('leaving')
 
@@ -193,16 +200,20 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = 'none')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = 'none')
 
-          return resolve()
-        }, this.time)
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterLeave() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         'position': '',

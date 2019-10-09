@@ -97,7 +97,7 @@ export default {
     _setDataOpt() {
       this.currentIndex = this.index
 
-      this.$slotKey.forEach((item, index) => {
+      this.$slotKey.forEach((item) => {
         if (item !== 'default') {
           this.shiftNum++
         }
