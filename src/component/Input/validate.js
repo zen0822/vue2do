@@ -3,8 +3,8 @@ export default (verifedType) => {
     return false
   }
 
-  var regexStr = ''
-  var dataTypeNameStr = ''
+  let regexStr = ''
+  let dataTypeNameStr = ''
 
   switch (verifedType) {
     case 'number': {

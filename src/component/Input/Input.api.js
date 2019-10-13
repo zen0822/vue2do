@@ -32,7 +32,7 @@ export default {
       }
 
       if (!this.stateValue && this.stateValue !== 0) {
-        let verifyEmpty = this._verifyEmpty()
+        const verifyEmpty = this._verifyEmpty()
 
         verified = verifyEmpty.verified
         verifiedHint = verifyEmpty.verifiedHint
@@ -70,7 +70,7 @@ export default {
         }
 
         if (this.minNum && this.number) {
-          let value = Number(this.stateValue)
+          const value = Number(this.stateValue)
 
           verified = this.minNum <= value
           verifiedHint = verified ? '' : `${this.name}不能小于${this.minNum}!`
@@ -81,7 +81,7 @@ export default {
         }
 
         if (this.maxNum && this.number) {
-          let value = Number(this.stateValue)
+          const value = Number(this.stateValue)
 
           verified = this.maxNum >= value
           verifiedHint = verified ? '' : `${this.name}不能大于${this.maxNum}!`

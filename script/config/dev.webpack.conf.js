@@ -1,9 +1,13 @@
 const path = require('path')
+const fs = require('fs')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const chalk = require('chalk')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 
 module.exports = function (opt = {}) {
   const appName = opt.appName
@@ -12,52 +16,31 @@ module.exports = function (opt = {}) {
     appName
   })
 
-  const port = process.env.PORT || config.dev.hotPort
+  const globalRoot = config.global.root
+  const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/dist/sw/sw.js`)
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
-    disableExtractScss: true
+    extractScss: false
   })
 
   const template = config.tpl ?
-    path.resolve(__dirname, `${config.global.root}/${appName}/index.html`) :
+    path.resolve(__dirname, `${globalRoot}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
-  let baseEntry = {}
-  baseEntry = baseWebpackConfig.entry.app.slice()
+  const newEntry = {
+    ...baseWebpackConfig.entry,
+    app: baseWebpackConfig.entry.app.slice()
+  }
+
   delete baseWebpackConfig.entry
 
   const devConf = merge(baseWebpackConfig, {
     mode: 'development',
     optimization: {
-      splitChunks: {
-        chunks: 'async',
-        minSize: 30000,
-        maxSize: 0,
-        minChunks: 1,
-        maxAsyncRequests: 5,
-        maxInitialRequests: 3,
-        automaticNameDelimiter: '~',
-        name: true,
-        cacheGroups: {
-          vendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10
-          },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true
-          }
-        }
-      }
+      usedExports: true
     },
-    entry: {
-      app: baseEntry.concat([
-        `webpack-dev-server/client?http://localhost:${port}/`,
-        'webpack/hot/dev-server'
-      ])
-    },
+    entry: newEntry,
     module: {
       rules: [{
         test: /(grid|util)\.scss$/,
@@ -84,6 +67,12 @@ module.exports = function (opt = {}) {
         statsOptions: null,
         logLevel: 'info'
       }),
+      new ProgressBarPlugin({
+        format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
+        complete: '>',
+        incomplete: '-',
+        clear: false
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
@@ -94,6 +83,21 @@ module.exports = function (opt = {}) {
       })
     ]
   })
+
+  if (process.env.SW_ENV === 'development') {
+    try {
+      fs.accessSync(swPath, fs.constants.F_OK)
+
+      devConf.plugins.push(
+        new WorkboxPlugin.InjectManifest({
+          swSrc: swPath,
+          importWorkboxFrom: 'disabled'
+        })
+      )
+    } catch (error) {
+      console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
+    }
+  }
 
   return devConf
 }

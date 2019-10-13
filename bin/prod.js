@@ -11,5 +11,5 @@ const argv = require('yargs')
   .argv
 
 require('../script/prod')({
-  appName: argv.app
+  appName: argv.app || 'example'
 })

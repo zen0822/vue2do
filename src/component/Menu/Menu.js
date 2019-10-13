@@ -128,7 +128,7 @@ export default {
       return this
     },
     menuClass() { // 组件 class 的名字
-      let classArr = [
+      const classArr = [
         this.cPrefix,
         this.xclass(this.compClass)
       ]
@@ -204,7 +204,7 @@ export default {
     /**
      * 当设备改变尺寸
      */
-    _changeByDeviceSize(size) {
+    _changeByDeviceSize() {
       if (this.panelDisplay) {
         this.spread()
       }
@@ -226,7 +226,7 @@ export default {
         $panel.style.display = ''
 
         if (vm.height === 'auto') {
-          let scrollerComp = vm.$refs.scroller
+          const scrollerComp = vm.$refs.scroller
           scrollerComp._initScroller()
 
           vm.menuHeight = scrollerComp.scrollerHeight

@@ -59,7 +59,6 @@ import uid from '../../util/uid'
 
 // 搜索功能的函数节流的间隔时间
 const SEARCH_KEY_UP_INTERVAL = 500
-const MENU_WIDTH = 170
 
 export default {
   name: 'Select',
@@ -203,7 +202,7 @@ export default {
       return this
     },
     selectClass() { // 组件 stage 的 class 的名字
-      let classArr = [
+      const classArr = [
         this.cPrefix,
         this.xclass(this.compClass),
         {
@@ -251,7 +250,7 @@ export default {
     deviceSize(val) {
       this.changeByDeviceSize(val)
     },
-    selectedHeight(val) {
+    selectedHeight() {
       this._adjustMenuMotion()
     },
     menuWidth(val) {
@@ -305,7 +304,7 @@ export default {
         hideMenu
       }) => {
         this.currentIndex = index
-        let selectedItem = this._isExistedVal(value)
+        const selectedItem = this._isExistedVal(value)
 
         if (this.multiple) {
           if (!selectedItem) {
@@ -366,8 +365,8 @@ export default {
      * 初始化 allOptionVal
      */
     _initAllOptionVal() {
-      let value = []
-      let optionTemp = this.classify ? this.stateOptionItemCopy : this.stateOption
+      const value = []
+      const optionTemp = this.classify ? this.stateOptionItemCopy : this.stateOption
 
       optionTemp.forEach((item) => {
         value.push(item[this.valueName])
@@ -385,7 +384,7 @@ export default {
       if (this.classifyOpt) {
         return this._processOption(this.classifyOpt)._initAllOptionVal()._initSelectTxt()
       } else {
-        let slotOption = this._initSelectSlot()
+        const slotOption = this._initSelectSlot()
 
         if (slotOption) {
           this.stateOption = slotOption
@@ -409,14 +408,14 @@ export default {
       }
 
       this.hasSlotOption = true
-      let optionItem = []
+      const optionItem = []
 
       $defaultSlotContent.forEach((item) => {
         if (item.text === ' ') {
           return false
         }
 
-        let children = item.componentOptions &&
+        const children = item.componentOptions &&
           Array.isArray(item.componentOptions.children) &&
           item.componentOptions.children[0]
 
@@ -424,8 +423,8 @@ export default {
           return false
         }
 
-        let attrs = item.data ? item.data.attrs : {}
-        let text = attrs.text === undefined ? (children ? (children.text ? children.text : '(empty)') : '') : attrs.text
+        const attrs = item.data ? item.data.attrs : {}
+        const text = attrs.text === undefined ? (children ? (children.text ? children.text : '(empty)') : '') : attrs.text
 
         optionItem.push({
           value: attrs.value,
@@ -464,12 +463,12 @@ export default {
         return false
       }
 
-      let valueTemp = this.stateValue
-      let optionTemp = this.stateOption
-      let toBeText = []
+      const valueTemp = this.stateValue
+      const optionTemp = this.stateOption
+      const toBeText = []
 
-      valueTemp.forEach((ele, index) => {
-        optionTemp.every((item, itemIndex) => {
+      valueTemp.forEach((ele) => {
+        optionTemp.every((item) => {
           if (item[this.valueName] === ele) {
             toBeText.push(item[this.textName])
 
@@ -489,13 +488,13 @@ export default {
     /**
      * 初始化单选下拉菜单
      */
-    _initSingleSelectTxt(val, txt) {
+    _initSingleSelectTxt() {
       if (!Array.isArray(this.stateOption)) {
         return this
       }
 
       if (this.stateValue || this.stateValue === 0 || this.stateValue === '0') {
-        this.stateOption.every((ele, index) => {
+        this.stateOption.every((ele) => {
           if (ele[this.valueName] === this.stateValue) {
             this._setTxtVal({
               value: ele[this.valueName],
@@ -531,8 +530,8 @@ export default {
         return false
       }
 
-      var isExisted = false
-      var existItem = {}
+      let isExisted = false
+      let existItem = {}
 
       this.stateValue.every((selectedVal, index) => {
         if (val === selectedVal) {
@@ -594,7 +593,7 @@ export default {
      * 监控 input 输入下拉框过滤的关键字的回调函数
      */
     _searchKeyup(evt) {
-      let keyWord = evt.target.value
+      const keyWord = evt.target.value
 
       if (!keyWord && keyWord !== 0) {
         this.searchOptionDisplay = false
@@ -632,7 +631,7 @@ export default {
      *  观察 option
      */
     _watchOption() {
-      this.unwatchOption = this.$watch('option', function (val, oldVal) {
+      this.unwatchOption = this.$watch('option', function (val) {
         if (!this.hasSlotOption) {
           return this._processOption(val)._initAllOptionVal()._initSelectTxt()
         }
@@ -665,7 +664,7 @@ export default {
      */
     _processClassifyOption(optionItem) {
       let optionTemp = []
-      let allOptionTemp = []
+      const allOptionTemp = []
       let allOption = []
 
       this.classify.forEach((item) => {
@@ -713,8 +712,8 @@ export default {
       const getMenuData = (vm) => {
         handleEleDisplay({
           element: vm.$refs.menu.$refs.panel,
-          cb: (element) => {
-            let scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
+          cb: () => {
+            const scrollerComp = vm.$refs.option.$refs.list.$refs.scroller
             scrollerComp.initScroller()
 
             vm.stateMenuHeight = scrollerComp.scrollerHeight

@@ -20,8 +20,6 @@ else
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Releasing $VERSION ..."
 
-    npm version $VERSION --message "[release] $VERSION"
-
     # build production
     npm run prod
 
@@ -30,7 +28,10 @@ else
     git commit -m "[build] $VERSION"
     git pull
 
+    npm version $VERSION --message "[release] $VERSION"
+
     # publish
+    git push origin refs/tags/v"$VERSION"
     git push
     if [[ -z $RELEASE_TAG ]]; then
       npm publish

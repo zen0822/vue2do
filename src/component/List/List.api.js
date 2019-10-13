@@ -2,9 +2,6 @@
  * list.api
  */
 
-const PAGE_TYPE_NUM = 'num'
-const PAGE_TYPE_MORE = 'more'
-
 export default {
   methods: {
     /**
@@ -78,6 +75,8 @@ export default {
         }
 
         listItemTemp = this.getListItemByPage({
+          startSlice,
+          endSlice,
           listItem: this.item,
           pageNum,
           pageSize,

@@ -1,0 +1,54 @@
+{
+  "include": [
+    "global.d.ts",
+    "index.d.ts",
+    "src/**/*",
+    "example/client/**/*",
+    "example/server/gql/**/*",
+    "script/gql.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "example/mock.config.js"
+  ],
+  "files": [
+    "example/app.config.js"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "lib": [
+      "dom",
+      "es5",
+      "es6",
+      "es7",
+      "es2015.promise",
+      "es2017",
+      "es2018",
+      "esnext",
+      "esnext.asynciterable",
+      "scripthost"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./tsDist",
+    "pretty": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "target": "es5",
+    "types": [
+      "node",
+      "jest"
+    ]
+  }
+}

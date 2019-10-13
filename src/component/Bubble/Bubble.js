@@ -97,7 +97,7 @@ export default {
         }
       ]
 
-      return `${className}`
+      return className.join(' ')
     }
   },
 
@@ -142,8 +142,8 @@ export default {
         return false
       }
 
-      let $el = this.$el
-      let hide = getComputedStyle($el).display === 'none'
+      const $el = this.$el
+      const hide = getComputedStyle($el).display === 'none'
 
       if (hide) {
         Object.assign($el.style, {
@@ -152,10 +152,10 @@ export default {
         })
       }
 
-      let position = childrenHeight(target)
+      const position = childrenHeight(target)
 
-      let width = target.offsetWidth
-      let height = target.offsetHeight
+      const width = target.offsetWidth
+      const height = target.offsetHeight
 
       if (this.targetDetail.top === position.top &&
         this.targetDetail.left === position.left &&
@@ -179,8 +179,7 @@ export default {
         height
       }
 
-      let bubbleWidth = this.$el.offsetWidth
-      let bubbleHeight = this.$el.offsetHeight
+      const bubbleWidth = this.$el.offsetWidth
 
       Object.assign(this.$el.style, {
         top: position.top + height + ARROW_HEIGHT / 2 + 'px',
@@ -224,7 +223,7 @@ export default {
 
       await this.$refs.transition.leave()
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         return resolve()
       })
     },

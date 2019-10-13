@@ -2,7 +2,7 @@
  * btn 组件的 material UI 样式
  */
 
-@import "../../scss/name.scss";
+@import '../../scss/name.scss';
 
 $C_PREFIX: #{$COMP_BTN};
 
@@ -12,7 +12,7 @@ $C_PREFIX: #{$COMP_BTN};
   }
 
   .#{$C_PREFIX}-overlay {
-    background-color: rgba(0, 0, 0, .12);
+    background-color: rgba(0, 0, 0, 0.12);
     position: absolute;
     top: 0;
     left: 0;
@@ -45,8 +45,8 @@ $C_PREFIX: #{$COMP_BTN};
 
   &.#{$C_PREFIX}-disabled {
     .#{$C_PREFIX}-ele {
-      color: rgba(0, 0, 0, .4);
-      background-color: rgba(0, 0, 0, .12);
+      color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.12);
     }
 
     &.#{$C_PREFIX}-type-button,

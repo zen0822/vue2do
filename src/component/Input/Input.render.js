@@ -3,9 +3,9 @@
  */
 
 export default function (h) {
-  let children = []
-  let editBoxChild = []
-  let wrapChildren = []
+  const children = []
+  const editBoxChild = []
+  const wrapChildren = []
 
   editBoxChild.push(
     h('motion-fade', {

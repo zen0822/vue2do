@@ -2,11 +2,11 @@
  * loading 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
 
-$C_PREFIX: #{ $COMP_LOADING };
+$C_PREFIX: #{$COMP_LOADING};
 
 @import './Loading.type.scss';
 
@@ -40,7 +40,7 @@ $C_PREFIX: #{ $COMP_LOADING };
     .#{$C_PREFIX}-bg {
       @extend %center-position;
 
-      background: rgba(256, 256, 256, .6);
+      background: rgba(256, 256, 256, 0.6);
       width: 100%;
       height: 100%;
     }
@@ -52,7 +52,7 @@ $C_PREFIX: #{ $COMP_LOADING };
       top: 50%;
       left: 50%;
 
-      transform: translate(-50%, -50%)
+      transform: translate(-50%, -50%);
     }
 
     .#{$C_PREFIX}-rotate {

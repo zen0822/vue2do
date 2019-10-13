@@ -14,10 +14,10 @@ const search = (urlSearch) => {
 
   const searchObj = {}
 
-  let urlSearchArr = urlSearch.split('&')
+  const urlSearchArr = urlSearch.split('&')
 
   urlSearchArr.forEach((item) => {
-    let searchItem = item.split('=')
+    const searchItem = item.split('=')
 
     Object.assign(searchObj, {
       [searchItem[0]]: searchItem[1]

@@ -18,7 +18,7 @@ export default {
   },
 
   actions: {
-    [compNameSpace.common.add]({ state, commit, rootState }, compOpt) {
+    [compNameSpace.common.add]({ commit }, compOpt) {
       return commit(compNameSpace.common.add, compOpt)
     }
   },

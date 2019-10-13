@@ -23,7 +23,7 @@
   - [例子](#例子)
     - [在当前目录构建名字为 zenProject 的应用项目](#在当前目录构建名字为-zenProject-的应用项目)
     - [在当前应用项目构建名字为 zenMpa 的多页应用](#在当前应用项目构建名字为-zenMpa-的多页应用)
-- [.apprc配置解析](#.apprc配置解析)
+- [app.config配置解析](#app.config配置解析)
 
 ## 开始使用
 
@@ -76,7 +76,6 @@ Vue.component('Input', Input)
 ## 通过 script 标签加载使用
 
 [从 codepen 预览](https://codepen.io/zen0822/project/editor/DYympR)
-
 
 ```html
 ...
@@ -156,11 +155,11 @@ cd zenProject
 vue2do build mpa zenMpa
 ```
 
-## .apprc配置解析
+## app.config配置解析
 
 - api：dev 环境的 api 的访问域名
 - apiProd 环境的 api 的访问域名
-- assetRoot：以 .apprc 将文件打包的文件位置，位置相对的文件位置
+- assetRoot：以 app.config 将文件打包的文件位置，位置相对的文件位置
 - assetPublicPath：打包资源的时候添加在前面的公共访问地址
 - assetSubDirectory：静态资源存放在 assetRoot 的文件夹位置
 - hotPort：dev 环境的访问端口，https 的默认访问端口是 443，http 是 80
@@ -177,3 +176,8 @@ vue2do build mpa zenMpa
 获取更多信息请访问 vue2do 的 [文档网站](https://zen0822.github.io)。
 
 本项目遵循 [semver](http://semver.org/lang/zh-CN/) 版本管理
+
+<details>
+    <summary></summary>
+    <div style="color: white;">希望十年之后看到我的代码还是像现在一样佩服自己。</div>
+</details>

@@ -4,7 +4,7 @@
 
 export default function (h) {
   let tabOption = []
-  let scrollerChildren = []
+  const scrollerChildren = []
   const tabBtnEle = (children, index) => {
     return h('btn', {
       class: [this.xclass('btn')],
@@ -30,7 +30,7 @@ export default function (h) {
       ])
     })
   } else {
-    let optionTmp = []
+    const optionTmp = []
 
     this.$slotKey.forEach((item, index) => {
       if (item === 'default') {
@@ -39,7 +39,7 @@ export default function (h) {
 
       const $slot = this.$slots[item][0]
       const $slotAttr = $slot.data.attrs
-      let optionItem = {}
+      const optionItem = {}
 
       if ($slotAttr.text) {
         Object.assign(optionItem, {
@@ -81,7 +81,7 @@ export default function (h) {
   )
 
   if (this.UIMaterial) {
-    let currentIndex = this.currentIndex <= 1 ? 1 : this.currentIndex
+    const currentIndex = this.currentIndex <= 1 ? 1 : this.currentIndex
 
     scrollerChildren.push(
       h('div', {

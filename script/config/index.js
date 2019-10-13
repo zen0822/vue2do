@@ -1,48 +1,63 @@
-// see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path')
+const path = require('path')
 
 module.exports = function ({
   appName
 }) {
-  const appConfigPath = path.resolve(__dirname, '../../' + appName + '/.apprc.js')
+  const appConfigPath = path.resolve(__dirname, '../../' + appName + '/app.config.js')
   const appConfig = require(appConfigPath)
   const appConfigDir = path.dirname(appConfigPath)
   const mockPort = appConfig.mockPort || 3000
+  const gqlMock = appConfig.gqlMock || mockPort
   const assetSubDirectory = appConfig.assetSubDirectory || 'static'
 
   const config = {
+    ...appConfig,
     api: appConfig.api,
     apiProd: appConfig.apiProd,
-    build: {
-      env: require('./prod.env'),
-      assetRoot: path.resolve(appConfigDir, appConfig.assetRoot),
-      assetPublicPath: appConfig.assetPublicPath || './',
+    prod: {
+      assetRoot: path.resolve(__dirname, '../../dist'),
+      assetPublicPath: './',
       assetSubDirectory: assetSubDirectory,
-      productionSourceMap: true,
-      productionGzip: appConfig.gzip || false,
-      productionGzipExtensions: ['js', 'css']
+      sourceMap: false,
+      gzip: appConfig.gzip || false,
+      gzipExt: ['js', 'css']
     },
     dev: {
-      env: require('./dev.env'),
       mockPort: mockPort || 3000,
       hotPort: appConfig.hotPort || 80,
       assetPublicPath: '/',
       assetSubDirectory: assetSubDirectory,
       proxyTable: {
+        '/gql': {
+          target: `http://localhost:${gqlMock}`,
+          pathRewrite: {
+            '^/gql': ''
+          }
+        },
         '/api/**': `http://localhost:${mockPort}`,
+        '/sw.js': `http://localhost:5169`,
         ...appConfig.proxy
       },
       cssSourceMap: false
     },
     doc: {
-      env: require('./prod.env'),
       htmlName: path.resolve(__dirname, '../../example/dist/index.html'),
-      assetsRoot: path.resolve(__dirname, '../../example/dist'),
-      assetsSubDirectory: 'static',
-      assetsPublicPath: './',
-      productionSourceMap: true,
-      productionGzip: true,
-      productionGzipExtensions: ['js', 'css']
+      assetRoot: path.resolve(appConfigDir, appConfig.assetRoot),
+      assetSubDirectory: 'static',
+      assetPublicPath: './',
+      sourceMap: true,
+      gzip: true,
+      gzipExt: ['js', 'css']
+    },
+    sw: {
+      hotPort: 5169,
+      assetRoot: path.resolve(appConfigDir, appConfig.assetRoot, './sw'),
+      assetPublicPath: '/',
+      assetSubDirectory: assetSubDirectory,
+      prodSourceMap: false
+    },
+    gql: {
+      port: gqlMock
     },
     global: {
       root: '../../',
@@ -51,8 +66,7 @@ module.exports = function ({
     https: appConfig.https,
     htmlName: appConfig.htmlName,
     type: 'spa',
-    tpl: appConfig.tpl,
-    sourceMap: false
+    tpl: appConfig.tpl
   }
 
   return config

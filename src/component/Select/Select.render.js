@@ -2,11 +2,11 @@
  * menu.render.js
  */
 export default function (h) {
-  let selectedBoxChildren = []
-  let menuChildren = []
+  const selectedBoxChildren = []
+  const menuChildren = []
 
   if (this.multiple) {
-    let liELe = []
+    const liELe = []
 
     selectedBoxChildren.push(
       h('div', {
@@ -113,12 +113,12 @@ export default function (h) {
   }
 
   if (Array.isArray(this.stateOption)) {
-    let scopedSlots = []
+    const scopedSlots = []
 
     if (this.$scopedSlots && this.$scopedSlots['custom']) {
       this.stateOption.forEach((item, index) => {
         Object.assign(scopedSlots, {
-          [`${index}`]: (props) => {
+          [`${index}`]: () => {
             return this.$scopedSlots['custom']({
               item,
               index

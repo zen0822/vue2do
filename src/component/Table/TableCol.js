@@ -91,16 +91,16 @@ const tableColComp = {
       }
 
       // 最终的宽度
-      let w = ''
+      // let w = ''
       let colBodyWidth = 0
-      let colContentWidth = 0
-      let widthNum = parseFloat(width)
+      // let colContentWidth = 0
+      const widthNum = parseFloat(width)
 
       colBodyWidth = width.indexOf('%') ? `${this.tableWidth * widthNum * 0.01 - COL_PADDING_BORDER_LENGTH}` : widthNum
-      colContentWidth = this.$el.offsetWidth - COL_PADDING_BORDER_LENGTH
+      // colContentWidth = this.$el.offsetWidth - COL_PADDING_BORDER_LENGTH
 
       // TODO: 当父元素 td 的宽度大于内容宽度时，宽度要设置成 auto
-      w = colContentWidth > colBodyWidth ? colContentWidth : colBodyWidth
+      // w = colContentWidth > colBodyWidth ? colContentWidth : colBodyWidth
 
       return colBodyWidth + 'px'
     }

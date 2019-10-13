@@ -4,13 +4,10 @@
  * @param {*} el
  * @param {*} options
  */
-const offset = function (el, options) {
+const offset = function (el) {
   if (!el) {
     return
   }
-
-  let rect
-  let win
 
   // 只有 IE <=11 会, 不然会报错
   if (!el.getClientRects().length) {
@@ -20,8 +17,8 @@ const offset = function (el, options) {
     }
   }
 
-  rect = el.getBoundingClientRect()
-  win = el.ownerDocument.defaultView
+  const rect = el.getBoundingClientRect()
+  const win = el.ownerDocument.defaultView
 
   return {
     top: rect.top + win.pageYOffset,

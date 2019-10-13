@@ -3,8 +3,8 @@
  */
 
 export default function (h) {
-  let classOpt = [this.cPrefix]
-  let deviceType = ['xs', 's', 'm', 'l', 'xl', 'span']
+  const classOpt = [this.cPrefix]
+  const deviceType = ['xs', 's', 'm', 'l', 'xl', 'span']
 
   if (this.pull > 0) {
     classOpt.push(`${this.cPrefix}-pull-${this.pull}`)

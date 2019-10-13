@@ -127,7 +127,7 @@ export default function (h) {
                 h('ul', {
                   class: [this.xclass('ul'), `${this.compPrefix}-ul`]
                 }, this.pageData.item.map((item, index) => {
-                  let pageNum = index + 1
+                  const pageNum = index + 1
 
                   return h('li', {
                     class: [

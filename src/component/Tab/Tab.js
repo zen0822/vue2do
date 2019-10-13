@@ -73,7 +73,7 @@ export default {
     initVal(val) {
       this.value = val
 
-      let currentIndex = this.queryIndexByValue(val)
+      const currentIndex = this.queryIndexByValue(val)
       this.switch(currentIndex)
     },
     currentIndex(val) {
@@ -97,12 +97,12 @@ export default {
       this.value = this.initVal
       this.option = this.initOpt
 
-      let urlHash = window.location.hash
+      const urlHash = window.location.hash
       this.urlSearchOpt = urlSearch(urlHash.slice(urlHash.indexOf('?')))
     },
 
     _initComp() {
-      let hasOption = this._initOptionSlot({
+      const hasOption = this._initOptionSlot({
         slotRef: this.$refs.optionSlot,
         compClass: `${this.compPrefix}-tab-ele`
       })

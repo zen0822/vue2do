@@ -1,5 +1,4 @@
 const shelljs = require('shelljs')
-shelljs.env.NODE_ENV = 'production'
 
 const websiteProject = './zen0822.github.io'
 
@@ -20,12 +19,12 @@ module.exports = function ({
     release
   })
 
-  var spinner = ora('building for documention website...')
+  const spinner = ora('building for documention website...')
   spinner.start()
 
-  var assetsPath = path.join(config.doc.assetsRoot, config.doc.assetsSubDirectory)
-  shelljs.rm('-rf', assetsPath)
-  shelljs.mkdir('-p', assetsPath)
+  const assetPath = path.join(config.doc.assetRoot, config.doc.assetSubDirectory)
+  shelljs.rm('-rf', assetPath)
+  shelljs.mkdir('-p', assetPath)
 
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
@@ -47,12 +46,12 @@ module.exports = function ({
         shelljs.echo('Git clone zen0822.github.io success')
 
         shelljs.rm('-rf', `${websiteProject}/static`)
-        shelljs.cp('-r', `${config.doc.assetsRoot}/*`, `${websiteProject}`)
-        shelljs.echo(`${assetsPath} successfully copy to ${websiteProject}`)
+        shelljs.cp('-r', `${config.doc.assetRoot}/*`, `${websiteProject}`)
+        shelljs.echo(`${assetPath} successfully copy to ${websiteProject}`)
 
         if (!ci) { // 不在持续集成服务器上
           // TODO: 准备解析 log 到网站分支
-          let log = shelljs.exec('git log')
+          // let log = shelljs.exec('git log')
 
           shelljs.cd('./zen0822.github.io')
 

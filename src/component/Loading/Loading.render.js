@@ -3,7 +3,7 @@
  */
 
 export default function (h) {
-  let loadingChildren = []
+  const loadingChildren = []
 
   if (this.isRotate) {
     let rotateEle = null
@@ -56,7 +56,7 @@ export default function (h) {
 
     loadingChildren.push(rotateEle)
   } else if (this.isSpot) {
-    let spotChildren = []
+    const spotChildren = []
 
     for (let i = 1; i <= 3; i++) {
       spotChildren.push(h('span', {

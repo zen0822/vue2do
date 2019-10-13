@@ -2,13 +2,13 @@
  * panel 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_MENU };
-$ICON_PREFIX: #{ $COMP_ICON };
+$C_PREFIX: #{$COMP_MENU};
+$ICON_PREFIX: #{$COMP_ICON};
 
 .#{$C_PREFIX} {
   position: relative;
@@ -26,7 +26,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     }
   }
 
-   .#{$C_PREFIX}-stage > .#{$C_PREFIX}-sub-fold {
+  .#{$C_PREFIX}-stage > .#{$C_PREFIX}-sub-fold {
     margin-left: 0;
   }
 
@@ -42,7 +42,7 @@ $ICON_PREFIX: #{ $COMP_ICON };
     display: none;
   }
 
-  @include device-type("s") {
+  @include device-type('s') {
     font-size: $h2;
 
     .#{$C_PREFIX}-sub-fold a {
@@ -65,13 +65,13 @@ $ICON_PREFIX: #{ $COMP_ICON };
         margin: auto;
         top: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, .8);
+        background: rgba(0, 0, 0, 0.8);
         transform: translateX(-200%);
       }
 
       &.#{$C_PREFIX}-animate-vertical {
         overflow: hidden;
-        background: rgba(0, 0, 0, .8);
+        background: rgba(0, 0, 0, 0.8);
 
         & > .#{$C_PREFIX}-close-panel {
           display: none;

@@ -18,8 +18,8 @@ const handleEleDisplay = ({
     return false
   }
 
-  let elDisplay = getComputedStyle(element).display
-  let cssDisplay = element.style.display
+  const elDisplay = getComputedStyle(element).display
+  const cssDisplay = element.style.display
 
   function handleElDisplay(show = true) {
     if (elDisplay === 'none' && cssDisplay === 'none') {
@@ -54,7 +54,7 @@ const prop = (element) => {
     return false
   }
 
-  let eleProp = {}
+  const eleProp = {}
 
   handleEleDisplay({
     element,
@@ -82,7 +82,7 @@ const prop = (element) => {
  * @param {*} el - dom 节点
  */
 const childrenHeight = (el) => {
-  let children = el.children
+  const children = el.children
   let totalHeight = 0
 
   for (let i = 0, len = children.length; i < len; i++) {

@@ -4,7 +4,7 @@ import mixin from '../../mixin'
 import {
   alert,
   confirm
-} from 'vue2do/index.js'
+} from 'vue2do/src/index.js'
 
 import homeBgImg from 'exAsset/home-bg.jpg'
 
@@ -52,8 +52,11 @@ export default {
       this.$refs.fullPop.hide()
     },
 
-    purePop() {
-      this.$refs.purePop.show()
+    showPureModal() {
+      this.$refs.pureModal.show()
+    },
+    hidePureModal() {
+      this.$refs.pureModal.hide()
     }
   }
 }

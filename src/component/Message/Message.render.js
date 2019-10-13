@@ -8,7 +8,8 @@ export default function (h) {
       this.cPrefix,
       this.xclass([
         this.themeClass,
-        'type-' + this.messageType
+        'type-' + this.messageType,
+        'align-' + this.stateAlign
       ])
     ],
     directives: [{
@@ -25,6 +26,6 @@ export default function (h) {
         theme: this.theme
       },
       ref: 'pop'
-    }, this.$slots.default ? this.$slots.default : this.infoMessage)
+    }, this.$slots.default ? this.$slots.default : this.stateMessage)
   ])
 }

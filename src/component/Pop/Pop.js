@@ -5,7 +5,7 @@
  * @prop part - 在一个父类元素弹出，默认为否即在当前文档之外弹窗
  * @prop position - 弹出层最终的所在位置 (top | right | bottom | left | center)
  * @prop speed - 弹出速度(slow|normal|fast)
- * @prop type - 弹出类型
+ * @prop type - 弹出类型(none | slide* | fade)
  *
  * @slot - 弹出层的主体内容
  *
@@ -22,6 +22,7 @@ import render from './Pop.render'
 import baseMixin from '../../mixin/base'
 
 import MotionSlide from '../MotionSlide/MotionSlide'
+import MotionFade from '../MotionFade/MotionFade'
 import {
   hasScroller
 } from '../../util/dom'
@@ -37,13 +38,17 @@ const popComp = {
   mixins: [baseMixin],
 
   components: {
-    'slide-transition': MotionSlide
+    'motion-slide': MotionSlide,
+    'motion-fade': MotionFade
   },
 
   props: {
     type: {
       type: String,
-      default: 'slide'
+      default: 'slide',
+      validator(val) {
+        return ['none', 'slide', 'fade'].includes(val)
+      }
     },
     direction: {
       type: String,
@@ -172,11 +177,11 @@ const popComp = {
      * 初始化弹出层
      */
     initPop() {
-      let ele = this.elementProp(this.$el)
-      let parentWidth = window.innerWidth
-      let parentHeight = window.innerHeight
-      let height = ele.offsetHeight
-      let width = ele.offsetWidth
+      const ele = this.elementProp(this.$el)
+      const parentWidth = window.innerWidth
+      const parentHeight = window.innerHeight
+      const height = ele.offsetHeight
+      const width = ele.offsetWidth
       let slideOffset = 0
       let popStyle = {}
 
@@ -220,8 +225,8 @@ const popComp = {
 
         slideOffset = 0
       } else {
-        let top = (parentHeight - height) / 2
-        let left = (parentWidth - width) / 2
+        const top = (parentHeight - height) / 2
+        const left = (parentWidth - width) / 2
 
         switch (this.popDirection) {
           case 'north':

@@ -9,7 +9,7 @@ export default {
     /**
      * 当设备改变尺寸
      */
-    changeByDeviceSize(size) {
+    changeByDeviceSize() {
       return this._adjustSelectedPoiStyle()
     },
 
@@ -151,7 +151,7 @@ export default {
         this.togglingMenu = false
       }, 300)
 
-      let menuHub = this.$store.state.comp.select
+      const menuHub = this.$store.state.comp.select
 
       Object.keys(menuHub).forEach((item) => {
         const menuVm = menuHub[item]

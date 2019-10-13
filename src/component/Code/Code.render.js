@@ -3,11 +3,11 @@
  */
 
 export default function (h) {
-  let $slots = this.$slots || {}
-  let codeStr = $slots.default ? $slots.default[0].text : this.code
-  let lineNumEle = []
+  const $slots = this.$slots || {}
+  const codeStr = $slots.default ? $slots.default[0].text : this.code
+  const lineNumEle = []
 
-  let matches = codeStr ? codeStr.match(/\n/g) : []
+  const matches = codeStr ? codeStr.match(/\n/g) : []
   this.lineNum = matches ? matches.length + 1 : 1
   for (let i = 1, len = this.lineNum; i <= len; i++) {
     lineNumEle.push(h('li', i))

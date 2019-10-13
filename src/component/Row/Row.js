@@ -15,8 +15,6 @@
 import render from './Row.render.js'
 import baseMixin from '../../mixin/base'
 
-const layoutType = ['grid', 'flex', 'flow']
-
 export default {
   name: 'Row',
 
@@ -57,7 +55,7 @@ export default {
       return `${this.compPrefix}-row`
     },
     compClass() {
-      let compClass = this.xclass([
+      const compClass = this.xclass([
         `align-${this.align}`,
         `justify-${this.justify}`,
         this.wrap
