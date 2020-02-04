@@ -1,6 +1,6 @@
 {
   "name": "@vue2do/component",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Base component for Vue.",
   "author": "zenwong@aliyun.com",
   "private": false,
@@ -16,7 +16,7 @@
     "test": "echo \"No test specified in @vue2do/component\" && exit 0"
   },
   "devDependencies": {
-    "@vue2do/build": "^1.0.5"
+    "@vue2do/build": "^1.0.6"
   },
   "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
   "dependencies": {
