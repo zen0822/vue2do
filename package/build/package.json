@@ -1,7 +1,7 @@
 {
 	"name": "@vue2do/build",
 	"version": "1.0.5",
-	"description": "Tool for build Vue application",
+	"description": "Tool for build Vue application.",
 	"author": "zenwong@aliyun.com",
 	"private": false,
 	"license": "MIT",
