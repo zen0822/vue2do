@@ -1,0 +1,16 @@
+{
+  "packages": [
+    "package/*"
+  ],
+  "version": "independent",
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "dist",
+        "*.md"
+      ],
+      "message": "chore(release): publish"
+    }
+  },
+  "npmClient": "yarn"
+}
