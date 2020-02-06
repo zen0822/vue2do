@@ -1,0 +1,166 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('start', '开始使用')
+      z-table(
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
+        template(slot='thead', v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col display
+          z-table-col 布尔值
+          z-table-col true
+          z-table-col 分页的显示状态
+        z-table-row(slot='2')
+          z-table-col display2
+          z-table-col 布
+          z-table-col false
+          z-table-col 分页的显示状态
+        z-table-row(slot='3')
+          z-table-col display3
+          z-table-col 布尔值
+          z-table-col true
+          z-table-col 撒旦发
+      z-code(:theme='typeTheme').
+        #{'<z-table ui="bootstrap">'}
+          #{'<'}template slot="thead" v-for="item in ['名字', '类型', '可选值', '说明']"#{'>'}
+            #{'<z-table-col>\\{\\{ item }}</z-table-col>'}
+          #{'</template>'}
+          #{'<z-table-row slot="1">'}
+            #{'<z-table-col>display</z-table-col>'}
+            #{'<z-table-col>布尔值</z-table-col>'}
+            #{'<z-table-col>true</z-table-col>'}
+            #{'<z-table-col>分页的显示状态</z-table-col>'}
+          #{'</z-table-row>'}
+          #{'<z-table-row slot="2">'}
+            #{'<z-table-col>display2</z-table-col>'}
+            #{'<z-table-col>布尔值</z-table-col>'}
+            #{'<z-table-col>false</z-table-col>'}
+            #{'<z-table-col></z-table-col>'}
+          #{'</z-table-row>'}
+          #{'<z-table-row slot="3">'}
+            #{'<z-table-col>display3</z-table-col>'}
+            #{'<z-table-col>布尔值</z-table-col>'}
+            #{'<z-table-col>true</z-table-col>'}
+            #{'<z-table-col>显示</z-table-col>'}
+          #{'</z-table-row>'}
+        #{'</z-table>'}
+    +section('list', '展示列表化的表格数据')
+      z-table(
+          auto
+          list
+          pager
+          :page-size='11'
+          :thead='["test", "name", "en"]'
+          :tbody='testOpt')
+        template(slot='thead')
+          z-table-col(max-width='30%') test
+          z-table-col name
+          z-table-col(max-width='100px') en
+        template(slot='tbody', slot-scope='props')
+          z-table-col {{ props.item.text }}
+          z-table-col {{ props.item.name }}
+          z-table-col {{ props.item.en }}
+      z-code().
+        #{'<z-table'}
+            auto
+            list
+            pager
+            :pageSize="10"
+            :thead="['test', 'name', 'en']"
+            #{':tbody="testOpt">'}
+          #{'<template slot="thead">'}
+            #{'<z-table-col max-width="30%">test</z-table-col>'}
+            #{'<z-table-col>name</z-table-col>'}
+            #{'<z-table-col max-width="100px">en</z-table-col>'}
+          #{'</template>'}
+          #{'<template slot="tbody" slot-scope="props">'}
+            #{'<z-table-col>\\{\\{ props.item.text }}</z-table-col>'}
+            #{'<z-table-col>\\{\\{ props.item.name }}</z-table-col>'}
+            #{'<z-table-col>\\{\\{ props.item.en }}</z-table-col>'}
+          #{'</template>'}
+        #{'</z-table>'}
+    +section('props', 'props 数据类型')
+      z-table(
+          scrollerAutoHide
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col auto
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 根据传入的列表数据生成分页数据
+        z-table-row(slot='2')
+          z-table-col border
+          z-table-col String
+          z-table-col (*none | all | row | col)
+          z-table-col
+            p 表格的边界线的类型，
+            |
+            |（none：默认是不要边界线，all：横竖都要，row：只要行与行之间要，col：只要列与列之间要）
+        z-table-row(slot='3')
+          z-table-col page
+          z-table-col Object
+          z-table-col ——
+          z-table-col
+            p 分页数据（没传的话，默认将传的列表数据（item）作为分页数据）
+            ul
+              li current - 当前页码
+              li total - 总共页码
+              li length - 数据总长度
+              li size - 每页展示的数据长度
+        z-table-row(slot='4')
+          z-table-col pager
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 启动分页功能
+        z-table-row(slot='5')
+          z-table-col list
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 默认是不以列表化的表格数据
+        z-table-row(slot='6')
+          z-table-col thead
+          z-table-col Array
+          z-table-col ——
+          z-table-col 表头标题数据
+        z-table-row(slot='7')
+          z-table-col tbody
+          z-table-col Array
+          z-table-col ——
+          z-table-col 列表标题数据
+        z-table-row(slot='8')
+          z-table-col pageSize
+          z-table-col Number
+          z-table-col ——
+          z-table-col 将列表数据（item）分为每页多少条数据, 默认为 5。
+        z-table-row(slot='9')
+          z-table-col scrollerAutoHide
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 启动滚动条自动隐藏
+    +section('events', 'events 事件')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col switchPage
+          z-table-col Object
+          z-table-col
+            p 换页触发事件, 返回值说明：
+            ul
+              li currentPage: 当前页码
+              li emitter: 派送事件的 viewModel

@@ -1,0 +1,213 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('start', '开始使用')
+      z-row.z-css-m-b(justify='start')
+        z-col.z-css-p-r(:xs='12')
+          span 按钮类型：
+          z-select.p-component-btn-select(
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='btnType'
+            value='button'
+            menuWidth='100%'
+            style='width: 100px;'
+          )
+            z-select-ele(value='button') button
+            z-select-ele(value='text') text
+            z-select-ele(value='float') float
+            z-select-ele(value='outline') outline
+        z-col.z-css-p-r(:xs='12')
+          span 边框圆角：
+          z-select.p-component-btn-select(
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='btnRadius'
+            value='S'
+            menuWidth='100%'
+            style='width: 100px;'
+          )
+            z-select-ele(value='none') none
+            z-select-ele(value='S') S
+            z-select-ele(value='M') M
+            z-select-ele(value='L') L
+        z-col.z-css-p-r(:xs='12')
+          span 按钮大小：
+          z-select.p-component-btn-select(
+            :ui='typeUI'
+            :theme='typeTheme'
+            ref='btnSize'
+            value='S'
+            menuWidth='100%'
+            style='width: 100px;'
+          )
+            z-select-ele(value='S') S
+            z-select-ele(value='M') M
+            z-select-ele(value='L') L
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        :radius='btnRadius'
+        :size='btnSize'
+        :type='btnType'
+      ) 提交
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn>'}
+          提交
+        #{'</z-btn>'}
+    +section('custom', '自定义按钮内容')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
+        p custom content
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn>'}
+          #{'<p>custom content</p>'}
+        #{'</z-btn>'}
+    +section('disabled', '禁止访问')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        disabled
+      ) 禁止访问
+
+      p *focus、click 等其他交互都没有动画
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn disabled>'}
+          禁止访问
+        #{'</z-btn>'}
+    +section('link', '链接按钮')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        link='//zen0822.github.io/#/component/btn'
+        type='text'
+      ) 链接按钮
+
+      p type 为 text 才生效
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn type="text" link="//zen0822.github.io/#/component/btn">'}
+          链接按钮
+        #{'</z-btn>'}
+    +section('style', '自定义样式')
+      z-btn(
+        ui='pure'
+        :theme='typeTheme'
+        :fontSize='14'
+        fontColor='#fff'
+        color='#FF6801'
+        height='43px'
+        width='115px'
+        type='text'
+      ) 自定义样式
+
+      p 可以自定义几个重要的样式
+
+      z-code(:theme='typeTheme').
+        #{'<z-btn'}
+          ui='pure'
+          :fontSize='14'
+          fontColor='#fff'
+          color='#FF6801'
+          height='43px'
+          width='115px'
+          type='text'
+        #{'>'}
+          链接按钮
+        #{'</z-btn>'}
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col block
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 按钮的宽度是父元素的宽度, width: 100%
+        z-table-row(slot='2')
+          z-table-col disabled
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 禁止点击
+        z-table-row(slot='3')
+          z-table-col link
+          z-table-col String
+          z-table-col ——
+          z-table-col 链接地址
+        z-table-row(slot='4')
+          z-table-col radius
+          z-table-col String
+          z-table-col ( none | *S | M | L)
+          z-table-col 按钮边角得半径尺寸
+        z-table-row(slot='5')
+          z-table-col size
+          z-table-col String
+          z-table-col ( *S | M | L)
+          z-table-col 按钮大小
+        z-table-row(slot='6')
+          z-table-col submit
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 作为提交按钮
+        z-table-row(slot='7')
+          z-table-col type
+          z-table-col Boolean
+          z-table-col ( *button | text | float | outline )
+          z-table-col 按钮类型
+        z-table-row(slot='8')
+          z-table-col value
+          z-table-col String
+          z-table-col ——
+          z-table-col 按钮名字
+    +section('props', 'events 组件事件')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col click
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
+          z-table-col 点击btn事件
+        z-table-row(slot='2')
+          z-table-col keyEnter
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
+          z-table-col focus 时敲击 Enter 键
+        z-table-row(slot='3')
+          z-table-col focus
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
+          z-table-col 按钮获得焦点事件
+        z-table-row(slot='4')
+          z-table-col blur
+          z-table-col
+            p 返回 Object
+            ul
+              li event - 注册事件的 Event 对象
+              li emitter - 派送事件的对象
+          z-table-col 按钮失去焦点事件

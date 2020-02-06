@@ -1,0 +1,43 @@
+include ../../mixin.pug
+
+div.component-transition
+  article.example-article
+    +section('zoom', '缩放')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='zoomIn'
+      ) 缩放过渡（进来）
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='zoomOut'
+        class='z-css-m-l'
+      ) 缩放过渡（离开）
+      div.transitioner
+        z-motion-zoom(
+            ref='zoom'
+        )
+          div 我被缩放了！
+      z-code(type='html', :theme='typeTheme').
+        #{'<z-btn @click="zoomIn">'}
+          缩放过渡（进来）
+        #{'</z-btn>'}
+
+        #{'<z-btn @click="zoomOut">'}
+          缩放过渡（离开）
+        #{'</z-btn>'}
+
+        #{'<z-motion-zoom ref="zoom">'}
+          #{'<div>我被缩放了！</div>'}
+        #{'</z-motion-zoom>'}
+      z-code(type='js', :theme='typeTheme').
+        ...
+          methods: {
+            zoomIn() {
+              this.$refs.zoom.enter()
+            },
+            zoomOut() {
+              this.$refs.zoom.leave()
+            }
+          }

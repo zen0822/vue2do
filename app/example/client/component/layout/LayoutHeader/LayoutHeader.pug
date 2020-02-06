@@ -1,0 +1,38 @@
+div.header-layout-stage
+  z-row.nav-box(justify='justify')
+    z-col(width='calc(100% - 400px)')
+      router-link(to='/')
+        img.logo-box(:src='logoUrl')
+    z-col(width='calc(400px)')
+      z-row.nav-menu-box(justify='justify')
+        z-col(:span='3')
+          router-link(to='/component/start') 组件
+        z-col(:span='3')
+          router-link(to='/build') 构建
+        z-col(:span='3')
+          router-link(to='/about') 关于
+        z-col(:span='3')
+          a(href='//github.com/zen0822/vue2do')
+            z-icon(size='L', theme='grey', kind='github')
+
+  z-row.nav-box.nav-box-mobile
+    z-col(:span='4')
+      div(@click.stop='showMenu')
+        z-icon(kind='sort', v-show='sortIconDisplay')
+    z-col.z-css-text-center(:span='4')
+      img.logo-box(:src='logoUrl')
+    z-col.z-css-text-right(:span='4')
+      div(@click.stop='showMenu')
+        z-icon(kind='search')
+
+  z-nav(
+    class='mobile-menu'
+    ref='mobileMenu'
+    @hide='hideMenu'
+    :init-opt='menuOpt'
+    :ui='typeUI'
+    :theme='typeTheme'
+  )
+    div.menu-search(slot='end')
+      z-input(placeholder='search in vue2do' block)
+        z-icon(slot='header' kind='search' size='xs')

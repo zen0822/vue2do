@@ -1,0 +1,192 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('start', '开始使用')
+      p.section-description 直接传入 init-opt，10s 之后会更改 initOpt 数据
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        :option='dropMenuOpt'
+      )
+      z-code(:theme='typeTheme').
+        #{'<z-select :option="dropMenuOpt"></z-select>'}
+    +section('tag', '添加子标签')
+      p.section-description 用直观的标签声明下拉框的数据
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
+        z-select-ele(value='1') {{ testName }}
+        z-select-ele(value='2') 按钮
+        z-select-ele(value='3') 测试3
+        z-select-ele(value='4') 测试4
+        z-select-ele(value='5') 测试5
+      z-code(:theme='typeTheme').
+        #{'<z-select>'}
+          #{'<z-select-ele value="1">{{ testName }}</z-select-ele>'}
+          #{'<z-select-ele value="2">按钮</z-select-ele>'}
+          #{'<z-select-ele value="3">测试222</z-select-ele>'}
+          #{'<z-select-ele value="4">测试3</z-select-ele>'}
+          #{'<z-select-ele value="5">测试4</z-select-ele>'}
+        #{'</z-select>'}
+    +section('classify', '分类下拉选择')
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        select-all
+        :classify='[{key: "recent",text: "最近"}, {key: "hot",text: "热门"}]'
+        :classify-opt='classifyOpt')
+      z-code(:theme='typeTheme').
+        #{'<z-select'}
+          :select-all="true"
+          :classify="[{
+            key: 'recent',
+            text: '最近'
+          }, {
+            key: 'hot',
+            text: '热门'
+          }]"
+        #{'  :classify-opt="classifyOpt"></z-select>'}
+    +section('multiple', '多选下拉框')
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        multiple
+        :option="selectOpt")
+      z-code(:theme='typeTheme').
+        #{ '<z-select' }
+          multiple
+          #{ ':option="selectOpt"></z-select>'}
+    +section('search', '搜索功能')
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        search
+        :option='selectOpt'
+      )
+      z-code(:theme='typeTheme').
+        #{'<z-select search :option="selectOpt"></z-select>'}
+    +section('init', '指定选定下拉选项')
+      z-select(
+        :ui='typeUI'
+        :theme='typeTheme'
+        :value='2'
+        :option='selectOpt'
+      )
+      z-code(:theme='typeTheme').
+        #{'<z-select :value="2" :option="selectOpt"></z-select>'}
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col classify
+          z-table-col Object
+          z-table-col ——
+          z-table-col 有值（数组类型）就开启标题下拉框 option 分类模式
+        z-table-row(slot='2')
+          z-table-col classifyOpt
+          z-table-col Object
+          z-table-col ——
+          z-table-col 分类下拉框的数据
+        z-table-row(slot='3')
+          z-table-col coverTrig
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 菜单展开时遮挡触发器，默认不开启
+        z-table-row(slot='4')
+          z-table-col defaultValue
+          z-table-col String, Number
+          z-table-col ——
+          z-table-col 按钮种类，默认值 -1
+        z-table-row(slot='5')
+          z-table-col defaultText
+          z-table-col String
+          z-table-col 请选择
+          z-table-col  默认的选项文本值
+        z-table-row(slot='6')
+          z-table-col errorMessage
+          z-table-col String
+          z-table-col ——
+          z-table-col 没选的时候显示的错误信息
+        z-table-row(slot='7')
+          z-table-col max
+          z-table-col Number
+          z-table-col ——
+          z-table-col 多选下拉框最多选择几个（默认是 0）
+        z-table-row(slot='8')
+          z-table-col min
+          z-table-col Number
+          z-table-col ( *false | true )
+          z-table-col 多选下拉框至少选择几个（默认是 0）
+        z-table-row(slot='9')
+          z-table-col menuWidth
+          z-table-col Nubmer | String
+          z-table-col 170
+          z-table-col 菜单宽度，可选值有 ‘auto’、‘100%’ 和数字
+        z-table-row(slot='10')
+          z-table-col multiple
+          z-table-col Boolean
+          z-table-col ( *false | true )
+          z-table-col 开启多选
+        z-table-row(slot='11')
+          z-table-col option
+          z-table-col Array
+          z-table-col ——
+          z-table-col 下拉框的 option 数据
+        z-table-row(slot='12')
+          z-table-col param
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 搜索参数名 (组件作为表单控时候的搜索参数名)
+        z-table-row(slot='13')
+          z-table-col required
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 必须选择下拉框的值（默认是 false）
+        z-table-row(slot='14')
+          z-table-col readOnly
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 只读（默认是 false）
+        z-table-row(slot='15')
+          z-table-col search
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 开启搜索过滤（默认为 false）
+        z-table-row(slot='16')
+          z-table-col selectAll
+          z-table-col Boolean
+          z-table-col ——
+          z-table-col 启动全选的功能（默认是 false）
+        z-table-row(slot='17')
+          z-table-col selectAllTxt
+          z-table-col String
+          z-table-col ——
+          z-table-col 全选选项的名字
+        z-table-row(slot='18')
+          z-table-col store
+          z-table-col All
+          z-table-col ——
+          z-table-col 储存实例化的信息
+        z-table-row(slot='19')
+          z-table-col textName
+          z-table-col String
+          z-table-col ——
+          z-table-col 指定读取 下拉框 optionItems 的 text 值的 key 的名字
+        z-table-row(slot='20')
+          z-table-col value
+          z-table-col String, Number
+          z-table-col ——
+          z-table-col 默认第一个显示的值
+        z-table-row(slot='21')
+          z-table-col valueName
+          z-table-col String
+          z-table-col ——
+          z-table-col 指定读取下拉框 optionItems 的 value 值的 key 的名字

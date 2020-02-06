@@ -19,9 +19,13 @@ module.exports = function ({
   const babelLoader = {
     loader: 'babel-loader',
     options: {
+      env: {
+        testing: {
+          plugins: [require.resolve('babel-plugin-istanbul')]
+        }
+      },
       presets: [
-        require.resolve('@babel/preset-react'),
-        require.resolve('@babel/preset-typescript'),
+        require.resolve('@vue/babel-preset-jsx'),
         [require.resolve('@babel/preset-env'), {
           modules: false,
           targets: {
@@ -30,29 +34,9 @@ module.exports = function ({
         }]
       ],
       plugins: [
-        require.resolve('@babel/plugin-proposal-class-properties'),
         require.resolve('@babel/plugin-syntax-dynamic-import'),
         require.resolve('@babel/plugin-transform-runtime'),
-        require.resolve('@babel/plugin-transform-react-jsx-source'),
-        // require.resolve('@babel/plugin-transform-arrow-functions'),
-        require.resolve('react-hot-loader/babel'),
-        [
-          require.resolve('babel-plugin-import'),
-          {
-            'libraryName': 'antd-mobile',
-            libraryDirectory: 'es',
-            'style': 'css'
-          }
-        ],
-        [
-          require.resolve('babel-plugin-import'),
-          {
-            'libraryName': 'antd',
-            libraryDirectory: 'es',
-            'style': 'css'
-          },
-          'some unique name'
-        ]
+        require.resolve('babel-plugin-transform-object-rest-spread')
       ]
     }
   }
@@ -76,8 +60,6 @@ module.exports = function ({
   const commonRule = {
     include: [
       projectPath,
-      /(react-intl|intl-messageformat|intl-messageformat-parser)/,
-      /(antd|antd-moboile)/,
       path.resolve(__dirname, '../util'),
       path.resolve(__dirname, '../../component')
     ]
@@ -85,7 +67,25 @@ module.exports = function ({
 
   let entryConfig = {}
   const configRule = {
-    'jsx|tsx|pre': {
+    'vue': {
+      ...commonRule,
+      test: /\.vue$/,
+      use: {
+        vuecss: {
+          loader: 'vue',
+          options: {
+            loaders: utils.cssLoaders()
+          }
+        },
+        vue: {
+          loader: 'vue-loader',
+          options: {
+            esModule: true
+          }
+        }
+      }
+    },
+    'pre,jsx|tsx': {
       ...commonRule,
       test: /\.(j|t)sx?$/,
       enforce: 'pre',
@@ -103,6 +103,7 @@ module.exports = function ({
         ts: {
           loader: 'ts-loader',
           options: {
+            appendTsxSuffixTo: [/\.vue$/],
             transpileOnly: true,
             experimentalWatchApi: true,
             compilerOptions: {
@@ -234,7 +235,7 @@ module.exports = function ({
       rule: configRule
     },
     output: {
-      path: config.prod.assetRoot,
+      path: config.prod.outDir,
       filename: utils.assetsPath('js/[name].bundle.[hash:7].js')
     },
     optimization: {
@@ -279,11 +280,13 @@ module.exports = function ({
       modules: [path.resolve(__dirname, '../node_modules'), 'node_modules'],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
-        'react-dom': '@hot-loader/react-dom',
+        'vue$': 'vue/dist/vue.esm.js',
         rootDir: globalRoot,
         libDir: path.resolve(globalRoot, './lib')
-      }
+      },
+      symlinks: false
     },
+
     resolveLoader: {
       modules: [path.resolve(__dirname, '../node_modules'), 'node_modules']
     }

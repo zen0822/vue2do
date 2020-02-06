@@ -1,0 +1,24 @@
+@import "../../../../scss/config.scss";
+
+.welcome {
+  text-align: left;
+
+  .example-article {
+    & > section {
+      border-bottom: $color-border-dark $border-thin solid;
+      padding-bottom: $gap-v-double;
+    }
+
+    .anchor-title {
+      font-size: 2em;
+
+      a {
+        color: $grey;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

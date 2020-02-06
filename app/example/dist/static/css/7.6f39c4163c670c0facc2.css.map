@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./example/client/component/page/About/About.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA,iBAAiB","file":"static/css/7.6f39c4163c670c0facc2.css","sourcesContent":[".page-about {\n  text-align: center;\n  max-width: 1200px;\n  box-sizing: border-box;\n  padding: 20px 50px;\n  margin: 0 auto; }\n"],"sourceRoot":""}

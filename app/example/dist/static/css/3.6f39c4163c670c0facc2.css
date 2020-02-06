@@ -1,0 +1,75 @@
+/**
+ * zenSpa/scss/config.scss
+ */
+.p-component .p-component-stage {
+  width: calc(100% - 250px);
+  overflow: auto;
+  padding: 20px 40px; }
+
+.p-component .p-component-menu-container {
+  width: 300px; }
+  @media only screen and (max-width: 575px) {
+    .p-component .p-component-menu-container {
+      width: 100%; } }
+  .p-component .p-component-menu-container .p-component-menu-select {
+    width: 105px;
+    margin-left: 10px; }
+
+.p-component .p-component-menu {
+  width: 250px;
+  overflow: auto;
+  padding: 20px 0;
+  box-sizing: border-box; }
+  .p-component .p-component-menu a {
+    color: #666666; }
+    .p-component .p-component-menu a.router-link-active {
+      color: #0099FF; }
+    .p-component .p-component-menu a:hover {
+      text-decoration: none; }
+
+.p-component .example-article > section {
+  padding-bottom: 20px; }
+
+.p-component .example-article > section:first-child > h1:first-child {
+  margin-top: 0; }
+
+.p-component .example-article .section-description {
+  font-size: 16px; }
+
+.p-component .example-article .anchor-title {
+  font-size: 2em;
+  cursor: pointer;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: #999999 1px solid; }
+  .p-component .example-article .anchor-title:hover::after {
+    content: "#";
+    color: #0099FF;
+    margin-left: 5px; }
+  .p-component .example-article .anchor-title a {
+    color: #666666; }
+    .p-component .example-article .anchor-title a:hover {
+      text-decoration: none; }
+
+.p-component .example-article .z-code {
+  margin-top: 20px; }
+
+@media only screen and (max-width: 991px) {
+  .p-component .example-article .anchor-title::after {
+    content: "#";
+    color: #0099FF;
+    margin-left: 5px; } }
+
+@media only screen and (max-width: 575px) {
+  .p-component .p-component-menu {
+    overflow: visible;
+    padding: 0;
+    width: 100%; }
+    .p-component .p-component-menu a {
+      color: #fff; }
+  .p-component .p-component-stage {
+    padding: 30px 10px;
+    width: 100%; } }
+
+
+/*# sourceMappingURL=3.6f39c4163c670c0facc2.css.map*/

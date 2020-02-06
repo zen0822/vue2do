@@ -1,0 +1,32 @@
+@import "./config.scss";
+@import "./mixin.scss";
+
+html, body {
+  color: $grey;
+  font-size: $font-base;
+  font-weight: normal;
+  font-family: "Microsoft Yahei" ,"simSun", "Arial";
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: $primary-color;
+  }
+
+  &:link {
+    text-decoration: none;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

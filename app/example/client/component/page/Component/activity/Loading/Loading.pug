@@ -1,0 +1,51 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('start', '开始使用')
+      z-loading(
+        display
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
+      z-code(type='html', :theme='typeTheme').
+        #{'<z-loading display />'}
+    +section('start', '点点点')
+      z-loading(
+        type='spot'
+        size='L'
+        display
+        :ui='typeUI'
+        :theme='typeTheme'
+      )
+      z-code(type='html', :theme='typeTheme').
+        #{'<z-loading type="spot" display />'}
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='(item, index) in ["名字", "类型", "可选值", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col bgDisplay
+          z-table-col Boolean
+          z-table-col false
+          z-table-col 是否显示 loading 的背景
+        z-table-row(slot='2')
+          z-table-col display
+          z-table-col Boolean
+          z-table-col false
+          z-table-col 马上显示加载组件
+        z-table-row(slot='3')
+          z-table-col size
+          z-table-col String
+          z-table-col S
+          z-table-col 大小(xs, s, m, l, xl), 默认 s
+        z-table-row(slot='4')
+          z-table-col type
+          z-table-col String
+          z-table-col rotate
+          z-table-col rotate, spot

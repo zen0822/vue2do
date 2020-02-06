@@ -1,0 +1,17 @@
+/**
+ * zenSpa/scss/config.scss
+ */
+.welcome {
+  text-align: left; }
+  .welcome .example-article > section {
+    border-bottom: #999999 1px solid;
+    padding-bottom: 20px; }
+  .welcome .example-article .anchor-title {
+    font-size: 2em; }
+    .welcome .example-article .anchor-title a {
+      color: #666666; }
+      .welcome .example-article .anchor-title a:hover {
+        text-decoration: none; }
+
+
+/*# sourceMappingURL=26.6f39c4163c670c0facc2.css.map*/

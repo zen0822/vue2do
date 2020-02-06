@@ -1,0 +1,107 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
+
+.#{$PAGE_PREFIX}-component {
+  .#{$PAGE_PREFIX}-component-stage {
+    width: calc(100% - 250px);
+    overflow: auto;
+    padding: $gap-v-double $gap-h-double * 2;
+  }
+
+  .#{$PAGE_PREFIX}-component-menu-container {
+    width: 300px;
+
+    @include device-type('xs') {
+      width: 100%;
+    }
+
+    .#{$PAGE_PREFIX}-component-menu-select {
+      width: 105px;
+      margin-left: 10px;
+    }
+  }
+
+  .#{$PAGE_PREFIX}-component-menu {
+    width: 250px;
+    overflow: auto;
+    padding: $gap-v-double 0;
+    box-sizing: border-box;
+
+    a {
+      color: $grey;
+
+      &.router-link-active {
+        color: $primary-color;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .example-article {
+    & > section {
+      padding-bottom: $gap-v-double;
+    }
+
+    & > section:first-child > h1:first-child {
+      margin-top: 0;
+    }
+
+    .section-description {
+      font-size: $h3;
+    }
+
+    .anchor-title {
+      font-size: 2em;
+      cursor: pointer;
+      padding-bottom: $gap-v-double;
+      margin-bottom: $gap-v-double;
+      border-bottom: $color-border-dark $border-thin solid;
+
+      &:hover::after {
+        content: "#";
+        color: $primary-color;
+        margin-left: $gap-v-half;
+      }
+
+      a {
+        color: $grey;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .z-code {
+      margin-top: $gap-v-double;
+    }
+  }
+
+  @include device-type("l") {
+    .example-article .anchor-title::after {
+      content: "#";
+      color: $primary-color;
+      margin-left: $gap-v-half;
+    }
+  }
+
+  @include device-type("xs") {
+    .#{$PAGE_PREFIX}-component-menu {
+      overflow: visible;
+      padding: 0;
+      width: 100%;
+
+      a {
+        color: #fff;
+      }
+    }
+
+    .#{$PAGE_PREFIX}-component-stage {
+      padding: $gap-v-triple $gap-h;
+      width: 100%;
+    }
+  }
+}

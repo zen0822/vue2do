@@ -1,0 +1,69 @@
+include ../../mixin.pug
+
+div
+  article.example-article
+    +section('start', '开始使用')
+      z-tab(
+        :ui='typeUI'
+        :theme='typeTheme'
+        query
+        :init-opt='testOpt.slice(0, 8)'
+      )
+      z-code(type='html', :theme='typeTheme').
+        #{'<z-tab query :init-opt="testOpt"></z-tab>'}
+      z-code(type='js', :theme='typeTheme').
+        ...
+          data() {
+            return {
+              testOpt: [{
+                value: 0,
+                text: 'test-0'
+              }, {
+                value: 1,
+                text: 'test-1'
+              }]
+            }
+          },
+        ...
+    +section('props', 'props 数据类型')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='(item, index) in ["名字", "类型", "可选值", "说明"]')
+          z-table-col(:max-width='index === 3 ? "23px" : ""') {{ item }}
+        z-table-row(slot='1')
+          z-table-col initOpt
+          z-table-col Array
+          z-table-col ——
+          z-table-col tab 的初始选项
+        z-table-row(slot='2')
+          z-table-col initVal
+          z-table-col String, Number
+          z-table-col ——
+          z-table-col 初始化 tab 的当前 value 值
+        z-table-row(slot='3')
+          z-table-col query
+          z-table-col Boolean
+          z-table-col *false | true
+          z-table-col 开启根据网址的 search 参数来选择选项卡
+    +section('events', 'events 组件事件')
+      z-table(
+          border='row'
+          auto
+          :pageSize='10')
+        template(
+            slot='thead'
+            v-for='item in ["名字", "返回值类型", "说明"]')
+          z-table-col {{ item }}
+        z-table-row(slot='1')
+          z-table-col click
+          z-table-col Object
+          z-table-col
+            p 点击事件, 以下的为返回值说明
+            ul
+             li emitter - 事件宿主
+             li value - 当前选项卡的值
+             li text - 当前选项卡的文本

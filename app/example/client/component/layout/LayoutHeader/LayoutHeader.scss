@@ -1,0 +1,94 @@
+@import "../../../scss/config.scss";
+@import "../../../scss/mixin.scss";
+
+.header-layout-stage {
+  position: relative;
+  background-color: $grey-dark;
+  height: 88px;
+  padding: 0 $gap-h-double;
+
+  & > .nav-box-mobile {
+    display: none;
+
+    .z-icon .z-icon-ali {
+      font-size: 30px;
+      color: #fff;
+    }
+
+    .z-icon .z-icon-sort {
+      font-size: 40px;
+    }
+  }
+
+  & > .nav-box {
+    height: 100%;
+    margin: 0 auto;
+
+    .logo-box {
+      width: 30px;
+      height: auto;
+    }
+
+    .nav-menu-box {
+      .z-icon .z-icon-l {
+        font-size: 40px;
+      }
+
+      .router-link-active {
+        color: $bg-color;
+
+        &::after {
+          content: " ";
+          width: 100%;
+          bottom: -33px;
+          left: 0;
+          position: absolute;
+          border-bottom: #fff $border-thin * 5 solid;
+        }
+      }
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .z-col {
+        position: relative;
+        font-size: $h3;
+        width: 100px;
+        text-align: center;
+      }
+    }
+  }
+
+  & > .mobile-menu {
+    margin: 0 -$gap-h;
+    display: none;
+
+    .menu-search {
+      & > .z-input {
+        .z-input-wrap {
+          input {
+            font-size: $h2;
+          }
+        }
+      }
+    }
+  }
+
+  @include device-type('s') {
+    height: 60px;
+
+    & > .nav-box {
+      display: none;
+    }
+
+    & > .nav-box-mobile {
+      display: flex;
+    }
+
+    & > .mobile-menu {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+div.app-container
+  header-layout(ref='header')
+  div.app-content(
+    :style='appStyle'
+    ref='appContent'
+  )
+    router-view
+  footer-layout(ref='footer')

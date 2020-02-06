@@ -1,0 +1,10 @@
+@import "../scss/config.scss";
+
+.app-container {
+  position: relative;
+
+  & > .app-content {
+    position: relative;
+    overflow: auto;
+  }
+}
