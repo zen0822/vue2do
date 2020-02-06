@@ -1,6 +1,8 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const chalk = require('chalk')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
 module.exports = function ({
   appName,
@@ -157,6 +159,12 @@ module.exports = function ({
         async: true,
         watch: [path.resolve(__dirname, `${globalRoot}/example/server`)],
         reportFiles: [path.resolve(__dirname, `${globalRoot}/example/server`)]
+      }),
+      new ProgressBarPlugin({
+        format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
+        complete: '>',
+        incomplete: '-',
+        clear: false
       })
     ]
   }

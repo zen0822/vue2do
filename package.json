@@ -28,11 +28,18 @@
     "vue2do": "bin/vue2do.js"
   },
   "scripts": {
+    "apollo": "apollo",
+    "apollo:engine": "apollo service:push",
     "coveralls": "cat test/coverage/lcov.info | coveralls",
     "debug": "node --inspect-brk=5858 bin/dev.js",
     "doc": "node bin/doc",
     "doc:rel": "node bin/doc --release && apollo service:push",
     "doc:rel:ci": "node bin/doc --release --ci && apollo service:push",
+    "gql": "npm run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw nodemon --watch ./script/gql.ts --watch ./tsDist/example/server/gql bin/gql.js",
+    "gql:gen": "graphql-codegen --config codegen.yml",
+    "mock:sw": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
+    "prisma:db": "docker-compose up -d",
+    "prisma:start": "prisma deploy",
     "mock:gql": "npm run tsc && nodemon --watch ./tsDist/example/server/gql bin/gql.js",
     "prod": "node bin/prod",
     "rel": "bash script/release.sh",
@@ -61,6 +68,7 @@
     "@vue/babel-preset-jsx": "^1.0.0",
     "@vue/composition-api": "^0.3.2",
     "@vue/test-utils": "^1.0.0-beta.29",
+    "apollo": "^2.13.1",
     "apollo-boost": "^0.4.0",
     "autoprefixer": "^9.3.1",
     "babel-eslint": "^10.0.1",
@@ -109,6 +117,8 @@
     "ora": "^3.0.0",
     "postcss-loader": "^3.0.0",
     "prerender-spa-plugin": "^3.0.0",
+    "prisma": "^1.34.0",
+    "prisma-client-lib": "^1.34.0",
     "progress-bar-webpack-plugin": "^1.12.1",
     "pug": "^2.0.3",
     "pug-loader": "^2.3.0",
@@ -143,9 +153,18 @@
     "yargs": "^12.0.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.1",
+    "@graphql-codegen/typescript": "1.2.1",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.3.2",
     "@types/node": "^12.0.3",
+    "@types/webpack": "^4.4.26",
+    "@types/workbox-sw": "^3.2.1",
+    "@types/ws": "^6.0.1",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.3.3",
+    "apollo-engine": "^1.1.2",
+    "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "dexie": "^2.0.4",
     "eslint": "^6.4.0",
@@ -160,6 +179,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "graphql-yoga": "^1.17.4",
     "istanbul-instrumenter-loader": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
     "karma": "^4.1.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -185,5 +205,8 @@
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "resolutions": {
+    "apollo/**/graphql": "^14.3.1"
   }
 }
