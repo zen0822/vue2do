@@ -192,7 +192,7 @@ export default {
     },
 
     _changeHandler(event) {
-      const files = Array.of(...event.target.files)
+      const files = Array.from(event.target.files)
 
       files.forEach((item, index) => {
         const file = item
