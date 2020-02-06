@@ -1,5 +1,5 @@
 export default function (h) {
-  let footerChildren = []
+  const footerChildren = []
 
   if (this.noBtn) {
     footerChildren.push(h('btn', {

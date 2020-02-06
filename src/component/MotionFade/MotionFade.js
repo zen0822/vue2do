@@ -42,7 +42,7 @@ export default {
     } = {}) {
       this.$emit('beforeEnter')
 
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         transition: this.transition,
@@ -50,34 +50,42 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = '')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = '')
 
-          return resolve()
-        }, 78)
+            resolve()
+          }, 78)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     entering() {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('entering')
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          Object.assign(el.style, {
-            opacity: this.opacity ? '' : 1
-          })
-
+        try {
           setTimeout(() => {
-            return resolve()
-          }, this.time)
-        }, 10)
+            Object.assign(el.style, {
+              opacity: this.opacity ? '' : 1
+            })
+
+            setTimeout(() => {
+              return resolve()
+            }, this.time)
+          }, 10)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterEnter() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         transition: '',
@@ -88,7 +96,7 @@ export default {
     },
 
     beforeLeave() {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('beforeLeave')
 
@@ -106,7 +114,7 @@ export default {
     leaveing({
       code
     } = {}) {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('leaving')
 
@@ -115,16 +123,20 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = 'none')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = 'none')
 
-          return resolve()
-        }, this.time)
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterLeave() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         transition: '',

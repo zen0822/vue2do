@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const File2DistWebpackPlugin = require('../../lib/webpack/File2DistWebpackPlugin')
+const FileToDistWebpackPlugin = require('../../lib/webpack/FileToDistWebpackPlugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = function ({
@@ -10,29 +10,17 @@ module.exports = function ({
     appName
   })
 
-  let configRule = [{
-    test: /\.jsx?$/,
+  const configRule = [{
+    test: /\.(j|t)sx?$/,
     enforce: 'pre',
-    loader: 'eslint-loader',
-    query: {
-      configFile: '.eslintrc.js',
-      formatter: require('eslint-friendly-formatter')
-    },
-    exclude: [/node_modules/]
+    exclude: [/node_modules/],
+    loader: 'eslint-loader'
   }, {
     test: /\.jsx?$/,
     use: {
       loader: 'babel-loader'
     },
     exclude: [/node_modules/]
-  }, {
-    test: /\.tsx?$/,
-    enforce: 'pre',
-    exclude: /node_modules/,
-    loader: 'tslint-loader',
-    options: {
-      typeCheck: true
-    }
   }, {
     test: /\.tsx?$/,
     exclude: [/node_modules/],
@@ -49,12 +37,15 @@ module.exports = function ({
   }]
 
   const baseConf = {
-    mode: 'development',
+    context: path.resolve(__dirname, `${config.global.root}`),
     devtool: '#eval-source-map',
     entry: {
       sw: path.resolve(__dirname, `${config.global.root}/${appName}/client/sw/sw.worker.ts`)
     },
-
+    mode: 'development',
+    module: {
+      rules: configRule
+    },
     output: {
       publicPath: config.sw.assetPublicPath,
       path: config.sw.assetRoot,
@@ -62,11 +53,22 @@ module.exports = function ({
       pathinfo: false,
       globalObject: 'this'
     },
-
+    performance: {
+      maxEntrypointSize: 104857600,
+      maxAssetSize: 10485760
+    },
+    plugins: [
+      new ForkTsCheckerWebpackPlugin({
+        async: true,
+        watch: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)],
+        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)]
+      }),
+      new webpack.HotModuleReplacementPlugin(),
+      new FileToDistWebpackPlugin({
+        dir: config.sw.assetRoot
+      })
+    ],
     stats: 'verbose',
-
-    context: path.resolve(__dirname, `${config.global.root}`),
-
     resolve: {
       modules: ['node_modules'],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -74,29 +76,7 @@ module.exports = function ({
         'src': path.resolve(__dirname, `${config.global.root}/src`)
       },
       symlinks: false
-    },
-
-    module: {
-      rules: configRule
-    },
-
-    performance: {
-      maxEntrypointSize: 104857600,
-      maxAssetSize: 10485760
-    },
-
-    plugins: [
-      new ForkTsCheckerWebpackPlugin({
-        tslint: true,
-        async: true,
-        watch: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)],
-        reportFiles: [path.resolve(__dirname, `${config.global.root}/example/client/sw`)]
-      }),
-      new webpack.HotModuleReplacementPlugin(),
-      new File2DistWebpackPlugin({
-        dir: config.sw.assetRoot
-      })
-    ]
+    }
   }
 
   return baseConf

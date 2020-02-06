@@ -1,6 +1,3 @@
-const shelljs = require('shelljs')
-shelljs.env.NODE_ENV = 'production'
-const path = require('path')
 const ora = require('ora')
 const webpack = require('webpack')
 
@@ -8,7 +5,7 @@ module.exports = function ({
   appName = 'example'
 } = {}) {
   const spinner = ora('building production...')
-  const webpackConfig = require('./config/sw.dev.webpack.conf')({
+  const webpackConfig = require('./config/sw.prod.webpack.conf')({
     appName: appName
   })
 

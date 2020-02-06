@@ -39,7 +39,7 @@ export default {
   },
 
   methods: {
-    textWidth(text, fontSize) {
+    textWidth(text) {
       if (text === ' ') {
         return 4
       }
@@ -92,7 +92,7 @@ export default {
       const contentArrayLength = contentArray.length
 
       let index = 0
-      let lineFont = []
+      const lineFont = []
 
       for (let i = 0, lineLength = this.line; i < lineLength; i++) {
         if (contentArray[index] === undefined) {
@@ -105,7 +105,7 @@ export default {
         let lastFontWidthOver = false // 最后一行的文字宽度是否小于容器宽度
 
         for (; j < contentArrayLength; j++) {
-          let fontWidth = this.textWidth(contentArray[j])
+          const fontWidth = this.textWidth(contentArray[j])
 
           if (contentArray[j] === undefined || (fontWidth + lineWidth) >= this.boxWidth) {
             // 最后一行并且文字总宽度大于容器宽度时

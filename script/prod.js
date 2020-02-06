@@ -1,5 +1,4 @@
 const shelljs = require('shelljs')
-shelljs.env.NODE_ENV = 'production'
 const path = require('path')
 const ora = require('ora')
 const webpack = require('webpack')

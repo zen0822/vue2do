@@ -37,6 +37,12 @@ export default [{
     title: '输入组件'
   }
 }, {
+  path: 'upload',
+  component: () => import('../component/page/Component/form/Upload/Upload'),
+  meta: {
+    title: '上传组件'
+  }
+}, {
   path: 'form',
   component: () => import('../component/page/Component/form/Form/Form'),
   meta: {
@@ -119,6 +125,18 @@ export default [{
   component: () => import('../component/page/Component/activity/Loading/Loading'),
   meta: {
     title: '加载组件'
+  }
+}, {
+  path: 'capture',
+  component: () => import('../component/page/Component/other/Capture/Capture'),
+  meta: {
+    title: '拍照组件'
+  }
+}, {
+  path: 'img',
+  component: () => import('../component/page/Component/data/Img/Img'),
+  meta: {
+    title: '图像组件'
   }
 }, {
   path: 'motion',

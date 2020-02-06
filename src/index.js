@@ -1,28 +1,33 @@
+import './lib/directive/directive.js'
+import './scss/transition.scss'
+import './scss/common/main.scss'
+import './scss/util.scss'
+import './scss/grid.scss'
+
+import { set as setConfig } from './config'
+
+import alert from './component/Modal/alert'
+import confirm from './component/Modal/confirm'
+import tip from './component/Message/tip'
+import toast from './component/Message/toast'
+import tooltip from './component/Bubble/tooltip'
+
 import Btn from './component/Btn/Btn'
 import Check from './component/Check/Check'
 import Form from './component/Form/Form'
 import Input from './component/Input/Input'
 import Icon from './component/Icon/Icon'
+import Img from './component/Img/Img'
+import Upload from './component/Upload/Upload'
 
 import Bubble from './component/Bubble/Bubble'
 import Modal from './component/Modal/Modal'
 import Pop from './component/Pop/Pop'
 import Message from './component/Message/Message'
 
-import Code from './component/Code/Code'
-import Loading from './component/Loading/Loading'
-import Nav from './component/Nav/Nav'
-
-import Omit from './component/Omit/Omit'
-import Page from './component/Page/Page'
-import Scroller from './component/Scroller/Scroller'
-import Search from './component/Search/Search'
-
 import Fold from './component/Fold/Fold'
 import FoldTitle from './component/Fold/FoldTitle'
 import FoldContent from './component/Fold/FoldContent'
-
-import List from './component/List/List'
 
 import Table from './component/Table/Table'
 import TableRow from './component/Table/TableRow'
@@ -43,6 +48,17 @@ import TabEle from './component/Tab/TabEle'
 import Col from './component/Col/Col'
 import Row from './component/Row/Row'
 
+import Capture from './component/Capture/Capture'
+import Code from './component/Code/Code'
+import Crop from './component/Crop/Crop'
+import Loading from './component/Loading/Loading'
+import List from './component/List/List'
+import Nav from './component/Nav/Nav'
+import Omit from './component/Omit/Omit'
+import Page from './component/Page/Page'
+import Scroller from './component/Scroller/Scroller'
+import Search from './component/Search/Search'
+
 import MotionFade from './component/MotionFade/MotionFade'
 import MotionFold from './component/MotionFold/MotionFold'
 import MotionRip from './component/MotionRip/MotionRip'
@@ -52,14 +68,17 @@ import MotionZoom from './component/MotionZoom/MotionZoom'
 const compHub = [
   Btn,
   Bubble,
+  Capture,
   Check,
   Code,
+  Crop,
   Form,
   Fold,
   FoldTitle,
   FoldContent,
-  Input,
   Icon,
+  Img,
+  Input,
   List,
   Loading,
   Omit,
@@ -87,7 +106,8 @@ const compHub = [
   Row,
   Table,
   TableRow,
-  TableCol
+  TableCol,
+  Upload
 ]
 
 const install = (Vue, {
@@ -106,6 +126,55 @@ const install = (Vue, {
 }
 
 export {
+  alert,
+  confirm,
+  tip,
+  toast,
+  tooltip,
+
+  Bubble,
+  Btn,
+  Capture,
+  Check,
+  Col,
+  Crop,
+  Form,
+  FoldTitle,
+  FoldContent,
+  Input,
+  Icon,
+  Loading,
+  List,
+  Message,
+  Menu,
+  MenuEle,
+  Modal,
+  Nav,
+  Omit,
+  Page,
+  Pop,
+  Fold,
+  Row,
+  Scroller,
+  Search,
+  Select,
+  SelectEle,
+  Shift,
+  ShiftEle,
+  Tab,
+  TabEle,
+  Table,
+  TableCol,
+  TableRow,
+  Upload,
+
+  MotionFade,
+  MotionFold,
+  MotionRip,
+  MotionSlide,
+  MotionZoom,
+
+  setConfig as set,
   install
 }
 

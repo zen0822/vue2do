@@ -18,7 +18,6 @@ import baseMixin from '../../mixin/base'
 import render from './Loading.render'
 
 const TYPE_ROTATE = 'rotate'
-const TYPE_ROTATE_2 = 'rotate2'
 const TYPE_SPOT = 'spot'
 
 export default {
@@ -92,7 +91,7 @@ export default {
      * 显示
      * @return {Object} this - 组件
      */
-    show(cb) {
+    show() {
       this.stateDisplay = true
 
       return this
@@ -120,7 +119,7 @@ export default {
     },
 
     clearTimeout() {
-      let timeout = this.timeout
+      const timeout = this.timeout
       if (timeout) {
         window.clearTimeout(timeout)
         this.timeout = null

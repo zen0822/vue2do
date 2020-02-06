@@ -8,31 +8,33 @@ import { Watch } from 'vue-property-decorator'
 import MixinPageComponent from '../Component/MixinPageComponent'
 
 @Component({
-  apollo: {
-    links: {
-      query: gql`{
-        links {
-          id,
-          url
-        }
-      }`,
-      prefetch: ({ route }) => ({ id: route.params.id }),
-      variables() {
-        return {
-          id: this.$route.params.id
-        }
-      }
-    }
-  }
+  // apollo: {
+  //   links: {
+  //     query: gql`{
+  //       links {
+  //         id,
+  //         url
+  //       }
+  //     }`,
+  //     prefetch: ({ route }) => ({ id: route.params.id }),
+  //     variables() {
+  //       return {
+  //         id: this.$route.params.id
+  //       }
+  //     }
+  //   }
+  // }
 })
 
 /**
  * 声明业务组件 PageMock 并且继承（混入）MixinPageComponent 类
  */
 class PageMock extends mixins(MixinPageComponent) {
-  articleId: string = ''
-  testData: string = ''
+  articleId = ''
+  testData = ''
   links: Array<object> = []
+  $apollo: any
+  $route: any
 
   /**
    * 监听 links 状态变量
@@ -40,15 +42,11 @@ class PageMock extends mixins(MixinPageComponent) {
    * @param val
    */
   @Watch('links')
-  onLinksChanged(val: Array<object>) {
+  onLinksChanged(val: Array<object>): any {
     console.log(val)
   }
 
-  constructor() {
-    super()
-  }
-
-  text() {
+  text(): any {
     return this.testData
   }
 
@@ -67,14 +65,14 @@ class PageMock extends mixins(MixinPageComponent) {
   /**
    * 获取所有 Link
    */
-  queryLinks() {
+  queryLinks(): any {
     return this.$apollo.queries.links.refetch()
   }
 
   /**
    * 添加 link
    */
-  async addLink() {
+  async addLink(): Promise<any> {
     this.$apollo.mutate({
       mutation: gql`
           mutation ($msg: String!, $description: String!) {
@@ -97,7 +95,7 @@ class PageMock extends mixins(MixinPageComponent) {
   /**
    * 组件安装完成之后执行的函数
    */
-  mounted() {
+  mounted(): any {
     this.articleId = this.$route.params.id
   }
 
@@ -106,17 +104,18 @@ class PageMock extends mixins(MixinPageComponent) {
    *
    * @param h
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   render(h: CreateElement): VNode {
     return (
       <div class='p-mock-p'>
         <z-btn
           class='z-css-m-r'
-          onClick={() => this.addLink()}
+          onClick={(): any => this.addLink()}
         >增加 link</z-btn>
 
         <z-btn
           theme='success'
-          onClick={() => this.queryLinks()}
+          onClick={(): any => this.queryLinks()}
         >获取 link</z-btn>
 
         <ol>

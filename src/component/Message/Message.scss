@@ -1,13 +1,13 @@
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 /**
  * pop 组件样式
  */
 
-$C_PREFIX: #{ $COMP_MESSAGE };
+$C_PREFIX: #{$COMP_MESSAGE};
 
 .#{$C_PREFIX} {
   position: absolute;
@@ -21,5 +21,15 @@ $C_PREFIX: #{ $COMP_MESSAGE };
     box-shadow: $shadow;
     padding: $gap-v-triple / 2;
     border-radius: $border-radius;
+  }
+
+  &-align {
+    &-center {
+      text-align: center;
+    }
+
+    &-right {
+      text-align: right;
+    }
   }
 }

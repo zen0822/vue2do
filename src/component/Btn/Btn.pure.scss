@@ -1,0 +1,103 @@
+/**
+ * btn 组件的 bootstrap UI 样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_BTN};
+
+@mixin btn-button($color, $dark-color) {
+  background-color: $color;
+}
+
+@mixin btn-outline($color, $font-color: #fff) {
+}
+
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-button($type-color, $type-color-dark);
+    }
+  }
+
+  &.#{$C_PREFIX}-type-outline {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-outline($type-color);
+    }
+  }
+
+  &.#{$C_PREFIX}-disabled {
+    & > .#{$C_PREFIX}-ele {
+      background-color: $type-color-light;
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-pure {
+  &:focus {
+    outline: none;
+  }
+
+  &.#{$C_PREFIX}-type-button,
+  &.#{$C_PREFIX}-type-float {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-button($color-primary, $color-primary-dark);
+    }
+  }
+
+  &.#{$C_PREFIX}-type-outline {
+    & > .#{$C_PREFIX}-ele {
+      @include btn-outline($color-primary);
+    }
+  }
+
+  &.#{$C_PREFIX}-disabled {
+    & > .#{$C_PREFIX}-ele {
+      background-color: $color-primary-light;
+      color: #fff;
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}

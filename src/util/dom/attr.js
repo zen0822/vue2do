@@ -4,7 +4,7 @@ const addClass = (el, classHub) => {
     return false
   }
 
-  let localClass = el.className.split(' ')
+  const localClass = el.className.split(' ')
   let classSet
 
   if (Array.isArray(classHub)) {
@@ -22,7 +22,7 @@ const delClass = (el, classHub) => {
     return false
   }
 
-  let localClass = new Set(el.className.split(' '))
+  const localClass = new Set(el.className.split(' '))
   let classSet
 
   if (Array.isArray(classHub)) {
@@ -41,7 +41,7 @@ const delClass = (el, classHub) => {
 }
 
 const childrenHeight = (el) => {
-  let children = el.children
+  const children = el.children
   let totalHeight = 0
 
   for (let i = 0, len = children.length; i < len; i++) {

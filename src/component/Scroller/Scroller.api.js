@@ -16,7 +16,7 @@ export default {
       evt.stopPropagation()
     },
 
-    yBarMouseDown(evt) {
+    yBarMouseDown() {
       this.yData.isMousedown = true
 
       this.pointStart = {
@@ -25,7 +25,7 @@ export default {
       }
     },
 
-    xBarMouseDown(evt) {
+    xBarMouseDown() {
       this.xData.isMousedown = true
 
       this.pointStart = {
@@ -41,8 +41,8 @@ export default {
 
       evt.preventDefault()
 
-      let type = this.yData.isMousedown ? 'y' : 'x'
-      let distance = evt[`client${type.toUpperCase()}`] - this.pointStart[type]
+      const type = this.yData.isMousedown ? 'y' : 'x'
+      const distance = evt[`client${type.toUpperCase()}`] - this.pointStart[type]
 
       this._boxAndBarScroll({
         type,
@@ -65,11 +65,11 @@ export default {
       this.xData.isMousedown = false
     },
 
-    scrollerMouseenter(evt) {
+    scrollerMouseenter() {
       this.showBar = true
     },
 
-    scrollerMouseleave(evt) {
+    scrollerMouseleave() {
       this.showBar = false
     },
 
@@ -131,8 +131,8 @@ export default {
         return false
       }
 
-      let yDistance = this.touchStart.y - evt.touches[0].clientY
-      let xDistance = this.touchStart.x - evt.touches[0].clientX
+      const yDistance = this.touchStart.y - evt.touches[0].clientY
+      const xDistance = this.touchStart.x - evt.touches[0].clientX
 
       if (!this.yData.scrollerContainBox) {
         this._boxAndBarScroll({
@@ -173,7 +173,7 @@ export default {
       }
     },
 
-    scrollerTouchEnd(evt) {
+    scrollerTouchEnd() {
       this.showBar = false
       this.isTouchStart = false
       this.moving = false
@@ -183,7 +183,7 @@ export default {
      * 触发滚动条滚动事件
      */
     triggerScroll(type) {
-      let eventName = type === 'y' ? 'scrollY' : 'scrollX'
+      const eventName = type === 'y' ? 'scrollY' : 'scrollX'
 
       return this.$nextTick(() => {
         this.$emit(eventName, {
@@ -334,7 +334,7 @@ export default {
 
       top = Number(top)
 
-      let length = this.boxTop - (-top)
+      const length = this.boxTop - (-top)
 
       this.triggerScroll('y')
 
@@ -356,7 +356,7 @@ export default {
 
       left = Number(left)
 
-      let length = this.boxLeft - (-left)
+      const length = this.boxLeft - (-left)
 
       this.triggerScroll('x')
 

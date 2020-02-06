@@ -3,10 +3,8 @@
  */
 
 const bootstrapCheck = function (h, {
-  className = '',
   checked = false,
-  indeterminate = false,
-  multiple = false
+  indeterminate = false
 } = {}) {
   return h('div', {
     class: [this.xclass('icon')]
@@ -22,11 +20,10 @@ const bootstrapCheck = function (h, {
 }
 
 const materialCheck = function (h, {
-  className = '',
   multiple = false,
   ripRefName = ''
 } = {}) {
-  let iconBoxEle = [
+  const iconBoxEle = [
     h('div', {
       class: [this.xclass('icon-box-rail')]
     })
@@ -134,13 +131,13 @@ const checkAllEle = function (h) {
 }
 
 export default function (h) {
-  let RowChildren = []
+  const RowChildren = []
 
   if (!Array.isArray(this.stateOption) || this.stateOption.length === 0) {
     return false
   }
 
-  let checkEle = []
+  const checkEle = []
 
   this.stateOption.forEach((item, index) => {
     const addBoxStyle = this.stateOption.length > 1

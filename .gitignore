@@ -2,6 +2,7 @@
 *.log
 
 .vscode
+.yarn
 node_modules
 zen0822.github.io
 

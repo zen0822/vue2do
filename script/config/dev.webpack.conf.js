@@ -14,25 +14,21 @@ module.exports = function (opt = {}) {
     appName
   })
 
-  const port = process.env.PORT || config.dev.hotPort
   const globalRoot = config.global.root
   const swPath = path.resolve(__dirname, `${globalRoot}/${appName}/dist/sw/sw.js`)
 
   const baseWebpackConfig = require('./base.webpack.conf')({
     appName,
-    disableExtractScss: true
+    extractScss: false
   })
 
   const template = config.tpl ?
     path.resolve(__dirname, `${globalRoot}/${appName}/index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
-  let newEntry = {
+  const newEntry = {
     ...baseWebpackConfig.entry,
-    app: baseWebpackConfig.entry.app.slice().concat([
-      `webpack-dev-server/client?http://localhost:${port}/`,
-      'webpack/hot/dev-server'
-    ])
+    app: baseWebpackConfig.entry.app.slice()
   }
 
   delete baseWebpackConfig.entry
@@ -80,17 +76,19 @@ module.exports = function (opt = {}) {
     ]
   })
 
-  try {
-    fs.accessSync(swPath, fs.constants.F_OK)
+  if (process.env.SW_ENV === 'development') {
+    try {
+      fs.accessSync(swPath, fs.constants.F_OK)
 
-    devConf.plugins.push(
-      new WorkboxPlugin.InjectManifest({
-        swSrc: swPath,
-        importWorkboxFrom: 'disabled'
-      })
-    )
-  } catch (error) {
-    console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run mock 生成对应文件。\n`)
+      devConf.plugins.push(
+        new WorkboxPlugin.InjectManifest({
+          swSrc: swPath,
+          importWorkboxFrom: 'disabled'
+        })
+      )
+    } catch (error) {
+      console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
+    }
   }
 
   return devConf

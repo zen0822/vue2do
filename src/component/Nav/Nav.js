@@ -30,8 +30,6 @@ import Icon from '../Icon/Icon'
 import Row from '../Row/Row'
 import Col from '../Col/Col'
 
-const layoutType = ['grid', 'flex', 'flow']
-
 export default {
   name: 'Nav',
 
@@ -129,7 +127,7 @@ export default {
     },
 
     show() {
-      let transitionRef = this.$refs.motion
+      const transitionRef = this.$refs.motion
 
       this.isActive = true
 
@@ -137,7 +135,7 @@ export default {
         // TODO: 离开时 height 还是等于零如果这时候取值就会是不正确的
         // 所以要先置为空
         transitionRef.$el.style.height = ''
-        let transitionHeight = this.elementProp(transitionRef.$el).offsetHeight
+        const transitionHeight = this.elementProp(transitionRef.$el).offsetHeight
         transitionRef.setHeight(transitionHeight)
       }
 

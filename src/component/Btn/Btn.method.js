@@ -24,7 +24,7 @@ export default {
     /**
      * 关闭按钮等待功能
      */
-    closeLoading(state) {
+    closeLoading() {
       this._allowBtn()
       this.$refs.loading.hide()
     }

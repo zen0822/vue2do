@@ -2,14 +2,14 @@
  * tab 组件的 material UI 样式
  */
 
-@import "../../scss/name.scss";
-@import "../../scss/config.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/name.scss';
+@import '../../scss/config.scss';
+@import '../../scss/mixin.scss';
 
 $C_PREFIX: #{$COMP_TAB};
-$C_ELE_PREFIX: #{ $COMP_TAB_ELE };
-$C_SHIFT_PREFIX: #{ $COMP_SHIFT };
-$C_BTN_PREFIX: #{ $COMP_BTN };
+$C_ELE_PREFIX: #{$COMP_TAB_ELE};
+$C_SHIFT_PREFIX: #{$COMP_SHIFT};
+$C_BTN_PREFIX: #{$COMP_BTN};
 
 @mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
   .#{$C_PREFIX}-bar {

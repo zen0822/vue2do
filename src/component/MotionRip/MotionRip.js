@@ -89,7 +89,7 @@ export default {
     } = {}) {
       this.$emit('beforeEnter')
 
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         'display': 'none'
@@ -106,16 +106,16 @@ export default {
       if (this.assign) {
         addClass(el, this.prefix('motion-rip-assign'))
 
-        let $spot = el.firstChild
+        const $spot = el.firstChild
 
         Object.assign(el.style, {
           'visibility': 'hidden',
           'display': ''
         })
 
-        let spotComputedStyle = getComputedStyle($spot)
-        let spotW = parseFloat(spotComputedStyle.width)
-        let spotH = parseFloat(spotComputedStyle.height)
+        const spotComputedStyle = getComputedStyle($spot)
+        const spotW = parseFloat(spotComputedStyle.width)
+        const spotH = parseFloat(spotComputedStyle.height)
 
         Object.assign(el.style, {
           'visibility': '',
@@ -127,35 +127,45 @@ export default {
       }
 
       // HACK: trigger browser reflow
-      let height = el.offsetHeight
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          code === this.code && (el.style.display = '')
+        try {
+          setTimeout(() => {
+            code === this.code && (el.style.display = '')
 
-          return resolve()
-        })
+            return resolve()
+          })
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
-    entering(opt = {}) {
-      let el = this.$el
+    entering() {
+      const el = this.$el
       // HACK: trigger browser reflow
-      let height = el.offsetHeight
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       this.$emit('entering')
 
       addClass(el, this.prefix('motion-rip-active'))
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          return resolve()
-        }, this.time)
+        try {
+          setTimeout(() => {
+            return resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
-    afterEnter(opt = {}) {
-      let el = this.$el
+    afterEnter() {
+      const el = this.$el
 
       addClass(el, this.prefix('motion-rip-after'))
 
@@ -164,16 +174,21 @@ export default {
       ])
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          el.style.display = 'none'
+        try {
+          setTimeout(() => {
+            el.style.display = 'none'
 
-          return this.$emit('afterEnter')
-        }, this.time)
+            this.$emit('afterEnter')
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     }
   },
 
-  render(h, context) {
+  render(h) {
     return h('transition', [
       h('div', {
         class: [

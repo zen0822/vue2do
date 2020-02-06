@@ -72,22 +72,22 @@ const Fold = {
     spreadAll() {
       this._initFold()
     },
-    only(val) {
+    only() {
       this._initFold()
     }
   },
 
   methods: {
     _initFold() {
-      let foldChildren = []
-      let foldData = []
+      const foldChildren = []
+      const foldData = []
 
-      this.$slotKey.forEach((item, index) => {
+      this.$slotKey.forEach((item) => {
         if (item === 'default') {
           return false
         }
 
-        let contentIndex = Number(item.split('-')[1]) - 1
+        const contentIndex = Number(item.split('-')[1]) - 1
 
         if (foldChildren[contentIndex] === undefined) {
           foldChildren[contentIndex] = {}
@@ -141,8 +141,8 @@ const Fold = {
     clickTitle(evt, currentIndex) {
       evt.stopPropagation()
 
-      let currentData = this.foldData[currentIndex - 1]
-      let folding = currentData.folding
+      const currentData = this.foldData[currentIndex - 1]
+      const folding = currentData.folding
 
       if (this.currentIndex !== currentIndex) {
         this.preIndex = this.currentIndex
@@ -174,8 +174,7 @@ const Fold = {
      * @param {Boolean} fold - true 为折叠 false 为展开
      */
     switch (currentIndex, fold = true) {
-      let currentData = this.foldData[currentIndex - 1]
-      let $transition = this.$refs[`transition${currentIndex}`]
+      const $transition = this.$refs[`transition${currentIndex}`]
 
       if (!$transition) {
         return false
@@ -183,7 +182,7 @@ const Fold = {
 
       $transition.$el.style.height = ''
       $transition.$el.style.width = ''
-      let transitionHeight = this.elementProp($transition.$el).offsetHeight
+      const transitionHeight = this.elementProp($transition.$el).offsetHeight
       $transition.setHeight(transitionHeight)
 
       if (fold) {

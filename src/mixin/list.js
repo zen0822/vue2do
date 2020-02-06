@@ -7,7 +7,6 @@ import loadingComp from '../component/Loading/Loading'
 import pageComp from '../component/Page/Page'
 
 const PAGE_TYPE_NUM = 'num'
-const PAGE_TYPE_MORE = 'more'
 
 export default {
   components: {

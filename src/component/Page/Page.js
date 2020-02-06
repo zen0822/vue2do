@@ -132,7 +132,7 @@ const pageComp = {
 
       let pageStart = 1
       let pageEnd = pageData.total
-      let pageItem = []
+      const pageItem = []
 
       if (pageData.total >= 11) {
         if (pageData.current > 5 && pageData.current < pageData.total - 4) {

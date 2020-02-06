@@ -9,7 +9,7 @@ import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
 
 let confirming = false
-let confirmHub = []
+const confirmHub = []
 
 /**
  * 创建 confirm 组件的实例
@@ -98,8 +98,6 @@ const confirm = (opt = '') => {
     .show(() => {})
 }
 
-window.addEventListener('load', () => {
-  createConfirm()
-})
+createConfirm()
 
 export default confirm

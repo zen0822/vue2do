@@ -2,12 +2,12 @@
  * input bootstrap UI 组件样式
  */
 
-@import "../../scss/config.scss";
-@import "../../scss/extend.scss";
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
-$C_PREFIX: #{ $COMP_INPUT };
+$C_PREFIX: #{$COMP_INPUT};
 
 .#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
   & > .#{$C_PREFIX}-wrap {
@@ -19,12 +19,12 @@ $C_PREFIX: #{ $COMP_INPUT };
 
     &.#{$C_PREFIX}-editting {
       border-color: $color-blue;
-      box-shadow: 0 0 0 4px rgba($color-blue, .3);
+      box-shadow: 0 0 0 4px rgba($color-blue, 0.3);
     }
 
     &.#{$C_PREFIX}-error-border {
       border-color: $color-danger;
-      box-shadow: 0 0 0 4px rgba($color-danger, .3);
+      box-shadow: 0 0 0 4px rgba($color-danger, 0.3);
     }
 
     .#{$C_PREFIX}-edit-box {

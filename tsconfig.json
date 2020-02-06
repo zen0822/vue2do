@@ -1,16 +1,18 @@
 {
   "include": [
     "global.d.ts",
+    "index.d.ts",
+    "src/**/*",
     "example/client/**/*",
     "example/server/gql/**/*",
     "script/gql.ts"
   ],
   "exclude": [
     "node_modules",
-    "example/.mockrc.js"
+    "example/mock.config.js"
   ],
   "files": [
-    "example/.apprc.js"
+    "example/app.config.js"
   ],
   "compilerOptions": {
     "allowJs": true,

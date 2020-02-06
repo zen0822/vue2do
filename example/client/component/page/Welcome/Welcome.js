@@ -1,7 +1,6 @@
 import './Welcome.scss'
 import pug from './Welcome.pug'
 import mixin from '../Component/mixin'
-import { alert, confirm } from 'vue2do/index.js'
 
 export default {
   name: 'PageWelcome',

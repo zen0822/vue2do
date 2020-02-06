@@ -1,11 +1,11 @@
 import db from './mock.db'
-import mockrc from '../../.mockrc.js'
+import mockrc from '../../mock.config.js'
 
 importScripts('https://zen0822.github.io/lib/workbox/workbox-sw.js')
 
 workbox.setConfig({
   modulePathPrefix: 'https://zen0822.github.io/lib/workbox',
-  debug: process.env.NODE_ENV === 'development'
+  debug: process.env.SW_DEBUG === 'true'
 })
 
 const {
@@ -37,8 +37,8 @@ class ServiceWorkerMain {
 
   private async init() {
     workboxRouting.registerRoute(
-      new RegExp('http://localhost:5168/#/'),
-      process.env.NODE_ENV === 'development'
+      new RegExp('https://localhost/#/'),
+      process.env.SW_ENV === 'development'
         ? new workboxStrategies.NetworkFirst()
         : new workboxStrategies.StaleWhileRevalidate()
     )

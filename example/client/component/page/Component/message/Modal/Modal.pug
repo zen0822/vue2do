@@ -11,7 +11,9 @@ div.component-modal
       z-modal(
         :ui='typeUI'
         :theme='typeTheme'
-        ref='simple'
+        ref='simple',
+        motion='none'
+        hideLayover
       )
         p 这是一个简单
         p 的小弹窗
@@ -19,7 +21,7 @@ div.component-modal
         #{'<z-btn @click="simple">'}
           确认
         #{'</z-btn>'}
-        #{'<z-modal ref="simple">'}
+        #{'<z-modal ref="simple" motion="none" hideLayover>'}
           #{'<p> 这是一个简单</p>'}
           #{'<p> 的小弹窗</p>'}
         #{'</z-modal>'}
@@ -64,6 +66,32 @@ div.component-modal
         #{'<z-modal header-name="custom" ref="modal">'}
           #{'<p>custom</p>'}
         #{'</z-modal>'}
+    +section('start', '纯净级别的弹窗')
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='showPureModal'
+      ) 显示弹出层
+      z-btn(
+        :ui='typeUI'
+        :theme='typeTheme'
+        @click='hidePureModal'
+        class='z-css-m-l'
+      ) 隐藏弹出层
+      z-modal(ref='pureModal' ui='pure')
+        div(
+          style={
+            background: '#000'
+          }
+        ) 这是一个纯净的弹窗
+      z-code(:theme='typeTheme').
+        #{'<z-btn @click="simple">'}
+          确认
+        #{'</z-btn>'}
+        #{'<z-pop ref="pop" direction="north" position="left">'}
+          #{'<p> 这是一个简单</p>'}
+          #{'<p> 的小弹窗</p>'}
+        #{'</z-pop>'}
 
     +section('props', 'props 数据类型')
       z-table(

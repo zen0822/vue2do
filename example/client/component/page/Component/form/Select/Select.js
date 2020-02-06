@@ -45,7 +45,7 @@ export default {
   },
 
   created() {
-    let testOpt = []
+    const testOpt = []
 
     for (let i = 0, len = 13; i < len; i++) {
       testOpt.push({

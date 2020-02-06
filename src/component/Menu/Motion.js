@@ -7,11 +7,6 @@
  */
 
 import {
-  addClass,
-  delClass
-} from '../../util/dom/attr'
-
-import {
   prop as elementProp
 } from '../../util/dom/prop'
 
@@ -61,10 +56,10 @@ export default {
      * 重新调整菜单的动画
      */
     adjustMotion() {
-      return new Promise(async(resolve, reject) => {
+      return new Promise((resolve, reject) => {
         try {
           this.$emit('beforeEnter')
-          let el = this.$el
+          const el = this.$el
 
           Object.assign(el.style, {
             overflow: 'hidden',
@@ -105,7 +100,7 @@ export default {
 
     beforeEnter() {
       this.$emit('beforeEnter')
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         height: 0,
@@ -116,18 +111,23 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          el.style.visibility = ''
+        try {
+          setTimeout(() => {
+            el.style.visibility = ''
 
-          return resolve()
-        }, 10)
+            resolve()
+          }, 10)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     entering() {
-      let el = this.$el
+      const el = this.$el
       // HACK: trigger browser reflow
-      let height = el.offsetHeight
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       Object.assign(el.style, {
         height: `${this.transitionHeight}px`,
@@ -138,14 +138,18 @@ export default {
       this.$emit('entering')
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          return resolve()
-        }, this.time)
+        try {
+          setTimeout(() => {
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterEnter() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         overflow: '',
@@ -158,7 +162,7 @@ export default {
     },
 
     beforeLeave() {
-      let el = this.$el
+      const el = this.$el
 
       this.$emit('beforeLeave')
 
@@ -176,8 +180,9 @@ export default {
     },
 
     leaveing() {
-      let el = this.$el
-      let height = el.offsetHeight
+      const el = this.$el
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const height = el.offsetHeight
 
       this.$emit('leaving')
 
@@ -187,14 +192,18 @@ export default {
       })
 
       return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          return resolve()
-        }, this.time)
+        try {
+          setTimeout(() => {
+            resolve()
+          }, this.time)
+        } catch (error) {
+          reject(error)
+        }
       })
     },
 
     afterLeave() {
-      let el = this.$el
+      const el = this.$el
 
       Object.assign(el.style, {
         overflow: '',

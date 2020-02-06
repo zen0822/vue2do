@@ -26,9 +26,6 @@ import loadingComp from '../Loading/Loading'
 
 import baseMixin from '../../mixin/base'
 import listMixin from '../../mixin/list'
-import tip from '../Message/tip'
-
-const COL_PADDING_BORDER_LENGTH = 22
 
 const Table = {
   name: 'Table',

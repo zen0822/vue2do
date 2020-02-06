@@ -2,7 +2,7 @@
  * menu.render.js
  */
 export default function (h) {
-  let children = []
+  const children = []
   const panelChildren = [
     h('scroller', {
       props: {

@@ -1,6 +1,7 @@
 /**
  * message 提示组件
  *
+ * @prop align - 信息的两边对齐方式 （left, center, right)
  * @prop message - 信息
  * @prop direction - 信息出现方向
  * @prop position - 信息展示的位置
@@ -33,6 +34,12 @@ const messageComp = {
 
   mixins: [baseMixin],
 
+  watch: {
+    'align'(val) {
+      this.stateAlign = val
+    }
+  },
+
   components: {
     pop: Pop
   },
@@ -55,6 +62,10 @@ const messageComp = {
   },
 
   props: {
+    align: {
+      type: String,
+      default: 'left'
+    },
     type: {
       type: String,
       default: 'pop'
@@ -81,7 +92,8 @@ const messageComp = {
 
   data: () => {
     return {
-      infoMessage: '', // 需要展示的信息
+      stateAlign: 'left',
+      stateMessage: '', // 需要展示的信息
       messageType: '', // 信息类型
       messageDisplay: false,
       hideCb: null
@@ -102,7 +114,8 @@ const messageComp = {
      * 设置数据
      */
     _setDataOpt() {
-      this.infoMessage = this.message
+      this.stateMessage = this.message
+      this.stateAlign = this.align
     },
 
     /**
@@ -165,7 +178,7 @@ const messageComp = {
      */
     info(text) {
       if (text === '' || text) {
-        this.infoMessage = text
+        this.stateMessage = text
       }
 
       return this
@@ -182,11 +195,13 @@ const messageComp = {
     set({
       hideCb,
       type = 'pop',
-      message = ''
+      message = '',
+      align
     } = {}) {
-      this.infoMessage = message
+      this.stateMessage = message
       this.hideCb = hideCb
       this.messageType = type
+      align && (this.stateAlign = align)
 
       return this
     }

@@ -1,7 +1,6 @@
 import './Build.scss'
 import pug from './Build.pug'
 import mixin from '../Component/mixin'
-import { alert, confirm } from 'vue2do/index.js'
 
 export default {
   name: 'PageBuild',

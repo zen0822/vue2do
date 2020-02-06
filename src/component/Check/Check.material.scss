@@ -2,8 +2,8 @@
  * check 组件的 material UI 样式
  */
 
-@import "../../scss/name.scss";
-@import "../../scss/mixin.scss";
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
 
 $C_PREFIX: #{$COMP_CHECK};
 $C_ICON_PREFIX: #{$COMP_ICON};
@@ -14,12 +14,12 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
   .#{$C_PREFIX}-indeterminate {
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($type-color, .2);
+        background-color: rgba($type-color, 0.2);
       }
     }
 
     .#{$C_PREFIX}-motion-rip::after {
-      background-color: rgba($type-color, .3);
+      background-color: rgba($type-color, 0.3);
     }
 
     .#{$C_PREFIX}-icon-box {
@@ -96,7 +96,7 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
 
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($grey, .2);
+        background-color: rgba($grey, 0.2);
       }
     }
   }
@@ -185,12 +185,12 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
   .#{$C_PREFIX}-indeterminate {
     .#{$C_PREFIX}-rip {
       & > .#{$C_MOTION_RIP_PREFIX}-spot {
-        background-color: rgba($color-primary, .2);
+        background-color: rgba($color-primary, 0.2);
       }
     }
 
     .#{$C_PREFIX}-motion-rip::after {
-      background-color: rgba($color-primary, .3);
+      background-color: rgba($color-primary, 0.3);
     }
 
     .#{$C_PREFIX}-icon-box {
@@ -254,9 +254,9 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     left: 0;
 
     &:after {
-      content: "";
+      content: '';
       position: absolute;
-      background-color: rgba($grey, .3);
+      background-color: rgba($grey, 0.3);
       top: 50%;
       left: 50%;
       width: 200%;
@@ -269,15 +269,15 @@ $C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
     @keyframes #{$C_PREFIX}-motion-rip {
       0% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: .6;
+        opacity: 0.6;
       }
       50% {
-        transform: translate(-50%, -50%) scale(.8);
+        transform: translate(-50%, -50%) scale(0.8);
         opacity: 1;
       }
       100% {
         transform: translate(-50%, -50%) scale(1);
-        opacity: .6;
+        opacity: 0.6;
       }
     }
   }

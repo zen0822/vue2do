@@ -78,11 +78,6 @@ export default {
         return false
       }
 
-      let $this = this.$el.querySelector('.' + this.xclass('pop'))
-      let styleHub = getComputedStyle($this)
-      let top = parseFloat(styleHub.top, 10)
-      let left = parseFloat(styleHub.left, 10)
-
       this.$refs.pop.computePosition()
 
       this.pointStart = {

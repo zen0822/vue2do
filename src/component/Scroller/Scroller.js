@@ -39,10 +39,6 @@ import apiMixin from './Scroller.api'
 import render from './Scroller.render.js'
 import keyCode from '../../config/keyCode.json'
 
-import {
-  offset as propOffset
-} from '../../util/dom/prop'
-
 import MotionFade from '../MotionFade/MotionFade'
 
 // 滚动一次的滚动区域走的像素大小
@@ -190,10 +186,10 @@ export default {
   },
 
   watch: {
-    barTop(val) {
+    barTop() {
       this.triggerScroll('y')
     },
-    barLeft(val) {
+    barLeft() {
       this.triggerScroll('x')
     },
     yComputed(val) {
@@ -322,10 +318,9 @@ export default {
       scrollerLength,
       length
     }) {
-      const $el = this.$el
       let scrollerContainBox = false // 滚动区域是否大过滚动内容
-      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
-      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
+      const barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
+      const boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
 
       if (length === '100%') {
         // 父元素大于滚动内容
@@ -368,13 +363,13 @@ export default {
       scrollerLength,
       scrollerContainBox
     }) {
-      let barName = type + 'Data' // 滚动条数据的名字
+      const barName = type + 'Data' // 滚动条数据的名字
       let boxBarRate = 0 // 滚动内容和滚动条的比
       let barLength = 0 // 滚动条的长度
       let boxAndScrollerOffset = 0 // 滚动内容和滚动区域的偏移值
       let barAndScrollerOffset = 0 // 滚动条和滚动区域的偏移值
-      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
-      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
+      // const barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}` // 滚动条位置名字
+      // const boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}` // 滚动内容位置名字
 
       boxBarRate = boxLength / scrollerLength
       barLength = scrollerLength / boxBarRate
@@ -415,19 +410,19 @@ export default {
       boxDistance,
       barDistance
     }) {
-      let barName = type + 'Data'
-      let barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
-      let boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
+      const barName = type + 'Data'
+      const barPositionName = `bar${type === 'y' ? 'Top' : 'Left'}`
+      const boxPositionName = `box${type === 'y' ? 'Top' : 'Left'}`
 
-      let barAndScrollerOffset = this[barName].barAndScrollerOffset
-      let boxAndScrollerOffset = this[barName].boxAndScrollerOffset
+      const barAndScrollerOffset = this[barName].barAndScrollerOffset
+      const boxAndScrollerOffset = this[barName].boxAndScrollerOffset
 
       // 调整内容区域和滚动条的位置
       this[boxPositionName] = this[boxPositionName] < -boxAndScrollerOffset ? -boxAndScrollerOffset : this[boxPositionName]
       this[barName][barPositionName] = this[barName].scrollerContainBox ? 0 : -this[boxPositionName] * barAndScrollerOffset / boxAndScrollerOffset
 
-      let boxPosition = this[boxPositionName] + boxDistance
-      let barPosition = this[barName][barPositionName] + barDistance
+      const boxPosition = this[boxPositionName] + boxDistance
+      const barPosition = this[barName][barPositionName] + barDistance
 
       if (boxDistance >= 0) {
         this[barName][barPositionName] = barPosition < 0 ? 0 : barPosition

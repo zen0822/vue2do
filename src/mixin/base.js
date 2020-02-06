@@ -12,6 +12,10 @@ import store from '../vuex/store'
 import commonStore from '../vuex/module/common/type.json'
 
 import {
+  computed
+} from '@vue/composition-api'
+
+import {
   prop as eleProp
 } from '../util/dom/prop'
 import {
@@ -20,6 +24,71 @@ import {
 import {
   debounce
 } from '../util'
+
+const props = {
+  id: [String, Number],
+  name: {
+    type: String,
+    default: ''
+  },
+  theme: {
+    type: String,
+    default: compConfig.defaultTheme,
+    validator(val) {
+      return [
+        'primary', 'grey', 'warning', 'success',
+        'danger', 'blue', 'orange', 'light', 'dark', 'white', 'black'
+      ].includes(val)
+    }
+  },
+  ui: {
+    type: String,
+    default: compConfig.defaultUI,
+    validator(val) {
+      return ['material', 'bootstrap', 'metro', 'apple', 'pure'].includes(val)
+    }
+  }
+}
+
+// computed
+const uiClass = (ui) => (
+  computed(() => ui.value ? `ui-${ui.value}` : '')
+)
+const themeClass = (theme) => (
+  computed(() => `theme-${theme.value}`)
+)
+const compClass = (uiClass, themeClass) => (
+  computed(() => [uiClass.value, themeClass.value])
+)
+const compPrefix = compConfig.prefix
+const deviceSize = (store) => store.getters[commonStore.deviceSize]
+const css4 = window.CSS && window.CSS.supports && window.CSS.supports('--a', 0)
+
+// methods
+const xclass = (cPrefix, className) => {
+  if (Array.isArray(className)) {
+    const classArr = className.map((item) => {
+      return `${cPrefix}-${item}`
+    })
+
+    return classArr.join(' ')
+  } else if (className === '' || className === undefined) {
+    return cPrefix
+  } else {
+    return `${cPrefix}-${className}`
+  }
+}
+
+export {
+  compClass,
+  compPrefix,
+  css4,
+  deviceSize,
+  props,
+  xclass,
+  uiClass,
+  themeClass
+}
 
 export default {
   store,
@@ -44,13 +113,13 @@ export default {
       type: String,
       default: compConfig.defaultUI,
       validator(val) {
-        return ['material', 'bootstrap', 'metro', 'apple'].includes(val)
+        return ['material', 'bootstrap', 'metro', 'apple', 'pure'].includes(val)
       }
     }
   },
 
   directives: {
-    'xclass' (el, binding) {
+    'xclass'(el, binding) {
       addClass(el, binding.value)
     }
   },
@@ -79,6 +148,9 @@ export default {
     },
     UIBootstrap() { // UI 是 bootstrap
       return this.ui === 'bootstrap'
+    },
+    UIPure() { // UI 是 pure
+      return this.ui === 'pure'
     }
   },
 
@@ -149,7 +221,7 @@ export default {
      **/
     xclass(className) {
       if (Array.isArray(className)) {
-        let classArr = className.map((item) => {
+        const classArr = className.map((item) => {
           return `${this.cPrefix}-${item}`
         })
 
@@ -173,7 +245,7 @@ export default {
         return false
       }
 
-      let option = []
+      const option = []
 
       $defaultSlotContent.forEach((item) => {
         if (!item.elm) {
@@ -182,13 +254,12 @@ export default {
 
         if (item.elm.className === opt.compClass) {
           const el = item.elm
-          const $el = $(el)
           const elAttr = el.attributes
           const attrKeys = Object.keys(elAttr)
-          let attrs = {}
+          const attrs = {}
 
           attrKeys.forEach((item) => {
-            let attr = elAttr[item]
+            const attr = elAttr[item]
 
             Object.assign(attrs, {
               [attr.name]: attr.value
@@ -218,17 +289,17 @@ export default {
       this._initComp()
     })
 
-    let deviceSizeClass = `${compConfig.prefix}-css-device-size`
+    const deviceSizeClass = `${compConfig.prefix}-css-device-size`
 
     if (document.getElementsByClassName(deviceSizeClass).length === 0) {
       if (!document.querySelector('.' + deviceSizeClass)) {
         // 添加存储设备尺寸的 dom 到页面上
-        let deviceSizeEle = document.createElement('div')
+        const deviceSizeEle = document.createElement('div')
         deviceSizeEle.className = deviceSizeClass
         document.body.appendChild(deviceSizeEle)
 
         const updateDeviceSize = () => {
-          let content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
+          const content = window.getComputedStyle(deviceSizeEle, ':after').getPropertyValue('content')
 
           this.$store.dispatch(commonStore.deviceSize, content)
         }

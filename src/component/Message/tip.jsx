@@ -9,7 +9,7 @@ import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
 
 let tiping = false
-let tipHub = []
+const tipHub = []
 
 /**
  * 创建 tip 组件的实例
@@ -19,7 +19,6 @@ const createTip = () => {
     name: 'tip',
     mixins: [baseMixin],
     computed: {
-      // 组件类名的前缀
       cPrefix() {
         return `${this.compPrefix}-tip`
       }
@@ -28,14 +27,12 @@ const createTip = () => {
       message: Message
     },
     store,
-    render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [
-        h('message', {
-          ref: 'tip'
-        })
-      ])
+    render() {
+      return (
+        <div class={[this.cPrefix]}>
+          <Message align='center' ref='tip' />
+        </div>
+      )
     },
     mounted() {
       this.$store.dispatch(commonStore.tip.add, this)
@@ -51,6 +48,10 @@ const commonVuex = new Vue({
 
 /**
  * 调用 tip
+ *
+ * @param {string, object} option -
+ *                                 message - 信息
+ *                                 align - 信息的两边对齐方式 （left, center, right)
  **/
 const tip = (opt = '') => {
   if (tiping) {
@@ -68,7 +69,10 @@ const tip = (opt = '') => {
       message: opt.toString()
     }
   } else {
-    option = opt
+    option = {
+      ...option,
+      ...opt
+    }
   }
 
   return commonVuex
@@ -79,6 +83,7 @@ const tip = (opt = '') => {
     .set({
       message: option.message,
       type: option.type,
+      align: option.align,
       hideCb: () => {
         tiping = false
         option.cb && option.cb()
@@ -91,8 +96,6 @@ const tip = (opt = '') => {
     .show()
 }
 
-window.addEventListener('load', () => {
-  createTip()
-})
+createTip()
 
 export default tip

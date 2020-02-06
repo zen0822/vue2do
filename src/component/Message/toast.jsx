@@ -10,7 +10,7 @@ import commonStore from '../../vuex/module/common/type.json'
 import baseMixin from '../../mixin/base'
 
 let toasting = false
-let toastHub = []
+const toastHub = []
 
 /**
  * 创建 toast 组件的实例
@@ -28,17 +28,12 @@ const createToast = () => {
       message: Message
     },
     store,
-    render(h) {
-      return h('div', {
-        class: [this.cPrefix]
-      }, [
-        h('message', {
-          props: {
-            position: 'bottom'
-          },
-          ref: 'toast'
-        })
-      ])
+    render() {
+      return (
+        <div class={[this.cPrefix]}>
+          <Message position='bottom' align='center' ref='toast' />
+        </div>
+      )
     },
     mounted() {
       this.$store.dispatch(commonStore.toast.add, this)
@@ -54,8 +49,12 @@ const commonVuex = new Vue({
 
 /**
  * 调用 toast
+ *
+ * @param {string, object} option -
+ *                                 message - 信息
+ *                                 align - 信息的两边对齐方式 （left, center, right)
  **/
-const toast = (opt = {}) => {
+const toast = (opt = '') => {
   if (toasting) {
     toastHub.push(opt)
 
@@ -71,7 +70,10 @@ const toast = (opt = {}) => {
       message: opt.toString()
     }
   } else {
-    option = opt
+    option = {
+      ...option,
+      ...opt
+    }
   }
 
   return commonVuex
@@ -82,6 +84,7 @@ const toast = (opt = {}) => {
     .set({
       message: option.message,
       type: option.type,
+      align: option.align,
       hideCb: () => {
         toasting = false
 
@@ -95,8 +98,6 @@ const toast = (opt = {}) => {
     .show()
 }
 
-window.addEventListener('load', () => {
-  createToast()
-})
+createToast()
 
 export default toast

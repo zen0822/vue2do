@@ -23,6 +23,10 @@
       {
         "name": "表单组件",
         "route": "/component/form"
+      },
+      {
+        "name": "上传组件",
+        "route": "/component/upload"
       }
     ]
   },
@@ -63,6 +67,10 @@
       {
         "name": "列表数据",
         "route": "/component/list"
+      },
+      {
+        "name": "图像组件",
+        "route": "/component/img"
       }
     ]
   },
@@ -141,6 +149,10 @@
       {
         "name": "菜单",
         "route": "/component/menu"
+      },
+      {
+        "name": "拍照",
+        "route": "/component/capture"
       }
     ]
   }

@@ -25,5 +25,5 @@ module.exports = {
       }
     ]
   }],
-  https: true
+  https: false
 }

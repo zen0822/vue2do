@@ -13,11 +13,11 @@ export default {
   },
 
   actions: {
-    [hubNameSpace.input.add]({ state, commit, rootState }, component) {
+    [hubNameSpace.input.add]({ commit }, component) {
       return commit(hubNameSpace.input.add, component)
     },
 
-    [hubNameSpace.select.add]({ state, commit, rootState }, component) {
+    [hubNameSpace.select.add]({ commit }, component) {
       return commit(hubNameSpace.select.add, component)
     }
   },

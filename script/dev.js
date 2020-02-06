@@ -22,21 +22,22 @@ module.exports = function ({
   const compiler = webpack(webpackConfig)
 
   console.log('')
-  console.log(`Starting frontend build server listening at ${config.https ? 'http' : 'https'}://localhost:${port}\n`)
+  console.log(`Starting frontend build server listening at ${config.https ? 'https' : 'http'}://localhost:${port}\n`)
 
   const server = new WebpackDevServer(compiler, {
     compress: true,
     hot: true,
-    hotOnly: true,
     historyApiFallback: true,
+    https: config.https,
     proxy: config.dev.proxyTable,
+    quiet: true,
     clientLogLevel: 'info',
     watchOptions: {
       aggregateTimeout: 300,
       ignored: [/node_modules/]
     },
-    watchContentBase: true,
-    contentBase: [path.resolve(config.prod.assetRoot, './sw')],
+    watchContentBase: process.env.SW_ENV === 'development',
+    contentBase: [path.resolve(config.prod.assetRoot)],
     publicPath: webpackConfig.output.publicPath,
     headers: {
       'X-Custom-Header': 'yes'

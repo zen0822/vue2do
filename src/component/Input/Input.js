@@ -60,8 +60,6 @@ import MotionFade from '../MotionFade/MotionFade'
 
 const TYPE_TEXT_AREA = 'area'
 const TYPE_TEXT = 'field'
-const ERROR_MESSAGE_TIP = 'tip'
-const ERROR_MESSAGE_BUBBLE = 'bubble'
 const KEYUP_INTERVAL_TIME = 100
 
 export default {
@@ -264,8 +262,8 @@ export default {
       ]
     },
     inputBoxCol() { // input 的阑珊的格数
-      let slotHead = this.$slots.header
-      let slotTail = this.$slots.footer
+      const slotHead = this.$slots.header
+      const slotTail = this.$slots.footer
 
       if (slotHead && slotTail) {
         return 12 - this.footerSpan - this.headerSpan
@@ -280,10 +278,10 @@ export default {
   },
 
   watch: {
-    value(val, oldVal) {
+    value(val) {
       this.stateValue = val
     },
-    stateValue(val, oldVal) {
+    stateValue(val) {
       const valueLength = String(val).length
 
       if (this.textLengthTip) {
@@ -341,7 +339,7 @@ export default {
         return this
       }
 
-      var verify = initVerfication(this.verifiedType)
+      const verify = initVerfication(this.verifiedType)
 
       if (verify) {
         this.regexObj = verify.regex
@@ -369,7 +367,7 @@ export default {
      *                  verified - 验证情况
      *                  verifiedHint - 错误提示
      */
-    _verifyEmpty(firstVerify) {
+    _verifyEmpty() {
       let verifiedHint = ''
 
       if (this.required) {
@@ -398,7 +396,7 @@ export default {
       let strTemp = String(val)
 
       if (isNaN(strTemp)) {
-        let temp = strTemp
+        const temp = strTemp
 
         strTemp = strTemp.replace(/[^\d.]+/g, '')
 
@@ -487,8 +485,6 @@ export default {
      * @return {Object}
      */
     _handlerInput(event) {
-      const refInput = this.$refs.input
-
       this.stateValue = event.currentTarget.value
       this.multiline && (this.$refs.pre.innerText = this.stateValue)
 

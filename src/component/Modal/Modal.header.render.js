@@ -1,5 +1,5 @@
 export default function (h) {
-  let headerChildren = []
+  const headerChildren = []
 
   if (this.isFull) {
     if (!this.isBiggerFull) {

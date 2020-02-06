@@ -2,8 +2,6 @@ import './Input.scss'
 import pug from './Input.pug'
 import mixin from '../../mixin'
 
-import { tip } from 'vue2do/index'
-
 export default {
   name: 'PageCompInput',
 
@@ -19,7 +17,9 @@ export default {
 
   methods: {
     clickVerifyInput() {
-      let verified = this.$refs.verifyInput.validate()
+      const verified = this.$refs.verifyInput.validate()
+
+      return verified
     }
   }
 }

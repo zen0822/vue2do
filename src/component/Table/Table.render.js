@@ -3,11 +3,9 @@
  */
 
 export default function (h) {
-  let scrollerChildren = []
-  let colCompOption = []
-
+  const colCompOption = []
+  const tableChildren = []
   let tableEle = {}
-  let tableChildren = []
   let theadRowChildren = []
   let tbodyRowChildren = []
   let headLength = 0
@@ -35,12 +33,12 @@ export default function (h) {
   }
 
   if (!this.list) {
-    this.$slotKey.forEach((item, index) => {
+    this.$slotKey.forEach((item) => {
       if (item === 'thead') {
         return false
       }
 
-      let rowSlot = this.$slots[item]
+      const rowSlot = this.$slots[item]
 
       rowSlot[0].componentOptions && rowSlot[0].componentOptions.children.forEach((rowSlotItem, rowSlotItemIndex) => {
         if (rowSlotItem.componentOptions === undefined) {
