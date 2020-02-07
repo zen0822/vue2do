@@ -2,7 +2,6 @@
   "packages": [
     "package/*"
   ],
-  "useWorkspaces": true,
   "version": "independent",
   "command": {
     "publish": {

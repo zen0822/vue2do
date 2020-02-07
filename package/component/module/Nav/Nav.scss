@@ -1,0 +1,134 @@
+/**
+ * nav 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_NAV};
+$ICON_PREFIX: #{$COMP_ICON};
+$FOLD_PREFIX: #{$COMP_FOLD};
+
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
+  .#{$C_PREFIX}-stage {
+    .#{$C_PREFIX}-motion-content {
+      .router-link-active {
+        color: $type-color;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX} {
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+
+  &-arrow {
+    text-align: right;
+
+    &-fold {
+      transform: rotate(0);
+      transition: transform 300ms ease-in-out;
+    }
+
+    &-spread {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .#{$C_PREFIX}-trigger {
+    display: none;
+    background-color: $color-bg;
+    padding: $gap-v;
+    border-bottom: $divider;
+    box-shadow: $shadow;
+  }
+
+  .#{$C_PREFIX}-stage {
+    & > .#{$C_PREFIX}-motion-content {
+      & > .#{$C_PREFIX}-sub-fold {
+        margin-left: 0;
+      }
+
+      & > .#{$FOLD_PREFIX} > .#{$FOLD_PREFIX}-dl {
+        cursor: pointer;
+
+        .#{$FOLD_PREFIX}-dt {
+          cursor: pointer;
+          padding: $gap-v 0;
+        }
+
+        & > .#{$FOLD_PREFIX}-dt {
+          background-color: rgba($color-grey-lighter, 0);
+          transition: background-color 300ms;
+
+          &:hover {
+            background-color: rgba($color-grey-lighter, 0.8);
+          }
+
+          .#{$C_PREFIX}-icon {
+            right: $gap-v-double;
+          }
+
+          padding: 12px $gap-v-double * 2 12px $gap-v-double;
+          color: $color-text-dark-primary;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .#{$C_PREFIX}-sub-fold {
+      margin-left: $gap-h-double * 2;
+
+      a {
+        display: block;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-close-nav {
+    display: none;
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

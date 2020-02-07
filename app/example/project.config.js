@@ -3,7 +3,7 @@ module.exports = {
   baseUrl: './',
   execute: './main.ts',
   bundleAnalyzer: true, // 打包文件的分析
-  favicon: './src/asset/favicon.ico',
+  favicon: './client/asset/img/favicon.ico',
   gzip: true,
   hotPort: 5167,
   htmlName: 'index',

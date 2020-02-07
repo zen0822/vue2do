@@ -1,0 +1,324 @@
+/**
+ * check 组件的 material UI 样式
+ */
+
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_CHECK};
+$C_ICON_PREFIX: #{$COMP_ICON};
+$C_MOTION_RIP_PREFIX: #{$COMP_MOTION_RIP};
+
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
+  .#{$C_PREFIX}-checked,
+  .#{$C_PREFIX}-indeterminate {
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($type-color, 0.2);
+      }
+    }
+
+    .#{$C_PREFIX}-motion-rip::after {
+      background-color: rgba($type-color, 0.3);
+    }
+
+    .#{$C_PREFIX}-icon-box {
+      &-rail {
+        border-color: $type-color;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-icon {
+    &-box {
+      &-dot,
+      &-checked,
+      &-indeterminate {
+        background-color: $type-color;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-disabled {
+    .#{$C_PREFIX}-icon {
+      &-box {
+        &-dot,
+        &-checked {
+          background-color: rgb(218, 218, 218);
+        }
+
+        &-rail {
+          border-color: rgb(218, 218, 218);
+        }
+      }
+    }
+
+    &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
+    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
+      background-color: $type-color-lighter;
+    }
+
+    &.#{$C_PREFIX}-opt-check-all {
+      &.#{$C_PREFIX}-checked,
+      &.#{$C_PREFIX}-indeterminate {
+        .#{$C_PREFIX}-icon-box-rail {
+          border-color: $type-color-lighter;
+        }
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  & > .#{$C_PREFIX}-opt-row {
+    & > .#{$C_PREFIX}-opt-col {
+      display: inline-block;
+      line-height: 0;
+    }
+  }
+
+  .#{$C_PREFIX}-motion-rip {
+    opacity: 0;
+    transition: opacity 150ms;
+  }
+
+  .#{$C_PREFIX}-box,
+  .#{$C_PREFIX}-opt-check-all {
+    &:focus {
+      outline: none;
+    }
+
+    &.#{$C_PREFIX}-focused {
+      .#{$C_PREFIX}-motion-rip {
+        opacity: 1;
+      }
+    }
+
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($grey, 0.2);
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-icon {
+    $icon-radius: 20px;
+
+    &-box {
+      box-sizing: border-box;
+      position: relative;
+      height: $icon-radius;
+      width: $icon-radius;
+
+      &-rail {
+        border: $color-text-dark-secondary 2px solid;
+        box-sizing: border-box;
+        border-radius: 100%;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      &-checked,
+      &-dot,
+      &-indeterminate {
+        background-color: $color-primary;
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100%;
+        width: 100%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 150ms;
+      }
+
+      &-dot {
+        border-radius: 100%;
+        height: 50%;
+        width: 50%;
+      }
+
+      &-indeterminate {
+        &::after {
+          content: '';
+          background-color: #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          height: 2px;
+          width: 60%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    &.#{$C_PREFIX}-icon-checkbox {
+      .#{$C_PREFIX}-icon-box {
+        height: $icon-radius;
+        width: $icon-radius;
+        border-radius: 2px;
+        overflow: hidden;
+
+        &-rail {
+          border-radius: 0;
+        }
+
+        &-indeterminate,
+        &-checked {
+          .#{$C_ICON_PREFIX} {
+            font-size: $icon-radius - 2;
+            color: #fff;
+            vertical-align: middle;
+          }
+
+          width: $icon-radius - 2;
+          height: $icon-radius - 2;
+        }
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-checked,
+  .#{$C_PREFIX}-indeterminate {
+    .#{$C_PREFIX}-rip {
+      & > .#{$C_MOTION_RIP_PREFIX}-spot {
+        background-color: rgba($color-primary, 0.2);
+      }
+    }
+
+    .#{$C_PREFIX}-motion-rip::after {
+      background-color: rgba($color-primary, 0.3);
+    }
+
+    .#{$C_PREFIX}-icon-box {
+      &-rail {
+        border-color: $color-primary;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-checked {
+    .#{$C_PREFIX}-icon-box {
+      &-checked,
+      &-dot {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-indeterminate {
+    .#{$C_PREFIX}-icon-box {
+      &-indeterminate {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-disabled {
+    .#{$C_PREFIX}-icon {
+      &-box {
+        &-dot,
+        &-checked {
+          background-color: rgb(218, 218, 218);
+        }
+
+        &-rail {
+          border-color: rgb(218, 218, 218);
+        }
+      }
+    }
+
+    &.#{$C_PREFIX}-opt-check-all .#{$C_PREFIX}-icon-box-checked,
+    &.#{$C_PREFIX}-indeterminate .#{$C_PREFIX}-icon-box-indeterminate {
+      background-color: $color-primary-lighter;
+    }
+
+    &.#{$C_PREFIX}-opt-check-all {
+      &.#{$C_PREFIX}-checked,
+      &.#{$C_PREFIX}-indeterminate {
+        .#{$C_PREFIX}-icon-box-rail {
+          border-color: $color-primary-lighter;
+        }
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-motion-rip {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: rgba($grey, 0.3);
+      top: 50%;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      border-radius: 100%;
+      transform: translate(-50%, -50%) scaleX(1);
+      animation: #{$C_PREFIX}-motion-rip 1.5s infinite ease-in-out;
+    }
+
+    @keyframes #{$C_PREFIX}-motion-rip {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

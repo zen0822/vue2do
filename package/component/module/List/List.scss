@@ -1,0 +1,37 @@
+/**
+ * list 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_LIST};
+
+.#{$C_PREFIX} {
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+
+  .#{$C_PREFIX}-page {
+    background-color: #fff;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .#{$C_PREFIX}-ul {
+    list-style-type: none;
+
+    & > .#{$C_PREFIX}-li {
+      &:last-child {
+        border: none;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-empty-data {
+    padding: $gap-v 0;
+    text-align: center;
+  }
+}

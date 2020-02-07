@@ -1,0 +1,135 @@
+@import './mixin/animation';
+
+//---------------- layout ----------------
+$DEVICE-XS-RANGE: "0px ~ 575px";
+$DEVICE-S-RANGE: "576px ~ 767px";
+$DEVICE-M-RANGE: "768px ~ 991px";
+$DEVICE-L-RANGE: "992px ~ 1199px";
+$DEVICE-XL-RANGE: "1200px ~ --px";
+
+@mixin device-type($type) {
+  @if $type==xs {
+    @media only screen and (max-width: 575px) {
+      @content;
+    }
+  }
+
+  @if $type==s {
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  }
+
+  @if $type==m {
+    @media only screen and (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @if $type==l {
+    @media only screen and (max-width: 1911px) {
+      @content;
+    }
+  }
+
+  @if $type==xl {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+}
+
+@mixin theme-style($type) {
+  $type-color: $color-primary;
+  $type-color-dark: $color-primary-dark;
+  $type-color-light: $color-primary-light;
+  $type-color-darker: $color-primary-darker;
+  $type-color-lighter: $color-primary-lighter;
+
+  @if $type=='primary' {
+    $type-color: $color-primary;
+    $type-color-dark: $color-primary-dark;
+    $type-color-light: $color-primary-light;
+    $type-color-darker: $color-primary-darker;
+    $type-color-lighter: $color-primary-lighter;
+  }
+  @else if $type=='danger' {
+    $type-color: $color-danger;
+    $type-color-dark: $color-danger-dark;
+    $type-color-light: $color-danger-light;
+    $type-color-darker: $color-danger-darker;
+    $type-color-lighter: $color-danger-lighter;
+  }
+  @else if $type=='success' {
+    $type-color: $color-success;
+    $type-color-dark: $color-success-dark;
+    $type-color-light: $color-success-light;
+    $type-color-darker: $color-success-darker;
+    $type-color-lighter: $color-success-lighter;
+  }
+  @else if $type=='warning' {
+    $type-color: $color-warning;
+    $type-color-dark: $color-warning-dark;
+    $type-color-light: $color-warning-light;
+    $type-color-darker: $color-warning-darker;
+    $type-color-lighter: $color-warning-lighter;
+  }
+  @else if $type=='blue' {
+    $type-color: $color-blue;
+    $type-color-dark: $color-blue-dark;
+    $type-color-light: $color-blue-light;
+    $type-color-darker: $color-blue-darker;
+    $type-color-lighter: $color-blue-lighter;
+  }
+  @else if $type=='light' {
+    $type-color: $color-light;
+    $type-color-dark: $color-light-dark;
+    $type-color-light: $color-light-light;
+    $type-color-darker: $color-light-darker;
+    $type-color-lighter: $color-light-lighter;
+  }
+  @else if $type=='dark' {
+    $type-color: $color-dark;
+    $type-color-dark: $color-dark-dark;
+    $type-color-light: $color-dark-light;
+    $type-color-darker: $color-dark-darker;
+    $type-color-lighter: $color-dark-lighter;
+  }
+  @else if $type=='white' {
+    $type-color: $color-white;
+    $type-color-dark: $color-white-dark;
+    $type-color-light: $color-white-light;
+    $type-color-darker: $color-white-darker;
+    $type-color-lighter: $color-white-lighter;
+  }
+  @else if $type=='black' {
+    $type-color: $color-black;
+    $type-color-dark: $color-black-dark;
+    $type-color-light: $color-black-light;
+    $type-color-darker: $color-black-darker;
+    $type-color-lighter: $color-black-lighter;
+  }
+  @else if $type=='orange' {
+    $type-color: $color-orange;
+    $type-color-dark: $color-orange-dark;
+    $type-color-light: $color-orange-light;
+    $type-color-darker: $color-orange-darker;
+    $type-color-lighter: $color-orange-lighter;
+  }
+  @else if $type=='grey' {
+    $type-color: $color-grey;
+    $type-color-dark: $color-grey-dark;
+    $type-color-light: $color-grey-light;
+    $type-color-darker: $color-grey-darker;
+    $type-color-lighter: $color-grey-lighter;
+  }
+  @else {
+    $type-color: $color-grey;
+    $type-color-dark: $color-grey-dark;
+    $type-color-light: $color-grey-light;
+    $type-color-darker: $color-grey-darker;
+    $type-color-lighter: $color-grey-lighter;
+  }
+
+  @include theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter)
+}

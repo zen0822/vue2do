@@ -4,9 +4,7 @@ import menuOpt from './menuOpt.json'
 import mixin from './mixin'
 import commonStore from '../../../vuex/module/common/type.json'
 
-import {
-  alert
-} from 'vue2do/index.js'
+import alert from '@vue2do/component/module/Modal/alert'
 
 export default {
   name: 'PageComponent',

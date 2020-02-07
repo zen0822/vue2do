@@ -1,0 +1,70 @@
+/**
+ * bubble 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+
+$C_PREFIX: #{$COMP_BUBBLE};
+$ICON_PREFIX: #{$COMP_ICON};
+
+.#{$C_PREFIX} {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: $z-index;
+  background: #fff;
+  box-shadow: $shadow;
+  border-radius: $border-radius;
+  padding: $gap-v;
+
+  &.#{$C_PREFIX}-fixed {
+    position: fixed;
+  }
+
+  &-slot {
+    max-width: 300px;
+
+    .#{$C_PREFIX}-text {
+      @extend %text-omit;
+      width: 100%;
+      display: inline-block;
+    }
+  }
+
+  &.#{$C_PREFIX}-custom .#{$C_PREFIX}-slot {
+    max-width: none;
+  }
+
+  .#{$C_PREFIX}-arrow {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    width: 16px;
+    margin: auto;
+    overflow: hidden;
+    transform: rotate(0);
+
+    .#{$ICON_PREFIX} {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      .z-icon-triangle-up {
+        font-size: $h3;
+      }
+    }
+
+    .#{$C_PREFIX}-border {
+      top: -1px;
+      color: $color-border;
+    }
+
+    .#{$C_PREFIX}-body {
+      color: #fff;
+    }
+  }
+}

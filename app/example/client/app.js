@@ -9,8 +9,8 @@ import {
 } from './router'
 import App from './App/App'
 
-import vue2do from 'vue2do'
-import enLang from 'src/language/en-US.json'
+import vue2do from '@vue2do/component'
+import enLang from '@vue2do/component/language/en-US.json'
 
 Vue.use(VueI18n)
 Vue.use(VueApollo)

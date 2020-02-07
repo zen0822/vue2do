@@ -1,9 +1,10 @@
 import './Tip.scss'
 import template from './Tip.pug'
 import mixin from '../../mixin'
-import tip from 'src/component/Message/tip'
-import toast from 'src/component/Message/toast'
-import tooltip from 'src/component/Bubble/tooltip'
+
+import tip from '@vue2do/component/module/Message/tip'
+import toast from '@vue2do/component/module/Message/toast'
+import tooltip from '@vue2do/component/module/Bubble/tooltip'
 
 export default {
   name: 'PageCompTip',

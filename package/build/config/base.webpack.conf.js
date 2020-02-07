@@ -61,7 +61,8 @@ module.exports = function ({
     include: [
       projectPath,
       path.resolve(__dirname, '../util'),
-      path.resolve(__dirname, '../../component')
+      // path.resolve(__dirname, '../../component'),
+      path.resolve(globalRoot, './node_modules/@vue2do/component')
     ]
   }
 
@@ -205,6 +206,15 @@ module.exports = function ({
           loader: 'html-loader'
         }
       }
+    },
+    'pug': {
+      ...commonRule,
+      test: /\.(pug)$/,
+      use: {
+        file: {
+          loader: 'pug-loader'
+        }
+      }
     }
   }
 
@@ -341,5 +351,9 @@ module.exports = function ({
       }])
   }
 
-  return projectConfig.webpack(webpackChainConfig)
+  if (projectConfig.webpack) {
+    return projectConfig.webpack(webpackChainConfig)
+  }
+
+  return webpackChainConfig
 }

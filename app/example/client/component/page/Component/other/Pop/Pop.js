@@ -2,8 +2,6 @@ import './Pop.scss'
 import pugTpl from './Pop.pug'
 import mixin from '../../mixin'
 
-import homeBgImg from 'exAsset/home-bg.jpg'
-
 export default {
   name: 'PageCompPop',
 
@@ -13,8 +11,7 @@ export default {
 
   data() {
     return {
-      testName: 'test',
-      homeBgImg
+      testName: 'test'
     }
   },
 

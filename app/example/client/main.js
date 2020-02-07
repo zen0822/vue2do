@@ -7,7 +7,7 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
-import 'vue2do/dist/util.css'
+import '@vue2do/component/dist/util.css'
 import './scss/main.scss'
 
 import {

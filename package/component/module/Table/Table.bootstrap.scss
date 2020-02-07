@@ -1,0 +1,22 @@
+/**
+ * table 组件的 bootstrap UI 样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+
+$C_PREFIX: #{$COMP_TABLE};
+$COL_PREFIX: #{$COMP_TABLE_COL};
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-bootstrap {
+  &.#{$C_PREFIX}-border-row,
+  &.#{$C_PREFIX}-border-all {
+    .#{$C_PREFIX}-header-group {
+      .#{$C_PREFIX}-row {
+        border-top: $divider;
+        border-bottom: $color-border 2px solid;
+      }
+    }
+  }
+}

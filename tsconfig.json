@@ -1,11 +1,8 @@
 {
   "include": [
-    "global.d.ts",
-    "index.d.ts",
-    "src/**/*",
-    "example/client/**/*",
-    "example/server/gql/**/*",
-    "script/gql.ts"
+    "*.d.ts",
+    "package",
+    "app"
   ],
   "exclude": [
     "node_modules",

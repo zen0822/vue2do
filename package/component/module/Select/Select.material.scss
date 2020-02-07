@@ -1,0 +1,85 @@
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_SELECT};
+$C_OPT_PREFIX: #{$COMP_SELECT_OPT};
+$C_ELE_PREFIX: #{$COMP_SELECT_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
+
+$MENU_WIDTH: 170px;
+$MULTI_MENU_WIDTH: 170px + 80px;
+$MENU_HEIGHT: 36px;
+
+.#{$C_PREFIX}.#{$C_PREFIX}-ui-material {
+  height: $MENU_HEIGHT;
+  vertical-align: middle;
+  border-radius: $border-radius;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.#{$C_PREFIX}-multiple {
+    width: $MULTI_MENU_WIDTH;
+    height: auto;
+  }
+
+  &.#{$C_PREFIX}-selecting {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    .#{$C_PREFIX}-selected-box {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+
+      &::after {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        opacity: 1;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-focusing {
+    .#{$C_PREFIX}-selected-box {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  & > .#{$C_PREFIX}-selected-box {
+    border-radius: $border-radius;
+
+    &::after {
+      box-shadow: $shadow-lower;
+      border-radius: $border-radius;
+      content: '';
+
+      opacity: 0;
+      transition: opacity 300ms ease-out;
+
+      width: 100%;
+      height: 100%;
+
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+    }
+  }
+
+  .#{$C_PREFIX}-opt-comp {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: none;
+
+    & > .#{ $C_OPT_PREFIX }-li:first-child {
+      border-top: $color-border-light $border-thin solid;
+    }
+  }
+}

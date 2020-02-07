@@ -1,0 +1,104 @@
+/**
+ * code 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_CODE};
+
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
+  border: $type-color-light $border-thin solid;
+
+  .#{$C_PREFIX}-line-num {
+    border-right: $border-thin * 2 $type-color solid;
+  }
+}
+
+.#{$C_PREFIX} {
+  font-size: $font-base;
+  background-color: #fff;
+  border: $color-primary-light $border-thin solid;
+  border-radius: $border-radius;
+  position: relative;
+  padding: $gap-v $gap-h-double;
+
+  .#{$C_PREFIX}-header {
+    color: $color-border;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: $gutter-v-half;
+  }
+
+  .#{$C_PREFIX}-article {
+    .#{$C_PREFIX}-pre {
+      width: 100%;
+      font-family: 'Roboto Mono', Monaco, courier, monospace;
+      font-size: 1em;
+      line-height: 16px;
+      -webkit-font-smoothing: initial;
+      -moz-osx-font-smoothing: initial;
+
+      .#{$C_PREFIX}-content {
+        position: relative;
+        padding: 0 0 0 50px;
+      }
+    }
+  }
+
+  .#{$C_PREFIX}-line-num {
+    border-right: $border-thin * 2 $color-primary solid;
+    font-family: 'Roboto Mono', Monaco, courier, monospace;
+    line-height: 16px;
+    text-align: right;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    padding-right: 5px;
+    width: 24px;
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

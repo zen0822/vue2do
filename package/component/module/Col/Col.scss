@@ -1,0 +1,54 @@
+/**
+ * col 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$gap-hub: (5, 10, 20, 30, 40, 50);
+$device-type: span, xl, l, m, s, xs;
+
+@mixin device-style($type) {
+  @for $i from 1 through 12 {
+    &.#{$C_PREFIX}-#{$type}-#{$i} {
+      width: 100% * $i / 12;
+    }
+  }
+}
+
+$C_PREFIX: #{$COMP_COL};
+
+.#{$C_PREFIX} {
+  box-sizing: border-box;
+
+  @each $type in $device-type {
+    @if $type != span {
+      @include device-type($type) {
+        @include device-style($type);
+      }
+    } @else {
+      @include device-style($type);
+    }
+  }
+
+  @for $i from 1 through 12 {
+    &.#{$C_PREFIX}-pull-#{$i},
+    &.#{$C_PREFIX}-push-#{$i} {
+      position: relative;
+    }
+
+    &.#{$C_PREFIX}-offset-#{$i} {
+      margin-left: 100% * $i / 12;
+    }
+
+    &.#{$C_PREFIX}-pull-#{$i} {
+      left: -100% * $i / 12;
+    }
+
+    &.#{$C_PREFIX}-push-#{$i} {
+      left: 100% * $i / 12;
+    }
+  }
+}

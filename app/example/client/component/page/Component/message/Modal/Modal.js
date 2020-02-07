@@ -1,12 +1,9 @@
 import './Modal.scss'
 import pugTpl from './Modal.pug'
 import mixin from '../../mixin'
-import {
-  alert,
-  confirm
-} from 'vue2do/src/index.js'
 
-import homeBgImg from 'exAsset/home-bg.jpg'
+import alert from '@vue2do/component/module/Modal/alert'
+import confirm from '@vue2do/component/module/Modal/confirm'
 
 export default {
   name: 'PageCompModal',
@@ -17,8 +14,7 @@ export default {
 
   data() {
     return {
-      testName: 'test',
-      homeBgImg
+      testName: 'test'
     }
   },
 

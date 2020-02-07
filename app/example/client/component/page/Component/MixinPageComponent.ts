@@ -8,7 +8,7 @@ import {
 } from 'vuex-class'
 import {
   debounce
-} from '../../../../../src/util'
+} from '@vue2do/component/util'
 
 namespace('../../../vuex/store')
 

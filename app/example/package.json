@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Example application.",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "build": "build",
+    "debug": "lerna run --scope @vue2do/build debug",
+    "dev:EX": "vue2do-build dev config example/project.config.js",
+    "mock:EX": "nodemon --watch ./app/example/mock bin/mock.js --app example",
+    "prod:EX": "cross-env NODE_ENV=production node bin/prod --app example",
+    "nodemon": "nodemon",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@vue2do/build": "^1.0.0",
+    "@vue2do/component": "^1.0.0"
+  }
+}

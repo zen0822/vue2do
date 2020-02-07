@@ -5,7 +5,7 @@ import {
 import commonStore from '../../../vuex/module/common/type.json'
 import {
   debounce
-} from 'vue2do/src/util'
+} from '@vue2do/component/util'
 import {
   ref
 } from '@vue/composition-api'

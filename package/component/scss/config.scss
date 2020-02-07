@@ -1,0 +1,187 @@
+// vue2/scss/config.scss
+
+//---------------- main ----------------
+
+$comp-prefix: z !default;
+
+//---------------- color ----------------
+
+// base color
+$color-blue-lighter: #bbdefb !default;
+$color-blue-light: #6ec6ff !default;
+$color-blue: #2196f3 !default;
+$color-blue-dark: #0069c0 !default;
+$color-blue-darker: #002171 !default;
+
+$color-danger-lighter: #ffcdd2 !default;
+$color-danger-light: #ff7961 !default;
+$color-danger: #f44336 !default;
+$color-danger-dark: #ba000d !default;
+$color-danger-darker: #7f0000 !default;
+
+$color-success-lighter: #c8e6c9 !default;
+$color-success-light: #80e27e !default;
+$color-success: #4caf50 !default;
+$color-success-dark: #087f23 !default;
+$color-success-darker: #030 !default;
+
+$color-warning-lighter: #fff9c4 !default;
+$color-warning-light: #ffff72 !default;
+$color-warning: #ffeb3b !default;
+$color-warning-dark: #c8b900 !default;
+$color-warning-darker: #c6a700 !default;
+
+$color-orange-lighter: #ffe0b2 !default;
+$color-orange-light: #ff8a50 !default;
+$color-orange: #ff5722 !default;
+$color-orange-dark: #c41c00 !default;
+$color-orange-darker: #870000 !default;
+
+$color-light-lighter: #fff !default;
+$color-light-light: #fff !default;
+$color-light: #f5f5f5 !default;
+$color-light-dark: #e0e0e0 !default;
+$color-light-darker: #d4d4d4 !default;
+
+$color-dark-lighter: #9e9e9e !default;
+$color-dark-light: #6d6d6d !default;
+$color-dark: #424242 !default;
+$color-dark-dark: #1b1b1b !default;
+$color-dark-darker: #000 !default;
+
+$color-white-lighter: #fff !default;
+$color-white-light: #fff !default;
+$color-white: #fff !default;
+$color-white-dark: #e0e0e0 !default;
+$color-white-darker: #d4d4d4 !default;
+
+$color-black-lighter: #9e9e9e !default;
+$color-black-light: #6d6d6d !default;
+$color-black: #000 !default;
+$color-black-dark: #000 !default;
+$color-black-darker: #000 !default;
+
+$color-grey-lighter: #eee !default;
+$color-grey-light: #cfcfcf !default;
+$color-grey: #9e9e9e !default;
+$color-grey-dark: #707070 !default;
+$color-grey-darker: #494949 !default;
+
+$color-primary: $color-blue !default;
+$color-primary-light: $color-blue-light !default;
+$color-primary-lighter: $color-blue-lighter !default;
+$color-primary-dark: $color-blue-dark !default;
+$color-primary-darker: $color-blue-darker !default;
+
+$color-secondary: $color-blue !default;
+$color-secondary-light: $color-blue-light !default;
+$color-secondary-lighter: $color-blue-lighter !default;
+$color-secondary-dark: $color-blue-dark !default;
+$color-secondary-darker: $color-blue-darker !default;
+
+$grey: #9e9e9e !default;
+$grey-dark: #707070 !default;
+$grey-darker: #333 !default;
+$grey-light: #ccc !default;
+$grey-lightest: #f5f5f5 !default;
+
+$color-text-light-primary: #fff;
+$color-text-light-secondary: rgba(#fff, 0.7);
+$color-text-light-hint: rgba(#fff, 0.5);
+$color-text-light-divider: rgba(#fff, 0.12);
+
+$color-text-dark-primary: rgba(#000, 0.87);
+$color-text-dark-secondary: rgba(#000, 0.54);
+$color-text-dark-hint: rgba(#000, 0.38);
+$color-text-dark-divider: rgba(#000, 0.12);
+
+// background
+$color-bg: #f5f5f5 !default;
+
+// link
+$color-link: $color-primary !default;
+
+// border
+$color-border: #d6d6d6 !default;
+$color-border-light: #e5e5e5 !default;
+$color-border-dark: $color-grey-dark !default;
+
+//---------------- gap padding 间隔参数 ----------------
+
+$gap-base: 8px !default;
+
+// 垂直方向的空隙值
+$gap-v: $gap-base !default;
+$gap-v-half: $gap-v / 2 !default;
+$gap-v-double: $gap-v * 2 !default;
+$gap-v-triple: $gap-v * 3 !default;
+
+// 水平方向的空隙值
+$gap-h: $gap-base !default;
+$gap-h-half: $gap-v / 2 !default;
+$gap-h-double: $gap-v * 2 !default;
+$gap-h-triple: $gap-v * 3 !default;
+
+// padding 空隙值
+$gap: $gap-base !default;
+$gap-half: $gap-v / 2 !default;
+$gap-double: $gap-v * 2 !default;
+$gap-triple: $gap-v * 3 !default;
+
+//---------------- gutter margin 间隔参数 ----------------
+
+$gutter-base: 10px !default;
+
+// 垂直方向的空隙值
+$gutter-v: $gutter-base !default;
+$gutter-v-half: $gutter-v / 2 !default;
+$gutter-v-double: $gutter-v * 2 !default;
+$gutter-v-triple: $gutter-v * 3 !default;
+
+// 水平方向的空隙值
+$gutter-h: $gutter-base !default;
+$gutter-h-half: $gutter-v / 2 !default;
+$gutter-h-double: $gutter-v * 2 !default;
+$gutter-h-triple: $gutter-v * 3 !default;
+
+// margin 空隙值
+$gutter: $gutter-base !default;
+$gutter-half: $gutter-v / 2 !default;
+$gutter-double: $gutter-v * 2 !default;
+$gutter-triple: $gutter-v * 3 !default;
+
+//---------------- border ----------------
+
+$border-thin: 1px !default;
+$border-thick: 2px !default;
+
+$divider: $color-border $border-thin solid;
+
+$border-radius: 3px !default;
+
+//---------------- font ----------------
+
+$font-base: 14px !default;
+
+$h1: 28px !default;
+$h2: 24px !default;
+$h3: 18px !default;
+$h4: 16px !default;
+$h5: $font-base !default;
+$h6: 12px;
+
+//---------------- other ----------------
+
+$z-index-lower: 998 !default;
+$z-index: 999 !default;
+$z-index-higher: 1000 !default;
+
+$z-index-modal: $z-index !default;
+$z-index-message: $z-index-higher !default;
+$z-index-upload-preview: $z-index !default;
+$z-index-capture: $z-index !default;
+
+$shadow-lower: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2) !default;
+$shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2) !default;
+$shadow-highter: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12),
+  0 5px 5px -3px rgba(0, 0, 0, 0.2) !default;

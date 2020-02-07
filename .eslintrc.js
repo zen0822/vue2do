@@ -13,6 +13,18 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended'
   ],
+  parserOptions: {
+    ecmaVersion: 2019,
+    ecmaFeatures: {
+      jsx: true
+    },
+    extraFileExtensions: ['.json'],
+    project: [
+      '*/tsconfig.json'
+    ],
+    sourceType: 'module',
+    tsconfigRootDir: './'
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -23,9 +35,6 @@ module.exports = {
       }
     }
   ],
-  parserOptions: {
-    sourceType: 'module'
-  },
   plugins: [
     '@typescript-eslint',
     'html',

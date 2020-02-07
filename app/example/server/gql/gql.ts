@@ -1,4 +1,7 @@
 import gqlSchema from './schema.gql'
+import Subscription from './resolver/Subscription'
+import Mutation from './resolver/Mutation'
+import { prisma } from '../prisma'
 
 class ServerMain {
   links: Array<Object>
@@ -25,9 +28,25 @@ class ServerMain {
             return item.id === args.id
           })
         },
-        links: () => this.links
+        links: () => this.links,
+        feed: async (_root: any, args: any, context: any, _info: any) => {
+          const where = args.filter ? {
+            OR: [
+              { description_contains: args.filter },
+              { url_contains: args.filter }
+            ]
+          } : {}
+
+          const links = await context.prisma.links({
+            where,
+            skip: args.skip,
+            first: args.first
+          })
+          return links
+        }
       },
       Mutation: {
+        ...Mutation,
         postLink: (_parent: Object, args: { url: string, description: string }) => {
           const link = {
             id: `link-${this.idCount++}`,
@@ -51,12 +70,21 @@ class ServerMain {
           return links[linkIndex]
         }
       },
+      User: {
+        links: (parent: any, _args: any, context: any) => {
+          return context.prisma.user({ id: parent.id }).links()
+        }
+      },
       Link: {
         id: (parent: { id: string }) => parent.id,
         description: (parent: { description: string }) => parent.description,
         desc: (parent: { description: string }) => `new: ${parent.description}`,
-        url: (parent: { url: string }) => parent.url
-      }
+        url: (parent: { url: string }) => parent.url,
+        postedBy: (parent: any, _args: any, context: any) => {
+          return context.prisma.link({ id: parent.id }).postedBy()
+        }
+      },
+      Subscription
     }
 
     return
@@ -65,7 +93,13 @@ class ServerMain {
   gql() {
     return {
       typeDefs: gqlSchema,
-      resolvers: this.resolvers
+      resolvers: this.resolvers,
+      context: (request: Object | Array<any>) => {
+        return {
+          ...request,
+          prisma
+        }
+      }
     }
   }
 }

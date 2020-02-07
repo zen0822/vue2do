@@ -1,0 +1,29 @@
+// Tab 组件样式
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_TAB};
+$C_ELE_PREFIX: #{$COMP_TAB_ELE};
+$C_SHIFT_PREFIX: #{$COMP_SHIFT};
+
+.#{$C_PREFIX} {
+  cursor: pointer;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+
+  .#{$C_PREFIX}-shift > .#{ $C_SHIFT_PREFIX }-row {
+    > .#{ $C_SHIFT_PREFIX }-col {
+      @include device-type('s') {
+        flex-grow: 1;
+      }
+
+      &.#{$C_PREFIX}-active {
+        .#{$C_PREFIX}-ele {
+          border-bottom: $divider;
+        }
+      }
+    }
+  }
+}

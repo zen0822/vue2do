@@ -1,0 +1,202 @@
+/**
+ * pop 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_MODAL};
+$ICON_PREFIX: #{$COMP_ICON};
+$BTN_PREFIX: #{$COMP_BTN};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
+
+$POP_CONTAINER_PADDING: 24px;
+
+@mixin theme-content($type, $type-color, $type-color-dark, $type-color-light, $type-color-darker, $type-color-lighter) {
+  &.#{$C_PREFIX}-type-full {
+    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop .#{$C_PREFIX}-header {
+      border-color: $type-color;
+    }
+
+    .#{$C_PREFIX}-pop {
+      .#{$C_PREFIX}-header {
+        background-color: $type-color;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX} {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: $z-index-modal;
+
+  &.#{$C_PREFIX}-no-header {
+    .#{$C_PREFIX}-pop > article {
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
+        padding-top: $gap-v-double;
+      }
+    }
+  }
+
+  & > .#{$C_PREFIX}-bg {
+    background: rgba(0, 0, 0, 0.12);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+
+  & > .#{$C_PREFIX}-pop {
+    position: absolute;
+    transform: rotate(0);
+
+    .#{$C_PREFIX}-content {
+      margin: 0 auto;
+      background: #fff;
+      border-radius: $border-radius;
+      overflow: hidden;
+      width: 280px;
+      box-shadow: $shadow;
+    }
+
+    .#{$C_PREFIX}-header {
+      cursor: default;
+      padding: $gap-v-double;
+      box-sizing: border-box;
+      width: 100%;
+
+      .#{$C_PREFIX}-header-title {
+        font-size: $h3;
+        line-height: 1;
+        font-weight: bold;
+      }
+    }
+
+    .#{$C_PREFIX}-article {
+      box-sizing: border-box;
+      width: 100%;
+
+      & > .#{$C_PREFIX}-scroller > .#{ $SCROLLER_PREFIX }-box {
+        padding: $gap-v-double;
+        box-sizing: border-box;
+      }
+    }
+
+    .#{$C_PREFIX}-footer {
+      padding: $gap-v-double;
+      box-sizing: border-box;
+      line-height: normal;
+      text-align: right;
+      height: auto;
+      width: 100%;
+
+      > .#{ $BTN_PREFIX } {
+        margin: 0 $gap-h-half;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-type-full {
+    &.#{$C_PREFIX}-has-scroller .#{$C_PREFIX}-pop .#{$C_PREFIX}-header {
+      border-bottom: $divider;
+      border-color: $color-primary;
+    }
+
+    .#{$C_PREFIX}-pop {
+      padding-top: 0;
+
+      .#{$C_PREFIX}-content {
+        width: 530px;
+      }
+
+      .#{$C_PREFIX}-header {
+        color: #fff;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        background-color: $color-primary;
+        box-shadow: $shadow-lower;
+
+        & > div {
+          min-height: 36px;
+        }
+
+        .#{$C_PREFIX}-header-nav {
+          line-height: 1;
+        }
+      }
+
+      .#{$C_PREFIX}-article {
+        height: 300px;
+      }
+
+      .#{$C_PREFIX}-footer {
+        border-top: $divider;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-size-m {
+    & > .#{$C_PREFIX}-pop {
+      .#{$C_PREFIX}-content {
+        width: 500px;
+      }
+    }
+  }
+
+  &.#{$C_PREFIX}-size-l {
+    & > .#{$C_PREFIX}-pop {
+      .#{$C_PREFIX}-content {
+        width: 800px;
+      }
+    }
+  }
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-success {
+  @include theme-style('success');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-danger {
+  @include theme-style('danger');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-warning {
+  @include theme-style('warning');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-orange {
+  @include theme-style('orange');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-blue {
+  @include theme-style('blue');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-light {
+  @include theme-style('light');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-dark {
+  @include theme-style('dark');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-grey {
+  @include theme-style('grey');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-black {
+  @include theme-style('black');
+}
+
+.#{$C_PREFIX}.#{$C_PREFIX}-theme-white {
+  @include theme-style('white');
+}

@@ -1,0 +1,153 @@
+/**
+ * select 组件样式
+ */
+
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+$C_PREFIX: #{$COMP_SELECT};
+$C_OPT_PREFIX: #{$COMP_SELECT_OPT};
+$C_ELE_PREFIX: #{$COMP_SELECT_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
+
+$MENU_HEIGHT: 36px;
+
+.#{$C_PREFIX} {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  background-color: #fff;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+
+  & > .#{$C_PREFIX}-read-only {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    opacity: 0;
+  }
+
+  & > .#{$C_PREFIX}-selected-box {
+    display: inline-block;
+    position: relative;
+
+    padding: $gap-v $gutter-h-triple $gap-v $gap-h-double;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+
+    box-sizing: border-box;
+    vertical-align: middle;
+
+    & > .#{$C_PREFIX}-init-text {
+      @extend %text-omit;
+      width: 100%;
+      outline: none;
+      border: none;
+      cursor: default;
+      font-size: $h4;
+
+      &.#{$C_PREFIX}-default-text {
+        color: #999;
+      }
+    }
+
+    & > .#{$C_PREFIX}-caret-down-icon {
+      position: absolute;
+      right: 10px;
+      top: 11px;
+      height: 13px;
+    }
+  }
+
+  & > &-menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .#{$C_PREFIX}-panel {
+    overflow: hidden;
+    box-shadow: $shadow-lower;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    z-index: 2;
+
+    .#{$C_PREFIX}-tag-opt > .#{ $C_ELE_PREFIX } {
+      background-color: #fff;
+      padding: $gap-h;
+    }
+
+    .#{$C_PREFIX}-opt-comp {
+      position: static;
+      display: block;
+    }
+
+    .#{$C_PREFIX}-search-input {
+      box-sizing: border-box;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      border-bottom: 1px solid $color-border;
+
+      display: inline-block;
+      width: 100%;
+    }
+  }
+
+  &.#{$C_PREFIX}-multiple {
+    position: relative;
+    height: auto;
+    min-height: $MENU_HEIGHT;
+
+    & > .#{$C_PREFIX}-selected-box {
+      box-sizing: border-box;
+      opacity: 1;
+
+      & > .#{$C_PREFIX}-init-text {
+        transition-property: opacity;
+        transition-duration: 150ms;
+
+        &.#{$C_PREFIX}-opacity {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 0;
+          padding: 0;
+        }
+      }
+
+      & > .#{$C_PREFIX}-scroller {
+        transition: height 300ms ease;
+        will-change: height;
+
+        & > .#{ $SCROLLER_PREFIX }-box > .#{$C_PREFIX}-multiple {
+          margin-right: $gap-v-triple;
+        }
+      }
+
+      .#{$C_PREFIX}-multiple-selected-ul {
+        & > li {
+          background-color: $color-bg;
+          display: inline-block;
+          margin: 4.5px 3px;
+          padding: 3px;
+
+          &:hover {
+            background-color: $color-border;
+          }
+        }
+      }
+    }
+
+    .#{$C_PREFIX}-panel,
+    .#{$C_PREFIX}-opt-comp {
+      width: 100%;
+    }
+  }
+}

@@ -11,7 +11,7 @@ export default {
 
   data() {
     return {
-      logoUrl: require('src/asset/img/z-white.png'),
+      logoUrl: require('file-loader?name=favicon.ico!../../../asset/img/favicon.ico'),
       menuOpt: [{
         'name': '组件',
         'route': '/component/start'

@@ -1,0 +1,66 @@
+@import '../../scss/config.scss';
+@import '../../scss/extend.scss';
+@import '../../scss/name.scss';
+@import '../../scss/mixin.scss';
+
+/**
+ * menu 组件样式
+ */
+
+$C_PREFIX: #{$COMP_MENU};
+$C_OPT_PREFIX: #{$COMP_MENU_OPT};
+$C_ELE_PREFIX: #{$COMP_MENU_ELE};
+$INPUT_PREFIX: #{$COMP_INPUT};
+$SCROLLER_PREFIX: #{$COMP_SCROLLER};
+
+$MENU_HEIGHT: 36px;
+$MENU_WIDTH: 170px;
+$MENU_BORDER_WIDTH: 1px;
+$OPTION_UI_PADDING_WIDTH: $gap-v;
+
+$MULTI_MENU_WIDTH: 170px + 80px;
+
+.#{$C_PREFIX} {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  background-color: #fff;
+  cursor: default;
+  line-height: 0;
+
+  & > .#{$C_PREFIX}-ban {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    opacity: 0;
+  }
+
+  & > .#{$C_PREFIX}-trigger {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
+  }
+
+  & > .#{$C_PREFIX}-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    box-shadow: $shadow-lower;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    line-height: 1;
+    z-index: 2;
+
+    transition: top 300ms ease, height 300ms ease;
+    will-change: top, height;
+
+    .#{$C_PREFIX}-container > .#{ $C_ELE_PREFIX } {
+      background-color: #fff;
+      padding: $gap-h;
+    }
+  }
+}
+
+@import './scss/Menu.material.scss';
