@@ -16,7 +16,7 @@ export default async function ({
     },
     sw: {
       hotPort: 5169,
-      assetRoot: path.resolve(projectPath, projectConfig.assetRoot, './sw'),
+      assetRoot: path.resolve(projectPath, 'projectConfig.assetRoot', './sw'),
       assetPublicPath: '/',
       assetSubDirectory: projectConfig.staticDir,
       prodSourceMap: false
@@ -24,7 +24,7 @@ export default async function ({
     gql: {
       ...projectConfig.gql,
       port: projectConfig.gql.port || 8080,
-      execute: path.resolve(projectPath, projectConfig.gql.execute, './sw')
+      execute: path.resolve(projectPath, projectConfig.gql.execute)
     }
   }
 

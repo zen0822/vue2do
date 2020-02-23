@@ -1,6 +1,6 @@
 # The HTTP endpoint for your Prisma API
 #endpoint: ''
-endpoint: http://localhost:4466
+endpoint: http://localhost:8889
 
 
 # Points to the file that contains your datamodel
@@ -9,7 +9,7 @@ datamodel: datamodel.prisma
 # Specifies language & location for the generated Prisma client
 generate:
   - generator: typescript-client
-    output: ../example/server/prisma
+    output: ../app/mock/server/prisma
 
 hooks:
   post-deploy:

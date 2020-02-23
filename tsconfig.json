@@ -1,11 +1,12 @@
 {
   "include": [
     "*.d.ts",
-    "package/*",
-    "app/*"
+    "./app/**/*.ts",
+    "./app/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "prisma"
   ],
   "compilerOptions": {
     "allowJs": true,

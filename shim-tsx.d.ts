@@ -13,7 +13,6 @@ declare global {
       $props: any; // specify the property name to use
     }
     interface IntrinsicElements {
-      [elem: string]: any;
     }
   }
 }

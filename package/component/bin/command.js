@@ -28,7 +28,7 @@ return yargs
   })
   .command({
     command: 'set icon <path>',
-    desc: '@vue2do/build command dev',
+    desc: 'Set component Icon.',
     builder(yargs) {
       yargs.options({
         path: {

@@ -18,7 +18,7 @@ return yargs
       })
     },
     handler: (argv) => {
-      require('../tsDist/script/gql')({
+      require('../tsDist/script/gql').default({
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }

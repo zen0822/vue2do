@@ -3,8 +3,11 @@ import Subscription from './resolver/Subscription'
 import Mutation from './resolver/Mutation'
 import { prisma } from '../prisma'
 
+type TLink = Record<string, any>
+type TLinks = Array<TLink>
+
 class ServerMain {
-  links: Array<Record<string, any>>
+  links: TLinks
   idCount: number
   resolvers: Record<string, any> = {}
 
@@ -19,21 +22,21 @@ class ServerMain {
     this.init()
   }
 
-  private init() {
+  private init(): void {
     this.resolvers = {
       Query: {
-        info: () => `This is the API of a Hackernews Clone`,
-        link: (_parent: Record<string, any>, args: { id: number }) => {
-          return this.links.find((item: any) => {
+        info: (): string => `This is the API of a Hackernews Clone`,
+        link: (_parent: Record<string, any>, args: { id: number }): TLink | undefined => {
+          return this.links.find((item: any): boolean => {
             return item.id === args.id
           })
         },
-        links: () => this.links,
-        feed: async (_root: any, args: any, context: any, _info: any) => {
+        links: (): TLinks => this.links,
+        feed: async (_root: any, args: any, context: any, _info: any): Promise<TLinks> => {
           const where = args.filter ? {
             OR: [
-              { description_contains: args.filter },
-              { url_contains: args.filter }
+              { 'description_contains': args.filter },
+              { 'url_contains': args.filter }
             ]
           } : {}
 
@@ -42,12 +45,13 @@ class ServerMain {
             skip: args.skip,
             first: args.first
           })
+
           return links
         }
       },
       Mutation: {
         ...Mutation,
-        postLink: (_parent: Record<string, any>, args: { url: string, description: string }) => {
+        postLink: (_parent: Record<string, any>, args: { url: string, description: string }): TLink => {
           const link = {
             id: `link-${this.idCount++}`,
             description: args.description,
@@ -58,7 +62,7 @@ class ServerMain {
 
           return link
         },
-        updateLink: (_parent: Record<string, any>, args: { id: string }) => {
+        updateLink: (_parent: Record<string, any>, args: { id: string }): TLink => {
           const links = this.links
           const linkIndex = links.findIndex((item: any) => args.id === item.id)
 
@@ -71,16 +75,16 @@ class ServerMain {
         }
       },
       User: {
-        links: (parent: any, _args: any, context: any) => {
+        links: (parent: any, _args: any, context: any): any => {
           return context.prisma.user({ id: parent.id }).links()
         }
       },
       Link: {
-        id: (parent: { id: string }) => parent.id,
-        description: (parent: { description: string }) => parent.description,
-        desc: (parent: { description: string }) => `new: ${parent.description}`,
-        url: (parent: { url: string }) => parent.url,
-        postedBy: (parent: any, _args: any, context: any) => {
+        id: (parent: { id: string }): string => parent.id,
+        description: (parent: { description: string }): string => parent.description,
+        desc: (parent: { description: string }): string => `new: ${parent.description}`,
+        url: (parent: { url: string }): string => parent.url,
+        postedBy: (parent: any, _args: any, context: any): any => {
           return context.prisma.link({ id: parent.id }).postedBy()
         }
       },
@@ -88,11 +92,11 @@ class ServerMain {
     }
   }
 
-  gql() {
+  gql(): any {
     return {
       typeDefs: gqlSchema,
       resolvers: this.resolvers,
-      context: (request: Record<string, any> | Array<any>) => {
+      context: (request: Record<string, any> | Array<any>): any => {
         return {
           ...request,
           prisma

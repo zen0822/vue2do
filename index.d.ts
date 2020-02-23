@@ -6,6 +6,7 @@ declare module '*.bmp'
 declare module '*.jpg'
 declare module '*.scss'
 declare module '*.html'
+declare module '@vue2do/*'
 
 declare module '*.vue' {
   export default Vue

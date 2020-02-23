@@ -1,6 +1,6 @@
-export default {
+module.exports = {
   gql: {
-    execute: '../../tsDist/app/mock/server/gql.js',
+    execute: '../../tsDist/mock/server/gql/gql.js',
     port: 8888
   },
   api: [{
