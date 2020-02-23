@@ -12,7 +12,9 @@
     "vue2do-component": "./bin/command.js"
   },
   "scripts": {
-    "test": "echo \"No test specified in @vue2do/component\" && exit 0"
+    "test": "echo \"No test specified in @vue2do/component\" && exit 0",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w"
   },
   "devDependencies": {
     "@vue2do/build": "^1.0.7"
@@ -22,6 +24,7 @@
     "download": "^7.1.0"
   },
 	"peerDependencies": {
-    "@vue/composition-api": "^0.3.2"
+    "@vue/composition-api": "^0.3.2",
+    "typescript": "^3.6.3"
   }
 }

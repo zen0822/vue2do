@@ -1,4 +1,4 @@
-import { deepReplaceVal } from '@act2do/component/util/data/object'
+import { deepReplaceVal } from '@vue2do/component/util/data/object'
 
 const apiPath = function getApiPath(apiData: any, apiPrefix: string): any {
   return deepReplaceVal({

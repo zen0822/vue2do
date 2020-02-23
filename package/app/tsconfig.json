@@ -1,6 +1,0 @@
-{
-  "extend": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./tsDist"
-  }
-}

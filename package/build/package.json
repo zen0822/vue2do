@@ -14,9 +14,7 @@
 	"scripts": {
 		"debug": "node --nolazy --inspect-brk=9229 ./bin/command dev config ../../app/example/project.config.js",
 		"nodemon": "nodemon",
-		"test": "echo \"No test specified in @vue2do/build\" && exit 0",
-		"tsc": "tsc",
-		"tsc:watch": "tsc -w"
+		"test": "echo \"No test specified in @vue2do/build\" && exit 0"
 	},
 	"dependencies": {
 		"concurrently": "^3.5.0",
@@ -47,7 +45,6 @@
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"@vue/babel-preset-jsx": "^1.0.0",
 		"@vue/test-utils": "^1.0.0-beta.29",
-		"apollo-boost": "^0.4.0",
 		"autoprefixer": "*",
 		"babel-jest": "^24.8.0",
 		"babel-loader": "^8.0.4",

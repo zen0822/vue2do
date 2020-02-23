@@ -7,8 +7,8 @@ node_modules
 zen0822.github.io
 
 test/coverage/**
-example/dist/**
-tsDist/**
+example/dist
+tsDist
 
 coverage
 /test.html

@@ -20,7 +20,7 @@ module.exports = {
     },
     extraFileExtensions: ['.json'],
     project: [
-      './tsconfig.json',
+      './tsconfig.eslint.json',
       './app/**/tsconfig.json',
       './package/**/tsconfig.json'
     ],

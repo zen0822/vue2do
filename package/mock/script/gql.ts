@@ -7,7 +7,7 @@ import {
 } from 'graphql-yoga'
 
 class GqlServer {
-  config: any
+  config: any;
   projectConfigPath: string
 
   constructor(projectConfigPath: string) {
