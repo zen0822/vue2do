@@ -1,0 +1,36 @@
+{
+  "name": "@vue2do/mock",
+  "version": "1.0.8",
+  "description": "Mock server for Vue2do.",
+  "author": "zenwong@aliyun.com",
+  "license": "MIT",
+  "typings": "./index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "vue2do-mock": "./bin/command.js"
+  },
+  "scripts": {
+    "test": "echo \"No test specified in @vue2do/mock\" && exit 0",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w"
+  },
+  "devDependencies": {
+    "apollo-boost": "^0.4.0",
+    "apollo-engine": "^1.1.2",
+    "graphql": "^14.3.1",
+    "graphql-yoga": "^1.17.4",
+    "graphql-tag": "^2.10.1",
+    "graphql-voyager": "^1.0.0-rc.27"
+  },
+  "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
+  "dependencies": {
+    "@graphql-codegen/cli": "^1.2.1",
+    "@graphql-codegen/typescript": "1.2.1",
+    "apollo": "^2.22.0"
+  },
+	"peerDependencies": {
+    "typescript": "^3.6.3"
+  }
+}

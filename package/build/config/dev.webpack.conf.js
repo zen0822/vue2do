@@ -138,20 +138,20 @@ module.exports = function ({
     }
   }
 
-  if (process.env.SW_ENV === 'development') {
-    try {
-      fs.accessSync(swPath, fs.constants.F_OK)
+  // if (process.env.SW_ENV === 'development') {
+  //   try {
+  //     fs.accessSync(swPath, fs.constants.F_OK)
 
-      baseWebpackChain
-        .plugin('WorkboxPlugin.InjectManifest')
-        .use(WorkboxPlugin.InjectManifest, [{
-          swSrc: swPath,
-          importWorkboxFrom: 'disabled'
-        }])
-    } catch (error) {
-      console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
-    }
-  }
+  //     baseWebpackChain
+  //       .plugin('WorkboxPlugin.InjectManifest')
+  //       .use(WorkboxPlugin.InjectManifest, [{
+  //         swSrc: swPath,
+  //         importWorkboxFrom: 'disabled'
+  //       }])
+  //   } catch (error) {
+  //     console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
+  //   }
+  // }
 
   baseWebpackChain.merge(devConf)
 

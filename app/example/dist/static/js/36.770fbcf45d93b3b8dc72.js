@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[36],{544:function(n,e,t){"use strict";t.r(e),e.default={name:"page-not-found",render:function(n){return n("div",{style:{"font-size":"60px","text-align":"center"}},404)}}}}]);

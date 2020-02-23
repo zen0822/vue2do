@@ -20,5 +20,8 @@
   "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
   "dependencies": {
     "download": "^7.1.0"
+  },
+	"peerDependencies": {
+    "@vue/composition-api": "^0.3.2"
   }
 }

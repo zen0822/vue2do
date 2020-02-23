@@ -1,0 +1,39 @@
+{
+  "name": "@vue2do/test",
+  "version": "1.0.8",
+  "description": "Test utils for Vue.",
+  "author": "zenwong@aliyun.com",
+  "license": "MIT",
+  "typings": "./index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "vue2do-test": "./bin/command.js"
+  },
+  "scripts": {
+    "test": "echo \"No test specified in @vue2do/test\" && exit 0"
+  },
+  "devDependencies": {
+    "@vue2do/build": "^1.0.7",
+    "chai": "^4.2.0",
+    "karma": "^4.1.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage-istanbul-reporter": "^2.0.5",
+    "karma-mocha": "^1.3.0",
+    "karma-sauce-launcher": "^2.0.2",
+    "karma-sinon-chai": "^2.0.2",
+    "karma-source-map-support": "^1.2.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "^0.0.32",
+    "karma-webpack": "^4.0.2",
+    "mocha": "^5.2.0",
+    "sinon": "^7.1.1",
+    "sinon-chai": "^3.2.0"
+  },
+  "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
+  "dependencies": {
+    "download": "^7.1.0"
+  }
+}

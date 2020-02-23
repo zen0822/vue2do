@@ -19,7 +19,6 @@
 		"tsc:watch": "tsc -w"
 	},
 	"dependencies": {
-		"compression-webpack-plugin": "^1.0.1",
 		"concurrently": "^3.5.0",
 		"connect-history-api-fallback": "*",
 		"copy-to-clipboard": "^3.0.8",
@@ -47,7 +46,6 @@
 		"@babel/runtime": "^7.1.2",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"@vue/babel-preset-jsx": "^1.0.0",
-		"@vue/composition-api": "^0.3.2",
 		"@vue/test-utils": "^1.0.0-beta.29",
 		"apollo-boost": "^0.4.0",
 		"autoprefixer": "*",
@@ -78,7 +76,6 @@
 		"purgecss-webpack-plugin": "^1.6.0",
 		"sass-loader": "^7.1.0",
 		"script-loader": "^0.7.2",
-		"shelljs": "^0.8.2",
 		"style-loader": "^1.0.0",
 		"ts-loader": "^6.1.1",
 		"typescript": "^3.6.3",

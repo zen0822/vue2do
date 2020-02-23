@@ -62,7 +62,7 @@ module.exports = function ({
       projectPath,
       path.resolve(__dirname, '../util'),
       // path.resolve(__dirname, '../../component'),
-      path.resolve(globalRoot, './node_modules/@vue2do/component')
+      /@vue2do/
     ]
   }
 

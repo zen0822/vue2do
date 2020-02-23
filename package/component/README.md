@@ -1,13 +1,13 @@
-# Overview
+# Vue2do 基础组件
 
-## Install package
+## Install
 
 ```bash
-yarn add react-redux react-intl --dev
+yarn add @vue/composition-api
 ```
 
-> 因为组件要和业务项目的 react-redux、react-intl 共用一个 react context，所以需要安装依赖包 react-redux、react-intl
+## 下载 Icon Font
 
-## TODO
-
-* 处理 `extract-text-webpack-plugin`
+```bash
+@vue2do/component set icon dfasdji387983r.js
+```

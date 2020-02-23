@@ -1,15 +1,11 @@
 {
   "include": [
     "*.d.ts",
-    "package",
-    "app"
+    "package/*",
+    "app/*"
   ],
   "exclude": [
-    "node_modules",
-    "example/mock.config.js"
-  ],
-  "files": [
-    "example/app.config.js"
+    "node_modules"
   ],
   "compilerOptions": {
     "allowJs": true,

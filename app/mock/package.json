@@ -1,0 +1,17 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Min Mock application.",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "debug": "lerna run --scope @vue2do/build debug",
+    "dev": "vue2do-build dev project.config.js",
+    "mock": "vue2do-mock mock.config.js",
+    "prod": "vue2do-build prod project.config.js"
+  },
+  "devDependencies": {
+    "@vue2do/build": "^1.0.0",
+    "@vue2do/component": "^1.0.0"
+  }
+}

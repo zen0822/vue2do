@@ -5,3 +5,5 @@ dist
 tsDist
 example/server/sw
 test/coverage
+
+node_modules

@@ -38,6 +38,10 @@ module.exports = function ({
     }
   }
 
+  const httpName = port === 443
+    ? 'https'
+    : httpsOpt ? 'https' : 'http'
+
   const server = new WebpackDevServer(compiler, {
     https: httpsOpt,
     clientLogLevel: 'info',
@@ -56,7 +60,7 @@ module.exports = function ({
     stats: 'errors-warnings'
   })
 
-  console.log(`Starting frontend build server listening at ${httpsOpt ? 'http' : 'https'}://localhost:${port}\n`)
+  console.log(`Starting frontend build server listening at ${httpName}://localhost:${port}\n`)
 
   server.listen(port, function (err) {
     if (err) {
@@ -65,6 +69,6 @@ module.exports = function ({
       return false
     }
 
-    console.log(`Frontend build server listening at http://localhost:${port}\n`)
+    console.log(`Frontend build server listening at ${httpName}://localhost:${port}\n`)
   })
 }

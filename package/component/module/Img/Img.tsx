@@ -16,8 +16,9 @@
 
 import {
   ref,
-  createComponent
+  defineComponent
 } from '@vue/composition-api'
+
 import { CreateElement, VNode } from 'vue'
 import {
   compPrefix,
@@ -26,9 +27,9 @@ import {
   xclass
 } from '../../mixin/base'
 
-css4 ? import(`./Img.var.scss`) : import(`./Img.scss`)
+css4 ? import('./Img.var.scss') : import('./Img.scss')
 
-export default createComponent({
+export default defineComponent({
   name: 'Img',
 
   props: {
@@ -59,6 +60,10 @@ export default createComponent({
     contain,
     height,
     width
+  }: {
+    contain: string,
+    height: string,
+    width: string
   }) {
     const imgState = ref(1) // 1：图片加载前，2：图片加载成功，3：图片加载失败
     const _xclass = (className: string): string => xclass(`${compPrefix}-img`, className)

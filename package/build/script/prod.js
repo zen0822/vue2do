@@ -8,17 +8,18 @@ const ora = require('ora')
 const spinner = ora('building for production...')
 
 module.exports = function ({
-  projectConfigPath
-}) {
+  projectConfigPath,
+  executeFunctionName
+} = {}) {
   const config = require('../config')({
     projectConfigPath
   })
   const webpackConfig = require('../config/prod.webpack.conf')({
     config
   })
+  const projectConfig = config.project
 
   console.log(`构建文件将保存到 ${config.prod.outDir} 目录下`)
-
   spinner.start()
 
   webpack(webpackConfig.toConfig(), function (err, stats) {
@@ -52,10 +53,10 @@ module.exports = function ({
       chunkModules: false
     }))
 
-    // process.stdout.write(stats.toString({
+    if (executeFunctionName) {
+      return projectConfig[executeFunctionName]()
+    }
 
-    // }) + '\n')
-
-    process.exit(0)
+    return process.exit(0)
   })
 }

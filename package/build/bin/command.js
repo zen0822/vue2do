@@ -4,8 +4,10 @@ const path = require('path')
 const yargs = require('yargs')
 
 return yargs
+  .example('$0 dev path/project.config.js')
+  .example('$0 prod path/project.config.js')
   .command({
-    command: 'dev config <path>',
+    command: 'dev <path>',
     desc: '@vue2do/build command dev',
     builder(yargs) {
       yargs.options({
@@ -23,26 +25,26 @@ return yargs
     }
   })
   .command({
-    command: 'prod config <path>',
+    command: 'prod <path> [execute]',
     desc: '@vue2do/build command prod',
     builder(yargs) {
       yargs.options({
-        name: {
-          default: 'config',
-          describe: '配置文件的路径',
-          type: 'string',
-          choices: ['config']
-        },
         path: {
           demandOption: true,
           describe: 'Configuration path.',
+          type: 'string'
+        },
+        execute: {
+          default: '',
+          describe: 'Execute function name.',
           type: 'string'
         }
       })
     },
     handler: (argv) => {
       require('../script/prod')({
-        projectConfigPath: path.resolve(process.cwd(), argv.path)
+        projectConfigPath: path.resolve(process.cwd(), argv.path),
+        executeFunctionName: argv.execute
       })
     }
   })
