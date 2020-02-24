@@ -28,3 +28,9 @@ declare module '*.css' {
   const content: string
   export default content
 }
+
+declare module '@vue/composition-api/dist/component/component' {
+  interface SetupContext {
+    readonly refs: { [key: string]: Vue | Element | Vue[] | Element[] };
+  }
+}
