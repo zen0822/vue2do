@@ -32,7 +32,7 @@ class ServerMain {
           })
         },
         links: (): TLinks => this.links,
-        feed: async (_root: any, args: any, context: any, _info: any): Promise<TLinks> => {
+        feed: async (_root: any, args: any, context: any): Promise<TLinks> => {
           const where = args.filter ? {
             OR: [
               { 'description_contains': args.filter },
@@ -108,6 +108,6 @@ class ServerMain {
 
 const serverMain = new ServerMain()
 
-export default function () {
+export default function (): any {
   return serverMain.gql()
 }
