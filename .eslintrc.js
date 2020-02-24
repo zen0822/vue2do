@@ -20,8 +20,10 @@ module.exports = {
     },
     extraFileExtensions: ['.json'],
     project: [
+      './tsconfig.json',
       './tsconfig.eslint.json',
-      './package/**/tsconfig.json'
+      './package/component/tsconfig.json',
+      './package/mock/tsconfig.json'
     ],
     sourceType: 'module',
     tsconfigRootDir: './'

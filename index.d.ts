@@ -1,10 +1,11 @@
 declare module '*.svg'
 declare module '*.png'
 declare module '*.jpeg'
+declare module '*.jpg'
 declare module '*.gif'
 declare module '*.bmp'
-declare module '*.jpg'
 declare module '*.scss'
+declare module '*.pug'
 declare module '*.html'
 declare module '@vue2do/*'
 
@@ -19,7 +20,7 @@ declare module '*.pug' {
 }
 
 declare module '*.scss' {
-  const content: string
+  const content: { [className: string]: string }
   export default content
 }
 
