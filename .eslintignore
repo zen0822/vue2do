@@ -1,5 +1,4 @@
-src/asset/**/*.js
-src/lib/*/**/*.js
+./lib
 .vscode
 dist
 tsDist

@@ -10,7 +10,3 @@ datamodel: datamodel.prisma
 generate:
   - generator: typescript-client
     output: ../app/mock/server/prisma
-
-hooks:
-  post-deploy:
-    - yarn run prisma generate

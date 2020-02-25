@@ -2,6 +2,6 @@ overwrite: true
 schema: http://localhost:3000
 documents: null
 generates:
-  ./example/server/gql/schema.gql.ts:
+  ./app/mock/server/gql/schema.gql.ts:
     plugins:
       - typescript
