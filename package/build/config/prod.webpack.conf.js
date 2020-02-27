@@ -67,13 +67,9 @@ module.exports = function ({
     baseWebpackChain
       .plugin('CompressionWebpackPlugin')
       .use(CompressionWebpackPlugin, [{
-        asset: '[path].gz[query]',
+        filename: '[path].gz[query]',
         algorithm: 'gzip',
-        test: new RegExp(
-          '\\.(' +
-          config.prod.gzipExt.join('|') +
-          ')$'
-        ),
+        test: new RegExp(`\\.(${config.prod.gzipExt.join('|')})$`),
         threshold: 10240,
         minRatio: 0.8
       }])
