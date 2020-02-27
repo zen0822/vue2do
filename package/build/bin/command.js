@@ -25,7 +25,7 @@ return yargs
     }
   })
   .command({
-    command: 'prod <path> [execute]',
+    command: 'prod <path>',
     desc: '@vue2do/build command prod',
     builder(yargs) {
       yargs.options({
@@ -33,18 +33,12 @@ return yargs
           demandOption: true,
           describe: 'Configuration path.',
           type: 'string'
-        },
-        execute: {
-          default: '',
-          describe: 'Execute function name.',
-          type: 'string'
         }
       })
     },
     handler: (argv) => {
       require('../script/prod')({
-        projectConfigPath: path.resolve(process.cwd(), argv.path),
-        executeFunctionName: argv.execute
+        projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }
   })

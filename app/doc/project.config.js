@@ -6,7 +6,7 @@ module.exports = {
   execute: './main.ts',
   bundleAnalyzer: true, // 打包文件的分析
   favicon: './client/asset/img/favicon.ico',
-  gzip: true,
+  gzip: false,
   hotPort: 5167,
   htmlName: 'index',
   htmlTitle: 'doc',

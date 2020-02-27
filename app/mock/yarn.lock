@@ -1192,11 +1192,6 @@ directory-tree@2.2.1:
   resolved "https://registry.npmjs.org/directory-tree/-/directory-tree-2.2.1.tgz#3d56ce8a82a6c9612ac0879c6b4ed9ea54e89bde"
   integrity sha512-AWgnCDEKC2/oSAA/0Ae3RhXnMkvOZtNAVQu7wF2/qXF5Xm8LhjWnEXLV4Yza45SmWkNPvNlo4zWPhZjcVd4T5w==
 
-docker-compose@^0.23.2:
-  version "0.23.2"
-  resolved "https://registry.npmjs.org/docker-compose/-/docker-compose-0.23.2.tgz#1df67182f59f8490f6b6276215e56214462ba88f"
-  integrity sha512-ERapDQEaq7vuPBoH4olEn8Jv56JTmJAZhTEhrKfskBdRlRHAXqdW87oSAjCT0GxZQbKgMBUVrp8Jtufsfu4QHA==
-
 dot-prop@^4.1.0:
   version "4.2.0"
   resolved "https://registry.npmjs.org/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"

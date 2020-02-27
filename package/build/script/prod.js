@@ -9,7 +9,7 @@ const spinner = ora('building for production...')
 
 module.exports = function ({
   projectConfigPath,
-  executeFunctionName
+  onSuccess
 } = {}) {
   const config = require('../config')({
     projectConfigPath
@@ -53,9 +53,7 @@ module.exports = function ({
       chunkModules: false
     }))
 
-    if (executeFunctionName) {
-      return projectConfig[executeFunctionName]()
-    }
+    onSuccess && onSuccess()
 
     return process.exit(0)
   })
