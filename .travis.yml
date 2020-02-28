@@ -27,7 +27,7 @@ after_script:
   - yarn run coveralls
 deploy:
   - provider: script
-    script: yarn run prod.rel.ci:D
+    script: yarn run prod.rel:D
     skip_cleanup: true
     on:
       branch: master

@@ -3,15 +3,15 @@ import VueI18n from 'vue-i18n'
 import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
 import VueCompositionApi from '@vue/composition-api'
+import VueRouter from 'vue-router'
 
-import {
-  createRouter
-} from './router'
 import App from './App/App'
+import routeConfig from './route/route'
 
-import vue2do from '@vue2do/component'
+import vue2do from '@vue2do/component/index.js'
 import enLang from '@vue2do/component/language/en-US.json'
 
+Vue.use(VueRouter)
 Vue.use(VueI18n)
 Vue.use(VueApollo)
 Vue.use(VueCompositionApi)
@@ -25,20 +25,21 @@ const vue2doLang = new VueI18n({
 })
 const apolloProvider = new VueApollo({
   defaultClient: new ApolloClient({
-    uri: 'http://localhost:5168/gql'
+    uri: 'http://localhost:5168'
   })
 })
+const router = new VueRouter({
+  routes: routeConfig
+})
 
-export function createApp() {
-  const router = createRouter()
-
-  router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
+export function createApp(): any {
+  router.beforeEach((_to, _from, next) => {
+    // document.title = to.meta.title
     next()
   })
 
   const app = new Vue({
-    ...App,
+    ...(App as any),
     apolloProvider,
     i18n: vue2doLang,
     router
@@ -49,3 +50,8 @@ export function createApp() {
     router
   }
 }
+
+export const useLang = (): any => vue2doLang
+export const useApollo = (): any => apolloProvider
+export const useRoute = (): any => router
+export const useRouter = (): any => router

@@ -13,5 +13,8 @@ module.exports = {
     '/api/**': `http://localhost:5170`
   },
   staticDir: 'static',
-  type: 'spa'
+  type: 'spa',
+  webpack(config) {
+    // see https://github.com/neutrinojs/webpack-chain for config.
+  }
 }

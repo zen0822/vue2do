@@ -27,7 +27,7 @@ module.exports = function ({
       presets: [
         require.resolve('@vue/babel-preset-jsx'),
         [require.resolve('@babel/preset-env'), {
-          modules: false,
+          modules: 'commonjs',
           targets: {
             browsers: ['last 2 versions', 'ie >= 10', 'iOS >= 8']
           }
@@ -96,7 +96,7 @@ module.exports = function ({
         }
       }
     },
-    tsx: {
+    'ts|tsx': {
       ...commonRule,
       test: /\.tsx?$/,
       use: {
@@ -115,7 +115,7 @@ module.exports = function ({
         }
       }
     },
-    jsx: {
+    'js|jsx': {
       ...commonRule,
       test: /\.jsx?$/,
       use: {

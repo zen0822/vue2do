@@ -1,13 +1,21 @@
 import './Mock.scss'
-import 'vue-router'
-
+import {
+  onMounted,
+  defineComponent,
+  watch,
+  ref
+} from '@vue/composition-api'
 import { CreateElement, VNode } from 'vue'
 import gql from 'graphql-tag'
-import Component, { mixins } from 'vue-class-component'
-import { Watch } from 'vue-property-decorator'
-import MixinPageComponent from '../../MixinPageComponent'
 
-@Component({
+import {
+  useRouter
+} from '../../../app'
+
+const router: any = useRouter()
+
+export default defineComponent({
+  name: 'PageMock',
   // apollo: {
   //   links: {
   //     query: gql`{
@@ -16,116 +24,116 @@ import MixinPageComponent from '../../MixinPageComponent'
   //         url
   //       }
   //     }`,
-  //     prefetch: ({ route }) => ({ id: route.params.id }),
-  //     variables() {
+  //     prefetch: ({ route }: { route: any }): any => ({ id: route.params.id }),
+  //     variables(): any {
   //       return {
-  //         id: this.$route.params.id
+  //         id: 1
   //       }
   //     }
   //   }
-  // }
-})
+  // },
+  setup(_props, { root }) {
+    const links = ref([])
+    const articleId = ref(root.$route.params.id)
 
-/**
- * 声明业务组件 PageMock 并且继承（混入）MixinPageComponent 类
- */
-class PageMock extends mixins(MixinPageComponent) {
-  articleId = ''
-  testData = ''
-  links: Array<object> = []
-  $apollo: any
-  $route: any
-
-  /**
-   * 监听 links 状态变量
-   *
-   * @param val
-   */
-  @Watch('links')
-  onLinksChanged(val: Array<object>): any {
-    console.log(val)
-  }
-
-  text(): any {
-    return this.testData
-  }
-
-  fetchSWMock(): void {
-    fetch(new Request('/api/ex', {
-      headers: new Headers({
-        'Accept': 'application/json'
+    const fetchSWMock = (): void => {
+      fetch(new Request('/api/ex', {
+        headers: new Headers({
+          'Accept': 'application/json'
+        })
+      })).then((response) => {
+        return response.json()
+      }).then((data) => {
+        console.log(data)
       })
-    })).then((response) => {
-      return response.json()
-    }).then((data) => {
-      console.log(data)
-    })
-  }
+    }
 
-  /**
-   * 获取所有 Link
-   */
-  queryLinks(): any {
-    return this.$apollo.queries.links.refetch()
-  }
-
-  /**
-   * 添加 link
-   */
-  async addLink(): Promise<any> {
-    this.$apollo.mutate({
-      mutation: gql`
-          mutation ($msg: String!, $description: String!) {
-            postLink(
-              url: $msg,
-              description: $description
-            ) {
+    /**
+     * 获取所有 Link
+     */
+    const queryLinks = async (): Promise<any> => {
+      try {
+        const { data } = await root.$apollo.query({
+          query: gql`{
+            links {
               id,
               url
             }
-          }
-        `,
-      variables: {
-        msg: 'zen0822.github.io',
-        description: 'vue2do doc'
+          }`
+        })
+
+        links.value = data.links
+      } catch (error) {
+        console.warn(error)
       }
+    }
+
+    /**
+     * 添加 link
+     */
+    const addLink = async (): Promise<any> => {
+      root.$apollo.mutate({
+        mutation: gql`
+            mutation ($msg: String!, $description: String!) {
+              postLink(
+                url: $msg,
+                description: $description
+              ) {
+                id,
+                url
+              }
+            }
+          `,
+        variables: {
+          msg: 'zen0822.github.io',
+          description: 'vue2do doc'
+        }
+      })
+    }
+
+    onMounted(function () {
+      console.log('onMounted')
     })
-  }
+    watch(links, (links, prevLinks) => { console.log('Watch links', links, prevLinks) })
 
-  /**
-   * 组件安装完成之后执行的函数
-   */
-  mounted(): any {
-    this.articleId = this.$route.params.id
-  }
-
-  /**
-   * dom 渲染
-   *
-   * @param h
-   */
+    return {
+      addLink,
+      articleId,
+      links,
+      fetchSWMock,
+      queryLinks
+    }
+  },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  render(h: CreateElement): VNode {
+  render(this: any, h: CreateElement): VNode {
+    const {
+      links,
+      addLink,
+      queryLinks
+    } = this
+
     return (
       <div class='p-mock-p'>
+        <div
+          onClick={(): any => router.push('/404')}
+        >跳转到 404</div>
+
         <z-btn
           class='z-css-m-r'
-          onClick={(): any => this.addLink()}
+          onClick={(): any => addLink()}
         >增加 link</z-btn>
 
         <z-btn
           theme='success'
-          onClick={(): any => this.queryLinks()}
+          onClick={(): any => queryLinks()}
         >获取 link</z-btn>
 
         <ol>
-          {this.links.map((item: any) => (
+          {links.map((item: any) => (
             <li>{item.id} {item.url}</li>
           ))}
         </ol>
       </div>
     )
   }
-}
-
-export default PageMock
+})

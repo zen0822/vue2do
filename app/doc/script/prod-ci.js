@@ -19,19 +19,6 @@ vue2doBuild.prod({
       shelljs.rm('-rf', `${websiteProject}/static`)
       shelljs.cp('-r', path.resolve(__dirname, '../dist/*'), `${websiteProject}`)
       shelljs.echo(`Successfully copy to ${websiteProject}.`)
-
-      // TODO: 准备解析 log 到网站分支
-      // let log = shelljs.exec('git log')
-
-      shelljs.cd(websiteProject)
-
-      shelljs.exec('git add -A')
-      shelljs.exec('git commit -m "Update vue2do document website."')
-
-      if (shelljs.exec('git push origin master').code === 0) {
-        console.log('Success push to zen0822.github.io.')
-        shelljs.rm('-rf', websiteProject)
-      }
     } else {
       shelljs.echo('Git clone zen0822.github.io failed')
       shelljs.exit(1)

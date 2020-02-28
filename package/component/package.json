@@ -1,7 +1,7 @@
 {
   "name": "@vue2do/component",
   "version": "1.0.8",
-  "description": "Base component for Vue",
+  "description": "Base component for Vue.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
   "main": "./dist/vue2do-component.common.js",

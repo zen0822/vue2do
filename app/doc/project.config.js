@@ -16,26 +16,6 @@ module.exports = {
   staticDir: 'static',
   tpl: true,
   type: 'spa',
-  ciExe() {
-    // 在持续集成服务器上
-
-    // const websiteProject = './zen0822.github.io'
-
-    // console.log('release')
-
-    // shelljs.rm('-rf', websiteProject)
-
-    // if (shelljs.exec('git clone https://github.com/zen0822/zen0822.github.io.git').code === 0) {
-    //   shelljs.echo('Git clone zen0822.github.io success')
-
-    //   shelljs.rm('-rf', `${websiteProject}/static`)
-    //   shelljs.cp('-r', `./*`, `${websiteProject}`)
-    //   shelljs.echo(`Successfully copy to ${websiteProject}`)
-    // } else {
-    //   shelljs.echo('Git clone zen0822.github.io failed')
-    //   exit(1)
-    // }
-  },
   webpack(config) {
     // see https://github.com/neutrinojs/webpack-chain for config.
     config.module

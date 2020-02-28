@@ -1,7 +1,7 @@
 module.exports = {
   gql: {
-    execute: '../../tsDist/mock/server/gql/gql.js',
-    port: 8888
+    execute: '../../tsDist/app/mock/server/gql/gql.js',
+    port: 5168
   },
   api: [{
     name: 'ex',
