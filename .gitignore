@@ -3,6 +3,7 @@
 
 .vscode
 .yarn
+.yarnrc.yml
 node_modules
 zen0822.github.io
 
