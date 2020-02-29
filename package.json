@@ -64,7 +64,7 @@
     "stylelint": "^11.0.0",
     "stylelint-config-standard": "^19.0.0",
     "stylelint-scss": "^3.11.1",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-class-component": "^7.1.0",
     "vue-cropper": "^0.4.9",
     "vue-i18n": "^8.3.0",
