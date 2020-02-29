@@ -1,6 +1,10 @@
-# Started
+# Overview
 
 ## Configuration
+
+### 项目配置文件
+
+在 cli 中一定需要传 path 参数的
 
 ```js
 apiUrl: '//example.com', // api 的地址
@@ -16,13 +20,7 @@ name: 'example', // 项目名字，打包的文件名
 outDir: './dist', // 输出的项目路径
 proxy: {
   '/api/**': {
-    target: 'http://clockwin.ltkwin.com',
-    secure: false,
-    changeOrigin: true
-  },
-  '/report': {
-    target: 'http://xyajs.data.p2cdn.com',
-    pathRewrite: { '^/report': '/' },
+    target: 'https://www.api.com',
     secure: false,
     changeOrigin: true
   }
@@ -33,9 +31,34 @@ type: 'spa', // 项目类型 spa | map
 httpsOpt: true | { httpcert: './example.com.cert' }, // webpack 的 https 的配置
 webpack(config) {
   // webpack chain config
+  // see https://github.com/neutrinojs/webpack-chain for config.
   // 需要返回 config
   return config
 }
+```
+
+### ProjectConfig 参数
+
+require 引入时可以只传入 `config` 参数，则必须传入 `path`。
+如果也传入 `configPath` 了，会和 `config` 合并，且 `config` 的优先级更高
+
+```js
+
+const vue2doBuild = require('@vue2do/build')
+
+vue2doBuild.dev({
+  config: {
+    httpsOpt: false
+  },
+  configPath: path.resolve(__dirname, '../project.config.js')
+})
+
+vue2doBuild.dev({
+  config: {
+    httpsOpt: false,
+    path: __dirname
+  }
+})
 ```
 
 ## Webpack Chain
@@ -53,7 +76,7 @@ webpack(config) {
     }
   }
 },
-tsx: {
+'ts|tsx': {
   ...commonRule,
   test: /\.tsx?$/,
   use: {
@@ -71,7 +94,7 @@ tsx: {
     }
   }
 },
-jsx: {
+'js|jsx': {
   ...commonRule,
   test: /\.jsx?$/,
   use: {
@@ -163,4 +186,48 @@ media: {
     }
   }
 }
+```
+
+## Started
+
+### Cli
+
+```bash
+vue2do-build dev projectPath/project.config.js
+
+vue2do-build prod projectPath/project.config.js
+```
+
+### Require
+
+```js
+const vue2doBuild = require('@vue2do/build')
+
+vue2doBuild.dev({
+  config: {
+    httpsOpt: false
+  },
+  configPath: path.resolve(__dirname, '../project.config.js')
+})
+
+vue2doBuild.prod({
+  config: {
+    httpsOpt: false
+  },
+  configPath: path.resolve(__dirname, '../project.config.js')
+})
+```
+
+## Method
+
+### getConfig
+
+return: base dev prod
+
+```js
+const configuration = getConfig({
+  config: {
+    path: path.dirname(projectConfigPath)
+  }
+})
 ```

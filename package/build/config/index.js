@@ -1,12 +1,28 @@
 const path = require('path')
 
 module.exports = function ({
-  projectConfigPath
+  projectConfigPath,
+  projectConfig = {}
 } = {}) {
-  const projectPath = path.dirname(projectConfigPath)
-  let projectConfig = require(projectConfigPath)
-  projectConfig = projectConfig.default || projectConfig
+  let projectPath = ''
+  let projectConfigFromFile = {}
 
+  if (projectConfigPath) {
+    projectPath = path.dirname(projectConfigPath)
+    projectConfigFromFile = require(projectConfigPath)
+    projectConfigFromFile = projectConfigFromFile.default || projectConfigFromFile
+  } else if (projectConfig.path) {
+    projectPath = projectConfig.path
+  } else {
+    console.warn('If projectConfigPath is empty, Param projectConfig.path is required.')
+
+    return process.exit(1)
+  }
+
+  projectConfig = {
+    ...projectConfigFromFile,
+    ...projectConfig
+  }
   const mockPort = projectConfig.mockPort ? projectConfig.mockPort : 3000
 
   const config = {
@@ -21,11 +37,11 @@ module.exports = function ({
       env: {
         NODE_ENV: '"production"'
       },
-      outDir: path.resolve(projectPath, projectConfig.outDir),
-      assetPublicPath: projectConfig.baseUrl,
-      staticDir: projectConfig.staticDir,
+      outDir: path.resolve(projectPath, projectConfig.outDir || './dist'),
+      assetPublicPath: projectConfig.baseUrl || './',
+      staticDir: projectConfig.staticDir || './static',
       sourceMap: projectConfig.sourceMap === undefined ? '#nosources-source-map' : projectConfig.sourceMap,
-      gzip: projectConfig.gzip,
+      gzip: projectConfig.gzip === undefined ? false : projectConfig.gzip,
       gzipExt: ['js', 'css']
     },
     dev: {
@@ -33,9 +49,9 @@ module.exports = function ({
         NODE_ENV: '"development"'
       },
       mockPort,
-      hotPort: projectConfig.hotPort,
+      hotPort: projectConfig.hotPort || 80,
       assetPublicPath: '/',
-      staticDir: projectConfig.staticDir,
+      staticDir: projectConfig.staticDir || './static',
       proxyTable: {
         ...projectConfig.proxy
       },

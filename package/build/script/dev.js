@@ -7,12 +7,14 @@ const fs = require('fs')
 const webpack = require('webpack')
 
 module.exports = function ({
+  projectConfig = {},
   projectConfigPath
-}) {
+} = {}) {
   const config = require('../config')({
+    projectConfig,
     projectConfigPath
   })
-  const projectConfig = config.project
+  projectConfig = config.project
 
   const WebpackDevServer = require('webpack-dev-server')
   const webpackConfig = process.env.NODE_ENV === 'testing' ?

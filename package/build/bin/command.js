@@ -20,6 +20,7 @@ return yargs
     },
     handler: (argv) => {
       require('../script/dev')({
+        projectConfig: {},
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }
@@ -38,6 +39,7 @@ return yargs
     },
     handler: (argv) => {
       require('../script/prod')({
+        projectConfig: {},
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }

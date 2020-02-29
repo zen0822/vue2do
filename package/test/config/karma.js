@@ -5,7 +5,7 @@ module.exports = function (config) {
     ...karmaConf,
     autoWatch: true,
     customLaunchers: {
-      Chrome_travis_ci: {
+      'Chrome_travis_ci': {
         base: 'Chrome',
         flags: ['--no-sandbox']
       }
