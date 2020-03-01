@@ -23,6 +23,9 @@
   "dependencies": {
     "download": "^7.1.0"
   },
+  "devDependencies":{
+    "vue-cropper": "^0.4.9"
+  },
   "peerDependencies": {
     "@vue/composition-api": "^0.3.2",
     "typescript": "^3.6.3"

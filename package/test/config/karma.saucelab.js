@@ -22,13 +22,11 @@ module.exports = function (config) {
     coverageReporter: {
       dir: path.join(__dirname, 'coverage'),
       reporters: [{
-          type: 'html'
-        },
-        {
-          type: 'lcov',
-          subdir: 'lcov'
-        }
-      ]
+        type: 'html'
+      }, {
+        type: 'lcov',
+        subdir: 'lcov'
+      }]
     },
     customLaunchers,
     frameworks: ['mocha', 'sinon-chai', 'source-map-support'],

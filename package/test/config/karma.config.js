@@ -1,25 +1,4 @@
 const path = require('path')
-const config = require('./config.json')
-const merge = require('webpack-merge')
-const webpackBaseConf = require('../script/config/base.webpack.conf')({
-  appName: config.appName
-})
-
-const webpackConf = merge(webpackBaseConf, {
-  module: {
-    rules: [{
-      test: /\.js$|\.jsx$/,
-      use: {
-        loader: 'istanbul-instrumenter-loader'
-      },
-      include: path.resolve('./unit/'),
-      exclude: /node_modules|\.spec\.js$/
-    }]
-  }
-})
-
-delete webpackConf.entry
-delete webpackConf.optimization
 
 module.exports = {
   autoWatch: false,
@@ -50,7 +29,6 @@ module.exports = {
   port: 9877,
   reporters: ['spec', 'coverage-istanbul'],
   singleRun: false,
-  webpack: webpackConf,
   webpackMiddleware: {
     noInfo: true
   }

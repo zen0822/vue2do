@@ -7,7 +7,13 @@ function dev({
   config = {},
   configPath
 } = {}) {
-  require('./script/dev')({
+  if (!configPath && !config.path) {
+    console.warn('If configPath is empty, Param config.path is required.')
+
+    return process.exit(1)
+  }
+
+  return require('./script/dev')({
     projectConfig: config,
     projectConfigPath: configPath
   })
@@ -23,7 +29,13 @@ function prod({
   configPath,
   onSuccess
 } = {}) {
-  require('./script/prod')({
+  if (!configPath && !config.path) {
+    console.warn('If configPath is empty, Param config.path is required.')
+
+    return process.exit(1)
+  }
+
+  return require('./script/prod')({
     projectConfig: config,
     projectConfigPath: configPath,
     onSuccess

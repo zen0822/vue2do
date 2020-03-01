@@ -4,6 +4,7 @@
   "description": "Test utils for Vue.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
+  "main": "./index.js",
   "typings": "./index.d.ts",
   "publishConfig": {
     "access": "public"
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^4.1.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.2.0",

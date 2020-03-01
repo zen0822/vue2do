@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   api: [{
     name: 'ex',
     path: '/api/ex',

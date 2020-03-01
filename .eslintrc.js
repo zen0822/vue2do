@@ -23,7 +23,8 @@ module.exports = {
       './tsconfig.json',
       './tsconfig.eslint.json',
       './package/component/tsconfig.json',
-      './package/mock/tsconfig.json'
+      './package/mock/tsconfig.json',
+      './package/test/tsconfig.json'
     ],
     sourceType: 'module',
     tsconfigRootDir: './'
@@ -42,9 +43,10 @@ module.exports = {
     '@typescript-eslint',
     'html',
     'json',
+    'jsx',
     'promise',
     'import',
-    'node',
+    'node'
   ],
   globals: {
     'document': true,
@@ -60,6 +62,10 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-this-alias': 0,
+    'jsx/uses-factory': [1, {'pragma': 'JSX'}],
+    'jsx/factory-in-scope': [0, {'pragma': 'JSX'}],
+    'jsx/mark-used-vars': 1,
+    'jsx/no-undef': 0,
     'quotes': ['error', 'single', {
       'allowTemplateLiterals': true
     }],
