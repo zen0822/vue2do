@@ -18,7 +18,7 @@ before_install:
   - sudo apt-get install -y -qq yarn=1.9.4-1
   - export PATH="$(yarn global bin):$PATH"
   - yarn global add apollo
-  - yarn global add
+  - yarn global add lerna
   - lerna bootstrap
 before_script:
   - sudo chown root /opt/google/chrome/chrome-sandbox
