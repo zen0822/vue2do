@@ -1,6 +1,6 @@
 {
   "name": "@vue2do/app",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Utils for Vue2do.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "test": "echo \"No test specified in @vue2do/app\" && exit 0"
   },
   "devDependencies": {
-    "@vue2do/build": "^1.1.0"
+    "@vue2do/build": "^1.1.1"
   },
   "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
   "dependencies": {
