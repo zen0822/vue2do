@@ -24,7 +24,7 @@
     "start:sw": "cross-env SW_ENV=development SW_DEBUG=true nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "sw:dev": "nodemon --watch ./script/sw.dev.js --watch ./script/config/sw.dev.webpack.conf.js bin/sw.dev.js",
     "sw:prod": "node bin/sw.prod",
-    "test:D": "vue2do-test unit app/doc/test.config.js",
+    "test:D": "vue2do-test unit app/doc/test-ci.config.js",
     "test.ci:D": "node app/doc/script/test.ci.js",
     "test:ci": "cross-env BABEL_ENV=testing karma start test/karma.ci",
     "test:unit": "cross-env NODE_ENV=testing jest",

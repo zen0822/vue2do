@@ -24,7 +24,7 @@ before_script:
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 script:
-  - yarn run test.ci:D
+  - yarn run test:D
 after_script:
   - yarn run coveralls
 deploy:
