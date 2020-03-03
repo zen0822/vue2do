@@ -6,6 +6,8 @@
 
 在 cli 中一定需要传 path 参数的
 
+> Param webpack is `webpack chain`, [Webpack Chain Github](https://github.com/neutrinojs/webpack-chain)
+
 ```js
 apiUrl: '//example.com', // api 的地址
 baseUrl: './', // 项目的根路径，默认是 __dirname
@@ -53,7 +55,7 @@ vue2doBuild.dev({
   configPath: path.resolve(__dirname, '../project.config.js')
 })
 
-vue2doBuild.dev({
+vue2doBuild.prod({
   config: {
     httpsOpt: false,
     path: __dirname
@@ -222,7 +224,7 @@ vue2doBuild.prod({
 
 ### getConfig
 
-return: base dev prod
+return: base | dev | prod
 
 ```js
 const configuration = getConfig({

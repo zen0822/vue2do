@@ -12,7 +12,6 @@
     "vue2do-mock": "./bin/command.js"
   },
   "scripts": {
-    "test": "echo \"No test specified in @vue2do/mock\" && exit 0",
     "tsc": "tsc",
     "tsc:watch": "tsc -w"
   },
@@ -32,6 +31,6 @@
     "@graphql-codegen/typescript": "1.2.1"
   },
   "peerDependencies": {
-    "typescript": "^3.6.3"
+    "typescript": "^3.8.3"
   }
 }

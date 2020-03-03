@@ -1,7 +1,7 @@
 const path = require('path')
-const vue2doTest = require('@vue2do/test')
+const { unit } = require('@vue2do/test')
 
-vue2doTest.unit({
+unit({
   config: {
     singleRun: true,
     customLaunchers: {

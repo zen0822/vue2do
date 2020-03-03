@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import VueCompositionApi from '@vue/composition-api'
 
 import {
   createRouter
@@ -11,7 +10,6 @@ import vue2do from '@vue2do/component'
 import enLang from '@vue2do/component/language/en-US.json'
 
 Vue.use(VueI18n)
-Vue.use(VueCompositionApi)
 Vue.use(vue2do, {
   prefix: 'z'
 })

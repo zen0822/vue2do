@@ -5,6 +5,7 @@
 	"author": "zenwong@aliyun.com",
 	"license": "MIT",
 	"main": "./index.js",
+  "typings": "./types/index.d.ts",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -13,8 +14,7 @@
 	},
 	"scripts": {
 		"debug": "node --nolazy --inspect-brk=9229 ./bin/command dev config ../../app/example/project.config.js",
-		"nodemon": "nodemon",
-		"test": "echo \"No test specified in @vue2do/build\" && exit 0"
+		"nodemon": "nodemon"
 	},
 	"dependencies": {
 		"concurrently": "^3.5.0",
@@ -75,7 +75,6 @@
 		"script-loader": "^0.7.2",
 		"style-loader": "^1.0.0",
 		"ts-loader": "^6.1.1",
-		"typescript": "^3.6.3",
 		"uglifyjs-webpack-plugin": "^2.2.0",
 		"url-loader": "2.1.0",
 		"vue-hot-reload-api": "^2.3.1",
@@ -98,7 +97,8 @@
 	},
 	"peerDependencies": {
 		"core-js": "^3.0.0",
-		"eslint": "^6.5.1",
+		"eslint": "^6.8.0",
+		"typescript": "^3.8.3",
 		"vue": "^2.6.10",
 		"webpack": "^4.41.2"
 	},

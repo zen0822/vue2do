@@ -15,19 +15,20 @@
     "vue2do-component": "./bin/command.js"
   },
   "scripts": {
-    "test": "echo \"No test specified in @vue2do/component\" && exit 0",
+    "test": "vue2do-test unit ./test.config.js",
     "tsc": "tsc",
     "tsc:watch": "tsc -w"
   },
   "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
   "dependencies": {
+    "@vue2do/test": "^1.1.0",
     "download": "^7.1.0"
   },
-  "devDependencies":{
+  "devDependencies": {
     "vue-cropper": "^0.4.9"
   },
   "peerDependencies": {
     "@vue/composition-api": "^0.3.2",
-    "typescript": "^3.6.3"
+    "typescript": "^3.8.3"
   }
 }

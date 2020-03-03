@@ -3,7 +3,7 @@ module.exports = {
   baseUrl: './',
   execute: './main.ts',
   bundleAnalyzer: true, // 打包文件的分析
-  favicon: './client/asset/img/favicon.ico',
+  favicon: './client/asset/img/favicon.png',
   gzip: true,
   hotPort: 5167,
   htmlName: 'index',
@@ -17,7 +17,6 @@ module.exports = {
   tpl: true,
   type: 'spa',
   webpack(config) {
-    // see https://github.com/neutrinojs/webpack-chain for config.
     config.module
       .rule('protocol')
       .test(/blog-[\w\W]+.html$/)

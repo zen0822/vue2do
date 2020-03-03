@@ -14,7 +14,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended'
   ],
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     ecmaFeatures: {
       jsx: true
     },
@@ -62,8 +62,14 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-this-alias': 0,
-    'jsx/uses-factory': [1, {'pragma': 'JSX'}],
-    'jsx/factory-in-scope': [0, {'pragma': 'JSX'}],
+    '@typescript-eslint/no-unused-expressions': [2, {
+      'allowShortCircuit': true,
+      'allowTernary': true,
+      'allowTaggedTemplates': true
+    }],
+    '@typescript-eslint/prefer-optional-chain': 2,
+    'jsx/uses-factory': [1, { 'pragma': 'JSX' }],
+    'jsx/factory-in-scope': [0, { 'pragma': 'JSX' }],
     'jsx/mark-used-vars': 1,
     'jsx/no-undef': 0,
     'quotes': ['error', 'single', {
@@ -75,6 +81,7 @@ module.exports = {
     'space-before-function-paren': 0,
     'no-multiple-empty-lines': 0,
     'no-useless-escape': 0,
+    'no-unused-expressions': 0,
     'no-async-promise-executor': 0,
     'import/no-webpack-loader-syntax': 0,
     indent: ['error', 2, {

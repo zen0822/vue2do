@@ -17,7 +17,7 @@ return yargs
       })
     },
     handler: (argv) => {
-      require('../script/unit')({
+      require('../tsDist/script/unit').default({
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }

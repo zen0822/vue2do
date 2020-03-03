@@ -8,12 +8,12 @@ function unit({
   configPath
 } = {}) {
   if (!configPath && !config.path) {
-    console.warn('If configPath is empty, Param config.path is required.')
+    console.warn('Param config.path is required when configPath is empty!')
 
     return process.exit(1)
   }
 
-  return require('./script/unit')({
+  return require('./tsDist/script/unit').default({
     projectConfig: config,
     projectConfigPath: configPath
   })

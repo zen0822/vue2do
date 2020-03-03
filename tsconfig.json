@@ -1,6 +1,6 @@
 {
   "include": [
-    "*.d.ts",
+    "./types/*.d.ts",
     "./script/**/*.ts",
     "./app/**/*.ts",
     "./app/**/*.tsx"
@@ -43,7 +43,8 @@
     "target": "es5",
     "types": [
       "node",
-      "jest"
+      "mocha",
+      "chai"
     ]
   }
 }
