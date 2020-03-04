@@ -1,6 +1,6 @@
 language: node_js
-sudo: required
 dist: trusty
+os: linux
 node_js:
   - 10.16.0
 cache:
@@ -21,7 +21,7 @@ before_install:
   - yarn global add lerna
 before_script:
   - lerna bootstrap
-  - lerna run tsc
+  #- lerna run tsc
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 script:
@@ -31,22 +31,22 @@ after_script:
 deploy:
   - provider: script
     script: yarn run prod.rel:D
-    skip_cleanup: true
+    cleanup: true
     on:
       branch: master
   - provider: pages
-    skip-cleanup: true
-    github-token: $GITHUB_TOKEN
-    keep-history: true
-    local-dir: zen0822.github.io
+    cleanup: true
+    token: $GITHUB_TOKEN
+    keep_history: true
+    local_dir: zen0822.github.io
     repo: zen0822/zen0822.github.io
-    target-branch: master
+    target_branch: master
     verbose: true
-    committer-from-gh: true
+    committer_from_gh: true
     on:
       branch: master
   - provider: script
-    skip_cleanup: true
+    cleanup: true
     script: yarn run prod:D
     on:
       branch: dev
