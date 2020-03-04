@@ -21,7 +21,6 @@ before_install:
   - yarn global add lerna
   - lerna bootstrap
 before_script:
-  - lerna run tsc
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 script:
