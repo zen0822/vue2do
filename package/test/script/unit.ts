@@ -15,6 +15,7 @@ export default function ({
   projectConfig = {},
   projectConfigPath
 }: TUnit): void {
+  console.log('Starting test server.')
   let projectConfigDir = projectConfig.path || ''
 
   if (projectConfigPath) {

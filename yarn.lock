@@ -1468,33 +1468,9 @@
     prop-types "^15.5.10"
     shelljs "0.8.3"
 
-"@vue2do/build@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.0.tgz#1f7d79beac56d43a6fa3d80d80a8906249e1ab39"
-  integrity sha512-vsnGjfPXB31/6uLQfZqmiywajHwTIfiEUpTZFIoJxcxQ9fZtsJXlJR34BTYcB0xMaGA1JwChO3j3HFNrcnfY5A==
+"@vue2do/test@file:./package/test":
+  version "1.1.1"
   dependencies:
-    concurrently "^3.5.0"
-    connect-history-api-fallback "*"
-    copy-to-clipboard "^3.0.8"
-    cross-env "^6.0.0"
-    eventsource-polyfill "*"
-    express "*"
-    js-md5 "^0.7.3"
-    jsonp "^0.2.1"
-    node-sass "*"
-    nodemon "^1.19.2"
-    nprogress "*"
-    optimist "*"
-    ora "*"
-    prop-types "^15.5.10"
-    shelljs "0.8.3"
-
-"@vue2do/test@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.0.tgz#17975e6959d0399b3d3ed35b6fbee16540851b3c"
-  integrity sha512-v1IhFXsHZoZ1PcTJLY+iSzh2nURPJDQRRRhyMII/2tXaX/eJZdTwo0a7zX+Kp9qHfRJ2yPZFs03qfWSEW2acpA==
-  dependencies:
-    "@vue2do/build" "^1.1.0"
     download "^7.1.0"
 
 "@webassemblyjs/ast@1.8.5":

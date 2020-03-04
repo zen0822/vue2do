@@ -19,8 +19,9 @@ before_install:
   - export PATH="$(yarn global bin):$PATH"
   - yarn global add apollo
   - yarn global add lerna
-  - lerna bootstrap
 before_script:
+  - lerna bootstrap
+  - lerna run tsc
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
 script:
