@@ -1,18 +1,13 @@
 {
   "include": [
-    "global.d.ts",
-    "index.d.ts",
-    "src/**/*",
-    "example/client/**/*",
-    "example/server/gql/**/*",
-    "script/gql.ts"
+    "./types/*.d.ts",
+    "./script/**/*.ts",
+    "./app/**/*.ts",
+    "./app/**/*.tsx"
   ],
   "exclude": [
     "node_modules",
-    "example/mock.config.js"
-  ],
-  "files": [
-    "example/app.config.js"
+    "prisma"
   ],
   "compilerOptions": {
     "allowJs": true,
@@ -48,7 +43,8 @@
     "target": "es5",
     "types": [
       "node",
-      "jest"
+      "mocha",
+      "chai"
     ]
   }
 }

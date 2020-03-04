@@ -1,7 +1,8 @@
-src/asset/**/*.js
-src/lib/*/**/*.js
+./lib
 .vscode
 dist
 tsDist
-example/server/sw
-test/coverage
+coverage
+prisma
+
+node_modules

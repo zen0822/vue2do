@@ -1,0 +1,30 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Min Mock application.",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "vue2do-build dev ./project.config.js",
+    "mock": "vue2do-mock mock.config.js",
+    "prisma:db": "docker-compose up -d",
+    "prisma:start": "prisma deploy",
+    "prod": "vue2do-build prod project.config.js"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.3.7",
+    "@vue2do/component": "^1.0.0",
+    "apollo-boost": "^0.4.7",
+    "bcryptjs": "^2.4.3",
+    "dexie": "^2.0.4",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.3",
+    "jsonwebtoken": "^8.5.1",
+    "prisma-client-lib": "^1.34.0",
+    "vue-apollo": "^3.0.3"
+  },
+  "dependencies": {
+    "prisma": "^1.34.10"
+  }
+}

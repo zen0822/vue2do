@@ -13,6 +13,22 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended'
   ],
+  parserOptions: {
+    ecmaVersion: 2020,
+    ecmaFeatures: {
+      jsx: true
+    },
+    extraFileExtensions: ['.json'],
+    project: [
+      './tsconfig.json',
+      './tsconfig.eslint.json',
+      './package/component/tsconfig.json',
+      './package/mock/tsconfig.json',
+      './package/test/tsconfig.json'
+    ],
+    sourceType: 'module',
+    tsconfigRootDir: './'
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -23,16 +39,14 @@ module.exports = {
       }
     }
   ],
-  parserOptions: {
-    sourceType: 'module'
-  },
   plugins: [
     '@typescript-eslint',
     'html',
     'json',
+    'jsx',
     'promise',
     'import',
-    'node',
+    'node'
   ],
   globals: {
     'document': true,
@@ -48,6 +62,16 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-this-alias': 0,
+    '@typescript-eslint/no-unused-expressions': [2, {
+      'allowShortCircuit': true,
+      'allowTernary': true,
+      'allowTaggedTemplates': true
+    }],
+    '@typescript-eslint/prefer-optional-chain': 2,
+    'jsx/uses-factory': [1, { 'pragma': 'JSX' }],
+    'jsx/factory-in-scope': [0, { 'pragma': 'JSX' }],
+    'jsx/mark-used-vars': 1,
+    'jsx/no-undef': 0,
     'quotes': ['error', 'single', {
       'allowTemplateLiterals': true
     }],
@@ -57,6 +81,7 @@ module.exports = {
     'space-before-function-paren': 0,
     'no-multiple-empty-lines': 0,
     'no-useless-escape': 0,
+    'no-unused-expressions': 0,
     'no-async-promise-executor': 0,
     'import/no-webpack-loader-syntax': 0,
     indent: ['error', 2, {

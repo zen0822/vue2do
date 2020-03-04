@@ -3,13 +3,12 @@
 
 .vscode
 .yarn
+.yarnrc.yml
 node_modules
+app/**/dist
+tsDist
 zen0822.github.io
 
-test/coverage/**
-example/dist/**
-tsDist/**
-
 coverage
-/test.html
+app/**/dist
 /dist/webpack-bundle-report.html
