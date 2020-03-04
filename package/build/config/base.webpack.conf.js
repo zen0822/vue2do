@@ -19,11 +19,6 @@ module.exports = function ({
   const babelLoader = {
     loader: 'babel-loader',
     options: {
-      env: {
-        testing: {
-          plugins: [require.resolve('babel-plugin-istanbul')]
-        }
-      },
       presets: [
         require.resolve('@vue/babel-preset-jsx'),
         [require.resolve('@babel/preset-env'), {

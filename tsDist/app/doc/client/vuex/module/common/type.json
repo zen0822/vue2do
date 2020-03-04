@@ -1,0 +1,23 @@
+{
+    "window": {
+        "add": "common/window/add",
+        "get": "common/window/get"
+    },
+    "appContent": {
+        "add": "common/appContent/add",
+        "get": "common/appContent/get"
+    },
+    "compStage": {
+        "add": "common/compStage/add",
+        "get": "common/compStage/get"
+    },
+    "typeUI": {
+        "add": "common/typeUI/add",
+        "get": "common/typeUI/get"
+    },
+    "typeTheme": {
+        "add": "common/typeTheme/add",
+        "get": "common/typeTheme/get"
+    },
+    "deviceSize": "common/deviceSize"
+}

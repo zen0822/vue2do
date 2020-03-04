@@ -1,0 +1,23 @@
+{
+    "alert": {
+        "add": "common/alert/add",
+        "get": "common/alert/get"
+    },
+    "confirm": {
+        "add": "common/confirm/add",
+        "get": "common/confirm/get"
+    },
+    "tip": {
+        "add": "common/tip/add",
+        "get": "common/tip/get"
+    },
+    "toast": {
+        "add": "common/toast/add",
+        "get": "common/toast/get"
+    },
+    "tooltip": {
+        "add": "common/tooltip/add",
+        "get": "common/tooltip/get"
+    },
+    "deviceSize": "common/deviceSize"
+}

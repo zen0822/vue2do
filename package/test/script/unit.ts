@@ -33,6 +33,13 @@ export default function ({
     }
   }).base
 
+  // babel add config
+  // env: {
+  //   testing: {
+  //     plugins: [require.resolve('babel-plugin-istanbul')]
+  //   }
+  // },
+
   baseWebpackChain.devtool('#inline-source-map')
   baseWebpackChain.module
     .rule('istanbul_js|jsx')

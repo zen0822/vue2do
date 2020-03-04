@@ -5,6 +5,10 @@
   "author": "zenwong@aliyun.com",
   "license": "MIT",
   "typings": "./index.d.ts",
+  "files": [
+    "./bin",
+    "./tsDist"
+  ],
   "publishConfig": {
     "access": "public"
   },

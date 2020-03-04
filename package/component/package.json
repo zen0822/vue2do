@@ -8,6 +8,9 @@
   "module": "./dist/vue2do-component.esm.js",
   "unpkg": "./dist/vue2do-component.js",
   "typings": "./types/index.d.ts",
+  "files": [
+    "./**"
+  ],
   "publishConfig": {
     "access": "public"
   },

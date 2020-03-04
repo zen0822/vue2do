@@ -6,6 +6,10 @@
   "license": "MIT",
   "main": "./index.js",
   "typings": "./index.d.ts",
+  "files": [
+    "./bin",
+    "./tsDist"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -23,7 +27,8 @@
     "@types/node": "^12.7.5",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
-    "@vue2do/build": "file:../build",
+    "@vue2do/build": "^1.1.0",
+		"babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
     "glob": "^7.1.6",
     "istanbul-instrumenter-loader": "^3.0.1",
@@ -42,7 +47,6 @@
     "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0"
   },
-  "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
   "dependencies": {
     "download": "^7.1.0"
   },

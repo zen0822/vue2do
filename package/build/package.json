@@ -6,6 +6,10 @@
 	"license": "MIT",
 	"main": "./index.js",
 	"typings": "./types/index.d.ts",
+  "files": [
+    "./bin",
+    "./script"
+  ],
 	"publishConfig": {
 		"access": "public"
 	},
@@ -48,7 +52,6 @@
 		"autoprefixer": "*",
 		"babel-jest": "^24.8.0",
 		"babel-loader": "^8.0.4",
-		"babel-plugin-istanbul": "^5.1.4",
 		"babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
 		"chalk": "^2.4.2",
 		"clean-webpack-plugin": "^3.0.0",
@@ -101,6 +104,5 @@
 		"typescript": "^3.8.3",
 		"vue": "^2.6.10",
 		"webpack": "^4.41.2"
-	},
-	"gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f"
+	}
 }

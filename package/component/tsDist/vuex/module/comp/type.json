@@ -1,0 +1,20 @@
+{
+    "common": {
+        "add": "comp/common/add",
+        "delete": "comp/common/delete",
+        "get": "comp/common/get"
+    },
+    "input": {
+        "add": "comp/input/add",
+        "delete": "comp/input/delete",
+        "get": "comp/input/get"
+    },
+    "menu": {
+        "add": "comp/menu/add",
+        "delete": "comp/menu/delete"
+    },
+    "select": {
+        "add": "comp/select/add",
+        "delete": "comp/select/delete"
+    }
+}

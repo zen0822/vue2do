@@ -1,0 +1,11 @@
+{
+    "input": {
+        "add": "hub/input/add",
+        "delete": "hub/input/delete",
+        "get": "hub/input/get"
+    },
+    "select": {
+        "add": "hub/select/add",
+        "delete": "hub/select/delete"
+    }
+}
