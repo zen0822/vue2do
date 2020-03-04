@@ -1,5 +1,7 @@
 # Test Utils for Vue
 
+[![npm version](https://badge.fury.io/js/%40vue2do%2Ftest.svg)](https://badge.fury.io/js/%40vue2do%2Ftest)
+
 ## Configuration
 
 同 `karam-webpack` 的配置，详情查看 [karam 配置文档网站](http://karma-runner.github.io/4.0/config/configuration-file.html)

@@ -1,5 +1,7 @@
 # Overview
 
+[![npm version](https://badge.fury.io/js/%40vue2do%2Fbuild.svg)](https://badge.fury.io/js/%40vue2do%2Fbuild)
+
 ## Configuration
 
 ### 项目配置文件

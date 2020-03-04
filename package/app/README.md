@@ -1,5 +1,21 @@
 # App 构建工具
 
+[![npm version](https://badge.fury.io/js/%40vue2do%2Fapp.svg)](https://badge.fury.io/js/%40vue2do%2Fapp)
+
+---
+
+- [构建单页应用（spa）和多页应用（mpa）](#构建单页应用（spa）和多页应用（mpa）)
+  - [全局安装 vue2do](#全局安装-vue2do)
+  - [命令行](#命令行)
+    - [初始化应用项目](#初始化应用项目)
+    - [构建应用](#构建应用)
+  - [例子](#例子)
+    - [在当前目录构建名字为 zenProject 的应用项目](#在当前目录构建名字为-zenProject-的应用项目)
+    - [在当前应用项目构建名字为 zenMpa 的多页应用](#在当前应用项目构建名字为-zenMpa-的多页应用)
+- [app.config配置解析](#app.config配置解析)
+
+---
+
 ## 构建单页应用（spa）和多页应用（mpa）
 
 ### 全局安装 vue2do

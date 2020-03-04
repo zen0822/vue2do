@@ -1,5 +1,7 @@
 # Mock server
 
+[![npm version](https://badge.fury.io/js/%40vue2do%2Fmock.svg)](https://badge.fury.io/js/%40vue2do%2Fmock)
+
 ## GraphQL Server
 
 ### Configuration
