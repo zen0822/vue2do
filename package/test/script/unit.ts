@@ -1,8 +1,8 @@
 import path from 'path'
+import glob from 'glob'
 import { Server as KarmaServer } from 'karma'
 import karmaConfig from '../config/karma.config'
 import { getConfig } from '@vue2do/build'
-import glob from 'glob'
 
 type TUnit = {
   projectConfig: {

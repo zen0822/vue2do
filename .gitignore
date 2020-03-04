@@ -5,12 +5,10 @@
 .yarn
 .yarnrc.yml
 node_modules
-zen0822.github.io
-
-test/coverage/**
 app/**/dist
 tsDist
+zen0822.github.io
 
 coverage
-/test.html
+app/**/dist
 /dist/webpack-bundle-report.html
