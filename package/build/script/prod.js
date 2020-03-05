@@ -54,7 +54,8 @@ module.exports = function ({
       chunkModules: false
     }))
 
-    onSuccess?.()
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+    onSuccess && onSuccess()
 
     return process.exit()
   })
