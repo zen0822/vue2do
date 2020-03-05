@@ -25,9 +25,6 @@
 		"nodemon": "nodemon"
 	},
 	"dependencies": {
-		"nodemon": "^1.19.2"
-	},
-	"devDependencies": {
 		"@babel/core": "^7.1.2",
 		"@babel/plugin-proposal-class-properties": "^7.7.0",
 		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
@@ -99,6 +96,9 @@
 		"workbox-window": "^4.2.0",
 		"write": "^1.0.3",
 		"yargs": "^14.2.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.19.2"
 	},
 	"peerDependencies": {
 		"core-js": "^3.0.0",
