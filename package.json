@@ -13,6 +13,7 @@
     "dev:E": "vue2do-build dev app/ex/project.config.js",
     "dev:M": "vue2do-build dev app/mock/project.config.js",
     "gql:gen": "graphql-codegen --config codegen.yml",
+    "lerna": "lerna",
     "lerna:install": "lerna exec -- yarn install",
     "lerna:test": "lerna run test",
     "mock:M": "yarn run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./app/mock/mock.config.js",
