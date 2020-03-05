@@ -22,7 +22,7 @@ before_install:
   - yarn global add apollo
   - yarn global add lerna
   - yarn add node-sass
-  - lerna bootstrap
+  - yarn install --verbose
 before_script:
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
