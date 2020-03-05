@@ -22,7 +22,7 @@
     "tsc": "tsc",
     "tsc:watch": "tsc -w"
   },
-  "gitHead": "5d932ceecf87c36f80ead403744083d59cc5cfdd",
+  "gitHead": "7a0babc98722e99766e7303ae57dbf7340ebcc31",
   "dependencies": {
     "@vue2do/test": "^1.1.6",
     "download": "^7.1.0"

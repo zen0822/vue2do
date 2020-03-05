@@ -29,7 +29,7 @@
     "graphql-voyager": "^1.0.0-rc.27",
     "graphql-yoga": "^1.17.4"
   },
-  "gitHead": "5d932ceecf87c36f80ead403744083d59cc5cfdd",
+  "gitHead": "7a0babc98722e99766e7303ae57dbf7340ebcc31",
   "dependencies": {
     "@graphql-codegen/cli": "^1.2.1",
     "@graphql-codegen/typescript": "1.2.1"
