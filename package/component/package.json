@@ -1,6 +1,6 @@
 {
   "name": "@vue2do/component",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Base component for Vue.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
@@ -24,7 +24,7 @@
   },
   "gitHead": "6f116a3ce3fd9ef535a65825fd16cd12f4e2a82f",
   "dependencies": {
-    "@vue2do/test": "^1.1.4",
+    "@vue2do/test": "^1.1.5",
     "download": "^7.1.0"
   },
   "devDependencies": {
