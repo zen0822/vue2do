@@ -175,10 +175,10 @@
   resolved "https://registry.npmjs.org/@types/sinon/-/sinon-7.5.2.tgz#5e2f1d120f07b9cda07e5dedd4f3bf8888fccdb9"
   integrity sha512-T+m89VdXj/eidZyejvmoP9jivXgBDdkOSBVQjU9kF349NEx10QdPNGxHeZUaj1IlJ32/ewdyXJjnJxyxJroYwg==
 
-"@vue2do/build@^1.0.0", "@vue2do/build@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.4.tgz#d566cb2fdc6ea027f5e9a07b8365b590af2b603e"
-  integrity sha512-8Dngs92PY30nK+ceAr2hacW6taMk2iqryDw7S9hJwsQSJJg+nK8/fnqSvsp2iWXqTamHYajHZbyuoY4w6jsvpQ==
+"@vue2do/build@^1.0.0", "@vue2do/build@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.5.tgz#e9ae0305ab720b3f7b649519e6e2cf030b0bdfd8"
+  integrity sha512-s/9S8sP63J1868lWafE3EdcM2aBeZy+idQUpbFrde5EKMzO6xCyDOAZVpE1K+hQ5kxAhbWx/1VREKuhzACVL4w==
   dependencies:
     concurrently "^3.5.0"
     connect-history-api-fallback "*"
@@ -197,23 +197,23 @@
     shelljs "0.8.3"
 
 "@vue2do/component@^1.0.0":
-  version "1.1.7"
-  resolved "https://registry.npmjs.org/@vue2do/component/-/component-1.1.7.tgz#962ca448767058d5f74a59fdb4fd4f7a227197e9"
-  integrity sha512-QP68BtnC2/oyUVexSHyg8lDpxIje8O6j/IsX4OMvYxKq8oR3OKKv4Lf9rp22wJ0h3YaVhwuMqIO8eP36HY1Uyw==
+  version "1.1.8"
+  resolved "https://registry.npmjs.org/@vue2do/component/-/component-1.1.8.tgz#79126b313efcd19a5e4a9a91a5661c5252c3d2dd"
+  integrity sha512-GwBVvwEMENE9txf+n9gmBdeloj3zvK3A3e+MXJLRMcfqCwIJ9el/t8oL3ZlDsKkqmbiJypre6fHwmE6/HnNRnw==
   dependencies:
-    "@vue2do/test" "^1.1.7"
+    "@vue2do/test" "^1.1.8"
     download "^7.1.0"
 
-"@vue2do/test@^1.1.0", "@vue2do/test@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.7.tgz#5858ce7d54bfb885ad64e744f6a29446e70efc27"
-  integrity sha512-QjldM4+Gyt2Eb00iqLw/f1WrZWqfD6lGnf5FxUrfVBx6O3G5S0655VdbCliBGEc8VhD/+eOLmhGMijC4hfg2lQ==
+"@vue2do/test@^1.1.0", "@vue2do/test@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.8.tgz#603fb8c50b49dfed58807a69f8c2d0906bac7078"
+  integrity sha512-5jqxaVqTQTsVs+VQ/6Pax3TCFtsOzN+dNcOVabUh3jnUP81BJt0S7lxhmEXTs3vHvsOVBIpAQYLmgGToC9KPwg==
   dependencies:
     "@types/karma" "^4.4.0"
     "@types/node" "^12.7.5"
     "@types/sinon" "^7.5.2"
     "@types/sinon-chai" "^3.2.3"
-    "@vue2do/build" "^1.1.4"
+    "@vue2do/build" "^1.1.5"
     babel-plugin-istanbul "^5.1.4"
     chai "^4.2.0"
     download "^7.1.0"
