@@ -23,14 +23,8 @@
     "tsc:watch": "tsc -w"
   },
   "dependencies": {
-    "@types/karma": "^4.4.0",
-    "@types/node": "^12.7.5",
-    "@types/sinon": "^7.5.2",
-    "@types/sinon-chai": "^3.2.3",
-    "@vue2do/build": "^1.1.5",
     "babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
-    "download": "^7.1.0",
     "glob": "^7.1.6",
     "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^4.1.0",
@@ -47,6 +41,13 @@
     "mocha": "^5.2.0",
     "sinon": "^7.1.1",
     "sinon-chai": "^3.2.0"
+  },
+	"devDependencies": {
+    "@types/karma": "^4.4.0",
+    "@types/node": "^12.7.5",
+    "@types/sinon": "^7.5.2",
+    "@types/sinon-chai": "^3.2.3",
+    "@vue2do/build": "^1.1.5"
   },
   "peerDependencies": {
     "typescript": "^3.8.3"

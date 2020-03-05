@@ -54,7 +54,7 @@ module.exports = function ({
       chunkModules: false
     }))
 
-    onSuccess && onSuccess()
+    onSuccess?.()
 
     return process.exit()
   })
