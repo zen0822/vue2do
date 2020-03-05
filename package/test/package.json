@@ -7,6 +7,8 @@
   "main": "./index.js",
   "typings": "./index.d.ts",
   "files": [
+    "./index.js",
+    "./index.d.ts",
     "bin",
     "tsDist"
   ],
@@ -21,9 +23,7 @@
     "tsc:watch": "tsc -w"
   },
   "dependencies": {
-    "@types/chai": "^4.2.9",
     "@types/karma": "^4.4.0",
-    "@types/mocha": "^7.0.1",
     "@types/node": "^12.7.5",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",

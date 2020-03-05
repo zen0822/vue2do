@@ -7,6 +7,8 @@
 	"main": "./index.js",
 	"typings": "./types/index.d.ts",
 	"files": [
+    "./index.js",
+    "./index.d.ts",
 		"bin",
 		"config",
 		"script",
