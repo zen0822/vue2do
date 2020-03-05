@@ -21,17 +21,16 @@ before_script:
   - yarn run app:install
 script:
   - yarn run test.ci:D
-  - yarn run prod.rel.ci:D
 after_script:
   - yarn run coveralls
 deploy:
   - provider: script
-    script:
-    cleanup: true
+    script: yarn run prod.rel.ci:D
+    skip_cleanup: true
     on:
       branch: master
   - provider: pages
-    cleanup: true
+    skip_cleanup: true
     token: $GITHUB_TOKEN
     keep_history: true
     local_dir: zen0822.github.io
@@ -42,7 +41,7 @@ deploy:
     on:
       branch: master
   - provider: script
-    cleanup: true
+    skip_cleanup: true
     script: yarn run prod:D
     on:
       branch: dev
