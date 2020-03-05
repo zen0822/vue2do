@@ -16,9 +16,7 @@
   },
   "devDependencies": {
     "@vue2do/build": "^1.0.0",
-    "@vue2do/component": "^1.0.0"
-  },
-  "dependencies": {
+    "@vue2do/component": "^1.0.0",
     "@vue2do/test": "^1.1.0"
   }
 }
