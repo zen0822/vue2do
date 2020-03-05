@@ -23,5 +23,6 @@
   },
   "dependencies": {
     "download": "^7.1.0"
-  }
+  },
+  "gitHead": "2dc9e8d8268115ebb5c60ef2a5d6da30c87868a2"
 }
