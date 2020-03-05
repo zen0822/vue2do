@@ -21,11 +21,12 @@ before_script:
   - yarn run app:install
 script:
   - yarn run test.ci:D
+  - yarn run prod.rel.ci:D
 after_script:
   - yarn run coveralls
 deploy:
   - provider: script
-    script: yarn run prod.rel.ci:D
+    script:
     cleanup: true
     on:
       branch: master
