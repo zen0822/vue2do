@@ -84,8 +84,8 @@
   "dependencies": {
     "@commitlint/config-conventional": "^8.2.0",
     "@types/ws": "^7.2.1",
-    "@vue2do/build": "^1.1.4",
-    "@vue2do/test": "^1.1.4",
+    "@vue2do/build": "^1.1.2",
+    "@vue2do/test": "^1.1.5",
     "commitlint": "^8.2.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
