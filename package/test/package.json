@@ -7,8 +7,8 @@
   "main": "./index.js",
   "typings": "./index.d.ts",
   "files": [
-    "./bin/**",
-    "./tsDist/**"
+    "bin",
+    "tsDist"
   ],
   "publishConfig": {
     "access": "public"
