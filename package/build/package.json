@@ -7,8 +7,10 @@
 	"main": "./index.js",
 	"typings": "./types/index.d.ts",
 	"files": [
-		"./bin",
-		"./script"
+		"bin",
+		"config",
+		"script",
+		"tpl"
 	],
 	"publishConfig": {
 		"access": "public"
