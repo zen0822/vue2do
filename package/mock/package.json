@@ -1,6 +1,6 @@
 {
   "name": "@vue2do/mock",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Mock server for Vue2do.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "tsc:watch": "tsc -w"
   },
   "devDependencies": {
-    "@vue2do/component": "^1.1.2",
+    "@vue2do/component": "^1.1.3",
     "apollo": "^2.22.0",
     "apollo-boost": "^0.4.0",
     "apollo-engine": "^1.1.2",
