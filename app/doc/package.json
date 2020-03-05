@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "Example application.",
+  "description": "Document application.",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
@@ -15,9 +15,9 @@
     "tsc:watch": "tsc -w"
   },
   "devDependencies": {
-    "@vue2do/build": "^1.1.7",
-    "@vue2do/component": "^1.1.11",
-    "@vue2do/test": "^1.1.10"
+    "@vue2do/build": "^1.1.8",
+    "@vue2do/component": "^1.1.12",
+    "@vue2do/test": "^1.1.11"
   },
   "dependencies": {
     "shelljs": "^0.8.3"

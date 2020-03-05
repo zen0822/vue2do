@@ -1193,10 +1193,10 @@
     lodash "^4.17.15"
     pretty "^2.0.0"
 
-"@vue2do/build@^1.1.7":
-  version "1.1.7"
-  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.7.tgz#7f918b2d02a02c3562a4ee916ae29e7b1fa257d6"
-  integrity sha512-tlxuiLb/iKcQrydb1PowiqZZZm3J4G3zg7mBI03ihpv2EtCrVy5eKN1PQl9H0B0e9xdqDll4I2XVv0r/ZTgv+g==
+"@vue2do/build@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.8.tgz#656304ae1a2f750a37609dfc097f55cdf7cd63f0"
+  integrity sha512-QIQgrBzgwiKItN88TCsew1+wOj0sXsd3kpen1pO9ym2qw0xWXTpua5w7I02UVdIYwWNjKcjgJHX6eO5NN3z5mg==
   dependencies:
     "@babel/core" "^7.1.2"
     "@babel/plugin-proposal-class-properties" "^7.7.0"
@@ -1270,19 +1270,19 @@
     write "^1.0.3"
     yargs "^14.2.0"
 
-"@vue2do/component@^1.1.11":
-  version "1.1.11"
-  resolved "https://registry.npmjs.org/@vue2do/component/-/component-1.1.11.tgz#6350ed29f7670aaef72cc1d846d0744ef592d925"
-  integrity sha512-TZYcmEIQxxZbf0usvt4GqcbwfVFdyfTKPED7B0RYRhvmTIj8P76S3U33uqtTIhVnNab5xNK/dTOo/ccD14EHmg==
+"@vue2do/component@^1.1.12":
+  version "1.1.12"
+  resolved "https://registry.npmjs.org/@vue2do/component/-/component-1.1.12.tgz#9097031de77baef53e5422f65afb736d2e3c9877"
+  integrity sha512-BU1k3R8QWbX+as07pko2Ts14EbZRKR6oPMKSrecw4mCuVj+fwfuLcArpmMXwzXLbVpoCa8pXvRmua0ghKI+TBA==
   dependencies:
-    "@vue2do/test" "^1.1.10"
+    "@vue2do/test" "^1.1.11"
     download "^7.1.0"
     vue-cropper "^0.4.9"
 
-"@vue2do/test@^1.1.10":
-  version "1.1.10"
-  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.10.tgz#30be2e0b479cd00103ff528d740197da73e5d62e"
-  integrity sha512-tcJevntJVyYgROQ0ZeRxCexCN1+cS5LiYaQ0O6OCafmTsf9G7nuZ+/l8lBNPUu6D026Emo+9RiJP8KA7bA4ZAQ==
+"@vue2do/test@^1.1.11":
+  version "1.1.11"
+  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.11.tgz#1333f253c4d721acc6db4bda8db2ee32562c007f"
+  integrity sha512-n3/pGL5ryR5hBM0j8DEgUMClZqxHa6bFVdjwMJlquoLHRrA/hdeU9p1/fkO9p+8OVqUSGhSqhz+vfqrOFGXoAw==
   dependencies:
     babel-plugin-istanbul "^5.1.4"
     chai "^4.2.0"
