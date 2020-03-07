@@ -6,7 +6,7 @@
 .yarnrc.yml
 node_modules
 app/**/dist
-./tsDist
+./tsDist/**
 zen0822.github.io
 
 coverage
