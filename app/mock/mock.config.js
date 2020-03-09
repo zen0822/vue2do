@@ -1,7 +1,24 @@
+const path = require('path')
+
 module.exports = {
   gql: {
     execute: '../../tsDist/app/mock/server/gql/gql.js',
     port: 5168
+  },
+  sw: {
+    webpack(config) {
+      config
+        .entryPoints
+        .clear()
+        .end()
+        .entry('sw')
+        .add(path.resolve(__dirname, './client/sw/sw.worker.ts'))
+        .end()
+        .devServer
+        .stats('verbose')
+
+      return config
+    }
   },
   api: [{
     name: 'ex',

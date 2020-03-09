@@ -33,8 +33,8 @@ const router = new VueRouter({
 })
 
 export function createApp(): any {
-  router.beforeEach((_to, _from, next) => {
-    // document.title = to.meta.title
+  router.beforeEach((to, _from, next) => {
+    document.title = to.meta.title
     next()
   })
 

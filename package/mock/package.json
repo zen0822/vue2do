@@ -4,10 +4,10 @@
   "description": "Mock server for Vue2do.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
-  "typings": "./index.d.ts",
+  "typings": "./types/index.d.ts",
+  "main": "tsDist/index.js",
   "files": [
-    "index.js",
-    "index.d.ts",
+    "types",
     "bin",
     "tsDist"
   ],

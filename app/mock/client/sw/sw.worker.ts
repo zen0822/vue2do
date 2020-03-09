@@ -35,7 +35,7 @@ class ServiceWorkerMain {
     this.registerRoute()
   }
 
-  private async init() {
+  private async init(): Promise<void> {
     workboxRouting.registerRoute(
       new RegExp('https://localhost/#/'),
       process.env.SW_ENV === 'development'
@@ -53,7 +53,7 @@ class ServiceWorkerMain {
     })
   }
 
-  private registerRoute() {
+  private registerRoute(): void {
     type C = { url: string, params: { data: object, name: string } }
 
     mockrc.api.forEach(async (item) => {
@@ -83,7 +83,8 @@ class ServiceWorkerMain {
             JSON.stringify({
               url,
               data: params.data
-            }), {
+            }),
+            {
               status: 200,
               headers: new Headers({
                 'Accept-Charset': 'utf-8',

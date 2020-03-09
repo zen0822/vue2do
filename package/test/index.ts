@@ -3,20 +3,24 @@
  *
  * configPath {string} - 配置文件路径
  */
-function unit({
+async function unit({
   config = {},
-  configPath
-} = {}) {
+  configPath = ''
+}: any = {}): Promise<any> {
   if (!configPath && !config.path) {
     console.warn('Param config.path is required when configPath is empty!')
 
     return process.exit(1)
   }
 
-  return require('./tsDist/script/unit').default({
+  const startUnitTest = await import('./script/unit')
+
+  return startUnitTest.default({
     projectConfig: config,
     projectConfigPath: configPath
   })
 }
 
-exports.unit = unit
+export {
+  unit
+}

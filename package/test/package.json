@@ -4,11 +4,10 @@
   "description": "Test utils for Vue.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
+  "main": "./tsDist/index.js",
+  "typings": "./types/index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts",
+    "types",
     "bin",
     "tsDist"
   ],

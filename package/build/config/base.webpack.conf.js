@@ -346,9 +346,5 @@ module.exports = function ({
       }])
   }
 
-  if (projectConfig.webpack) {
-    return projectConfig.webpack(webpackChainConfig)
-  }
-
   return webpackChainConfig
 }

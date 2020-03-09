@@ -9,4 +9,3 @@ node_modules
 zen0822.github.io
 
 coverage
-./dist/webpack-bundle-report.html

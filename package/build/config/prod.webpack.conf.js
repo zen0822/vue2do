@@ -75,5 +75,9 @@ module.exports = function ({
       }])
   }
 
+  if (typeof projectConfig.webpack === 'function') {
+    return projectConfig.webpack(baseWebpackChain)
+  }
+
   return baseWebpackChain
 }

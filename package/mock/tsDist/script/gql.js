@@ -106,7 +106,7 @@ var GqlServer = /** @class */ (function () {
                                 port: config_2.gql.port,
                                 httpServer: httpServer,
                                 graphqlPaths: ['/']
-                            }, function () { return console.log("GraphQL server with Apollo Engine is running on http://localhost:" + config_2.gql.port); });
+                            }, function () { return console.log("@vue2do/mock: GraphQL server with Apollo Engine is running on http://localhost:" + config_2.gql.port); });
                         }
                         else {
                             graphQLServer.start({
@@ -114,7 +114,7 @@ var GqlServer = /** @class */ (function () {
                                 tracing: {
                                     mode: 'enabled'
                                 }
-                            }, function () { return console.log("GraphQL server is running on http://localhost:" + config_2.gql.port); });
+                            }, function () { return console.log("@vue2do/mock: GraphQL server is running on http://localhost:" + config_2.gql.port); });
                         }
                         return [3 /*break*/, 4];
                     case 3:

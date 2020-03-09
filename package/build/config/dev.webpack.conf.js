@@ -155,5 +155,9 @@ module.exports = function ({
 
   baseWebpackChain.merge(devConf)
 
+  if (typeof projectConfig.webpack === 'function') {
+    return projectConfig.webpack(baseWebpackChain)
+  }
+
   return baseWebpackChain
 }
