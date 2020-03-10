@@ -17,7 +17,7 @@ bundleAnalyzer: true, // 打包文件的分析
 execute: './index.js', // 执行文件路径
 favicon: './public/icon-coin.png', // favicon 路径
 gzip: true, // 开启 gzip
-hotPort: 3000, // 热开发端口
+port: 3000, // 热开发端口
 htmlName: 'index', // html 的名字
 htmlTitle: 'ex', // html 标题
 name: 'example', // 项目名字，打包的文件名

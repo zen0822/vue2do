@@ -59,20 +59,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var build_1 = require("@vue2do/build");
 var path_1 = __importDefault(require("path"));
+var chalk_1 = __importDefault(require("chalk"));
 function dev(_a) {
     var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
+    var _d, _e;
     return __awaiter(this, void 0, void 0, function () {
-        var configOpt;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
-                case 0: return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
+        var configFile, configOpt, swConfig;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
+                case 0:
+                    console.log(chalk_1.default.green('@vue2do/mock') + ": Starting service worker server.");
+                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
                 case 1:
-                    configOpt = _d.sent();
-                    console.log('@vue2do/mock: Starting service worker server.');
+                    configFile = _f.sent();
+                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
+                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
                     build_1.dev({
-                        config: __assign(__assign({}, projectConfig), { path: path_1.default.dirname(projectConfigPath), webpack: function (config) {
-                                var _a;
-                                return (_a = configOpt === null || configOpt === void 0 ? void 0 : configOpt.sw) === null || _a === void 0 ? void 0 : _a.webpack(config);
+                        config: __assign(__assign({}, projectConfig), { port: swConfig.port, path: projectConfig.path === undefined
+                                ? path_1.default.dirname(projectConfigPath)
+                                : projectConfig.path, webpack: function (config) {
+                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
                             } })
                     });
                     return [2 /*return*/];
@@ -82,12 +88,30 @@ function dev(_a) {
 }
 exports.dev = dev;
 function prod(_a) {
-    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b;
-    console.log('Publish service worker.');
-    build_1.prod({
-        config: __assign(__assign({}, projectConfig), { webpack: function (config) {
-                return config;
-            } })
+    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
+    var _d, _e;
+    return __awaiter(this, void 0, void 0, function () {
+        var configFile, configOpt, swConfig;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
+                case 0:
+                    console.log(chalk_1.default.green('@vue2do/mock') + ": Publish service worker.");
+                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
+                case 1:
+                    configFile = _f.sent();
+                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
+                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
+                    build_1.prod({
+                        clear: true,
+                        config: __assign(__assign({}, projectConfig), { port: swConfig.port, path: projectConfig.path === undefined
+                                ? path_1.default.dirname(projectConfigPath)
+                                : projectConfig.path, webpack: function (config) {
+                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
+                            } })
+                    });
+                    return [2 /*return*/];
+            }
+        });
     });
 }
 exports.prod = prod;

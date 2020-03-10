@@ -1,11 +1,9 @@
 const path = require('path')
-const fs = require('fs')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const WorkboxPlugin = require('workbox-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = function ({
@@ -31,7 +29,7 @@ module.exports = function ({
     // Object.keys(baseWebpackConfig.entry).forEach((entryName) => {
     //   Object.assign(baseEntry, {
     //     [entryName]: baseWebpackConfig.entry[entryName].concat([
-    //       `webpack-dev-server/client?http://0.0.0.0:${config.dev.hotPort}`,
+    //       `webpack-dev-server/client?http://0.0.0.0:${config.dev.port}`,
     //       'webpack/hot/dev-server',
     //       'react-hot-loader/patch'
     //     ])
@@ -135,23 +133,24 @@ module.exports = function ({
           favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
         }]
       }
+    },
+    devServer: {
+      clientLogLevel: 'info',
+      disableHostCheck: true,
+      hot: true,
+      historyApiFallback: true,
+      headers: {
+        'X-Custom-Header': 'yes'
+      },
+      inline: true,
+      proxy: config.dev.proxyTable,
+      watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+      },
+      stats: 'errors-warnings'
     }
   }
-
-  // if (process.env.SW_ENV === 'development') {
-  //   try {
-  //     fs.accessSync(swPath, fs.constants.F_OK)
-
-  //     baseWebpackChain
-  //       .plugin('WorkboxPlugin.InjectManifest')
-  //       .use(WorkboxPlugin.InjectManifest, [{
-  //         swSrc: swPath,
-  //         importWorkboxFrom: 'disabled'
-  //       }])
-  //   } catch (error) {
-  //     console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
-  //   }
-  // }
 
   baseWebpackChain.merge(devConf)
 

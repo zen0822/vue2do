@@ -279,7 +279,7 @@ module.exports = function ({
       maxAssetSize: 10485760
     },
 
-    stats: 'verbose',
+    stats: 'normal',
 
     resolve: {
       modules: [path.resolve(__dirname, '../node_modules'), 'node_modules'],

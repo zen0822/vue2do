@@ -46,6 +46,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var chalk_1 = __importDefault(require("chalk"));
 var config_1 = __importDefault(require("../config"));
 var middleware_1 = require("graphql-voyager/middleware");
 var apollo_engine_1 = require("apollo-engine");
@@ -106,7 +107,7 @@ var GqlServer = /** @class */ (function () {
                                 port: config_2.gql.port,
                                 httpServer: httpServer,
                                 graphqlPaths: ['/']
-                            }, function () { return console.log("@vue2do/mock: GraphQL server with Apollo Engine is running on http://localhost:" + config_2.gql.port); });
+                            }, function () { return console.log(chalk_1.default.green('@vue2do/mock') + ": GraphQL server with Apollo Engine is running on http://localhost:" + config_2.gql.port); });
                         }
                         else {
                             graphQLServer.start({
@@ -114,7 +115,7 @@ var GqlServer = /** @class */ (function () {
                                 tracing: {
                                     mode: 'enabled'
                                 }
-                            }, function () { return console.log("@vue2do/mock: GraphQL server is running on http://localhost:" + config_2.gql.port); });
+                            }, function () { return console.log(chalk_1.default.green('@vue2do/mock') + ": GraphQL server is running on http://localhost:" + config_2.gql.port); });
                         }
                         return [3 /*break*/, 4];
                     case 3:

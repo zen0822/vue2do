@@ -7,16 +7,21 @@ module.exports = function ({
   let projectPath = ''
   let projectConfigFromFile = {}
 
-  if (projectConfigPath) {
-    projectPath = path.dirname(projectConfigPath)
-    projectConfigFromFile = require(projectConfigPath)
-    projectConfigFromFile = projectConfigFromFile.default || projectConfigFromFile
-  } else if (projectConfig.path) {
-    projectPath = projectConfig.path
-  } else {
+  if (!projectConfigPath && !projectConfig.path) {
     console.warn('If projectConfigPath is empty, Param projectConfig.path is required.')
 
     return process.exit(1)
+  }
+
+  if (projectConfigPath) {
+    projectConfigFromFile = require(projectConfigPath)
+    projectConfigFromFile = projectConfigFromFile.default || projectConfigFromFile
+    projectPath = projectConfigFromFile.path || path.dirname(projectConfigPath)
+  }
+
+  // 优先加载 config 的配置参数
+  if (projectConfig.path) {
+    projectPath = projectConfig.path
   }
 
   projectConfig = {
@@ -49,7 +54,7 @@ module.exports = function ({
         NODE_ENV: '"development"'
       },
       mockPort,
-      hotPort: projectConfig.hotPort || 80,
+      port: projectConfig.port || 80,
       assetPublicPath: '/',
       staticDir: projectConfig.staticDir || './static',
       proxyTable: {

@@ -1,5 +1,6 @@
 import { dev as buildDev, prod as buildProd } from '@vue2do/build'
 import path from 'path'
+import chalk from 'chalk'
 
 type TUnit = {
   projectConfig: {
@@ -12,30 +13,46 @@ async function dev({
   projectConfig = {},
   projectConfigPath = ''
 }: TUnit): Promise<void> {
-  const configOpt = await import(projectConfigPath)
-  console.log('@vue2do/mock: Starting service worker server.')
+  console.log(`${chalk.green('@vue2do/mock')}: Starting service worker server.`)
+
+  const configFile = await import(projectConfigPath)
+  const configOpt = configFile.default ?? configFile
+  const swConfig = configOpt.sw ?? {}
 
   buildDev({
     config: {
       ...projectConfig,
-      path: path.dirname(projectConfigPath),
+      port: swConfig.port,
+      path: projectConfig.path === undefined
+        ? path.dirname(projectConfigPath)
+        : projectConfig.path,
       webpack(config: any): any {
-        return configOpt?.sw?.webpack(config)
+        return swConfig?.webpack(config)
       }
     }
   })
 }
 
-function prod({
-  projectConfig = {}
-}: TUnit): void {
-  console.log('Publish service worker.')
+async function prod({
+  projectConfig = {},
+  projectConfigPath = ''
+}: TUnit): Promise<void> {
+  console.log(`${chalk.green('@vue2do/mock')}: Publish service worker.`)
+
+  const configFile = await import(projectConfigPath)
+  const configOpt = configFile.default ?? configFile
+  const swConfig = configOpt.sw ?? {}
 
   buildProd({
+    clear: true,
     config: {
       ...projectConfig,
+      port: swConfig.port,
+      path: projectConfig.path === undefined
+        ? path.dirname(projectConfigPath)
+        : projectConfig.path,
       webpack(config: any): any {
-        return config
+        return swConfig?.webpack(config)
       }
     }
   })

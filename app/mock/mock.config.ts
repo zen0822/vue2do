@@ -1,21 +1,35 @@
-const path = require('path')
+import path from 'path'
 
-module.exports = {
+export default {
   gql: {
-    execute: '../../tsDist/app/mock/server/gql/gql.js',
+    execute: './server/gql/gql.js',
     port: 5168
   },
   sw: {
-    webpack(config) {
+    port: 5169,
+    webpack(config: any): any {
       config
         .entryPoints
         .clear()
-        .end()
+
+      config
         .entry('sw')
-        .add(path.resolve(__dirname, './client/sw/sw.worker.ts'))
-        .end()
+        .add(path.resolve(__dirname, '../../../app/mock/client/sw/sw.worker.ts'))
+
+      config
         .devServer
-        .stats('verbose')
+        .stats('normal')
+
+      config
+        .output
+        .filename('[name].js')
+        .globalObject('this')
+        .pathinfo(false)
+        .publicPath('/')
+        .path(path.resolve(__dirname, '../../../app/mock/dist/sw'))
+
+      config.optimization.clear()
+      config.plugins.delete('HtmlWebpackPlugin')
 
       return config
     }

@@ -14,10 +14,11 @@ module.exports = function ({
     projectConfig,
     projectConfigPath
   })
+
   projectConfig = config.project
 
   const WebpackDevServer = require('webpack-dev-server')
-  const webpackConfig = process.env.NODE_ENV === 'testing' ?
+  const webpackChain = process.env.NODE_ENV === 'testing' ?
     require('../config/prod.webpack.conf')({
       config
     }) :
@@ -25,8 +26,9 @@ module.exports = function ({
       config
     })
 
-  const port = process.env.PORT || config.dev.hotPort
-  const compiler = webpack(webpackConfig.toConfig())
+  const port = process.env.PORT || config.dev.port
+  const webpackConfig = webpackChain.toConfig()
+  const compiler = webpack(webpackConfig)
   let httpsOpt = false
 
   if (projectConfig.httpsOpt === undefined) {
@@ -45,21 +47,8 @@ module.exports = function ({
     : httpsOpt ? 'https' : 'http'
 
   const server = new WebpackDevServer(compiler, {
-    https: httpsOpt,
-    clientLogLevel: 'info',
-    disableHostCheck: true,
-    hot: true,
-    historyApiFallback: true,
-    headers: {
-      'X-Custom-Header': 'yes'
-    },
-    inline: true,
-    proxy: config.dev.proxyTable,
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
-    },
-    stats: 'errors-warnings'
+    ...webpackConfig.devServer,
+    https: httpsOpt
   })
 
   console.log(`Starting frontend build server listening at ${httpName}://localhost:${port}\n`)

@@ -66,7 +66,7 @@ vue2do build mpa zenMpa
 - assetRoot：以 app.config 将文件打包的文件位置，位置相对的文件位置
 - assetPublicPath：打包资源的时候添加在前面的公共访问地址
 - assetSubDirectory：静态资源存放在 assetRoot 的文件夹位置
-- hotPort：dev 环境的访问端口，https 的默认访问端口是 443，http 是 80
+- port：dev 环境的访问端口，https 的默认访问端口是 443，http 是 80
 - htmlName：打包生成的 index.html 访问地址 记得加上 html 的文件名，不然 404
 - https：等同于 webpack 的 https 选项配置
 - loaderRule：loader rule

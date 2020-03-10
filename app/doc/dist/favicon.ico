@@ -1,0 +1,1 @@
+module.exports = __webpack_public_path__ + "static/fonts/favicon.e7c4944.png";

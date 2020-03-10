@@ -72,7 +72,7 @@ function default_1(_a) {
                         apiProd: projectConfig.apiProd,
                         project: __assign(__assign({}, projectConfig), { path: projectPath }),
                         sw: {
-                            hotPort: 5169,
+                            port: 5169,
                             assetRoot: path.resolve(projectPath, 'projectConfig.assetRoot', './sw'),
                             assetPublicPath: '/',
                             assetSubDirectory: projectConfig.staticDir,

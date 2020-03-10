@@ -19,17 +19,19 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "tsc:watch": "tsc -w"
+    "tsc:w": "tsc -w"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.1",
-    "@graphql-codegen/typescript": "1.2.1"
+    "@graphql-codegen/typescript": "1.2.1",
+    "typescript": "^3.8.3"
   },
   "gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02",
   "dependencies": {
     "@vue2do/component": "^1.1.12",
     "apollo": "^2.22.0",
     "apollo-engine": "^1.1.2",
+    "chalk": "^3.0.0",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
     "graphql-voyager": "^1.0.0-rc.27",
