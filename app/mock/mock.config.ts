@@ -1,4 +1,5 @@
 import path from 'path'
+import FileToDistWebpackPlugin from '../../lib/webpack/FileToDistWebpackPlugin'
 
 export default {
   gql: {
@@ -8,28 +9,36 @@ export default {
   sw: {
     port: 5169,
     webpack(config: any): any {
+      const swAssetDir = path.resolve(__dirname, '../../../app/mock/dist/sw')
+
       config
         .entryPoints
         .clear()
 
       config
         .entry('sw')
-        .add(path.resolve(__dirname, '../../../app/mock/client/sw/sw.worker.ts'))
-
-      config
-        .devServer
-        .stats('normal')
+        .add(path.resolve(__dirname, '../../../app/mock/server/sw/sw.worker.ts'))
 
       config
         .output
         .filename('[name].js')
-        .globalObject('this')
+        .globalObject('self')
         .pathinfo(false)
         .publicPath('/')
-        .path(path.resolve(__dirname, '../../../app/mock/dist/sw'))
+        .path(swAssetDir)
 
       config.optimization.clear()
-      config.plugins.delete('HtmlWebpackPlugin')
+      config.plugins.delete('html')
+
+      config
+        .node
+        .set('fs', 'empty')
+
+      config
+        .plugin('fileToDist')
+        .use(FileToDistWebpackPlugin, [{
+          dir: swAssetDir
+        }])
 
       return config
     }

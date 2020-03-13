@@ -2787,6 +2787,13 @@ acorn@^7.1.0:
   resolved "https://registry.npmjs.org/acorn/-/acorn-7.1.1.tgz#e35668de0b402f359de515c5482a1ab9f89a69bf"
   integrity sha512-add7dgA5ppRPxCFJoAGfMDi7PIBXq1RtGo7BhbLaxwrXPOmw8gq48Y9ozT01hUKy9byMjlR20EJhu5zlkErEkg==
 
+add-filename-increment@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/add-filename-increment/-/add-filename-increment-1.0.0.tgz#106feea10dcda5d2bfe25a5e83d347382f9dd97d"
+  integrity sha512-pFV8VZX8jxuVMIycKvGZkWF/ihnUubu9lbQVnOnZWp7noVxbKQTNj7zG2y9fXdPcuZ6lAN3Drr517HaivGCjdQ==
+  dependencies:
+    strip-filename-increment "^2.0.1"
+
 adm-zip@^0.4.7, adm-zip@~0.4.3:
   version "0.4.14"
   resolved "https://registry.npmjs.org/adm-zip/-/adm-zip-0.4.14.tgz#2cf312bcc9f8875df835b0f6040bd89be0a727a9"
@@ -14418,6 +14425,11 @@ strip-eof@^1.0.0:
   resolved "https://registry.npmjs.org/strip-eof/-/strip-eof-1.0.0.tgz#bb43ff5598a6eb05d89b59fcd129c983313606bf"
   integrity sha1-u0P/VZim6wXYm1n80SnJgzE2Br8=
 
+strip-filename-increment@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/strip-filename-increment/-/strip-filename-increment-2.0.1.tgz#3feca2ebd529d4cdcad0281a9bbb2660b096fcc6"
+  integrity sha512-+v5xsiTTsdYqkPj7qz1zlngIsjZedhHDi3xp/9bMurV8kXe9DAr732gNVqtt4X8sI3hOqS3nlFfps5gyVcux6w==
+
 strip-final-newline@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/strip-final-newline/-/strip-final-newline-2.0.0.tgz#89b852fb2fcbe936f6f4b3187afb0a12c1ab58ad"
@@ -16320,6 +16332,13 @@ write@1.0.3, write@^1.0.3:
   integrity sha512-/lg70HAjtkUgWPVZhZcm+T4hkL8Zbtp1nFNOn3lRrxnlv50SRBv7cR7RqR+GMsd3hUXy9hWBo4CHTbFTcOYwig==
   dependencies:
     mkdirp "^0.5.1"
+
+write@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/write/-/write-2.0.0.tgz#d6320a5f764fbd6ee93022f61273d62fa23dbd04"
+  integrity sha512-yam9TAqN8sAZokECAejo9HpT2j2s39OgK8i8yxadrFBVo+iSWLfnipRVFulfAw1d2dz5vSuGmlMHYRKG4fysOA==
+  dependencies:
+    add-filename-increment "^1.0.0"
 
 ws@^5.2.0:
   version "5.2.2"

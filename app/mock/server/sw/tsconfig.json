@@ -1,0 +1,15 @@
+{
+  "extends": "../../../../tsconfig.json",
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "lib.dom.d.ts"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "webworker"
+    ]
+  }
+}

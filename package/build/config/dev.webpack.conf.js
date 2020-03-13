@@ -4,7 +4,6 @@ const chalk = require('chalk')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = function ({
   config
@@ -83,38 +82,25 @@ module.exports = function ({
       dashboard: {
         plugin: DashboardPlugin
       },
-      loaderOptions: {
+      webpackLoaderOptions: {
         plugin: webpack.LoaderOptionsPlugin,
         args: [{
           debug: true
         }]
       },
-      HotModuleReplacement: {
+      webpackHotModuleReplacement: {
         plugin: webpack.HotModuleReplacementPlugin
       },
-      NamedModules: {
+      webpackNamedModules: {
         plugin: webpack.NamedModulesPlugin
       },
-      NoEmitOnErrors: {
+      webpackNoEmitOnErrors: {
         plugin: webpack.NoEmitOnErrorsPlugin
       },
-      OccurrenceOrder: {
+      webpackOptimizeOccurrenceOrder: {
         plugin: webpack.optimize.OccurrenceOrderPlugin
       },
-      BundleAnalyzerPlugin: {
-        plugin: BundleAnalyzerPlugin,
-        args: [{
-          analyzerMode: 'static',
-          reportFilename: 'webpack-bundle-report.html',
-          defaultSizes: 'parsed',
-          openAnalyzer: false,
-          generateStatsFile: false,
-          statsFilename: 'stats.json',
-          statsOptions: null,
-          logLevel: 'info'
-        }]
-      },
-      ProgressBar: {
+      progressBar: {
         plugin: ProgressBarPlugin,
         args: [{
           format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
@@ -123,7 +109,7 @@ module.exports = function ({
           clear: false
         }]
       },
-      HtmlWebpack: {
+      html: {
         plugin: HtmlWebpackPlugin,
         args: [{
           filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,

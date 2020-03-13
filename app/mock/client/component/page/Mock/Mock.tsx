@@ -92,9 +92,11 @@ export default defineComponent({
     }
 
     onMounted(function () {
-      console.log('onMounted')
+      // console.log('onMounted')
     })
-    watch(links, (links, prevLinks) => { console.log('Watch links', links, prevLinks) })
+    watch(links, () => {
+      // console.log('Watch links', links, prevLinks)
+    })
 
     return {
       addLink,
@@ -109,6 +111,7 @@ export default defineComponent({
     const {
       links,
       addLink,
+      fetchSWMock,
       queryLinks
     } = this
 
@@ -127,6 +130,11 @@ export default defineComponent({
           theme='success'
           onClick={(): any => queryLinks()}
         >获取 link</z-btn>
+
+        <z-btn
+          theme='danger'
+          onClick={(): any => fetchSWMock()}
+        >fetchSWMock</z-btn>
 
         <ol>
           {links.map((item: any) => (

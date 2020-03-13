@@ -1,3 +1,7 @@
+import fs from 'fs'
+import path from 'path'
+import WorkboxPlugin from 'workbox-webpack-plugin'
+
 const gqlPort = 5168
 
 export default {
@@ -19,7 +23,7 @@ export default {
         '^/gql': ''
       }
     },
-    '/api/**': `http://localhost:${gqlPort}`,
+    '/api/**': `http://localhost`,
     '/sw.js': `http://localhost:5169`
   },
   staticDir: 'static',
@@ -28,18 +32,21 @@ export default {
   webpack(config: any): any {
     if (process.env.SW_ENV === 'development') {
       console.log('cross-env SW_ENV=development SW_DEBUG=true')
-      // try {
-      //   fs.accessSync(swPath, fs.constants.F_OK)
+      const swPath = path.resolve(__dirname, '../../../app/mock/dist/sw/sw.js')
 
-      //   devConf.plugins.push(
-      //     new WorkboxPlugin.InjectManifest({
-      //       swSrc: swPath,
-      //       importWorkboxFrom: 'disabled'
-      //     })
-      //   )
-      // } catch (error) {
-      //   console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
-      // }
+      try {
+        fs.accessSync(swPath, fs.constants.F_OK)
+
+        config
+          .plugin('workbox')
+          .use(WorkboxPlugin.InjectManifest, [{
+            swSrc: swPath,
+            swDest: 'sw.js',
+            maximumFileSizeToCacheInBytes: 20000000
+          }])
+      } catch (error) {
+        console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run mock:sw.prod:M 生成对应文件。\n`)
+      }
     }
 
     return config

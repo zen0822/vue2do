@@ -299,6 +299,10 @@ module.exports = function ({
 
   webpackChainConfig.merge(baseConf)
 
+  if (projectConfig.type === 'spa') {
+    webpackChainConfig.output.chunkFilename('[name].bundle.js')
+  }
+
   if (config.zepto) {
     webpackChainConfig.module
       .rule('exportZepto')

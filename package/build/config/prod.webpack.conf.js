@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const path = require('path')
 
 module.exports = function ({
@@ -23,31 +23,14 @@ module.exports = function ({
       publicPath: config.prod.assetPublicPath
     },
     plugin: {
-      CleanWebpackPlugin: {
+      clean: {
         plugin: CleanWebpackPlugin,
         args: [{
           // dry: true,
           verbose: true
         }]
       },
-      UglifyJsPlugin: {
-        plugin: UglifyJsPlugin,
-        args: [{
-          uglifyOptions: {
-            compress: true,
-            cache: true,
-            ie8: false,
-            parallel: true,
-            output: {
-              comments: false,
-              beautify: false
-            },
-            sourceMap: config.prod.sourceMap,
-            warnings: false
-          }
-        }]
-      },
-      HtmlWebpackPlugin: {
+      html: {
         plugin: HtmlWebpackPlugin,
         args: [{
           filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
@@ -65,7 +48,7 @@ module.exports = function ({
     const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
     baseWebpackChain
-      .plugin('CompressionWebpackPlugin')
+      .plugin('compression')
       .use(CompressionWebpackPlugin, [{
         filename: '[path].gz[query]',
         algorithm: 'gzip',
@@ -75,9 +58,28 @@ module.exports = function ({
       }])
   }
 
+  // optimization: {
+  //   minimize: true,
+  //   minimizer: [{
+  //     terser: {
+  //       plugin: TerserPlugin,
+  //       args: [{
+  //         test: /\.js(\?.*)?$/i
+  //       }]
+  //     }
+  //   }]
+  // },
+
+  baseWebpackChain
+    .optimization
+    .minimize(true)
+    .minimizer('terser')
+    .use(TerserPlugin, [{
+      test: /\.m?js(\?.*)?$/i
+    }])
+
   if (typeof projectConfig.webpack === 'function') {
     return projectConfig.webpack(baseWebpackChain)
   }
-
   return baseWebpackChain
 }

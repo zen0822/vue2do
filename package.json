@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "app:install": "cd ./app/doc && yarn install && cd ../mock && yarn install",
+    "app:i": "cd ./app/doc && yarn install && cd ../mock && yarn install",
     "coveralls": "echo \"No test specified\" && exit 0",
     "debug": "node --inspect-brk=5858 bin/dev.js",
     "dev:D": "vue2do-build dev app/doc/project.config.js",
@@ -14,29 +14,22 @@
     "dev:M": "cross-env SW_ENV=development SW_DEBUG=true vue2do-build dev ./tsDist/app/mock/project.config.js --root ./app/mock/",
     "gql:gen": "graphql-codegen --config codegen.yml",
     "lerna": "lerna",
-    "lerna:install": "lerna exec -- yarn install",
+    "lerna:i": "lerna exec -- yarn install",
     "lerna:test": "lerna run test",
     "lerna:tsc": "lerna run tsc",
-    "mock.gql:M": "yarn run tsc && lerna run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./tsDist/app/mock/mock.config.js --root ./app/mock/",
-    "mock.sw:M": "yarn run tsc && lerna run tsc && vue2do-mock sw dev ./tsDist/app/mock/mock.config.js --root ./app/mock/",
-    "mock.sw.prod:M": "yarn run tsc && lerna run tsc && vue2do-mock sw prod ./tsDist/app/mock/mock.config.js --root ./app/mock/",
+    "mock.gql:M": "lerna run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./tsDist/app/mock/mock.config.js --root ./app/mock/",
+    "mock.sw:M": "lerna run tsc && vue2do-mock sw dev ./tsDist/app/mock/mock.config.js --root ./app/mock/",
+    "mock.sw.prod:M": "lerna run tsc && vue2do-mock sw prod ./tsDist/app/mock/mock.config.js --root ./app/mock/",
     "prod:D": "vue2do-build prod app/doc/project.config.js",
     "prod.rel:D": "node ./app/doc/script/prod.js && apollo service:push",
     "prod.rel.ci:D": "node ./app/doc/script/prod-ci.js",
     "prod:E": "vue2do-build prod app/example/project.config.js",
-    "prod:M": "node bin/prod",
     "prisma:db": "docker-compose up -d",
     "prisma:start": "prisma deploy",
-    "rel": "lerna run tsc && lerna publish",
-    "start": "nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
-    "start:sw": "cross-env SW_ENV=development SW_DEBUG=true nodemon --watch ./script/* --ignore ./script/config/sw.dev.webpack.conf.js bin/dev.js",
     "test:D": "vue2do-test unit ./app/doc/test.config.js",
     "test.ci:D": "node ./app/doc/script/test.ci.js",
-    "test:ci": "cross-env BABEL_ENV=testing karma start test/karma.ci",
-    "test:unit": "cross-env NODE_ENV=testing jest",
     "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "vue2do-build": "vue2do-build"
+    "tsc:w": "tsc -w"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.26",
@@ -88,10 +81,12 @@
     "@types/ws": "^7.2.1",
     "@vue2do/build": "^1.1.8",
     "@vue2do/test": "^1.1.11",
+    "chalk": "^3.0.0",
     "commitlint": "^8.2.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
     "prisma": "^1.34.10",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "write": "^2.0.0"
   }
 }
