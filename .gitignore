@@ -11,3 +11,5 @@ zen0822.github.io
 /app/*/dist/*
 
 coverage
+
+.gitkeep
