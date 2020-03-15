@@ -21,6 +21,7 @@
     "mock.sw:M": "lerna run tsc && vue2do-mock sw dev ./tsDist/app/mock/mock.config.js --root ./app/mock/",
     "mock.sw.prod:M": "lerna run tsc && vue2do-mock sw prod ./tsDist/app/mock/mock.config.js --root ./app/mock/",
     "prod:D": "vue2do-build prod app/doc/project.config.js",
+    "prod:M": "vue2do-build prod ./tsDist/app/mock/project.config.js",
     "prod.rel:D": "node ./app/doc/script/prod.js && apollo service:push",
     "prod.rel.ci:D": "node ./app/doc/script/prod-ci.js",
     "prod:E": "vue2do-build prod app/example/project.config.js",

@@ -10,7 +10,7 @@ import gql from 'graphql-tag'
 
 import {
   useRouter
-} from '../../../app'
+} from '../../app'
 
 const router: any = useRouter()
 

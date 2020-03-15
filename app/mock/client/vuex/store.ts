@@ -12,11 +12,11 @@ const commonStore = new Vuex.Store({
   }
 })
 
-export function useStore() {
+export function useStore(): any {
   return commonStore
 }
 
-export function useState(name) {
+export function useState(name: string): any {
   return computed(() => commonStore.getters[name])
 }
 

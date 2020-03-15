@@ -646,9 +646,10 @@
     levenary "^1.1.1"
     semver "^5.5.0"
 
-"@babel/preset-typescript@^7.6.0":
+"@babel/preset-typescript@^7.8.3":
   version "7.8.3"
   resolved "https://registry.npmjs.org/@babel/preset-typescript/-/preset-typescript-7.8.3.tgz#90af8690121beecd9a75d0cc26c6be39d1595d13"
+  integrity sha512-qee5LgPGui9zQ0jR1TeU5/fP9L+ovoArklEqY12ek8P/wV5ZeM/VYSQYwICeoT6FfpJTekG9Ilay5PhwsOpMHA==
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-transform-typescript" "^7.8.3"

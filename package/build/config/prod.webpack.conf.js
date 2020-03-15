@@ -17,6 +17,7 @@ module.exports = function ({
     path.resolve(__dirname, `../tpl/index.html`)
 
   const prodWebpackConf = {
+    mode: 'production',
     devtool: config.prod.sourceMap,
     output: {
       path: config.prod.outDir,

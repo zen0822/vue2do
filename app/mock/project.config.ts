@@ -11,7 +11,8 @@ export default {
   bundleAnalyzer: true, // 打包文件的分析
   favicon: './client/asset/img/favicon.ico',
   gzip: true,
-  port: 80,
+  path: path.resolve(__dirname, '../../../app/mock/'),
+  port: 8080,
   htmlName: 'index',
   htmlTitle: 'mock',
   name: 'mock',
@@ -48,6 +49,8 @@ export default {
         console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run mock:sw.prod:M 生成对应文件。\n`)
       }
     }
+
+    config.devServer.stats('normal')
 
     return config
   }

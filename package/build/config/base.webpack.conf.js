@@ -21,8 +21,10 @@ module.exports = function ({
     options: {
       presets: [
         require.resolve('@vue/babel-preset-jsx'),
+        require.resolve('@babel/preset-typescript'),
         [require.resolve('@babel/preset-env'), {
-          modules: 'commonjs',
+          modules: false,
+          loose: true,
           targets: {
             browsers: ['last 2 versions', 'ie >= 10', 'iOS >= 8']
           }
@@ -104,6 +106,7 @@ module.exports = function ({
             experimentalWatchApi: true,
             compilerOptions: {
               module: 'es6',
+              target: 'es6',
               noEmit: true
             }
           }
@@ -234,7 +237,6 @@ module.exports = function ({
   }
 
   const baseConf = {
-    mode: 'production',
     entry: entryConfig,
     module: {
       rule: configRule

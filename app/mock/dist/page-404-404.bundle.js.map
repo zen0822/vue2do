@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./app/mock/client/page/404/404.js"],"names":["name","render","h","style"],"mappings":";;;;;;;;;;AAAA;AAAe;AACbA,MAAI,EAAE,gBADO;AAEbC,QAFa,kBAENC,CAFM,EAEH;AACR,WAAOA,CAAC,CAAC,KAAD,EAAQ;AACdC,WAAK,EAAE;AACL,qBAAa,MADR;AAEL,sBAAc;AAFT;AADO,KAAR,EAKL,GALK,CAAR;AAMD;AATY,CAAf,E","file":"page-404-404.bundle.js","sourceRoot":""}

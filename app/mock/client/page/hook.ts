@@ -1,7 +1,7 @@
 import {
   useState
-} from '../../vuex/store'
-import commonStore from '../../vuex/module/common/type.json'
+} from '../vuex/store'
+import commonStore from '../vuex/module/common/type.json'
 import {
   ref
 } from '@vue/composition-api'
