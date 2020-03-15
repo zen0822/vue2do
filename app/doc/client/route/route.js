@@ -1,5 +1,15 @@
 import componentChildren from './componentChildren'
 
+// const routerLazyLoad = (filename) => {
+//   return () => {
+//     try {
+//       return import(/* webpackChunkName: "[request]" */`../component/page${filename}`)
+//     } catch (error) {
+//       console.error(error)
+//     }
+//   }
+// }
+
 export default [{
   path: '/',
   component: () => import('../component/page/Welcome/Welcome'),

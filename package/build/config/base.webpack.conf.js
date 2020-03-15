@@ -302,7 +302,7 @@ module.exports = function ({
   webpackChainConfig.merge(baseConf)
 
   if (projectConfig.type === 'spa') {
-    webpackChainConfig.output.chunkFilename('[name].bundle.js')
+    webpackChainConfig.output.chunkFilename(utils.assetsPath('js/[name].bundle.[hash:7].js'))
   }
 
   if (config.zepto) {

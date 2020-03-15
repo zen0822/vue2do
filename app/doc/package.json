@@ -14,11 +14,6 @@
     "tsc": "tsc",
     "tsc:watch": "tsc -w"
   },
-  "devDependencies": {
-    "@vue2do/build": "^1.1.8",
-    "@vue2do/component": "^1.1.12",
-    "@vue2do/test": "^1.1.11"
-  },
   "dependencies": {
     "shelljs": "^0.8.3"
   }
