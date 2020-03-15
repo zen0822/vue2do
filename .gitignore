@@ -8,6 +8,6 @@ node_modules
 /tsDist
 zen0822.github.io
 
-/app/*/dist
+/app/*/dist/*
 
 coverage
