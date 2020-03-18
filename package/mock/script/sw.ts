@@ -22,6 +22,8 @@ async function dev({
   buildDev({
     config: {
       ...projectConfig,
+      ...swConfig,
+      pure: true,
       port: swConfig.port,
       path: projectConfig.path === undefined
         ? path.dirname(projectConfigPath)
@@ -47,6 +49,8 @@ async function prod({
     clear: true,
     config: {
       ...projectConfig,
+      ...swConfig,
+      pure: true,
       port: swConfig.port,
       path: projectConfig.path === undefined
         ? path.dirname(projectConfigPath)

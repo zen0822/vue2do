@@ -75,7 +75,7 @@ function dev(_a) {
                     configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
                     swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
                     build_1.dev({
-                        config: __assign(__assign({}, projectConfig), { port: swConfig.port, path: projectConfig.path === undefined
+                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, path: projectConfig.path === undefined
                                 ? path_1.default.dirname(projectConfigPath)
                                 : projectConfig.path, webpack: function (config) {
                                 return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
@@ -103,7 +103,7 @@ function prod(_a) {
                     swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
                     build_1.prod({
                         clear: true,
-                        config: __assign(__assign({}, projectConfig), { port: swConfig.port, path: projectConfig.path === undefined
+                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, path: projectConfig.path === undefined
                                 ? path_1.default.dirname(projectConfigPath)
                                 : projectConfig.path, webpack: function (config) {
                                 return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);

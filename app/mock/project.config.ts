@@ -12,7 +12,7 @@ export default {
   favicon: './client/asset/img/favicon.ico',
   gzip: true,
   path: path.resolve(__dirname, '../../../app/mock/'),
-  port: 8080,
+  port: 80,
   htmlName: 'index',
   htmlTitle: 'mock',
   name: 'mock',
@@ -24,7 +24,9 @@ export default {
         '^/gql': ''
       }
     },
-    '/api/**': `http://localhost`,
+    '/api/**': {
+      target: `http://localhost`
+    },
     '/sw.js': `http://localhost:5169`
   },
   staticDir: 'static',
@@ -32,7 +34,8 @@ export default {
   type: 'spa',
   webpack(config: any): any {
     if (process.env.SW_ENV === 'development') {
-      console.log('cross-env SW_ENV=development SW_DEBUG=true')
+      console.log('App mock: Min Mock is running')
+
       const swPath = path.resolve(__dirname, '../../../app/mock/dist/sw/sw.js')
 
       try {
@@ -48,9 +51,11 @@ export default {
       } catch (error) {
         console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run mock:sw.prod:M 生成对应文件。\n`)
       }
-    }
 
-    config.devServer.stats('normal')
+      config.devServer
+        .contentBase([path.resolve(__dirname, '../../../app/mock/dist/sw/')])
+        .watchContentBase(true)
+    }
 
     return config
   }

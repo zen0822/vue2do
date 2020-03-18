@@ -7,6 +7,7 @@ module.exports = function ({
   config
 } = {}) {
   const projectConfig = config.project
+  const pureJs = projectConfig.pure
   const baseWebpackChain = require('./base.webpack.conf')({
     config,
     extractScss: true,
@@ -30,15 +31,6 @@ module.exports = function ({
           // dry: true,
           verbose: true
         }]
-      },
-      html: {
-        plugin: HtmlWebpackPlugin,
-        args: [{
-          filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
-          template,
-          title: projectConfig.htmlTitle,
-          inject: true
-        }]
       }
     }
   }
@@ -59,18 +51,6 @@ module.exports = function ({
       }])
   }
 
-  // optimization: {
-  //   minimize: true,
-  //   minimizer: [{
-  //     terser: {
-  //       plugin: TerserPlugin,
-  //       args: [{
-  //         test: /\.js(\?.*)?$/i
-  //       }]
-  //     }
-  //   }]
-  // },
-
   baseWebpackChain
     .optimization
     .minimize(true)
@@ -79,8 +59,21 @@ module.exports = function ({
       test: /\.m?js(\?.*)?$/i
     }])
 
+  if (!pureJs) {
+    baseWebpackChain
+      .plugin('html')
+      .use(HtmlWebpackPlugin, [{
+        filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
+        template,
+        title: projectConfig.htmlTitle,
+        inject: true,
+        favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
+      }])
+  }
+
   if (typeof projectConfig.webpack === 'function') {
     return projectConfig.webpack(baseWebpackChain)
   }
+
   return baseWebpackChain
 }

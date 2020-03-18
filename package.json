@@ -18,7 +18,7 @@
     "lerna:test": "lerna run test",
     "lerna:tsc": "lerna run tsc",
     "mock.gql:M": "lerna run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./tsDist/app/mock/mock.config.js --root ./app/mock/",
-    "mock.sw:M": "lerna run tsc && vue2do-mock sw dev ./tsDist/app/mock/mock.config.js --root ./app/mock/",
+    "mock.sw.dev:M": "lerna run tsc && cross-env SW_ENV=development SW_DEBUG=true && vue2do-mock sw dev ./tsDist/app/mock/mock.config.js --root ./app/mock/",
     "mock.sw.prod:M": "lerna run tsc && vue2do-mock sw prod ./tsDist/app/mock/mock.config.js --root ./app/mock/",
     "prod:D": "vue2do-build prod app/doc/project.config.js",
     "prod:M": "vue2do-build prod ./tsDist/app/mock/project.config.js",

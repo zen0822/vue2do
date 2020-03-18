@@ -9,6 +9,7 @@ module.exports = function ({
   config
 } = {}) {
   const appName = config.project.name
+  const pureJs = config.project.pure
   const projectConfig = config.project
   const baseWebpackChain = require('./base.webpack.conf')({
     config,
@@ -108,16 +109,6 @@ module.exports = function ({
           incomplete: '-',
           clear: false
         }]
-      },
-      html: {
-        plugin: HtmlWebpackPlugin,
-        args: [{
-          filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
-          template,
-          title: projectConfig.htmlTitle,
-          inject: true,
-          favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
-        }]
       }
     },
     devServer: {
@@ -139,6 +130,18 @@ module.exports = function ({
   }
 
   baseWebpackChain.merge(devConf)
+
+  if (!pureJs) {
+    baseWebpackChain
+      .plugin('html')
+      .use(HtmlWebpackPlugin, [{
+        filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
+        template,
+        title: projectConfig.htmlTitle,
+        inject: true,
+        favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
+      }])
+  }
 
   if (typeof projectConfig.webpack === 'function') {
     return projectConfig.webpack(baseWebpackChain)

@@ -38,7 +38,7 @@ async function init(): Promise<void> {
   precacheAndRoute(self.__WB_MANIFEST)
 
   addEventListener('push', (event) => {
-    const title = '@vue2do/mock: Get Started With Workbox'
+    const title = '@vue2do/mock: Get Started With Workboxed'
     const options = {
       body: event?.data?.text()
     }
