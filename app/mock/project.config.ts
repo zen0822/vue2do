@@ -39,7 +39,7 @@ export default {
       config.devServer
         .contentBase([path.resolve(__dirname, '../../../app/mock/dist/sw/')])
         .watchContentBase(true)
-        .stats('normal')
+        // .stats('normal')
     }
 
     if (process.env.NODE_ENV === 'production') {

@@ -41,7 +41,6 @@ export default {
         }])
 
       config.devServer
-        .stats('normal')
         .watchOptions({
           aggregateTimeout: 300,
           ignored: [/node_modules/, path.resolve(__dirname, '../../../app/mock/client/')]
