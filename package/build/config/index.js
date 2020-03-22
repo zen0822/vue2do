@@ -36,8 +36,9 @@ module.exports = function ({
     },
     project: {
       ...projectConfig,
-      path: projectPath,
-      pure: projectConfig.pure === undefined ? false : projectConfig.pure
+      path: projectConfigPath,
+      pure: projectConfig.pure === undefined ? false : projectConfig.pure,
+      root: projectPath
     },
     prod: {
       env: {
