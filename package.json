@@ -15,7 +15,7 @@
     "gql:gen": "graphql-codegen --config codegen.yml",
     "lerna": "lerna",
     "lerna:i": "lerna exec -- yarn install",
-    "lerna:rel": "lerna run publish",
+    "lerna:rel": "lerna publish",
     "lerna:test": "lerna run test",
     "lerna:tsc": "lerna run tsc",
     "mock.gql:M": "lerna run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./tsDist/app/mock/mock.config.js --root ./app/mock/",
