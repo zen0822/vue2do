@@ -7,8 +7,8 @@ async function unit({
   config = {},
   configPath = ''
 }: any = {}): Promise<any> {
-  if (!configPath && !config.path) {
-    console.warn('Param config.path is required when configPath is empty!')
+  if (!configPath && !config.root) {
+    console.warn('Param config.root is required when configPath is empty!')
 
     return process.exit(1)
   }

@@ -55,8 +55,8 @@ function unit(_a) {
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
-                    if (!configPath && !config.path) {
-                        console.warn('Param config.path is required when configPath is empty!');
+                    if (!configPath && !config.root) {
+                        console.warn('Param config.root is required when configPath is empty!');
                         return [2 /*return*/, process.exit(1)];
                     }
                     return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('./script/unit')); })];
