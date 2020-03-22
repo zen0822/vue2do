@@ -82,6 +82,7 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@types/ws": "^7.2.1",
     "@vue2do/build": "latest",
+    "@vue2do/component": "^1.1.14",
     "@vue2do/test": "^1.1.15",
     "chalk": "^3.0.0",
     "commitlint": "^8.2.0",
