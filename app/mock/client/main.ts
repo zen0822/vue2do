@@ -9,7 +9,7 @@ import 'regenerator-runtime/runtime'
 
 import '@vue2do/component/dist/util.css'
 import './scss/main.scss'
-// import './sw/main'
+import './sw/main'
 
 import {
   createApp

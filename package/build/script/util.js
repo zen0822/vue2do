@@ -15,7 +15,7 @@ module.exports = function ({
 
     assetsPath(_path) {
       const staticDir = process.env.NODE_ENV === 'production' ?
-        config.build.staticDir :
+        config.prod.staticDir :
         config.dev.staticDir
 
       return path.posix.join(staticDir, _path)

@@ -22,8 +22,8 @@ async function sw({
   config = {},
   configPath = ''
 }: any = {}): Promise<void> {
-  if (!configPath && !config.path) {
-    console.warn('@vue2do/mock: If configPath is empty, Param config.path is required.')
+  if (!configPath && !config.root) {
+    console.warn('@vue2do/mock: If configPath is empty, Param config.root is required.')
 
     return process.exit(1)
   }

@@ -25,7 +25,7 @@ async function dev({
       ...swConfig,
       pure: true,
       port: swConfig.port,
-      path: projectConfig.path === undefined
+      root: projectConfig.path === undefined
         ? path.dirname(projectConfigPath)
         : projectConfig.path,
       webpack(config: any): any {
@@ -52,7 +52,7 @@ async function prod({
       ...swConfig,
       pure: true,
       port: swConfig.port,
-      path: projectConfig.path === undefined
+      root: projectConfig.path === undefined
         ? path.dirname(projectConfigPath)
         : projectConfig.path,
       webpack(config: any): any {

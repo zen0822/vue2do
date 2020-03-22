@@ -7,8 +7,8 @@ function dev({
   config = {},
   configPath
 } = {}) {
-  if (!configPath && !config.path) {
-    console.warn('@vue2do/build: If configPath is empty, Param config.path is required.')
+  if (!configPath && !config.root) {
+    console.warn('@vue2do/build: If configPath is empty, Param config.root is required.')
 
     return process.exit(1)
   }
@@ -29,8 +29,8 @@ function prod({
   configPath,
   onSuccess
 } = {}) {
-  if (!configPath && !config.path) {
-    console.warn('@vue2do/build: If configPath is empty, Param config.path is required.')
+  if (!configPath && !config.root) {
+    console.warn('@vue2do/build: If configPath is empty, Param config.root is required.')
 
     return process.exit(1)
   }
@@ -51,8 +51,8 @@ function getConfig({
   config = {},
   configPath
 } = {}) {
-  if (!configPath && !config.path) {
-    console.warn('@vue2do/build: If configPath is empty, Param config.path is required.')
+  if (!configPath && !config.root) {
+    console.warn('@vue2do/build: If configPath is empty, Param config.root is required.')
 
     return process.exit(1)
   }

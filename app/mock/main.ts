@@ -3,4 +3,3 @@
  */
 
 import './client/main'
-import './client/sw/main'

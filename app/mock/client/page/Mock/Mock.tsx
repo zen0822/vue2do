@@ -37,7 +37,7 @@ export default defineComponent({
     const articleId = ref(root.$route.params.id)
 
     const fetchSWMock = (): void => {
-      fetch(new Request('/api/ex', {
+      fetch(new Request('/api/sw', {
         headers: new Headers({
           'Accept': 'application/json'
         })

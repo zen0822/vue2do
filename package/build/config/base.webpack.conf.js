@@ -45,7 +45,7 @@ module.exports = function ({
   const appName = projectConfig.name
 
   const globalRoot = config.global.root
-  const projectPath = projectConfig.path
+  const projectPath = projectConfig.root
   let extractTextScss = null
 
   if (extractScss) {
@@ -287,9 +287,7 @@ module.exports = function ({
       modules: [path.resolve(__dirname, '../node_modules'), 'node_modules'],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
-        'vue$': 'vue/dist/vue.esm.js',
-        rootDir: globalRoot,
-        libDir: path.resolve(globalRoot, './lib')
+        'vue$': 'vue/dist/vue.esm.js'
       },
       symlinks: false
     },

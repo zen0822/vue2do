@@ -1,9 +1,6 @@
 *.zip
 *.log
 
-.vscode
-.yarn
-.yarnrc.yml
 node_modules
 /tsDist
 zen0822.github.io

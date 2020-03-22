@@ -14,7 +14,7 @@ module.exports = function ({
     bundleAnalyzer: projectConfig.bundleAnalyzer
   })
   const template = projectConfig.tpl ?
-    path.resolve(projectConfig.path, `./index.html`) :
+    path.resolve(projectConfig.root, `./index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
   const prodWebpackConf = {
@@ -67,7 +67,7 @@ module.exports = function ({
         template,
         title: projectConfig.htmlTitle,
         inject: true,
-        favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
+        favicon: projectConfig.favicon && path.resolve(projectConfig.root, projectConfig.favicon)
       }])
   }
 

@@ -1,0 +1,10 @@
+{
+  "eslint.validate": [
+      "javascript",
+      "javascriptreact"
+  ],
+  "search.exclude": {
+    "**/dist": true,
+    "**/tsDist": true
+  },
+}

@@ -27,7 +27,7 @@ return yargs
     handler: (argv) => {
       require('../script/dev')({
         projectConfig: {
-          path: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
+          root: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
         },
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
@@ -54,7 +54,7 @@ return yargs
     handler: (argv) => {
       require('../script/prod')({
         projectConfig: {
-          path: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
+          root: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
         },
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })

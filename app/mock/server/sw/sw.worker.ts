@@ -69,28 +69,22 @@ function createRoute(): void {
 
         return false
       },
-      ({ url, event, params }: any) => {
-        return fetch(event.request)
-          .then((response) => {
-            return response.text()
-          })
-          .then((responseBody) => {
-            return new Response(
-              JSON.stringify({
-                url,
-                data: params.data,
-                body: `${responseBody} <!-- Look Ma. Added Content. -->`
-              }),
-              {
-                status: 200,
-                headers: new Headers({
-                  'Accept-Charset': 'utf-8',
-                  'Content-Type': 'application/json',
-                  'Cache-Control': 'max-age=3600'
-                })
-              }
-            )
-          })
+      ({ url, params }: any) => {
+        return Promise.resolve(new Response(
+          JSON.stringify({
+            url,
+            data: params.data,
+            body: `!-- Look Ma. Added Cont. -->`
+          }),
+          {
+            status: 200,
+            headers: new Headers({
+              'Accept-Charset': 'utf-8',
+              'Content-Type': 'application/json',
+              'Cache-Control': 'max-age=3600'
+            })
+          }
+        ))
       }
     )
   })
@@ -119,28 +113,22 @@ self.addEventListener('fetch', (event) => {
 
 router.registerRoute(new Route(
   ({ url }) => {
-    return (url.pathname === '/api/sw')
+    return url.pathname.includes('/api/sw')
   },
-  ({ url, event }: any) => {
-    return fetch(event.request)
-      .then((response) => {
-        return response.text()
-      })
-      .then((responseBody) => {
-        return new Response(
-          JSON.stringify({
-            url,
-            body: `${responseBody} <!-- Look Ma. Added Content. -->`
-          }),
-          {
-            status: 200,
-            headers: new Headers({
-              'Accept-Charset': 'utf-8',
-              'Content-Type': 'application/json',
-              'Cache-Control': 'max-age=3600'
-            })
-          }
-        )
-      })
+  ({ url }: any) => {
+    return Promise.resolve(new Response(
+      JSON.stringify({
+        url,
+        body: `!-- /api/sw -->`
+      }),
+      {
+        status: 200,
+        headers: new Headers({
+          'Accept-Charset': 'utf-8',
+          'Content-Type': 'application/json',
+          'Cache-Control': 'max-age=3600'
+        })
+      }
+    ))
   }
 ))

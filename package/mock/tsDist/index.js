@@ -77,8 +77,8 @@ function sw(_a) {
         return __generator(this, function (_e) {
             switch (_e.label) {
                 case 0:
-                    if (!configPath && !config.path) {
-                        console.warn('@vue2do/mock: If configPath is empty, Param config.path is required.');
+                    if (!configPath && !config.root) {
+                        console.warn('@vue2do/mock: If configPath is empty, Param config.root is required.');
                         return [2 /*return*/, process.exit(1)];
                     }
                     return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('./script/sw')); })];

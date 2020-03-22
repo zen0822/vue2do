@@ -7,8 +7,8 @@ module.exports = function ({
   let projectPath = ''
   let projectConfigFromFile = {}
 
-  if (!projectConfigPath && !projectConfig.path) {
-    console.warn('If projectConfigPath is empty, Param projectConfig.path is required.')
+  if (!projectConfigPath && !projectConfig.root) {
+    console.warn('If projectConfigPath is empty, Param projectConfig.root is required.')
 
     return process.exit(1)
   }
@@ -20,8 +20,8 @@ module.exports = function ({
   }
 
   // 优先加载 config 的配置参数
-  if (projectConfig.path) {
-    projectPath = projectConfig.path
+  if (projectConfig.root) {
+    projectPath = projectConfig.root
   }
 
   projectConfig = {

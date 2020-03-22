@@ -18,7 +18,7 @@ module.exports = function ({
   })
 
   const template = projectConfig.tpl ?
-    path.resolve(projectConfig.path, `./index.html`) :
+    path.resolve(projectConfig.root, `./index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
   let baseEntry = {}
@@ -39,7 +39,7 @@ module.exports = function ({
 
   const commonRule = {
     include: [
-      projectConfig.path,
+      projectConfig.root,
       path.resolve(__dirname, '../util'),
       path.resolve(__dirname, '../../component')
     ]
@@ -139,7 +139,7 @@ module.exports = function ({
         template,
         title: projectConfig.htmlTitle,
         inject: true,
-        favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
+        favicon: projectConfig.favicon && path.resolve(projectConfig.root, projectConfig.favicon)
       }])
   }
 
