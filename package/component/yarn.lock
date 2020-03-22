@@ -133,13 +133,14 @@
   resolved "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@vue2do/test@^1.1.11":
-  version "1.1.11"
-  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.11.tgz#1333f253c4d721acc6db4bda8db2ee32562c007f"
-  integrity sha512-n3/pGL5ryR5hBM0j8DEgUMClZqxHa6bFVdjwMJlquoLHRrA/hdeU9p1/fkO9p+8OVqUSGhSqhz+vfqrOFGXoAw==
+"@vue2do/test@latest":
+  version "1.1.12"
+  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.12.tgz#1d90f20a9a54f7bff63a1b092edb47cb70b96b41"
+  integrity sha512-4ivQWwMMLzmDlZkN+Jfk08pennQBHVyjQ/HmslBPtovKisJe+lduNNZtW5mahaBm/YMu2eFzVDhQ4KqvT0/jMA==
   dependencies:
     babel-plugin-istanbul "^5.1.4"
     chai "^4.2.0"
+    chalk "^3.0.0"
     glob "^7.1.6"
     istanbul-instrumenter-loader "^3.0.1"
     karma "^4.1.0"
