@@ -14,7 +14,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.3.7",
-    "@vue2do/component": "^1.0.0",
+    "@vue2do/component": "latest",
     "apollo-boost": "^0.4.7",
     "bcryptjs": "^2.4.3",
     "dexie": "^2.0.4",

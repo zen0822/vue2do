@@ -28,7 +28,7 @@
   },
   "gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02",
   "dependencies": {
-    "@vue2do/component": "^1.1.13",
+    "@vue2do/component": "latest",
     "apollo": "^2.22.0",
     "apollo-engine": "^1.1.2",
     "chalk": "^3.0.0",

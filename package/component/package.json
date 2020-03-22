@@ -39,7 +39,7 @@
   },
   "gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02",
   "dependencies": {
-    "@vue2do/test": "^1.1.12",
+    "@vue2do/test": "latest",
     "chalk": "^3.0.0",
     "download": "^7.1.0",
     "vue-cropper": "^0.4.9"
