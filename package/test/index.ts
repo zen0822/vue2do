@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 /**
  * 启动开发环境
  *
@@ -8,7 +10,7 @@ async function unit({
   configPath = ''
 }: any = {}): Promise<any> {
   if (!configPath && !config.root) {
-    console.warn('Param config.root is required when configPath is empty!')
+    console.warn(`${chalk.green('@vue2do/test')}Param config.root is required when configPath is empty!`)
 
     return process.exit(1)
   }

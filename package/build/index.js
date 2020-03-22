@@ -1,3 +1,5 @@
+const chalk = require('chalk')
+
 /**
  * 启动开发环境
  *
@@ -8,7 +10,7 @@ function dev({
   configPath
 } = {}) {
   if (!configPath && !config.root) {
-    console.warn('@vue2do/build: If configPath is empty, Param config.root is required.')
+    console.log(`${chalk.green('@vue2do/build')}: If configPath is empty, Param config.root is required.`)
 
     return process.exit(1)
   }
@@ -30,7 +32,7 @@ function prod({
   onSuccess
 } = {}) {
   if (!configPath && !config.root) {
-    console.warn('@vue2do/build: If configPath is empty, Param config.root is required.')
+    console.log(`${chalk.green('@vue2do/build')}: If configPath is empty, Param config.root is required.`)
 
     return process.exit(1)
   }
@@ -52,7 +54,7 @@ function getConfig({
   configPath
 } = {}) {
   if (!configPath && !config.root) {
-    console.warn('@vue2do/build: If configPath is empty, Param config.root is required.')
+    console.log(`${chalk.green('@vue2do/build')}: If configPath is empty, Param config.root is required.`)
 
     return process.exit(1)
   }

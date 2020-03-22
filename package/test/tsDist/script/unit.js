@@ -19,18 +19,19 @@ var glob_1 = __importDefault(require("glob"));
 var karma_1 = require("karma");
 var karma_config_1 = __importDefault(require("../config/karma.config"));
 var build_1 = require("@vue2do/build");
+var chalk_1 = __importDefault(require("chalk"));
 function default_1(_a) {
     var _b;
     var _c = _a.projectConfig, projectConfig = _c === void 0 ? {} : _c, projectConfigPath = _a.projectConfigPath;
-    console.log('Starting test server.');
-    var projectConfigDir = projectConfig.path || '';
+    console.log(chalk_1.default.green('@vue2do/test') + ": Starting unit testing server.");
+    var projectConfigDir = projectConfig.root || '';
     if (projectConfigPath) {
         projectConfigDir = path_1.default.dirname(projectConfigPath);
         projectConfig = __assign(__assign({}, require(projectConfigPath)), projectConfig);
     }
     var baseWebpackChain = build_1.getConfig({
         config: {
-            path: projectConfigDir
+            root: projectConfigDir
         }
     }).base;
     // babel add config
@@ -56,7 +57,6 @@ function default_1(_a) {
             ignore: '**/node_modules/**',
             nodir: true
         }), preprocessors: (_b = {},
-            // '**/*.@(js|jsx|ts|tsx)': ['webpack', 'sourcemap'],
             _b[path_1.default.resolve(projectConfigDir, './**/__tests__/*.test.js')] = ['webpack', 'sourcemap'],
             _b[path_1.default.resolve(projectConfigDir, './**/__tests__/*.test.ts')] = ['webpack', 'sourcemap'],
             _b), webpack: baseWebpackConfig, webpackMiddleware: {

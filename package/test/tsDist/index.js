@@ -35,6 +35,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -43,6 +46,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var chalk_1 = __importDefault(require("chalk"));
 /**
  * 启动开发环境
  *
@@ -56,7 +60,7 @@ function unit(_a) {
             switch (_e.label) {
                 case 0:
                     if (!configPath && !config.root) {
-                        console.warn('Param config.root is required when configPath is empty!');
+                        console.warn(chalk_1.default.green('@vue2do/test') + "Param config.root is required when configPath is empty!");
                         return [2 /*return*/, process.exit(1)];
                     }
                     return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('./script/unit')); })];

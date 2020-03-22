@@ -3,10 +3,11 @@ import glob from 'glob'
 import { Server as KarmaServer } from 'karma'
 import karmaConfig from '../config/karma.config'
 import { getConfig } from '@vue2do/build'
+import chalk from 'chalk'
 
 type TUnit = {
   projectConfig: {
-    path?: string
+    root?: string
   }
   projectConfigPath: string
 }
@@ -15,8 +16,9 @@ export default function ({
   projectConfig = {},
   projectConfigPath
 }: TUnit): void {
-  console.log('Starting test server.')
-  let projectConfigDir = projectConfig.path || ''
+  console.log(`${chalk.green('@vue2do/test')}: Starting unit testing server.`)
+
+  let projectConfigDir = projectConfig.root || ''
 
   if (projectConfigPath) {
     projectConfigDir = path.dirname(projectConfigPath)
@@ -29,7 +31,7 @@ export default function ({
 
   const baseWebpackChain = getConfig({
     config: {
-      path: projectConfigDir
+      root: projectConfigDir
     }
   }).base
 
@@ -62,7 +64,6 @@ export default function ({
       nodir: true
     }),
     preprocessors: {
-      // '**/*.@(js|jsx|ts|tsx)': ['webpack', 'sourcemap'],
       [path.resolve(projectConfigDir, './**/__tests__/*.test.js')]: ['webpack', 'sourcemap'],
       [path.resolve(projectConfigDir, './**/__tests__/*.test.ts')]: ['webpack', 'sourcemap']
     },
