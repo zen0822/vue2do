@@ -23,7 +23,7 @@ var chalk_1 = __importDefault(require("chalk"));
 function default_1(_a) {
     var _b;
     var _c = _a.projectConfig, projectConfig = _c === void 0 ? {} : _c, projectConfigPath = _a.projectConfigPath;
-    console.log(chalk_1.default.green('@vue2do/test') + ": Starting unit testing server.");
+    console.log(chalk_1.default.green('@vue2do/test') + ": starting unit testing server.");
     var projectConfigDir = projectConfig.root || '';
     if (projectConfigPath) {
         projectConfigDir = path_1.default.dirname(projectConfigPath);

@@ -16,7 +16,7 @@ export default function ({
   projectConfig = {},
   projectConfigPath
 }: TUnit): void {
-  console.log(`${chalk.green('@vue2do/test')}: Starting unit testing server.`)
+  console.log(`${chalk.green('@vue2do/test')}: starting unit testing server.`)
 
   let projectConfigDir = projectConfig.root || ''
 
