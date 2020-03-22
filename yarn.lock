@@ -2478,10 +2478,10 @@
     write "^1.0.3"
     yargs "^14.2.0"
 
-"@vue2do/test@latest":
-  version "1.1.12"
-  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.12.tgz#1d90f20a9a54f7bff63a1b092edb47cb70b96b41"
-  integrity sha512-4ivQWwMMLzmDlZkN+Jfk08pennQBHVyjQ/HmslBPtovKisJe+lduNNZtW5mahaBm/YMu2eFzVDhQ4KqvT0/jMA==
+"@vue2do/test@^1.1.15":
+  version "1.1.15"
+  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.15.tgz#5308bbfa9fdd5ecefeffc8a7eaf6852ed0a6fea0"
+  integrity sha512-EXGxBc/+QFkIBZuWUA7/2jPXti1+nPDcCRHhyxU92IcF+OY6Cmm7Jysys68BduGvWPeD8RcutkXkAlRV7sW4sA==
   dependencies:
     babel-plugin-istanbul "^5.1.4"
     chai "^4.2.0"
