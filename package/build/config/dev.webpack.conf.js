@@ -1,17 +1,15 @@
 const path = require('path')
-const fs = require('fs')
 const webpack = require('webpack')
 const chalk = require('chalk')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const WorkboxPlugin = require('workbox-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = function ({
   config
 } = {}) {
   const appName = config.project.name
+  const pureJs = config.project.pure
   const projectConfig = config.project
   const baseWebpackChain = require('./base.webpack.conf')({
     config,
@@ -20,7 +18,7 @@ module.exports = function ({
   })
 
   const template = projectConfig.tpl ?
-    path.resolve(projectConfig.path, `./index.html`) :
+    path.resolve(projectConfig.root, `./index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
 
   let baseEntry = {}
@@ -31,7 +29,7 @@ module.exports = function ({
     // Object.keys(baseWebpackConfig.entry).forEach((entryName) => {
     //   Object.assign(baseEntry, {
     //     [entryName]: baseWebpackConfig.entry[entryName].concat([
-    //       `webpack-dev-server/client?http://0.0.0.0:${config.dev.hotPort}`,
+    //       `webpack-dev-server/client?http://0.0.0.0:${config.dev.port}`,
     //       'webpack/hot/dev-server',
     //       'react-hot-loader/patch'
     //     ])
@@ -41,7 +39,7 @@ module.exports = function ({
 
   const commonRule = {
     include: [
-      projectConfig.path,
+      projectConfig.root,
       path.resolve(__dirname, '../util'),
       path.resolve(__dirname, '../../component')
     ]
@@ -85,38 +83,25 @@ module.exports = function ({
       dashboard: {
         plugin: DashboardPlugin
       },
-      loaderOptions: {
+      webpackLoaderOptions: {
         plugin: webpack.LoaderOptionsPlugin,
         args: [{
           debug: true
         }]
       },
-      HotModuleReplacement: {
+      webpackHotModuleReplacement: {
         plugin: webpack.HotModuleReplacementPlugin
       },
-      NamedModules: {
+      webpackNamedModules: {
         plugin: webpack.NamedModulesPlugin
       },
-      NoEmitOnErrors: {
+      webpackNoEmitOnErrors: {
         plugin: webpack.NoEmitOnErrorsPlugin
       },
-      OccurrenceOrder: {
+      webpackOptimizeOccurrenceOrder: {
         plugin: webpack.optimize.OccurrenceOrderPlugin
       },
-      BundleAnalyzerPlugin: {
-        plugin: BundleAnalyzerPlugin,
-        args: [{
-          analyzerMode: 'static',
-          reportFilename: 'webpack-bundle-report.html',
-          defaultSizes: 'parsed',
-          openAnalyzer: false,
-          generateStatsFile: false,
-          statsFilename: 'stats.json',
-          statsOptions: null,
-          logLevel: 'info'
-        }]
-      },
-      ProgressBar: {
+      progressBar: {
         plugin: ProgressBarPlugin,
         args: [{
           format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
@@ -124,36 +109,43 @@ module.exports = function ({
           incomplete: '-',
           clear: false
         }]
-      },
-      HtmlWebpack: {
-        plugin: HtmlWebpackPlugin,
-        args: [{
-          filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
-          template,
-          title: projectConfig.htmlTitle,
-          inject: true,
-          favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
-        }]
       }
+    },
+    devServer: {
+      clientLogLevel: 'info',
+      disableHostCheck: true,
+      hot: true,
+      historyApiFallback: true,
+      headers: {
+        'X-Custom-Header': 'yes'
+      },
+      inline: true,
+      proxy: config.dev.proxyTable,
+      watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+      },
+      stats: 'errors-warnings'
     }
   }
 
-  // if (process.env.SW_ENV === 'development') {
-  //   try {
-  //     fs.accessSync(swPath, fs.constants.F_OK)
-
-  //     baseWebpackChain
-  //       .plugin('WorkboxPlugin.InjectManifest')
-  //       .use(WorkboxPlugin.InjectManifest, [{
-  //         swSrc: swPath,
-  //         importWorkboxFrom: 'disabled'
-  //       }])
-  //   } catch (error) {
-  //     console.log(`\n在应用的 dist/sw 未找到 sw.js 文件，需要先运行 npm run sw:prod 生成对应文件。\n`)
-  //   }
-  // }
-
   baseWebpackChain.merge(devConf)
+
+  if (!pureJs) {
+    baseWebpackChain
+      .plugin('html')
+      .use(HtmlWebpackPlugin, [{
+        filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
+        template,
+        title: projectConfig.htmlTitle,
+        inject: true,
+        favicon: projectConfig.favicon && path.resolve(projectConfig.root, projectConfig.favicon)
+      }])
+  }
+
+  if (typeof projectConfig.webpack === 'function') {
+    return projectConfig.webpack(baseWebpackChain)
+  }
 
   return baseWebpackChain
 }

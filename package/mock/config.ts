@@ -15,7 +15,7 @@ export default async function ({
       path: projectPath
     },
     sw: {
-      hotPort: 5169,
+      port: 5169,
       assetRoot: path.resolve(projectPath, 'projectConfig.assetRoot', './sw'),
       assetPublicPath: '/',
       assetSubDirectory: projectConfig.staticDir,

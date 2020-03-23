@@ -17,7 +17,7 @@ bundleAnalyzer: true, // 打包文件的分析
 execute: './index.js', // 执行文件路径
 favicon: './public/icon-coin.png', // favicon 路径
 gzip: true, // 开启 gzip
-hotPort: 3000, // 热开发端口
+port: 3000, // 热开发端口
 htmlName: 'index', // html 的名字
 htmlTitle: 'ex', // html 标题
 name: 'example', // 项目名字，打包的文件名
@@ -67,7 +67,7 @@ vue2doBuild.prod({
 
 ## Webpack Chain
 
-### loader 的基础配置
+### Loader 的基础配置
 
 ```js
 'jsx|tsx|pre': {
@@ -190,6 +190,110 @@ media: {
     }
   }
 }
+```
+
+### Plugin 的基础配置
+
+```js
+// base
+...
+plugin: {
+  forkTsChecker: {
+    plugin: ForkTsCheckerWebpackPlugin,
+    args: [{
+      eslint: true,
+      async: true,
+      watch: [projectPath],
+      reportFiles: [projectPath]
+    }]
+  }
+},
+...
+
+// dev
+...
+plugin: {
+  dashboard: {
+    plugin: DashboardPlugin
+  },
+  webpackLoaderOptions: {
+    plugin: webpack.LoaderOptionsPlugin,
+    args: [{
+      debug: true
+    }]
+  },
+  webpackHotModuleReplacement: {
+    plugin: webpack.HotModuleReplacementPlugin
+  },
+  webpackNamedModules: {
+    plugin: webpack.NamedModulesPlugin
+  },
+  webpackNoEmitOnErrors: {
+    plugin: webpack.NoEmitOnErrorsPlugin
+  },
+  webpackOptimizeOccurrenceOrder: {
+    plugin: webpack.optimize.OccurrenceOrderPlugin
+  },
+  progressBar: {
+    plugin: ProgressBarPlugin,
+    args: [{
+      format: `build [:bar] ${chalk.green.bold(':percent')}  (:elapsed 秒)`,
+      complete: '>',
+      incomplete: '-',
+      clear: false
+    }]
+  },
+  html: {
+    plugin: HtmlWebpackPlugin,
+    args: [{
+      filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
+      template,
+      title: projectConfig.htmlTitle,
+      inject: true,
+      favicon: projectConfig.favicon && path.resolve(projectConfig.path, projectConfig.favicon)
+    }]
+  }
+},
+...
+
+// prod
+...
+plugin: {
+  clean: {
+    plugin: CleanWebpackPlugin,
+    args: [{
+      // dry: true,
+      verbose: true
+    }]
+  },
+  uglifyJs: {
+    plugin: UglifyJsPlugin,
+    args: [{
+      uglifyOptions: {
+        compress: true,
+        cache: true,
+        ie8: false,
+        parallel: true,
+        output: {
+          comments: false,
+          beautify: false
+        },
+        sourceMap: config.prod.sourceMap,
+        warnings: false
+      }
+    }]
+  },
+  html: {
+    plugin: HtmlWebpackPlugin,
+    args: [{
+      filename: `${projectConfig.htmlName ? projectConfig.htmlName : 'index'}.html`,
+      template,
+      title: projectConfig.htmlTitle,
+      inject: true
+    }]
+  }
+}
+...
 ```
 
 ## Started

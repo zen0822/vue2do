@@ -16,7 +16,7 @@
  */
 
 import './Crop.scss'
-import VueCropper from 'vue-cropper'
+import * as VueCropper from 'vue-cropper'
 import baseMixin from '../../mixin/base'
 
 export default {

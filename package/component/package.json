@@ -1,6 +1,6 @@
 {
   "name": "@vue2do/component",
-  "version": "1.1.12",
+  "version": "1.1.14",
   "description": "Base component for Vue.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
@@ -35,16 +35,20 @@
   "scripts": {
     "test": "vue2do-test unit ./test.config.js",
     "tsc": "tsc",
-    "tsc:watch": "tsc -w"
+    "tsc:w": "tsc -w"
   },
   "gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02",
   "dependencies": {
-    "@vue2do/test": "^1.1.11",
+    "@vue2do/test": "latest",
+    "chalk": "^3.0.0",
     "download": "^7.1.0",
     "vue-cropper": "^0.4.9"
   },
   "peerDependencies": {
     "@vue/composition-api": "^0.3.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
     "typescript": "^3.8.3"
   }
 }

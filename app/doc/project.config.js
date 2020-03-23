@@ -5,7 +5,7 @@ module.exports = {
   bundleAnalyzer: true, // 打包文件的分析
   favicon: './client/asset/img/favicon.png',
   gzip: true,
-  hotPort: 5167,
+  port: 5167,
   htmlName: 'index',
   htmlTitle: 'doc',
   name: 'doc',

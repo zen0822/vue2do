@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import config from '../config'
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware'
 import { ApolloEngine } from 'apollo-engine'
@@ -51,7 +52,7 @@ class GqlServer {
           port: config.gql.port,
           httpServer,
           graphqlPaths: ['/']
-        }, () => console.log(`GraphQL server with Apollo Engine is running on http://localhost:${config.gql.port}`)
+        }, () => console.log(`${chalk.green('@vue2do/mock')}: GraphQL server with Apollo Engine is running on http://localhost:${config.gql.port}`)
         )
       } else {
         graphQLServer.start({
@@ -59,7 +60,7 @@ class GqlServer {
           tracing: {
             mode: 'enabled'
           }
-        }, () => console.log(`GraphQL server is running on http://localhost:${config.gql.port}`))
+        }, () => console.log(`${chalk.green('@vue2do/mock')}: GraphQL server is running on http://localhost:${config.gql.port}`))
       }
     } catch (error) {
       console.warn(error)

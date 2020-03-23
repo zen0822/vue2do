@@ -21,8 +21,10 @@ module.exports = function ({
     options: {
       presets: [
         require.resolve('@vue/babel-preset-jsx'),
+        require.resolve('@babel/preset-typescript'),
         [require.resolve('@babel/preset-env'), {
-          modules: 'commonjs',
+          modules: false,
+          loose: true,
           targets: {
             browsers: ['last 2 versions', 'ie >= 10', 'iOS >= 8']
           }
@@ -43,7 +45,7 @@ module.exports = function ({
   const appName = projectConfig.name
 
   const globalRoot = config.global.root
-  const projectPath = projectConfig.path
+  const projectPath = projectConfig.root
   let extractTextScss = null
 
   if (extractScss) {
@@ -104,6 +106,7 @@ module.exports = function ({
             experimentalWatchApi: true,
             compilerOptions: {
               module: 'es6',
+              target: 'es6',
               noEmit: true
             }
           }
@@ -234,7 +237,6 @@ module.exports = function ({
   }
 
   const baseConf = {
-    mode: 'production',
     entry: entryConfig,
     module: {
       rule: configRule
@@ -279,15 +281,13 @@ module.exports = function ({
       maxAssetSize: 10485760
     },
 
-    stats: 'verbose',
+    stats: 'normal',
 
     resolve: {
       modules: [path.resolve(__dirname, '../node_modules'), 'node_modules'],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
-        'vue$': 'vue/dist/vue.esm.js',
-        rootDir: globalRoot,
-        libDir: path.resolve(globalRoot, './lib')
+        'vue$': 'vue/dist/vue.esm.js'
       },
       symlinks: false
     },
@@ -298,6 +298,10 @@ module.exports = function ({
   }
 
   webpackChainConfig.merge(baseConf)
+
+  if (projectConfig.type === 'spa') {
+    webpackChainConfig.output.chunkFilename(utils.assetsPath('js/[name].bundle.[hash:7].js'))
+  }
 
   if (config.zepto) {
     webpackChainConfig.module
@@ -344,10 +348,6 @@ module.exports = function ({
         statsOptions: null,
         logLevel: 'info'
       }])
-  }
-
-  if (projectConfig.webpack) {
-    return projectConfig.webpack(webpackChainConfig)
   }
 
   return webpackChainConfig

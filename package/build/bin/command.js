@@ -4,8 +4,8 @@ const path = require('path')
 const yargs = require('yargs')
 
 return yargs
-  .example('$0 dev path/project.config.js')
-  .example('$0 prod path/project.config.js')
+  .example('$0 dev ./path/project.config.js --root ./path')
+  .example('$0 prod ./path/project.config.js --root ./path')
   .command({
     command: 'dev <path>',
     desc: '@vue2do/build command dev',
@@ -15,12 +15,20 @@ return yargs
           demandOption: true,
           describe: 'Configuration path.',
           type: 'string'
+        },
+        root: {
+          alias: 'r',
+          demandOption: false,
+          describe: 'Project path.',
+          type: 'string'
         }
       })
     },
     handler: (argv) => {
       require('../script/dev')({
-        projectConfig: {},
+        projectConfig: {
+          root: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
+        },
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }
@@ -34,12 +42,20 @@ return yargs
           demandOption: true,
           describe: 'Configuration path.',
           type: 'string'
+        },
+        root: {
+          alias: 'r',
+          demandOption: false,
+          describe: 'Project path.',
+          type: 'string'
         }
       })
     },
     handler: (argv) => {
       require('../script/prod')({
-        projectConfig: {},
+        projectConfig: {
+          root: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
+        },
         projectConfigPath: path.resolve(process.cwd(), argv.path)
       })
     }

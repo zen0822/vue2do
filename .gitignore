@@ -1,13 +1,11 @@
 *.zip
 *.log
 
-.vscode
-.yarn
-.yarnrc.yml
 node_modules
 /app/**/dist
 /tsDist
 zen0822.github.io
 
+/app/*/dist/
+
 coverage
-./dist/webpack-bundle-report.html

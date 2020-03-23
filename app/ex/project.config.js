@@ -4,7 +4,7 @@ module.exports = {
   execute: './main.ts',
   bundleAnalyzer: true, // 打包文件的分析
   gzip: true,
-  hotPort: 5167,
+  port: 5167,
   htmlName: 'index',
   htmlTitle: 'ex',
   name: 'example',

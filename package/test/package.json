@@ -1,14 +1,13 @@
 {
   "name": "@vue2do/test",
-  "version": "1.1.11",
+  "version": "1.1.15",
   "description": "Test utils for Vue.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
-  "main": "./index.js",
-  "typings": "./index.d.ts",
+  "main": "./tsDist/index.js",
+  "typings": "./types/index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts",
+    "types",
     "bin",
     "tsDist"
   ],
@@ -20,11 +19,12 @@
   },
   "scripts": {
     "tsc": "tsc -v && tsc",
-    "tsc:watch": "tsc -w"
+    "tsc:w": "tsc -w"
   },
   "dependencies": {
     "babel-plugin-istanbul": "^5.1.4",
     "chai": "^4.2.0",
+    "chalk": "^3.0.0",
     "glob": "^7.1.6",
     "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^4.1.0",
@@ -47,10 +47,11 @@
     "@types/node": "^12.7.5",
     "@types/sinon": "^7.5.2",
     "@types/sinon-chai": "^3.2.3",
-    "@vue2do/build": "^1.1.8"
+    "@vue2do/build": "latest",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "typescript": "^3.8.3"
   },
-  "gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02"
+  "gitHead": "14520de5335c81992a91c229beee45f338cc43bc"
 }

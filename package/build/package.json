@@ -1,6 +1,6 @@
 {
 	"name": "@vue2do/build",
-	"version": "1.1.8",
+	"version": "1.1.12",
 	"description": "Tool for build Vue application",
 	"author": "zenwong@aliyun.com",
 	"license": "MIT",
@@ -20,10 +20,6 @@
 	"bin": {
 		"vue2do-build": "./bin/command.js"
 	},
-	"scripts": {
-		"debug": "node --nolazy --inspect-brk=9229 ./bin/command dev config ../../app/example/project.config.js",
-		"nodemon": "nodemon"
-	},
 	"dependencies": {
 		"@babel/core": "^7.1.2",
 		"@babel/plugin-proposal-class-properties": "^7.7.0",
@@ -31,7 +27,7 @@
 		"@babel/plugin-transform-arrow-functions": "^7.2.0",
 		"@babel/plugin-transform-runtime": "^7.1.0",
 		"@babel/preset-env": "^7.1.0",
-		"@babel/preset-typescript": "^7.6.0",
+		"@babel/preset-typescript": "^7.8.3",
 		"@babel/runtime": "^7.1.2",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"@vue/babel-preset-jsx": "^1.0.0",
@@ -40,13 +36,12 @@
 		"babel-jest": "^24.8.0",
 		"babel-loader": "^8.0.4",
 		"babel-plugin-transform-object-rest-spread": "^7.0.0-beta.3",
-		"chalk": "^2.4.2",
+		"chalk": "^3.0.0",
 		"clean-webpack-plugin": "^3.0.0",
 		"compression-webpack-plugin": "^2.0.0",
 		"concurrently": "^3.5.0",
 		"connect-history-api-fallback": "*",
 		"copy-to-clipboard": "^3.0.8",
-		"cross-env": "^6.0.0",
 		"css-loader": "^0.23.1",
 		"eslint-loader": "^3.0.2",
 		"eventsource-polyfill": "*",
@@ -76,8 +71,8 @@
 		"sass-loader": "^7.1.0",
 		"script-loader": "^0.7.2",
 		"style-loader": "^1.0.0",
+		"terser-webpack-plugin": "^2.3.5",
 		"ts-loader": "^6.1.1",
-		"uglifyjs-webpack-plugin": "^2.2.0",
 		"url-loader": "2.1.0",
 		"vue-hot-reload-api": "^2.3.1",
 		"vue-html-loader": "^1.2.4",
@@ -86,14 +81,12 @@
 		"vue-template-compiler": "^2.5.13",
 		"watchpack": "^1.4.0",
 		"webpack-bundle-analyzer": "^3.3.2",
-		"webpack-chain": "^6.0.0",
+		"webpack-chain": "^6.4.0",
 		"webpack-dashboard": "*",
 		"webpack-dev-middleware": "^1.12.0",
 		"webpack-dev-server": "^3.1.11",
 		"webpack-hot-middleware": "^2.18.2",
 		"webpack-merge": "^4.1.1",
-		"workbox-webpack-plugin": "^5.0.0",
-		"workbox-window": "^4.2.0",
 		"write": "^1.0.3",
 		"yargs": "^14.2.0"
 	},
@@ -107,5 +100,5 @@
 		"vue": "^2.6.10",
 		"webpack": "^4.41.2"
 	},
-	"gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02"
+	"gitHead": "14520de5335c81992a91c229beee45f338cc43bc"
 }

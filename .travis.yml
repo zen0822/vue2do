@@ -18,7 +18,7 @@ before_script:
   - sudo chown root /opt/google/chrome/chrome-sandbox
   - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
   - npm rebuild node-sass
-  - yarn run app:install
+  - yarn run app:i
 script:
   - yarn run test.ci:D
 after_script:
