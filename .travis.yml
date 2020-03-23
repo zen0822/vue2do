@@ -20,7 +20,7 @@ before_script:
   - npm rebuild node-sass
   - yarn run app:i
 script:
-  - yarn run test.ci:D
+  - yarn run test:D
 after_script:
   - yarn run coveralls
 deploy:
