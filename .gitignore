@@ -2,6 +2,7 @@
 *.log
 
 node_modules
+/app/**/dist
 /tsDist
 zen0822.github.io
 
