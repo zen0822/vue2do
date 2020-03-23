@@ -9,10 +9,10 @@
 	"files": [
 		"index.js",
 		"index.d.ts",
-		"bin",
-		"config",
-		"script",
-		"tpl"
+		"bin/",
+		"config/",
+		"script/",
+		"tpl/"
 	],
 	"publishConfig": {
 		"access": "public"
