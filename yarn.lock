@@ -2435,9 +2435,9 @@
     pretty "^2.0.0"
 
 "@vue2do/build@^1.1.13":
-  version "1.1.14"
-  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.14.tgz#3ba3a68c6c05b1f2c4901a7b893d579ca9ff55ce"
-  integrity sha512-64IzHVbbe9or9HLNDzQHsoYorXbq3QBlhbonZZtM1Y26mcLRBS4YfFIcCIIkrjj0L8AkLtVqFXWkXyD5vsmtAQ==
+  version "1.1.15"
+  resolved "https://registry.npmjs.org/@vue2do/build/-/build-1.1.15.tgz#dcffc00a1d3cea3d4cbf259b27c1b8e339603abd"
+  integrity sha512-IlYYLpyXxrcS0VVHVmpaZwurlO+hX6KHfEe85IyDIPgUQdFGhmnYQ2SyuNbVGHIKrGfqO4NAfbDe4XKZe+4e5g==
   dependencies:
     "@babel/core" "^7.1.2"
     "@babel/plugin-proposal-class-properties" "^7.7.0"
@@ -2519,9 +2519,9 @@
     vue-cropper "^0.4.9"
 
 "@vue2do/test@^1.1.16", "@vue2do/test@latest":
-  version "1.1.17"
-  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.17.tgz#fc259b0256ad72dc372102013b2ea57bff708be5"
-  integrity sha512-qwfVoy8uqKCE3BRxLYismgYZ1jDQ1t7R4fuwaFawIMQxuXLdrjPOuP229yDNG5o+eT6Tz+rcANHa0g7kANbKdA==
+  version "1.1.18"
+  resolved "https://registry.npmjs.org/@vue2do/test/-/test-1.1.18.tgz#9122b5a0f911e59c89a63c24c93cf41ea65ad621"
+  integrity sha512-QbpBLbKx1fK2dQc/tnz2xAzCXic5BEsjFL4U9GBKti4YatZLOzuTP9Kb7LaSA7wO0cGw8LQf3cT110H1/gz0PA==
   dependencies:
     babel-plugin-istanbul "^5.1.4"
     chai "^4.2.0"
