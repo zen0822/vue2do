@@ -29,6 +29,7 @@
     "prisma:db": "docker-compose up -d",
     "prisma:start": "prisma deploy",
     "test:D": "vue2do-test unit ./app/doc/test.config.js",
+    "test:M": "yarn workspace @app/mock run test",
     "test.ci:D": "node ./app/doc/script/test.ci.js",
     "tsc": "tsc",
     "tsc:w": "tsc -w"
@@ -91,5 +92,9 @@
     "prisma": "^1.34.10",
     "typescript": "^3.8.3",
     "write": "^2.0.0"
-  }
+  },
+  "workspaces": [
+    "app/*",
+    "package/*"
+  ]
 }

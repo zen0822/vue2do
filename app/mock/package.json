@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "@app/mock",
   "version": "1.0.0",
   "description": "Min Mock application.",
   "license": "UNLICENSED",
@@ -9,7 +9,8 @@
     "mock": "vue2do-mock mock.config.js",
     "prisma:db": "docker-compose up -d",
     "prisma:start": "prisma deploy",
-    "prod": "vue2do-build prod project.config.js"
+    "prod": "vue2do-build prod project.config.js",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

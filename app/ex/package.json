@@ -1,0 +1,10 @@
+{
+  "name": "@app/ex",
+  "version": "1.0.0",
+  "description": "Example application.",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  }
+}
