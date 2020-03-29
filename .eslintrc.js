@@ -56,7 +56,7 @@ module.exports = {
     'exit': true,
     'workbox': true
   },
-  'rules': {
+  rules: {
     '@typescript-eslint/member-delimiter-style': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-var-requires': 0,
@@ -93,5 +93,12 @@ module.exports = {
     }],
     'no-template-curly-in-string': 0,
     'operator-linebreak': 0
+  },
+  settings: {
+    'import/resolver': 'node',
+    'import/internal-regex': [
+      /^@app/, 
+      /^@package/
+    ]
   }
 }

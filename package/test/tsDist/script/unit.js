@@ -48,7 +48,7 @@ function default_1(_a) {
         .add(path_1.default.resolve('./unit/'))
         .end()
         .use('istanbul')
-        .loader('istanbul-instrumenter-loader')
+        .loader(require.resolve('istanbul-instrumenter-loader'))
         .end();
     var baseWebpackConfig = baseWebpackChain.toConfig();
     delete baseWebpackConfig.entry;

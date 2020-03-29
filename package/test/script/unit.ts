@@ -50,7 +50,7 @@ export default function ({
     .add(path.resolve('./unit/'))
     .end()
     .use('istanbul')
-    .loader('istanbul-instrumenter-loader')
+    .loader(require.resolve('istanbul-instrumenter-loader'))
     .end()
 
   const baseWebpackConfig = baseWebpackChain.toConfig()

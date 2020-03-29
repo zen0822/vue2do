@@ -34,7 +34,7 @@ var handleEleDisplay = function (_a) {
         return element;
     }
     handleElDisplay();
-    cb && cb(element);
+    cb === null || cb === void 0 ? void 0 : cb(element);
     handleElDisplay(false);
     return element;
 };

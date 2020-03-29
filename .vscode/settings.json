@@ -1,10 +1,12 @@
 {
   "eslint.validate": [
-      "javascript",
-      "javascriptreact"
+    "javascript",
+    "javascriptreact"
   ],
   "search.exclude": {
     "**/dist": true,
     "**/tsDist": true
   },
+  "eslint.nodePath": ".vscode/pnpify",
+  "typescript.tsdk": ".vscode/pnpify/typescript/lib"
 }

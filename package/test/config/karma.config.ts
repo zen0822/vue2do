@@ -19,6 +19,16 @@ export default {
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
   },
+  plugins: [
+    require.resolve('karma-webpack'),
+    require.resolve('karma-sourcemap-loader'),
+    require.resolve('karma-mocha'),
+    require.resolve('karma-sinon-chai'),
+    require.resolve('karma-source-map-support'),
+    require.resolve('karma-spec-reporter'),
+    require.resolve('karma-coverage-istanbul-reporter'),
+    require.resolve('karma-chrome-launcher')
+  ],
   preprocessors: {},
   port: 9877,
   reporters: ['spec', 'coverage-istanbul'],

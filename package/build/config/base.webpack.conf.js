@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const PurgecssPlugin = require('purgecss-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const PnpWebpackPlugin = require('../script/WrapPnpWebpackPlugin')(require('pnp-webpack-plugin'))
 
 const Config = require('webpack-chain')
 const webpackChainConfig = new Config()
@@ -17,7 +18,7 @@ module.exports = function ({
   bundleAnalyzer = false
 } = {}) {
   const babelLoader = {
-    loader: 'babel-loader',
+    loader: require.resolve('babel-loader'),
     options: {
       presets: [
         require.resolve('@vue/babel-preset-jsx'),
@@ -59,6 +60,7 @@ module.exports = function ({
       projectPath,
       path.resolve(__dirname, '../util'),
       // path.resolve(__dirname, '../../component'),
+      /package\/component/,
       /@vue2do/
     ]
   }
@@ -70,13 +72,13 @@ module.exports = function ({
       test: /\.vue$/,
       use: {
         vuecss: {
-          loader: 'vue',
+          loader: require.resolve('vue'),
           options: {
             loaders: utils.cssLoaders()
           }
         },
         vue: {
-          loader: 'vue-loader',
+          loader: require.resolve('vue-loader'),
           options: {
             esModule: true
           }
@@ -89,7 +91,7 @@ module.exports = function ({
       enforce: 'pre',
       use: {
         eslint: {
-          loader: 'eslint-loader'
+          loader: require.resolve('eslint-loader')
         }
       }
     },
@@ -99,8 +101,8 @@ module.exports = function ({
       use: {
         babel: babelLoader,
         ts: {
-          loader: 'ts-loader',
-          options: {
+          loader: require.resolve('ts-loader'),
+          options: PnpWebpackPlugin.tsLoaderOptions({
             appendTsxSuffixTo: [/\.vue$/],
             transpileOnly: true,
             experimentalWatchApi: true,
@@ -109,7 +111,7 @@ module.exports = function ({
               target: 'es6',
               noEmit: true
             }
-          }
+          })
         }
       }
     },
@@ -128,13 +130,13 @@ module.exports = function ({
       test: /\.(css)$/,
       use: {
         style: {
-          loader: extractScss ? MiniCssExtractPlugin.loader : 'style-loader'
+          loader: extractScss ? MiniCssExtractPlugin.loader : require.resolve('style-loader')
         },
         css: {
-          loader: 'css-loader'
+          loader: require.resolve('css-loader')
         },
         postcss: {
-          loader: 'postcss-loader'
+          loader: require.resolve('postcss-loader')
         }
       }
     },
@@ -143,16 +145,16 @@ module.exports = function ({
       test: /\.(scss)$/,
       use: {
         style: {
-          loader: extractScss ? MiniCssExtractPlugin.loader : 'style-loader'
+          loader: extractScss ? MiniCssExtractPlugin.loader : require.resolve('style-loader')
         },
         css: {
-          loader: 'css-loader'
+          loader: require.resolve('css-loader')
         },
         postcss: {
-          loader: 'postcss-loader'
+          loader: require.resolve('postcss-loader')
         },
         sass: {
-          loader: 'sass-loader'
+          loader: require.resolve('sass-loader')
         }
       }
     },
@@ -161,16 +163,16 @@ module.exports = function ({
       test: /\.(less)$/,
       use: {
         style: {
-          loader: extractScss ? MiniCssExtractPlugin.loader : 'style-loader'
+          loader: extractScss ? MiniCssExtractPlugin.loader : require.resolve('style-loader')
         },
         css: {
-          loader: 'css-loader'
+          loader: require.resolve('css-loader')
         },
         postcss: {
-          loader: 'postcss-loader'
+          loader: require.resolve('postcss-loader')
         },
         sass: {
-          loader: 'less-loader'
+          loader: require.resolve('less-loader')
         }
       }
     },
@@ -179,7 +181,7 @@ module.exports = function ({
       test: /\.(png|jpe?g|gif|svg|woff2?|eot|ttf|otf)(\?.*)?$/,
       use: {
         url: {
-          loader: 'url-loader',
+          loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
             name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
@@ -192,7 +194,7 @@ module.exports = function ({
       test: /\.(mp3|aac|ogg)(\?.*)?$/,
       use: {
         file: {
-          loader: 'file-loader'
+          loader: require.resolve('file-loader')
         }
       }
     },
@@ -201,7 +203,7 @@ module.exports = function ({
       test: /\.(html|tpl)$/,
       use: {
         file: {
-          loader: 'html-loader'
+          loader: require.resolve('html-loader')
         }
       }
     },
@@ -210,7 +212,7 @@ module.exports = function ({
       test: /\.(pug)$/,
       use: {
         file: {
-          loader: 'pug-loader'
+          loader: require.resolve('pug-loader')
         }
       }
     }
@@ -267,12 +269,13 @@ module.exports = function ({
     plugin: {
       forkTsChecker: {
         plugin: ForkTsCheckerWebpackPlugin,
-        args: [{
+        args: [PnpWebpackPlugin.forkTsCheckerOptions({
+          useTypescriptIncrementalApi: false,
           eslint: true,
           async: true,
           watch: [projectPath],
           reportFiles: [projectPath]
-        }]
+        })]
       }
     },
 
@@ -284,16 +287,23 @@ module.exports = function ({
     stats: 'normal',
 
     resolve: {
-      modules: [path.resolve(__dirname, '../node_modules'), 'node_modules'],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       alias: {
         'vue$': 'vue/dist/vue.esm.js'
       },
-      symlinks: false
+      plugin: {
+        pnp: {
+          plugin: PnpWebpackPlugin
+        }
+      }
     },
 
     resolveLoader: {
-      modules: [path.resolve(__dirname, '../node_modules'), 'node_modules']
+      plugin: {
+        pnp: {
+          plugin: PnpWebpackPlugin.moduleLoader(module)
+        }
+      }
     }
   }
 

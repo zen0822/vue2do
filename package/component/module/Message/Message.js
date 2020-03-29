@@ -137,7 +137,7 @@ const messageComp = {
               this.hide()
             }, TIP_DISPLAY_TIME)
 
-            cb && cb()
+            cb?.()
 
             return this.$emit('hide')
           }
@@ -163,7 +163,7 @@ const messageComp = {
           this.isMousedown = false
 
           this.hideCb && this.hideCb()
-          cb && cb()
+          cb?.()
 
           return this.$emit('hide')
         }

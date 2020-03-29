@@ -4,5 +4,6 @@ dist
 tsDist
 coverage
 prisma
+iconfont.svg.js
 
 node_modules

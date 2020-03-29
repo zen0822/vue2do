@@ -5,6 +5,7 @@
     "./**/*.tsx"
   ],
   "compilerOptions": {
-    "outDir": "./tsDist"
+    "outDir": "./tsDist",
+    "skipLibCheck": true
   }
 }

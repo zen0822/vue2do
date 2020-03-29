@@ -95,7 +95,7 @@ const confirm = (opt = '') => {
         }
       }
     })
-    .show(() => {})
+    .show(() => { /* nothing */ })
 }
 
 createConfirm()

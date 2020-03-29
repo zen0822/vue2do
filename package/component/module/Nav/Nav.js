@@ -166,7 +166,7 @@ export default {
       }
 
       this.isSmallDevice ? this.hide() : this.show()
-      this.$refs.fold.$on('ready', () => {})
+      this.$refs.fold.$on('ready', () => { /* nothing */ })
     }
   },
 

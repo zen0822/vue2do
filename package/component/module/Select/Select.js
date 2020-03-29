@@ -347,7 +347,7 @@ export default {
         this.selectedHeight = height
       }
 
-      cb && cb()
+      cb?.()
     },
 
     /**
