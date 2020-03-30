@@ -8,5 +8,6 @@
     "**/tsDist": true
   },
   "eslint.nodePath": ".vscode/pnpify",
-  "typescript.tsdk": ".vscode/pnpify/typescript/lib"
+  "typescript.tsdk": ".vscode/pnpify/typescript/lib",
+  "yaml.format.singleQuote": true
 }

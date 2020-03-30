@@ -1,14 +1,13 @@
 *.zip
+!.yarn/cache/**/*.zip
+
 *.log
+coverage
 
 node_modules
 /app/**/dist
 /tsDist
 zen0822.github.io
-
-/app/*/dist/
-
-coverage
 
 .yarn/*
 !.yarn/cache
