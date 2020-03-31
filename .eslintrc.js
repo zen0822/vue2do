@@ -26,9 +26,11 @@ module.exports = {
       './app/ex/tsconfig.json',
       './app/mock/tsconfig.json',
       './app/mock/server/sw/tsconfig.json',
+      './package/build/tsconfig.json',
       './package/component/tsconfig.json',
       './package/mock/tsconfig.json',
-      './package/test/tsconfig.json'
+      './package/test/tsconfig.json',
+      './package/wc-pnp-webpack-plugin/tsconfig.json'
     ],
     sourceType: 'module',
     tsconfigRootDir: './'

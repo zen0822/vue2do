@@ -1,17 +1,23 @@
-const path = require('path')
-const webpack = require('webpack')
-const chalk = require('chalk')
-const DashboardPlugin = require('webpack-dashboard/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+import path from 'path'
+import webpack from 'webpack'
+import chalk from 'chalk'
+import DashboardPlugin from 'webpack-dashboard/plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import getBaseConfig from './base.webpack.conf'
 
-module.exports = function ({
+type TOpt = {
+  config: any
+}
+
+export default function ({
   config
-} = {}) {
+}: TOpt): any {
   const appName = config.project.name
   const pureJs = config.project.pure
   const projectConfig = config.project
-  const baseWebpackChain = require('./base.webpack.conf')({
+  
+  const baseWebpackChain = getBaseConfig({
     config,
     extractScss: false,
     purgeCss: false

@@ -4,21 +4,25 @@
 	"description": "Tool for build Vue application",
 	"author": "zenwong@aliyun.com",
 	"license": "MIT",
-	"main": "./index.js",
-	"typings": "./types/index.d.ts",
+	"main": "./tsDist/index.js",
 	"files": [
-		"index.js",
-		"index.d.ts",
+		"index.ts",
 		"bin/",
 		"config/",
 		"script/",
-		"tpl/"
+		"tpl/",
+		"types/",
+		"tsDist/"
 	],
 	"publishConfig": {
 		"access": "public"
 	},
 	"bin": {
 		"vue2do-build": "./bin/command.js"
+	},
+	"scripts": {
+		"tsc": "tsc -v && tsc && copyfiles tpl/**/*.html tsDist/",
+		"tsc:w": "tsc -w"
 	},
 	"dependencies": {
 		"@babel/core": "^7.1.2",
@@ -29,8 +33,18 @@
 		"@babel/preset-env": "^7.1.0",
 		"@babel/preset-typescript": "^7.8.3",
 		"@babel/runtime": "^7.1.2",
+		"@types/compression-webpack-plugin": "^2.0.1",
+		"@types/glob": "^7.1.1",
+		"@types/mini-css-extract-plugin": "^0.9.1",
+		"@types/node": "^13.9.8",
+		"@types/progress-bar-webpack-plugin": "^2.1.0",
+		"@types/terser-webpack-plugin": "^2.2.0",
+		"@types/webpack": "^4.41.10",
+		"@types/webpack-bundle-analyzer": "^2.13.3",
+		"@types/webpack-dev-server": "^3.10.1",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"@vue/babel-preset-jsx": "^1.0.0",
+		"@vue2do/wc-pnp-webpack-plugin": "workspace:package/wc-pnp-webpack-plugin",
 		"autoprefixer": "*",
 		"babel-jest": "^24.8.0",
 		"babel-loader": "^8.0.4",
@@ -58,7 +72,7 @@
 		"jsonp": "^0.2.1",
 		"less": "^3.10.3",
 		"less-loader": "^5.0.0",
-		"mini-css-extract-plugin": "^0.8.0",
+		"mini-css-extract-plugin": "^0.9.0",
 		"node-sass": "*",
 		"nprogress": "*",
 		"ora": "*",
@@ -83,16 +97,18 @@
 		"vue-template-compiler": "^2.5.13",
 		"watchpack": "^1.4.0",
 		"webpack": "^4.0.0",
-		"webpack-bundle-analyzer": "^3.3.2",
+		"webpack-bundle-analyzer": "^3.6.1",
 		"webpack-chain": "^6.4.0",
 		"webpack-dashboard": "*",
 		"webpack-dev-middleware": "^3.7.2",
-		"webpack-dev-server": "^3.1.11",
+		"webpack-dev-server": "^3.10.3",
 		"webpack-hot-middleware": "^2.18.2",
 		"write": "^1.0.3",
 		"yargs": "^14.2.0"
 	},
 	"devDependencies": {
+		"@types/copyfiles": "2.1.1",
+		"copyfiles": "^2.2.0",
 		"nodemon": "^1.19.2"
 	},
 	"gitHead": "14520de5335c81992a91c229beee45f338cc43bc"

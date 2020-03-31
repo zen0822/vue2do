@@ -57,61 +57,74 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_1 = require("@vue2do/build");
+/**
+ * @param appName { string } - project name
+ * @param opt { Object } - the options that start the development project
+ */
 var path_1 = __importDefault(require("path"));
-var chalk_1 = __importDefault(require("chalk"));
-function dev(_a) {
+var fs_1 = __importDefault(require("fs"));
+var webpack_1 = __importDefault(require("webpack"));
+var config_1 = __importDefault(require("../config"));
+var webpack_dev_server_1 = __importDefault(require("webpack-dev-server"));
+function default_1(_a) {
     var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
-    var _d, _e;
     return __awaiter(this, void 0, void 0, function () {
-        var configFile, configOpt, swConfig;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
-                case 0:
-                    console.log(chalk_1.default.green('@vue2do/mock') + ": Starting service worker server.");
-                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
+        var config, getWebpackChain, _d, webpackChain, port, webpackConfig, compiler, httpsOpt, httpName, server;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
+                case 0: return [4 /*yield*/, config_1.default({
+                        projectConfig: projectConfig,
+                        projectConfigPath: projectConfigPath
+                    })];
                 case 1:
-                    configFile = _f.sent();
-                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
-                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
-                    build_1.dev({
-                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
-                                ? path_1.default.dirname(projectConfigPath)
-                                : projectConfig.path, webpack: function (config) {
-                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
-                            } })
+                    config = _e.sent();
+                    projectConfig = config.project;
+                    if (!(process.env.NODE_ENV === 'testing')) return [3 /*break*/, 3];
+                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('../config/prod.webpack.conf')); })];
+                case 2:
+                    _d = (_e.sent()).default;
+                    return [3 /*break*/, 5];
+                case 3: return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('../config/dev.webpack.conf')); })];
+                case 4:
+                    _d = (_e.sent()).default;
+                    _e.label = 5;
+                case 5:
+                    getWebpackChain = _d;
+                    webpackChain = getWebpackChain({
+                        config: config
+                    });
+                    port = process.env.PORT || config.dev.port;
+                    webpackConfig = webpackChain.toConfig();
+                    compiler = webpack_1.default(webpackConfig);
+                    httpsOpt = false;
+                    if (projectConfig.httpsOpt === undefined) {
+                        httpsOpt = false;
+                    }
+                    else if (typeof projectConfig.httpsOpt === 'boolean') {
+                        httpsOpt = projectConfig.httpsOpt;
+                    }
+                    else {
+                        httpsOpt = {
+                            key: fs_1.default.readFileSync(path_1.default.resolve(config.projectPath, projectConfig.httpsOpt.key)),
+                            cert: fs_1.default.readFileSync(path_1.default.resolve(config.projectPath, projectConfig.httpsOpt.cert))
+                        };
+                    }
+                    httpName = port === 443
+                        ? 'https'
+                        : httpsOpt ? 'https' : 'http';
+                    server = new webpack_dev_server_1.default(compiler, __assign(__assign({}, webpackConfig.devServer), { https: httpsOpt }));
+                    console.log("Starting frontend build server listening at " + httpName + "://localhost:" + port + "\n");
+                    server.listen(port, function (err) {
+                        if (err) {
+                            console.log(err);
+                            return false;
+                        }
+                        console.log("Frontend build server listening at " + httpName + "://localhost:" + port + "\n");
                     });
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.dev = dev;
-function prod(_a) {
-    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
-    var _d, _e;
-    return __awaiter(this, void 0, void 0, function () {
-        var configFile, configOpt, swConfig;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
-                case 0:
-                    console.log(chalk_1.default.green('@vue2do/mock') + ": Publish service worker.");
-                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
-                case 1:
-                    configFile = _f.sent();
-                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
-                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
-                    build_1.prod({
-                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
-                                ? path_1.default.dirname(projectConfigPath)
-                                : projectConfig.path, webpack: function (config) {
-                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
-                            } })
-                    });
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-exports.prod = prod;
-//# sourceMappingURL=sw.js.map
+exports.default = default_1;
+//# sourceMappingURL=dev.js.map

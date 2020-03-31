@@ -1,0 +1,20 @@
+{
+  "name": "@vue2do/wc-pnp-webpack-plugin",
+  "version": "1.0.0",
+  "description": "Wrap Pnp Webpack Plugin for webpack chain.",
+  "author": "zenwong@aliyun.com",
+  "license": "MIT",
+  "main": "./tsDist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"No test specified in @vue2do/wc-pnp-webpack-plugin\" && exit 0"
+  },
+  "peerDependencies": {
+    "webpack": "^4.41.2"
+  },
+  "dependencies": {
+    "@types/node": "^13.9.8"
+  }
+}

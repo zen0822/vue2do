@@ -3,27 +3,36 @@
  * @param opt { Object } - the options that start the development project
  */
 
-const webpack = require('webpack')
-const ora = require('ora')
+import webpack from 'webpack'
+import ora from 'ora'
+import getConfig from '../config'
+import getProdConfig from '../config/prod.webpack.conf'
+
+type TOpt = {
+  projectConfig: any
+  projectConfigPath?: string
+  onSuccess?: () => void
+}
+
 const spinner = ora('building for production...')
 
-module.exports = function ({
+export default async function ({
   projectConfig = {},
   projectConfigPath,
   onSuccess
-} = {}) {
-  const config = require('../config')({
+}: TOpt): Promise<any> {
+  const config = await getConfig({
     projectConfig,
     projectConfigPath
   })
-  const webpackConfig = require('../config/prod.webpack.conf')({
+  const webpackConfig = await getProdConfig({
     config
   })
 
   console.log(`构建文件将保存到 ${config.prod.outDir} 目录下`)
   spinner.start()
 
-  webpack(webpackConfig.toConfig(), function (err, stats) {
+  webpack(webpackConfig.toConfig(), function (err: any, stats) {
     spinner.stop()
 
     if (err) {

@@ -1,11 +1,16 @@
-const path = require('path')
+import path from 'path'
 
-module.exports = function ({
+type TOpt = {
+  projectConfig: any
+  projectConfigPath?: string
+}
+
+export default async function ({
   projectConfigPath,
   projectConfig = {}
-} = {}) {
+}: TOpt): Promise<Record<string, any>> {
   let projectPath = ''
-  let projectConfigFromFile = {}
+  let projectConfigFromFile: any = {}
 
   if (!projectConfigPath && !projectConfig.root) {
     console.warn('If projectConfigPath is empty, Param projectConfig.root is required.')
@@ -14,7 +19,7 @@ module.exports = function ({
   }
 
   if (projectConfigPath) {
-    projectConfigFromFile = require(projectConfigPath)
+    projectConfigFromFile = await import(projectConfigPath)
     projectConfigFromFile = projectConfigFromFile.default || projectConfigFromFile
     projectPath = projectConfigFromFile.path || path.dirname(projectConfigPath)
   }

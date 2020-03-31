@@ -1,19 +1,23 @@
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+import path from 'path'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
-module.exports = function ({
+type TOpt = {
+  config: any
+}
+
+export default function ({
   config
-} = {}) {
+}: TOpt): any {
   return {
-    entryHub(path) {
-      const fs = require('fs')
+    async entryHub(path: string): Promise<any> {
+      const fs = await import('fs')
 
       return fs.readdirSync(path).map((item) => {
         return item.replace('.js', '')
       })
     },
 
-    assetsPath(_path) {
+    assetsPath(_path: string): string {
       const staticDir = process.env.NODE_ENV === 'production' ?
         config.prod.staticDir :
         config.dev.staticDir
@@ -21,11 +25,11 @@ module.exports = function ({
       return path.posix.join(staticDir, _path)
     },
 
-    cssLoaders(options) {
+    cssLoaders(options: any): any {
       options = options || {}
 
-      function generateLoaders(loaders) {
-        const sourceLoader = loaders.map(function (loader) {
+      function generateLoaders(loaders: any): any {
+        const sourceLoader = loaders.map(function (loader: any) {
           let extraParamChar
 
           if (/\?/.test(loader)) {

@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "app:tsc": "yarn workspaces foreach --include @app/doc --include @app/ex --include @app/mock run tsc",
+    "app:tsc": "yarn workspaces foreach -v --include @app/doc --include @app/ex --include @app/mock run tsc",
     "coveralls": "echo \"No test specified\" && exit 0",
     "debug": "node app/doc/script/dev",
     "dev:D": "yarn workspace @app/doc run dev",
@@ -29,7 +29,7 @@
     "test:D": "vue2do-test unit ./app/doc/test.config.js",
     "test:M": "yarn workspace @app/mock run test",
     "test.ci:D": "node ./app/doc/script/test.ci.js",
-    "vue2do:tsc": "yarn workspaces foreach --include @vue2do/build --include @vue2do/component --include @vue2do/mock --include @vue2do/test run tsc"
+    "vue2do:tsc": "yarn workspaces foreach -v --include @vue2do/build --include @vue2do/component --include @vue2do/mock --include @vue2do/test run tsc"
   },
   "devDependencies": {
     "@babel/types": "^7.9.0",

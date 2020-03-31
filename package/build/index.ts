@@ -1,21 +1,35 @@
-const chalk = require('chalk')
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path='./types/index.d.ts' />
+import chalk from 'chalk'
+
+type TOpt = {
+  config: any
+  configPath?: string
+  onSuccess?: () => void
+}
+
+type TProdOpt = TOpt & {
+  clear?: boolean
+}
 
 /**
  * 启动开发环境
  *
  * configPath {string} - 配置文件路径
  */
-function dev({
+async function dev({
   config = {},
   configPath
-} = {}) {
+}: TOpt): Promise<any> {
   if (!configPath && !config.root) {
     console.log(`${chalk.green('@vue2do/build')}: If configPath is empty, Param config.root is required.`)
 
     return process.exit(1)
   }
 
-  return require('./script/dev')({
+  const startDev = (await import('./script/dev')).default
+
+  return startDev({
     projectConfig: config,
     projectConfigPath: configPath
   })
@@ -26,18 +40,20 @@ function dev({
  *
  * configPath {string} - 配置文件路径
  */
-function prod({
+async function prod({
   config = {},
   configPath,
   onSuccess
-} = {}) {
+}: TProdOpt): Promise<any> {
   if (!configPath && !config.root) {
     console.log(`${chalk.green('@vue2do/build')}: If configPath is empty, Param config.root is required.`)
 
     return process.exit(1)
   }
 
-  return require('./script/prod')({
+  const startProd = (await import('./script/prod')).default
+
+  return startProd({
     projectConfig: config,
     projectConfigPath: configPath,
     onSuccess
@@ -49,22 +65,29 @@ function prod({
  *
  * configPath {string} - 配置文件路径
  */
-function getConfig({
+async function getConfig({
   config = {},
   configPath
-} = {}) {
+}: TOpt): Promise<any> {
   if (!configPath && !config.root) {
     console.log(`${chalk.green('@vue2do/build')}: If configPath is empty, Param config.root is required.`)
 
     return process.exit(1)
   }
 
-  return require('./script/getConfig')({
+
+  const startGetConfig = (await import('./script/getConfig')).default
+
+  return startGetConfig({
     projectConfig: config,
     projectConfigPath: configPath
   })
 }
 
-exports.dev = dev
-exports.prod = prod
-exports.getConfig = getConfig
+export default getConfig
+
+export {
+  dev,
+  prod,
+  getConfig
+}

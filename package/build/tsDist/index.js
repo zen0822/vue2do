@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -57,61 +46,93 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_1 = require("@vue2do/build");
-var path_1 = __importDefault(require("path"));
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path='./types/index.d.ts' />
 var chalk_1 = __importDefault(require("chalk"));
+/**
+ * 启动开发环境
+ *
+ * configPath {string} - 配置文件路径
+ */
 function dev(_a) {
-    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
-    var _d, _e;
+    var _b = _a.config, config = _b === void 0 ? {} : _b, configPath = _a.configPath;
     return __awaiter(this, void 0, void 0, function () {
-        var configFile, configOpt, swConfig;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var startDev;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    console.log(chalk_1.default.green('@vue2do/mock') + ": Starting service worker server.");
-                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
+                    if (!configPath && !config.root) {
+                        console.log(chalk_1.default.green('@vue2do/build') + ": If configPath is empty, Param config.root is required.");
+                        return [2 /*return*/, process.exit(1)];
+                    }
+                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('./script/dev')); })];
                 case 1:
-                    configFile = _f.sent();
-                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
-                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
-                    build_1.dev({
-                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
-                                ? path_1.default.dirname(projectConfigPath)
-                                : projectConfig.path, webpack: function (config) {
-                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
-                            } })
-                    });
-                    return [2 /*return*/];
+                    startDev = (_c.sent()).default;
+                    return [2 /*return*/, startDev({
+                            projectConfig: config,
+                            projectConfigPath: configPath
+                        })];
             }
         });
     });
 }
 exports.dev = dev;
+/**
+ * 启动产品环境
+ *
+ * configPath {string} - 配置文件路径
+ */
 function prod(_a) {
-    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
-    var _d, _e;
+    var _b = _a.config, config = _b === void 0 ? {} : _b, configPath = _a.configPath, onSuccess = _a.onSuccess;
     return __awaiter(this, void 0, void 0, function () {
-        var configFile, configOpt, swConfig;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var startProd;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    console.log(chalk_1.default.green('@vue2do/mock') + ": Publish service worker.");
-                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
+                    if (!configPath && !config.root) {
+                        console.log(chalk_1.default.green('@vue2do/build') + ": If configPath is empty, Param config.root is required.");
+                        return [2 /*return*/, process.exit(1)];
+                    }
+                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('./script/prod')); })];
                 case 1:
-                    configFile = _f.sent();
-                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
-                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
-                    build_1.prod({
-                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
-                                ? path_1.default.dirname(projectConfigPath)
-                                : projectConfig.path, webpack: function (config) {
-                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
-                            } })
-                    });
-                    return [2 /*return*/];
+                    startProd = (_c.sent()).default;
+                    return [2 /*return*/, startProd({
+                            projectConfig: config,
+                            projectConfigPath: configPath,
+                            onSuccess: onSuccess
+                        })];
             }
         });
     });
 }
 exports.prod = prod;
-//# sourceMappingURL=sw.js.map
+/**
+ * Get configuration
+ *
+ * configPath {string} - 配置文件路径
+ */
+function getConfig(_a) {
+    var _b = _a.config, config = _b === void 0 ? {} : _b, configPath = _a.configPath;
+    return __awaiter(this, void 0, void 0, function () {
+        var startGetConfig;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    if (!configPath && !config.root) {
+                        console.log(chalk_1.default.green('@vue2do/build') + ": If configPath is empty, Param config.root is required.");
+                        return [2 /*return*/, process.exit(1)];
+                    }
+                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('./script/getConfig')); })];
+                case 1:
+                    startGetConfig = (_c.sent()).default;
+                    return [2 /*return*/, startGetConfig({
+                            projectConfig: config,
+                            projectConfigPath: configPath
+                        })];
+            }
+        });
+    });
+}
+exports.getConfig = getConfig;
+exports.default = getConfig;
+//# sourceMappingURL=index.js.map

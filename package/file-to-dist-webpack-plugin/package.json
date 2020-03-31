@@ -9,14 +9,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": [
-    "script"
-  ],
-  "bin": {
-    "vue2do-app": "./bin/command.js"
-  },
   "scripts": {
-    "test": "echo \"No test specified in @vue2do/app\" && exit 0"
+    "test": "echo \"No test specified in @vue2do/file-to-dist-webpack-plugin\" && exit 0"
   },
   "peerDependencies": {
     "webpack": "^4.41.2"

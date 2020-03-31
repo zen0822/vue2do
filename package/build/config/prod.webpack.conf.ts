@@ -1,18 +1,24 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const path = require('path')
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
+import TerserPlugin from 'terser-webpack-plugin'
+import path from 'path'
+import getBaseConfig from './base.webpack.conf'
 
-module.exports = function ({
+type TOpt = {
+  config: any
+}
+
+export default async function ({
   config
-} = {}) {
+}: TOpt): Promise<any> {
   const projectConfig = config.project
   const pureJs = projectConfig.pure
-  const baseWebpackChain = require('./base.webpack.conf')({
+  const baseWebpackChain = getBaseConfig({
     config,
     extractScss: true,
     bundleAnalyzer: projectConfig.bundleAnalyzer
   })
+
   const template = projectConfig.tpl ?
     path.resolve(projectConfig.root, `./index.html`) :
     path.resolve(__dirname, `../tpl/index.html`)
@@ -38,7 +44,7 @@ module.exports = function ({
   baseWebpackChain.merge(prodWebpackConf)
 
   if (config.prod.gzip) {
-    const CompressionWebpackPlugin = require('compression-webpack-plugin')
+    const CompressionWebpackPlugin = await import('compression-webpack-plugin')
 
     baseWebpackChain
       .plugin('compression')

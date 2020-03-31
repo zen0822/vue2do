@@ -57,61 +57,72 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_1 = require("@vue2do/build");
 var path_1 = __importDefault(require("path"));
-var chalk_1 = __importDefault(require("chalk"));
-function dev(_a) {
-    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
-    var _d, _e;
+function default_1(_a) {
+    var projectConfigPath = _a.projectConfigPath, _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b;
     return __awaiter(this, void 0, void 0, function () {
-        var configFile, configOpt, swConfig;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var projectPath, projectConfigFromFile, mockPort, config;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
                 case 0:
-                    console.log(chalk_1.default.green('@vue2do/mock') + ": Starting service worker server.");
+                    projectPath = '';
+                    projectConfigFromFile = {};
+                    if (!projectConfigPath && !projectConfig.root) {
+                        console.warn('If projectConfigPath is empty, Param projectConfig.root is required.');
+                        return [2 /*return*/, process.exit(1)];
+                    }
+                    if (!projectConfigPath) return [3 /*break*/, 2];
                     return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
                 case 1:
-                    configFile = _f.sent();
-                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
-                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
-                    build_1.dev({
-                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
-                                ? path_1.default.dirname(projectConfigPath)
-                                : projectConfig.path, webpack: function (config) {
-                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
-                            } })
-                    });
-                    return [2 /*return*/];
+                    projectConfigFromFile = _c.sent();
+                    projectConfigFromFile = projectConfigFromFile.default || projectConfigFromFile;
+                    projectPath = projectConfigFromFile.path || path_1.default.dirname(projectConfigPath);
+                    _c.label = 2;
+                case 2:
+                    // 优先加载 config 的配置参数
+                    if (projectConfig.root) {
+                        projectPath = projectConfig.root;
+                    }
+                    projectConfig = __assign(__assign({}, projectConfigFromFile), projectConfig);
+                    mockPort = projectConfig.mockPort ? projectConfig.mockPort : 3000;
+                    config = {
+                        global: {
+                            root: path_1.default.resolve(__dirname, '../../../')
+                        },
+                        project: __assign(__assign({}, projectConfig), { path: projectConfigPath, pure: projectConfig.pure === undefined ? false : projectConfig.pure, root: projectPath }),
+                        prod: {
+                            env: {
+                                NODE_ENV: '"production"'
+                            },
+                            outDir: path_1.default.resolve(projectPath, projectConfig.outDir || './dist'),
+                            assetPublicPath: projectConfig.baseUrl || './',
+                            staticDir: projectConfig.staticDir || './static',
+                            sourceMap: projectConfig.sourceMap === undefined ? '#nosources-source-map' : projectConfig.sourceMap,
+                            gzip: projectConfig.gzip === undefined ? false : projectConfig.gzip,
+                            gzipExt: ['js', 'css']
+                        },
+                        dev: {
+                            env: {
+                                NODE_ENV: '"development"'
+                            },
+                            mockPort: mockPort,
+                            port: projectConfig.port || 80,
+                            assetPublicPath: '/',
+                            staticDir: projectConfig.staticDir || './static',
+                            proxyTable: __assign({}, projectConfig.proxy),
+                            cssSourceMap: false
+                        },
+                        test: {
+                            env: {
+                                NODE_ENV: '"testing"'
+                            }
+                        },
+                        sourceMap: false
+                    };
+                    return [2 /*return*/, config];
             }
         });
     });
 }
-exports.dev = dev;
-function prod(_a) {
-    var _b = _a.projectConfig, projectConfig = _b === void 0 ? {} : _b, _c = _a.projectConfigPath, projectConfigPath = _c === void 0 ? '' : _c;
-    var _d, _e;
-    return __awaiter(this, void 0, void 0, function () {
-        var configFile, configOpt, swConfig;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
-                case 0:
-                    console.log(chalk_1.default.green('@vue2do/mock') + ": Publish service worker.");
-                    return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require(projectConfigPath)); })];
-                case 1:
-                    configFile = _f.sent();
-                    configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
-                    swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
-                    build_1.prod({
-                        config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
-                                ? path_1.default.dirname(projectConfigPath)
-                                : projectConfig.path, webpack: function (config) {
-                                return swConfig === null || swConfig === void 0 ? void 0 : swConfig.webpack(config);
-                            } })
-                    });
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-exports.prod = prod;
-//# sourceMappingURL=sw.js.map
+exports.default = default_1;
+//# sourceMappingURL=index.js.map

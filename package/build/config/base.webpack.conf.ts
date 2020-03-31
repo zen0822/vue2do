@@ -1,22 +1,33 @@
-const path = require('path')
-const webpack = require('webpack')
-const glob = require('glob-all')
+import path from 'path'
+import webpack from 'webpack'
+import glob from 'glob'
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const PurgecssPlugin = require('purgecss-webpack-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const PnpWebpackPlugin = require('../script/WrapPnpWebpackPlugin')(require('pnp-webpack-plugin'))
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import PurgecssPlugin from 'purgecss-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import Config from 'webpack-chain'
 
-const Config = require('webpack-chain')
+import WrapPnpWebpackPlugin from '@vue2do/wc-pnp-webpack-plugin'
+import SourcePnpWebpackPlugin from 'pnp-webpack-plugin'
+import getUtils from '../script/util'
+
+const PnpWebpackPlugin = WrapPnpWebpackPlugin(SourcePnpWebpackPlugin)
 const webpackChainConfig = new Config()
 
-module.exports = function ({
-  config,
+type TOpt = {
+  config: any
+  extractScss?: boolean
+  purgeCss?: boolean
+  bundleAnalyzer?: boolean
+}
+
+export default function ({
+  config = {},
   extractScss = false,
   purgeCss = false,
   bundleAnalyzer = false
-} = {}) {
+}: TOpt): any {
   const babelLoader = {
     loader: require.resolve('babel-loader'),
     options: {
@@ -39,7 +50,7 @@ module.exports = function ({
     }
   }
 
-  const utils = require(path.resolve(__dirname, `../script/util`))({
+  const utils = getUtils({
     config
   })
   const projectConfig = config.project
@@ -47,7 +58,7 @@ module.exports = function ({
 
   const globalRoot = config.global.root
   const projectPath = projectConfig.root
-  let extractTextScss = null
+  let extractTextScss: any = null
 
   if (extractScss) {
     extractTextScss = new MiniCssExtractPlugin({
@@ -218,7 +229,7 @@ module.exports = function ({
   if (projectConfig.type === 'map') {
     const entryHub = utils.entryHub(path.resolve(projectPath, `./entry`))
 
-    entryHub.forEach((entryName) => {
+    entryHub.forEach((entryName: string) => {
       entryConfig = {
         ...entryConfig,
         [entryName]: [
@@ -334,11 +345,11 @@ module.exports = function ({
     webpackChainConfig
       .plugin('purgeCss')
       .use(PurgecssPlugin, [{
-        paths: () => glob.sync([
+        paths: (): any => glob.sync([
           `${projectPath}/**/*`,
           `${path.resolve(__dirname, '../../component')}/**/*`,
           `!${path.resolve(__dirname, '../../component')}/node_modules/**/*`
-        ], { nodir: true })
+        ].join(''), { nodir: true })
       }])
   }
 
