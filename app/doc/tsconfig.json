@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../../types/*.d.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "./tsDist",
+    "types": [
+      "chai",
+      "mocha",
+      "node"
+    ]
+  }
+}

@@ -4,8 +4,10 @@
     "javascriptreact"
   ],
   "search.exclude": {
+    ".pnp.js": true,
     "**/dist": true,
-    "**/tsDist": true
+    "**/tsDist": true,
+    "yarn.lock": true
   },
   "eslint.nodePath": ".vscode/pnpify",
   "typescript.tsdk": ".vscode/pnpify/typescript/lib",

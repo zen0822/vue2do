@@ -124,9 +124,6 @@ module.exports = function ({
     },
     css: {
       ...commonRule,
-      include: [
-        ...commonRule.include
-      ],
       test: /\.(css)$/,
       use: {
         style: {

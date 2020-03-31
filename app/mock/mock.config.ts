@@ -1,5 +1,5 @@
 import path from 'path'
-import FileToDistWebpackPlugin from '../../lib/webpack/FileToDistWebpackPlugin'
+import FileToDistWebpackPlugin from '@vue2do/file-to-dist-webpack-plugin'
 
 export default {
   gql: {

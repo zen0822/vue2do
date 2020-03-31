@@ -56,8 +56,5 @@
     "webpack": "^4.0.0",
     "yargs": "^15.3.1"
   },
-  "peerDependencies": {
-    "eslint": "^6.8.0"
-  },
   "gitHead": "14520de5335c81992a91c229beee45f338cc43bc"
 }

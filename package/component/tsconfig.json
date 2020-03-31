@@ -5,6 +5,11 @@
     "./**/*.tsx"
   ],
   "compilerOptions": {
-    "outDir": "./tsDist"
+    "outDir": "./tsDist",
+    "types": [
+      "node",
+      "mocha",
+      "chai"
+    ]
   }
 }

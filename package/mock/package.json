@@ -39,13 +39,11 @@
     "graphql-tag": "^2.10.1",
     "graphql-voyager": "^1.0.0-rc.27",
     "graphql-yoga": "^1.17.4",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "vue": "^2.6.11"
   },
   "peerDependencies": {
-    "eslint": "^6.8.0",
     "react": ">=15.4.2",
-    "react-dom": ">=15.4.2",
-    "vue": "^2.6.11",
-    "webpack": "^4.41.2"
+    "react-dom": ">=15.4.2"
   }
 }

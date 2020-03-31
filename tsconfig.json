@@ -2,13 +2,6 @@
   "include": [
     "./types/*.d.ts",
     "./script/**/*.ts",
-    "./app/**/*.ts",
-    "./app/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "prisma",
-    "./app/mock/server/sw"
   ],
   "compilerOptions": {
     "allowJs": true,
@@ -41,11 +34,6 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "strict": true,
-    "target": "es5",
-    "types": [
-      "node",
-      "mocha",
-      "chai"
-    ]
+    "target": "es5"
   }
 }

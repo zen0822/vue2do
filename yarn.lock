@@ -109,10 +109,10 @@ __metadata:
     "@babel/runtime": ^7.9.2
     "@types/chai": 4.2.11
     "@types/core-js": 2.5.3
-    "@types/eslint": 6.1.8
     "@types/file-loader": 4.2.0
+    "@types/mocha": ^7.0.1
     "@types/node": ^13.9.5
-    "@types/webpack": 4.41.8
+    "@types/webpack": 4.41.10
     "@vue/composition-api": ^0.5.0
     "@vue/test-utils": ^1.0.0-beta.32
     "@vue2do/build": "workspace:package/build"
@@ -120,7 +120,6 @@ __metadata:
     "@vue2do/test": "workspace:package/test"
     chai: ^4.2.0
     core-js: ^3.6.4
-    eslint: ^6.8.0
     extract-loader: ^5.0.1
     file-loader: ^6.0.0
     html-loader: ^1.0.0
@@ -141,6 +140,12 @@ __metadata:
 "@app/ex@workspace:app/ex":
   version: 0.0.0-use.local
   resolution: "@app/ex@workspace:app/ex"
+  dependencies:
+    "@types/webpack": 4.41.10
+    "@vue2do/build": "workspace:package/build"
+    "@vue2do/component": "workspace:package/component"
+    typescript: ^3.8.3
+    vue: ^2.6.11
   languageName: unknown
   linkType: soft
 
@@ -148,27 +153,36 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@app/mock@workspace:app/mock"
   dependencies:
+    "@babel/runtime": ^7.9.2
     "@types/bcryptjs": ^2.4.2
-    "@types/eslint": 6.1.8
+    "@types/chai": 4.2.11
+    "@types/core-js": 2.5.3
     "@types/graphql": ^14.5.0
     "@types/jsonwebtoken": ^8.3.7
+    "@types/mocha": ^7.0.1
     "@types/node": ^13.9.5
     "@types/workbox-webpack-plugin": ^5.0.0
     "@vue/composition-api": ^0.5.0
+    "@vue2do/build": "workspace:package/build"
     "@vue2do/component": "workspace:package/component"
+    "@vue2do/file-to-dist-webpack-plugin": "workspace:package/file-to-dist-webpack-plugin"
     apollo-boost: ^0.4.7
     bcryptjs: ^2.4.3
+    core-js: ^3.6.4
     dexie: ^2.0.4
     graphql: ^14.6.0
     graphql-tag: ^2.10.3
     jsonwebtoken: ^8.5.1
     prisma: ^1.34.10
     prisma-client-lib: ^1.34.0
+    regenerator-runtime: ^0.13.5
+    typescript: ^3.8.3
     vue: ^2.6.11
     vue-apollo: ^3.0.3
     vue-i18n: ^8.16.0
     vue-router: ^3.1.6
     vuex: ^3.1.3
+    webpack: ^4.41.2
     workbox-core: ^5.0.0
     workbox-precaching: ^5.0.0
     workbox-routing: ^5.0.0
@@ -176,10 +190,6 @@ __metadata:
     workbox-webpack-plugin: ^5.1.2
     workbox-window: ^5.0.0
     write: ^2.0.0
-  peerDependencies:
-    eslint: "*"
-    typescript: ^3.8.3
-    webpack: ^4.41.2
   languageName: unknown
   linkType: soft
 
@@ -3642,13 +3652,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/aws-lambda@npm:^8.10.26":
-  version: 8.10.46
-  resolution: "@types/aws-lambda@npm:8.10.46"
-  checksum: 2/2b005ea0dbf717e44ce046d5696509f8b679dbd447c67d2d284d1a1dad2ed865033b43c570169cf441de07841916cfc9809765f8a472dc29403395ea01ad7ce3
-  languageName: node
-  linkType: hard
-
 "@types/babel-types@npm:*, @types/babel-types@npm:^7.0.0":
   version: 7.0.7
   resolution: "@types/babel-types@npm:7.0.7"
@@ -3848,16 +3851,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:6.1.8":
-  version: 6.1.8
-  resolution: "@types/eslint@npm:6.1.8"
-  dependencies:
-    "@types/estree": "*"
-    "@types/json-schema": "*"
-  checksum: 2/2439199bbb48c48ca20e36bca0fbfcd280cee59ca4a6fae438de8d2b49d47353c840f6989e9b5dabcdd89ad4dded8549bf9ac5a2621e45156d01438fd677b10e
-  languageName: node
-  linkType: hard
-
 "@types/estree@npm:*":
   version: 0.0.44
   resolution: "@types/estree@npm:0.0.44"
@@ -4006,7 +3999,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.3":
+"@types/json-schema@npm:^7.0.3":
   version: 7.0.4
   resolution: "@types/json-schema@npm:7.0.4"
   checksum: 2/5094037431e4b29d5cc9d6938ea596d1145cc46d305d8d302a477a54d0a7a83ba4629abbf52fcabc3ffdb31cf94647bc366a7bcc544770cbb80212d903018e2b
@@ -4257,7 +4250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/responselike@npm:*":
+"@types/responselike@npm:*, @types/responselike@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/responselike@npm:1.0.0"
   dependencies:
@@ -4404,7 +4397,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack@npm:*, @types/webpack@npm:4.41.8, @types/webpack@npm:^4.4.31":
+"@types/webpack@npm:*, @types/webpack@npm:^4.4.31":
   version: 4.41.8
   resolution: "@types/webpack@npm:4.41.8"
   dependencies:
@@ -4415,6 +4408,20 @@ __metadata:
     "@types/webpack-sources": "*"
     source-map: ^0.6.0
   checksum: 2/411d95e0576d94b580be8fcd06098a8e3ef4e46a8569b280bec1250e63b5f8b7fd339b359e5e76619a3160d81635053705dd7e3ec2d103d6366cb8f14ac2cdbf
+  languageName: node
+  linkType: hard
+
+"@types/webpack@npm:4.41.10":
+  version: 4.41.10
+  resolution: "@types/webpack@npm:4.41.10"
+  dependencies:
+    "@types/anymatch": "*"
+    "@types/node": "*"
+    "@types/tapable": "*"
+    "@types/uglify-js": "*"
+    "@types/webpack-sources": "*"
+    source-map: ^0.6.0
+  checksum: 2/f99c6faeefa8ac9cf17e8424f68571b85ffe53481d3a7ca82bde9c5926af9eb090b9da6db99f19e1c4b09d0b479616630b9498b732a689ab7683cb3e8a5b7f89
   languageName: node
   linkType: hard
 
@@ -4434,7 +4441,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^7.2.1":
+"@types/ws@npm:^7.2.3":
   version: 7.2.3
   resolution: "@types/ws@npm:7.2.3"
   dependencies:
@@ -4489,11 +4496,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^2.3.3":
-  version: 2.25.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:2.25.0"
+"@typescript-eslint/eslint-plugin@npm:^2.26.0":
+  version: 2.26.0
+  resolution: "@typescript-eslint/eslint-plugin@npm:2.26.0"
   dependencies:
-    "@typescript-eslint/experimental-utils": 2.25.0
+    "@typescript-eslint/experimental-utils": 2.26.0
     functional-red-black-tree: ^1.0.1
     regexpp: ^3.0.0
     tsutils: ^3.17.1
@@ -4504,31 +4511,31 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 2/7ca02b7aa06326488583e4b1078fbf39b0d5a909c689e87e4a8f9def05720b8ef91faee12fe09b344c149f068fb00ca9692d7f918ffc3b9bfc1c0b79632959af
+  checksum: 2/0cb2632af0f6983e6b00d45ce6dca034a30172add8da0b99d30c8525b38a8cffb2cceeaa13d723fc4269c717d7533b27b262c70b0cfbc9a89ada6e9c2f7c1f53
   languageName: node
   linkType: hard
 
-"@typescript-eslint/experimental-utils@npm:2.25.0":
-  version: 2.25.0
-  resolution: "@typescript-eslint/experimental-utils@npm:2.25.0"
+"@typescript-eslint/experimental-utils@npm:2.26.0":
+  version: 2.26.0
+  resolution: "@typescript-eslint/experimental-utils@npm:2.26.0"
   dependencies:
     "@types/json-schema": ^7.0.3
-    "@typescript-eslint/typescript-estree": 2.25.0
+    "@typescript-eslint/typescript-estree": 2.26.0
     eslint-scope: ^5.0.0
     eslint-utils: ^2.0.0
   peerDependencies:
     eslint: "*"
-  checksum: 2/1b221a91d887a2217dd4f9c6f15664b1d6bb37ce024e71cdfd90a4a356af974d92a17805af255f18e98ac314cbd32cc4387f45234c908e04ac632e03dfc51a1f
+  checksum: 2/b2df423dcc28946c9977f174e36c079ac4dc2250e5878b149be1627cbf1e3a9cabd91288d61c56b9d4d7cd88d036869f48d58efb8054e3db543d8936b84d8776
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^2.3.3":
-  version: 2.25.0
-  resolution: "@typescript-eslint/parser@npm:2.25.0"
+"@typescript-eslint/parser@npm:^2.26.0":
+  version: 2.26.0
+  resolution: "@typescript-eslint/parser@npm:2.26.0"
   dependencies:
     "@types/eslint-visitor-keys": ^1.0.0
-    "@typescript-eslint/experimental-utils": 2.25.0
-    "@typescript-eslint/typescript-estree": 2.25.0
+    "@typescript-eslint/experimental-utils": 2.26.0
+    "@typescript-eslint/typescript-estree": 2.26.0
     eslint-visitor-keys: ^1.1.0
   peerDependencies:
     eslint: ^5.0.0 || ^6.0.0
@@ -4536,13 +4543,13 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 2/e0202f663b146db3ac245613ab782e47e2db6ce4daa84e618286d7f9acb8b9343684ee4dcd675abd0fa839c721fbb200eef90ae4617b3e162c6ac355ca42ec98
+  checksum: 2/2b751d3d3f0e2fdd741249fe8d926e6c9d62fee8f98dfad73d6cc116bb28825c8fc4d4d2b4bb8483baf6ad1e492ef0ef69c0fe8b0115423ca289a0f76aeca522
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:2.25.0":
-  version: 2.25.0
-  resolution: "@typescript-eslint/typescript-estree@npm:2.25.0"
+"@typescript-eslint/typescript-estree@npm:2.26.0":
+  version: 2.26.0
+  resolution: "@typescript-eslint/typescript-estree@npm:2.26.0"
   dependencies:
     debug: ^4.1.1
     eslint-visitor-keys: ^1.1.0
@@ -4556,7 +4563,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 2/c7093c1734ec97598fc763c9b084c568a3392fa422b8fa19844a1bbf057925a01484d70fef4ca18bcd94084ece01399db507310ac56ff8f83fe96f0877da2cf2
+  checksum: 2/89285c28301337187c6a093a72757de633acd74771421c0a4ed02a0f942737314549122b424893e0f60720c44b07d6768617ad3e898464e49424e3cd855a3092
   languageName: node
   linkType: hard
 
@@ -4709,6 +4716,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@vue2do/build-css4-webpack-plugin@workspace:package/build-css4-webpack-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vue2do/build-css4-webpack-plugin@workspace:package/build-css4-webpack-plugin"
+  peerDependencies:
+    webpack: ^4.41.2
+  bin:
+    vue2do-app: ./bin/command.js
+  languageName: unknown
+  linkType: soft
+
 "@vue2do/build@workspace:package/build":
   version: 0.0.0-use.local
   resolution: "@vue2do/build@workspace:package/build"
@@ -4734,6 +4751,7 @@ __metadata:
     copy-to-clipboard: ^3.0.8
     core-js: ^3.0.0
     css-loader: ^3.4.2
+    eslint: ^6.8.0
     eslint-loader: ^3.0.2
     eventsource-polyfill: "*"
     exports-loader: ^0.7.0
@@ -4757,21 +4775,24 @@ __metadata:
     pnp-webpack-plugin: ^1.6.4
     postcss-loader: ^3.0.0
     progress-bar-webpack-plugin: ^1.12.1
-    pug: ^2.0.3
-    pug-loader: ^2.3.0
+    pug: ^2.0.4
+    pug-loader: ^2.4.0
     purgecss-webpack-plugin: ^1.6.0
     sass-loader: ^8.0.0
     script-loader: ^0.7.2
     style-loader: ^1.0.0
     terser-webpack-plugin: ^2.3.5
     ts-loader: ^6.1.1
+    typescript: ^3.8.3
     url-loader: 4.0.0
+    vue: ^2.6.10
     vue-hot-reload-api: ^2.3.1
     vue-html-loader: ^1.2.4
     vue-loader: ^15.4.2
     vue-style-loader: ^4.1.2
     vue-template-compiler: ^2.5.13
     watchpack: ^1.4.0
+    webpack: ^4.0.0
     webpack-bundle-analyzer: ^3.3.2
     webpack-chain: ^6.4.0
     webpack-dashboard: "*"
@@ -4780,11 +4801,6 @@ __metadata:
     webpack-hot-middleware: ^2.18.2
     write: ^1.0.3
     yargs: ^14.2.0
-  peerDependencies:
-    eslint: ^6.8.0
-    typescript: ^3.8.3
-    vue: ^2.6.10
-    webpack: ^4.0.0
   bin:
     vue2do-build: ./bin/command.js
   languageName: unknown
@@ -4805,7 +4821,6 @@ __metadata:
     chalk: ^3.0.0
     core-js: ^3.6.4
     download: ^7.1.0
-    eslint: ^6.8.0
     typescript: ^3.8.3
     vue: ^2.6.11
     vue-cropper: ^0.4.9
@@ -4813,6 +4828,16 @@ __metadata:
     vuex: ^3.1.3
   bin:
     vue2do-component: ./bin/command.js
+  languageName: unknown
+  linkType: soft
+
+"@vue2do/file-to-dist-webpack-plugin@workspace:package/file-to-dist-webpack-plugin":
+  version: 0.0.0-use.local
+  resolution: "@vue2do/file-to-dist-webpack-plugin@workspace:package/file-to-dist-webpack-plugin"
+  peerDependencies:
+    webpack: ^4.41.2
+  bin:
+    vue2do-app: ./bin/command.js
   languageName: unknown
   linkType: soft
 
@@ -4837,12 +4862,10 @@ __metadata:
     graphql-voyager: ^1.0.0-rc.27
     graphql-yoga: ^1.17.4
     typescript: ^3.8.3
+    vue: ^2.6.11
   peerDependencies:
-    eslint: ^6.8.0
     react: ">=15.4.2"
     react-dom: ">=15.4.2"
-    vue: ^2.6.11
-    webpack: ^4.41.2
   bin:
     vue2do-mock: ./bin/command.js
   languageName: unknown
@@ -4885,8 +4908,6 @@ __metadata:
     vue: ^2.6.10
     webpack: ^4.0.0
     yargs: ^15.3.1
-  peerDependencies:
-    eslint: ^6.8.0
   bin:
     vue2do-test: ./bin/command.js
   languageName: unknown
@@ -9971,7 +9992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.0.0, core-js@npm:^3.0.1, core-js@npm:^3.3.3, core-js@npm:^3.4.0, core-js@npm:^3.6.4":
+"core-js@npm:^3.0.0, core-js@npm:^3.0.1, core-js@npm:^3.4.0, core-js@npm:^3.6.4":
   version: 3.6.4
   resolution: "core-js@npm:3.6.4"
   checksum: 2/30c4178f2b88e758b4202daf0b8651efd0c6a9f058b50638b1194614c15d31da83a504278b448da1385a594e27dbfcdf2d4bea8d6c6115fbe5cfef0b8734404c
@@ -12192,18 +12213,6 @@ __metadata:
   version: 7.0.0
   resolution: "extract-files@npm:7.0.0"
   checksum: 2/c0b059d0110d3b2f44c8312cf4756f65c67dc5b2b4917fd39a2c48763015824f84835490278525093ea322797d9beaaaeaaae3fb938b863405030e13ce0153fc
-  languageName: node
-  linkType: hard
-
-"extract-loader@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "extract-loader@npm:4.0.3"
-  dependencies:
-    babel-runtime: ^6.26.0
-    btoa: ^1.2.1
-    loader-utils: ^1.1.0
-    resolve: ^1.8.1
-  checksum: 2/cb4585f2188298685a764a91356e7316f417940d0c8150d7c8a354f8c86adb6ecd20f78400e8b2119d5c34ac205a66b166cdca08abc5967c8b456af1fe7f5bcb
   languageName: node
   linkType: hard
 
@@ -21019,7 +21028,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pug-loader@npm:^2.3.0":
+"pug-loader@npm:^2.4.0":
   version: 2.4.0
   resolution: "pug-loader@npm:2.4.0"
   dependencies:
@@ -21065,7 +21074,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"pug@npm:^2.0.3":
+"pug@npm:^2.0.4":
   version: 2.0.4
   resolution: "pug@npm:2.0.4"
   dependencies:
@@ -21744,7 +21753,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.3, regenerator-runtime@npm:^0.13.4, regenerator-runtime@npm:^0.13.5":
+"regenerator-runtime@npm:^0.13.4, regenerator-runtime@npm:^0.13.5":
   version: 0.13.5
   resolution: "regenerator-runtime@npm:0.13.5"
   checksum: 2/8d8ee0eca26e0491085033caf2b1b95379c4db21e38d79cde52bbd4014a3865eee26ec0f4f958682e8600f185f2f5dbcd8c6685b9b9261639767929c19b5bcd2
@@ -22363,34 +22372,23 @@ resolve@1.9.0:
   version: 0.0.0-use.local
   resolution: "root@workspace:."
   dependencies:
+    "@babel/types": ^7.9.0
     "@commitlint/config-conventional": ^8.2.0
     "@types/autoprefixer": 9.7.1
-    "@types/aws-lambda": ^8.10.26
-    "@types/bcryptjs": ^2.4.2
-    "@types/chai": ^4.2.9
-    "@types/jsonwebtoken": ^8.3.7
-    "@types/mocha": ^7.0.1
     "@types/node": ^13.9.5
-    "@types/sinon": ^7.5.2
-    "@types/ws": ^7.2.1
-    "@typescript-eslint/eslint-plugin": ^2.3.3
-    "@typescript-eslint/parser": ^2.3.3
+    "@types/ws": ^7.2.3
+    "@typescript-eslint/eslint-plugin": ^2.26.0
+    "@typescript-eslint/parser": ^2.26.0
     "@vue/composition-api": ^0.5.0
     "@vue2do/build": "workspace:package/build"
-    "@vue2do/component": "workspace:package/component"
-    "@vue2do/test": "workspace:package/test"
     "@yarnpkg/cli": ^2.0.0-rc.31
     "@yarnpkg/core": ^2.0.0-rc.25
     "@yarnpkg/plugin-workspace-tools": ^2.0.0-rc.16
     "@yarnpkg/pnpify": ^2.0.0-rc.20
     autoprefixer: ^9.7.5
-    bcryptjs: ^2.4.3
-    chai: ^4.2.0
     chalk: ^3.0.0
     commitlint: ^8.2.0
-    core-js: ^3.3.3
     cross-env: ^7.0.2
-    dexie: ^2.0.4
     eslint: ^6.8.0
     eslint-config-standard: ^12.0.0
     eslint-friendly-formatter: ^4.0.1
@@ -22402,25 +22400,23 @@ resolve@1.9.0:
     eslint-plugin-node: ^11.0.0
     eslint-plugin-promise: ^4.0.1
     eslint-plugin-standard: ^4.0.0
-    extract-loader: ^4.0.3
     husky: ^4.2.3
-    jsonwebtoken: ^8.5.1
     lerna: ^3.20.2
     lint-staged: ^9.4.2
     micromatch: ^4.0.2
     node-sass: ^4.13.1
     nodemon: ^2.0.2
-    regenerator-runtime: ^0.13.3
     stylelint: ^11.0.0
     stylelint-config-standard: ^19.0.0
     stylelint-scss: ^3.11.1
-    tsc-pnp: ^0.1.0
     typescript: ^3.8.3
     vue: ^2.6.11
     webpack: ^4.41.2
     write: ^2.0.0
   dependenciesMeta:
-    run-node:
+    eslint:
+      unplugged: true
+    pug:
       unplugged: true
   languageName: unknown
   linkType: soft
@@ -24930,19 +24926,6 @@ resolve@1.9.0:
     typescript:
       optional: true
   checksum: 2/78341a27939de565e2754ff65ebb689743c16e3295528089d143c08d91842cf9029c3d6b3c95a9a20854a114a7904329d02c710d63f7ce4dbf671b8a3e560ac1
-  languageName: node
-  linkType: hard
-
-"tsc-pnp@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "tsc-pnp@npm:0.1.0"
-  dependencies:
-    tslib: ^1.9.3
-  peerDependencies:
-    typescript: ^3.0.0
-  bin:
-    tsc-pnp: lib/tsc-pnp.js
-  checksum: 2/c093b93af2cc6c1350fcb0ff34a39ccb349b27f87273345a0b36212c04a6ad1a2dc2d35f404698aacd4250b11e08327543a19ed1d0c03fde2e5a7c8c1883ffaa
   languageName: node
   linkType: hard
 

@@ -2,16 +2,16 @@
   "name": "root",
   "version": "1.0.0",
   "description": "Vue2do Org.",
-  "author": "Zheng (Zen) Huang (Wong) <zenwongg@aliyun.com>",
+  "author": "Zheng (Zen) Huang (Wong) <zenwong@aliyun.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "app:i": "cd ./app/doc && yarn install && cd ../mock && yarn install",
+    "app:tsc": "yarn workspaces foreach --include @app/doc --include @app/ex --include @app/mock run tsc",
     "coveralls": "echo \"No test specified\" && exit 0",
     "debug": "node app/doc/script/dev",
-    "dev:D": "vue2do-build dev app/doc/project.config.js",
+    "dev:D": "yarn workspace @app/doc run dev",
     "dev:E": "vue2do-build dev app/ex/project.config.js",
-    "dev:M": "yarn run tsc && cross-env NODE_ENV=development vue2do-build dev ./tsDist/app/mock/project.config.js --root ./app/mock/",
+    "dev:M": "yarn workspace @app/mock run dev",
     "gql:gen": "graphql-codegen --config codegen.yml",
     "lerna": "lerna",
     "lerna:i": "lerna exec -- yarn install",
@@ -29,32 +29,22 @@
     "test:D": "vue2do-test unit ./app/doc/test.config.js",
     "test:M": "yarn workspace @app/mock run test",
     "test.ci:D": "node ./app/doc/script/test.ci.js",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w"
+    "vue2do:tsc": "yarn workspaces foreach --include @vue2do/build --include @vue2do/component --include @vue2do/mock --include @vue2do/test run tsc"
   },
   "devDependencies": {
+    "@babel/types": "^7.9.0",
     "@types/autoprefixer": "9.7.1",
-    "@types/aws-lambda": "^8.10.26",
-    "@types/bcryptjs": "^2.4.2",
-    "@types/chai": "^4.2.9",
-    "@types/jsonwebtoken": "^8.3.7",
-    "@types/mocha": "^7.0.1",
     "@types/node": "^13.9.5",
-    "@types/sinon": "^7.5.2",
-    "@types/ws": "^7.2.1",
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "@typescript-eslint/parser": "^2.3.3",
+    "@types/ws": "^7.2.3",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
     "@vue/composition-api": "^0.5.0",
     "@yarnpkg/cli": "^2.0.0-rc.31",
     "@yarnpkg/core": "^2.0.0-rc.25",
     "@yarnpkg/plugin-workspace-tools": "^2.0.0-rc.16",
     "@yarnpkg/pnpify": "^2.0.0-rc.20",
     "autoprefixer": "^9.7.5",
-    "bcryptjs": "^2.4.3",
-    "chai": "^4.2.0",
-    "core-js": "^3.3.3",
     "cross-env": "^7.0.2",
-    "dexie": "^2.0.4",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^4.0.1",
@@ -66,13 +56,10 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "extract-loader": "^4.0.3",
     "husky": "^4.2.3",
-    "jsonwebtoken": "^8.5.1",
     "lerna": "^3.20.2",
     "lint-staged": "^9.4.2",
     "micromatch": "^4.0.2",
-    "regenerator-runtime": "^0.13.3",
     "stylelint": "^11.0.0",
     "stylelint-config-standard": "^19.0.0",
     "stylelint-scss": "^3.11.1",
@@ -82,13 +69,10 @@
   "dependencies": {
     "@commitlint/config-conventional": "^8.2.0",
     "@vue2do/build": "workspace:package/build",
-    "@vue2do/component": "workspace:package/component",
-    "@vue2do/test": "workspace:package/test",
     "chalk": "^3.0.0",
     "commitlint": "^8.2.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
-    "tsc-pnp": "^0.1.0",
     "typescript": "^3.8.3",
     "write": "^2.0.0"
   },
@@ -100,7 +84,10 @@
     "pnp": true
   },
   "dependenciesMeta": {
-    "run-node": {
+    "eslint": {
+      "unplugged": true
+    },
+    "pug": {
       "unplugged": true
     }
   }

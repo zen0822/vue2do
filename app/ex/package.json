@@ -5,6 +5,16 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "dev": "vue2do-build dev ./project.config.js",
+    "test": "echo \"No test specified\" && exit 0",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/webpack": "4.41.10",
+    "@vue2do/build": "workspace:package/build",
+    "@vue2do/component": "workspace:package/component",
+    "typescript": "^3.8.3",
+    "vue": "^2.6.11"
   }
 }

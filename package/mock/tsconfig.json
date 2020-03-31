@@ -6,6 +6,11 @@
   ],
   "compilerOptions": {
     "outDir": "./tsDist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "node",
+      "mocha",
+      "chai"
+    ]
   }
 }

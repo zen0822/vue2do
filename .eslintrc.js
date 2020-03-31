@@ -22,6 +22,9 @@ module.exports = {
     project: [
       './tsconfig.json',
       './tsconfig.eslint.json',
+      './app/doc/tsconfig.json',
+      './app/ex/tsconfig.json',
+      './app/mock/tsconfig.json',
       './app/mock/server/sw/tsconfig.json',
       './package/component/tsconfig.json',
       './package/mock/tsconfig.json',

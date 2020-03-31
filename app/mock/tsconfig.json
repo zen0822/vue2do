@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../../types/*.d.ts"
+  ],
+  "exclude": [
+    "./prisma/*",
+    "./server/sw"
+  ],
+  "compilerOptions": {
+    "outDir": "./tsDist",
+    "types": [
+      "chai",
+      "mocha",
+      "node"
+    ]
+  }
+}
