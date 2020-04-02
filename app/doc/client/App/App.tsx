@@ -11,7 +11,7 @@ import {
   useState
 } from '../vuex/store'
 
-import { CreateElement, VNode } from 'vue'
+import { VNode } from 'vue'
 import commonStore from '../vuex/module/common/type.json'
 
 import LayoutHeader from '../component/layout/LayoutHeader/LayoutHeader'
@@ -52,32 +52,17 @@ export default defineComponent({
       }
     })
 
-    return {
-      appContentRef,
-      deviceSize,
-      headerRef,
-      footerRef,
-      appStyle
-    }
-  },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  render(this: any, h: CreateElement): VNode {
-    const {
-      appStyle,
-      deviceSize
-    } = this
-
-    return (
-      <div class='app-container' data-size={deviceSize}>
-        <LayoutHeader ref='headerRef' />
+    return (): VNode => (
+      <div class='app-container' data-size={deviceSize.value}>
+        <LayoutHeader ref={headerRef} />
         <div
           class='app-content'
-          style={appStyle}
-          ref='appContentRef'
+          style={appStyle.value}
+          ref={appContentRef}
         >
           <router-view />
         </div>
-        <LayoutFooter ref='footerRef' />
+        <LayoutFooter ref={footerRef} />
       </div>
     )
   }

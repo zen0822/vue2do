@@ -8,11 +8,18 @@
       "type": "node",
       "request": "launch",
       "name": "Debug test",
-      "skipFiles": ["<node_internals>/**", "node_modules/**"],
-      "runtimeArgs": ["-r", "./.pnp.js", "-r", "./app/doc/script/dev.js"],
+      "skipFiles": [
+        "<node_internals>/**",
+        "node_modules/**"
+      ],
+      "runtimeArgs": [
+        "-r",
+        "./.pnp.js",
+        "-r",
+        "./app/doc/script/dev.js"
+      ],
       "cwd": "${workspaceFolder}"
     },
-    
     {
       "type": "node",
       "request": "launch",

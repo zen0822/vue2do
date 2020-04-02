@@ -1,5 +1,5 @@
 import './LayoutHeader.scss'
-import { CreateElement, VNode } from 'vue'
+import { VNode } from 'vue'
 import {
   defineComponent,
   ref
@@ -38,27 +38,7 @@ export default defineComponent({
       sortIconDisplay.value = true
     }
 
-    return {
-      hideMenu,
-      menuOpt,
-      showMenu,
-      sortIconDisplay,
-      typeUI,
-      typeTheme
-    }
-  },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  render(this: any, h: CreateElement): VNode {
-    const {
-      hideMenu,
-      menuOpt,
-      showMenu,
-      sortIconDisplay,
-      typeUI,
-      typeTheme
-    } = this
-
-    return (
+    return (): VNode => (
       <div class='header-layout-stage'>
         <Row class='nav-box' justify='justify'>
           <Col width='calc(100% - 400px)'>
@@ -104,11 +84,11 @@ export default defineComponent({
 
         <Nav
           class='mobile-menu'
-          ref='mobileMenu'
+          ref={mobileMenuRef}
           {...{ on: { hide: hideMenu } }}
-          initOpt={menuOpt}
-          ui={typeUI}
-          theme={typeTheme}
+          initOpt={menuOpt.value}
+          ui={typeUI.value}
+          theme={typeTheme.value}
         >
           <div class='menu-search' slot='end'>
             <Input placeholder='search in vue2do' block>

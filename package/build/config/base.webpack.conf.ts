@@ -32,8 +32,8 @@ export default function ({
     loader: require.resolve('babel-loader'),
     options: {
       presets: [
-        require.resolve('@vue/babel-preset-jsx'),
-        require.resolve('@babel/preset-typescript'),
+        require.resolve('babel-preset-vca-jsx'),
+        require.resolve('@vue/babel-preset-app'),
         [require.resolve('@babel/preset-env'), {
           modules: false,
           loose: true,
