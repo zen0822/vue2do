@@ -9,8 +9,8 @@
     "access": "public"
   },
   "files": [
-    "bin",
-    "script"
+    "bin/",
+    "script/"
   ],
   "bin": {
     "vue2do-app": "./bin/command.js"

@@ -47,6 +47,7 @@ require("./Mock.scss");
 var composition_api_1 = require("@vue/composition-api");
 var graphql_tag_1 = __importDefault(require("graphql-tag"));
 var app_1 = require("../../app");
+var Btn_1 = __importDefault(require("@vue2do/component/module/Btn"));
 var router = app_1.useRouter();
 exports.default = composition_api_1.defineComponent({
     name: 'PageMock',
@@ -70,9 +71,10 @@ exports.default = composition_api_1.defineComponent({
         var _this = this;
         var root = _a.root;
         var links = composition_api_1.ref([]);
-        var articleId = composition_api_1.ref(root.$route.params.id);
+        var btnRef = composition_api_1.ref(null);
+        // const articleId = ref(root.$route.params.id)
         var fetchSWMock = function () {
-            fetch(new Request('/api/sw', {
+            fetch(new Request('/api/ex', {
                 headers: new Headers({
                     'Accept': 'application/json'
                 })
@@ -122,35 +124,26 @@ exports.default = composition_api_1.defineComponent({
             });
         }); };
         composition_api_1.onMounted(function () {
+            var _a, _b;
             // console.log('onMounted')
+            (_b = (_a = btnRef === null || btnRef === void 0 ? void 0 : btnRef.value) === null || _a === void 0 ? void 0 : _a.openLoading) === null || _b === void 0 ? void 0 : _b.call(_a);
         });
         composition_api_1.watch(links, function () {
             // console.log('Watch links', links, prevLinks)
         });
-        return {
-            addLink: addLink,
-            articleId: articleId,
-            links: links,
-            fetchSWMock: fetchSWMock,
-            queryLinks: queryLinks
-        };
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    render: function (h) {
-        var _a = this, links = _a.links, addLink = _a.addLink, fetchSWMock = _a.fetchSWMock, queryLinks = _a.queryLinks;
-        return (<div class='p-mock-p'>
+        return function () { return (<div class='p-mock-p'>
         <div onClick={function () { return router.push('/404'); }}>跳转到 404</div>
 
-        <z-btn class='z-css-m-r' onClick={function () { return addLink(); }}>增加 link</z-btn>
+        <Btn_1.default class='z-css-m-r' onClick={function () { return addLink(); }}>增加 link</Btn_1.default>
 
-        <z-btn theme='success' onClick={function () { return queryLinks(); }}>获取 link</z-btn>
+        <Btn_1.default theme='success' onClick={function () { return queryLinks(); }}>获取 link</Btn_1.default>
 
-        <z-btn theme='danger' onClick={function () { return fetchSWMock(); }}>fetchSWMock</z-btn>
+        <Btn_1.default size='L' ref={btnRef} theme='danger' onClick={function () { return fetchSWMock(); }}>fetchSWMock</Btn_1.default>
 
         <ol>
-          {links.map(function (item) { return (<li>{item.id} {item.url}</li>); })}
+          {links.value.map(function (item) { return (<li>{item.id} {item.url}</li>); })}
         </ol>
-      </div>);
+      </div>); };
     }
 });
 var templateObject_1, templateObject_2;

@@ -9,20 +9,20 @@
     "app:tsc": "yarn workspaces foreach -v --include @app/doc --include @app/ex --include @app/mock run tsc",
     "coveralls": "echo \"No test specified\" && exit 0",
     "debug": "node app/doc/script/dev",
-    "dev:D": "yarn workspace @app/doc run dev",
+    "dev:D": "vue2do-build dev app/doc/project.config.js",
     "dev:E": "vue2do-build dev app/ex/project.config.js",
-    "dev:M": "yarn workspace @app/mock run dev",
+    "dev:M": "yarn workspaces foreach -v --include @vue2do/mock --include @app/mock run tsc && cross-env NODE_ENV=development vue2do-build dev ./app/mock/tsDist/project.config.js --root ./app/mock/",
     "gql:gen": "graphql-codegen --config codegen.yml",
     "lerna": "lerna",
     "lerna:i": "lerna exec -- yarn install",
     "lerna:rel": "lerna publish",
     "lerna:test": "lerna run test",
     "lerna:tsc": "lerna run tsc",
-    "mock.gql:M": "lerna run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./tsDist/app/mock/mock.config.js --root ./app/mock/",
-    "mock.sw.dev:M": "lerna run tsc && cross-env NODE_ENV=development vue2do-mock sw dev ./tsDist/app/mock/mock.config.js --root ./app/mock/",
-    "mock.sw.prod:M": "lerna run tsc && vue2do-mock sw prod ./tsDist/app/mock/mock.config.js --root ./app/mock/",
+    "mock.gql:M": "lerna run tsc && cross-env APOLLO_ENGINE_KEY=service:mockServer:LPVLKoXjQSJZfFYIl19zzw && vue2do-mock gql ./app/mock//tsDistmock.config.js --root ./app/mock/",
+    "mock.sw.dev:M": "yarn workspaces foreach -v --include @vue2do/mock --include @app/mock run tsc && cross-env NODE_ENV=development vue2do-mock sw dev ./app/mock/tsDist/mock.config.js --root ./app/mock/",
+    "mock.sw.prod:M": "yarn workspaces foreach -v --include @vue2do/mock --include @app/mock run tsc && vue2do-mock sw prod ./app/mock//tsDistmock.config.js --root ./app/mock/",
     "prod:D": "vue2do-build prod app/doc/project.config.js",
-    "prod:M": "yarn run tsc && cross-env NODE_ENV=production vue2do-build prod ./tsDist/app/mock/project.config.js",
+    "prod:M": "yarn run tsc && cross-env NODE_ENV=production vue2do-build prod ./app/mock//tsDistproject.config.js",
     "prod.rel:D": "node ./app/doc/script/prod.js && apollo service:push",
     "prod.rel.ci:D": "node ./app/doc/script/prod-ci.js",
     "prod:E": "vue2do-build prod app/example/project.config.js",
@@ -39,6 +39,7 @@
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "@vue/composition-api": "^0.5.0",
+    "@vue2do/mock": "workspace:package/mock",
     "@yarnpkg/cli": "^2.0.0-rc.31",
     "@yarnpkg/core": "^2.0.0-rc.25",
     "@yarnpkg/plugin-workspace-tools": "^2.0.0-rc.16",
@@ -61,7 +62,7 @@
     "lint-staged": "^9.4.2",
     "micromatch": "^4.0.2",
     "stylelint": "^11.0.0",
-    "stylelint-config-standard": "^19.0.0",
+    "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.11.1",
     "vue": "^2.6.11",
     "webpack": "^4.41.2"
@@ -84,10 +85,19 @@
     "pnp": true
   },
   "dependenciesMeta": {
+    "@vue/composition-api": {
+      "unplugged": true
+    },
     "eslint": {
       "unplugged": true
     },
+    "eslint-loader": {
+      "unplugged": true
+    },
     "pug": {
+      "unplugged": true
+    },
+    "typescript": {
       "unplugged": true
     }
   }

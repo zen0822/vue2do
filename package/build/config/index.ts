@@ -20,8 +20,8 @@ export default async function ({
 
   if (projectConfigPath) {
     projectConfigFromFile = await import(projectConfigPath)
-    projectConfigFromFile = projectConfigFromFile.default || projectConfigFromFile
-    projectPath = projectConfigFromFile.path || path.dirname(projectConfigPath)
+    projectConfigFromFile = projectConfigFromFile.default ?? projectConfigFromFile
+    projectPath = projectConfigFromFile.path ?? path.dirname(projectConfigPath)
   }
 
   // 优先加载 config 的配置参数
@@ -63,7 +63,7 @@ export default async function ({
       mockPort,
       port: projectConfig.port || 80,
       assetPublicPath: '/',
-      staticDir: projectConfig.staticDir || './static',
+      staticDir: projectConfig.staticDir ?? './static',
       proxyTable: {
         ...projectConfig.proxy
       },

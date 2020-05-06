@@ -1,6 +1,6 @@
-const addClass = (el, classHub) => {
+const addClass = (el: HTMLElement, classHub: string | string[]): boolean => {
   if (!((Array.isArray(classHub) && classHub.length > 0) ||
-      typeof classHub === 'string')) {
+    typeof classHub === 'string')) {
     return false
   }
 
@@ -13,12 +13,14 @@ const addClass = (el, classHub) => {
     classSet = new Set(localClass.concat(classHub.trim().split(' ')))
   }
 
-  el.className = [...classSet].join(' ')
+  el.className = Array.from(classSet ?? []).join(' ')
+
+  return true
 }
 
-const delClass = (el, classHub) => {
+const delClass = (el: HTMLElement, classHub: string | string[]): boolean => {
   if (!((Array.isArray(classHub) && classHub.length > 0) ||
-      typeof classHub === 'string')) {
+    typeof classHub === 'string')) {
     return false
   }
 
@@ -33,14 +35,16 @@ const delClass = (el, classHub) => {
     )
   }
 
-  classSet.forEach((item) => {
+  classSet?.forEach((item) => {
     localClass.delete(item)
   })
 
-  el.className = [...localClass].join(' ')
+  el.className = Array.from(localClass).join(' ')
+
+  return true
 }
 
-const childrenHeight = (el) => {
+const childrenHeight = (el: any): number => {
   const children = el.children
   let totalHeight = 0
 

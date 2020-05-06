@@ -148,19 +148,4 @@ export default defineComponent({
       </div>
     )
   }
-
-  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // render(this: any, h: CreateElement): VNode {
-  //   const {
-  //     imgState,
-  //     _width,
-  //     _height,
-  //     xclass,
-  //     src,
-  //     alt,
-  //     title
-  //   } = this
-
-
-  // }
 })

@@ -14,5 +14,14 @@
   },
   "peerDependencies": {
     "webpack": "^4.41.2"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "core-js": "^3.6.4",
+    "write": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/chalk": "2.2.0",
+    "@types/core-js": "2.5.3"
   }
 }

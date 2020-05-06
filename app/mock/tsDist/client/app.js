@@ -22,15 +22,11 @@ var composition_api_1 = __importDefault(require("@vue/composition-api"));
 var vue_router_1 = __importDefault(require("vue-router"));
 var App_1 = __importDefault(require("./App/App"));
 var route_1 = __importDefault(require("./route/route"));
-var index_js_1 = __importDefault(require("@vue2do/component/index.js"));
 var en_US_json_1 = __importDefault(require("@vue2do/component/language/en-US.json"));
 vue_1.default.use(vue_router_1.default);
 vue_1.default.use(vue_i18n_1.default);
 vue_1.default.use(vue_apollo_1.default);
 vue_1.default.use(composition_api_1.default);
-vue_1.default.use(index_js_1.default, {
-    prefix: 'z'
-});
 var vue2doLang = new vue_i18n_1.default({
     locale: Object.keys(en_US_json_1.default)[0],
     messages: en_US_json_1.default

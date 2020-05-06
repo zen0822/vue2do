@@ -8,7 +8,7 @@
   "main": "tsDist/index.js",
   "files": [
     "bin/",
-    "tsDist",
+    "tsDist/",
     "types/"
   ],
   "publishConfig": {
@@ -29,6 +29,7 @@
     "@types/graphql": "^14.5.0",
     "@types/mocha": "^7.0.2",
     "@types/node": "^13.9.5",
+    "@types/yargs": "15.0.4",
     "@vue/composition-api": "^0.5.0",
     "@vue2do/build": "workspace:package/build",
     "@vue2do/component": "workspace:package/component",
@@ -40,9 +41,10 @@
     "graphql-voyager": "^1.0.0-rc.27",
     "graphql-yoga": "^1.17.4",
     "typescript": "^3.8.3",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "yargs": "^15.3.1"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "react": ">=15.4.2",
     "react-dom": ">=15.4.2"
   }

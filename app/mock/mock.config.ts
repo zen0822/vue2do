@@ -50,54 +50,43 @@ export default {
     }
   },
   api: [{
-    name: 'ex',
-    path: '/api/ex',
+    key: 'zen',
+    url: '/api/zen',
     data: [{
-      name: 'name',
-      type: 'english',
-      length: {
-        max: 1,
-        min: 2
-      },
+      key: 'name',
+      content: 'zen'
+    }]
+  }, {
+    key: 'ex',
+    url: '/api/ex',
+    total: 5,
+    data: [{
+      key: 'name',
+      type: 'name',
       children: [{
-        name: 'firstName',
-        type: 'english',
-        length: {
-          max: 1,
-          min: 2
-        }
+        key: 'firstName',
+        type: 'first',
+        tpl: '@first'
       }, {
-        name: 'lastName',
-        type: 'english',
-        length: {
-          max: 1,
-          min: 2
-        }
+        key: 'lastName',
+        type: 'last',
+        tpl: '@last'
       }]
     }, {
-      name: 'age',
-      type: 'number',
-      length: {
-        min: 2
-      }
+      key: 'age',
+      type: 'natural',
+      tpl: '@natural(0, 100)'
     }, {
-      name: 'famliy',
-      type: 'chinese',
-      length: {
-        min: 2
-      },
+      key: 'famliy',
+      type: 'cname',
       children: [{
-        name: 'mother',
-        type: 'chinese',
-        length: {
-          min: 2
-        },
+        key: 'mother',
+        type: 'cname',
+        tpl: '@cname',
         children: [{
-          name: 'mother',
-          type: 'chinese',
-          length: {
-            min: 2
-          }
+          key: 'sistar',
+          type: 'cname',
+          tpl: '@cname'
         }]
       }]
     }]

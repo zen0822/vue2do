@@ -46,8 +46,12 @@ exports.default = {
         }
     },
     api: [{
+            name: 'zen',
+            path: '/api/zen'
+        }, {
             name: 'ex',
             path: '/api/ex',
+            total: 5,
             data: [{
                     name: 'name',
                     type: 'english',

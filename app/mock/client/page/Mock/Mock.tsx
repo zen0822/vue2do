@@ -5,12 +5,11 @@ import {
   watch,
   ref
 } from '@vue/composition-api'
-import { CreateElement, VNode } from 'vue'
+import { VNode } from 'vue'
 import gql from 'graphql-tag'
+import { useRouter } from '../../app'
 
-import {
-  useRouter
-} from '../../app'
+import Btn from '@vue2do/component/module/Btn'
 
 const router: any = useRouter()
 
@@ -34,10 +33,11 @@ export default defineComponent({
   // },
   setup(_props, { root }) {
     const links = ref([])
-    const articleId = ref(root.$route.params.id)
+    const btnRef = ref<any>(null)
+    // const articleId = ref(root.$route.params.id)
 
     const fetchSWMock = (): void => {
-      fetch(new Request('/api/sw', {
+      fetch(new Request('/api/ex', {
         headers: new Headers({
           'Accept': 'application/json'
         })
@@ -93,51 +93,37 @@ export default defineComponent({
 
     onMounted(function () {
       // console.log('onMounted')
+      btnRef?.value?.openLoading?.()
     })
     watch(links, () => {
       // console.log('Watch links', links, prevLinks)
     })
 
-    return {
-      addLink,
-      articleId,
-      links,
-      fetchSWMock,
-      queryLinks
-    }
-  },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  render(this: any, h: CreateElement): VNode {
-    const {
-      links,
-      addLink,
-      fetchSWMock,
-      queryLinks
-    } = this
-
-    return (
+    return (): VNode => (
       <div class='p-mock-p'>
         <div
           onClick={(): any => router.push('/404')}
         >跳转到 404</div>
 
-        <z-btn
+        <Btn
           class='z-css-m-r'
           onClick={(): any => addLink()}
-        >增加 link</z-btn>
+        >增加 link</Btn>
 
-        <z-btn
+        <Btn
           theme='success'
           onClick={(): any => queryLinks()}
-        >获取 link</z-btn>
+        >获取 link</Btn>
 
-        <z-btn
+        <Btn
+          size='L'
+          ref={btnRef}
           theme='danger'
           onClick={(): any => fetchSWMock()}
-        >fetchSWMock</z-btn>
+        >fetchSWMock</Btn>
 
         <ol>
-          {links.map((item: any) => (
+          {links.value.map((item: any) => (
             <li>{item.id} {item.url}</li>
           ))}
         </ol>

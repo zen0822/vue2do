@@ -109,10 +109,13 @@ __metadata:
     "@babel/runtime": ^7.9.2
     "@types/chai": 4.2.11
     "@types/core-js": 2.5.3
+    "@types/eslint": 6.1.9
     "@types/file-loader": 4.2.0
     "@types/mocha": ^7.0.1
     "@types/node": ^13.9.5
     "@types/webpack": 4.41.10
+    "@typescript-eslint/eslint-plugin": ^2.26.0
+    "@typescript-eslint/parser": ^2.26.0
     "@vue/composition-api": ^0.5.0
     "@vue/test-utils": ^1.0.0-beta.32
     "@vue2do/build": "workspace:package/build"
@@ -120,6 +123,17 @@ __metadata:
     "@vue2do/test": "workspace:package/test"
     chai: ^4.2.0
     core-js: ^3.6.4
+    eslint: ^6.8.0
+    eslint-config-standard: ^12.0.0
+    eslint-friendly-formatter: ^4.0.1
+    eslint-import-resolver-node: ^0.3.3
+    eslint-plugin-html: ^6.0.0
+    eslint-plugin-import: ^2.14.0
+    eslint-plugin-json: ^1.4.0
+    eslint-plugin-jsx: ^0.1.0
+    eslint-plugin-node: ^11.0.0
+    eslint-plugin-promise: ^4.0.1
+    eslint-plugin-standard: ^4.0.0
     extract-loader: ^5.0.1
     file-loader: ^6.0.0
     html-loader: ^1.0.0
@@ -160,8 +174,11 @@ __metadata:
     "@types/graphql": ^14.5.0
     "@types/jsonwebtoken": ^8.3.7
     "@types/mocha": ^7.0.1
+    "@types/mockjs": 1.0.2
     "@types/node": ^13.9.5
     "@types/workbox-webpack-plugin": ^5.0.0
+    "@typescript-eslint/eslint-plugin": ^2.26.0
+    "@typescript-eslint/parser": ^2.26.0
     "@vue/composition-api": ^0.5.0
     "@vue2do/build": "workspace:package/build"
     "@vue2do/component": "workspace:package/component"
@@ -170,9 +187,11 @@ __metadata:
     bcryptjs: ^2.4.3
     core-js: ^3.6.4
     dexie: ^2.0.4
+    eslint: ^6.8.0
     graphql: ^14.6.0
     graphql-tag: ^2.10.3
     jsonwebtoken: ^8.5.1
+    mockjs: ^1.1.0
     prisma: ^1.34.10
     prisma-client-lib: ^1.34.0
     regenerator-runtime: ^0.13.5
@@ -3765,6 +3784,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/chalk@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@types/chalk@npm:2.2.0"
+  dependencies:
+    chalk: "*"
+  checksum: 2/9cded9031f180268be59010fc1e13c7b4384e51f0ca8b75bc7a40bdd46f5f3c4859953525fb53663287e5bb25ca5df59396c276ce5c09e1a83aa7a2aec6a9f59
+  languageName: node
+  linkType: hard
+
 "@types/color-name@npm:^1.1.1":
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
@@ -3862,6 +3890,16 @@ __metadata:
   version: 1.0.0
   resolution: "@types/eslint-visitor-keys@npm:1.0.0"
   checksum: 2/48d1f3263148ac822afbc1e54358b423851a2a28c41aef4d7803b052b4f6c3ebfb219daed419b8a4f2b6ac34b545dab4def916d15e69d2bf3f128f7abc0e6132
+  languageName: node
+  linkType: hard
+
+"@types/eslint@npm:6.1.9":
+  version: 6.1.9
+  resolution: "@types/eslint@npm:6.1.9"
+  dependencies:
+    "@types/estree": "*"
+    "@types/json-schema": "*"
+  checksum: 2/1350cae235d298658ac8b9d027e16716128536a69e2fdd449bd1f9e10598a557e4ce483049ae5cc7c2e8e2538fcedb6dfb1c254eb7261b0fc6432a44094904b0
   languageName: node
   linkType: hard
 
@@ -4040,7 +4078,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:^7.0.3":
+"@types/json-schema@npm:*, @types/json-schema@npm:^7.0.3":
   version: 7.0.4
   resolution: "@types/json-schema@npm:7.0.4"
   checksum: 2/5094037431e4b29d5cc9d6938ea596d1145cc46d305d8d302a477a54d0a7a83ba4629abbf52fcabc3ffdb31cf94647bc366a7bcc544770cbb80212d903018e2b
@@ -4184,6 +4222,13 @@ __metadata:
   version: 7.0.2
   resolution: "@types/mocha@npm:7.0.2"
   checksum: 2/a3b2b5b2ed45e417c6292de33678408093a96bc26dc78d4f28446baa7f629e0945557325ada9f3f56efc44e1cee5f4f04e950da4ff316f2bea58106892de96da
+  languageName: node
+  linkType: hard
+
+"@types/mockjs@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@types/mockjs@npm:1.0.2"
+  checksum: 2/024ebc3fc865f2fc7e24041ec45645adda2430a68ef1667bc14ccb81488e3911684c43bd52e4a00d1eb8fd39e709010a15b17c4d1d32c61a64783a214008f51c
   languageName: node
   linkType: hard
 
@@ -4977,6 +5022,12 @@ __metadata:
 "@vue2do/file-to-dist-webpack-plugin@workspace:package/file-to-dist-webpack-plugin":
   version: 0.0.0-use.local
   resolution: "@vue2do/file-to-dist-webpack-plugin@workspace:package/file-to-dist-webpack-plugin"
+  dependencies:
+    "@types/chalk": 2.2.0
+    "@types/core-js": 2.5.3
+    chalk: ^4.0.0
+    core-js: ^3.6.4
+    write: ^2.0.0
   peerDependencies:
     webpack: ^4.41.2
   languageName: unknown
@@ -4992,6 +5043,7 @@ __metadata:
     "@types/graphql": ^14.5.0
     "@types/mocha": ^7.0.2
     "@types/node": ^13.9.5
+    "@types/yargs": 15.0.4
     "@vue/composition-api": ^0.5.0
     "@vue2do/build": "workspace:package/build"
     "@vue2do/component": "workspace:package/component"
@@ -5002,11 +5054,11 @@ __metadata:
     graphql-tag: ^2.10.1
     graphql-voyager: ^1.0.0-rc.27
     graphql-yoga: ^1.17.4
-    typescript: ^3.8.3
-    vue: ^2.6.11
-  peerDependencies:
     react: ">=15.4.2"
     react-dom: ">=15.4.2"
+    typescript: ^3.8.3
+    vue: ^2.6.11
+    yargs: ^15.3.1
   bin:
     vue2do-mock: ./bin/command.js
   languageName: unknown
@@ -8869,6 +8921,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:*, chalk@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "chalk@npm:4.0.0"
+  dependencies:
+    ansi-styles: ^4.1.0
+    supports-color: ^7.1.0
+  checksum: 2/12b01a228b5ca2f03a82684c62d54c06e2ba2f7b81dd08fac56c5b9288958dd24f9cae866e140df5c29cb736059cb4be0165157ebb0b15039cc1ea511a2dab60
+  languageName: node
+  linkType: hard
+
 "chalk@npm:2.4.2, chalk@npm:^2.0.0, chalk@npm:^2.0.1, chalk@npm:^2.1.0, chalk@npm:^2.3.0, chalk@npm:^2.3.1, chalk@npm:^2.4.1, chalk@npm:^2.4.2":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -9563,6 +9625,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:*, commander@npm:5.0.0":
+  version: 5.0.0
+  resolution: "commander@npm:5.0.0"
+  checksum: 2/2d86041c5d959936c05b02a42cba28dee1ff117f3275aef3737ceb89fd8de23aafd19c1508ab3598d0736f7aae9a0ddb75d7f52c7d6ea1e8fb6efa7cc61571c3
+  languageName: node
+  linkType: hard
+
 "commander@npm:2.12.2":
   version: 2.12.2
   resolution: "commander@npm:2.12.2"
@@ -9592,13 +9661,6 @@ __metadata:
   dependencies:
     graceful-readlink: ">= 1.0.0"
   checksum: 2/9b1fe7000d68e718b0b97b9f09626645cf833a5d8e5f29d409e731892170db201b71af6e7ff307d4dc327cd3cf26eb335cecf867ef91a9df91e61923511d8ebd
-  languageName: node
-  linkType: hard
-
-"commander@npm:5.0.0":
-  version: 5.0.0
-  resolution: "commander@npm:5.0.0"
-  checksum: 2/2d86041c5d959936c05b02a42cba28dee1ff117f3275aef3737ceb89fd8de23aafd19c1508ab3598d0736f7aae9a0ddb75d7f52c7d6ea1e8fb6efa7cc61571c3
   languageName: node
   linkType: hard
 
@@ -18335,6 +18397,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"mockjs@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "mockjs@npm:1.1.0"
+  dependencies:
+    commander: "*"
+  bin:
+    random: bin/random
+  checksum: 2/27bf03f51a03b2bd090125ea2dae6493ef4ce76240c8734fa33f7986ade9f985474d15a2d3c58ecea93e700fdd8ca5a49e40b23c4f1aef61219a29ecee1d3d4c
+  languageName: node
+  linkType: hard
+
 "modify-values@npm:^1.0.0":
   version: 1.0.1
   resolution: "modify-values@npm:1.0.1"
@@ -21521,6 +21594,20 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-dom@npm:>=15.4.2":
+  version: 16.13.1
+  resolution: "react-dom@npm:16.13.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    prop-types: ^15.6.2
+    scheduler: ^0.19.1
+  peerDependencies:
+    react: ^16.13.1
+  checksum: 2/fb5c3ad41360c6a8674f33916aa895d05e79d063d31a6963074220c1cda9e07e880799d01670b4ebd570b4d3457584f13cc898b5033a05641e8e801f5611607e
+  languageName: node
+  linkType: hard
+
 "react-event-listener@npm:^0.6.2":
   version: 0.6.6
   resolution: "react-event-listener@npm:0.6.6"
@@ -21577,7 +21664,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.4":
+"react@npm:>=15.4.2, react@npm:^16.8.4":
   version: 16.13.1
   resolution: "react@npm:16.13.1"
   dependencies:
@@ -22580,6 +22667,7 @@ resolve@1.9.0:
     "@typescript-eslint/parser": ^2.26.0
     "@vue/composition-api": ^0.5.0
     "@vue2do/build": "workspace:package/build"
+    "@vue2do/mock": "workspace:package/mock"
     "@yarnpkg/cli": ^2.0.0-rc.31
     "@yarnpkg/core": ^2.0.0-rc.25
     "@yarnpkg/plugin-workspace-tools": ^2.0.0-rc.16
@@ -22613,9 +22701,15 @@ resolve@1.9.0:
     webpack: ^4.41.2
     write: ^2.0.0
   dependenciesMeta:
+    "@vue/composition-api":
+      unplugged: true
     eslint:
       unplugged: true
+    eslint-loader:
+      unplugged: true
     pug:
+      unplugged: true
+    typescript:
       unplugged: true
   languageName: unknown
   linkType: soft
@@ -22810,6 +22904,16 @@ resolve@1.9.0:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: 2/007678c559669029a5f8a029022548c2f39258b8087d1da0a3f5c5360abf3aa2794a87f56998151432f48910eca53331206cd712b751188623ca3d1bcab38b9f
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.19.1":
+  version: 0.19.1
+  resolution: "scheduler@npm:0.19.1"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: 2/804f990b9f370cca6d42b65f3cba2cc2bfed4973ee5623bed1ea36a6627842db8c891e2e5ac003f06f9ee892d1d3396921e27fa077346caf0213af05776e8dee
   languageName: node
   linkType: hard
 

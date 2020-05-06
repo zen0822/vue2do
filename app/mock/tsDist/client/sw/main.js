@@ -62,10 +62,11 @@ function init() {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    wb_1.register().then(function (registration) {
-                                        registration.pushManager.subscribe({
-                                            userVisibleOnly: true
-                                        }).catch(function (error) { console.warn(error); });
+                                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                                    wb_1.register().then(function (_registration) {
+                                        // registration.pushManager.subscribe({
+                                        //   userVisibleOnly: true
+                                        // }).catch((error: any) => { console.warn(error) })
                                     }).catch(function (registrationError) {
                                         console.warn('SW of mock registration failed: ', registrationError);
                                     });
