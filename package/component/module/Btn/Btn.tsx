@@ -56,7 +56,6 @@ import MotionRip from '../MotionRip'
 import { VNode } from 'vue'
 
 const BTN_TYPE_BUTTON = 'button'
-
 const SIZE_S = 'S'
 
 export default defineComponent({
@@ -186,7 +185,6 @@ export default defineComponent({
 
     watchEffect(() => {
       stateDisabled.value = props.disabled
-      console.log(`name is: ` + props.disabled)
     })
 
     /**

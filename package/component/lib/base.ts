@@ -9,10 +9,12 @@
 
 import compConfig from '../config/index.json'
 import commonStore from '../vuex/module/common/type.json'
+import store from '../vuex/store'
 
 import {
   computed,
-  Ref
+  Ref,
+  isRef
 } from '@vue/composition-api'
 
 const props = {
@@ -41,17 +43,22 @@ const props = {
 }
 
 // computed
-const uiClass = (ui: string): Ref<string> => (
-  computed(() => ui ? `ui-${ui}` : '')
-)
-const themeClass = (theme: string): Ref<string> => (
-  computed(() => `theme-${theme}`)
-)
+const uiClass = (ui: string | Ref<string>): Ref<string> => {
+  const uiStr = isRef(ui) ? ui.value : ui
+
+  return computed(() => uiStr ? `ui-${uiStr}` : '')
+}
+const themeClass = (theme: string | Ref<string>): Ref<string> => {
+  const themeStr = isRef(theme) ? theme.value : theme
+
+  return computed(() => themeStr ? `theme-${themeStr}` : '')
+}
 const compClass = (uiClass: Ref<string>, themeClass: Ref<string>): Ref<readonly string[]> => (
   computed(() => [uiClass.value, themeClass.value])
 )
 const compPrefix = compConfig.prefix
-const deviceSize = (store: any): Ref<any> => store.getters[commonStore.deviceSize]
+// const deviceSize = (store: any): Ref<any> => store.getters[commonStore.deviceSize]
+const deviceSize = computed<string>(() => store.getters[commonStore.deviceSize])
 const css4 = window.CSS && window.CSS.supports && window.CSS.supports('--a', '0')
 
 // methods
