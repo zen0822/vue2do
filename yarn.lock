@@ -22694,7 +22694,7 @@ resolve@1.9.0:
     node-sass: ^4.13.1
     nodemon: ^2.0.2
     stylelint: ^11.0.0
-    stylelint-config-standard: ^19.0.0
+    stylelint-config-standard: ^20.0.0
     stylelint-scss: ^3.11.1
     typescript: ^3.8.3
     vue: ^2.6.11
@@ -24402,14 +24402,14 @@ resolve@1.9.0:
   languageName: node
   linkType: hard
 
-"stylelint-config-standard@npm:^19.0.0":
-  version: 19.0.0
-  resolution: "stylelint-config-standard@npm:19.0.0"
+"stylelint-config-standard@npm:^20.0.0":
+  version: 20.0.0
+  resolution: "stylelint-config-standard@npm:20.0.0"
   dependencies:
     stylelint-config-recommended: ^3.0.0
   peerDependencies:
     stylelint: ">=10.1.0"
-  checksum: 2/c4d9c73c71f995ed67d98ebf7916c599faa532aaad3707f2742eb4670c6912581cc0375195cc21150a6244f22224105b51070305094c4b9dcdc18d44ff467938
+  checksum: 2/3d70090294bad0ce2841a64feb97cd3985be8f51cdf4ed5e67c1f1c1578a15755a22dd2f8d63dce0f7db46607005b5a321fcbc2b0cbf4c636b9fd48ec35e82b2
   languageName: node
   linkType: hard
 
