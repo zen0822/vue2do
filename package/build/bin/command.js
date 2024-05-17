@@ -25,7 +25,7 @@ return yargs
       })
     },
     handler: (argv) => {
-      require('../script/dev')({
+      require('../tsDist/script/dev').default({
         projectConfig: {
           root: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
         },
@@ -52,7 +52,7 @@ return yargs
       })
     },
     handler: (argv) => {
-      require('../script/prod')({
+      require('../tsDist/script/prod').default({
         projectConfig: {
           root: argv.root ? path.resolve(process.cwd(), argv.root) : undefined
         },

@@ -70,29 +70,31 @@ const alert = (opt = '') => {
     option = opt
   }
 
-  return commonVuex
+  const alertVm = commonVuex
     .$store
     .getters[commonStore.alert.get]
     .$refs
     .alert
-    .set({
-      theme: option.theme,
-      ui: option.ui,
-      title: option.title,
-      message: option.message,
-      okCb: (vm) => {
-        option.cb && option.cb()
-        vm.hide()
-      },
-      hideCb: () => {
-        alerting = false
 
-        if (alertHub.length > 0) {
-          alert(alertHub.shift())
-        }
+  alertVm.set({
+    theme: option.theme,
+    ui: option.ui,
+    title: option.title,
+    message: option.message,
+    okCb: () => {
+      option.cb && option.cb()
+      alertVm.hide()
+    },
+    hideCb: () => {
+      alerting = false
+
+      if (alertHub.length > 0) {
+        alert(alertHub.shift())
       }
-    })
-    .show()
+    }
+  })
+
+  alertVm.show()
 }
 
 createAlert()

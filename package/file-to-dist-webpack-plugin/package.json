@@ -1,0 +1,27 @@
+{
+  "name": "@vue2do/file-to-dist-webpack-plugin",
+  "version": "1.0.0",
+  "description": "File to dist webpack plugin",
+  "author": "zenwong@aliyun.com",
+  "license": "MIT",
+  "typings": "./index.d.ts",
+  "main": "./index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"No test specified in @vue2do/file-to-dist-webpack-plugin\" && exit 0"
+  },
+  "peerDependencies": {
+    "webpack": "^4.41.2"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "core-js": "^3.6.4",
+    "write": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/chalk": "2.2.0",
+    "@types/core-js": "2.5.3"
+  }
+}

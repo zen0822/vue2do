@@ -46,7 +46,6 @@ async function prod({
   const swConfig = configOpt.sw ?? {}
 
   buildProd({
-    clear: true,
     config: {
       ...projectConfig,
       ...swConfig,

@@ -7,17 +7,12 @@ import VueRouter from 'vue-router'
 
 import App from './App/App'
 import routeConfig from './route/route'
-
-import vue2do from '@vue2do/component/index.js'
 import enLang from '@vue2do/component/language/en-US.json'
 
 Vue.use(VueRouter)
 Vue.use(VueI18n)
 Vue.use(VueApollo)
 Vue.use(VueCompositionApi)
-Vue.use(vue2do, {
-  prefix: 'z'
-})
 
 const vue2doLang = new VueI18n({
   locale: Object.keys(enLang)[0],

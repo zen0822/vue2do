@@ -11,16 +11,16 @@ import Vue from 'vue'
 
 const bubbleDirective = {
   update(el, binding, opt = {}) {
-    var bubbleTip = {}
+    let bubbleTip = {}
 
-    var bubbleText = opt.text
+    const bubbleText = opt.text
 
     if (!bubbleText && bubbleText !== 0) {
       return false
     }
 
     if (opt.bubble) {
-      var vmParent = binding.vm
+      let vmParent = binding.vm
 
       for (let i = 0, len = opt.parent; i < len; i++) {
         vmParent = vmParent['$parent']

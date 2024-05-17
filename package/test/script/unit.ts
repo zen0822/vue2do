@@ -12,10 +12,10 @@ type TUnit = {
   projectConfigPath: string
 }
 
-export default function ({
+export default async function ({
   projectConfig = {},
   projectConfigPath
-}: TUnit): void {
+}: TUnit): Promise<void> {
   console.log(`${chalk.green('@vue2do/test')}: starting unit testing server.`)
 
   let projectConfigDir = projectConfig.root || ''
@@ -29,11 +29,11 @@ export default function ({
     }
   }
 
-  const baseWebpackChain = getConfig({
+  const baseWebpackChain = (await getConfig({
     config: {
       root: projectConfigDir
     }
-  }).base
+  })).base
 
   // babel add config
   // env: {
@@ -50,7 +50,7 @@ export default function ({
     .add(path.resolve('./unit/'))
     .end()
     .use('istanbul')
-    .loader('istanbul-instrumenter-loader')
+    .loader(require.resolve('istanbul-instrumenter-loader'))
     .end()
 
   const baseWebpackConfig = baseWebpackChain.toConfig()

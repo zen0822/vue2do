@@ -1,4 +1,4 @@
-import db from './mock.db'
+import dbMock from './mock.db'
 import mockrc from '../../mock.config'
 
 import {
@@ -28,14 +28,19 @@ const {
 
 const router = new Router()
 
-async function init(): Promise<void> {
+function init(): void {
   registerRoute(
     new RegExp('http://localhost/#/'),
     process.env.NODE_ENV === 'development'
       ? new NetworkFirst()
       : new StaleWhileRevalidate()
   )
-  precacheAndRoute(self.__WB_MANIFEST)
+
+  try {
+    self.__WB_MANIFEST && precacheAndRoute(self.__WB_MANIFEST)
+  } catch (error) {
+    console.warn(error)
+  }
 
   addEventListener('push', (event) => {
     const title = '@vue2do/mock: Get Started With Workboxed'
@@ -44,26 +49,29 @@ async function init(): Promise<void> {
     }
     event.waitUntil(registration.showNotification(title, options))
   })
+
+  self.addEventListener('fetch', (event) => {
+    const responsePromise = router.handleRequest(event)
+
+    if (responsePromise) {
+      // Router found a route to handle the request
+      event.respondWith(responsePromise)
+    } else {
+      // No route found to handle the request
+    }
+  })
 }
 
 function createRoute(): void {
-  mockrc.api.forEach(async (item) => {
-    try {
-      await db.mock.put({
-        data: item.data,
-        api: item.path,
-        name: item.name
-      })
-    } catch (error) {
-      console.warn(error)
-    }
+  mockrc.api.forEach(async (apiItem) => {
+    const mockData = await dbMock.table(apiItem.key).toCollection().toArray()
 
-    registerRoute(
+    router.registerRoute(new Route(
       ({ url }) => {
-        if (url.href.includes(item.path)) {
+        if (url.href.includes(apiItem.url)) {
           return {
-            name: item.name,
-            data: item.data
+            url: apiItem.url,
+            data: mockData
           }
         }
 
@@ -74,7 +82,7 @@ function createRoute(): void {
           JSON.stringify({
             url,
             data: params.data,
-            body: `!-- Look Ma. Added Cont. -->`
+            body: `!-- Look Ma. Added Content. -->`
           }),
           {
             status: 200,
@@ -86,7 +94,7 @@ function createRoute(): void {
           }
         ))
       }
-    )
+    ))
   })
 }
 
@@ -99,36 +107,5 @@ skipWaiting()
 clientsClaim()
 
 init()
+
 createRoute()
-
-self.addEventListener('fetch', (event) => {
-  const responsePromise = router.handleRequest(event)
-  if (responsePromise) {
-    // Router found a route to handle the request
-    event.respondWith(responsePromise)
-  } else {
-    // No route found to handle the request
-  }
-})
-
-router.registerRoute(new Route(
-  ({ url }) => {
-    return url.pathname.includes('/api/sw')
-  },
-  ({ url }: any) => {
-    return Promise.resolve(new Response(
-      JSON.stringify({
-        url,
-        body: `!-- /api/sw -->`
-      }),
-      {
-        status: 200,
-        headers: new Headers({
-          'Accept-Charset': 'utf-8',
-          'Content-Type': 'application/json',
-          'Cache-Control': 'max-age=3600'
-        })
-      }
-    ))
-  }
-))

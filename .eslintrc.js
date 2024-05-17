@@ -22,10 +22,15 @@ module.exports = {
     project: [
       './tsconfig.json',
       './tsconfig.eslint.json',
+      './app/doc/tsconfig.json',
+      './app/ex/tsconfig.json',
+      './app/mock/tsconfig.json',
       './app/mock/server/sw/tsconfig.json',
+      './package/build/tsconfig.json',
       './package/component/tsconfig.json',
       './package/mock/tsconfig.json',
-      './package/test/tsconfig.json'
+      './package/test/tsconfig.json',
+      './package/wc-pnp-webpack-plugin/tsconfig.json'
     ],
     sourceType: 'module',
     tsconfigRootDir: './'
@@ -56,7 +61,7 @@ module.exports = {
     'exit': true,
     'workbox': true
   },
-  'rules': {
+  rules: {
     '@typescript-eslint/member-delimiter-style': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-var-requires': 0,
@@ -93,5 +98,12 @@ module.exports = {
     }],
     'no-template-curly-in-string': 0,
     'operator-linebreak': 0
+  },
+  settings: {
+    'import/resolver': 'node',
+    'import/internal-regex': [
+      /^@app/, 
+      /^@package/
+    ]
   }
 }

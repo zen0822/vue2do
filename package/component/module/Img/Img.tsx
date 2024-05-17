@@ -19,7 +19,7 @@ import {
   defineComponent
 } from '@vue/composition-api'
 
-import { CreateElement, VNode } from 'vue'
+import { VNode } from 'vue'
 import {
   compPrefix,
   css4,
@@ -50,6 +50,7 @@ export default defineComponent({
       required: true,
       type: String
     },
+    title: String,
     width: {
       default: '',
       type: [String, Number]
@@ -57,16 +58,15 @@ export default defineComponent({
   },
 
   setup({
+    alt,
     contain,
     height,
+    src,
+    title,
     width
-  }: {
-    contain: string,
-    height: string,
-    width: string
   }) {
     const imgState = ref(1) // 1：图片加载前，2：图片加载成功，3：图片加载失败
-    const _xclass = (className: string): string => xclass(`${compPrefix}-img`, className)
+    const _xclass = (className = ''): string => xclass(`${compPrefix}-img`, className)
 
     const _width = ref(
       Number.isNaN(Number(width))
@@ -103,30 +103,8 @@ export default defineComponent({
       imgState.value = 3
     }
 
-    return {
-      _height,
-      _width,
-      imgState,
-      imageLoadError,
-      imageLoadSuccess,
-      xclass: _xclass
-    }
-  },
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  render(this: any, h: CreateElement): VNode {
-    const {
-      imgState,
-      _width,
-      _height,
-      xclass,
-      src,
-      alt,
-      title
-    } = this
-
     const imgProps = {
-      class: xclass('content'),
+      class: _xclass('content'),
       alt,
       title
     }
@@ -135,16 +113,16 @@ export default defineComponent({
       width: _width,
       height: _height
     }
-
-    return (
+    
+    return (): VNode => (
       <div
         style={imageBoxStyle}
-        class={xclass()}
+        class={_xclass()}
         ref='me'
       >
-        {imgState === 1 && (
+        {imgState.value === 1 && (
           <div
-            class={xclass('skeleton')}
+            class={_xclass('skeleton')}
             style={{
               ...imageBoxStyle
             }}
@@ -154,14 +132,14 @@ export default defineComponent({
         <img
           {...imgProps}
           src={src}
-          onLoad={(event: any): Function => this.imageLoadSuccess(event)}
-          onError={(): Function => this.imageLoadError()}
+          onLoad={(event: any): void => imageLoadSuccess(event)}
+          onError={(): void => imageLoadError()}
           style={{
-            display: imgState === 2 ? '' : 'none'
+            display: imgState.value === 2 ? '' : 'none'
           }}
         />
 
-        {imgState === 3 && (
+        {imgState.value === 3 && (
           <img
             {...imgProps}
             src={''}

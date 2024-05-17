@@ -21,13 +21,13 @@ module.exports = {
       .rule('protocol')
       .test(/blog-[\w\W]+.html$/)
       .use('extract')
-      .loader('extract-loader')
+      .loader(require.resolve('extract-loader'))
       .end()
       .use('html')
-      .loader('html-loader')
+      .loader(require.resolve('html-loader'))
       .end()
       .use('file')
-      .loader('file-loader')
+      .loader(require.resolve('file-loader'))
       .options({
         name: 'static/[name].[ext]',
         publicPath: './'

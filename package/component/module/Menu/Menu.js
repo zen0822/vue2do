@@ -197,7 +197,7 @@ export default {
       this.triggerHeight = trigHeight === 'auto' ? this.$refs.trigger.offsetHeight : trigHeight
 
       return this.$nextTick(() => {
-        cb && cb()
+        cb?.()
       })
     },
 

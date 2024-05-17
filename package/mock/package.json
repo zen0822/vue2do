@@ -1,15 +1,15 @@
 {
   "name": "@vue2do/mock",
-  "version": "1.1.14",
+  "version": "1.1.15",
   "description": "Mock server for Vue2do.",
   "author": "zenwong@aliyun.com",
   "license": "MIT",
   "typings": "./types/index.d.ts",
   "main": "tsDist/index.js",
   "files": [
-    "types",
-    "bin",
-    "tsDist"
+    "bin/",
+    "tsDist/",
+    "types/"
   ],
   "publishConfig": {
     "access": "public"
@@ -21,23 +21,31 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w"
   },
-  "devDependencies": {
-    "@graphql-codegen/cli": "^1.2.1",
-    "@graphql-codegen/typescript": "1.2.1",
-    "typescript": "^3.8.3"
-  },
   "gitHead": "32251aac4a5c2c458c888a62cd22eff14d13dd02",
   "dependencies": {
-    "@vue2do/component": "latest",
+    "@graphql-codegen/cli": "^1.2.1",
+    "@graphql-codegen/typescript": "1.2.1",
+    "@types/chai": "^4.2.11",
+    "@types/graphql": "^14.5.0",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.9.5",
+    "@types/yargs": "15.0.4",
+    "@vue/composition-api": "^0.5.0",
+    "@vue2do/build": "workspace:package/build",
+    "@vue2do/component": "workspace:package/component",
     "apollo": "^2.22.0",
     "apollo-engine": "^1.1.2",
     "chalk": "^3.0.0",
     "graphql": "^14.3.1",
     "graphql-tag": "^2.10.1",
     "graphql-voyager": "^1.0.0-rc.27",
-    "graphql-yoga": "^1.17.4"
+    "graphql-yoga": "^1.17.4",
+    "typescript": "^3.8.3",
+    "vue": "^2.6.11",
+    "yargs": "^15.3.1"
   },
-  "peerDependencies": {
-    "typescript": "^3.8.3"
+  "devDependencies": {
+    "react": ">=15.4.2",
+    "react-dom": ">=15.4.2"
   }
 }

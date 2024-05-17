@@ -102,7 +102,6 @@ function prod(_a) {
                     configOpt = (_d = configFile.default) !== null && _d !== void 0 ? _d : configFile;
                     swConfig = (_e = configOpt.sw) !== null && _e !== void 0 ? _e : {};
                     build_1.prod({
-                        clear: true,
                         config: __assign(__assign(__assign({}, projectConfig), swConfig), { pure: true, port: swConfig.port, root: projectConfig.path === undefined
                                 ? path_1.default.dirname(projectConfigPath)
                                 : projectConfig.path, webpack: function (config) {

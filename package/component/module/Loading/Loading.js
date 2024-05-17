@@ -114,7 +114,7 @@ export default {
         this.timeout = null
         this.hide()
 
-        return cb && cb()
+        return cb?.()
       }, this.time)
     },
 

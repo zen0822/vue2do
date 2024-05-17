@@ -125,7 +125,7 @@ var messageComp = {
                         setTimeout(function () {
                             _this.hide();
                         }, TIP_DISPLAY_TIME);
-                        cb && cb();
+                        cb === null || cb === void 0 ? void 0 : cb();
                         return _this.$emit('hide');
                     }
                 });
@@ -147,7 +147,7 @@ var messageComp = {
                     _this.messageDisplay = false;
                     _this.isMousedown = false;
                     _this.hideCb && _this.hideCb();
-                    cb && cb();
+                    cb === null || cb === void 0 ? void 0 : cb();
                     return _this.$emit('hide');
                 }
             });

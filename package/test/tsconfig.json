@@ -5,9 +5,12 @@
     "./**/*.tsx"
   ],
   "compilerOptions": {
-    "outDir": "./tsDist"
-  },
-  "types": [
-    "karma"
-  ]
+    "outDir": "./tsDist",
+    "types": [
+      "karma",
+      "node",
+      "mocha",
+      "chai"
+    ]
+  }
 }

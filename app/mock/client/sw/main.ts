@@ -8,10 +8,11 @@ async function init(): Promise<any> {
     const wb = new Workbox('/sw.js')
 
     window.addEventListener('load', async () => {
-      wb.register().then((registration: any) => {
-        registration.pushManager.subscribe({
-          userVisibleOnly: true
-        }).catch((error: any) => { console.warn(error) })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      wb.register().then((_registration: any) => {
+        // registration.pushManager.subscribe({
+        //   userVisibleOnly: true
+        // }).catch((error: any) => { console.warn(error) })
       }).catch((registrationError: any) => {
         console.warn('SW of mock registration failed: ', registrationError)
       })

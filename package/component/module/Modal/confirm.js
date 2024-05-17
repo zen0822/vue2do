@@ -73,29 +73,31 @@ const confirm = (opt = '') => {
     option = opt
   }
 
-  return commonVuex
+  const confirmVm = commonVuex
     .$store
-    .getters[commonStore.confirm.get]
+    .getters[commonStore.alert.get]
     .$refs
-    .confirm
-    .set({
-      theme: option.theme,
-      ui: option.ui,
-      title: option.title,
-      message: option.message,
-      okCb: (vm) => {
-        option.cb && option.cb()
-        vm.hide()
-      },
-      hideCb: () => {
-        confirming = false
+    .alert
 
-        if (confirmHub.length > 0) {
-          confirm(confirmHub.shift())
-        }
+  confirmVm.set({
+    theme: option.theme,
+    ui: option.ui,
+    title: option.title,
+    message: option.message,
+    okCb: () => {
+      option.cb && option.cb()
+      confirmVm.hide()
+    },
+    hideCb: () => {
+      confirming = false
+
+      if (confirmHub.length > 0) {
+        confirm(confirmHub.shift())
       }
-    })
-    .show(() => {})
+    }
+  })
+
+  confirmVm.show(() => { /* nothing */ })
 }
 
 createConfirm()

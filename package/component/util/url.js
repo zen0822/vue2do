@@ -38,7 +38,7 @@ const fitSearch = (urlSearch) => {
   const urlSearchObj = search(urlSearch)
   const urlSearchObjKeys = Object.keys(urlSearchObj)
   const urlSearchObjValues = Object.values(urlSearchObj)
-  let urlSearchArr = []
+  const urlSearchArr = []
 
   urlSearchObjValues.forEach((item, index) => {
     if (item !== '') {

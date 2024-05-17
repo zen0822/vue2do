@@ -159,7 +159,7 @@ export default {
         return false
       }
 
-      cb && cb()
+      cb?.()
 
       this.$emit('change', {
         emitter: this,
@@ -175,7 +175,7 @@ export default {
     },
 
     _handlerClick(event, index) {
-      event && event.stopPropagation()
+      event?.stopPropagation()
 
       this.selectOption(index, true, () => this.$refs[`rip${index}`].enter())
     }

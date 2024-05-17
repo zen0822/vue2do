@@ -38,7 +38,7 @@ const handleEleDisplay = ({
   }
 
   handleElDisplay()
-  cb && cb(element)
+  cb?.(element)
   handleElDisplay(false)
 
   return element

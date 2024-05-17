@@ -16,5 +16,6 @@ module.exports = {
   type: 'spa',
   webpack(config) {
     // see https://github.com/neutrinojs/webpack-chain for config.
+    return config
   }
 }

@@ -50,14 +50,18 @@ exports.default = composition_api_1.defineComponent({
         }, src: {
             required: true,
             type: String
-        }, width: {
+        }, title: String, width: {
             default: '',
             type: [String, Number]
         } }),
-    setup: function (_a) {
-        var contain = _a.contain, height = _a.height, width = _a.width;
+    setup: function (_a, _b) {
+        var alt = _a.alt, contain = _a.contain, height = _a.height, src = _a.src, title = _a.title, width = _a.width;
+        var slots = _b.slots;
         var imgState = composition_api_1.ref(1); // 1：图片加载前，2：图片加载成功，3：图片加载失败
-        var _xclass = function (className) { return base_1.xclass(base_1.compPrefix + "-img", className); };
+        var _xclass = function (className) {
+            if (className === void 0) { className = ''; }
+            return base_1.xclass(base_1.compPrefix + "-img", className);
+        };
         var _width = composition_api_1.ref(Number.isNaN(Number(width))
             ? width
             : (width && width + "px"));
@@ -82,21 +86,8 @@ exports.default = composition_api_1.defineComponent({
         var imageLoadError = function () {
             imgState.value = 3;
         };
-        return {
-            _height: _height,
-            _width: _width,
-            imgState: imgState,
-            imageLoadError: imageLoadError,
-            imageLoadSuccess: imageLoadSuccess,
-            xclass: _xclass
-        };
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    render: function (h) {
-        var _this = this;
-        var _a = this, imgState = _a.imgState, _width = _a._width, _height = _a._height, xclass = _a.xclass, src = _a.src, alt = _a.alt, title = _a.title;
         var imgProps = {
-            class: xclass('content'),
+            class: _xclass('content'),
             alt: alt,
             title: title
         };
@@ -104,15 +95,28 @@ exports.default = composition_api_1.defineComponent({
             width: _width,
             height: _height
         };
-        return (<div style={imageBoxStyle} class={xclass()} ref='me'>
-        {imgState === 1 && (<div class={xclass('skeleton')} style={__assign({}, imageBoxStyle)}/>)}
+        return function () { return (<div style={imageBoxStyle} class={_xclass()} ref='me'>
+        {slots === null || slots === void 0 ? void 0 : slots.default}
+        {imgState.value === 1 && (<div class={_xclass('skeleton')} style={__assign({}, imageBoxStyle)}/>)}
 
-        <img {...imgProps} src={src} onLoad={function (event) { return _this.imageLoadSuccess(event); }} onError={function () { return _this.imageLoadError(); }} style={{
-            display: imgState === 2 ? '' : 'none'
+        <img {...imgProps} src={src} onLoad={function (event) { return imageLoadSuccess(event); }} onError={function () { return imageLoadError(); }} style={{
+            display: imgState.value === 2 ? '' : 'none'
         }}/>
 
-        {imgState === 3 && (<img {...imgProps} src={''}/>)}
-      </div>);
+        {imgState.value === 3 && (<img {...imgProps} src={''}/>)}
+      </div>); };
     }
+    // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // render(this: any, h: CreateElement): VNode {
+    //   const {
+    //     imgState,
+    //     _width,
+    //     _height,
+    //     xclass,
+    //     src,
+    //     alt,
+    //     title
+    //   } = this
+    // }
 });
 //# sourceMappingURL=Img.jsx.map
