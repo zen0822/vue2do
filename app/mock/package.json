@@ -34,7 +34,7 @@
     "apollo-boost": "^0.4.7",
     "bcryptjs": "^2.4.3",
     "core-js": "^3.6.4",
-    "dexie": "^2.0.4",
+    "dexie": "^3.2.2",
     "eslint": "^6.8.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
